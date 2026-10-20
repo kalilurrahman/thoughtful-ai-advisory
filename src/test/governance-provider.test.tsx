@@ -7,7 +7,7 @@ vi.mock("@/features/governance/workspace.functions", () => ({
 }));
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: { auth: {
-    getSession: vi.fn().mockResolvedValue({ data: { session: null } }),
+    getUser: vi.fn().mockResolvedValue({ data: { user: null } }),
     onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
   } },
 }));

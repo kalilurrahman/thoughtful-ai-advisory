@@ -32,6 +32,7 @@ const item = z.object({
   done: z.boolean(),
 });
 export const workspaceState = z.object({
+  workspaceMode: z.enum(["sample", "personal"]).default("personal"),
   answers: z.record(z.string(), answer),
   gr: z.record(z.string(), z.boolean()),
   tier: z.enum(["Low", "Medium", "High"]),
@@ -67,12 +68,14 @@ export const saveWorkspace = createServerFn({ method: "POST" })
   });
 export const loadWorkspace = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data: org, error } = await context.supabase
+  .inputValidator(z.object({ organizationId: z.string().uuid().optional() }).optional())
+  .handler(async ({ context, data }) => {
+    let query = context.supabase
       .from("organizations")
       .select("id,name")
-      .eq("owner_id", context.userId)
-      .order("created_at", { ascending: true })
+      .eq("owner_id", context.userId);
+    if (data?.organizationId) query = query.eq("id", data.organizationId);
+    const { data: org, error } = await query.order("created_at", { ascending: true })
       .limit(1)
       .maybeSingle();
     if (error) throw new Error("Unable to load workspace.");
@@ -115,6 +118,7 @@ export const loadWorkspace = createServerFn({ method: "POST" })
     if (a.error || g.error || s.error || r.error || i.error || d.error || c.error || m.error || ca.error)
       throw new Error("Workspace data unavailable.");
     const state = workspaceState.parse({
+      workspaceMode: "personal",
       answers: a.data.answers,
       gr: g.data.controls,
       tier: g.data.tier,
@@ -129,4 +133,11 @@ export const loadWorkspace = createServerFn({ method: "POST" })
       dark: false,
     });
     return { id: org.id, name: org.name, state };
+  });
+export const listWorkspaces = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data, error } = await context.supabase.from("organizations").select("id,name,created_at").eq("owner_id", context.userId).order("created_at", { ascending: false });
+    if (error) throw new Error("Unable to list workspaces.");
+    return data;
   });
