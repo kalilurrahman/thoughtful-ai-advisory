@@ -47,6 +47,7 @@ export type AIIncident = {
   statusHistory: { status: AIIncident["status"]; changedAt: string }[];
 };
 export type GovernanceState = {
+  workspaceMode?: "sample" | "personal";
   answers: Answers;
   gr: Record<string, boolean>;
   tier: Tier;
@@ -61,6 +62,7 @@ export type GovernanceState = {
   dark: boolean;
 };
 export const initialState = (): GovernanceState => ({
+  workspaceMode: "sample",
   answers: defaultAnswers(),
   gr: defaultGuardrails(),
   tier: "High",
@@ -76,6 +78,10 @@ export const initialState = (): GovernanceState => ({
   qi: 0,
   dark: false,
 });
+export function blankState(): GovernanceState {
+  const sample = initialState();
+  return { ...sample, workspaceMode: "personal", answers: Object.fromEntries(Object.keys(sample.answers).map((id) => [id, { s: 0, e: 0 }])), gr: Object.fromEntries(Object.keys(sample.gr).map((id) => [id, false])), systems: [], roadmap: [] };
+}
 export type Action =
   | { type: "answer"; id: string; patch: Partial<Answer> }
   | { type: "guardrail"; name: string }
@@ -100,6 +106,7 @@ export type Action =
   | { type: "monitor-observation"; id: string; observation: MonitoringObservation; nextDue: string }
   | { type: "monitor-status"; id: string; status: "Active" | "Paused" }
   | { type: "corrective-action"; action: CorrectiveAction }
+  | { type: "edit-corrective-evidence"; id: string; evidence: string }
   | { type: "transition-corrective-action"; id: string; status: CorrectiveAction["status"]; actor: string; note: string; changedAt: string }
   | { type: "roadmap"; control: Control }
   | { type: "done"; key: string }
@@ -181,11 +188,12 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
       const review = s.changeReviews.find((item) => item.id === a.id);
       if (!review) return s;
       const result = transitionChangeReview(review, a.status, a.actor, a.note, a.changedAt);
-      return result.review
+      const updatedReview = result.review;
+      return updatedReview
         ? {
             ...s,
             changeReviews: s.changeReviews.map((item) =>
-              item.id === a.id ? result.review! : item,
+              item.id === a.id ? updatedReview : item,
             ),
           }
         : s;
@@ -210,12 +218,15 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
       };
     case "corrective-action":
       return { ...s, correctiveActions: [a.action, ...s.correctiveActions] };
+    case "edit-corrective-evidence":
+      return { ...s, correctiveActions: s.correctiveActions.map((item) => item.id === a.id ? { ...item, completionEvidence: a.evidence.trim() } : item) };
     case "transition-corrective-action": {
       const action = s.correctiveActions.find((item) => item.id === a.id);
       if (!action) return s;
       const result = transitionCorrectiveAction(action, a.status, a.actor, a.note, a.changedAt);
-      return result.action
-        ? { ...s, correctiveActions: s.correctiveActions.map((item) => item.id === a.id ? result.action! : item) }
+      const updatedAction = result.action;
+      return updatedAction
+        ? { ...s, correctiveActions: s.correctiveActions.map((item) => item.id === a.id ? updatedAction : item) }
         : s;
     }
     case "roadmap":
@@ -262,8 +273,8 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
       if (current === id) return;
       current = id;
       setId(null);
-      setName("Acme Health");
-      dispatch({ type: "load", state: initialState() });
+      setName(id ? "My organization" : "Acme Health");
+      dispatch({ type: "load", state: id ? blankState() : initialState() });
       if (id) {
         try {
           const result = await load();
@@ -277,7 +288,7 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
         }
       }
     }
-    supabase.auth.getSession().then(({ data }) => apply(data.session?.user.id ?? null));
+    supabase.auth.getUser().then(({ data }) => apply(data.user?.id ?? null)).catch(() => apply(null));
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {

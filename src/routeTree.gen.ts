@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssessRouteImport } from './routes/assess'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CalculatorsRouteImport } from './routes/calculators'
 import { Route as ChangesRouteImport } from './routes/changes'
 import { Route as ChecklistRouteImport } from './routes/checklist'
@@ -26,6 +27,7 @@ import { Route as MoreRouteImport } from './routes/more'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as PlaybookRouteImport } from './routes/playbook'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as TemplatesRouteImport } from './routes/templates'
@@ -38,6 +40,11 @@ const IndexRoute = IndexRouteImport.update({
 const AssessRoute = AssessRouteImport.update({
   id: '/assess',
   path: '/assess',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalculatorsRoute = CalculatorsRouteImport.update({
@@ -115,6 +122,11 @@ const PlaybookRoute = PlaybookRouteImport.update({
   path: '/playbook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RoadmapRoute = RoadmapRouteImport.update({
   id: '/roadmap',
   path: '/roadmap',
@@ -134,6 +146,7 @@ const TemplatesRoute = TemplatesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assess': typeof AssessRoute
+  '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
   '/changes': typeof ChangesRoute
   '/checklist': typeof ChecklistRoute
@@ -149,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/plans': typeof PlansRoute
   '/playbook': typeof PlaybookRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/roadmap': typeof RoadmapRoute
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
@@ -156,6 +170,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assess': typeof AssessRoute
+  '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
   '/changes': typeof ChangesRoute
   '/checklist': typeof ChecklistRoute
@@ -171,6 +186,7 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/plans': typeof PlansRoute
   '/playbook': typeof PlaybookRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/roadmap': typeof RoadmapRoute
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
@@ -179,6 +195,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assess': typeof AssessRoute
+  '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
   '/changes': typeof ChangesRoute
   '/checklist': typeof ChecklistRoute
@@ -194,6 +211,7 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/plans': typeof PlansRoute
   '/playbook': typeof PlaybookRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/roadmap': typeof RoadmapRoute
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
@@ -203,6 +221,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/assess'
+    | '/auth'
     | '/calculators'
     | '/changes'
     | '/checklist'
@@ -218,6 +237,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/plans'
     | '/playbook'
+    | '/reset-password'
     | '/roadmap'
     | '/start'
     | '/templates'
@@ -225,6 +245,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/assess'
+    | '/auth'
     | '/calculators'
     | '/changes'
     | '/checklist'
@@ -240,6 +261,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/plans'
     | '/playbook'
+    | '/reset-password'
     | '/roadmap'
     | '/start'
     | '/templates'
@@ -247,6 +269,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/assess'
+    | '/auth'
     | '/calculators'
     | '/changes'
     | '/checklist'
@@ -262,6 +285,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/plans'
     | '/playbook'
+    | '/reset-password'
     | '/roadmap'
     | '/start'
     | '/templates'
@@ -270,6 +294,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssessRoute: typeof AssessRoute
+  AuthRoute: typeof AuthRoute
   CalculatorsRoute: typeof CalculatorsRoute
   ChangesRoute: typeof ChangesRoute
   ChecklistRoute: typeof ChecklistRoute
@@ -285,6 +310,7 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   PlansRoute: typeof PlansRoute
   PlaybookRoute: typeof PlaybookRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   RoadmapRoute: typeof RoadmapRoute
   StartRoute: typeof StartRoute
   TemplatesRoute: typeof TemplatesRoute
@@ -304,6 +330,13 @@ declare module '@tanstack/react-router' {
       path: '/assess'
       fullPath: '/assess'
       preLoaderRoute: typeof AssessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calculators': {
@@ -411,6 +444,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlaybookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/roadmap': {
       id: '/roadmap'
       path: '/roadmap'
@@ -438,6 +478,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssessRoute: AssessRoute,
+  AuthRoute: AuthRoute,
   CalculatorsRoute: CalculatorsRoute,
   ChangesRoute: ChangesRoute,
   ChecklistRoute: ChecklistRoute,
@@ -453,6 +494,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   PlansRoute: PlansRoute,
   PlaybookRoute: PlaybookRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   RoadmapRoute: RoadmapRoute,
   StartRoute: StartRoute,
   TemplatesRoute: TemplatesRoute,
