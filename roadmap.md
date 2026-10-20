@@ -1,4 +1,8 @@
 # AEGIS build
+- [ ] Add basic profiles and Google, Apple, Microsoft, Lovable, and email/password authentication.
+- [ ] Add private workspace selection and blank workspace creation while preserving the sample.
+- [ ] Generate clearly distinguished working reports from personal workspace records.
+- [ ] Verify account, save/restore, and report workflows; resolve existing build errors.
 - [x] Expand and check the governance resource library, add practical highlights, and verify search/filter flows.
 - [x] Expand navigation and screen layouts across desktop, tablet and phone.
 - [x] Replace fixed-example presentation with live workspace and inventory summaries.
