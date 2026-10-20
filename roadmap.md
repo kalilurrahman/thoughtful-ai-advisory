@@ -1,0 +1,23 @@
+# AEGIS build
+- [x] Expand and check the governance resource library, add practical highlights, and verify search/filter flows.
+- [x] Expand navigation and screen layouts across desktop, tablet and phone.
+- [x] Replace fixed-example presentation with live workspace and inventory summaries.
+- [x] Verify cross-device navigation, registration and interactive controls.
+- [x] Recreate the twelve supplied screens and Broadsheet design.
+- [x] Preserve supplied seeds and test scoring, classifier, guardrail and calculator rules.
+- [x] Add manifest-only home-screen installation.
+- [x] Verify the interactive flows at mobile and desktop sizes.
+- [x] Add organization-scoped Cloud persistence after the screens pass, per Prompt 5.
+- [ ] Verify signed-in save/restore and cross-account isolation — blocked until a first account signs in; no auth users exist.
+- [x] Add a comprehensive AI Governance Playbook reader with 12 lifecycle chapters.
+- [x] Connect playbook chapters to assessment, inventory, guardrails, gates, roadmap, sources and audit-pack workflows.
+- [x] Document the AI-governance-only scope and publishing workflow.
+- [ ] Add browser smoke and accessibility coverage for the playbook reader.
+- [x] Add an eight-document governance template library with editable context and Markdown downloads.
+- [ ] Add draft persistence and organisation-specific template approvals.
+- [x] Add guided learning paths by role, programme stage and immediate goal.
+- [x] Add deep links from guided paths to individual playbook chapters.
+- [x] Persist private playbook review progress and chapter notes in the browser; support Markdown export.
+- [x] Add an organization-scoped AI incident and near-miss register with lifecycle tracking, timestamped status history, bounded validation, backward-compatible snapshot defaults and RLS-protected atomic Cloud persistence.
+- [x] Add a live lifecycle checklist and system-profile completeness assessor derived from persisted workspace sources; preserve workspace-level assessment, guardrail and release-gate scoring.
+- [ ] Add signed-in evidence attachments and a verified export workflow after authentication is available.

@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1792317601420,
+      "tag": "0000_aegis_organization_workspaces",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792317698452,
+      "tag": "0001_aegis_workspace_creation_sentinel",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792495884889,
+      "tag": "0002_aegis_ai_incident_register",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792499597000,
+      "tag": "0003_aegis_governance_decisions",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792501000000,
+      "tag": "0004_aegis_ai_change_reviews",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1792502000000,
+      "tag": "0005_aegis_ai_monitoring_plans",
+      "breakpoints": true
+    }
+  ]
+}

@@ -14,4 +14,16 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
+
+  it("registers the AI incident-management route", () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    expect(router.matchRoutes("/incidents").at(-1)?.routeId).toBe("/incidents");
+  });
+
+  it("registers the live governance lifecycle checklist route", () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    expect(router.matchRoutes("/checklist").at(-1)?.routeId).toBe("/checklist");
+  });
 });

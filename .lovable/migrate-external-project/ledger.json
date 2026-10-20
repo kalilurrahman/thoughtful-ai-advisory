@@ -1,0 +1,68 @@
+{
+  "source": "code-archive",
+  "capabilities": [
+    {
+      "capability": "Twelve AEGIS screens and Broadsheet design",
+      "source": "lovable.md and PNG references",
+      "outcome": "recreate",
+      "status": "verified",
+      "next_action": null
+    },
+    {
+      "capability": "Scoring, classifier, guardrails and calculators",
+      "source": "client-side prototype",
+      "outcome": "preserve",
+      "status": "verified",
+      "next_action": null
+    },
+    {
+      "capability": "Seed records",
+      "source": "prototype constants",
+      "outcome": "preserve",
+      "status": "verified",
+      "next_action": null
+    },
+    {
+      "capability": "Home-screen installation",
+      "source": "lovable.md Prompt 1",
+      "outcome": "manifest only",
+      "status": "verified",
+      "next_action": null
+    },
+    {
+      "capability": "Evidence attachment and report generation",
+      "source": "explicit mocks in Prompt 2 and Prompt 4",
+      "outcome": "preserve demo behavior",
+      "status": "verified",
+      "next_action": null
+    },
+    {
+      "capability": "Organization-scoped persistence and authentication",
+      "source": "lovable.md Prompt 5 after screens pass",
+      "outcome": "migrate to Lovable Cloud",
+      "status": "implemented_verification_pending",
+      "next_action": "Sign in through More using Microsoft or Lovable; verify save/restore and cross-account isolation. No auth users exist to mint a test session."
+    },
+    {
+      "capability": "Existing auth identities and records",
+      "source": "archive contains design seed only, no existing backend",
+      "outcome": "not_detected",
+      "status": "not_applicable",
+      "next_action": null
+    },
+    {
+      "capability": "External providers, webhooks, callbacks, schedules, secrets and uploaded file bytes",
+      "source": "prototype and brief",
+      "outcome": "none detected; onboarding SSO is a demo link",
+      "status": "not_applicable",
+      "next_action": null
+    },
+    {
+      "capability": "Production cutover",
+      "source": "current published placeholder",
+      "outcome": "preserve public root URL",
+      "status": "pending",
+      "next_action": "User publishes after review"
+    }
+  ]
+}

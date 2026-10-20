@@ -10,6 +10,9 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
+import { GovernanceProvider } from "@/features/governance/store";
+import { GovernanceShell } from "@/features/governance/shell";
+import "@lovable.dev/cloud-auth-js/styles.css";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -79,19 +82,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "AI Governance and Advisory" },
-      { name: "description", content: "AI governance and advisory by Kalilur Rahman." },
-      { name: "author", content: "Kalilur Rahman" },
+      { name: "description", content: "AI Governance and Advisory — coming soon" },
+      { name: "author", content: "AEGIS" },
       { property: "og:title", content: "AI Governance and Advisory" },
-      { property: "og:description", content: "AI governance and advisory by Kalilur Rahman." },
+      { property: "og:description", content: "AI Governance and Advisory — coming soon" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "theme-color", content: "#f3f2f2" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/aegis-icon-192.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/aegis-icon-192.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -119,8 +131,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <GovernanceProvider>
+        <GovernanceShell>
+          <Outlet />
+        </GovernanceShell>
+      </GovernanceProvider>
     </QueryClientProvider>
   );
 }

@@ -10,33 +10,284 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AssessRouteImport } from './routes/assess'
+import { Route as CalculatorsRouteImport } from './routes/calculators'
+import { Route as ChangesRouteImport } from './routes/changes'
+import { Route as ChecklistRouteImport } from './routes/checklist'
+import { Route as DecisionsRouteImport } from './routes/decisions'
+import { Route as ExportRouteImport } from './routes/export'
+import { Route as GatesRouteImport } from './routes/gates'
+import { Route as GuardrailsRouteImport } from './routes/guardrails'
+import { Route as IncidentsRouteImport } from './routes/incidents'
+import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as KnowledgeRouteImport } from './routes/knowledge'
+import { Route as MonitoringRouteImport } from './routes/monitoring'
+import { Route as MoreRouteImport } from './routes/more'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as PlansRouteImport } from './routes/plans'
+import { Route as PlaybookRouteImport } from './routes/playbook'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
+import { Route as StartRouteImport } from './routes/start'
+import { Route as TemplatesRouteImport } from './routes/templates'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssessRoute = AssessRouteImport.update({
+  id: '/assess',
+  path: '/assess',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalculatorsRoute = CalculatorsRouteImport.update({
+  id: '/calculators',
+  path: '/calculators',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangesRoute = ChangesRouteImport.update({
+  id: '/changes',
+  path: '/changes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChecklistRoute = ChecklistRouteImport.update({
+  id: '/checklist',
+  path: '/checklist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DecisionsRoute = DecisionsRouteImport.update({
+  id: '/decisions',
+  path: '/decisions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExportRoute = ExportRouteImport.update({
+  id: '/export',
+  path: '/export',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GatesRoute = GatesRouteImport.update({
+  id: '/gates',
+  path: '/gates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuardrailsRoute = GuardrailsRouteImport.update({
+  id: '/guardrails',
+  path: '/guardrails',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IncidentsRoute = IncidentsRouteImport.update({
+  id: '/incidents',
+  path: '/incidents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InventoryRoute = InventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KnowledgeRoute = KnowledgeRouteImport.update({
+  id: '/knowledge',
+  path: '/knowledge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitoringRoute = MonitoringRouteImport.update({
+  id: '/monitoring',
+  path: '/monitoring',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoreRoute = MoreRouteImport.update({
+  id: '/more',
+  path: '/more',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlansRoute = PlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaybookRoute = PlaybookRouteImport.update({
+  id: '/playbook',
+  path: '/playbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StartRoute = StartRouteImport.update({
+  id: '/start',
+  path: '/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TemplatesRoute = TemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assess': typeof AssessRoute
+  '/calculators': typeof CalculatorsRoute
+  '/changes': typeof ChangesRoute
+  '/checklist': typeof ChecklistRoute
+  '/decisions': typeof DecisionsRoute
+  '/export': typeof ExportRoute
+  '/gates': typeof GatesRoute
+  '/guardrails': typeof GuardrailsRoute
+  '/incidents': typeof IncidentsRoute
+  '/inventory': typeof InventoryRoute
+  '/knowledge': typeof KnowledgeRoute
+  '/monitoring': typeof MonitoringRoute
+  '/more': typeof MoreRoute
+  '/onboarding': typeof OnboardingRoute
+  '/plans': typeof PlansRoute
+  '/playbook': typeof PlaybookRoute
+  '/roadmap': typeof RoadmapRoute
+  '/start': typeof StartRoute
+  '/templates': typeof TemplatesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assess': typeof AssessRoute
+  '/calculators': typeof CalculatorsRoute
+  '/changes': typeof ChangesRoute
+  '/checklist': typeof ChecklistRoute
+  '/decisions': typeof DecisionsRoute
+  '/export': typeof ExportRoute
+  '/gates': typeof GatesRoute
+  '/guardrails': typeof GuardrailsRoute
+  '/incidents': typeof IncidentsRoute
+  '/inventory': typeof InventoryRoute
+  '/knowledge': typeof KnowledgeRoute
+  '/monitoring': typeof MonitoringRoute
+  '/more': typeof MoreRoute
+  '/onboarding': typeof OnboardingRoute
+  '/plans': typeof PlansRoute
+  '/playbook': typeof PlaybookRoute
+  '/roadmap': typeof RoadmapRoute
+  '/start': typeof StartRoute
+  '/templates': typeof TemplatesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assess': typeof AssessRoute
+  '/calculators': typeof CalculatorsRoute
+  '/changes': typeof ChangesRoute
+  '/checklist': typeof ChecklistRoute
+  '/decisions': typeof DecisionsRoute
+  '/export': typeof ExportRoute
+  '/gates': typeof GatesRoute
+  '/guardrails': typeof GuardrailsRoute
+  '/incidents': typeof IncidentsRoute
+  '/inventory': typeof InventoryRoute
+  '/knowledge': typeof KnowledgeRoute
+  '/monitoring': typeof MonitoringRoute
+  '/more': typeof MoreRoute
+  '/onboarding': typeof OnboardingRoute
+  '/plans': typeof PlansRoute
+  '/playbook': typeof PlaybookRoute
+  '/roadmap': typeof RoadmapRoute
+  '/start': typeof StartRoute
+  '/templates': typeof TemplatesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/assess'
+    | '/calculators'
+    | '/changes'
+    | '/checklist'
+    | '/decisions'
+    | '/export'
+    | '/gates'
+    | '/guardrails'
+    | '/incidents'
+    | '/inventory'
+    | '/knowledge'
+    | '/monitoring'
+    | '/more'
+    | '/onboarding'
+    | '/plans'
+    | '/playbook'
+    | '/roadmap'
+    | '/start'
+    | '/templates'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/assess'
+    | '/calculators'
+    | '/changes'
+    | '/checklist'
+    | '/decisions'
+    | '/export'
+    | '/gates'
+    | '/guardrails'
+    | '/incidents'
+    | '/inventory'
+    | '/knowledge'
+    | '/monitoring'
+    | '/more'
+    | '/onboarding'
+    | '/plans'
+    | '/playbook'
+    | '/roadmap'
+    | '/start'
+    | '/templates'
+  id:
+    | '__root__'
+    | '/'
+    | '/assess'
+    | '/calculators'
+    | '/changes'
+    | '/checklist'
+    | '/decisions'
+    | '/export'
+    | '/gates'
+    | '/guardrails'
+    | '/incidents'
+    | '/inventory'
+    | '/knowledge'
+    | '/monitoring'
+    | '/more'
+    | '/onboarding'
+    | '/plans'
+    | '/playbook'
+    | '/roadmap'
+    | '/start'
+    | '/templates'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssessRoute: typeof AssessRoute
+  CalculatorsRoute: typeof CalculatorsRoute
+  ChangesRoute: typeof ChangesRoute
+  ChecklistRoute: typeof ChecklistRoute
+  DecisionsRoute: typeof DecisionsRoute
+  ExportRoute: typeof ExportRoute
+  GatesRoute: typeof GatesRoute
+  GuardrailsRoute: typeof GuardrailsRoute
+  IncidentsRoute: typeof IncidentsRoute
+  InventoryRoute: typeof InventoryRoute
+  KnowledgeRoute: typeof KnowledgeRoute
+  MonitoringRoute: typeof MonitoringRoute
+  MoreRoute: typeof MoreRoute
+  OnboardingRoute: typeof OnboardingRoute
+  PlansRoute: typeof PlansRoute
+  PlaybookRoute: typeof PlaybookRoute
+  RoadmapRoute: typeof RoadmapRoute
+  StartRoute: typeof StartRoute
+  TemplatesRoute: typeof TemplatesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +299,163 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assess': {
+      id: '/assess'
+      path: '/assess'
+      fullPath: '/assess'
+      preLoaderRoute: typeof AssessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calculators': {
+      id: '/calculators'
+      path: '/calculators'
+      fullPath: '/calculators'
+      preLoaderRoute: typeof CalculatorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changes': {
+      id: '/changes'
+      path: '/changes'
+      fullPath: '/changes'
+      preLoaderRoute: typeof ChangesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checklist': {
+      id: '/checklist'
+      path: '/checklist'
+      fullPath: '/checklist'
+      preLoaderRoute: typeof ChecklistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/decisions': {
+      id: '/decisions'
+      path: '/decisions'
+      fullPath: '/decisions'
+      preLoaderRoute: typeof DecisionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/export': {
+      id: '/export'
+      path: '/export'
+      fullPath: '/export'
+      preLoaderRoute: typeof ExportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gates': {
+      id: '/gates'
+      path: '/gates'
+      fullPath: '/gates'
+      preLoaderRoute: typeof GatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guardrails': {
+      id: '/guardrails'
+      path: '/guardrails'
+      fullPath: '/guardrails'
+      preLoaderRoute: typeof GuardrailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/incidents': {
+      id: '/incidents'
+      path: '/incidents'
+      fullPath: '/incidents'
+      preLoaderRoute: typeof IncidentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventory': {
+      id: '/inventory'
+      path: '/inventory'
+      fullPath: '/inventory'
+      preLoaderRoute: typeof InventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/knowledge': {
+      id: '/knowledge'
+      path: '/knowledge'
+      fullPath: '/knowledge'
+      preLoaderRoute: typeof KnowledgeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitoring': {
+      id: '/monitoring'
+      path: '/monitoring'
+      fullPath: '/monitoring'
+      preLoaderRoute: typeof MonitoringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/more': {
+      id: '/more'
+      path: '/more'
+      fullPath: '/more'
+      preLoaderRoute: typeof MoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plans': {
+      id: '/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof PlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playbook': {
+      id: '/playbook'
+      path: '/playbook'
+      fullPath: '/playbook'
+      preLoaderRoute: typeof PlaybookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/start': {
+      id: '/start'
+      path: '/start'
+      fullPath: '/start'
+      preLoaderRoute: typeof StartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/templates': {
+      id: '/templates'
+      path: '/templates'
+      fullPath: '/templates'
+      preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssessRoute: AssessRoute,
+  CalculatorsRoute: CalculatorsRoute,
+  ChangesRoute: ChangesRoute,
+  ChecklistRoute: ChecklistRoute,
+  DecisionsRoute: DecisionsRoute,
+  ExportRoute: ExportRoute,
+  GatesRoute: GatesRoute,
+  GuardrailsRoute: GuardrailsRoute,
+  IncidentsRoute: IncidentsRoute,
+  InventoryRoute: InventoryRoute,
+  KnowledgeRoute: KnowledgeRoute,
+  MonitoringRoute: MonitoringRoute,
+  MoreRoute: MoreRoute,
+  OnboardingRoute: OnboardingRoute,
+  PlansRoute: PlansRoute,
+  PlaybookRoute: PlaybookRoute,
+  RoadmapRoute: RoadmapRoute,
+  StartRoute: StartRoute,
+  TemplatesRoute: TemplatesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
