@@ -14,13 +14,308 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ai_change_reviews: {
+        Row: {
+          organization_id: string
+          reviews: Json
+          updated_at: string
+        }
+        Insert: {
+          organization_id: string
+          reviews?: Json
+          updated_at?: string
+        }
+        Update: {
+          organization_id?: string
+          reviews?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_change_reviews_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_corrective_actions: {
+        Row: {
+          actions: Json
+          organization_id: string
+          updated_at: string
+        }
+        Insert: {
+          actions?: Json
+          organization_id: string
+          updated_at?: string
+        }
+        Update: {
+          actions?: Json
+          organization_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_corrective_actions_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_governance_decisions: {
+        Row: {
+          decisions: Json
+          organization_id: string
+          updated_at: string
+        }
+        Insert: {
+          decisions?: Json
+          organization_id: string
+          updated_at?: string
+        }
+        Update: {
+          decisions?: Json
+          organization_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_governance_decisions_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_incidents: {
+        Row: {
+          incidents: Json
+          organization_id: string
+          updated_at: string
+        }
+        Insert: {
+          incidents?: Json
+          organization_id: string
+          updated_at?: string
+        }
+        Update: {
+          incidents?: Json
+          organization_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_incidents_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_monitoring_plans: {
+        Row: {
+          organization_id: string
+          plans: Json
+          updated_at: string
+        }
+        Insert: {
+          organization_id: string
+          plans?: Json
+          updated_at?: string
+        }
+        Update: {
+          organization_id?: string
+          plans?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_monitoring_plans_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_systems: {
+        Row: {
+          organization_id: string
+          systems: Json
+        }
+        Insert: {
+          organization_id: string
+          systems?: Json
+        }
+        Update: {
+          organization_id?: string
+          systems?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_systems_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assessments: {
+        Row: {
+          answers: Json
+          organization_id: string
+          updated_at: string
+        }
+        Insert: {
+          answers?: Json
+          organization_id: string
+          updated_at?: string
+        }
+        Update: {
+          answers?: Json
+          organization_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessments_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guardrail_configs: {
+        Row: {
+          controls: Json
+          organization_id: string
+          tier: string
+        }
+        Insert: {
+          controls?: Json
+          organization_id: string
+          tier?: string
+        }
+        Update: {
+          controls?: Json
+          organization_id?: string
+          tier?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guardrail_configs_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          owner_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          owner_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          owner_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string
+          display_name: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string
+          display_name?: string
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string
+          display_name?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      roadmap_items: {
+        Row: {
+          items: Json
+          organization_id: string
+        }
+        Insert: {
+          items?: Json
+          organization_id: string
+        }
+        Update: {
+          items?: Json
+          organization_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roadmap_items_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sources: {
+        Row: {
+          entries: Json
+          organization_id: string
+        }
+        Insert: {
+          entries?: Json
+          organization_id: string
+        }
+        Update: {
+          entries?: Json
+          organization_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sources_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      save_aegis_workspace: {
+        Args: { p_name: string; p_org: string; p_sources: Json; p_state: Json }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
