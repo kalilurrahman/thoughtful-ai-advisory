@@ -53,7 +53,7 @@ function str(v: unknown): string | undefined {
 }
 
 export function parsePage(source: string, text: string): SitePage {
-  const m = FRONT_MATTER_RE.exec(text.replace(/^﻿/, ""));
+  const m = FRONT_MATTER_RE.exec(text.replace(/^\uFEFF/, ""));
   if (!m) throw new Error(`${source}: missing YAML front matter`);
   const meta = (parse(m[1] ?? "") ?? {}) as Record<string, unknown>;
   const title = str(meta["title"]) ?? source;

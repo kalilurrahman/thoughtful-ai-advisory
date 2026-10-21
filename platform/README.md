@@ -1,3 +1,5 @@
+> **In this repository:** `platform/` is the AEGIS Python reference implementation and governed content. Lovable does **not** run any Python. The deployed website (`src/`) bundles the Markdown/YAML in `platform/content` at build time and runs TypeScript ports of the engines in the browser. To run the Python code, use a local Python 3.11+ environment (`make install && make test`).
+
 # AEGIS Enterprise AI Governance
 
 **Govern every AI system, agent, and decision with evidence.**
