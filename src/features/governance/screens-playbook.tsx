@@ -11,13 +11,19 @@ export function PlaybookScreen() {
   const hash = useLocation({ select: (location) => location.hash });
   const [query, setQuery] = useState("");
   const [part, setPart] = useState("All");
-  const [open, setOpen] = useState(PLAYBOOK_CHAPTERS[0].id);
+  const [open, setOpen] = useState<string | null>(PLAYBOOK_CHAPTERS[0]?.id ?? null);
   const [completed, setCompleted] = useState<string[]>([]);
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [progressLoaded, setProgressLoaded] = useState(false);
   const parts = [
     "All",
-    ...Array.from(new Set(PLAYBOOK_CHAPTERS.map((chapter) => chapter.part.split(" · ")[1]))),
+    ...Array.from(
+      new Set(
+        PLAYBOOK_CHAPTERS.map((chapter) => chapter.part.split(" · ")[1]).filter(
+          (item): item is string => Boolean(item),
+        ),
+      ),
+    ),
   ];
   const chapters = useMemo(
     () =>
@@ -85,7 +91,7 @@ export function PlaybookScreen() {
   function downloadNotes() {
     const entries = PLAYBOOK_CHAPTERS.filter((chapter) => notes[chapter.id]?.trim());
     const body = entries
-      .map((chapter) => `## ${chapter.title}\n\n${notes[chapter.id].trim()}`)
+      .map((chapter) => `## ${chapter.title}\n\n${notes[chapter.id]?.trim() ?? ""}`)
       .join("\n\n");
     const markdown = `# AEGIS Playbook Notes\n\nReviewed chapters: ${completed.length} / ${PLAYBOOK_CHAPTERS.length}\n\n${body || "No chapter notes have been added yet."}\n`;
     const url = URL.createObjectURL(new Blob([markdown], { type: "text/markdown;charset=utf-8" }));
