@@ -41,7 +41,7 @@ export function TemplatesScreen() {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = `aegis-${selected.id}-template.md`;
+    anchor.download = `aegis-${GOVERNANCE_TEMPLATES[0]?.id ?? "governance"}-template.md`;
     anchor.click();
     URL.revokeObjectURL(url);
   }
