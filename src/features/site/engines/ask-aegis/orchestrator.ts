@@ -496,7 +496,8 @@ class AskAegisAgent {
       for (const cid of sub.controlIds()) r.addControl(cid);
     }
     r.nextActions = [
-      'An approver resolves pending items with: python3 -m aegis_admin.cli approvals resolve <approval_id> --decision approve|reject --approver "<name>" --role approver',
+      // The Python agent points to its admin CLI here; the website has no Python runtime.
+      "A named approver with the approver role must approve or reject the pending item in the AEGIS approvals workflow; it cannot be bypassed from this chat.",
     ];
     return r;
   }
