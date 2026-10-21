@@ -1,0 +1,67 @@
+%% AEGIS MVP — technical / deployment architecture (as built in this repository)
+flowchart LR
+  classDef fe fill:#E8F1F8,stroke:#0B2545,color:#0B2545
+  classDef svc fill:#0B2545,stroke:#0B2545,color:#fff
+  classDef lib fill:#13636B,stroke:#13636B,color:#fff
+  classDef store fill:#FFF7E6,stroke:#B7791F,color:#5F370E
+  classDef ext fill:#F4F6F8,stroke:#8895A7,color:#333,stroke-dasharray: 4 3
+
+  B[Browser<br/>static HTML/CSS + vanilla JS<br/>assessment-engine.js · analytics.js<br/>no cookies · no CDNs]:::fe
+  CDN[CDN / static host<br/>app/website/dist]:::ext
+  RP[Reverse proxy<br/>TLS · WAF]:::ext
+
+  subgraph API[aegis_api — stdlib ThreadingHTTPServer]
+    R[Router · validation · rate limit<br/>CSP & security headers]:::svc
+    LEAD[Lead capture<br/>business-email gate · HMAC report tokens]:::svc
+    EVT[Cookieless analytics]:::svc
+  end
+
+  subgraph CORE[Domain packages · app/*]
+    AE[aegis_assessment<br/>maturity engine · risk tiering]:::lib
+    RPT[aegis_reports<br/>Markdown · PDF · CSV · JSON]:::lib
+    AGT[aegis_agent<br/>orchestrator · 14 tools · retrieval]:::lib
+    SH[aegis_shield<br/>advisor · policy generator]:::lib
+    PE[aegis_policy<br/>schema · evaluator · rollout modes]:::lib
+    CMN[aegis_common<br/>content · audit chain · redaction · evidence labels]:::lib
+  end
+
+  subgraph CONTENT[Governed content · content/]
+    CT[controls.yaml]:::store
+    TPL[assessment templates]:::store
+    PP[policy packs]:::store
+    IP[industry packs]:::store
+    EM[email templates<br/>approved / draft]:::store
+  end
+
+  subgraph VAR[Runtime data · var/]
+    AUD[(audit logs<br/>hash-chained JSONL)]:::store
+    LDS[(leads · reports · forms)]:::store
+    APR[(approvals queue)]:::store
+    AGS[(agent records<br/>inventory · assessments · tasks)]:::store
+  end
+
+  ADM[aegis_admin CLI<br/>audit verify · approvals · leads · funnel]:::svc
+  CRM[CRM adapter<br/>JSONL · webhook · HubSpot]:::ext
+  MAIL[Mail adapter<br/>outbox · SMTP]:::ext
+  LLM[Optional LLM adapter<br/>redacted input · output validated]:::ext
+  WORM[SIEM / WORM storage<br/>production]:::ext
+
+  B -->|HTML| CDN
+  B -->|/api JSON| RP --> R
+  R --> LEAD & EVT
+  R --> AE & AGT & SH
+  LEAD --> AE --> RPT
+  AGT --> AE & RPT & SH & PE
+  SH --> PE
+  AE & AGT & SH & PE --> CMN
+  CMN --> CT & TPL
+  SH --> PP
+  AGT --> IP
+  LEAD --> EM
+  LEAD --> CRM & MAIL
+  AGT -.optional.-> LLM
+  R & AGT & PE --> AUD
+  LEAD --> LDS
+  AGT --> AGS & APR
+  ADM --> AUD & APR & LDS
+  AUD -.ship.-> WORM

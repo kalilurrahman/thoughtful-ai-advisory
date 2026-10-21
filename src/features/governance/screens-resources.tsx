@@ -589,7 +589,7 @@ export function OnboardingScreen() {
         />
       </label>
       <Button className="full-button" asChild>
-        <Link to="/">
+        <Link to="/workspace">
           Sign in with SSO · demo
           <ArrowRight />
         </Link>

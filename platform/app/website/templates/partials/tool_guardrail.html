@@ -1,0 +1,22 @@
+<section class="tool" id="guardrail-generator" data-tool="guardrail-generator" aria-labelledby="gg-heading" hidden>
+  <h2 id="gg-heading">Describe your LLM application or agent</h2>
+  <p class="small">The output is a <strong>draft</strong> starting point for review by your security and governance teams. Changing production runtime policy requires human approval.</p>
+  <form class="tool-form" id="gg-form" novalidate>
+    {% with prefix="gg" %}{% include "partials/tool_fields.html" %}{% endwith %}
+    <button class="btn btn-primary" type="submit">Generate draft guardrails</button>
+    <div class="form-status" id="gg-status" role="status" aria-live="polite"></div>
+  </form>
+  {% include "partials/tool_unavailable.html" %}
+  <section class="tool-result" id="gg-result" aria-labelledby="gg-result-heading" tabindex="-1" hidden>
+    <h2 id="gg-result-heading">Draft guardrails</h2>
+    <div class="gg-output"></div>
+    <h3 id="gg-policy-heading">Draft policy (YAML)</h3>
+    <div class="code-actions">
+      <button class="btn btn-secondary" type="button" id="gg-copy">Copy YAML</button>
+      <button class="btn btn-secondary" type="button" id="gg-download">Download YAML</button>
+      <button class="btn btn-secondary" type="button" id="gg-download-json">Download JSON</button>
+      <span class="form-status" id="gg-copy-status" role="status" aria-live="polite"></span>
+    </div>
+    <pre class="code-block" tabindex="0" aria-labelledby="gg-policy-heading"><code id="gg-policy"></code></pre>
+  </section>
+</section>

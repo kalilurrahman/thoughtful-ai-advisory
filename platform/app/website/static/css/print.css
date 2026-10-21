@@ -1,0 +1,20 @@
+/* Print / "Save as PDF" — used for the client-side assessment report and any page. */
+@page { margin: 16mm 14mm; }
+body { font-size: 11pt; color: #000; background: #fff; }
+.site-header, .site-footer, .breadcrumbs, .skip-link, .nav-toggle, .end-ctas, .hero-actions,
+.aegis-form, .tool-form, .step-nav, .report-actions, .report-restart, .assessment-progress,
+.gate, .code-actions, .chat-form, .tool-unavailable, noscript { display: none !important; }
+.hero, .score-summary { background: #fff !important; color: #000 !important; border: 1px solid #000; }
+.hero h1, .hero .lead, .score-summary strong, .score-max { color: #000 !important; }
+a { color: #000; }
+.prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; }
+h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
+table, .flag, .plan-col, .question, .control-item { page-break-inside: avoid; break-inside: avoid; }
+.table-wrap { overflow: visible; border: 0; }
+progress { border: 1px solid #000; }
+.badge { border: 1px solid #000; color: #000 !important; background: #fff !important; }
+.container { max-width: none; padding: 0; }
+.assessment-report, .assessment-preliminary { max-width: none; }
+/* When the detailed report is visible, print only the report. */
+body.report-ready .page-header, body.report-ready .tool-intro, body.report-ready .assessment-preliminary,
+body.report-ready .faq, body.report-ready .page-updated { display: none !important; }

@@ -1,0 +1,148 @@
+# AEGIS Industry Pack — Healthcare & Pharma
+# ---------------------------------------------------------------------------
+# Sector overlay on the AEGIS Control Library. Control IDs reference
+# content/controls/controls.yaml ONLY. Risk-tier hints are DEFAULTS that the
+# AEGIS risk-tier engine and a human approver must confirm per system (EI-02).
+# Sector regimes are described generally to prompt legal review — they are not
+# legal advice and their applicability must be verified with counsel.
+# ---------------------------------------------------------------------------
+pack:
+  id: healthcare_pharma
+  name: Healthcare & Pharma
+  version: 1.0.0
+  status: draft-for-pilot-validation
+  effective_date: "2026-10-21"
+  owner: AEGIS Governance Content Lead
+  review_cadence: quarterly
+  profile_industry: healthcare_pharma
+  disclaimer: >-
+    This pack highlights AEGIS controls and evidence commonly relevant to healthcare providers, payers, life-sciences
+    and pharmaceutical organizations. It does not determine which laws apply, does not establish conformity with any
+    regulation or standard, and is not legal or regulatory advice. Verify every regime with qualified counsel.
+
+summary: >-
+  Healthcare and pharma AI touches special-category health data, clinical and patient-safety decisions, and
+  regulated product and quality processes. Emphasis falls on privacy and redaction, human oversight of clinical
+  outputs, validation and documentation evidence, and change control for models that may sit inside regulated
+  processes.
+
+priority_use_cases:
+  - id: HC-UC-01
+    name: Clinical documentation and ambient scribing
+    description: GenAI drafts clinical notes or discharge summaries from consultations for clinician review.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Processes special-category health data; errors can propagate into the medical record; clinician review is the primary safeguard.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: vulnerable, data_sensitivity: special_category, autonomy: suggests, domain_category: healthcare, genai: true}
+    key_controls: [IS-03, IS-04, IS-09, IS-07, IS-08, SE-08]
+  - id: HC-UC-02
+    name: Clinical decision support and triage
+    description: Model ranks, flags or recommends diagnoses, triage priority or care pathways.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Material influence on care decisions for patients; may fall within medical-device software regimes depending on intended purpose.
+    risk_profile_hint: {decision_impact: material, affected_parties: vulnerable, data_sensitivity: special_category, autonomy: suggests, domain_category: healthcare}
+    key_controls: [GL-02, IS-05, IS-06, IS-07, IS-09, GL-06, SE-09, AO-07]
+  - id: HC-UC-03
+    name: Patient-facing virtual assistant
+    description: Chatbot answers patient questions, schedules appointments or routes requests.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Direct interaction with patients who may be vulnerable; risk of unsafe medical guidance and disclosure of health data.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: vulnerable, data_sensitivity: special_category, autonomy: suggests, domain_category: healthcare, genai: true}
+    key_controls: [IS-08, IS-04, IS-12, IS-14, IS-06, SE-04]
+  - id: HC-UC-04
+    name: Pharmacovigilance case intake and literature screening
+    description: NLP/GenAI extracts adverse-event information from reports and literature for safety teams.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Supports a regulated patient-safety process using health data; missed or mis-coded adverse events matter even though human safety reviewers remain decision-makers.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: public, data_sensitivity: special_category, autonomy: suggests, domain_category: healthcare, genai: true}
+    key_controls: [GL-05, IS-07, GL-04, SE-08, GL-06]
+  - id: HC-UC-05
+    name: Clinical trial recruitment and site selection
+    description: Model matches patients to trial criteria or ranks candidate sites.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Uses health records and can create inequitable access to trials; fairness and consent considerations.
+    risk_profile_hint: {decision_impact: material, affected_parties: vulnerable, data_sensitivity: special_category, autonomy: suggests, domain_category: healthcare}
+    key_controls: [IS-03, IS-05, IS-02, EI-06, AO-11]
+  - id: HC-UC-06
+    name: GxP-adjacent manufacturing and quality analytics
+    description: Models support batch release review, deviation triage or predictive maintenance in regulated manufacturing.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Sits inside validated quality processes where change control and documentation expectations are strict.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: public, data_sensitivity: confidential, autonomy: suggests, domain_category: other}
+    key_controls: [GL-04, GL-05, GL-06, EI-05, SE-02, SE-08]
+  - id: HC-UC-07
+    name: Medical and regulatory writing assistants
+    description: GenAI drafts regulatory submissions, medical information letters or promotional review material.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Outputs reach regulators and healthcare professionals; hallucination and confidentiality risks, with human authorship retained.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: public, data_sensitivity: confidential, autonomy: suggests, domain_category: other, genai: true}
+    key_controls: [IS-04, IS-10, IS-12, GL-05, IS-08]
+  - id: HC-UC-08
+    name: Revenue-cycle and prior-authorization agents
+    description: Agent assembles prior-authorization packets, codes encounters or drafts claims appeals.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Agentic actions on health data with financial and access-to-care impact; external submissions require approval.
+    risk_profile_hint: {decision_impact: material, affected_parties: customers, data_sensitivity: special_category, autonomy: acts_with_approval, domain_category: healthcare, genai: true, external_actions: true}
+    key_controls: [EI-07, IS-11, IS-13, IS-16, IS-15, SE-08]
+
+emphasized_controls:
+  - {id: IS-03, why: "Health data is special-category data in many jurisdictions; privacy assessment, consent basis, retention and transfers must be documented per system."}
+  - {id: IS-04, why: "Protected health information must be masked before external model calls and in logs."}
+  - {id: IS-09, why: "Clinician oversight, override and escalation must be designed in, not assumed."}
+  - {id: IS-07, why: "Accuracy and robustness thresholds for clinical outputs need declared levels and evidence."}
+  - {id: IS-05, why: "Performance can differ across patient populations; subgroup testing is expected for clinical models."}
+  - {id: GL-04, why: "Model or prompt changes inside validated or clinical processes must trigger reassessment and revalidation."}
+  - {id: GL-06, why: "Technical documentation underpins any device, quality or audit inquiry."}
+  - {id: SE-09, why: "Post-deployment monitoring plans are expected for clinical-impact systems."}
+  - {id: SE-04, why: "Patient-safety-relevant AI incidents need defined triage and reporting routes."}
+  - {id: AO-07, why: "Obligations differ by product classification, geography and care setting; counsel must maintain the register."}
+
+additional_evidence:
+  - {id: HC-EV-01, description: "Record of the intended-purpose statement reviewed against medical-device software qualification criteria by regulatory affairs.", related_controls: [EI-04, AO-07]}
+  - {id: HC-EV-02, description: "Clinical validation report with performance by relevant patient subgroups and declared limitations.", related_controls: [IS-07, IS-05, GL-05]}
+  - {id: HC-EV-03, description: "Data-processing agreements / business associate agreements covering every model provider that receives health data.", related_controls: [GL-11, EI-08, IS-03]}
+  - {id: HC-EV-04, description: "Computerized-system validation or equivalent change-control records for AI used in GxP processes.", related_controls: [GL-04, GL-05, SE-02]}
+  - {id: HC-EV-05, description: "Clinician-override and escalation logs with sample review.", related_controls: [IS-09, SE-08]}
+  - {id: HC-EV-06, description: "Redaction test results using synthetic health records, including free-text identifiers.", related_controls: [IS-04]}
+
+sector_regimes:
+  - name: Health-data privacy laws (e.g. HIPAA in the US; GDPR special-category rules in the EU/EEA and UK)
+    scope_summary: Rules on use, disclosure, safeguards and transfer of health information; contractual requirements for service providers that handle it.
+    aegis_relevance: Privacy assessment, minimisation, redaction, vendor agreements and logging evidence.
+    related_controls: [IS-03, IS-04, GL-11, SE-08]
+    verify_with_counsel: true
+  - name: Medical-device software regimes (e.g. US FDA oversight of software and AI-enabled device functions; EU MDR/IVDR)
+    scope_summary: Software intended for diagnosis, treatment or monitoring may be regulated as a medical device, with its own conformity and change-control routes.
+    aegis_relevance: Intended-purpose documentation, validation, change control and technical documentation evidence. AEGIS does not perform device conformity assessment.
+    related_controls: [EI-04, GL-05, GL-04, GL-06]
+    verify_with_counsel: true
+  - name: EU AI Act interplay with product legislation and Annex III areas
+    scope_summary: AI that is a safety component of, or is itself, a product covered by EU harmonisation legislation (such as medical devices) may be high-risk; some healthcare access uses may fall within Annex III areas.
+    aegis_relevance: Classification evidence and readiness indicators only; timelines must be verified against the current Official Journal text and amendments.
+    related_controls: [EI-02, AO-07, GL-02]
+    verify_with_counsel: true
+  - name: GxP and computerized-system expectations (e.g. electronic records and signatures rules; EU GMP guidance on computerized systems)
+    scope_summary: Validation, audit-trail and data-integrity expectations for systems used in regulated manufacturing, clinical and quality processes.
+    aegis_relevance: Change control, validation, audit trail and evidence retention.
+    related_controls: [GL-04, GL-05, SE-02, SE-08]
+    verify_with_counsel: true
+  - name: Pharmacovigilance and clinical-trial regulations
+    scope_summary: Safety-reporting and trial-conduct rules that constrain how AI may support case processing and recruitment.
+    aegis_relevance: Validation and human review of AI-assisted safety and trial processes.
+    related_controls: [GL-05, IS-09, IS-03]
+    verify_with_counsel: true
+
+recommended_policy_packs:
+  - {id: pack-baseline, purpose: "Default-deny tools, PII redaction, injection detection, limits, decision logging and kill switch for every LLM app or agent.", status: available}
+  - {id: pack-healthcare-clinical-documentation, purpose: "Clinical documentation assistant: patient-context-scoped reads, draft-only notes for clinician review and signature, PHI redaction.", status: available}
+  - {id: pack-customer-support-agent, purpose: "Starting point for patient-facing scheduling/service assistants (adapt: remove refunds, add clinical-escalation rules).", status: available}
+  - {id: patient-assistant-safety, purpose: "Append AI disclosure, block dosing/diagnosis instructions, escalate emergencies to humans.", status: proposed}
+
+pilot_discovery_questions:
+  - {id: HC-DQ-01, question: "Which AI systems touch patient-identifiable or trial-participant data, and which model providers receive that data?", purpose: "Scope privacy and redaction exposure.", related_controls: [EI-06, IS-03, IS-04]}
+  - {id: HC-DQ-02, question: "Has regulatory affairs reviewed whether any AI system's intended purpose could qualify it as medical-device software?", purpose: "Identify product-regulation exposure early.", related_controls: [EI-04, AO-07]}
+  - {id: HC-DQ-03, question: "Where do clinicians review, override or reject AI outputs, and is that recorded?", purpose: "Test human-oversight design and evidence.", related_controls: [IS-09, SE-08]}
+  - {id: HC-DQ-04, question: "Which AI components sit inside validated (GxP) processes, and how are model or prompt changes revalidated?", purpose: "Assess change-control maturity.", related_controls: [GL-04, GL-05]}
+  - {id: HC-DQ-05, question: "Is clinical model performance reported by patient subgroup?", purpose: "Assess fairness evidence.", related_controls: [IS-05, IS-07]}
+  - {id: HC-DQ-06, question: "How would a patient-safety incident involving AI be detected, triaged and reported?", purpose: "Assess incident readiness.", related_controls: [SE-04, GL-08]}
+  - {id: HC-DQ-07, question: "Which vendor EHR or SaaS features with embedded AI are enabled, and who approved them?", purpose: "Surface third-party and shadow AI.", related_controls: [EI-08, EI-09, GL-11]}
+  - {id: HC-DQ-08, question: "Do any agents submit information externally (payers, regulators, patients) without human approval?", purpose: "Identify high-impact agent actions.", related_controls: [IS-13, EI-07]}

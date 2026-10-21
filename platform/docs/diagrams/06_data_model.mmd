@@ -1,0 +1,104 @@
+%% AEGIS canonical data model (MVP)
+erDiagram
+  ORGANIZATION ||--o{ AI_SYSTEM : owns
+  AI_SYSTEM ||--o{ COMPONENT : "uses (model / prompt / dataset)"
+  AI_SYSTEM ||--o{ AGENT_TOOL : "can call"
+  AI_SYSTEM }o--o{ VENDOR : "supplied by"
+  AI_SYSTEM ||--o{ ASSESSMENT : "is assessed by"
+  ASSESSMENT ||--o{ ASSESSMENT_RESPONSE : contains
+  ASSESSMENT_RESPONSE }o--o{ EVIDENCE_ITEM : "supported by"
+  ASSESSMENT ||--o{ GAP : produces
+  GAP }o--|| CONTROL : "maps to"
+  GAP ||--o{ REMEDIATION_TASK : "remediated by"
+  AI_SYSTEM ||--o{ RUNTIME_POLICY : "governed by"
+  RUNTIME_POLICY ||--o{ POLICY_DECISION : emits
+  CONTROL }o--o{ FRAMEWORK_REF : "indicatively maps to"
+  APPROVAL }o--|| AI_SYSTEM : concerns
+  REPORT }o--|| ASSESSMENT : summarises
+  AUDIT_RECORD }o--o| AI_SYSTEM : references
+  LEAD ||--|| MATURITY_RESULT : has
+
+  AI_SYSTEM {
+    string id PK
+    string name
+    string purpose
+    string business_owner
+    string technical_owner
+    string risk_tier "Low|Medium|High|Prohibited-review"
+    bool   risk_tier_confirmed
+    string lifecycle_status "draft|intake|assessment|approved|production|retired"
+    string data_sensitivity
+    string autonomy
+    bool   genai
+    bool   eu_exposure
+  }
+  CONTROL {
+    string id PK "AO|EI|GL|IS|SE-NN"
+    string title
+    string pillar
+    string priority
+    string applies_to
+  }
+  ASSESSMENT {
+    string id PK
+    string type "maturity|use_case|agentic|vendor"
+    string template_version
+    string status
+  }
+  ASSESSMENT_RESPONSE {
+    string question_id
+    string answer "implemented|partial|not_implemented|unknown|1-5"
+    string evidence_status "Verified|User-asserted|Inferred|Missing evidence|Critical gap"
+  }
+  EVIDENCE_ITEM {
+    string id PK
+    string uri
+    string sha256
+    string reviewed_by
+    date   reviewed_at
+  }
+  GAP {
+    string id PK
+    string severity "Critical|High|Medium|Low"
+    string evidence_status
+    string owner_role
+    date   due_date
+  }
+  REMEDIATION_TASK {
+    string id PK
+    string status
+    string assignee
+    bool   user_confirmed
+  }
+  RUNTIME_POLICY {
+    string policy_id PK
+    string version "semver"
+    string status "draft|in_review|approved|active|retired"
+    string rollout_mode "observe|warn|protect|enforce|contain"
+  }
+  POLICY_DECISION {
+    string decision "ALLOW|DENY|REDACT|TRANSFORM|REQUIRE_HUMAN_APPROVAL|ESCALATE|RATE_LIMIT"
+    string effective_decision
+    string trace_id
+  }
+  APPROVAL {
+    string id PK
+    string type "risk_tier_change|exception|prod_policy_change|evidence_export|external_comms"
+    string status "pending|approved|rejected"
+    string requested_by
+    string resolved_by
+  }
+  AUDIT_RECORD {
+    string id PK
+    string trace_id
+    string action
+    string prev_hash
+    string hash
+  }
+  LEAD {
+    string lead_id PK
+    string email
+    string company
+    bool   consent
+    string lead_tags
+  }

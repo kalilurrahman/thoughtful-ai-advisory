@@ -1,0 +1,16 @@
+<section class="tool chat" id="ask-aegis" data-tool="ask-aegis" aria-labelledby="ask-heading" hidden>
+  <h2 id="ask-heading">Ask AEGIS</h2>
+  <p class="small">Answers cite AEGIS controls and label evidence status. This public demo is read-only: it cannot change risk tiers, approve exceptions or send anything on your behalf. Do not enter personal or confidential data.</p>
+  <div class="chat-log" id="ask-log" role="log" aria-live="polite" aria-relevant="additions" aria-label="Conversation" tabindex="0"></div>
+  <form class="chat-form" id="ask-form" novalidate>
+    <div class="field field--wide">
+      <label for="ask-input">Your question</label>
+      <p class="hint" id="ask-input-hint">For example: “Which controls cover agent tool permissions?” Press Enter to send, Shift+Enter for a new line.</p>
+      <textarea id="ask-input" name="message" rows="3" maxlength="4000" required aria-describedby="ask-input-hint"></textarea>
+      <p class="field-error" id="ask-input-error" hidden></p>
+    </div>
+    <button class="btn btn-primary" type="submit">Send</button>
+    <div class="form-status" id="ask-status" role="status" aria-live="polite"></div>
+  </form>
+  {% include "partials/tool_unavailable.html" %}
+</section>

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SplatRouteImport } from './routes/$'
 import { Route as AssessRouteImport } from './routes/assess'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CalculatorsRouteImport } from './routes/calculators'
@@ -31,10 +32,18 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as WorkspaceRouteImport } from './routes/workspace'
+import { Route as FrameworkControlsIndexRouteImport } from './routes/framework.controls.index'
+import { Route as FrameworkControlsControlIdRouteImport } from './routes/framework.controls.$controlId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssessRoute = AssessRouteImport.update({
@@ -142,9 +151,26 @@ const TemplatesRoute = TemplatesRouteImport.update({
   path: '/templates',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkspaceRoute = WorkspaceRouteImport.update({
+  id: '/workspace',
+  path: '/workspace',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FrameworkControlsIndexRoute = FrameworkControlsIndexRouteImport.update({
+  id: '/framework/controls/',
+  path: '/framework/controls/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FrameworkControlsControlIdRoute =
+  FrameworkControlsControlIdRouteImport.update({
+    id: '/framework/controls/$controlId',
+    path: '/framework/controls/$controlId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/assess': typeof AssessRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
@@ -166,9 +192,13 @@ export interface FileRoutesByFullPath {
   '/roadmap': typeof RoadmapRoute
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
+  '/workspace': typeof WorkspaceRoute
+  '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
+  '/framework/controls/': typeof FrameworkControlsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/assess': typeof AssessRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
@@ -190,10 +220,14 @@ export interface FileRoutesByTo {
   '/roadmap': typeof RoadmapRoute
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
+  '/workspace': typeof WorkspaceRoute
+  '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
+  '/framework/controls': typeof FrameworkControlsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/assess': typeof AssessRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
@@ -215,11 +249,15 @@ export interface FileRoutesById {
   '/roadmap': typeof RoadmapRoute
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
+  '/workspace': typeof WorkspaceRoute
+  '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
+  '/framework/controls/': typeof FrameworkControlsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$'
     | '/assess'
     | '/auth'
     | '/calculators'
@@ -241,9 +279,13 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/start'
     | '/templates'
+    | '/workspace'
+    | '/framework/controls/$controlId'
+    | '/framework/controls/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$'
     | '/assess'
     | '/auth'
     | '/calculators'
@@ -265,9 +307,13 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/start'
     | '/templates'
+    | '/workspace'
+    | '/framework/controls/$controlId'
+    | '/framework/controls'
   id:
     | '__root__'
     | '/'
+    | '/$'
     | '/assess'
     | '/auth'
     | '/calculators'
@@ -289,10 +335,14 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/start'
     | '/templates'
+    | '/workspace'
+    | '/framework/controls/$controlId'
+    | '/framework/controls/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SplatRoute: typeof SplatRoute
   AssessRoute: typeof AssessRoute
   AuthRoute: typeof AuthRoute
   CalculatorsRoute: typeof CalculatorsRoute
@@ -314,6 +364,9 @@ export interface RootRouteChildren {
   RoadmapRoute: typeof RoadmapRoute
   StartRoute: typeof StartRoute
   TemplatesRoute: typeof TemplatesRoute
+  WorkspaceRoute: typeof WorkspaceRoute
+  FrameworkControlsControlIdRoute: typeof FrameworkControlsControlIdRoute
+  FrameworkControlsIndexRoute: typeof FrameworkControlsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -323,6 +376,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assess': {
@@ -472,11 +532,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TemplatesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/workspace': {
+      id: '/workspace'
+      path: '/workspace'
+      fullPath: '/workspace'
+      preLoaderRoute: typeof WorkspaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/framework/controls/': {
+      id: '/framework/controls/'
+      path: '/framework/controls'
+      fullPath: '/framework/controls/'
+      preLoaderRoute: typeof FrameworkControlsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/framework/controls/$controlId': {
+      id: '/framework/controls/$controlId'
+      path: '/framework/controls/$controlId'
+      fullPath: '/framework/controls/$controlId'
+      preLoaderRoute: typeof FrameworkControlsControlIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SplatRoute: SplatRoute,
   AssessRoute: AssessRoute,
   AuthRoute: AuthRoute,
   CalculatorsRoute: CalculatorsRoute,
@@ -498,6 +580,9 @@ const rootRouteChildren: RootRouteChildren = {
   RoadmapRoute: RoadmapRoute,
   StartRoute: StartRoute,
   TemplatesRoute: TemplatesRoute,
+  WorkspaceRoute: WorkspaceRoute,
+  FrameworkControlsControlIdRoute: FrameworkControlsControlIdRoute,
+  FrameworkControlsIndexRoute: FrameworkControlsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

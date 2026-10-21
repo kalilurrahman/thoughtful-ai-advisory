@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block main %}
+{% set c = extra.control %}
+<div class="page-header">
+  <div class="container">
+    <p class="eyebrow"><a href="{{ site.control_library.slug }}#pillar-{{ c.pillar | lower }}">{{ c.pillar }} — {{ c.pillar_name }}</a></p>
+    <h1>{{ page.h1 }}</h1>
+    <p class="lead">{{ c.objective }}</p>
+  </div>
+</div>
+<div class="container page-body">
+  <div class="prose">
+    <h2 id="at-a-glance">At a glance</h2>
+    <dl class="facts">
+      <dt>Pillar</dt><dd>{{ c.pillar }} — {{ c.pillar_name }}</dd>
+      <dt>Priority</dt><dd>{{ c.priority }}</dd>
+      <dt>Applies to</dt><dd>{{ c.applies_to }}</dd>
+      <dt>Typical owner</dt><dd>{{ c.owner_role }}</dd>
+      {% if c.modules %}<dt>AEGIS modules</dt><dd>{{ c.modules | join(', ') }}</dd>{% endif %}
+      <dt>Control library</dt><dd>v{{ extra.library_version }}</dd>
+    </dl>
+    <h2 id="evidence">Evidence that demonstrates this control</h2>
+    <p>Examples of records an assessor would expect to see. Until a named reviewer has examined them, evidence is labelled <em>User-asserted</em> or <em>Missing evidence</em> in AEGIS outputs, never <em>Verified</em>.</p>
+    <ul>
+      {% for e in c.evidence %}<li>{{ e }}</li>{% endfor %}
+    </ul>
+    <h2 id="mappings">Indicative framework mappings</h2>
+    <div class="table-wrap" role="region" tabindex="0" aria-label="Framework mappings for {{ c.id }}">
+      <table>
+        <thead><tr><th scope="col">Framework</th><th scope="col">References</th></tr></thead>
+        <tbody>
+          {% for m in c.mappings %}
+          <tr><th scope="row">{{ m.framework }}</th><td>{{ m.refs | join(', ') if m.refs else 'No direct mapping' }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="small">{{ extra.mapping_disclaimer }}</p>
+    {% if extra.questions %}
+    <h2 id="assessment">Where the self-assessment asks about it</h2>
+    <ul>
+      {% for q in extra.questions %}<li><strong>{{ q.id }}</strong> — {{ q.text }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% if extra.flags %}
+    <h2 id="flags">Related critical risk flags</h2>
+    <ul>
+      {% for f in extra.flags %}<li><strong>{{ f.title }}</strong> — {{ f.rationale }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  <nav class="pager" aria-label="Adjacent controls">
+    {% if extra.prev %}<a class="pager-prev" href="{{ extra.prev.url }}"><span class="small">Previous</span> {{ extra.prev.id }} {{ extra.prev.title }}</a>{% endif %}
+    {% if extra.next %}<a class="pager-next" href="{{ extra.next.url }}"><span class="small">Next</span> {{ extra.next.id }} {{ extra.next.title }}</a>{% endif %}
+  </nav>
+  {% include "partials/page_end.html" %}
+</div>
+{% endblock %}

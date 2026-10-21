@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://thoughtful-ai-governance.lovable.app/sitemap.xml

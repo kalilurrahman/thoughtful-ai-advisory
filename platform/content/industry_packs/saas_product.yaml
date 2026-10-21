@@ -1,0 +1,135 @@
+# AEGIS Industry Pack — SaaS & AI Product Companies
+# ---------------------------------------------------------------------------
+# Sector overlay on the AEGIS Control Library. Control IDs reference
+# content/controls/controls.yaml ONLY. Risk-tier hints are DEFAULTS that the
+# AEGIS risk-tier engine and a human approver must confirm per system (EI-02).
+# Sector regimes are described generally to prompt legal review — they are not
+# legal advice and their applicability must be verified with counsel.
+# ---------------------------------------------------------------------------
+pack:
+  id: saas_product
+  name: SaaS & AI Product Companies
+  version: 1.0.0
+  status: draft-for-pilot-validation
+  effective_date: "2026-10-21"
+  owner: AEGIS Governance Content Lead
+  review_cadence: quarterly
+  profile_industry: saas_product
+  disclaimer: >-
+    This pack highlights AEGIS controls and evidence commonly relevant to software companies that ship AI features or
+    AI-native products to customers. It does not determine which laws apply, does not establish conformity with any
+    regulation or standard, and is not legal advice. Verify every regime with qualified counsel.
+
+summary: >-
+  SaaS companies are usually providers of AI features to business customers, and deployers of AI internally. Their
+  governance must keep pace with weekly releases, answer customer security and AI questionnaires quickly, govern
+  LLM features and agents in a multi-tenant product, and give customers the transparency they need to meet their own
+  obligations.
+
+priority_use_cases:
+  - id: SP-UC-01
+    name: In-product GenAI assistant or copilot
+    description: LLM feature that drafts, summarizes or answers questions over customer data inside the product.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Processes customer tenant data; cross-tenant leakage, prompt injection and hallucination risks; disclosure expected.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: confidential, autonomy: suggests, domain_category: customer_service, genai: true}
+    key_controls: [IS-04, IS-11, IS-12, IS-14, IS-08, SE-11]
+  - id: SP-UC-02
+    name: Customer-facing autonomous agents (workflow automation)
+    description: Agents take actions in customer systems via integrations (send emails, update records, create tickets).
+    default_risk_tier_hint: High
+    risk_tier_rationale: External, possibly irreversible actions on behalf of customers; tool abuse and injection risks across tenants.
+    risk_profile_hint: {decision_impact: material, affected_parties: customers, data_sensitivity: confidential, autonomy: acts_autonomously, domain_category: other, genai: true, external_actions: true}
+    key_controls: [EI-07, IS-11, IS-13, IS-16, IS-15, IS-14, SE-08]
+  - id: SP-UC-03
+    name: AI features used by customers for regulated decisions (e.g. HR, lending, education modules)
+    description: Product capabilities that customers use to rank, score or decide about individuals.
+    default_risk_tier_hint: High
+    risk_tier_rationale: The vendor may carry provider-type obligations; customers need documentation and instructions for use.
+    risk_profile_hint: {decision_impact: material, affected_parties: public, data_sensitivity: personal, autonomy: suggests, domain_category: employment}
+    key_controls: [GL-02, IS-05, GL-06, SE-11, IS-09, AO-07]
+  - id: SP-UC-04
+    name: Support-ticket triage and auto-reply
+    description: Classifies tickets and drafts or sends responses to customers.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Customer-facing outputs; auto-send increases impact.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: personal, autonomy: acts_with_approval, domain_category: customer_service, genai: true}
+    key_controls: [IS-08, IS-04, IS-13, SE-04]
+  - id: SP-UC-05
+    name: Engineering copilots and internal coding agents
+    description: Internal GenAI and agents for code generation, review and incident response.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Access to source code, secrets and production; supply-chain exposure.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: internal, data_sensitivity: confidential, autonomy: acts_with_approval, domain_category: internal_productivity, genai: true}
+    key_controls: [IS-10, IS-11, EI-07, IS-16]
+  - id: SP-UC-06
+    name: Fine-tuning or training on customer data
+    description: Models improved using customer content or telemetry.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Contractual and privacy constraints on customer data use and memorization/leakage risk; elevate to High when special-category data or consequential downstream uses are involved.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: personal, autonomy: none, domain_category: other}
+    key_controls: [IS-02, IS-03, EI-06, AO-07, IS-14]
+  - id: SP-UC-07
+    name: Sales and marketing content generation
+    description: GenAI drafts outbound emails, campaigns and website content.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Public-facing generated content (human-reviewed); risk of unsupported claims, undisclosed AI content and confidential data in prompts. May be lowered to Low where outputs are internal-only.
+    risk_profile_hint: {decision_impact: none, affected_parties: public, data_sensitivity: internal, autonomy: suggests, domain_category: other, genai: true}
+    key_controls: [IS-04, IS-08, AO-05]
+
+emphasized_controls:
+  - {id: IS-14, why: "Every LLM feature and agent release needs prompt-injection, jailbreak and leakage testing; re-test after material change."}
+  - {id: IS-11, why: "Agents and RAG features must be scoped per tenant and per user permission."}
+  - {id: IS-12, why: "Versioned runtime policy lets fast release cycles ship with consistent guardrails."}
+  - {id: GL-04, why: "Prompt and model-provider changes ship weekly; reassessment triggers must be automated, not manual."}
+  - {id: EI-05, why: "Prompt, model and configuration versions per release are needed to explain behaviour changes to customers."}
+  - {id: SE-11, why: "Customers need instructions for use, capability and limitation statements to meet their own obligations."}
+  - {id: IS-08, why: "AI interactions and AI-generated content should be disclosed to end users."}
+  - {id: GL-11, why: "Foundation-model provider terms (data retention, training use, sub-processors) flow down to customer commitments."}
+  - {id: SE-05, why: "Customer security reviews increasingly ask for AI governance evidence."}
+  - {id: AO-07, why: "Provider-versus-deployer role and customer contract commitments must be tracked per feature."}
+
+additional_evidence:
+  - {id: SP-EV-01, description: "AI feature fact sheet per customer-facing feature (purpose, model provider, data use, limitations, controls).", related_controls: [SE-11, EI-04]}
+  - {id: SP-EV-02, description: "Release-gate record showing adversarial test results for each LLM feature release.", related_controls: [IS-14, GL-05, GL-04]}
+  - {id: SP-EV-03, description: "Tenant-isolation test results for retrieval and agent tools.", related_controls: [IS-11, IS-14]}
+  - {id: SP-EV-04, description: "Model-provider data-processing terms and sub-processor list mapped to customer commitments.", related_controls: [GL-11, EI-08, AO-07]}
+  - {id: SP-EV-05, description: "Customer-facing AI questionnaire answer library with control citations and evidence links.", related_controls: [SE-05, SE-02]}
+
+sector_regimes:
+  - name: EU AI Act provider and deployer obligations, including transparency obligations for certain AI systems (Art. 50)
+    scope_summary: Vendors placing AI systems on the EU market may be providers; some product features (chatbots, generated content) carry transparency duties; high-risk use cases carry further obligations.
+    aegis_relevance: Classification, transparency and documentation evidence; timelines must be verified against the current Official Journal text and amendments.
+    related_controls: [IS-08, AO-07, GL-06, SE-11]
+    verify_with_counsel: true
+  - name: Processor obligations under data-protection laws (e.g. GDPR processor terms, sub-processor notice)
+    scope_summary: Using customer personal data in AI features, and engaging model providers as sub-processors, must fit processor commitments.
+    aegis_relevance: Privacy assessment, vendor due diligence and data lineage.
+    related_controls: [IS-03, GL-11, EI-06]
+    verify_with_counsel: true
+  - name: US state AI and automated-decision laws (e.g. Colorado's AI Act; New York City rules on automated employment decision tools)
+    scope_summary: Developer and deployer duties, bias audits or notices for certain consequential or employment decisions; effective dates have been amended and must be checked.
+    aegis_relevance: Impact assessment, fairness testing and disclosure evidence.
+    related_controls: [GL-02, IS-05, IS-08]
+    verify_with_counsel: true
+  - name: Customer assurance frameworks (e.g. SOC 2 reports, ISO/IEC 27001 and ISO/IEC 42001 certification requests)
+    scope_summary: Customers request third-party assurance; ISO/IEC 42001 certification is issued only by accredited certification bodies.
+    aegis_relevance: Readiness evidence and assurance packs; AEGIS does not certify.
+    related_controls: [SE-01, SE-05, SE-10]
+    verify_with_counsel: true
+
+recommended_policy_packs:
+  - {id: pack-baseline, purpose: "Default-deny tools, PII redaction, injection detection, limits, decision logging and kill switch for every LLM app or agent.", status: available}
+  - {id: pack-customer-support-agent, purpose: "Starting point for in-product and support agents acting on customer records with tenant binding.", status: available}
+  - {id: pack-coding-devops-agent, purpose: "Guardrails for internal engineering copilots and coding agents.", status: available}
+  - {id: customer-agent-actions, purpose: "Require end-user confirmation for external sends and deletions in customer systems; per-tenant limits and kill switch.", status: proposed}
+
+pilot_discovery_questions:
+  - {id: SP-DQ-01, question: "Which product features use LLMs or agents, and which model providers do they call?", purpose: "Build the feature-level inventory.", related_controls: [EI-01, EI-05, EI-08]}
+  - {id: SP-DQ-02, question: "How are prompt and model changes tested and released? Is adversarial testing in the release gate?", purpose: "Assess release governance.", related_controls: [GL-04, IS-14, GL-05]}
+  - {id: SP-DQ-03, question: "Can any agent act in customer systems without end-user confirmation?", purpose: "Identify high-impact actions.", related_controls: [IS-13, EI-07]}
+  - {id: SP-DQ-04, question: "How is tenant isolation enforced in retrieval and tool access?", purpose: "Test isolation design.", related_controls: [IS-11]}
+  - {id: SP-DQ-05, question: "Do you use customer data to train or fine-tune models? What do contracts allow?", purpose: "Assess data-use constraints.", related_controls: [IS-03, AO-07]}
+  - {id: SP-DQ-06, question: "Do customers use your product for HR, credit, education or other consequential decisions?", purpose: "Identify provider-type obligations.", related_controls: [EI-02, GL-02]}
+  - {id: SP-DQ-07, question: "How many AI-related questions appear in customer security reviews, and how long do they take to answer?", purpose: "Baseline assurance effort for ROI.", related_controls: [SE-05]}
+  - {id: SP-DQ-08, question: "Which engineering teams own runtime guardrails, and would they adopt policy-as-code in CI?", purpose: "Assess developer adoption path.", related_controls: [IS-12]}

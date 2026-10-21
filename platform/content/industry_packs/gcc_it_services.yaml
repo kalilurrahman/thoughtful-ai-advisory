@@ -1,0 +1,136 @@
+# AEGIS Industry Pack — Global Capability Centers (GCC) & IT Services
+# ---------------------------------------------------------------------------
+# Sector overlay on the AEGIS Control Library. Control IDs reference
+# content/controls/controls.yaml ONLY. Risk-tier hints are DEFAULTS that the
+# AEGIS risk-tier engine and a human approver must confirm per system (EI-02).
+# Sector regimes are described generally to prompt legal review — they are not
+# legal advice and their applicability must be verified with counsel.
+# ---------------------------------------------------------------------------
+pack:
+  id: gcc_it_services
+  name: Global Capability Centers & IT Services
+  version: 1.0.0
+  status: draft-for-pilot-validation
+  effective_date: "2026-10-21"
+  owner: AEGIS Governance Content Lead
+  review_cadence: quarterly
+  profile_industry: gcc_it_services
+  disclaimer: >-
+    This pack highlights AEGIS controls and evidence commonly relevant to global capability centers (captive
+    technology and operations centers) and IT/BPO service providers. It does not determine which laws or client
+    contractual obligations apply, does not establish conformity with any regulation or standard, and is not legal
+    advice. Verify every regime with qualified counsel.
+
+summary: >-
+  GCCs and IT service providers build and run AI on behalf of a parent enterprise or clients, often across
+  jurisdictions. Governance must handle split accountability (who is provider, who is deployer), client data
+  segregation, cross-border transfers, developer-led agent adoption, and client demands for AI assurance evidence.
+
+priority_use_cases:
+  - id: GC-UC-01
+    name: Software-engineering copilots and coding agents
+    description: GenAI assistants and agents write, review or refactor code and open pull requests in client or parent repositories.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Access to source code and secrets; agents can push changes; client IP and supply-chain exposure.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: confidential, autonomy: acts_with_approval, domain_category: internal_productivity, genai: true}
+    key_controls: [EI-07, IS-11, IS-10, IS-14, IS-16, SE-08]
+  - id: GC-UC-02
+    name: IT operations and service-desk agents (AIOps)
+    description: Agents triage tickets, run diagnostics and execute remediation runbooks on infrastructure.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Tool access to production infrastructure; autonomous changes can cause outages across client estates.
+    risk_profile_hint: {decision_impact: material, affected_parties: customers, data_sensitivity: confidential, autonomy: acts_autonomously, domain_category: critical_infrastructure, genai: true, external_actions: true}
+    key_controls: [EI-07, IS-11, IS-13, IS-15, IS-16, GL-04, SE-04]
+  - id: GC-UC-03
+    name: Business-process automation for parent or client operations (finance, HR, procurement)
+    description: GenAI and agents process invoices, onboarding, vendor documents or reconciliations.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Personal and financial data at scale; errors propagate into client books; approval steps needed for postings.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: personal, autonomy: acts_with_approval, domain_category: other, genai: true}
+    key_controls: [IS-04, IS-13, GL-05, SE-08, EI-06]
+  - id: GC-UC-04
+    name: HR screening and workforce analytics
+    description: Model screens CVs, ranks candidates or analyzes performance and attrition.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Employment decisions about individuals; listed as a sensitive area in several regimes.
+    risk_profile_hint: {decision_impact: material, affected_parties: public, data_sensitivity: personal, autonomy: suggests, domain_category: employment}
+    key_controls: [GL-02, IS-05, IS-08, IS-09, IS-03, AO-07]
+  - id: GC-UC-05
+    name: Contact-center agent assist and voice analytics
+    description: Real-time transcription, suggested responses and quality scoring for client contact centers.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Customer personal data and employee monitoring; transparency to callers and agents required.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: personal, autonomy: suggests, domain_category: customer_service, genai: true}
+    key_controls: [IS-04, IS-08, IS-03, AO-05]
+  - id: GC-UC-06
+    name: Internal knowledge assistants (RAG over client or parent documents)
+    description: Retrieval-augmented assistants answer staff questions using document repositories.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Risk of cross-client data leakage through retrieval and of exposing restricted documents.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: confidential, autonomy: suggests, domain_category: internal_productivity, genai: true}
+    key_controls: [IS-04, IS-11, IS-12, IS-14, EI-06]
+  - id: GC-UC-07
+    name: AI solutions built for clients (delivery engagements)
+    description: The provider designs, builds or operates AI systems that clients deploy.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Tier depends on the client use case; role allocation and evidence hand-over determine accountability.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: confidential, autonomy: suggests, domain_category: other}
+    key_controls: [AO-09, GL-06, SE-11, GL-02, AO-07]
+
+emphasized_controls:
+  - {id: AO-09, why: "Provider/deployer/client responsibilities must be allocated in contracts and RACIs for every AI system built or run for others."}
+  - {id: AO-07, why: "Client contracts often carry AI-specific obligations (no training on client data, approved providers, notice of AI use) that must be tracked per engagement."}
+  - {id: EI-07, why: "Developer-led agent adoption is fast; agents and their tool permissions must be registered."}
+  - {id: IS-11, why: "Agents operating in client environments require least-privilege, per-client scopes."}
+  - {id: IS-04, why: "Client data must be redacted before external model calls and kept segregated."}
+  - {id: IS-10, why: "Approved model and plugin lists prevent unvetted tools in client delivery."}
+  - {id: EI-09, why: "Shadow AI use by large engineering populations is a primary exposure."}
+  - {id: AO-05, why: "Large, fast-growing workforces need role-based AI training with completion evidence clients can audit."}
+  - {id: SE-05, why: "Clients increasingly request AI assurance evidence packs during due diligence and audits."}
+  - {id: IS-15, why: "Kill switches per client tenant contain incidents to one engagement."}
+
+additional_evidence:
+  - {id: GC-EV-01, description: "Per-engagement AI obligations matrix derived from client contracts and statements of work.", related_controls: [AO-07, AO-09]}
+  - {id: GC-EV-02, description: "Tenant/client segregation design for AI systems, including retrieval-index separation and test results.", related_controls: [IS-11, IS-14, EI-06]}
+  - {id: GC-EV-03, description: "Approved AI tools and providers list with client-specific restrictions.", related_controls: [IS-10, GL-11]}
+  - {id: GC-EV-04, description: "Agent registry extract with tool scopes per client environment.", related_controls: [EI-07, IS-11]}
+  - {id: GC-EV-05, description: "Cross-border data-transfer assessments for AI processing locations.", related_controls: [IS-03]}
+  - {id: GC-EV-06, description: "Client-ready AI assurance pack template (policies, controls, testing summaries).", related_controls: [SE-05, SE-11]}
+
+sector_regimes:
+  - name: Data-protection laws of delivery and client jurisdictions (e.g. India's Digital Personal Data Protection Act 2023 and its implementing rules; GDPR for EU personal data)
+    scope_summary: Rules for processing personal data, processor/fiduciary obligations and cross-border transfers; implementing-rule status and timelines must be checked.
+    aegis_relevance: Privacy assessment, transfer assessment, redaction and logging evidence.
+    related_controls: [IS-03, IS-04, SE-08]
+    verify_with_counsel: true
+  - name: EU AI Act role allocation along the AI value chain
+    scope_summary: Organizations that develop AI for others or substantially modify systems may take on provider-type obligations; deployers have separate obligations. Outputs used in the EU can bring non-EU entities into scope.
+    aegis_relevance: Role allocation and evidence hand-over support only; timelines must be verified against the current Official Journal text and amendments.
+    related_controls: [AO-09, AO-07, GL-06]
+    verify_with_counsel: true
+  - name: Client contractual and assurance requirements (e.g. information-security certifications and attestations clients require, client AI-use clauses)
+    scope_summary: Contractual commitments on data use, approved tooling, audit rights and notification that often go beyond statutory requirements.
+    aegis_relevance: Obligations register, vendor controls and assurance packs.
+    related_controls: [AO-07, GL-11, SE-05]
+    verify_with_counsel: true
+  - name: Employment and anti-discrimination rules for automated hiring and worker monitoring (e.g. local rules on automated employment decision tools)
+    scope_summary: Some jurisdictions require bias audits, notices or consultation for automated hiring or monitoring tools.
+    aegis_relevance: Fairness testing, disclosure and human-oversight evidence.
+    related_controls: [IS-05, IS-08, IS-09]
+    verify_with_counsel: true
+
+recommended_policy_packs:
+  - {id: pack-baseline, purpose: "Default-deny tools, PII redaction, injection detection, limits, decision logging and kill switch for every LLM app or agent.", status: available}
+  - {id: pack-coding-devops-agent, purpose: "Branch-scoped writes, draft pull requests only, allow-listed fetches and approval-gated production deployment.", status: available}
+  - {id: pack-internal-rag-knowledge-assistant, purpose: "ACL-aware read-only retrieval with indirect-injection screening — basis for per-client retrieval segregation.", status: available}
+  - {id: aiops-change-approval, purpose: "Require human approval for production infrastructure changes; rate-limit remediation actions; tenant kill switch.", status: proposed}
+
+pilot_discovery_questions:
+  - {id: GC-DQ-01, question: "For each AI system, who is the provider, who is the deployer, and is that written into the contract or RACI?", purpose: "Establish accountability.", related_controls: [AO-09, EI-03]}
+  - {id: GC-DQ-02, question: "Which client contracts restrict AI use, model providers or training on client data?", purpose: "Populate the obligations register.", related_controls: [AO-07]}
+  - {id: GC-DQ-03, question: "How many developers use coding assistants or agents, and which tools are approved?", purpose: "Size shadow-AI and agent exposure.", related_controls: [EI-09, IS-10, EI-07]}
+  - {id: GC-DQ-04, question: "Can any agent change production infrastructure or client systems without human approval?", purpose: "Identify high-impact actions.", related_controls: [IS-13, IS-11]}
+  - {id: GC-DQ-05, question: "How is client data kept separate in shared AI platforms and retrieval indexes?", purpose: "Test segregation.", related_controls: [IS-11, EI-06]}
+  - {id: GC-DQ-06, question: "Where is AI processing performed, and are cross-border transfers assessed?", purpose: "Assess transfer exposure.", related_controls: [IS-03]}
+  - {id: GC-DQ-07, question: "What AI assurance evidence have clients requested in the last year, and how long did it take to provide?", purpose: "Baseline assurance effort for ROI.", related_controls: [SE-05]}
+  - {id: GC-DQ-08, question: "Is AI training tracked by role, and can completion be evidenced to clients?", purpose: "Assess literacy evidence.", related_controls: [AO-05]}

@@ -1,0 +1,31 @@
+{
+  "synthetic": true,
+  "turns": 54,
+  "report": {
+    "md": "supportpilot_readiness_report.md",
+    "json": "supportpilot_readiness_report.json",
+    "csv": "supportpilot_readiness_report_gap_register.csv",
+    "pdf": "supportpilot_readiness_report.pdf"
+  },
+  "report_errors": {},
+  "summary": {
+    "questions": 43,
+    "answered": 43,
+    "gaps": 39,
+    "by_severity": {
+      "Critical": 6,
+      "High": 24,
+      "Medium": 5,
+      "Low": 4
+    },
+    "by_evidence_status": {
+      "Verified": 3,
+      "User-asserted": 9,
+      "Inferred": 0,
+      "Missing evidence": 25,
+      "Critical gap": 6
+    }
+  },
+  "transcript": "supportpilot_transcript.md",
+  "audit_chain_valid": true
+}

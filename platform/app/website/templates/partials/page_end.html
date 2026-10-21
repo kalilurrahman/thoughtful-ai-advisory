@@ -1,0 +1,17 @@
+{% if faq %}
+<section class="faq" aria-labelledby="faq-heading">
+  <h2 id="faq-heading">Frequently asked questions</h2>
+  <dl class="faq-list">
+    {% for item in faq %}
+    <dt>{{ item.q }}</dt>
+    <dd>{{ item.a | inline_md }}</dd>
+    {% endfor %}
+  </dl>
+</section>
+{% endif %}
+{% if end_ctas %}
+<div class="end-ctas">
+  {% for c in end_ctas %}{{ c }}{% endfor %}
+</div>
+{% endif %}
+{% if page.updated %}<p class="page-updated">Last reviewed: <time datetime="{{ page.updated }}">{{ page.updated }}</time></p>{% endif %}

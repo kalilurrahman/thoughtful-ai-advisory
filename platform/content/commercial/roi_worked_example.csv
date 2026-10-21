@@ -1,0 +1,45 @@
+section,id,label,formula,value,unit,source,note
+assumption,ai_systems,ai_systems,,40,,Customer input,Number of AI systems in scope (inventory count or best estimate).
+assumption,assessment_hours_per_system,assessment_hours_per_system,,24,,Customer input,Person-hours to complete one risk/impact assessment today.
+assumption,hourly_cost,hourly_cost,,95,,Customer input,Blended fully loaded hourly cost of people doing governance work.
+assumption,audit_prep_hours_per_year,audit_prep_hours_per_year,,600,,Customer input,"Person-hours per year assembling AI evidence for audits, customers and regulators."
+assumption,approval_cycle_days,approval_cycle_days,,45,,Customer input,Average calendar days from use-case intake to approval decision today.
+assumption,assessments_per_system_per_year,assessments_per_system_per_year,,1,,Customer input,"Assessments or reassessments per system per year (initial, change-triggered, periodic)."
+assumption,new_use_cases_per_year,new_use_cases_per_year,,12,,Customer input,New AI use cases going through approval per year.
+assumption,delay_cost_per_day,delay_cost_per_day,,500,,Customer estimate,Business value lost per use case per day of approval delay. Default 0 excludes this benefit.
+assumption,annual_incident_probability,annual_incident_probability,,0.1,,Customer estimate,Probability of at least one material AI incident in a year.
+assumption,expected_incident_cost,expected_incident_cost,,750000,,Customer estimate,"Expected cost of a material AI incident (response, remediation, legal, customer impact)."
+assumption,aegis_annual_cost,aegis_annual_cost,,75000,,Customer input,Annual AEGIS subscription from the commercial proposal (pricing is itself a hypothesis).
+assumption,implementation_cost,implementation_cost,,30000,,Customer input,"One-time cost, e.g. Governance Baseline fee and internal implementation effort."
+assumption,assessment_effort_reduction,assessment_effort_reduction,,0.4,,AEGIS hypothesis — validate in pilot,"Share of assessment effort removed by agent-assisted, pre-populated assessments."
+assumption,audit_prep_reduction,audit_prep_reduction,,0.5,,AEGIS hypothesis — validate in pilot,Share of audit-preparation effort removed by continuous evidence capture and evidence packs.
+assumption,approval_cycle_reduction,approval_cycle_reduction,,0.3,,AEGIS hypothesis — validate in pilot,"Share of approval cycle time removed by triage, routing and complete submissions."
+assumption,incident_likelihood_reduction,incident_likelihood_reduction,,0.2,,AEGIS hypothesis — validate in pilot,"Relative reduction in material-incident likelihood from runtime guardrails, testing and oversight."
+assumption,realization_rate,realization_rate,,0.75,,AEGIS hypothesis — validate in pilot,"Share of modelled benefit realized in year 1, reflecting adoption ramp."
+calculation,L1,Assessment effort today (hours/yr),ai_systems × assessment_hours_per_system × assessments_per_system_per_year,960.0,hours,derived,"depends on: ai_systems, assessment_hours_per_system, assessments_per_system_per_year"
+calculation,L2,Assessment cost today,L1 × hourly_cost,91200.0,currency,derived,depends on: hourly_cost
+calculation,L3,Assessment hours saved,L1 × assessment_effort_reduction,384.0,hours,derived,depends on: assessment_effort_reduction
+calculation,L4,Assessment cost saving,L2 × assessment_effort_reduction,36480.0,currency,derived,depends on: assessment_effort_reduction
+calculation,L5,Audit-preparation cost today,audit_prep_hours_per_year × hourly_cost,57000.0,currency,derived,"depends on: audit_prep_hours_per_year, hourly_cost"
+calculation,L6,Audit-preparation hours saved,audit_prep_hours_per_year × audit_prep_reduction,300.0,hours,derived,depends on: audit_prep_reduction
+calculation,L7,Audit-preparation cost saving,L5 × audit_prep_reduction,28500.0,currency,derived,depends on: audit_prep_reduction
+calculation,L8,Approval days saved per use case,approval_cycle_days × approval_cycle_reduction,13.5,days,derived,"depends on: approval_cycle_days, approval_cycle_reduction"
+calculation,L9,Time-to-value benefit,new_use_cases_per_year × L8 × delay_cost_per_day,81000.0,currency,derived,"depends on: new_use_cases_per_year, delay_cost_per_day"
+calculation,L10,Expected annual incident loss today,annual_incident_probability × expected_incident_cost,75000.0,currency,derived,"depends on: annual_incident_probability, expected_incident_cost"
+calculation,L11,Risk-reduction value (expected),L10 × incident_likelihood_reduction,15000.0,currency,derived,depends on: incident_likelihood_reduction
+calculation,L12,Gross modelled annual benefit,L4 + L7 + L9 + L11,160980.0,currency,derived,derived
+calculation,L13,Year-1 realized benefit,L12 × realization_rate,120735.0,currency,derived,depends on: realization_rate
+calculation,L14,Governance hours freed per year (modelled),L3 + L6,684.0,hours,derived,derived
+calculation,L15,Year-1 cost,aegis_annual_cost + implementation_cost,105000.0,currency,derived,"depends on: aegis_annual_cost, implementation_cost"
+calculation,L16,Year-1 net benefit,L13 − L15,15735.0,currency,derived,derived
+calculation,L17,Steady-state annual net benefit,L12 − aegis_annual_cost,85980.0,currency,derived,depends on: aegis_annual_cost
+summary,gross_annual_benefit,gross_annual_benefit,,160980.0,,derived,
+summary,year1_realized_benefit,year1_realized_benefit,,120735.0,,derived,
+summary,year1_cost,year1_cost,,105000.0,,derived,
+summary,year1_net_benefit,year1_net_benefit,,15735.0,,derived,
+summary,year1_roi_pct,year1_roi_pct,,15.0,,derived,
+summary,steady_state_net_benefit,steady_state_net_benefit,,85980.0,,derived,
+summary,steady_state_roi_pct,steady_state_roi_pct,,114.6,,derived,
+summary,payback_months,payback_months,,10.4,,derived,
+summary,hours_freed_per_year,hours_freed_per_year,,684.0,,derived,
+summary,efficiency_share_of_gross_pct,efficiency_share_of_gross_pct,,40.4,,derived,

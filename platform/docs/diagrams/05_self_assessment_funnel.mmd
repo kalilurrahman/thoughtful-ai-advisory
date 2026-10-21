@@ -1,0 +1,24 @@
+%% AI Governance Maturity Self-Assessment — lead-magnet flow
+sequenceDiagram
+  autonumber
+  actor V as Visitor
+  participant W as Website (assessment-engine.js)
+  participant A as AEGIS API
+  participant E as Reference engine + reports
+  participant C as CRM adapter
+  participant M as Mail adapter (approved template)
+  participant L as Audit log
+  V->>W: Profile (industry, size, AI systems, agents, EU)
+  V->>W: 24 answers across 8 weighted domains
+  W->>W: Instant preliminary score + level (client-side, no PII)
+  W-->>A: page_view / assessment_* events (cookieless)
+  V->>W: Business email + consent (gate)
+  W->>A: POST /api/leads
+  A->>A: Validate (business email, consent, honeypot, rate limit)
+  A->>E: score_assessment → Markdown + PDF report
+  A->>C: Upsert contact + internal qualification tags
+  A->>M: Send report (pre-approved template)
+  A->>L: lead.created (lead id, email domain only)
+  A-->>W: Full result + signed report links (no internal tags)
+  W-->>V: Detailed report · PDF / Markdown download · Book Governance Baseline CTA
+  Note over W,A: If the API is unreachable, the browser renders the full report<br/>and offers Markdown + print-to-PDF, and says no email was sent

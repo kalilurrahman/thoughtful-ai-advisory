@@ -1,0 +1,98 @@
+{
+  "synthetic": true,
+  "profile": {
+    "name": "SME credit decision support",
+    "purpose": "Recommend credit limits for small-business applicants",
+    "decision_impact": "material",
+    "affected_parties": "customers",
+    "data_sensitivity": "personal",
+    "autonomy": "suggests",
+    "domain_category": "credit",
+    "genai": false,
+    "vendor_model": false,
+    "eu_exposure": true,
+    "environment": "production"
+  },
+  "result": {
+    "tier": "High",
+    "score": 85,
+    "provisional": false,
+    "factors": [
+      {
+        "factor": "decision_impact",
+        "value": "material",
+        "points": 20,
+        "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+      },
+      {
+        "factor": "affected_parties",
+        "value": "customers",
+        "points": 10,
+        "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+      },
+      {
+        "factor": "data_sensitivity",
+        "value": "personal",
+        "points": 15,
+        "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+      },
+      {
+        "factor": "autonomy",
+        "value": "suggests",
+        "points": 5,
+        "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+      },
+      {
+        "factor": "domain_category",
+        "value": "credit — Creditworthiness / credit scoring (Annex III area 5)",
+        "points": 30,
+        "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+      },
+      {
+        "factor": "eu_exposure",
+        "value": true,
+        "points": 5,
+        "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+      }
+    ],
+    "triggers": [
+      "Potential EU AI Act high-risk area: Creditworthiness / credit scoring (Annex III area 5) — legal classification review required (Art. 6)",
+      "Material or automated decisions in a sensitive (Annex III-like) domain"
+    ],
+    "missing_fields": [],
+    "clarifying_questions": [],
+    "required_modules": [
+      "core",
+      "data_privacy",
+      "security",
+      "fairness_safety",
+      "human_oversight"
+    ],
+    "approval_authority": "AI Governance Forum",
+    "review_cadence_months": 6,
+    "evidence_status": "Inferred",
+    "requires_human_confirmation": true,
+    "rationale": "Preliminary tier High (score 85). Drivers: decision_impact=material (+20); affected_parties=customers (+10); data_sensitivity=personal (+15); autonomy=suggests (+5); domain_category=credit — Creditworthiness / credit scoring (Annex III area 5) (+30); eu_exposure=True (+5). Triggers: Potential EU AI Act high-risk area: Creditworthiness / credit scoring (Annex III area 5) — legal classification review required (Art. 6); Material or automated decisions in a sensitive (Annex III-like) domain. Inferred from user-provided intake; requires human confirmation.",
+    "citations": [
+      "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+      "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+      "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+      "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+      "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+      "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+      "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+      "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+    ],
+    "citation_ids": [
+      "AO-07",
+      "EI-02",
+      "EI-04",
+      "GL-01",
+      "GL-02",
+      "GL-03",
+      "IS-03",
+      "IS-09"
+    ],
+    "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+  }
+}

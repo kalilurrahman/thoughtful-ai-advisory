@@ -1,0 +1,495 @@
+# AEGIS AI Use-Case Assessment — question bank (owner: agent workstream)
+# ---------------------------------------------------------------------------
+# Used by the AEGIS Agent guided assessment (app/agent/aegis_agent) to deep-dive a
+# single AI system / use case after intake and risk tiering.
+#
+# Rules:
+#   * Every question cites AEGIS control IDs from content/controls/controls.yaml
+#     (validated by tests/unit/test_agent_question_bank.py).
+#   * Every question lists the evidence an assessor expects to see. Answers are
+#     User-asserted until evidence is attached AND reviewed by a named reviewer.
+#   * Results are readiness indicators only — never a compliance determination.
+#
+# Module selection: a module applies when ANY of its `applies_when` conditions hold.
+#   always: true
+#   tier_in: [..]                      risk tier from calculate_risk_tier
+#   profile: {field: value}            profile field equals value (booleans allowed)
+#   profile_in: {field: [values]}      profile field is one of values
+#   has_tools: true                    profile.tools is a non-empty list
+#   required_module: <id>              calculate_risk_tier().required_modules mentions it
+# A question may carry its own `applies_when` (same grammar) to narrow further.
+# ---------------------------------------------------------------------------
+template:
+  id: AEGIS-UC-ASSESS
+  name: AI Use-Case Risk & Control Assessment
+  version: 1.0.0
+  status: published
+  effective_date: "2026-10-21"
+  owner: AEGIS Governance Content Lead
+  control_library_version: 1.0.0
+  evidence_status: User-asserted
+  disclaimer: >-
+    This use-case assessment produces an indicative view of governance readiness for a
+    single AI system. Self-reported answers are User-asserted; only evidence reviewed by
+    a named reviewer is Verified. Risk tiers are Inferred and require human confirmation.
+    Framework mappings are indicative. AEGIS does not certify ISO/IEC 42001 conformity,
+    guarantee EU AI Act compliance, or replace legal advice.
+
+answer_options:
+  - {id: implemented,     label: Implemented,          credit: 1.0, severity_points: 1, synonyms: [implemented, "yes", "in place", done, fully, complete, completed, deployed, enforced, exists]}
+  - {id: partial,         label: Partially implemented, credit: 0.5, severity_points: 2, synonyms: [partial, partially, "in progress", some, ad hoc, pilot, draft, informal, planned]}
+  - {id: not_implemented, label: Not implemented,       credit: 0.0, severity_points: 3, synonyms: [not implemented, "no", none, missing, absent, "not in place", "not done", "don't have", "do not have"]}
+  - {id: unknown,         label: Unknown,               credit: 0.0, severity_points: 2, synonyms: [unknown, "not sure", "don't know", "do not know", unsure, "no idea"]}
+  - {id: not_applicable,  label: Not applicable,        credit: null, severity_points: 0, synonyms: [not applicable, n/a, na]}
+
+# Severity = priority_points[control priority] + tier_points[risk tier] + answer severity_points
+severity_rules:
+  priority_points: {critical: 3, high: 2, medium: 1, low: 0}
+  tier_points: {Prohibited-review: 3, High: 2, Medium: 1, Low: 0}
+  thresholds: {Critical: 8, High: 6, Medium: 4}     # score >= threshold; else Low
+  # Implemented-but-unevidenced answers are evidence gaps, not implementation gaps.
+  evidence_gap_max_severity: Medium
+  # Not implemented on a question flagged critical_if_not_implemented at tier Medium or above.
+  critical_override_min_tier: Medium
+
+# Intake fields gathered before tiering. Keys match aegis_assessment.risk_tier profile keys.
+intake_fields:
+  - {id: name,              required: true,  type: text,    prompt: "What is the name of the AI system or use case?"}
+  - {id: purpose,           required: true,  type: text,    prompt: "Briefly describe its intended purpose and who uses it."}
+  - {id: domain_category,   required: true,  type: select,  prompt: "Which domain best describes the use case?",
+     options: [customer_service, internal_productivity, credit, employment, healthcare, biometric, education, critical_infrastructure, law_enforcement, migration, justice, essential_services, other]}
+  - {id: decision_impact,   required: true,  type: select,  prompt: "What is the impact of the system's outputs on decisions about people or the business?",
+     options: [none, advisory, material, automated_decision]}
+  - {id: affected_parties,  required: true,  type: select,  prompt: "Who is affected by its outputs?",
+     options: [internal, customers, public, vulnerable]}
+  - {id: data_sensitivity,  required: true,  type: select,  prompt: "What is the most sensitive data it processes?",
+     options: [public, internal, confidential, personal, special_category]}
+  - {id: autonomy,          required: true,  type: select,  prompt: "How autonomous is it?",
+     options: [none, suggests, acts_with_approval, acts_autonomously]}
+  - {id: external_actions,  required: true,  type: boolean, prompt: "Can it take actions outside the conversation (send messages, update records, move money)? (yes/no)"}
+  - {id: genai,             required: true,  type: boolean, prompt: "Does it use generative AI / an LLM? (yes/no)"}
+  - {id: vendor_model,      required: true,  type: boolean, prompt: "Does it rely on a third-party / vendor model or AI service? (yes/no)"}
+  - {id: eu_exposure,       required: true,  type: boolean, prompt: "Is it placed on the EU market or does it affect people in the EU? (yes/no)"}
+  - {id: tools,             required: false, type: list,    prompt: "Which tools or systems can it access (e.g. crm, email, ticketing, payments)?"}
+  - {id: environment,       required: false, type: select,  prompt: "What environment is it in?", options: [idea, development, pilot, production]}
+  - {id: users_count_band,  required: false, type: select,  prompt: "Roughly how many users or affected people?", options: ["<100", "100-1000", "1000-10000", "10000+"]}
+
+modules:
+  # ------------------------------------------------------------------ core
+  - id: core
+    name: Core governance & lifecycle
+    description: Ownership, purpose, tiering, approval gates, obligations and change control.
+    applies_when: [{always: true}]
+    questions:
+      - id: UC-CORE-Q1
+        domain: inventory
+        text: Is there a named accountable business owner and technical owner for this AI system, recorded in the AI inventory?
+        controls: [EI-03, EI-01]
+        evidence_expected: [Inventory record with owner fields populated, Owner acceptance record]
+        remediation: Register the system in the AI inventory with a named accountable business owner and technical owner, and capture owner acceptance.
+        critical_if_not_implemented: false
+      - id: UC-CORE-Q2
+        domain: inventory
+        text: Are the intended purpose, context of use, users, affected parties and out-of-scope uses documented?
+        controls: [EI-04]
+        evidence_expected: [System profile with intended purpose, Users and affected parties, Foreseeable misuse analysis]
+        remediation: Document intended purpose, context of use, users, affected parties and explicitly out-of-scope or foreseeable misuse.
+        critical_if_not_implemented: false
+      - id: UC-CORE-Q3
+        domain: risk_lifecycle
+        text: Has the use case passed intake triage and received a risk tier that was confirmed by an accountable approver?
+        controls: [GL-01, EI-02, EI-12]
+        evidence_expected: [Intake register entry, Triage decision with rationale, Tiering approval record]
+        remediation: Run the use case through intake triage and record a human-confirmed risk tier with rationale in the intake register.
+        critical_if_not_implemented: false
+      - id: UC-CORE-Q4
+        domain: risk_lifecycle
+        text: Was a pre-deployment risk and impact assessment completed and approved at the gate appropriate to the risk tier?
+        controls: [GL-02, GL-03]
+        evidence_expected: [Completed risk/impact assessment, Reviewer sign-off, Approval record with conditions, Residual-risk statement]
+        remediation: Complete a tier-proportionate risk and impact assessment and obtain approval at the tier-appropriate gate before (further) production use.
+        critical_if_not_implemented: true
+      - id: UC-CORE-Q5
+        domain: strategy
+        text: Have the legal, regulatory and contractual obligations that apply to this system (by jurisdiction) been identified and reviewed?
+        controls: [AO-07]
+        evidence_expected: [Obligations register entry for this system, Legal review record]
+        remediation: Add the system to the obligations register and obtain a legal review of applicable obligations by jurisdiction.
+        critical_if_not_implemented: false
+      - id: UC-CORE-Q6
+        domain: strategy
+        text: Has the use case been screened against the organization's prohibited and restricted AI use policy?
+        controls: [AO-10]
+        evidence_expected: [Intake screening record against prohibited/restricted use list]
+        remediation: Screen the use case against the prohibited/restricted AI use list and record the outcome; escalate any match for legal review.
+        critical_if_not_implemented: true
+      - id: UC-CORE-Q7
+        domain: risk_lifecycle
+        text: Are changes to the model, prompts, data, tools or vendor subject to change control with defined reassessment triggers?
+        controls: [GL-04, EI-05]
+        evidence_expected: [Change policy with AI-specific triggers, Change tickets referencing reassessment, Model/prompt version history]
+        remediation: Add AI-specific change triggers (model, prompt, data, tool, vendor) to change management and require reassessment when they fire.
+        critical_if_not_implemented: false
+
+  # ------------------------------------------------------------------ data & privacy
+  - id: data_privacy
+    name: Data & privacy
+    description: Data lineage, privacy impact, minimisation, redaction and retention.
+    applies_when:
+      - {profile_in: {data_sensitivity: [personal, special_category, confidential]}}
+      - {required_module: data_privacy}
+    questions:
+      - id: UC-DATA-Q1
+        domain: data_privacy
+        text: Are the data sources, classifications and data flows used for training, grounding (RAG) and prompts documented for this system?
+        controls: [EI-06, IS-02]
+        evidence_expected: [Data source register entries, Data-flow diagram, Data classification per source]
+        remediation: Document every data source, its classification and the data flows into prompts, retrieval indexes, logs and external services.
+        critical_if_not_implemented: false
+      - id: UC-DATA-Q2
+        domain: data_privacy
+        text: Has a privacy / data-protection impact assessment been completed covering lawful basis, minimisation, retention and cross-border transfers?
+        controls: [IS-03]
+        evidence_expected: [Privacy/data-protection impact assessment, Retention schedule, Transfer assessment]
+        remediation: Complete a privacy impact assessment (DPIA where required) covering lawful basis, minimisation, retention and transfers, signed off by the DPO/privacy lead.
+        critical_if_not_implemented: true
+      - id: UC-DATA-Q3
+        domain: data_privacy
+        text: Are personal and sensitive fields redacted or masked before they reach prompts, logs and external model calls?
+        controls: [IS-04]
+        evidence_expected: [Redaction configuration, Redaction test results, Log samples showing masking]
+        remediation: Deploy redaction/masking on prompts, responses, logs and external model calls; test it against representative records and retain the results.
+        critical_if_not_implemented: true
+      - id: UC-DATA-Q4
+        domain: data_privacy
+        text: Is the system's data access limited to the minimum records and fields it needs (e.g. field-level scoping of CRM access)?
+        controls: [IS-03, IS-11]
+        evidence_expected: [Access-scope configuration, Field-level access matrix, Access review record]
+        remediation: Restrict data access to the minimum records and fields required, using scoped service identities, and review access periodically.
+        critical_if_not_implemented: false
+      - id: UC-DATA-Q5
+        domain: data_privacy
+        text: Are retention periods defined and enforced for prompts, outputs, conversation transcripts and logs?
+        controls: [IS-03, SE-02]
+        evidence_expected: [Retention schedule covering AI artefacts, Deletion job configuration or records]
+        remediation: Define and enforce retention periods for prompts, outputs, transcripts and logs consistent with the privacy assessment.
+        critical_if_not_implemented: false
+
+  # ------------------------------------------------------------------ security
+  - id: security
+    name: Security & resilience
+    description: Threat modelling, supply chain, testing and containment.
+    applies_when: [{always: true}]
+    questions:
+      - id: UC-SEC-Q1
+        domain: security
+        text: Has an AI-specific threat model been completed for this system (e.g. prompt injection, data poisoning, model abuse, tool misuse)?
+        controls: [IS-01]
+        evidence_expected: [Threat model document, Mitigation tracking]
+        remediation: Produce an AI-specific threat model covering injection, poisoning, abuse and tool misuse, and track mitigations to closure.
+        critical_if_not_implemented: false
+      - id: UC-SEC-Q2
+        domain: security
+        text: Do models, prompts, plugins and third-party components come from an approved, integrity-checked supply chain?
+        controls: [IS-10, EI-05]
+        evidence_expected: [Approved model/provider list, Integrity checks, Dependency scanning results]
+        remediation: Restrict models and components to an approved list with integrity checks and dependency scanning.
+        critical_if_not_implemented: false
+      - id: UC-SEC-Q3
+        domain: security
+        text: Is there a tested kill switch and rollback procedure that can disable the system, model, agent or individual tools quickly?
+        controls: [IS-15]
+        evidence_expected: [Kill-switch procedure, Kill-switch test record with time-to-disable, Rollback runbook]
+        remediation: Implement and test a kill switch and rollback runbook; record time-to-disable from the test.
+        critical_if_not_implemented: true
+      - id: UC-SEC-Q4
+        domain: security
+        text: Were pre-release validation and robustness tests run against documented acceptance criteria, with results retained?
+        controls: [GL-05, IS-07]
+        evidence_expected: [Test plan and results, Acceptance criteria, Release sign-off]
+        remediation: Define acceptance criteria, run pre-release validation and robustness tests, and retain signed-off results.
+        critical_if_not_implemented: false
+
+  # ------------------------------------------------------------------ GenAI / LLM
+  - id: genai_llm
+    name: Generative AI & LLM controls
+    description: Adversarial testing, runtime guardrails, limits, prompt registry and output quality.
+    applies_when:
+      - {profile: {genai: true}}
+      - {required_module: genai_llm}
+    questions:
+      - id: UC-GEN-Q1
+        domain: security
+        text: Has the system been tested for prompt injection (direct and indirect), jailbreaks and data leakage before release and after material changes?
+        controls: [IS-14]
+        evidence_expected: [Red-team / adversarial test results, Remediation records, Re-test evidence]
+        remediation: Run adversarial testing for direct and indirect prompt injection, jailbreaks and data leakage before release and after each material change.
+        critical_if_not_implemented: true
+      - id: UC-GEN-Q2
+        domain: security
+        text: Are runtime guardrails (input/output filtering, PII detection, topic restrictions) enforced through a versioned runtime policy?
+        controls: [IS-12]
+        evidence_expected: [Versioned runtime policy, Policy decision logs, Enforcement-mode configuration]
+        remediation: Enforce a versioned runtime policy for input/output filtering, PII detection and topic restrictions, starting in monitor mode then enforce.
+        critical_if_not_implemented: false
+      - id: UC-GEN-Q3
+        domain: security
+        text: Are rate, token and spend limits configured and alerting when breached?
+        controls: [IS-16]
+        evidence_expected: [Limit configuration, Limit-breach alerts]
+        remediation: Configure rate, token and budget limits per user and per system with breach alerts.
+        critical_if_not_implemented: false
+      - id: UC-GEN-Q4
+        domain: risk_lifecycle
+        text: Are system prompts and prompt templates version-controlled in a registry alongside the model version?
+        controls: [EI-05, IS-10]
+        evidence_expected: [Model registry entries with versions, Prompt/config version history]
+        remediation: Version system prompts and templates in a registry linked to model versions and change tickets.
+        critical_if_not_implemented: false
+      - id: UC-GEN-Q5
+        domain: fairness_transparency
+        text: Are groundedness / hallucination rates and output quality evaluated against defined thresholds?
+        controls: [IS-07, IS-06]
+        evidence_expected: [Accuracy metrics with thresholds, Safety evaluation results]
+        remediation: Define groundedness and quality thresholds and evaluate against a representative test set before release and periodically.
+        critical_if_not_implemented: false
+
+  # ------------------------------------------------------------------ agentic
+  - id: agentic
+    name: Agentic AI & tool use
+    description: Agent and tool registry, least privilege, human approval, action logging and runtime limits.
+    applies_when:
+      - {profile_in: {autonomy: [acts_with_approval, acts_autonomously]}}
+      - {profile: {external_actions: true}}
+      - {has_tools: true}
+      - {required_module: agentic}
+    questions:
+      - id: UC-AGT-Q1
+        domain: inventory
+        text: Is the agent registered with every tool it can call, the scopes of each tool and the permitted actions?
+        controls: [EI-07]
+        evidence_expected: [Agent registry entry, Tool/permission manifest per agent]
+        remediation: Register the agent and a tool/permission manifest listing each tool, scope and permitted action.
+        critical_if_not_implemented: true
+      - id: UC-AGT-Q2
+        domain: security
+        text: Does each tool use least-privilege credentials scoped to the required actions only (no shared or admin credentials)?
+        controls: [IS-11]
+        evidence_expected: [Tool permission matrix, Access-scope configuration, Access review records]
+        remediation: Replace shared/admin credentials with per-tool, least-privilege scoped identities and review access periodically.
+        critical_if_not_implemented: true
+      - id: UC-AGT-Q3
+        domain: oversight_operations
+        text: Do high-impact actions (e.g. refunds, record changes, external messages, deletions) require human approval before execution?
+        controls: [IS-13]
+        evidence_expected: [Approval rules in runtime policy, Approval records with approver identity]
+        remediation: Require human approval for high-impact actions via runtime policy, and record approver identity for each approval.
+        critical_if_not_implemented: true
+      - id: UC-AGT-Q4
+        domain: assurance
+        text: Are all agent tool calls logged in a tamper-evident log with trace IDs, redacted inputs and outcomes?
+        controls: [SE-08]
+        evidence_expected: [Log configuration, Tamper-evidence mechanism, Retention settings, Sample log extract]
+        remediation: Log every tool call with trace ID, redacted inputs, decision and outcome to tamper-evident storage with defined retention.
+        critical_if_not_implemented: true
+      - id: UC-AGT-Q5
+        domain: security
+        text: Are per-action limits (value caps, rate limits, loop/step limits) enforced at runtime for agent actions?
+        controls: [IS-12, IS-16]
+        evidence_expected: [Versioned runtime policy, Limit configuration, Limit-breach alerts]
+        remediation: Enforce value caps, rate limits and step limits for agent actions in the runtime policy with alerts on breach.
+        critical_if_not_implemented: false
+
+  # ------------------------------------------------------------------ fairness & safety
+  - id: fairness_safety
+    name: Fairness, safety & transparency
+    description: Bias testing, harm evaluation, AI disclosure and contestability.
+    applies_when:
+      - {tier_in: [High, Prohibited-review]}
+      - {profile_in: {affected_parties: [customers, public, vulnerable]}}
+      - {profile_in: {decision_impact: [material, automated_decision]}}
+      - {required_module: fairness_safety}
+    questions:
+      - id: UC-FAIR-Q1
+        domain: fairness_transparency
+        text: Has the system been tested for bias or discriminatory outcomes across relevant groups, with documented thresholds?
+        controls: [IS-05]
+        evidence_expected: [Fairness test plan and results, Mitigation records]
+        remediation: Define relevant groups and fairness metrics, test against thresholds and record mitigations.
+        critical_if_not_implemented: false
+        applies_when: [{tier_in: [High, Prohibited-review]}, {profile_in: {decision_impact: [material, automated_decision]}}]
+      - id: UC-FAIR-Q2
+        domain: fairness_transparency
+        text: Has a safety and harm evaluation been completed (harmful, misleading or inappropriate outputs, including for vulnerable users)?
+        controls: [IS-06]
+        evidence_expected: [Harm analysis, Safety evaluation results, Residual-risk sign-off]
+        remediation: Complete a harm analysis and safety evaluation, including vulnerable-user scenarios, and obtain residual-risk sign-off.
+        critical_if_not_implemented: false
+      - id: UC-FAIR-Q3
+        domain: fairness_transparency
+        text: Are people informed when they are interacting with AI or receiving AI-generated content?
+        controls: [IS-08]
+        evidence_expected: [Disclosure text and placement, User-facing documentation]
+        remediation: Add clear AI-interaction and AI-generated-content disclosures at the point of interaction; have Legal review the wording.
+        critical_if_not_implemented: false
+      - id: UC-FAIR-Q4
+        domain: fairness_transparency
+        text: Can affected individuals obtain an explanation, reach a human, and contest or appeal outcomes?
+        controls: [IS-08, AO-11]
+        evidence_expected: [Explanation approach, Feedback channel, Feedback log]
+        remediation: Provide a route to a human, explanations proportionate to impact, and a contest/appeal channel whose outcomes are logged.
+        critical_if_not_implemented: false
+
+  # ------------------------------------------------------------------ human oversight
+  - id: human_oversight
+    name: Human oversight & operations
+    description: Oversight design, operator training, escalation and go-live conditions.
+    applies_when:
+      - {tier_in: [High, Prohibited-review]}
+      - {profile_in: {decision_impact: [material, automated_decision]}}
+      - {profile_in: {autonomy: [acts_with_approval, acts_autonomously]}}
+      - {required_module: human_oversight}
+    questions:
+      - id: UC-HUM-Q1
+        domain: oversight_operations
+        text: Is the human oversight design documented — who reviews which outputs or actions, when, and with authority to override or stop the system?
+        controls: [IS-09]
+        evidence_expected: [Oversight design document, Override/appeal procedures, Oversight operation records]
+        remediation: Document the oversight design (reviewer roles, review points, override and stop authority) and keep records of oversight in operation.
+        critical_if_not_implemented: true
+      - id: UC-HUM-Q2
+        domain: oversight_operations
+        text: Are operators and reviewers trained on the system's limitations, automation bias and escalation paths?
+        controls: [AO-05]
+        evidence_expected: [Training curriculum, Completion records by role]
+        remediation: Deliver role-based training for operators and reviewers covering limitations, automation bias and escalation, and track completion.
+        critical_if_not_implemented: false
+      - id: UC-HUM-Q3
+        domain: oversight_operations
+        text: Is there a defined escalation path for concerns and AI incidents involving this system?
+        controls: [AO-06, SE-04]
+        evidence_expected: [Escalation matrix, AI incident procedure, Sample escalation records]
+        remediation: Define and communicate an escalation path and incident procedure for this system, with named contacts and timeframes.
+        critical_if_not_implemented: false
+      - id: UC-HUM-Q4
+        domain: risk_lifecycle
+        text: Were go-live deployment conditions defined, verified and signed off before production use?
+        controls: [GL-07]
+        evidence_expected: [Go-live checklist, Condition verification record]
+        remediation: Define go-live conditions (controls, monitoring, oversight) and verify them with a signed checklist before production use.
+        critical_if_not_implemented: false
+
+  # ------------------------------------------------------------------ vendor / third party
+  - id: vendor_third_party
+    name: Vendor & third-party AI
+    description: Vendor due diligence, contract controls, vendor inventory and vendor change monitoring.
+    applies_when:
+      - {profile: {vendor_model: true}}
+      - {required_module: vendor_third_party}
+    questions:
+      - id: UC-VEN-Q1
+        domain: risk_lifecycle
+        text: Was vendor AI due diligence completed for the model/service provider (security, data use, model training on your data, subprocessors)?
+        controls: [GL-11]
+        evidence_expected: [Vendor AI questionnaire, Due-diligence approval]
+        remediation: Complete AI-specific vendor due diligence covering security, data use, training on customer data and subprocessors.
+        critical_if_not_implemented: false
+      - id: UC-VEN-Q2
+        domain: risk_lifecycle
+        text: Do contract terms cover data-use restrictions, no training on your data, retention, breach notification and audit rights?
+        controls: [GL-11, AO-09]
+        evidence_expected: [Contract AI clauses, Responsibility allocation (e.g. RACI or contract schedule)]
+        remediation: Negotiate or confirm AI contract clauses for data use, training restrictions, retention, breach notification and audit rights.
+        critical_if_not_implemented: false
+      - id: UC-VEN-Q3
+        domain: inventory
+        text: Is the vendor AI product recorded in the third-party AI inventory with an accountable owner?
+        controls: [EI-08, AO-09]
+        evidence_expected: [Vendor AI register, Vendor AI owner assignments]
+        remediation: Record the vendor AI product in the third-party AI inventory with an accountable owner and contract/DPA references.
+        critical_if_not_implemented: false
+      - id: UC-VEN-Q4
+        domain: risk_lifecycle
+        text: Are vendor model version changes and deprecations monitored and routed through change control?
+        controls: [GL-04, EI-05]
+        evidence_expected: [Change tickets referencing reassessment, Model registry entries with versions]
+        remediation: Monitor vendor model/version announcements and route changes through change control with reassessment triggers.
+        critical_if_not_implemented: false
+
+  # ------------------------------------------------------------------ monitoring & assurance
+  - id: monitoring_assurance
+    name: Monitoring, incidents & evidence
+    description: Production monitoring, incident handling, evidence retention and periodic review.
+    applies_when: [{always: true}]
+    questions:
+      - id: UC-MON-Q1
+        domain: oversight_operations
+        text: Is production performance, drift and misuse monitored against thresholds with alerts and review?
+        controls: [GL-08, SE-12]
+        evidence_expected: [Monitoring dashboards, Alert thresholds, Monitoring review records]
+        remediation: Instrument performance, drift and misuse monitoring with thresholds, alerts and a recurring review.
+        critical_if_not_implemented: false
+      - id: UC-MON-Q2
+        domain: oversight_operations
+        text: Is this system covered by an AI incident management procedure, including internal and external reporting timelines?
+        controls: [SE-04]
+        evidence_expected: [AI incident procedure, Incident log, Post-incident reviews]
+        remediation: Bring the system under the AI incident procedure with defined severity levels and reporting timelines; Legal to confirm external reporting duties.
+        critical_if_not_implemented: false
+      - id: UC-MON-Q3
+        domain: assurance
+        text: Is evidence for this system's controls retained in an evidence repository, and can an audit-ready evidence pack be produced on request?
+        controls: [SE-02, SE-05]
+        evidence_expected: [Evidence repository, Retention policy, Sample evidence pack]
+        remediation: Store control evidence for this system in the evidence repository with retention rules and assemble an audit-ready evidence pack.
+        critical_if_not_implemented: false
+      - id: UC-MON-Q4
+        domain: assurance
+        text: Is a periodic review / recertification of this system scheduled at the cadence required by its risk tier?
+        controls: [GL-12, EI-11]
+        evidence_expected: [Review calendar by tier, Recertification records]
+        remediation: Schedule periodic review and recertification at the cadence set for the system's risk tier.
+        critical_if_not_implemented: false
+      - id: UC-MON-Q5
+        domain: assurance
+        text: Is technical documentation (system/model card, architecture, data, testing, limitations) maintained for this system?
+        controls: [GL-06]
+        evidence_expected: [Technical documentation pack, Model/system card]
+        remediation: Produce and maintain technical documentation including a system/model card, architecture, data, testing and known limitations.
+        critical_if_not_implemented: false
+        applies_when: [{tier_in: [High, Prohibited-review]}, {profile: {eu_exposure: true}}]
+
+# Runtime guardrail recommendations surfaced in reports, keyed by the same applicability grammar.
+runtime_guardrails:
+  - id: RG-PII-REDACTION
+    title: Redact personal and sensitive data in prompts, responses and logs
+    controls: [IS-04, IS-03]
+    applies_when: [{profile_in: {data_sensitivity: [personal, special_category, confidential]}}]
+  - id: RG-INJECTION-FILTER
+    title: Detect and block prompt-injection and jailbreak attempts, including indirect injection in retrieved content
+    controls: [IS-14, IS-12]
+    applies_when: [{profile: {genai: true}}]
+  - id: RG-TOOL-ALLOWLIST
+    title: Allow-list tools and scopes per agent; deny by default
+    controls: [IS-11, EI-07]
+    applies_when: [{has_tools: true}, {profile_in: {autonomy: [acts_with_approval, acts_autonomously]}}]
+  - id: RG-HUMAN-APPROVAL
+    title: Require human approval for high-impact actions (refunds, record changes, external messages, deletions)
+    controls: [IS-13, IS-09]
+    applies_when: [{profile: {external_actions: true}}, {profile_in: {autonomy: [acts_with_approval, acts_autonomously]}}]
+  - id: RG-LIMITS
+    title: Enforce rate, token, spend and per-action value limits
+    controls: [IS-16, IS-12]
+    applies_when: [{profile: {genai: true}}, {has_tools: true}]
+  - id: RG-ACTION-LOGGING
+    title: Log every model and tool call with trace ID, redacted inputs and policy decision
+    controls: [SE-08]
+    applies_when: [{always: true}]
+  - id: RG-KILL-SWITCH
+    title: Provide a kill switch to disable the system, agent or individual tools
+    controls: [IS-15]
+    applies_when: [{always: true}]
+  - id: RG-DISCLOSURE
+    title: Display AI-interaction disclosure to end users
+    controls: [IS-08]
+    applies_when: [{profile_in: {affected_parties: [customers, public, vulnerable]}}]

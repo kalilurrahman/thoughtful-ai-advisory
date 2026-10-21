@@ -1,0 +1,1013 @@
+# AEGIS Control Library
+# ---------------------------------------------------------------------------
+# Single source of truth for AEGIS control IDs. Every recommendation produced by
+# the assessment engine, AEGIS Agent, Runtime Shield Advisor and reports MUST
+# cite control IDs from this file.
+#
+# Framework mappings are AEGIS's INDICATIVE interpretation for governance-readiness
+# purposes. They are not legal advice, not an official crosswalk published by NIST,
+# ISO or the European Commission, and they do not establish conformity or
+# compliance. Jurisdiction-specific use requires qualified legal review.
+#
+# Mapping references:
+#   nist_ai_rmf : NIST AI 100-1 (AI RMF 1.0) function/category/subcategory IDs
+#   iso_42001   : ISO/IEC 42001:2023 clause numbers and Annex A control IDs
+#   eu_ai_act   : Regulation (EU) 2024/1689 article numbers
+#
+# applies_to scopes: all | high_risk | genai | agentic | third_party
+# ---------------------------------------------------------------------------
+library:
+  id: AEGIS-CTRL-LIB
+  version: 1.0.0
+  status: published
+  effective_date: "2026-10-21"
+  owner: AEGIS Governance Content Lead
+  review_cadence: quarterly
+  mapping_disclaimer: >-
+    Framework mappings are indicative AEGIS interpretations to support governance
+    readiness and evidence collection. They do not constitute legal advice, a
+    certification, or a determination of conformity with ISO/IEC 42001 or
+    compliance with the EU AI Act or any other law.
+
+pillars:
+  - id: AO
+    name: Accountability & Operating Model
+    summary: Who owns AI risk, who decides, and how governance is resourced.
+  - id: EI
+    name: Enterprise AI Inventory
+    summary: A complete, classified, owned record of every AI system, model, agent and vendor AI product.
+  - id: GL
+    name: Governance & Lifecycle Control
+    summary: Risk-proportionate gates from intake through approval, change, monitoring and retirement.
+  - id: IS
+    name: Integrity, Safety & Security
+    summary: Data, fairness, safety, security and runtime guardrails for AI systems and agents.
+  - id: SE
+    name: Stewardship, Evidence & Assurance
+    summary: Logging, evidence, control testing, incident handling and continuous improvement.
+
+controls:
+  # ------------------------------------------------------------------ AO
+  - id: AO-01
+    title: AI governance policy
+    pillar: AO
+    objective: Maintain a documented, approved and versioned AI governance policy that sets scope, principles, risk appetite linkage and accountabilities.
+    applies_to: all
+    domains: [strategy]
+    evidence: [Approved AI policy document with version and approval record, Policy communication record, Annual policy review minutes]
+    owner_role: Chief AI Officer / AI Governance Lead
+    priority: critical
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.1, GOVERN 1.2]
+      iso_42001: ["5.2", A.2.2, A.2.4]
+      eu_ai_act: [Art. 17, Art. 26]
+
+  - id: AO-02
+    title: Executive accountability and AI governance forum
+    pillar: AO
+    objective: Establish a cross-functional AI governance forum with documented authority to approve, restrict or stop AI use cases.
+    applies_to: all
+    domains: [strategy]
+    evidence: [Forum terms of reference, Membership list, Decision log or minutes showing approve/restrict/stop decisions]
+    owner_role: Executive sponsor (CIO/CRO/COO)
+    priority: critical
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 2.1, GOVERN 2.3]
+      iso_42001: ["5.1", "5.3", A.3.2]
+      eu_ai_act: [Art. 17]
+
+  - id: AO-03
+    title: AI roles, responsibilities and RACI
+    pillar: AO
+    objective: Define roles and responsibilities for business, technology, risk, legal, privacy and security across the AI lifecycle.
+    applies_to: all
+    domains: [strategy, oversight_operations]
+    evidence: [AI RACI matrix, Role descriptions, Assignment records for human-oversight roles]
+    owner_role: AI Governance Lead
+    priority: high
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 2.1]
+      iso_42001: ["5.3", A.3.2]
+      eu_ai_act: [Art. 26]
+
+  - id: AO-04
+    title: AI risk appetite and tolerance
+    pillar: AO
+    objective: Define AI risk appetite, tolerance thresholds and risk-tier criteria approved by leadership.
+    applies_to: all
+    domains: [strategy, risk_lifecycle]
+    evidence: [Approved AI risk appetite statement, Risk-tier criteria, Board or committee approval record]
+    owner_role: Chief Risk Officer
+    priority: high
+    modules: [Control, Assess]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.3, MAP 1.5]
+      iso_42001: ["6.1.1", "6.1.2"]
+      eu_ai_act: [Art. 9]
+
+  - id: AO-05
+    title: AI literacy and role-based training
+    pillar: AO
+    objective: Provide role-based AI literacy and responsible-use training for staff, operators and decision-makers.
+    applies_to: all
+    domains: [oversight_operations]
+    evidence: [Training curriculum, Completion records by role, Training effectiveness metrics]
+    owner_role: HR / Learning lead with AI Governance Lead
+    priority: high
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 2.2]
+      iso_42001: ["7.2", "7.3", A.4.6]
+      eu_ai_act: [Art. 4]
+
+  - id: AO-06
+    title: Escalation paths and decision rights
+    pillar: AO
+    objective: Define how AI issues, concerns and incidents are escalated, to whom, and within what timeframe.
+    applies_to: all
+    domains: [strategy, oversight_operations]
+    evidence: [Escalation matrix, Concern-reporting channel, Sample escalation records]
+    owner_role: AI Governance Lead
+    priority: high
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 2.1, GOVERN 4.3]
+      iso_42001: ["5.3", A.3.3]
+      eu_ai_act: [Art. 26]
+
+  - id: AO-07
+    title: Regulatory and contractual obligations register
+    pillar: AO
+    objective: Maintain a register of AI-relevant legal, regulatory, contractual and customer obligations by jurisdiction and system.
+    applies_to: all
+    domains: [strategy, risk_lifecycle]
+    evidence: [Obligations register, Legal review records, Mapping of obligations to AI systems]
+    owner_role: Legal / Compliance
+    priority: high
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.1]
+      iso_42001: ["4.1", "4.2", "6.1"]
+      eu_ai_act: [Art. 6, Art. 26]
+
+  - id: AO-08
+    title: Responsible AI principles and objectives
+    pillar: AO
+    objective: Set measurable responsible-AI objectives aligned to organizational values and risk appetite.
+    applies_to: all
+    domains: [strategy, fairness_transparency]
+    evidence: [Responsible AI principles, Objectives with metrics, Leadership approval]
+    owner_role: AI Governance Lead
+    priority: medium
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.2]
+      iso_42001: ["6.2", A.6.1.2, A.9.3]
+      eu_ai_act: []
+
+  - id: AO-09
+    title: Third-party AI accountability
+    pillar: AO
+    objective: Assign accountability for vendor and third-party AI, including allocation of responsibilities between provider, deployer and customer.
+    applies_to: third_party
+    domains: [strategy, risk_lifecycle]
+    evidence: [Responsibility allocation (e.g. RACI or contract schedule), Vendor AI owner assignments]
+    owner_role: Procurement / Vendor Risk
+    priority: medium
+    modules: [Register, Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 6.1, GOVERN 6.2]
+      iso_42001: [A.10.2, A.10.3]
+      eu_ai_act: [Art. 25, Art. 26]
+
+  - id: AO-10
+    title: Prohibited and restricted AI use policy
+    pillar: AO
+    objective: Define prohibited, restricted and conditionally permitted AI uses and screen every use case against them.
+    applies_to: all
+    domains: [strategy, risk_lifecycle]
+    evidence: [Prohibited/restricted use list, Intake screening records]
+    owner_role: Legal / AI Governance Lead
+    priority: critical
+    modules: [Control, Assess]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.1, MAP 1.1]
+      iso_42001: [A.9.4, A.2.2]
+      eu_ai_act: [Art. 5]
+
+  - id: AO-11
+    title: Stakeholder engagement and feedback
+    pillar: AO
+    objective: Collect and act on feedback from affected individuals, users and internal stakeholders about AI systems.
+    applies_to: high_risk
+    domains: [fairness_transparency]
+    evidence: [Feedback channel, Feedback log, Actions taken]
+    owner_role: Product Owner
+    priority: medium
+    modules: [Control, Assurance]
+    mappings:
+      nist_ai_rmf: [GOVERN 5.1, GOVERN 5.2]
+      iso_42001: ["4.2", A.8.3, A.8.5]
+      eu_ai_act: [Art. 27]
+
+  - id: AO-12
+    title: Governance resourcing
+    pillar: AO
+    objective: Allocate budget, people and tooling sufficient to operate AI governance at the organization's scale.
+    applies_to: all
+    domains: [strategy]
+    evidence: [Approved governance budget, Staffing plan, Tooling inventory]
+    owner_role: Executive sponsor
+    priority: medium
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.4]
+      iso_42001: ["7.1", A.4.2]
+      eu_ai_act: [Art. 17]
+
+  # ------------------------------------------------------------------ EI
+  - id: EI-01
+    title: Enterprise AI inventory (system of record)
+    pillar: EI
+    objective: Maintain a complete, current inventory of AI systems, models, agents and vendor AI products in a single system of record.
+    applies_to: all
+    domains: [inventory]
+    evidence: [AI inventory export with record counts, Inventory coverage attestation, Last-updated timestamps]
+    owner_role: AI Governance Lead / CIO office
+    priority: critical
+    modules: [Register]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.6]
+      iso_42001: [A.4.2, "7.5"]
+      eu_ai_act: [Art. 26, Art. 49]
+
+  - id: EI-02
+    title: AI risk classification and tiering
+    pillar: EI
+    objective: Classify every AI system by business criticality, data sensitivity, decision impact, autonomy and regulatory relevance and assign a risk tier.
+    applies_to: all
+    domains: [inventory, risk_lifecycle]
+    evidence: [Classification criteria, Risk tier per inventory record, Tiering approval records]
+    owner_role: AI Risk Lead
+    priority: critical
+    modules: [Register, Assess]
+    mappings:
+      nist_ai_rmf: [MAP 1.1, MAP 1.5, GOVERN 1.3]
+      iso_42001: ["6.1.2", A.5.2]
+      eu_ai_act: [Art. 6]
+
+  - id: EI-03
+    title: Accountable owner per AI system
+    pillar: EI
+    objective: Assign a named accountable business owner and technical owner to every AI system.
+    applies_to: all
+    domains: [inventory, strategy]
+    evidence: [Owner fields populated in inventory, Owner acceptance records]
+    owner_role: Business unit leaders
+    priority: critical
+    modules: [Register]
+    mappings:
+      nist_ai_rmf: [GOVERN 2.1]
+      iso_42001: [A.3.2, A.10.2]
+      eu_ai_act: [Art. 26]
+
+  - id: EI-04
+    title: Intended purpose and context of use
+    pillar: EI
+    objective: Document intended purpose, users, affected parties, context of use and foreseeable misuse for each AI system.
+    applies_to: all
+    domains: [inventory, fairness_transparency]
+    evidence: [System profile with intended purpose, Users and affected parties, Foreseeable misuse analysis]
+    owner_role: Product Owner
+    priority: high
+    modules: [Register, Assess]
+    mappings:
+      nist_ai_rmf: [MAP 1.1, MAP 1.2, MAP 3.4]
+      iso_42001: [A.6.2.2, A.9.4]
+      eu_ai_act: [Art. 11, Art. 13]
+
+  - id: EI-05
+    title: Model, prompt and component registry
+    pillar: EI
+    objective: Record models, versions, prompts, system instructions, fine-tunes and configuration for each AI system.
+    applies_to: all
+    domains: [inventory, risk_lifecycle]
+    evidence: [Model registry entries with versions, Prompt/config version history]
+    owner_role: ML / Platform Engineering Lead
+    priority: high
+    modules: [Register]
+    mappings:
+      nist_ai_rmf: [MAP 4.1, GOVERN 1.6]
+      iso_42001: [A.4.4, A.6.2.3]
+      eu_ai_act: [Art. 11]
+
+  - id: EI-06
+    title: Data source and lineage registry
+    pillar: EI
+    objective: Record data sources, classifications, provenance and data flows used to train, ground or operate each AI system.
+    applies_to: all
+    domains: [inventory, data_privacy]
+    evidence: [Data source register, Data-flow diagrams, Data classification per source]
+    owner_role: Data Owner / CDO office
+    priority: high
+    modules: [Register]
+    mappings:
+      nist_ai_rmf: [MAP 2.3, MEASURE 2.10]
+      iso_42001: [A.4.3, A.7.5]
+      eu_ai_act: [Art. 10]
+
+  - id: EI-07
+    title: Agent and tool registry
+    pillar: EI
+    objective: Register every AI agent, the tools, APIs, plugins and data stores it can access, and its permitted actions.
+    applies_to: agentic
+    domains: [inventory, security]
+    evidence: [Agent registry entries, Tool/permission manifest per agent]
+    owner_role: Platform Engineering Lead
+    priority: critical
+    modules: [Register, Shield]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.6, MAP 4.1]
+      iso_42001: [A.4.4, A.6.2.3]
+      eu_ai_act: [Art. 11]
+
+  - id: EI-08
+    title: Third-party and vendor AI inventory
+    pillar: EI
+    objective: Inventory vendor AI products, embedded AI features and foundation-model providers with contract and data-processing details.
+    applies_to: third_party
+    domains: [inventory]
+    evidence: [Vendor AI register, Contract/DPA references]
+    owner_role: Procurement / Vendor Risk
+    priority: high
+    modules: [Register]
+    mappings:
+      nist_ai_rmf: [GOVERN 6.1]
+      iso_42001: [A.10.3]
+      eu_ai_act: [Art. 25]
+
+  - id: EI-09
+    title: Shadow AI discovery
+    pillar: EI
+    objective: Periodically discover unregistered AI use (SaaS AI features, API keys, browser tools) and bring it into the inventory.
+    applies_to: all
+    domains: [inventory]
+    evidence: [Discovery scan reports, Reconciliation records]
+    owner_role: CISO / IT Asset Management
+    priority: medium
+    modules: [Register]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.6]
+      iso_42001: [A.4.2]
+      eu_ai_act: []
+
+  - id: EI-10
+    title: Dependency and integration mapping
+    pillar: EI
+    objective: Map upstream and downstream dependencies and integrations for each material AI system.
+    applies_to: high_risk
+    domains: [inventory]
+    evidence: [Dependency map, Integration inventory]
+    owner_role: Enterprise Architecture
+    priority: medium
+    modules: [Register]
+    mappings:
+      nist_ai_rmf: [MAP 4.1, MAP 4.2]
+      iso_42001: [A.4.5, A.6.2.3]
+      eu_ai_act: [Art. 11]
+
+  - id: EI-11
+    title: Inventory attestation and recertification
+    pillar: EI
+    objective: Require owners to periodically attest that inventory records are complete and accurate.
+    applies_to: all
+    domains: [inventory, assurance]
+    evidence: [Attestation records, Exceptions for stale records]
+    owner_role: AI Governance Lead
+    priority: medium
+    modules: [Register, Assurance]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.5]
+      iso_42001: ["9.1"]
+      eu_ai_act: []
+
+  - id: EI-12
+    title: Use-case intake register
+    pillar: EI
+    objective: Capture every proposed AI use case through a standard intake before build or procurement.
+    applies_to: all
+    domains: [inventory, risk_lifecycle]
+    evidence: [Intake form, Intake register with status]
+    owner_role: AI CoE
+    priority: high
+    modules: [Register, Assess]
+    mappings:
+      nist_ai_rmf: [MAP 1.1]
+      iso_42001: [A.5.2, A.6.1.3]
+      eu_ai_act: [Art. 6]
+
+  # ------------------------------------------------------------------ GL
+  - id: GL-01
+    title: Intake triage workflow
+    pillar: GL
+    objective: Triage each intake against risk triggers to route it to the right assessment depth and approvers.
+    applies_to: all
+    domains: [risk_lifecycle]
+    evidence: [Triage criteria, Triage decisions with rationale]
+    owner_role: AI CoE
+    priority: high
+    modules: [Assess, Control]
+    mappings:
+      nist_ai_rmf: [MAP 1.1, MAP 1.6]
+      iso_42001: ["8.1", A.6.1.3]
+      eu_ai_act: [Art. 9]
+
+  - id: GL-02
+    title: Pre-deployment risk and impact assessment
+    pillar: GL
+    objective: Complete a documented risk and impact assessment, proportionate to risk tier, before production deployment.
+    applies_to: all
+    domains: [risk_lifecycle, fairness_transparency]
+    evidence: [Completed risk/impact assessment, Reviewer sign-off, Residual-risk statement]
+    owner_role: AI Risk Lead
+    priority: critical
+    modules: [Assess]
+    mappings:
+      nist_ai_rmf: [MAP 1.1, MAP 3.1, MAP 5.1, MEASURE 1.1]
+      iso_42001: ["6.1.4", "8.4", A.5.2, A.5.3, A.5.4]
+      eu_ai_act: [Art. 9, Art. 27]
+
+  - id: GL-03
+    title: Risk-tiered approval gates
+    pillar: GL
+    objective: Require approvals by authorities proportionate to risk tier before deployment, with recorded conditions.
+    applies_to: all
+    domains: [risk_lifecycle]
+    evidence: [Approval matrix by tier, Approval records with conditions]
+    owner_role: AI Governance Forum
+    priority: critical
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [MANAGE 1.1, GOVERN 1.4]
+      iso_42001: ["8.1", A.6.2.5]
+      eu_ai_act: [Art. 9, Art. 43]
+
+  - id: GL-04
+    title: Change management and reassessment triggers
+    pillar: GL
+    objective: Subject model, prompt, data, vendor, tool and agent changes to change control and trigger reassessment when material.
+    applies_to: all
+    domains: [risk_lifecycle]
+    evidence: [Change policy with AI triggers, Change tickets referencing reassessment]
+    owner_role: Engineering / Change Advisory Board
+    priority: high
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.4, MANAGE 2.4]
+      iso_42001: ["6.3", A.6.2.6]
+      eu_ai_act: [Art. 43]
+
+  - id: GL-05
+    title: Pre-release validation and testing
+    pillar: GL
+    objective: Validate performance, robustness and safety against acceptance criteria before release.
+    applies_to: all
+    domains: [risk_lifecycle, security]
+    evidence: [Test plan and results, Acceptance criteria, Release sign-off]
+    owner_role: QA / ML Engineering
+    priority: high
+    modules: [Assess, Assurance]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.1, MEASURE 2.3, MEASURE 2.5]
+      iso_42001: [A.6.2.4]
+      eu_ai_act: [Art. 9, Art. 15]
+
+  - id: GL-06
+    title: Technical documentation
+    pillar: GL
+    objective: Maintain technical documentation describing design, data, performance, limitations and controls for each material AI system.
+    applies_to: high_risk
+    domains: [risk_lifecycle, assurance]
+    evidence: [Technical documentation pack, Model/system card]
+    owner_role: Product / ML Engineering
+    priority: high
+    modules: [Control, Assurance]
+    mappings:
+      nist_ai_rmf: [MAP 2.2, MEASURE 2.9]
+      iso_42001: ["7.5", A.6.2.7, A.6.2.3]
+      eu_ai_act: [Art. 11]
+
+  - id: GL-07
+    title: Deployment conditions and go-live readiness
+    pillar: GL
+    objective: Verify that approval conditions, monitoring, oversight and rollback are in place before go-live.
+    applies_to: all
+    domains: [risk_lifecycle, oversight_operations]
+    evidence: [Go-live checklist, Condition verification record]
+    owner_role: Product Owner
+    priority: high
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [MANAGE 1.2, MANAGE 2.1]
+      iso_42001: [A.6.2.5]
+      eu_ai_act: [Art. 26]
+
+  - id: GL-08
+    title: Post-deployment monitoring
+    pillar: GL
+    objective: Monitor production AI systems for performance, drift, misuse, incidents and unexpected behaviour with defined thresholds.
+    applies_to: all
+    domains: [oversight_operations]
+    evidence: [Monitoring dashboards, Alert thresholds, Monitoring review records]
+    owner_role: ML Ops / Product Owner
+    priority: high
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [MEASURE 3.1, MANAGE 4.1]
+      iso_42001: ["9.1", A.6.2.6]
+      eu_ai_act: [Art. 26, Art. 72]
+
+  - id: GL-09
+    title: Retirement and decommissioning
+    pillar: GL
+    objective: Define how AI systems are restricted, remediated, retired or decommissioned safely, including data and model disposal.
+    applies_to: all
+    domains: [risk_lifecycle]
+    evidence: [Decommissioning procedure, Retirement records]
+    owner_role: Product Owner
+    priority: medium
+    modules: [Control, Register]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.7, MANAGE 2.4]
+      iso_42001: [A.6.2.6]
+      eu_ai_act: []
+
+  - id: GL-10
+    title: Exceptions and risk acceptance
+    pillar: GL
+    objective: Record exceptions and residual-risk acceptances with an accountable approver, expiry date and compensating controls.
+    applies_to: all
+    domains: [risk_lifecycle]
+    evidence: [Exception register, Approver and expiry per exception]
+    owner_role: AI Governance Forum
+    priority: high
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [MANAGE 1.3, MANAGE 1.4]
+      iso_42001: ["6.1.3"]
+      eu_ai_act: [Art. 9]
+
+  - id: GL-11
+    title: Vendor AI due diligence and contract controls
+    pillar: GL
+    objective: Perform AI-specific due diligence on vendors and include AI terms (data use, model changes, incident notice, audit rights) in contracts.
+    applies_to: third_party
+    domains: [risk_lifecycle, data_privacy]
+    evidence: [Vendor AI questionnaire, Contract AI clauses, Due-diligence approval]
+    owner_role: Procurement / Vendor Risk
+    priority: high
+    modules: [Assess, Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 6.1, MAP 4.1]
+      iso_42001: [A.10.3, A.10.4]
+      eu_ai_act: [Art. 25]
+
+  - id: GL-12
+    title: Periodic review and recertification
+    pillar: GL
+    objective: Re-review AI systems at a cadence set by risk tier and recertify continued use.
+    applies_to: all
+    domains: [risk_lifecycle, assurance]
+    evidence: [Review calendar by tier, Recertification records]
+    owner_role: AI Risk Lead
+    priority: medium
+    modules: [Control, Assurance]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.5]
+      iso_42001: ["9.3"]
+      eu_ai_act: [Art. 9]
+
+  # ------------------------------------------------------------------ IS
+  - id: IS-01
+    title: AI threat modelling
+    pillar: IS
+    objective: Threat-model AI systems, including prompt injection, data poisoning, model extraction and unsafe tool use.
+    applies_to: all
+    domains: [security]
+    evidence: [Threat model per material system, Mitigation tracking]
+    owner_role: CISO / Security Architecture
+    priority: high
+    modules: [Shield, Assess]
+    mappings:
+      nist_ai_rmf: [MAP 5.1, MEASURE 2.7]
+      iso_42001: ["6.1.2", A.6.1.3]
+      eu_ai_act: [Art. 15]
+
+  - id: IS-02
+    title: Data governance and quality
+    pillar: IS
+    objective: Govern the quality, representativeness and fitness of data used to train, fine-tune or ground AI systems.
+    applies_to: all
+    domains: [data_privacy]
+    evidence: [Data quality checks, Dataset documentation, Data approval records]
+    owner_role: Data Owner
+    priority: high
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [MAP 2.3, MEASURE 2.1]
+      iso_42001: [A.7.2, A.7.3, A.7.4, A.7.6]
+      eu_ai_act: [Art. 10]
+
+  - id: IS-03
+    title: Privacy assessment and data minimisation
+    pillar: IS
+    objective: Assess privacy, consent, retention, cross-border transfer and minimisation requirements for AI processing of personal data.
+    applies_to: all
+    domains: [data_privacy]
+    evidence: [Privacy/data-protection impact assessment, Retention schedule, Transfer assessment]
+    owner_role: DPO / Privacy Lead
+    priority: critical
+    modules: [Assess, Control]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.10, MAP 1.1]
+      iso_42001: [A.7.4, A.5.4]
+      eu_ai_act: [Art. 10]
+
+  - id: IS-04
+    title: Sensitive data redaction and masking
+    pillar: IS
+    objective: Redact, mask or exclude sensitive data from prompts, responses, logs and external model calls.
+    applies_to: genai
+    domains: [data_privacy, security]
+    evidence: [Redaction configuration, Redaction test results, Log samples showing masking]
+    owner_role: Platform Engineering / Privacy Lead
+    priority: critical
+    modules: [Shield]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.10]
+      iso_42001: [A.7.4, A.6.2.6]
+      eu_ai_act: [Art. 10]
+
+  - id: IS-05
+    title: Bias and fairness testing
+    pillar: IS
+    objective: Test AI systems for bias and discriminatory outcomes across relevant groups before release and periodically.
+    applies_to: high_risk
+    domains: [fairness_transparency]
+    evidence: [Fairness test plan and results, Mitigation records]
+    owner_role: Responsible AI Lead / Data Science
+    priority: high
+    modules: [Assess, Assurance]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.11]
+      iso_42001: [A.5.4, A.7.4]
+      eu_ai_act: [Art. 10]
+
+  - id: IS-06
+    title: Safety and harm evaluation
+    pillar: IS
+    objective: Evaluate AI systems for safety risks and unintended harms to individuals, groups and society.
+    applies_to: high_risk
+    domains: [fairness_transparency]
+    evidence: [Harm analysis, Safety evaluation results, Residual-risk sign-off]
+    owner_role: Responsible AI Lead
+    priority: high
+    modules: [Assess]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.6, MAP 5.1]
+      iso_42001: [A.5.4, A.5.5]
+      eu_ai_act: [Art. 9]
+
+  - id: IS-07
+    title: Accuracy and robustness testing
+    pillar: IS
+    objective: Measure accuracy and robustness, including degraded and adversarial conditions, against declared levels.
+    applies_to: high_risk
+    domains: [security, risk_lifecycle]
+    evidence: [Accuracy metrics with thresholds, Robustness test results]
+    owner_role: ML Engineering
+    priority: high
+    modules: [Assess, Assurance]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.5]
+      iso_42001: [A.6.2.4]
+      eu_ai_act: [Art. 15]
+
+  - id: IS-08
+    title: Transparency and AI disclosures
+    pillar: IS
+    objective: Inform users when they interact with AI or when AI materially influences a decision, and provide explanations where appropriate.
+    applies_to: all
+    domains: [fairness_transparency]
+    evidence: [Disclosure text and placement, Explanation approach, User-facing documentation]
+    owner_role: Product Owner / Legal
+    priority: high
+    modules: [Control]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.8, MEASURE 2.9]
+      iso_42001: [A.8.2, A.8.5]
+      eu_ai_act: [Art. 13, Art. 50]
+
+  - id: IS-09
+    title: Human oversight design
+    pillar: IS
+    objective: Design human review, override, escalation and appeal mechanisms proportionate to decision impact.
+    applies_to: high_risk
+    domains: [oversight_operations, fairness_transparency]
+    evidence: [Oversight design document, Override/appeal procedures, Oversight operation records]
+    owner_role: Business Owner
+    priority: critical
+    modules: [Control, Shield]
+    mappings:
+      nist_ai_rmf: [GOVERN 3.2, MAP 3.5]
+      iso_42001: [A.9.2, A.6.2.6]
+      eu_ai_act: [Art. 14, Art. 26]
+
+  - id: IS-10
+    title: Secure model and prompt supply chain
+    pillar: IS
+    objective: Secure models, weights, prompts, plugins and dependencies against tampering and untrusted sources.
+    applies_to: genai
+    domains: [security]
+    evidence: [Approved model/provider list, Integrity checks, Dependency scanning results]
+    owner_role: Security Architecture
+    priority: high
+    modules: [Shield]
+    mappings:
+      nist_ai_rmf: [GOVERN 6.1, MEASURE 2.7]
+      iso_42001: [A.10.3, A.6.2.3]
+      eu_ai_act: [Art. 15]
+
+  - id: IS-11
+    title: Least-privilege tool access
+    pillar: IS
+    objective: Grant AI agents only the tools, scopes and data access required for their declared purpose; deny by default.
+    applies_to: agentic
+    domains: [security]
+    evidence: [Tool permission matrix, Access-scope configuration, Access review records]
+    owner_role: Platform Engineering / IAM
+    priority: critical
+    modules: [Shield]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.7, MANAGE 2.2]
+      iso_42001: [A.6.2.6, A.4.4]
+      eu_ai_act: [Art. 15, Art. 14]
+
+  - id: IS-12
+    title: Runtime guardrails and policy enforcement
+    pillar: IS
+    objective: Evaluate prompts, responses and tool calls against versioned runtime policy before execution.
+    applies_to: genai
+    domains: [security, oversight_operations]
+    evidence: [Versioned runtime policy, Policy decision logs, Enforcement-mode configuration]
+    owner_role: Platform Engineering / Security
+    priority: high
+    modules: [Shield]
+    mappings:
+      nist_ai_rmf: [MANAGE 2.2, MANAGE 2.4, MEASURE 2.7]
+      iso_42001: [A.6.2.6]
+      eu_ai_act: [Art. 15, Art. 14]
+
+  - id: IS-13
+    title: Human approval for high-impact actions
+    pillar: IS
+    objective: Require designated human approval before AI agents execute high-impact, irreversible or external actions.
+    applies_to: agentic
+    domains: [oversight_operations, security]
+    evidence: [Approval rules in runtime policy, Approval records with approver identity]
+    owner_role: Business Owner
+    priority: critical
+    modules: [Shield, Control]
+    mappings:
+      nist_ai_rmf: [GOVERN 3.2, MANAGE 2.2]
+      iso_42001: [A.9.2, A.6.2.6]
+      eu_ai_act: [Art. 14]
+
+  - id: IS-14
+    title: Prompt-injection and data-leakage testing
+    pillar: IS
+    objective: Test LLM applications and agents for prompt injection, jailbreak, data leakage and unsafe tool use before release and after material change.
+    applies_to: genai
+    domains: [security]
+    evidence: [Red-team / adversarial test results, Remediation records, Re-test evidence]
+    owner_role: Security Testing / Red Team
+    priority: critical
+    modules: [Shield, Assess]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.7]
+      iso_42001: [A.6.2.4]
+      eu_ai_act: [Art. 15]
+
+  - id: IS-15
+    title: Kill switch and rollback
+    pillar: IS
+    objective: Be able to disable or roll back an AI system, model, agent, tool or tenant quickly after a security or safety incident.
+    applies_to: all
+    domains: [security, oversight_operations]
+    evidence: [Kill-switch procedure, Kill-switch test record with time-to-disable, Rollback runbook]
+    owner_role: Platform Engineering / SRE
+    priority: critical
+    modules: [Shield]
+    mappings:
+      nist_ai_rmf: [MANAGE 2.4]
+      iso_42001: [A.6.2.6]
+      eu_ai_act: [Art. 14]
+
+  - id: IS-16
+    title: Rate, budget and resource limits
+    pillar: IS
+    objective: Enforce rate, token, cost and tool-call limits to contain runaway agents, abuse and denial-of-wallet.
+    applies_to: genai
+    domains: [security]
+    evidence: [Limit configuration, Limit-breach alerts]
+    owner_role: Platform Engineering / FinOps
+    priority: medium
+    modules: [Shield]
+    mappings:
+      nist_ai_rmf: [MANAGE 2.2]
+      iso_42001: [A.4.5, A.6.2.6]
+      eu_ai_act: [Art. 15]
+
+  # ------------------------------------------------------------------ SE
+  - id: SE-01
+    title: Control testing programme
+    pillar: SE
+    objective: Test AI controls periodically for design and operating effectiveness and retain results.
+    applies_to: all
+    domains: [assurance]
+    evidence: [Control test plan, Test results with dates and testers]
+    owner_role: Second line / Compliance Testing
+    priority: high
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [MEASURE 1.3, MEASURE 4.1]
+      iso_42001: ["9.1", "9.2"]
+      eu_ai_act: [Art. 17]
+
+  - id: SE-02
+    title: Evidence repository and retention
+    pillar: SE
+    objective: Store governance evidence in a controlled repository with retention aligned to obligations.
+    applies_to: all
+    domains: [assurance]
+    evidence: [Evidence repository, Retention policy, Access controls on evidence]
+    owner_role: AI Governance Lead
+    priority: high
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.4]
+      iso_42001: ["7.5"]
+      eu_ai_act: [Art. 18, Art. 19]
+
+  - id: SE-03
+    title: Governance metrics and leadership reporting
+    pillar: SE
+    objective: Report AI governance KPIs to leadership and use them to drive corrective action.
+    applies_to: all
+    domains: [assurance, strategy]
+    evidence: [KPI dashboard, Leadership pack, Actions arising]
+    owner_role: AI Governance Lead
+    priority: medium
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.5, MANAGE 4.2]
+      iso_42001: ["9.1", "9.3"]
+      eu_ai_act: []
+
+  - id: SE-04
+    title: AI incident management and reporting
+    pillar: SE
+    objective: Detect, triage, contain, report and learn from AI incidents, including regulatory notification where required.
+    applies_to: all
+    domains: [oversight_operations, assurance]
+    evidence: [AI incident procedure, Incident log, Post-incident reviews]
+    owner_role: CISO / Operational Risk
+    priority: high
+    modules: [Assurance, Shield]
+    mappings:
+      nist_ai_rmf: [MANAGE 4.3, MANAGE 2.3]
+      iso_42001: ["10.2", A.8.4]
+      eu_ai_act: [Art. 73, Art. 26]
+
+  - id: SE-05
+    title: Audit-ready evidence packs
+    pillar: SE
+    objective: Produce an audit-ready evidence pack for any material AI system on request.
+    applies_to: high_risk
+    domains: [assurance]
+    evidence: [Sample evidence pack, Time-to-produce metric]
+    owner_role: AI Governance Lead
+    priority: high
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.4, MEASURE 2.9]
+      iso_42001: ["7.5", "9.2"]
+      eu_ai_act: [Art. 11, Art. 18]
+
+  - id: SE-06
+    title: Corrective action and continuous improvement
+    pillar: SE
+    objective: Track nonconformities and corrective actions to closure and feed lessons into policies and controls.
+    applies_to: all
+    domains: [assurance]
+    evidence: [Corrective action register, Closure evidence]
+    owner_role: AI Governance Lead
+    priority: medium
+    modules: [Assurance, Control]
+    mappings:
+      nist_ai_rmf: [MANAGE 4.2]
+      iso_42001: ["10.1", "10.2"]
+      eu_ai_act: [Art. 20]
+
+  - id: SE-07
+    title: Management review
+    pillar: SE
+    objective: Conduct periodic management review of the AI governance system's suitability and effectiveness.
+    applies_to: all
+    domains: [assurance, strategy]
+    evidence: [Management review minutes, Decisions and actions]
+    owner_role: Executive sponsor
+    priority: medium
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [GOVERN 1.5]
+      iso_42001: ["9.3"]
+      eu_ai_act: [Art. 17]
+
+  - id: SE-08
+    title: Immutable action logging
+    pillar: SE
+    objective: Log AI decisions, tool calls, policy decisions and approvals in tamper-evident, retained logs.
+    applies_to: all
+    domains: [assurance, security]
+    evidence: [Log configuration, Tamper-evidence mechanism, Retention settings, Sample log extract]
+    owner_role: Platform Engineering / Security Operations
+    priority: critical
+    modules: [Shield, Assurance]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.8, MANAGE 4.1]
+      iso_42001: [A.6.2.8]
+      eu_ai_act: [Art. 12, Art. 19, Art. 26]
+
+  - id: SE-09
+    title: Post-market monitoring plan
+    pillar: SE
+    objective: Maintain a post-market / post-deployment monitoring plan for high-risk AI systems.
+    applies_to: high_risk
+    domains: [oversight_operations, assurance]
+    evidence: [Post-market monitoring plan, Monitoring outputs]
+    owner_role: Product Owner
+    priority: high
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [MANAGE 4.1]
+      iso_42001: ["9.1", A.6.2.6]
+      eu_ai_act: [Art. 72]
+
+  - id: SE-10
+    title: Independent review and internal audit
+    pillar: SE
+    objective: Subject AI governance to independent review or internal audit on a risk-based cycle.
+    applies_to: all
+    domains: [assurance]
+    evidence: [Internal audit plan, Audit reports, Management responses]
+    owner_role: Internal Audit
+    priority: medium
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [MEASURE 1.3]
+      iso_42001: ["9.2"]
+      eu_ai_act: []
+
+  - id: SE-11
+    title: Stakeholder transparency reporting
+    pillar: SE
+    objective: Provide deployers, customers and affected parties with appropriate information on AI system capabilities, limits and governance.
+    applies_to: high_risk
+    domains: [fairness_transparency, assurance]
+    evidence: [Instructions for use, Customer-facing AI documentation, Transparency reports]
+    owner_role: Product Owner
+    priority: medium
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [GOVERN 4.2, MEASURE 2.9]
+      iso_42001: [A.8.2, A.8.5]
+      eu_ai_act: [Art. 13]
+
+  - id: SE-12
+    title: Model performance and drift monitoring
+    pillar: SE
+    objective: Monitor model performance and data/concept drift against thresholds and trigger review when breached.
+    applies_to: all
+    domains: [oversight_operations]
+    evidence: [Drift metrics and thresholds, Alert history, Review records]
+    owner_role: ML Ops
+    priority: high
+    modules: [Assurance]
+    mappings:
+      nist_ai_rmf: [MEASURE 2.4, MEASURE 3.1]
+      iso_42001: [A.6.2.6]
+      eu_ai_act: [Art. 72, Art. 15]

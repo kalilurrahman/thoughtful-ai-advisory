@@ -1,0 +1,102 @@
+{% set a = assessment %}
+<script type="application/json" id="aegis-assessment-data">{{ a.bundle | json_script }}</script>
+<section class="tool assessment" id="assessment" data-tool="maturity-assessment" aria-labelledby="assessment-heading" hidden>
+  <h2 id="assessment-heading" class="visually-hidden">AI Governance Maturity Self-Assessment</h2>
+  <div class="assessment-progress" id="assessment-progress-wrap">
+    <p class="progress-label" id="assessment-progress-label">Step 1 of {{ a.total_steps }}</p>
+    <progress id="assessment-progress" max="{{ a.total_steps }}" value="1" aria-labelledby="assessment-progress-label"></progress>
+  </div>
+  <form id="assessment-form" class="assessment-form" novalidate>
+    <div class="error-summary" id="assessment-errors" role="alert" tabindex="-1" hidden>
+      <h3 class="error-summary-title">Please answer the following</h3>
+      <ul></ul>
+    </div>
+    <section class="assessment-step" data-step="0" data-step-title="Your organization" aria-labelledby="step-0-title">
+      <h3 class="step-title" id="step-0-title" tabindex="-1">Your organization</h3>
+      <p class="small">About {{ a.estimated_minutes }} minutes. Your answers stay in this browser tab until you choose to request the detailed report.</p>
+      {% for f in a.profile_fields %}
+      {% if f.type == 'select' %}
+      <div class="field">
+        <label for="pf-{{ f.id }}">{{ f.label }}{% if f.required %} <span class="req">(required)</span>{% endif %}</label>
+        <select id="pf-{{ f.id }}" name="{{ f.id }}" data-profile="{{ f.id }}"{% if f.required %} required{% endif %}>
+          <option value="">Select…</option>
+          {% for val, lab in f.choices %}<option value="{{ val }}">{{ lab }}</option>{% endfor %}
+        </select>
+        <p class="field-error" id="pf-{{ f.id }}-error" hidden></p>
+      </div>
+      {% else %}
+      <fieldset class="field fieldset-inline" id="pf-{{ f.id }}" data-profile-group="{{ f.id }}">
+        <legend>{{ f.label }}{% if f.required %} <span class="req">(required)</span>{% endif %}</legend>
+        <div class="choice"><input type="radio" id="pf-{{ f.id }}-yes" name="{{ f.id }}" value="true" data-profile="{{ f.id }}"><label for="pf-{{ f.id }}-yes">Yes</label></div>
+        <div class="choice"><input type="radio" id="pf-{{ f.id }}-no" name="{{ f.id }}" value="false" data-profile="{{ f.id }}"><label for="pf-{{ f.id }}-no">No</label></div>
+        <p class="field-error" id="pf-{{ f.id }}-error" hidden></p>
+      </fieldset>
+      {% endif %}
+      {% endfor %}
+    </section>
+    {% for step in a.steps %}
+    {% set sn = loop.index %}
+    <section class="assessment-step" data-step="{{ sn }}" data-step-title="{{ step.domain.name }}" aria-labelledby="step-{{ sn }}-title" hidden>
+      <h3 class="step-title" id="step-{{ sn }}-title" tabindex="-1">{{ step.domain.name }}</h3>
+      <p class="small">Choose the statement that best describes your organization today. Answers are self-reported (<em>User-asserted</em>).</p>
+      {% for q in step.questions %}
+      {% set qid = q.id | lower %}
+      <fieldset class="question" id="q-{{ qid }}" data-question="{{ q.id }}">
+        <legend><span class="question-id">{{ q.id }}</span> {{ q.text }}</legend>
+        <div class="scale">
+          {% for s in a.scale %}
+          <div class="scale-option">
+            <input type="radio" id="q-{{ qid }}-{{ s.score }}" name="{{ q.id }}" value="{{ s.score }}" data-question="{{ q.id }}">
+            <label for="q-{{ qid }}-{{ s.score }}"><span class="scale-score">{{ s.score }}</span> <span class="scale-label">{{ s.label }}</span> <span class="scale-desc">{{ s.description }}</span></label>
+          </div>
+          {% endfor %}
+        </div>
+        <p class="field-error" id="q-{{ qid }}-error" hidden></p>
+      </fieldset>
+      {% endfor %}
+    </section>
+    {% endfor %}
+    <div class="step-nav">
+      <button class="btn btn-secondary" type="button" id="assessment-back" hidden>Back</button>
+      <button class="btn btn-primary" type="submit" id="assessment-next">Next</button>
+    </div>
+  </form>
+
+  <section class="assessment-preliminary" id="assessment-preliminary" aria-labelledby="prelim-title" hidden>
+    <h2 id="prelim-title" tabindex="-1">Your preliminary result</h2>
+    <p class="evidence-note"><span class="badge badge-asserted">User-asserted</span> Based only on your self-reported answers. No evidence has been reviewed.</p>
+    <div class="score-summary">
+      <p class="score-big"><span id="prelim-score">—</span><span class="score-max"> / 100</span></p>
+      <p class="score-level">Maturity level: <strong id="prelim-level">—</strong></p>
+      <p id="prelim-interpretation"></p>
+    </div>
+    <h3>Domain scores</h3>
+    <ul class="domain-bars" id="prelim-domains"></ul>
+    <div class="gate" id="assessment-gate-panel">
+      <h3 id="gate-title">Get your detailed report</h3>
+      <p>Your detailed report includes strengths, gaps, critical risk flags, a 30/60/90-day plan, recommended AEGIS controls with framework mappings, and indicative readiness indicators.</p>
+      <form id="assessment-gate" class="aegis-form" novalidate aria-labelledby="gate-title">
+        <div class="error-summary" id="gate-errors" role="alert" tabindex="-1" hidden>
+          <h4 class="error-summary-title">Please correct the following</h4>
+          <ul></ul>
+        </div>
+        <div class="field"><label for="gate-name">Full name <span class="req">(required)</span></label><input id="gate-name" name="name" type="text" autocomplete="name" maxlength="120" required><p class="field-error" id="gate-name-error" hidden></p></div>
+        <div class="field"><label for="gate-email">Work email <span class="req">(required)</span></label><p class="hint" id="gate-email-hint">Please use your business email address.</p><input id="gate-email" name="email" type="email" autocomplete="email" maxlength="254" spellcheck="false" required aria-describedby="gate-email-hint"><p class="field-error" id="gate-email-error" hidden></p></div>
+        <div class="field"><label for="gate-company">Organization <span class="req">(required)</span></label><input id="gate-company" name="company" type="text" autocomplete="organization" maxlength="160" required><p class="field-error" id="gate-company-error" hidden></p></div>
+        <div class="field"><label for="gate-role">Job title</label><input id="gate-role" name="role" type="text" autocomplete="organization-title" maxlength="120"><p class="field-error" id="gate-role-error" hidden></p></div>
+        <div class="hp-field" aria-hidden="true"><label for="gate-website">Leave this field empty</label><input id="gate-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <div class="field field--check"><input id="gate-consent" name="consent" type="checkbox" value="true" required><label for="gate-consent">I agree that AEGIS may store my details and answers to prepare and send my report. See our <a href="{{ site.privacy_url }}">privacy notice</a>. <span class="req">(required)</span></label><p class="field-error" id="gate-consent-error" hidden></p></div>
+        <div class="field field--check"><input id="gate-marketing" name="marketing_opt_in" type="checkbox" value="true"><label for="gate-marketing">Also send me the occasional AEGIS governance briefing (optional).</label></div>
+        <button class="btn btn-primary" type="submit">Get my detailed report</button>
+        <div class="form-status" id="gate-status" role="status" aria-live="polite" tabindex="-1"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="assessment-report" id="assessment-report" aria-labelledby="report-title" hidden>
+    <div class="report-delivery notice" id="report-delivery" role="status" tabindex="-1"></div>
+    <div class="report-actions" id="report-actions"></div>
+    <div id="report-body"></div>
+    <p class="report-restart"><button class="btn btn-secondary" type="button" id="assessment-restart">Start a new assessment</button></p>
+  </section>
+</section>

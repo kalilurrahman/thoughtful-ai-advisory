@@ -1,0 +1,231 @@
+# AEGIS Runtime Policy Pack — Coding / DevOps Agent
+# ---------------------------------------------------------------------------
+# For agents that read code, open draft pull requests, run CI and propose
+# deployments.
+# Design choices:
+#   * The agent works on its own branch prefix and can only open DRAFT pull
+#     requests; merging is a human step.
+#   * Production deployment always requires Release Manager approval.
+#   * Arbitrary shell, secret reads and infrastructure deletion are denied.
+#   * Outbound HTTP fetches are limited to an allow-list of documentation and
+#     package registries (exfiltration and dependency-confusion defence).
+#   * API keys / tokens are redacted from prompts, outputs and tool parameters.
+# Template status: draft. AEGIS supports readiness and evidence; it does not
+# certify compliance.
+# ---------------------------------------------------------------------------
+schema_version: aegis.policy/v1
+policy_id: pack-coding-devops-agent
+policy_name: Coding / DevOps Agent Runtime Policy
+description: >-
+  Guardrails for a software-engineering agent: read code, branch-scoped
+  writes, draft pull requests, CI runs, allow-listed fetches, and
+  approval-gated production deployment.
+version: 1.0.0
+status: draft
+owner: VP Engineering
+applies_to:
+  agent_name: ["coding-*", "devops-*", "*-swe-agent"]
+  environment: [dev, test, staging, production]
+  risk_tier: [Medium, High]
+  tenant: ["*"]
+  model: ["*"]
+rollout:
+  mode: observe
+  exit_criteria:
+    - At least 1,000 agent sessions evaluated; default-deny hits reviewed and tool registry updated
+    - No secrets observed in sampled redacted logs
+    - Production deployment approval tested end-to-end with the Release Manager role
+    - Kill-switch drill for deploy and repository tools completed within 15 minutes
+identity:
+  required: true
+  required_claims: [sub, tenant_id, roles]
+  allowed_roles: [engineer, sre]
+  tenant_binding: true
+tools:
+  default_action: DENY
+  deny_list:
+    - shell.exec
+    - secrets.read
+    - infra.delete_resource
+    - repo.force_push
+    - repo.merge_pull_request
+    - iam.update_policy
+  rules:
+    - id: tool.repo-read-file
+      tool: repo.read_file
+      operation: read
+      action: ALLOW
+      scopes: ["repo:read"]
+      parameters:
+        repo: {type: string, required: true, regex: "^[a-z0-9-]+/[a-z0-9._-]+$"}
+        path: {type: string, required: true, max_length: 400, regex: "^(?!.*\\.\\.)(?!/)[A-Za-z0-9._/@-]+$"}
+        ref: {type: string, max_length: 100}
+      citations: [IS-11, EI-07]
+    - id: tool.repo-search
+      tool: repo.search
+      operation: read
+      action: ALLOW
+      scopes: ["repo:read"]
+      parameters:
+        repo: {type: string, required: true, regex: "^[a-z0-9-]+/[a-z0-9._-]+$"}
+        query: {type: string, required: true, max_length: 300}
+      citations: [IS-11]
+    - id: tool.repo-create-branch
+      tool: repo.create_branch
+      operation: write
+      action: ALLOW
+      description: Branches must use the agent's prefix.
+      scopes: ["repo:branch:create"]
+      parameters:
+        repo: {type: string, required: true, regex: "^[a-z0-9-]+/[a-z0-9._-]+$"}
+        branch: {type: string, required: true, regex: "^agent/[a-z0-9][a-z0-9-]{2,60}$"}
+      max_calls_per_session: 3
+      citations: [IS-11, IS-12]
+    - id: tool.repo-commit
+      tool: repo.commit
+      operation: write
+      action: ALLOW
+      description: Commit only to agent-prefixed branches.
+      scopes: ["repo:contents:write"]
+      parameters:
+        repo: {type: string, required: true, regex: "^[a-z0-9-]+/[a-z0-9._-]+$"}
+        branch: {type: string, required: true, regex: "^agent/[a-z0-9][a-z0-9-]{2,60}$"}
+        message: {type: string, required: true, max_length: 500}
+        changes: {type: array, required: true, max_items: 50}
+      max_calls_per_session: 20
+      citations: [IS-11, IS-12]
+    - id: tool.repo-open-pull-request
+      tool: repo.open_pull_request
+      operation: write
+      action: ALLOW
+      description: Draft pull requests only; human review and merge.
+      scopes: ["repo:pulls:create"]
+      parameters:
+        repo: {type: string, required: true, regex: "^[a-z0-9-]+/[a-z0-9._-]+$"}
+        head: {type: string, required: true, regex: "^agent/[a-z0-9][a-z0-9-]{2,60}$"}
+        base: {type: string, required: true, enum: [main, develop]}
+        title: {type: string, required: true, max_length: 200}
+        body: {type: string, max_length: 10000}
+        draft: {type: boolean, required: true, enum: [true]}
+      max_calls_per_session: 3
+      citations: [IS-11, IS-09]
+    - id: tool.ci-run-tests
+      tool: ci.run_tests
+      operation: write
+      action: ALLOW
+      scopes: ["ci:run"]
+      parameters:
+        repo: {type: string, required: true, regex: "^[a-z0-9-]+/[a-z0-9._-]+$"}
+        ref: {type: string, required: true, regex: "^agent/[a-z0-9][a-z0-9-]{2,60}$"}
+      max_calls_per_session: 10
+      citations: [IS-11, IS-16]
+    - id: tool.ci-get-logs
+      tool: ci.get_logs
+      operation: read
+      action: ALLOW
+      scopes: ["ci:read"]
+      parameters:
+        run_id: {type: string, required: true, regex: "^[0-9]{1,20}$"}
+      citations: [IS-11]
+    - id: tool.http-fetch
+      tool: http.fetch
+      operation: read
+      action: ALLOW
+      description: Fetch documentation and package metadata from allow-listed hosts only.
+      scopes: ["net:egress:allowlist"]
+      parameters:
+        url: {type: string, required: true, max_length: 2000, domain_allow_list: [docs.python.org, pypi.org, developer.mozilla.org, nodejs.org]}
+        method: {type: string, enum: [GET]}
+      max_calls_per_session: 20
+      citations: [IS-11, IS-04]
+    - id: tool.deploy-release
+      tool: deploy.release
+      operation: write
+      action: ALLOW
+      description: Deploy to non-production freely; production requires Release Manager approval.
+      scopes: ["deploy:release"]
+      parameters:
+        service: {type: string, required: true, regex: "^[a-z0-9-]{2,60}$"}
+        version: {type: string, required: true, regex: "^v?[0-9]+\\.[0-9]+\\.[0-9]+$"}
+        environment: {type: string, required: true, enum: [dev, staging, production]}
+      require_approval_if:
+        - {param: environment, op: eq, value: production, reason: production deployment needs Release Manager approval}
+      approval_roles: [Release Manager]
+      max_calls_per_session: 2
+      citations: [IS-11, IS-13, IS-15]
+content:
+  max_input_chars: 100000
+  pii_redaction:
+    enabled: true
+    entities: [api_key, email, payment_card, iban, us_ssn, uk_nino, phone, ip_address]
+    apply_to: [prompt, response, tool_params, tool_output]
+    action: REDACT
+  prompt_injection:
+    enabled: true
+    apply_to: [prompt, tool_output, tool_params]
+    action: DENY
+    decode_obfuscation: true
+  jailbreak:
+    enabled: true
+    apply_to: [prompt]
+    action: DENY
+    decode_obfuscation: true
+  transforms:
+    - id: transform.strip_unapproved_urls
+      type: strip_unapproved_urls
+      apply_to: [response]
+      domain_allow_list: [github.example.com, docs.python.org, pypi.org, developer.mozilla.org]
+limits:
+  requests_per_minute: 60
+  tool_calls_per_session: 80
+  tokens_per_day: 5000000
+  cost_per_month_usd: 8000
+  action_on_breach: RATE_LIMIT
+  alert_at_percent: 80
+logging:
+  immutable_audit: true
+  prompt_logging: redacted
+  response_logging: redacted
+  tool_param_logging: redacted
+  sink: aegis_common.audit.AuditLog (hash-chained JSONL) forwarded to SIEM
+kill_switch:
+  enabled: true
+  engaged: false
+  scopes: [agent, tool, model, tenant]
+  engaged_targets: []
+  authorized_roles: [Security Operations Lead, VP Engineering, SRE On-call]
+  target_time_to_disable_minutes: 15
+rollback:
+  previous_version: null
+  strategy: disable
+  triggers:
+    - Secret or credential observed in agent output or commits
+    - Unexpected production change attributed to the agent
+    - Injection in repository content or CI logs reaches a tool call
+shadow_mode:
+  enabled: true
+  evaluate_as: enforce
+evidence_retention_days: 365
+approval:
+  required_approver_roles: [AI System Owner, Security Lead]
+  min_approvers: 2
+  separation_of_duties: true
+  approved_by: []
+  approved_at: null
+escalation:
+  queue: platform-security
+  contact_role: Security Operations Lead
+change_history:
+  - version: 1.0.0
+    date: "2026-10-21"
+    author: AEGIS Governance Content Lead
+    change_type: created
+    summary: Initial coding/devops agent pack.
+citations: [IS-04, IS-09, IS-10, IS-11, IS-12, IS-13, IS-14, IS-15, IS-16, SE-08, EI-07]
+metadata:
+  pack: coding_devops_agent
+  evidence_status: Inferred
+  intended_use: Software-engineering and DevOps agents.
+  tailoring_notes:
+    - The api_key detector matches common prefixed key formats only (sk-/pk-/api-/key-/token-); add a secret scanner in CI and pre-commit.
+    - Branch protection and required reviews must also be enforced in the source-control platform.

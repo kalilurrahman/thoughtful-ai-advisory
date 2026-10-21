@@ -1,0 +1,39 @@
+{# Generic lead form. Requires: form_def, form_key, prefix. Optional: compact. #}
+{% set p = prefix %}
+<form class="aegis-form{% if compact is defined and compact %} aegis-form--compact{% endif %}" id="{{ p }}-form" action="/api/contact" method="post" novalidate
+      data-aegis-form="{{ form_def.api_form }}" data-business-email="{{ 'true' if form_def.business_email else 'false' }}"
+      data-success="{{ form_def.success }}"{% if form_key == 'blueprint' %} data-download-label="{{ site.downloads.blueprint.label }}"{% if blueprint_available %} data-download="{{ site.downloads.blueprint.path }}"{% endif %}{% endif %}{% if tool_name is defined and tool_name %} data-tool="{{ tool_name }}"{% endif %}>
+  <div class="error-summary" id="{{ p }}-errors" role="alert" tabindex="-1" hidden>
+    <h3 class="error-summary-title">Please correct the following</h3>
+    <ul></ul>
+  </div>
+  {% for f in form_def.fields %}
+  {% set fid = p ~ '-' ~ f.name %}
+  <div class="field{% if f.type == 'textarea' %} field--wide{% endif %}">
+    <label for="{{ fid }}">{{ f.label }}{% if f.required %} <span class="req">(required)</span>{% endif %}</label>
+    {% if f.hint %}<p class="hint" id="{{ fid }}-hint">{{ f.hint }}</p>{% endif %}
+    {% if f.type == 'select' %}
+    <select id="{{ fid }}" name="{{ f.name }}"{% if f.required %} required{% endif %}{% if f.hint %} aria-describedby="{{ fid }}-hint"{% endif %}>
+      {% for val, lab in f.options %}<option value="{{ val }}">{{ lab }}</option>{% endfor %}
+    </select>
+    {% elif f.type == 'textarea' %}
+    <textarea id="{{ fid }}" name="{{ f.name }}" rows="{{ f.rows or 4 }}" maxlength="4000"{% if f.required %} required{% endif %}{% if f.hint %} aria-describedby="{{ fid }}-hint"{% endif %}></textarea>
+    {% else %}
+    <input id="{{ fid }}" name="{{ f.name }}" type="{{ f.type }}"{% if f.autocomplete %} autocomplete="{{ f.autocomplete }}"{% endif %} maxlength="{{ 254 if f.type == 'email' else 160 }}"{% if f.required %} required{% endif %}{% if f.hint %} aria-describedby="{{ fid }}-hint"{% endif %}{% if f.type == 'email' %} spellcheck="false"{% endif %}>
+    {% endif %}
+    <p class="field-error" id="{{ fid }}-error" hidden></p>
+  </div>
+  {% endfor %}
+  <div class="hp-field" aria-hidden="true">
+    <label for="{{ p }}-website">Leave this field empty</label>
+    <input id="{{ p }}-website" name="website" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <div class="field field--check">
+    <input id="{{ p }}-consent" name="consent" type="checkbox" value="true" required>
+    <label for="{{ p }}-consent">{{ form_def.consent }} See our <a href="{{ site.privacy_url }}">privacy notice</a>. <span class="req">(required)</span></label>
+    <p class="field-error" id="{{ p }}-consent-error" hidden></p>
+  </div>
+  <button class="btn btn-primary" type="submit">{{ form_def.submit }}</button>
+  <div class="form-status" id="{{ p }}-status" role="status" aria-live="polite" tabindex="-1"></div>
+  <noscript><p class="notice">This form needs JavaScript. You can also email <a href="mailto:{{ site.organization.email }}">{{ site.organization.email }}</a>.</p></noscript>
+</form>

@@ -1,0 +1,99 @@
+{
+  "synthetic": true,
+  "profile": {
+    "name": "Internal meeting summariser",
+    "purpose": "Summarise internal meeting transcripts",
+    "decision_impact": "none",
+    "affected_parties": "internal",
+    "data_sensitivity": "internal",
+    "autonomy": "suggests",
+    "domain_category": "internal_productivity",
+    "genai": true,
+    "vendor_model": true
+  },
+  "result": {
+    "tier": "Low",
+    "score": 20,
+    "provisional": false,
+    "factors": [
+      {
+        "factor": "decision_impact",
+        "value": "none",
+        "points": 0,
+        "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+      },
+      {
+        "factor": "affected_parties",
+        "value": "internal",
+        "points": 0,
+        "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+      },
+      {
+        "factor": "data_sensitivity",
+        "value": "internal",
+        "points": 5,
+        "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+      },
+      {
+        "factor": "autonomy",
+        "value": "suggests",
+        "points": 5,
+        "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+      },
+      {
+        "factor": "domain_category",
+        "value": "internal_productivity",
+        "points": 0,
+        "citation": "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
+      },
+      {
+        "factor": "generative_ai",
+        "value": true,
+        "points": 5,
+        "citation": "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+      },
+      {
+        "factor": "third_party_model",
+        "value": true,
+        "points": 5,
+        "citation": "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)"
+      }
+    ],
+    "triggers": [],
+    "missing_fields": [],
+    "clarifying_questions": [],
+    "required_modules": [
+      "core",
+      "genai_llm",
+      "vendor_third_party"
+    ],
+    "approval_authority": "Product Owner with AI CoE review",
+    "review_cadence_months": 24,
+    "evidence_status": "Inferred",
+    "requires_human_confirmation": true,
+    "rationale": "Preliminary tier Low (score 20). Drivers: data_sensitivity=internal (+5); autonomy=suggests (+5); generative_ai=True (+5); third_party_model=True (+5). Inferred from user-provided intake; requires human confirmation.",
+    "citations": [
+      "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+      "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+      "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+      "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+      "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+      "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)",
+      "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+      "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)",
+      "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+    ],
+    "citation_ids": [
+      "EI-02",
+      "EI-04",
+      "GL-01",
+      "GL-02",
+      "GL-03",
+      "GL-11",
+      "IS-03",
+      "IS-09",
+      "IS-14"
+    ],
+    "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+  }
+}

@@ -1,0 +1,376 @@
+# AEGIS AI Governance Maturity Self-Assessment — template
+# ---------------------------------------------------------------------------
+# This file is the single source of truth for the self-assessment. Both the
+# Python engine (app/assessment-engine) and the browser engine
+# (app/website/static/js/assessment-engine.js) interpret THIS data; parity is
+# enforced by tests/integration/test_website_engine_parity.py.
+#
+# All findings derived from this self-assessment are USER-ASSERTED: answers are
+# self-reported and no evidence has been reviewed. Results are readiness
+# indicators only — never a compliance determination.
+# ---------------------------------------------------------------------------
+template:
+  id: AEGIS-SA-MATURITY
+  name: AI Governance Maturity Self-Assessment
+  version: 1.0.0
+  status: published
+  effective_date: "2026-10-21"
+  estimated_minutes: 8
+  evidence_status: User-asserted
+  disclaimer: >-
+    This self-assessment produces an indicative, self-reported view of AI governance
+    maturity. All results are User-asserted: no evidence has been reviewed. Framework
+    readiness indicators are not a determination of conformity with ISO/IEC 42001,
+    compliance with the EU AI Act, or alignment with NIST AI RMF. AEGIS does not
+    certify compliance and this report is not legal advice.
+
+scale:
+  - {score: 1, label: Not started, description: No practice exists.}
+  - {score: 2, label: Initial / ad hoc, description: "Practice exists informally or in pockets; not documented or repeatable."}
+  - {score: 3, label: Defined for some systems, description: Documented practice applied to some systems or business units.}
+  - {score: 4, label: Consistently implemented, description: Practice applied consistently across material AI systems with records.}
+  - {score: 5, label: "Measured, automated, and continuously improved", description: "Practice is measured, largely automated and improved from metrics."}
+
+# Scoring rules (implemented identically in Python and JS):
+#   domain_score  = round_half_up_1dp( sum(domain answers) * 100 / (5 * n_questions) )
+#   overall_score = round_half_up_1dp( sum_d( sum(domain d answers) * weight_d / (5 * n_d) ) )
+#                   computed from UNROUNDED domain values (weights are integer percents)
+#   round_half_up_1dp(num/den) = floor((20*num + den) / (2*den)) / 10   (integer arithmetic)
+#   maturity level  = first level whose [min, max] contains overall_score (rounded)
+scoring:
+  rounding: half_up_1dp
+  levels:
+    - {name: Initial,    min: 0,  max: 39.9, interpretation: "AI governance is ad hoc; immediate foundational work required."}
+    - {name: Developing, min: 40, max: 59.9, interpretation: Basic practices exist but are inconsistent and hard to evidence.}
+    - {name: Defined,    min: 60, max: 74.9, interpretation: "Core governance is established; expand coverage and automation."}
+    - {name: Managed,    min: 75, max: 89.9, interpretation: Controls are monitored and integrated into operations.}
+    - {name: Optimized,  min: 90, max: 100,  interpretation: "Governance is adaptive, automated and continuously assured."}
+  strengths:
+    min_score: 4          # questions scoring >= 4
+    limit: 5              # sort: score desc, domain weight desc, question order asc
+  gaps:
+    max_score: 3          # questions scoring <= 3
+    limit: 5              # sort: score asc, domain weight desc, question order asc
+  action_plan:
+    # horizon by answer score; sort within horizon: score asc, weight desc, order asc
+    horizons:
+      - {horizon: "30", label: First 30 days — stabilise, scores: [1, 2]}
+      - {horizon: "60", label: Days 31–60 — standardise, scores: [3]}
+      - {horizon: "90", label: Days 61–90 — scale and automate, scores: [4]}
+    limit_per_horizon: 5
+  recommended_controls:
+    limit: 10             # union of controls from flags (in flag order) then gaps (in gap order), de-duplicated
+  readiness:
+    # indicator value = round_half_up_1dp( sum(answers of mapped questions) * 100 / (5 * n) )
+    bands:
+      - {name: Limited readiness,     min: 0,  max: 49.9}
+      - {name: Partial readiness,     min: 50, max: 74.9}
+      - {name: Substantial readiness, min: 75, max: 100}
+
+profile_fields:
+  - {id: industry, label: Industry, type: select, options: [healthcare_pharma, bfsi, gcc_it_services, saas_product, public_sector, other], required: true}
+  - {id: org_size, label: Employees, type: select, options: ["<250", "250-1000", "1000-5000", "5000+"], required: true}
+  - {id: ai_systems, label: Approximate number of AI systems in use, type: select, options: ["0-9", "10-24", "25-99", "100+", "unknown"], required: true}
+  - {id: uses_agents, label: "Do you use AI agents or autonomous workflows?", type: boolean, required: true}
+  - {id: eu_operations, label: "Do you place AI on the EU market or use AI affecting people in the EU?", type: boolean, required: true}
+
+domains:
+  - {id: strategy,               name: Strategy & Accountability,          weight: 12, order: 1}
+  - {id: inventory,              name: AI Inventory & Visibility,          weight: 14, order: 2}
+  - {id: risk_lifecycle,         name: Risk Management & Lifecycle,        weight: 14, order: 3}
+  - {id: data_privacy,           name: Data & Privacy,                     weight: 12, order: 4}
+  - {id: security,               name: Security & Resilience,              weight: 14, order: 5}
+  - {id: fairness_transparency,  name: "Fairness, Safety & Transparency",  weight: 12, order: 6}
+  - {id: oversight_operations,   name: Human Oversight & Operations,       weight: 12, order: 7}
+  - {id: assurance,              name: "Assurance, Evidence & Improvement", weight: 10, order: 8}
+
+questions:
+  # ---------------------------------------------------------- Strategy
+  - id: STR-Q1
+    domain: strategy
+    order: 1
+    text: Does your organization have a documented AI governance policy and accountable ownership model?
+    controls: [AO-01, AO-03]
+    action: Approve and publish an AI governance policy with a named executive owner and accountability model.
+  - id: STR-Q2
+    domain: strategy
+    order: 2
+    text: Is there a cross-functional AI governance forum with authority to approve, restrict, or stop AI use cases?
+    controls: [AO-02]
+    action: Charter a cross-functional AI governance forum with documented authority to approve, restrict or stop use cases.
+  - id: STR-Q3
+    domain: strategy
+    order: 3
+    text: Are AI roles, responsibilities, and escalation paths defined for business, technology, risk, legal, and security teams?
+    controls: [AO-03, AO-06]
+    action: Publish an AI RACI and escalation matrix covering business, technology, risk, legal, privacy and security.
+
+  # ---------------------------------------------------------- Inventory
+  - id: INV-Q1
+    domain: inventory
+    order: 4
+    text: Does your organization maintain a complete inventory of AI systems, models, agents, and vendor AI products?
+    controls: [EI-01, EI-08, EI-09]
+    action: Stand up an AI system of record and run inventory workshops plus shadow-AI discovery to reach full coverage.
+  - id: INV-Q2
+    domain: inventory
+    order: 5
+    text: Are AI systems classified by business criticality, data sensitivity, decision impact, autonomy, and regulatory relevance?
+    controls: [EI-02]
+    action: Apply AEGIS risk-tier criteria to every inventory record and approve tier assignments.
+  - id: INV-Q3
+    domain: inventory
+    order: 6
+    text: Can you identify the owner, purpose, users, data sources, and dependencies for each material AI system?
+    controls: [EI-03, EI-04, EI-06, EI-10]
+    action: Complete owner, purpose, users, data-source and dependency fields for all material AI systems.
+
+  # ---------------------------------------------------------- Risk & lifecycle
+  - id: RSK-Q1
+    domain: risk_lifecycle
+    order: 7
+    text: Do AI use cases undergo risk assessment before production deployment?
+    controls: [GL-01, GL-02, GL-03]
+    action: Make a tier-proportionate risk and impact assessment a mandatory gate before any production deployment.
+  - id: RSK-Q2
+    domain: risk_lifecycle
+    order: 8
+    text: Are model, prompt, data, vendor, and agent changes subject to change control and reassessment?
+    controls: [GL-04, EI-05]
+    action: Add AI-specific change triggers (model, prompt, data, vendor, tool, agent) to change management with reassessment rules.
+  - id: RSK-Q3
+    domain: risk_lifecycle
+    order: 9
+    text: Is there a defined process for retiring, restricting, or remediating AI systems that no longer meet requirements?
+    controls: [GL-09, GL-10]
+    action: Define restrict/remediate/retire procedures and an exception register with expiry dates.
+
+  # ---------------------------------------------------------- Data & privacy
+  - id: DAT-Q1
+    domain: data_privacy
+    order: 10
+    text: Are data sources, data classifications, and data flows documented for AI systems?
+    controls: [EI-06, IS-02]
+    action: Document data sources, classifications and data flows for each material AI system.
+  - id: DAT-Q2
+    domain: data_privacy
+    order: 11
+    text: Are privacy, consent, retention, cross-border transfer, and data-minimization requirements assessed?
+    controls: [IS-03]
+    action: Embed privacy impact assessment (consent, retention, transfers, minimisation) into AI intake and change.
+  - id: DAT-Q3
+    domain: data_privacy
+    order: 12
+    text: Are sensitive data fields redacted, masked, or excluded from prompts, logs, and external model calls?
+    controls: [IS-04]
+    action: Deploy redaction/masking for prompts, responses, logs and external model calls, starting with highest-sensitivity systems.
+
+  # ---------------------------------------------------------- Security
+  - id: SEC-Q1
+    domain: security
+    order: 13
+    text: Are AI systems included in threat modeling, security review, and vulnerability-management processes?
+    controls: [IS-01, IS-10]
+    action: Extend threat modelling, security review and vulnerability management to all AI systems and model supply chains.
+  - id: SEC-Q2
+    domain: security
+    order: 14
+    text: Are LLM applications and agents tested for prompt injection, jailbreak, data leakage, and unsafe tool use?
+    controls: [IS-14, IS-11, IS-12]
+    action: Run adversarial testing (prompt injection, jailbreak, leakage, unsafe tool use) before release and after material change.
+  - id: SEC-Q3
+    domain: security
+    order: 15
+    text: Can you disable or roll back an AI system, model, agent, or tool quickly after a security or safety incident?
+    controls: [IS-15]
+    action: Implement and test a kill switch and rollback runbook for every production AI system and agent.
+
+  # ---------------------------------------------------------- Fairness, safety, transparency
+  - id: FST-Q1
+    domain: fairness_transparency
+    order: 16
+    text: Are AI systems assessed for bias, discriminatory outcomes, safety risks, and unintended harm?
+    controls: [IS-05, IS-06]
+    action: Introduce bias, safety and harm evaluation for high-impact systems with documented thresholds.
+  - id: FST-Q2
+    domain: fairness_transparency
+    order: 17
+    text: Are users informed when they are interacting with AI or when AI materially influences a decision?
+    controls: [IS-08]
+    action: Standardise AI disclosures for AI interactions and AI-influenced decisions.
+  - id: FST-Q3
+    domain: fairness_transparency
+    order: 18
+    text: Are explanations, disclosures, and appeal mechanisms available for affected individuals where appropriate?
+    controls: [IS-08, IS-09, AO-11]
+    action: Provide explanation and appeal routes for individuals affected by AI-influenced decisions.
+
+  # ---------------------------------------------------------- Oversight & operations
+  - id: HUM-Q1
+    domain: oversight_operations
+    order: 19
+    text: Are human-review, override, escalation, and appeal mechanisms defined for high-impact AI decisions?
+    controls: [IS-09, IS-13]
+    action: Define human review, override and approval points for high-impact AI decisions and agent actions.
+  - id: HUM-Q2
+    domain: oversight_operations
+    order: 20
+    text: Are AI systems monitored for performance, drift, misuse, incidents, and unexpected behavior?
+    controls: [GL-08, SE-12, SE-04]
+    action: Instrument production AI for performance, drift, misuse and incident monitoring with alert thresholds.
+  - id: HUM-Q3
+    domain: oversight_operations
+    order: 21
+    text: Are operators and affected teams trained on AI limitations, escalation paths, and responsible use?
+    controls: [AO-05]
+    action: Roll out role-based AI literacy and operator training with completion tracking.
+
+  # ---------------------------------------------------------- Assurance
+  - id: ASR-Q1
+    domain: assurance
+    order: 22
+    text: Are AI controls tested periodically, with evidence retained for audit and review?
+    controls: [SE-01, SE-02]
+    action: Establish a periodic AI control-testing programme with an evidence repository and retention rules.
+  - id: ASR-Q2
+    domain: assurance
+    order: 23
+    text: Can your organization produce an audit-ready evidence pack for a material AI system on request?
+    controls: [SE-05, SE-08, GL-06]
+    action: Build an audit-ready evidence pack for your highest-risk AI system and template it for the rest.
+  - id: ASR-Q3
+    domain: assurance
+    order: 24
+    text: Are AI governance metrics reviewed by leadership and used to drive corrective action?
+    controls: [SE-03, SE-06, SE-07]
+    action: Define AI governance KPIs and review them in a recurring leadership forum with tracked corrective actions.
+
+# Critical risk flags. A flag fires when ALL listed conditions hold.
+#   question/max_score : answer to question <= max_score
+#   profile            : every listed profile field equals the given value
+critical_flags:
+  - id: FLAG-NO-INVENTORY
+    title: No reliable AI inventory
+    severity: Critical gap
+    when: {question: INV-Q1, max_score: 2}
+    rationale: Without a complete inventory, risk tiering, oversight and evidence cannot be applied to systems you do not know about.
+    controls: [EI-01, EI-09]
+  - id: FLAG-NO-PREDEPLOY-ASSESSMENT
+    title: AI deployed without pre-deployment risk assessment
+    severity: Critical gap
+    when: {question: RSK-Q1, max_score: 2}
+    rationale: Systems reaching production without risk assessment may carry unidentified legal, safety or security exposure.
+    controls: [GL-02, GL-03]
+  - id: FLAG-SENSITIVE-DATA-EXPOSURE
+    title: Sensitive data may reach prompts, logs or external models
+    severity: Critical gap
+    when: {question: DAT-Q3, max_score: 2}
+    rationale: Unredacted personal or confidential data in prompts and logs creates privacy and confidentiality exposure.
+    controls: [IS-04, IS-03]
+  - id: FLAG-AGENTS-UNTESTED
+    title: Agents or LLM apps not tested for prompt injection and unsafe tool use
+    severity: Critical gap
+    when: {question: SEC-Q2, max_score: 2, profile: {uses_agents: true}}
+    rationale: Agents with tool access that are untested for injection can be manipulated into unauthorised actions or data leakage.
+    controls: [IS-14, IS-11, IS-12]
+  - id: FLAG-NO-KILL-SWITCH
+    title: No tested kill switch or rollback
+    severity: Critical gap
+    when: {question: SEC-Q3, max_score: 2}
+    rationale: Without containment, an AI incident cannot be stopped quickly.
+    controls: [IS-15]
+  - id: FLAG-NO-HUMAN-OVERSIGHT
+    title: High-impact decisions lack defined human oversight
+    severity: Critical gap
+    when: {question: HUM-Q1, max_score: 2}
+    rationale: High-impact AI decisions without review, override or appeal raise fairness, safety and accountability exposure.
+    controls: [IS-09, IS-13]
+  - id: FLAG-NO-EVIDENCE
+    title: Cannot produce audit-ready evidence
+    severity: Critical gap
+    when: {question: ASR-Q2, max_score: 2}
+    rationale: Inability to evidence controls undermines responses to auditors, customers and regulators.
+    controls: [SE-05, SE-08]
+  - id: FLAG-EU-TRANSPARENCY
+    title: EU-facing AI without consistent AI-interaction disclosure
+    severity: Critical gap
+    when: {question: FST-Q2, max_score: 2, profile: {eu_operations: true}}
+    rationale: Transparency obligations for certain AI systems (EU AI Act Art. 50) require readiness; legal review recommended.
+    controls: [IS-08]
+  - id: FLAG-NO-POLICY
+    title: No AI governance policy or accountable owner
+    severity: Critical gap
+    when: {question: STR-Q1, max_score: 1}
+    rationale: Without a policy and owner, no one is accountable for AI risk decisions.
+    controls: [AO-01, AO-02]
+
+# Framework readiness indicator groups — indicative only.
+readiness_groups:
+  - framework: NIST AI RMF
+    groups:
+      - {id: NIST-GOVERN, name: GOVERN, questions: [STR-Q1, STR-Q2, STR-Q3, HUM-Q3, ASR-Q3]}
+      - {id: NIST-MAP,    name: MAP,    questions: [INV-Q1, INV-Q2, INV-Q3, RSK-Q1, DAT-Q1]}
+      - {id: NIST-MEASURE, name: MEASURE, questions: [SEC-Q2, FST-Q1, HUM-Q2, ASR-Q1, DAT-Q2]}
+      - {id: NIST-MANAGE, name: MANAGE, questions: [RSK-Q2, RSK-Q3, SEC-Q3, HUM-Q1, ASR-Q2]}
+  - framework: ISO/IEC 42001
+    groups:
+      - {id: ISO-C4-5,  name: "Context & leadership (Cl. 4–5, A.2–A.3)", questions: [STR-Q1, STR-Q2, STR-Q3]}
+      - {id: ISO-C6,    name: "Planning & impact assessment (Cl. 6, A.5)", questions: [INV-Q2, RSK-Q1, FST-Q1]}
+      - {id: ISO-C7,    name: "Support & documented information (Cl. 7, A.4)", questions: [HUM-Q3, INV-Q1, ASR-Q2]}
+      - {id: ISO-C8,    name: "Operation & lifecycle (Cl. 8, A.6–A.7)", questions: [RSK-Q2, DAT-Q1, DAT-Q2, SEC-Q1]}
+      - {id: ISO-C9,    name: "Performance evaluation (Cl. 9)", questions: [HUM-Q2, ASR-Q1]}
+      - {id: ISO-C10,   name: "Improvement (Cl. 10)", questions: [ASR-Q3, RSK-Q3]}
+  - framework: EU AI Act
+    groups:
+      - {id: EU-ART4,   name: "AI literacy (Art. 4)", questions: [HUM-Q3]}
+      - {id: EU-ART9,   name: "Risk management (Art. 9)", questions: [RSK-Q1, RSK-Q2, INV-Q2]}
+      - {id: EU-ART10,  name: "Data governance (Art. 10)", questions: [DAT-Q1, DAT-Q2, FST-Q1]}
+      - {id: EU-ART11-12, name: "Technical documentation & record-keeping (Art. 11–12)", questions: [INV-Q3, ASR-Q2]}
+      - {id: EU-ART13-50, name: "Transparency (Art. 13, Art. 50)", questions: [FST-Q2, FST-Q3]}
+      - {id: EU-ART14,  name: "Human oversight (Art. 14)", questions: [HUM-Q1, SEC-Q3]}
+      - {id: EU-ART15,  name: "Accuracy, robustness & cybersecurity (Art. 15)", questions: [SEC-Q1, SEC-Q2]}
+      - {id: EU-ART72-73, name: "Post-market monitoring & incidents (Art. 72–73)", questions: [HUM-Q2, ASR-Q1]}
+
+# Recommended AEGIS modules. A rule fires if ANY of its conditions hold.
+#   domain_below: {domain: score}  -> domain score < value
+#   overall_below: value
+#   profile: {field: value}
+#   flag: flag id fired
+#   always: true
+module_rules:
+  - module: Assess
+    reason: Establish an evidence-based baseline of maturity and use-case risk.
+    any: [{overall_below: 75}, {domain_below: {risk_lifecycle: 60}}]
+  - module: Register
+    reason: Create a single, owned and classified AI system of record.
+    any: [{domain_below: {inventory: 60}}, {flag: FLAG-NO-INVENTORY}, {profile: {ai_systems: "25-99"}}, {profile: {ai_systems: "100+"}}, {profile: {ai_systems: unknown}}]
+  - module: Control
+    reason: Operationalise policies, approval gates and lifecycle workflows.
+    any: [{domain_below: {strategy: 60}}, {domain_below: {risk_lifecycle: 60}}, {domain_below: {data_privacy: 60}}]
+  - module: Shield
+    reason: Enforce runtime guardrails, approvals and containment for LLM apps and agents.
+    any: [{profile: {uses_agents: true}}, {domain_below: {security: 60}}, {flag: FLAG-SENSITIVE-DATA-EXPOSURE}, {flag: FLAG-NO-KILL-SWITCH}]
+  - module: Assurance
+    reason: Test controls continuously and produce audit-ready evidence packs.
+    any: [{domain_below: {assurance: 60}}, {flag: FLAG-NO-EVIDENCE}, {domain_below: {oversight_operations: 60}}]
+  - module: Agent
+    reason: Accelerate assessments, gap analysis and reporting with a citation-backed governance copilot.
+    any: [{always: true}]
+
+# Lead qualification (internal; never shown to the respondent).
+lead_rules:
+  - {tag: baseline_priority, label: High-priority Governance Baseline candidate, any: [{overall_below: 60}]}
+  - {tag: platform_candidate, label: Platform candidate (10+ AI systems), any: [{profile: {ai_systems: "10-24"}}, {profile: {ai_systems: "25-99"}}, {profile: {ai_systems: "100+"}}]}
+  - {tag: shield_candidate, label: Runtime Shield candidate, any: [{profile: {uses_agents: true}}]}
+  - {tag: compliance_led, label: Compliance-led candidate, any: [{profile: {industry: healthcare_pharma}}, {profile: {industry: bfsi}}, {profile: {industry: public_sector}}, {profile: {eu_operations: true}}]}
+  - {tag: register_opportunity, label: Immediate Register/Assess opportunity, any: [{flag: FLAG-NO-INVENTORY}]}
+  - {tag: assurance_opportunity, label: Assurance opportunity, any: [{flag: FLAG-NO-EVIDENCE}]}
+
+cta:
+  primary:
+    label: Book an AEGIS Governance Baseline
+    url: /contact/book-governance-baseline/
+    description: A fixed-scope 4–6 week engagement — inventory up to 25 AI systems, validate this maturity baseline with evidence, deep-dive five priority systems, review two agents, and deliver a gap register, remediation roadmap and executive readiness report.
+  secondary:
+    label: Explore AEGIS Agent
+    url: /solutions/agent/

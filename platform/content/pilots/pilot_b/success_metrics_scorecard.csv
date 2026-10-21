@@ -1,0 +1,10 @@
+metric_id,pilot,metric,target,measurement_method,data_source,measurement_point,owner,result,met,evidence_ref,evidence_status
+M1,B,AI systems registered,>=25,Count of Register records (LLM features; agents; internal AI tools; vendor AI) meeting completeness definition and confirmed by owner,Register export + owner confirmation log,End W2; final W6,AEGIS delivery lead,,,,
+M2,B,High-risk systems assessed,100% of confirmed High-tier systems in scope,High-tier systems with completed owner-reviewed GL-02 assessment / confirmed High-tier systems in scope,Register tier field + deep-dive records + tier approval records,End W4; final W6,AEGIS delivery lead,,,,
+M3,B,Agent-assisted assessment completion,>=70%,Participants completing self-assessment via AEGIS Agent / participants invited,Pilot workspace audit log,End W3,AEGIS product lead,,,,
+M4,B,Runtime policies drafted,>=2,Draft aegis.policy/v1 policies passing validate_policy with zero errors and reviewed with agent owner,Policy files + validation output + review record,End W4-W5,AEGIS Shield lead,,,,
+M5,B,Executive report accepted,Accepted,Sponsor written confirmation (accept / accept with changes / decline),Sponsor sign-off record,W6,AEGIS delivery lead,,,,
+M6,B,Follow-on commercial discussion initiated,Yes,Proposal presented and dated next meeting with budget holder agreed,CRM record + proposal,W6,AEGIS commercial lead,,,,
+S4,B,Observe-mode decision review (signal),Optional,Would-be decisions by type and reviewer-judged false-positive share on sample,Partner-operated decision logs reviewed in partner environment,W5,AEGIS Shield lead,,,,
+S5,B,Developer adoption (signal),Qualitative,Policies committed to partner repo; CI validation added; engineers engaged,Partner repo metadata + survey,W5-W6,AEGIS Shield lead,,,,
+S9,B,Approval-rule workability (signal),Qualitative,Approver roles named for every approval rule; latency acceptability,Agent review records + survey E4,W4-W6,AEGIS Shield lead,,,,

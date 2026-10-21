@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block main %}
+{% include "partials/page_header.html" %}
+<div class="container page-body">
+  <div class="prose">
+    {% if body %}{{ body }}{% else %}
+    <p>The page you were looking for does not exist or has moved.</p>
+    {% endif %}
+    <h2>Popular destinations</h2>
+    <ul>
+      <li><a href="/">AEGIS home</a></li>
+      {% for key in ['assessment', 'baseline', 'agent', 'blueprint'] %}
+      <li><a href="{{ site.ctas[key].url }}">{{ site.ctas[key].label }}</a></li>
+      {% endfor %}
+      <li><a href="{{ site.control_library.slug }}">AEGIS Control Library</a></li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+%% AEGIS launch sequence — increments, dependencies and status (no calendar estimates)
+flowchart LR
+  classDef done fill:#E6F4EA,stroke:#2F855A,color:#22543D
+  classDef prog fill:#FFF7E6,stroke:#B7791F,color:#5F370E
+  classDef blocked fill:#FDECEC,stroke:#C53030,color:#742A2A
+
+  F0[Foundation<br/>control library · templates · audit · redaction]:::done
+  P1[Phase 1<br/>Enhanced website<br/>framework · solutions · compliance · industries]:::done
+  P2[Phase 2<br/>Maturity self-assessment<br/>lead capture · gated report · CRM/email]:::done
+  P3[Phase 3<br/>AEGIS Agent MVP<br/>Ask · Assess · Gaps · Reports]:::done
+  P4[Phase 4<br/>Runtime Shield Advisor<br/>policy-as-code · policy engine]:::done
+  G1{{Launch gate<br/>legal review · named approvers ·<br/>hosting · real CRM/ESP}}:::prog
+  P5[Phase 5<br/>Design-partner pilots A & B<br/>kits ready · dry-run done]:::blocked
+  P6[Phase 6<br/>Commercialisation<br/>pricing validation · case studies · proposals]:::blocked
+
+  F0 --> P1 --> P2 --> P3 --> P4
+  F0 --> P3
+  P2 --> G1
+  P4 --> G1
+  G1 --> P5 --> P6
+  P3 -.agent-assisted assessments.-> P5
+  P4 -.runtime policies.-> P5

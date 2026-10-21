@@ -1,0 +1,1 @@
+"""AEGIS admin console (CLI)."""

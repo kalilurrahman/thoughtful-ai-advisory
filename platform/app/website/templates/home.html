@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <p class="eyebrow">{{ site.site_tagline }}</p>
+    <h1 id="hero-title">{{ page.h1 }}</h1>
+    <p class="lead">{{ page.lead or page.description }}</p>
+    <p class="hero-actions">
+      {% if page.primary_cta %}{% set c = site.ctas[page.primary_cta] %}<a class="btn btn-primary btn-lg" href="{{ c.url }}" data-cta="hero_{{ page.primary_cta }}">{{ c.label }}</a>{% endif %}
+      {% if page.secondary_cta %}{% set c = site.ctas[page.secondary_cta] %}<a class="btn btn-secondary btn-lg" href="{{ c.url }}" data-cta="hero_{{ page.secondary_cta }}">{{ c.label }}</a>{% endif %}
+    </p>
+    <p class="hero-note">AEGIS supports readiness and evidence. It does not certify compliance.</p>
+  </div>
+</section>
+<div class="container page-body">
+  <div class="prose prose--home">
+    {{ body }}
+  </div>
+  {% set end_ctas = [] %}
+  {% include "partials/page_end.html" %}
+</div>
+{% endblock %}

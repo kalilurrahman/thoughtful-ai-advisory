@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block main %}
+{% include "partials/page_header.html" %}
+<div class="container page-body layout-split">
+  <div class="prose">
+    {{ body }}
+  </div>
+  <section class="form-panel" aria-labelledby="form-heading">
+    <h2 id="form-heading">{{ form_def.submit }}</h2>
+    {% with prefix="lf" %}{% include "partials/form_fields.html" %}{% endwith %}
+  </section>
+</div>
+<div class="container">
+  {% set end_ctas = [] %}
+  {% include "partials/page_end.html" %}
+</div>
+{% endblock %}
