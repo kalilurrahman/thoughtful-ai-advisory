@@ -15,7 +15,7 @@ const categories = ["All", "Programme", "Lifecycle", "Assurance", "Operations"] 
 export function TemplatesScreen() {
   const [category, setCategory] = useState<(typeof categories)[number]>("All");
   const [query, setQuery] = useState("");
-  const [selectedId, setSelectedId] = useState(GOVERNANCE_TEMPLATES[0].id);
+  const [selectedId, setSelectedId] = useState(GOVERNANCE_TEMPLATES[0]?.id ?? "");
   const [context, setContext] = useState({ organisation: "", owner: "", system: "", date: "" });
   const [copied, setCopied] = useState(false);
   const visible = useMemo(
@@ -31,6 +31,9 @@ export function TemplatesScreen() {
   );
   const selected =
     GOVERNANCE_TEMPLATES.find((template) => template.id === selectedId) ?? GOVERNANCE_TEMPLATES[0];
+  if (!selected) {
+    return <p className="muted">No governance templates are available yet.</p>;
+  }
   const markdown = `# ${selected.title}\n\n> Starter template · Adapt to your organisation and validate with relevant owners.\n\n${selected.description}\n\n## Document details\n\n- Organisation: ${context.organisation || "[Organisation]"}\n- Accountable owner: ${context.owner || "[Name / role]"}\n- AI system or programme: ${context.system || "[System / programme]"}\n- Prepared / reviewed: ${context.date || "[Date]"}\n\n## How to use\n\n${selected.prompt}\n\n${selected.sections.map((section) => `## ${section.heading}\n\n${section.prompts.map((prompt) => `- [ ] ${prompt}\n  - Notes / evidence: \n`).join("\n")}`).join("\n")}\n## Approval and review\n\n- Decision: [Approve / approve with conditions / reject / defer]\n- Decision owner: [Name / role]\n- Conditions and actions: [Owner · due date · evidence]\n- Next review date: [Date]\n`;
 
   function download() {

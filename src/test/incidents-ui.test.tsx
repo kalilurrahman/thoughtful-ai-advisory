@@ -104,10 +104,14 @@ describe("AI incident register interface", () => {
   it("saves revised ownership and response notes for an incident", () => {
     const dispatch = renderIncidents([incident]);
     fireEvent.click(screen.getByText("Update ownership and response notes"));
-    fireEvent.change(screen.getAllByLabelText("Response owner")[1], {
+    const ownerInput = screen.getAllByLabelText("Response owner")[1];
+    if (!ownerInput) throw new Error("Second response owner input is missing");
+    fireEvent.change(ownerInput, {
       target: { value: "Security lead" },
     });
-    fireEvent.change(screen.getAllByLabelText("Containment and response notes")[1], {
+    const notesInput = screen.getAllByLabelText("Containment and response notes")[1];
+    if (!notesInput) throw new Error("Second response notes input is missing");
+    fireEvent.change(notesInput, {
       target: { value: "Model access suspended." },
     });
     fireEvent.click(screen.getByRole("button", { name: "Save incident updates" }));
