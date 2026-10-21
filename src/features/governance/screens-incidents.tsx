@@ -23,7 +23,7 @@ const blankIncident = (): Omit<AIIncident, "id"> => ({
   title: "",
   system: "",
   severity: "Moderate",
-  category: categories[0],
+  category: categories[0] ?? "Other",
   status: "Open",
   detectedAt: new Date().toISOString().slice(0, 10),
   owner: "",

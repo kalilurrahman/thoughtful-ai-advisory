@@ -129,13 +129,13 @@ export function StartScreen() {
   const [stage, setStage] = useState<keyof typeof stages>("Getting started");
   const journey = roles[role];
   const recommended = useMemo(() => {
-    const ranking = goals[goal];
+    const ranking: readonly string[] = goals[goal];
     return journey.chapters
       .map((id) => PLAYBOOK_CHAPTERS.find((chapter) => chapter.id === id))
       .filter((chapter): chapter is (typeof PLAYBOOK_CHAPTERS)[number] => Boolean(chapter))
       .sort((a, b) => {
-        const aRank = ranking.indexOf(a.id as (typeof ranking)[number]);
-        const bRank = ranking.indexOf(b.id as (typeof ranking)[number]);
+        const aRank = ranking.indexOf(a.id);
+        const bRank = ranking.indexOf(b.id);
         return (aRank < 0 ? ranking.length : aRank) - (bRank < 0 ? ranking.length : bRank);
       })
       .slice(0, 5);

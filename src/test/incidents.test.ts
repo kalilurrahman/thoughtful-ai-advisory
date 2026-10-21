@@ -33,7 +33,9 @@ describe("AI incident register", () => {
 
   it("backfills an initial lifecycle event for older incident records", () => {
     const { statusHistory: _history, ...olderRecord } = sample;
-    expect(aiIncidentListSchema.parse([olderRecord])[0].statusHistory).toEqual([
+    const backfilled = aiIncidentListSchema.parse([olderRecord])[0];
+    if (!backfilled) throw new Error("Backfilled incident record is missing");
+    expect(backfilled.statusHistory).toEqual([
       { status: "Open", changedAt: "2026-10-20T00:00:00.000Z" },
     ]);
   });
@@ -64,7 +66,9 @@ describe("AI incident register", () => {
       incident: sample,
       changedAt: "2026-10-20T10:00:00.000Z",
     });
-    expect(updated.incidents[0].statusHistory).toEqual(sample.statusHistory);
+    const firstIncident = updated.incidents[0];
+    if (!firstIncident) throw new Error("Updated incident record is missing");
+    expect(firstIncident.statusHistory).toEqual(sample.statusHistory);
   });
 
   it("updates response ownership and notes without changing lifecycle history", () => {
