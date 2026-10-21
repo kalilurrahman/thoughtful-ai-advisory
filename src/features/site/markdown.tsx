@@ -30,6 +30,7 @@ export function slugify(text: string): string {
 
 /** Internal links lose the static site's trailing slash; unsafe schemes become "#". */
 export function safeHref(href: string): string {
+  // eslint-disable-next-line no-control-regex -- strip control characters like the platform url_is_safe()
   const cleaned = href.replace(/[\x00-\x20\x7f]+/g, "");
   if (ANY_SCHEME.test(cleaned) && !SAFE_SCHEME.test(cleaned)) return "#";
   if (cleaned.startsWith("/")) {

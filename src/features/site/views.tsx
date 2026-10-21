@@ -173,11 +173,7 @@ function ToolTemplate({ page }: { page: SitePage }) {
             <SiteMarkdown className="prose tool-intro" body={page.body} />
           </>
         )}
-        {tool && (
-          <div id={anchor} tabIndex={-1}>
-            <tool.Component />
-          </div>
-        )}
+        {tool && <tool.Component />}
         {waitlist && (
           <section className="form-panel" aria-labelledby="form-heading">
             <h2 id="form-heading">Join the waitlist</h2>
