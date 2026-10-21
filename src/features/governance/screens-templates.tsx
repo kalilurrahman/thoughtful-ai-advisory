@@ -34,6 +34,7 @@ export function TemplatesScreen() {
   if (!selected) {
     return <p className="muted">No governance templates are available yet.</p>;
   }
+  const activeTemplate = selected;
   const markdown = `# ${selected.title}\n\n> Starter template · Adapt to your organisation and validate with relevant owners.\n\n${selected.description}\n\n## Document details\n\n- Organisation: ${context.organisation || "[Organisation]"}\n- Accountable owner: ${context.owner || "[Name / role]"}\n- AI system or programme: ${context.system || "[System / programme]"}\n- Prepared / reviewed: ${context.date || "[Date]"}\n\n## How to use\n\n${selected.prompt}\n\n${selected.sections.map((section) => `## ${section.heading}\n\n${section.prompts.map((prompt) => `- [ ] ${prompt}\n  - Notes / evidence: \n`).join("\n")}`).join("\n")}\n## Approval and review\n\n- Decision: [Approve / approve with conditions / reject / defer]\n- Decision owner: [Name / role]\n- Conditions and actions: [Owner · due date · evidence]\n- Next review date: [Date]\n`;
 
   function download() {
@@ -41,7 +42,7 @@ export function TemplatesScreen() {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = `aegis-${GOVERNANCE_TEMPLATES[0]?.id ?? "governance"}-template.md`;
+    anchor.download = `aegis-${activeTemplate.id}-template.md`;
     anchor.click();
     URL.revokeObjectURL(url);
   }
