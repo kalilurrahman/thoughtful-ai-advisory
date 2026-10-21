@@ -1,0 +1,30 @@
+%% Runtime Shield — "AI proposes. AEGIS evaluates. Approved actions execute."
+sequenceDiagram
+  autonumber
+  participant App as LLM app / agent
+  participant SDK as AEGIS SDK / gateway hook
+  participant PE as Policy engine (versioned policy)
+  participant HA as Human approver
+  participant Tool as Tool / API / data store
+  participant Log as Immutable audit log
+  App->>SDK: Proposed action (prompt, tool call + params, identity)
+  SDK->>PE: evaluate(request, policy vX.Y)
+  PE->>PE: Kill switch? (contain → DENY all in scope)
+  PE->>PE: Identity claims · tool allow/deny-list · least-privilege scopes
+  PE->>PE: Parameter validation · PII redaction · injection / jailbreak detection
+  PE->>PE: Rate, token & budget limits
+  PE->>PE: Apply rollout mode (observe · warn · protect · enforce · contain)
+  PE-->>Log: Decision + reasons + matched rules + citations (redacted)
+  alt ALLOW / REDACT / TRANSFORM
+    PE-->>SDK: Effective decision (+ redacted / transformed payload)
+    SDK->>Tool: Execute
+  else REQUIRE_HUMAN_APPROVAL / ESCALATE
+    PE-->>SDK: Pending
+    SDK->>HA: Approval request (context, risk, policy rule)
+    HA-->>SDK: Approve / reject (identity recorded)
+    SDK-->>Log: Approval record
+    SDK->>Tool: Execute only if approved
+  else DENY / RATE_LIMIT
+    PE-->>SDK: Blocked or deferred with reason
+    SDK-->>App: Safe error + escalation path
+  end

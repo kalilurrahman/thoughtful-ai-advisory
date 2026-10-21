@@ -1,0 +1,5454 @@
+{
+  "report_id": "rpt_mvi8hvbh70a6fa4b",
+  "report_type": "AEGIS AI Use-Case Governance Readiness Report",
+  "synthetic": true,
+  "generated_at": "2026-10-21T14:55:24+00:00",
+  "prepared_by": "Synthetic AEGIS Analyst via AEGIS Agent",
+  "template": {
+    "id": "AEGIS-UC-ASSESS",
+    "version": "1.0.0"
+  },
+  "control_library_version": "1.0.0",
+  "system": {
+    "id": "sys_mvi8hs8acc1e916b",
+    "name": "Mortgage valuation model",
+    "status": "draft",
+    "risk_tier": "High",
+    "risk_tier_status": "Confirmed by Synthetic Head of AI Risk (2026-10-21)"
+  },
+  "profile": {
+    "name": "Mortgage valuation model",
+    "purpose": "Estimate property values for mortgage underwriting",
+    "decision_impact": "material",
+    "affected_parties": "customers",
+    "data_sensitivity": "confidential",
+    "autonomy": "suggests",
+    "domain_category": "credit",
+    "tools": [],
+    "external_actions": false,
+    "genai": false,
+    "vendor_model": true,
+    "eu_exposure": true,
+    "environment": "production",
+    "business_owner": "Synthetic owner — Mortgage valuation model"
+  },
+  "profile_provenance": {},
+  "assessment_id": "asm_mvi8hv8m12237207",
+  "risk": {
+    "tier": "High",
+    "score": 85,
+    "provisional": false,
+    "factors": [
+      {
+        "factor": "decision_impact",
+        "value": "material",
+        "points": 20,
+        "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+      },
+      {
+        "factor": "affected_parties",
+        "value": "customers",
+        "points": 10,
+        "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+      },
+      {
+        "factor": "data_sensitivity",
+        "value": "confidential",
+        "points": 10,
+        "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+      },
+      {
+        "factor": "autonomy",
+        "value": "suggests",
+        "points": 5,
+        "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+      },
+      {
+        "factor": "domain_category",
+        "value": "credit — Creditworthiness / credit scoring (Annex III area 5)",
+        "points": 30,
+        "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+      },
+      {
+        "factor": "third_party_model",
+        "value": true,
+        "points": 5,
+        "citation": "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)"
+      },
+      {
+        "factor": "eu_exposure",
+        "value": true,
+        "points": 5,
+        "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+      }
+    ],
+    "triggers": [
+      "Potential EU AI Act high-risk area: Creditworthiness / credit scoring (Annex III area 5) — legal classification review required (Art. 6)",
+      "Material or automated decisions in a sensitive (Annex III-like) domain"
+    ],
+    "missing_fields": [],
+    "clarifying_questions": [],
+    "required_modules": [
+      "core",
+      "data_privacy",
+      "security",
+      "fairness_safety",
+      "human_oversight",
+      "vendor_third_party"
+    ],
+    "approval_authority": "AI Governance Forum",
+    "review_cadence_months": 6,
+    "evidence_status": "Inferred",
+    "requires_human_confirmation": true,
+    "rationale": "Preliminary tier High (score 85). Drivers: decision_impact=material (+20); affected_parties=customers (+10); data_sensitivity=confidential (+10); autonomy=suggests (+5); domain_category=credit — Creditworthiness / credit scoring (Annex III area 5) (+30); third_party_model=True (+5); eu_exposure=True (+5). Triggers: Potential EU AI Act high-risk area: Creditworthiness / credit scoring (Annex III area 5) — legal classification review required (Art. 6); Material or automated decisions in a sensitive (Annex III-like) domain. Inferred from user-provided intake; requires human confirmation.",
+    "citations": [
+      "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+      "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+      "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+      "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+      "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+      "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+      "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)",
+      "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+      "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+    ],
+    "citation_ids": [
+      "AO-07",
+      "EI-02",
+      "EI-04",
+      "GL-01",
+      "GL-02",
+      "GL-03",
+      "GL-11",
+      "IS-03",
+      "IS-09"
+    ],
+    "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)",
+    "engine": "aegis_assessment.risk_tier"
+  },
+  "modules": [
+    {
+      "id": "core",
+      "name": "Core governance & lifecycle",
+      "description": "Ownership, purpose, tiering, approval gates, obligations and change control.",
+      "reasons": [
+        "applies to every use case"
+      ]
+    },
+    {
+      "id": "data_privacy",
+      "name": "Data & privacy",
+      "description": "Data lineage, privacy impact, minimisation, redaction and retention.",
+      "reasons": [
+        "data_sensitivity in [personal, special_category, confidential]",
+        "risk tiering requires the data_privacy module"
+      ]
+    },
+    {
+      "id": "security",
+      "name": "Security & resilience",
+      "description": "Threat modelling, supply chain, testing and containment.",
+      "reasons": [
+        "applies to every use case"
+      ]
+    },
+    {
+      "id": "fairness_safety",
+      "name": "Fairness, safety & transparency",
+      "description": "Bias testing, harm evaluation, AI disclosure and contestability.",
+      "reasons": [
+        "risk tier is High or Prohibited-review",
+        "affected_parties in [customers, public, vulnerable]",
+        "decision_impact in [material, automated_decision]",
+        "risk tiering requires the fairness_safety module"
+      ]
+    },
+    {
+      "id": "human_oversight",
+      "name": "Human oversight & operations",
+      "description": "Oversight design, operator training, escalation and go-live conditions.",
+      "reasons": [
+        "risk tier is High or Prohibited-review",
+        "decision_impact in [material, automated_decision]",
+        "risk tiering requires the human_oversight module"
+      ]
+    },
+    {
+      "id": "vendor_third_party",
+      "name": "Vendor & third-party AI",
+      "description": "Vendor due diligence, contract controls, vendor inventory and vendor change monitoring.",
+      "reasons": [
+        "vendor_model = true",
+        "risk tiering requires the vendor_third_party module"
+      ]
+    },
+    {
+      "id": "monitoring_assurance",
+      "name": "Monitoring, incidents & evidence",
+      "description": "Production monitoring, incident handling, evidence retention and periodic review.",
+      "reasons": [
+        "applies to every use case"
+      ]
+    }
+  ],
+  "gap_analysis": {
+    "assessment_id": "asm_mvi8hv8m12237207",
+    "system_id": "sys_mvi8hs8acc1e916b",
+    "tier": "High",
+    "as_of": "2026-10-21",
+    "findings": [
+      {
+        "question_id": "UC-CORE-Q1",
+        "question": "Is there a named accountable business owner and technical owner for this AI system, recorded in the AI inventory?",
+        "module": "core",
+        "domain": "inventory",
+        "controls": [
+          "EI-03",
+          "EI-01"
+        ],
+        "primary_control": "EI-03",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 2.1",
+            "GOVERN 1.6"
+          ],
+          "iso_42001": [
+            "A.3.2",
+            "A.10.2",
+            "A.4.2",
+            "7.5"
+          ],
+          "eu_ai_act": [
+            "Art. 26",
+            "Art. 49"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Business unit leaders",
+        "recommended_action": "Register the system in the AI inventory with a named accountable business owner and technical owner, and capture owner acceptance.",
+        "evidence_expected": [
+          "Inventory record with owner fields populated",
+          "Owner acceptance record"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-002"
+      },
+      {
+        "question_id": "UC-CORE-Q2",
+        "question": "Are the intended purpose, context of use, users, affected parties and out-of-scope uses documented?",
+        "module": "core",
+        "domain": "inventory",
+        "controls": [
+          "EI-04"
+        ],
+        "primary_control": "EI-04",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 1.1",
+            "MAP 1.2",
+            "MAP 3.4"
+          ],
+          "iso_42001": [
+            "A.6.2.2",
+            "A.9.4"
+          ],
+          "eu_ai_act": [
+            "Art. 11",
+            "Art. 13"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Product Owner",
+        "recommended_action": "Document intended purpose, context of use, users, affected parties and explicitly out-of-scope or foreseeable misuse.",
+        "evidence_expected": [
+          "System profile with intended purpose",
+          "Users and affected parties",
+          "Foreseeable misuse analysis"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-008"
+      },
+      {
+        "question_id": "UC-CORE-Q3",
+        "question": "Has the use case passed intake triage and received a risk tier that was confirmed by an accountable approver?",
+        "module": "core",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-01",
+          "EI-02",
+          "EI-12"
+        ],
+        "primary_control": "EI-02",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 1.1",
+            "MAP 1.6",
+            "MAP 1.5",
+            "GOVERN 1.3"
+          ],
+          "iso_42001": [
+            "8.1",
+            "A.6.1.3",
+            "6.1.2",
+            "A.5.2"
+          ],
+          "eu_ai_act": [
+            "Art. 9",
+            "Art. 6"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "AI Risk Lead",
+        "recommended_action": "Run the use case through intake triage and record a human-confirmed risk tier with rationale in the intake register.",
+        "evidence_expected": [
+          "Intake register entry",
+          "Triage decision with rationale",
+          "Tiering approval record"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 6 = priority critical (3) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-024"
+      },
+      {
+        "question_id": "UC-CORE-Q4",
+        "question": "Was a pre-deployment risk and impact assessment completed and approved at the gate appropriate to the risk tier?",
+        "module": "core",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-02",
+          "GL-03"
+        ],
+        "primary_control": "GL-02",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 1.1",
+            "MAP 3.1",
+            "MAP 5.1",
+            "MEASURE 1.1",
+            "MANAGE 1.1",
+            "GOVERN 1.4"
+          ],
+          "iso_42001": [
+            "6.1.4",
+            "8.4",
+            "A.5.2",
+            "A.5.3",
+            "A.5.4",
+            "8.1",
+            "A.6.2.5"
+          ],
+          "eu_ai_act": [
+            "Art. 9",
+            "Art. 27",
+            "Art. 43"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "AI Risk Lead",
+        "recommended_action": "Complete a tier-proportionate risk and impact assessment and obtain approval at the tier-appropriate gate before (further) production use.",
+        "evidence_expected": [
+          "Completed risk/impact assessment",
+          "Reviewer sign-off",
+          "Approval record with conditions",
+          "Residual-risk statement"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-003"
+      },
+      {
+        "question_id": "UC-CORE-Q5",
+        "question": "Have the legal, regulatory and contractual obligations that apply to this system (by jurisdiction) been identified and reviewed?",
+        "module": "core",
+        "domain": "strategy",
+        "controls": [
+          "AO-07"
+        ],
+        "primary_control": "AO-07",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.1"
+          ],
+          "iso_42001": [
+            "4.1",
+            "4.2",
+            "6.1"
+          ],
+          "eu_ai_act": [
+            "Art. 6",
+            "Art. 26"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Legal / Compliance",
+        "recommended_action": "Add the system to the obligations register and obtain a legal review of applicable obligations by jurisdiction.",
+        "evidence_expected": [
+          "Obligations register entry for this system",
+          "Legal review record"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 5 = priority high (2) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-027"
+      },
+      {
+        "question_id": "UC-CORE-Q6",
+        "question": "Has the use case been screened against the organization's prohibited and restricted AI use policy?",
+        "module": "core",
+        "domain": "strategy",
+        "controls": [
+          "AO-10"
+        ],
+        "primary_control": "AO-10",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.1",
+            "MAP 1.1"
+          ],
+          "iso_42001": [
+            "A.9.4",
+            "A.2.2"
+          ],
+          "eu_ai_act": [
+            "Art. 5"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Legal / AI Governance Lead",
+        "recommended_action": "Screen the use case against the prohibited/restricted AI use list and record the outcome; escalate any match for legal review.",
+        "evidence_expected": [
+          "Intake screening record against prohibited/restricted use list"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-004"
+      },
+      {
+        "question_id": "UC-CORE-Q7",
+        "question": "Are changes to the model, prompts, data, tools or vendor subject to change control with defined reassessment triggers?",
+        "module": "core",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-04",
+          "EI-05"
+        ],
+        "primary_control": "GL-04",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.4",
+            "MANAGE 2.4",
+            "MAP 4.1",
+            "GOVERN 1.6"
+          ],
+          "iso_42001": [
+            "6.3",
+            "A.6.2.6",
+            "A.4.4",
+            "A.6.2.3"
+          ],
+          "eu_ai_act": [
+            "Art. 43",
+            "Art. 11"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Engineering / Change Advisory Board",
+        "recommended_action": "Add AI-specific change triggers (model, prompt, data, tool, vendor) to change management and require reassessment when they fire.",
+        "evidence_expected": [
+          "Change policy with AI-specific triggers",
+          "Change tickets referencing reassessment",
+          "Model/prompt version history"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 5 = priority high (2) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-028"
+      },
+      {
+        "question_id": "UC-DATA-Q1",
+        "question": "Are the data sources, classifications and data flows used for training, grounding (RAG) and prompts documented for this system?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "EI-06",
+          "IS-02"
+        ],
+        "primary_control": "EI-06",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 2.3",
+            "MEASURE 2.10",
+            "MEASURE 2.1"
+          ],
+          "iso_42001": [
+            "A.4.3",
+            "A.7.5",
+            "A.7.2",
+            "A.7.3",
+            "A.7.4",
+            "A.7.6"
+          ],
+          "eu_ai_act": [
+            "Art. 10"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-1645"
+        ],
+        "reviewed_evidence": [
+          "evd_mvi8hv8ydcfc68b3"
+        ],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Data Owner / CDO office",
+        "recommended_action": "Document every data source, its classification and the data flows into prompts, retrieval indexes, logs and external services.",
+        "evidence_expected": [
+          "Data source register entries",
+          "Data-flow diagram",
+          "Data classification per source"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-1645.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-009"
+      },
+      {
+        "question_id": "UC-DATA-Q2",
+        "question": "Has a privacy / data-protection impact assessment been completed covering lawful basis, minimisation, retention and cross-border transfers?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "IS-03"
+        ],
+        "primary_control": "IS-03",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.10",
+            "MAP 1.1"
+          ],
+          "iso_42001": [
+            "A.7.4",
+            "A.5.4"
+          ],
+          "eu_ai_act": [
+            "Art. 10"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Critical gap",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "Critical",
+        "owner_role": "DPO / Privacy Lead",
+        "recommended_action": "Complete a privacy impact assessment (DPIA where required) covering lawful basis, minimisation, retention and transfers, signed off by the DPO/privacy lead.",
+        "evidence_expected": [
+          "Privacy/data-protection impact assessment",
+          "Retention schedule",
+          "Transfer assessment"
+        ],
+        "rationale": "Severity score 8 = priority critical (3) + tier High (2) + answer 'not_implemented' (3); raised to Critical (question flagged critical when not implemented).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 30,
+        "due_date": "2026-11-20",
+        "horizon": "30",
+        "gap_id": "GAP-001"
+      },
+      {
+        "question_id": "UC-DATA-Q3",
+        "question": "Are personal and sensitive fields redacted or masked before they reach prompts, logs and external model calls?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "IS-04"
+        ],
+        "primary_control": "IS-04",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.10"
+          ],
+          "iso_42001": [
+            "A.7.4",
+            "A.6.2.6"
+          ],
+          "eu_ai_act": [
+            "Art. 10"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-2840"
+        ],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Platform Engineering / Privacy Lead",
+        "recommended_action": "Deploy redaction/masking on prompts, responses, logs and external model calls; test it against representative records and retain the results.",
+        "evidence_expected": [
+          "Redaction configuration",
+          "Redaction test results",
+          "Log samples showing masking"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-2840.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-005"
+      },
+      {
+        "question_id": "UC-DATA-Q4",
+        "question": "Is the system's data access limited to the minimum records and fields it needs (e.g. field-level scoping of CRM access)?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "IS-03",
+          "IS-11"
+        ],
+        "primary_control": "IS-03",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.10",
+            "MAP 1.1",
+            "MEASURE 2.7",
+            "MANAGE 2.2"
+          ],
+          "iso_42001": [
+            "A.7.4",
+            "A.5.4",
+            "A.6.2.6",
+            "A.4.4"
+          ],
+          "eu_ai_act": [
+            "Art. 10",
+            "Art. 15",
+            "Art. 14"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-2253"
+        ],
+        "reviewed_evidence": [
+          "evd_mvi8hv956c8f8cf9"
+        ],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "DPO / Privacy Lead",
+        "recommended_action": "Restrict data access to the minimum records and fields required, using scoped service identities, and review access periodically.",
+        "evidence_expected": [
+          "Access-scope configuration",
+          "Field-level access matrix",
+          "Access review record"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-2253.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-006"
+      },
+      {
+        "question_id": "UC-DATA-Q5",
+        "question": "Are retention periods defined and enforced for prompts, outputs, conversation transcripts and logs?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "IS-03",
+          "SE-02"
+        ],
+        "primary_control": "IS-03",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.10",
+            "MAP 1.1",
+            "GOVERN 1.4"
+          ],
+          "iso_42001": [
+            "A.7.4",
+            "A.5.4",
+            "7.5"
+          ],
+          "eu_ai_act": [
+            "Art. 10",
+            "Art. 18",
+            "Art. 19"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "DPO / Privacy Lead",
+        "recommended_action": "Define and enforce retention periods for prompts, outputs, transcripts and logs consistent with the privacy assessment.",
+        "evidence_expected": [
+          "Retention schedule covering AI artefacts",
+          "Deletion job configuration or records"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'partial' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-007"
+      },
+      {
+        "question_id": "UC-SEC-Q1",
+        "question": "Has an AI-specific threat model been completed for this system (e.g. prompt injection, data poisoning, model abuse, tool misuse)?",
+        "module": "security",
+        "domain": "security",
+        "controls": [
+          "IS-01"
+        ],
+        "primary_control": "IS-01",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 5.1",
+            "MEASURE 2.7"
+          ],
+          "iso_42001": [
+            "6.1.2",
+            "A.6.1.3"
+          ],
+          "eu_ai_act": [
+            "Art. 15"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "CISO / Security Architecture",
+        "recommended_action": "Produce an AI-specific threat model covering injection, poisoning, abuse and tool misuse, and track mitigations to closure.",
+        "evidence_expected": [
+          "Threat model document",
+          "Mitigation tracking"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 5 = priority high (2) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-029"
+      },
+      {
+        "question_id": "UC-SEC-Q2",
+        "question": "Do models, prompts, plugins and third-party components come from an approved, integrity-checked supply chain?",
+        "module": "security",
+        "domain": "security",
+        "controls": [
+          "IS-10",
+          "EI-05"
+        ],
+        "primary_control": "IS-10",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 6.1",
+            "MEASURE 2.7",
+            "MAP 4.1",
+            "GOVERN 1.6"
+          ],
+          "iso_42001": [
+            "A.10.3",
+            "A.6.2.3",
+            "A.4.4"
+          ],
+          "eu_ai_act": [
+            "Art. 15",
+            "Art. 11"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-5534"
+        ],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Security Architecture",
+        "recommended_action": "Restrict models and components to an approved list with integrity checks and dependency scanning.",
+        "evidence_expected": [
+          "Approved model/provider list",
+          "Integrity checks",
+          "Dependency scanning results"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-5534.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-010"
+      },
+      {
+        "question_id": "UC-SEC-Q3",
+        "question": "Is there a tested kill switch and rollback procedure that can disable the system, model, agent or individual tools quickly?",
+        "module": "security",
+        "domain": "security",
+        "controls": [
+          "IS-15"
+        ],
+        "primary_control": "IS-15",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MANAGE 2.4"
+          ],
+          "iso_42001": [
+            "A.6.2.6"
+          ],
+          "eu_ai_act": [
+            "Art. 14"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Platform Engineering / SRE",
+        "recommended_action": "Implement and test a kill switch and rollback runbook; record time-to-disable from the test.",
+        "evidence_expected": [
+          "Kill-switch procedure",
+          "Kill-switch test record with time-to-disable",
+          "Rollback runbook"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 6 = priority critical (3) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-025"
+      },
+      {
+        "question_id": "UC-SEC-Q4",
+        "question": "Were pre-release validation and robustness tests run against documented acceptance criteria, with results retained?",
+        "module": "security",
+        "domain": "security",
+        "controls": [
+          "GL-05",
+          "IS-07"
+        ],
+        "primary_control": "GL-05",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.1",
+            "MEASURE 2.3",
+            "MEASURE 2.5"
+          ],
+          "iso_42001": [
+            "A.6.2.4"
+          ],
+          "eu_ai_act": [
+            "Art. 9",
+            "Art. 15"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "QA / ML Engineering",
+        "recommended_action": "Define acceptance criteria, run pre-release validation and robustness tests, and retain signed-off results.",
+        "evidence_expected": [
+          "Test plan and results",
+          "Acceptance criteria",
+          "Release sign-off"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-011"
+      },
+      {
+        "question_id": "UC-FAIR-Q1",
+        "question": "Has the system been tested for bias or discriminatory outcomes across relevant groups, with documented thresholds?",
+        "module": "fairness_safety",
+        "domain": "fairness_transparency",
+        "controls": [
+          "IS-05"
+        ],
+        "primary_control": "IS-05",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.11"
+          ],
+          "iso_42001": [
+            "A.5.4",
+            "A.7.4"
+          ],
+          "eu_ai_act": [
+            "Art. 10"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Responsible AI Lead / Data Science",
+        "recommended_action": "Define relevant groups and fairness metrics, test against thresholds and record mitigations.",
+        "evidence_expected": [
+          "Fairness test plan and results",
+          "Mitigation records"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 5 = priority high (2) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-030"
+      },
+      {
+        "question_id": "UC-FAIR-Q2",
+        "question": "Has a safety and harm evaluation been completed (harmful, misleading or inappropriate outputs, including for vulnerable users)?",
+        "module": "fairness_safety",
+        "domain": "fairness_transparency",
+        "controls": [
+          "IS-06"
+        ],
+        "primary_control": "IS-06",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.6",
+            "MAP 5.1"
+          ],
+          "iso_42001": [
+            "A.5.4",
+            "A.5.5"
+          ],
+          "eu_ai_act": [
+            "Art. 9"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Responsible AI Lead",
+        "recommended_action": "Complete a harm analysis and safety evaluation, including vulnerable-user scenarios, and obtain residual-risk sign-off.",
+        "evidence_expected": [
+          "Harm analysis",
+          "Safety evaluation results",
+          "Residual-risk sign-off"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-012"
+      },
+      {
+        "question_id": "UC-FAIR-Q3",
+        "question": "Are people informed when they are interacting with AI or receiving AI-generated content?",
+        "module": "fairness_safety",
+        "domain": "fairness_transparency",
+        "controls": [
+          "IS-08"
+        ],
+        "primary_control": "IS-08",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.8",
+            "MEASURE 2.9"
+          ],
+          "iso_42001": [
+            "A.8.2",
+            "A.8.5"
+          ],
+          "eu_ai_act": [
+            "Art. 13",
+            "Art. 50"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Product Owner / Legal",
+        "recommended_action": "Add clear AI-interaction and AI-generated-content disclosures at the point of interaction; have Legal review the wording.",
+        "evidence_expected": [
+          "Disclosure text and placement",
+          "User-facing documentation"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-013"
+      },
+      {
+        "question_id": "UC-FAIR-Q4",
+        "question": "Can affected individuals obtain an explanation, reach a human, and contest or appeal outcomes?",
+        "module": "fairness_safety",
+        "domain": "fairness_transparency",
+        "controls": [
+          "IS-08",
+          "AO-11"
+        ],
+        "primary_control": "IS-08",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.8",
+            "MEASURE 2.9",
+            "GOVERN 5.1",
+            "GOVERN 5.2"
+          ],
+          "iso_42001": [
+            "A.8.2",
+            "A.8.5",
+            "4.2",
+            "A.8.3"
+          ],
+          "eu_ai_act": [
+            "Art. 13",
+            "Art. 50",
+            "Art. 27"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Product Owner / Legal",
+        "recommended_action": "Provide a route to a human, explanations proportionate to impact, and a contest/appeal channel whose outcomes are logged.",
+        "evidence_expected": [
+          "Explanation approach",
+          "Feedback channel",
+          "Feedback log"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-014"
+      },
+      {
+        "question_id": "UC-HUM-Q1",
+        "question": "Is the human oversight design documented — who reviews which outputs or actions, when, and with authority to override or stop the system?",
+        "module": "human_oversight",
+        "domain": "oversight_operations",
+        "controls": [
+          "IS-09"
+        ],
+        "primary_control": "IS-09",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 3.2",
+            "MAP 3.5"
+          ],
+          "iso_42001": [
+            "A.9.2",
+            "A.6.2.6"
+          ],
+          "eu_ai_act": [
+            "Art. 14",
+            "Art. 26"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Business Owner",
+        "recommended_action": "Document the oversight design (reviewer roles, review points, override and stop authority) and keep records of oversight in operation.",
+        "evidence_expected": [
+          "Oversight design document",
+          "Override/appeal procedures",
+          "Oversight operation records"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 6 = priority critical (3) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-026"
+      },
+      {
+        "question_id": "UC-HUM-Q2",
+        "question": "Are operators and reviewers trained on the system's limitations, automation bias and escalation paths?",
+        "module": "human_oversight",
+        "domain": "oversight_operations",
+        "controls": [
+          "AO-05"
+        ],
+        "primary_control": "AO-05",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 2.2"
+          ],
+          "iso_42001": [
+            "7.2",
+            "7.3",
+            "A.4.6"
+          ],
+          "eu_ai_act": [
+            "Art. 4"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-5234"
+        ],
+        "reviewed_evidence": [
+          "evd_mvi8hv9n799d3e3e"
+        ],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "HR / Learning lead with AI Governance Lead",
+        "recommended_action": "Deliver role-based training for operators and reviewers covering limitations, automation bias and escalation, and track completion.",
+        "evidence_expected": [
+          "Training curriculum",
+          "Completion records by role"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-5234.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-015"
+      },
+      {
+        "question_id": "UC-HUM-Q3",
+        "question": "Is there a defined escalation path for concerns and AI incidents involving this system?",
+        "module": "human_oversight",
+        "domain": "oversight_operations",
+        "controls": [
+          "AO-06",
+          "SE-04"
+        ],
+        "primary_control": "AO-06",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 2.1",
+            "GOVERN 4.3",
+            "MANAGE 4.3",
+            "MANAGE 2.3"
+          ],
+          "iso_42001": [
+            "5.3",
+            "A.3.3",
+            "10.2",
+            "A.8.4"
+          ],
+          "eu_ai_act": [
+            "Art. 26",
+            "Art. 73"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [
+          "EVD-6429"
+        ],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Low",
+        "owner_role": "AI Governance Lead",
+        "recommended_action": "Define and communicate an escalation path and incident procedure for this system, with named contacts and timeframes.",
+        "evidence_expected": [
+          "Escalation matrix",
+          "AI incident procedure",
+          "Sample escalation records"
+        ],
+        "rationale": "Implementation claimed and evidence referenced, but not yet reviewed by a named reviewer. Severity score 4 = priority high (2) + tier High (2) + answer (0); capped at Low for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 180,
+        "due_date": "2027-04-19",
+        "horizon": "backlog",
+        "gap_id": "GAP-032"
+      },
+      {
+        "question_id": "UC-HUM-Q4",
+        "question": "Were go-live deployment conditions defined, verified and signed off before production use?",
+        "module": "human_oversight",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-07"
+        ],
+        "primary_control": "GL-07",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MANAGE 1.2",
+            "MANAGE 2.1"
+          ],
+          "iso_42001": [
+            "A.6.2.5"
+          ],
+          "eu_ai_act": [
+            "Art. 26"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [
+          "EVD-4909"
+        ],
+        "reviewed_evidence": [
+          "evd_mvi8hv9t7e776a3f"
+        ],
+        "evidence_status": "Verified",
+        "is_gap": false,
+        "gap_type": null,
+        "severity": null,
+        "owner_role": "Product Owner",
+        "recommended_action": "Define go-live conditions (controls, monitoring, oversight) and verify them with a signed checklist before production use.",
+        "evidence_expected": [
+          "Go-live checklist",
+          "Condition verification record"
+        ],
+        "rationale": "Implementation evidence reviewed by Synthetic Head of AI Risk.",
+        "notes": "synthetic dry-run answer"
+      },
+      {
+        "question_id": "UC-VEN-Q1",
+        "question": "Was vendor AI due diligence completed for the model/service provider (security, data use, model training on your data, subprocessors)?",
+        "module": "vendor_third_party",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-11"
+        ],
+        "primary_control": "GL-11",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 6.1",
+            "MAP 4.1"
+          ],
+          "iso_42001": [
+            "A.10.3",
+            "A.10.4"
+          ],
+          "eu_ai_act": [
+            "Art. 25"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Procurement / Vendor Risk",
+        "recommended_action": "Complete AI-specific vendor due diligence covering security, data use, training on customer data and subprocessors.",
+        "evidence_expected": [
+          "Vendor AI questionnaire",
+          "Due-diligence approval"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-016"
+      },
+      {
+        "question_id": "UC-VEN-Q2",
+        "question": "Do contract terms cover data-use restrictions, no training on your data, retention, breach notification and audit rights?",
+        "module": "vendor_third_party",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-11",
+          "AO-09"
+        ],
+        "primary_control": "GL-11",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 6.1",
+            "MAP 4.1",
+            "GOVERN 6.2"
+          ],
+          "iso_42001": [
+            "A.10.3",
+            "A.10.4",
+            "A.10.2"
+          ],
+          "eu_ai_act": [
+            "Art. 25",
+            "Art. 26"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Procurement / Vendor Risk",
+        "recommended_action": "Negotiate or confirm AI contract clauses for data use, training restrictions, retention, breach notification and audit rights.",
+        "evidence_expected": [
+          "Contract AI clauses",
+          "Responsibility allocation (e.g. RACI or contract schedule)"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-017"
+      },
+      {
+        "question_id": "UC-VEN-Q3",
+        "question": "Is the vendor AI product recorded in the third-party AI inventory with an accountable owner?",
+        "module": "vendor_third_party",
+        "domain": "inventory",
+        "controls": [
+          "EI-08",
+          "AO-09"
+        ],
+        "primary_control": "EI-08",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 6.1",
+            "GOVERN 6.2"
+          ],
+          "iso_42001": [
+            "A.10.3",
+            "A.10.2"
+          ],
+          "eu_ai_act": [
+            "Art. 25",
+            "Art. 26"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Procurement / Vendor Risk",
+        "recommended_action": "Record the vendor AI product in the third-party AI inventory with an accountable owner and contract/DPA references.",
+        "evidence_expected": [
+          "Vendor AI register",
+          "Vendor AI owner assignments"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-018"
+      },
+      {
+        "question_id": "UC-VEN-Q4",
+        "question": "Are vendor model version changes and deprecations monitored and routed through change control?",
+        "module": "vendor_third_party",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-04",
+          "EI-05"
+        ],
+        "primary_control": "GL-04",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.4",
+            "MANAGE 2.4",
+            "MAP 4.1",
+            "GOVERN 1.6"
+          ],
+          "iso_42001": [
+            "6.3",
+            "A.6.2.6",
+            "A.4.4",
+            "A.6.2.3"
+          ],
+          "eu_ai_act": [
+            "Art. 43",
+            "Art. 11"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-9743"
+        ],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Engineering / Change Advisory Board",
+        "recommended_action": "Monitor vendor model/version announcements and route changes through change control with reassessment triggers.",
+        "evidence_expected": [
+          "Change tickets referencing reassessment",
+          "Model registry entries with versions"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-9743.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-019"
+      },
+      {
+        "question_id": "UC-MON-Q1",
+        "question": "Is production performance, drift and misuse monitored against thresholds with alerts and review?",
+        "module": "monitoring_assurance",
+        "domain": "oversight_operations",
+        "controls": [
+          "GL-08",
+          "SE-12"
+        ],
+        "primary_control": "GL-08",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 3.1",
+            "MANAGE 4.1",
+            "MEASURE 2.4"
+          ],
+          "iso_42001": [
+            "9.1",
+            "A.6.2.6"
+          ],
+          "eu_ai_act": [
+            "Art. 26",
+            "Art. 72",
+            "Art. 15"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-5247"
+        ],
+        "reviewed_evidence": [
+          "evd_mvi8hva398be55af"
+        ],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "ML Ops / Product Owner",
+        "recommended_action": "Instrument performance, drift and misuse monitoring with thresholds, alerts and a recurring review.",
+        "evidence_expected": [
+          "Monitoring dashboards",
+          "Alert thresholds",
+          "Monitoring review records"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-5247.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-020"
+      },
+      {
+        "question_id": "UC-MON-Q2",
+        "question": "Is this system covered by an AI incident management procedure, including internal and external reporting timelines?",
+        "module": "monitoring_assurance",
+        "domain": "oversight_operations",
+        "controls": [
+          "SE-04"
+        ],
+        "primary_control": "SE-04",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MANAGE 4.3",
+            "MANAGE 2.3"
+          ],
+          "iso_42001": [
+            "10.2",
+            "A.8.4"
+          ],
+          "eu_ai_act": [
+            "Art. 73",
+            "Art. 26"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "CISO / Operational Risk",
+        "recommended_action": "Bring the system under the AI incident procedure with defined severity levels and reporting timelines; Legal to confirm external reporting duties.",
+        "evidence_expected": [
+          "AI incident procedure",
+          "Incident log",
+          "Post-incident reviews"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-021"
+      },
+      {
+        "question_id": "UC-MON-Q3",
+        "question": "Is evidence for this system's controls retained in an evidence repository, and can an audit-ready evidence pack be produced on request?",
+        "module": "monitoring_assurance",
+        "domain": "assurance",
+        "controls": [
+          "SE-02",
+          "SE-05"
+        ],
+        "primary_control": "SE-02",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.4",
+            "MEASURE 2.9"
+          ],
+          "iso_42001": [
+            "7.5",
+            "9.2"
+          ],
+          "eu_ai_act": [
+            "Art. 18",
+            "Art. 19",
+            "Art. 11"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "AI Governance Lead",
+        "recommended_action": "Store control evidence for this system in the evidence repository with retention rules and assemble an audit-ready evidence pack.",
+        "evidence_expected": [
+          "Evidence repository",
+          "Retention policy",
+          "Sample evidence pack"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-022"
+      },
+      {
+        "question_id": "UC-MON-Q4",
+        "question": "Is a periodic review / recertification of this system scheduled at the cadence required by its risk tier?",
+        "module": "monitoring_assurance",
+        "domain": "assurance",
+        "controls": [
+          "GL-12",
+          "EI-11"
+        ],
+        "primary_control": "GL-12",
+        "control_priority": "medium",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.5"
+          ],
+          "iso_42001": [
+            "9.3",
+            "9.1"
+          ],
+          "eu_ai_act": [
+            "Art. 9"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "Medium",
+        "owner_role": "AI Risk Lead",
+        "recommended_action": "Schedule periodic review and recertification at the cadence set for the system's risk tier.",
+        "evidence_expected": [
+          "Review calendar by tier",
+          "Recertification records"
+        ],
+        "rationale": "Severity score 5 = priority medium (1) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-031"
+      },
+      {
+        "question_id": "UC-MON-Q5",
+        "question": "Is technical documentation (system/model card, architecture, data, testing, limitations) maintained for this system?",
+        "module": "monitoring_assurance",
+        "domain": "assurance",
+        "controls": [
+          "GL-06"
+        ],
+        "primary_control": "GL-06",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 2.2",
+            "MEASURE 2.9"
+          ],
+          "iso_42001": [
+            "7.5",
+            "A.6.2.7",
+            "A.6.2.3"
+          ],
+          "eu_ai_act": [
+            "Art. 11"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Product / ML Engineering",
+        "recommended_action": "Produce and maintain technical documentation including a system/model card, architecture, data, testing and known limitations.",
+        "evidence_expected": [
+          "Technical documentation pack",
+          "Model/system card"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-023"
+      }
+    ],
+    "gaps": [
+      {
+        "question_id": "UC-DATA-Q2",
+        "question": "Has a privacy / data-protection impact assessment been completed covering lawful basis, minimisation, retention and cross-border transfers?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "IS-03"
+        ],
+        "primary_control": "IS-03",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.10",
+            "MAP 1.1"
+          ],
+          "iso_42001": [
+            "A.7.4",
+            "A.5.4"
+          ],
+          "eu_ai_act": [
+            "Art. 10"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Critical gap",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "Critical",
+        "owner_role": "DPO / Privacy Lead",
+        "recommended_action": "Complete a privacy impact assessment (DPIA where required) covering lawful basis, minimisation, retention and transfers, signed off by the DPO/privacy lead.",
+        "evidence_expected": [
+          "Privacy/data-protection impact assessment",
+          "Retention schedule",
+          "Transfer assessment"
+        ],
+        "rationale": "Severity score 8 = priority critical (3) + tier High (2) + answer 'not_implemented' (3); raised to Critical (question flagged critical when not implemented).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 30,
+        "due_date": "2026-11-20",
+        "horizon": "30",
+        "gap_id": "GAP-001"
+      },
+      {
+        "question_id": "UC-CORE-Q1",
+        "question": "Is there a named accountable business owner and technical owner for this AI system, recorded in the AI inventory?",
+        "module": "core",
+        "domain": "inventory",
+        "controls": [
+          "EI-03",
+          "EI-01"
+        ],
+        "primary_control": "EI-03",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 2.1",
+            "GOVERN 1.6"
+          ],
+          "iso_42001": [
+            "A.3.2",
+            "A.10.2",
+            "A.4.2",
+            "7.5"
+          ],
+          "eu_ai_act": [
+            "Art. 26",
+            "Art. 49"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Business unit leaders",
+        "recommended_action": "Register the system in the AI inventory with a named accountable business owner and technical owner, and capture owner acceptance.",
+        "evidence_expected": [
+          "Inventory record with owner fields populated",
+          "Owner acceptance record"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-002"
+      },
+      {
+        "question_id": "UC-CORE-Q4",
+        "question": "Was a pre-deployment risk and impact assessment completed and approved at the gate appropriate to the risk tier?",
+        "module": "core",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-02",
+          "GL-03"
+        ],
+        "primary_control": "GL-02",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 1.1",
+            "MAP 3.1",
+            "MAP 5.1",
+            "MEASURE 1.1",
+            "MANAGE 1.1",
+            "GOVERN 1.4"
+          ],
+          "iso_42001": [
+            "6.1.4",
+            "8.4",
+            "A.5.2",
+            "A.5.3",
+            "A.5.4",
+            "8.1",
+            "A.6.2.5"
+          ],
+          "eu_ai_act": [
+            "Art. 9",
+            "Art. 27",
+            "Art. 43"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "AI Risk Lead",
+        "recommended_action": "Complete a tier-proportionate risk and impact assessment and obtain approval at the tier-appropriate gate before (further) production use.",
+        "evidence_expected": [
+          "Completed risk/impact assessment",
+          "Reviewer sign-off",
+          "Approval record with conditions",
+          "Residual-risk statement"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-003"
+      },
+      {
+        "question_id": "UC-CORE-Q6",
+        "question": "Has the use case been screened against the organization's prohibited and restricted AI use policy?",
+        "module": "core",
+        "domain": "strategy",
+        "controls": [
+          "AO-10"
+        ],
+        "primary_control": "AO-10",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.1",
+            "MAP 1.1"
+          ],
+          "iso_42001": [
+            "A.9.4",
+            "A.2.2"
+          ],
+          "eu_ai_act": [
+            "Art. 5"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Legal / AI Governance Lead",
+        "recommended_action": "Screen the use case against the prohibited/restricted AI use list and record the outcome; escalate any match for legal review.",
+        "evidence_expected": [
+          "Intake screening record against prohibited/restricted use list"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-004"
+      },
+      {
+        "question_id": "UC-DATA-Q3",
+        "question": "Are personal and sensitive fields redacted or masked before they reach prompts, logs and external model calls?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "IS-04"
+        ],
+        "primary_control": "IS-04",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.10"
+          ],
+          "iso_42001": [
+            "A.7.4",
+            "A.6.2.6"
+          ],
+          "eu_ai_act": [
+            "Art. 10"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-2840"
+        ],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Platform Engineering / Privacy Lead",
+        "recommended_action": "Deploy redaction/masking on prompts, responses, logs and external model calls; test it against representative records and retain the results.",
+        "evidence_expected": [
+          "Redaction configuration",
+          "Redaction test results",
+          "Log samples showing masking"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-2840.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-005"
+      },
+      {
+        "question_id": "UC-DATA-Q4",
+        "question": "Is the system's data access limited to the minimum records and fields it needs (e.g. field-level scoping of CRM access)?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "IS-03",
+          "IS-11"
+        ],
+        "primary_control": "IS-03",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.10",
+            "MAP 1.1",
+            "MEASURE 2.7",
+            "MANAGE 2.2"
+          ],
+          "iso_42001": [
+            "A.7.4",
+            "A.5.4",
+            "A.6.2.6",
+            "A.4.4"
+          ],
+          "eu_ai_act": [
+            "Art. 10",
+            "Art. 15",
+            "Art. 14"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-2253"
+        ],
+        "reviewed_evidence": [
+          "evd_mvi8hv956c8f8cf9"
+        ],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "DPO / Privacy Lead",
+        "recommended_action": "Restrict data access to the minimum records and fields required, using scoped service identities, and review access periodically.",
+        "evidence_expected": [
+          "Access-scope configuration",
+          "Field-level access matrix",
+          "Access review record"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-2253.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-006"
+      },
+      {
+        "question_id": "UC-DATA-Q5",
+        "question": "Are retention periods defined and enforced for prompts, outputs, conversation transcripts and logs?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "IS-03",
+          "SE-02"
+        ],
+        "primary_control": "IS-03",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.10",
+            "MAP 1.1",
+            "GOVERN 1.4"
+          ],
+          "iso_42001": [
+            "A.7.4",
+            "A.5.4",
+            "7.5"
+          ],
+          "eu_ai_act": [
+            "Art. 10",
+            "Art. 18",
+            "Art. 19"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "DPO / Privacy Lead",
+        "recommended_action": "Define and enforce retention periods for prompts, outputs, transcripts and logs consistent with the privacy assessment.",
+        "evidence_expected": [
+          "Retention schedule covering AI artefacts",
+          "Deletion job configuration or records"
+        ],
+        "rationale": "Severity score 7 = priority critical (3) + tier High (2) + answer 'partial' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-007"
+      },
+      {
+        "question_id": "UC-CORE-Q2",
+        "question": "Are the intended purpose, context of use, users, affected parties and out-of-scope uses documented?",
+        "module": "core",
+        "domain": "inventory",
+        "controls": [
+          "EI-04"
+        ],
+        "primary_control": "EI-04",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 1.1",
+            "MAP 1.2",
+            "MAP 3.4"
+          ],
+          "iso_42001": [
+            "A.6.2.2",
+            "A.9.4"
+          ],
+          "eu_ai_act": [
+            "Art. 11",
+            "Art. 13"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Product Owner",
+        "recommended_action": "Document intended purpose, context of use, users, affected parties and explicitly out-of-scope or foreseeable misuse.",
+        "evidence_expected": [
+          "System profile with intended purpose",
+          "Users and affected parties",
+          "Foreseeable misuse analysis"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-008"
+      },
+      {
+        "question_id": "UC-DATA-Q1",
+        "question": "Are the data sources, classifications and data flows used for training, grounding (RAG) and prompts documented for this system?",
+        "module": "data_privacy",
+        "domain": "data_privacy",
+        "controls": [
+          "EI-06",
+          "IS-02"
+        ],
+        "primary_control": "EI-06",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 2.3",
+            "MEASURE 2.10",
+            "MEASURE 2.1"
+          ],
+          "iso_42001": [
+            "A.4.3",
+            "A.7.5",
+            "A.7.2",
+            "A.7.3",
+            "A.7.4",
+            "A.7.6"
+          ],
+          "eu_ai_act": [
+            "Art. 10"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-1645"
+        ],
+        "reviewed_evidence": [
+          "evd_mvi8hv8ydcfc68b3"
+        ],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Data Owner / CDO office",
+        "recommended_action": "Document every data source, its classification and the data flows into prompts, retrieval indexes, logs and external services.",
+        "evidence_expected": [
+          "Data source register entries",
+          "Data-flow diagram",
+          "Data classification per source"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-1645.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-009"
+      },
+      {
+        "question_id": "UC-SEC-Q2",
+        "question": "Do models, prompts, plugins and third-party components come from an approved, integrity-checked supply chain?",
+        "module": "security",
+        "domain": "security",
+        "controls": [
+          "IS-10",
+          "EI-05"
+        ],
+        "primary_control": "IS-10",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 6.1",
+            "MEASURE 2.7",
+            "MAP 4.1",
+            "GOVERN 1.6"
+          ],
+          "iso_42001": [
+            "A.10.3",
+            "A.6.2.3",
+            "A.4.4"
+          ],
+          "eu_ai_act": [
+            "Art. 15",
+            "Art. 11"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-5534"
+        ],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Security Architecture",
+        "recommended_action": "Restrict models and components to an approved list with integrity checks and dependency scanning.",
+        "evidence_expected": [
+          "Approved model/provider list",
+          "Integrity checks",
+          "Dependency scanning results"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-5534.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-010"
+      },
+      {
+        "question_id": "UC-SEC-Q4",
+        "question": "Were pre-release validation and robustness tests run against documented acceptance criteria, with results retained?",
+        "module": "security",
+        "domain": "security",
+        "controls": [
+          "GL-05",
+          "IS-07"
+        ],
+        "primary_control": "GL-05",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.1",
+            "MEASURE 2.3",
+            "MEASURE 2.5"
+          ],
+          "iso_42001": [
+            "A.6.2.4"
+          ],
+          "eu_ai_act": [
+            "Art. 9",
+            "Art. 15"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "QA / ML Engineering",
+        "recommended_action": "Define acceptance criteria, run pre-release validation and robustness tests, and retain signed-off results.",
+        "evidence_expected": [
+          "Test plan and results",
+          "Acceptance criteria",
+          "Release sign-off"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-011"
+      },
+      {
+        "question_id": "UC-FAIR-Q2",
+        "question": "Has a safety and harm evaluation been completed (harmful, misleading or inappropriate outputs, including for vulnerable users)?",
+        "module": "fairness_safety",
+        "domain": "fairness_transparency",
+        "controls": [
+          "IS-06"
+        ],
+        "primary_control": "IS-06",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.6",
+            "MAP 5.1"
+          ],
+          "iso_42001": [
+            "A.5.4",
+            "A.5.5"
+          ],
+          "eu_ai_act": [
+            "Art. 9"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Responsible AI Lead",
+        "recommended_action": "Complete a harm analysis and safety evaluation, including vulnerable-user scenarios, and obtain residual-risk sign-off.",
+        "evidence_expected": [
+          "Harm analysis",
+          "Safety evaluation results",
+          "Residual-risk sign-off"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-012"
+      },
+      {
+        "question_id": "UC-FAIR-Q3",
+        "question": "Are people informed when they are interacting with AI or receiving AI-generated content?",
+        "module": "fairness_safety",
+        "domain": "fairness_transparency",
+        "controls": [
+          "IS-08"
+        ],
+        "primary_control": "IS-08",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.8",
+            "MEASURE 2.9"
+          ],
+          "iso_42001": [
+            "A.8.2",
+            "A.8.5"
+          ],
+          "eu_ai_act": [
+            "Art. 13",
+            "Art. 50"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Product Owner / Legal",
+        "recommended_action": "Add clear AI-interaction and AI-generated-content disclosures at the point of interaction; have Legal review the wording.",
+        "evidence_expected": [
+          "Disclosure text and placement",
+          "User-facing documentation"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-013"
+      },
+      {
+        "question_id": "UC-FAIR-Q4",
+        "question": "Can affected individuals obtain an explanation, reach a human, and contest or appeal outcomes?",
+        "module": "fairness_safety",
+        "domain": "fairness_transparency",
+        "controls": [
+          "IS-08",
+          "AO-11"
+        ],
+        "primary_control": "IS-08",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.8",
+            "MEASURE 2.9",
+            "GOVERN 5.1",
+            "GOVERN 5.2"
+          ],
+          "iso_42001": [
+            "A.8.2",
+            "A.8.5",
+            "4.2",
+            "A.8.3"
+          ],
+          "eu_ai_act": [
+            "Art. 13",
+            "Art. 50",
+            "Art. 27"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Product Owner / Legal",
+        "recommended_action": "Provide a route to a human, explanations proportionate to impact, and a contest/appeal channel whose outcomes are logged.",
+        "evidence_expected": [
+          "Explanation approach",
+          "Feedback channel",
+          "Feedback log"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-014"
+      },
+      {
+        "question_id": "UC-HUM-Q2",
+        "question": "Are operators and reviewers trained on the system's limitations, automation bias and escalation paths?",
+        "module": "human_oversight",
+        "domain": "oversight_operations",
+        "controls": [
+          "AO-05"
+        ],
+        "primary_control": "AO-05",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 2.2"
+          ],
+          "iso_42001": [
+            "7.2",
+            "7.3",
+            "A.4.6"
+          ],
+          "eu_ai_act": [
+            "Art. 4"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-5234"
+        ],
+        "reviewed_evidence": [
+          "evd_mvi8hv9n799d3e3e"
+        ],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "HR / Learning lead with AI Governance Lead",
+        "recommended_action": "Deliver role-based training for operators and reviewers covering limitations, automation bias and escalation, and track completion.",
+        "evidence_expected": [
+          "Training curriculum",
+          "Completion records by role"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-5234.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-015"
+      },
+      {
+        "question_id": "UC-VEN-Q1",
+        "question": "Was vendor AI due diligence completed for the model/service provider (security, data use, model training on your data, subprocessors)?",
+        "module": "vendor_third_party",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-11"
+        ],
+        "primary_control": "GL-11",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 6.1",
+            "MAP 4.1"
+          ],
+          "iso_42001": [
+            "A.10.3",
+            "A.10.4"
+          ],
+          "eu_ai_act": [
+            "Art. 25"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Procurement / Vendor Risk",
+        "recommended_action": "Complete AI-specific vendor due diligence covering security, data use, training on customer data and subprocessors.",
+        "evidence_expected": [
+          "Vendor AI questionnaire",
+          "Due-diligence approval"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-016"
+      },
+      {
+        "question_id": "UC-VEN-Q2",
+        "question": "Do contract terms cover data-use restrictions, no training on your data, retention, breach notification and audit rights?",
+        "module": "vendor_third_party",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-11",
+          "AO-09"
+        ],
+        "primary_control": "GL-11",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 6.1",
+            "MAP 4.1",
+            "GOVERN 6.2"
+          ],
+          "iso_42001": [
+            "A.10.3",
+            "A.10.4",
+            "A.10.2"
+          ],
+          "eu_ai_act": [
+            "Art. 25",
+            "Art. 26"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Procurement / Vendor Risk",
+        "recommended_action": "Negotiate or confirm AI contract clauses for data use, training restrictions, retention, breach notification and audit rights.",
+        "evidence_expected": [
+          "Contract AI clauses",
+          "Responsibility allocation (e.g. RACI or contract schedule)"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-017"
+      },
+      {
+        "question_id": "UC-VEN-Q3",
+        "question": "Is the vendor AI product recorded in the third-party AI inventory with an accountable owner?",
+        "module": "vendor_third_party",
+        "domain": "inventory",
+        "controls": [
+          "EI-08",
+          "AO-09"
+        ],
+        "primary_control": "EI-08",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 6.1",
+            "GOVERN 6.2"
+          ],
+          "iso_42001": [
+            "A.10.3",
+            "A.10.2"
+          ],
+          "eu_ai_act": [
+            "Art. 25",
+            "Art. 26"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Procurement / Vendor Risk",
+        "recommended_action": "Record the vendor AI product in the third-party AI inventory with an accountable owner and contract/DPA references.",
+        "evidence_expected": [
+          "Vendor AI register",
+          "Vendor AI owner assignments"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-018"
+      },
+      {
+        "question_id": "UC-VEN-Q4",
+        "question": "Are vendor model version changes and deprecations monitored and routed through change control?",
+        "module": "vendor_third_party",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-04",
+          "EI-05"
+        ],
+        "primary_control": "GL-04",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.4",
+            "MANAGE 2.4",
+            "MAP 4.1",
+            "GOVERN 1.6"
+          ],
+          "iso_42001": [
+            "6.3",
+            "A.6.2.6",
+            "A.4.4",
+            "A.6.2.3"
+          ],
+          "eu_ai_act": [
+            "Art. 43",
+            "Art. 11"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-9743"
+        ],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Engineering / Change Advisory Board",
+        "recommended_action": "Monitor vendor model/version announcements and route changes through change control with reassessment triggers.",
+        "evidence_expected": [
+          "Change tickets referencing reassessment",
+          "Model registry entries with versions"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-9743.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-019"
+      },
+      {
+        "question_id": "UC-MON-Q1",
+        "question": "Is production performance, drift and misuse monitored against thresholds with alerts and review?",
+        "module": "monitoring_assurance",
+        "domain": "oversight_operations",
+        "controls": [
+          "GL-08",
+          "SE-12"
+        ],
+        "primary_control": "GL-08",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 3.1",
+            "MANAGE 4.1",
+            "MEASURE 2.4"
+          ],
+          "iso_42001": [
+            "9.1",
+            "A.6.2.6"
+          ],
+          "eu_ai_act": [
+            "Art. 26",
+            "Art. 72",
+            "Art. 15"
+          ]
+        },
+        "answer": "partial",
+        "evidence_refs": [
+          "EVD-5247"
+        ],
+        "reviewed_evidence": [
+          "evd_mvi8hva398be55af"
+        ],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "ML Ops / Product Owner",
+        "recommended_action": "Instrument performance, drift and misuse monitoring with thresholds, alerts and a recurring review.",
+        "evidence_expected": [
+          "Monitoring dashboards",
+          "Alert thresholds",
+          "Monitoring review records"
+        ],
+        "rationale": "Severity score 6 = priority high (2) + tier High (2) + answer 'partial' (2). Evidence referenced: EVD-5247.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-020"
+      },
+      {
+        "question_id": "UC-MON-Q2",
+        "question": "Is this system covered by an AI incident management procedure, including internal and external reporting timelines?",
+        "module": "monitoring_assurance",
+        "domain": "oversight_operations",
+        "controls": [
+          "SE-04"
+        ],
+        "primary_control": "SE-04",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MANAGE 4.3",
+            "MANAGE 2.3"
+          ],
+          "iso_42001": [
+            "10.2",
+            "A.8.4"
+          ],
+          "eu_ai_act": [
+            "Art. 73",
+            "Art. 26"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "CISO / Operational Risk",
+        "recommended_action": "Bring the system under the AI incident procedure with defined severity levels and reporting timelines; Legal to confirm external reporting duties.",
+        "evidence_expected": [
+          "AI incident procedure",
+          "Incident log",
+          "Post-incident reviews"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-021"
+      },
+      {
+        "question_id": "UC-MON-Q3",
+        "question": "Is evidence for this system's controls retained in an evidence repository, and can an audit-ready evidence pack be produced on request?",
+        "module": "monitoring_assurance",
+        "domain": "assurance",
+        "controls": [
+          "SE-02",
+          "SE-05"
+        ],
+        "primary_control": "SE-02",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.4",
+            "MEASURE 2.9"
+          ],
+          "iso_42001": [
+            "7.5",
+            "9.2"
+          ],
+          "eu_ai_act": [
+            "Art. 18",
+            "Art. 19",
+            "Art. 11"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "AI Governance Lead",
+        "recommended_action": "Store control evidence for this system in the evidence repository with retention rules and assemble an audit-ready evidence pack.",
+        "evidence_expected": [
+          "Evidence repository",
+          "Retention policy",
+          "Sample evidence pack"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-022"
+      },
+      {
+        "question_id": "UC-MON-Q5",
+        "question": "Is technical documentation (system/model card, architecture, data, testing, limitations) maintained for this system?",
+        "module": "monitoring_assurance",
+        "domain": "assurance",
+        "controls": [
+          "GL-06"
+        ],
+        "primary_control": "GL-06",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 2.2",
+            "MEASURE 2.9"
+          ],
+          "iso_42001": [
+            "7.5",
+            "A.6.2.7",
+            "A.6.2.3"
+          ],
+          "eu_ai_act": [
+            "Art. 11"
+          ]
+        },
+        "answer": "not_implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "High",
+        "owner_role": "Product / ML Engineering",
+        "recommended_action": "Produce and maintain technical documentation including a system/model card, architecture, data, testing and known limitations.",
+        "evidence_expected": [
+          "Technical documentation pack",
+          "Model/system card"
+        ],
+        "rationale": "Severity score 7 = priority high (2) + tier High (2) + answer 'not_implemented' (3).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 60,
+        "due_date": "2026-12-20",
+        "horizon": "60",
+        "gap_id": "GAP-023"
+      },
+      {
+        "question_id": "UC-CORE-Q3",
+        "question": "Has the use case passed intake triage and received a risk tier that was confirmed by an accountable approver?",
+        "module": "core",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-01",
+          "EI-02",
+          "EI-12"
+        ],
+        "primary_control": "EI-02",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 1.1",
+            "MAP 1.6",
+            "MAP 1.5",
+            "GOVERN 1.3"
+          ],
+          "iso_42001": [
+            "8.1",
+            "A.6.1.3",
+            "6.1.2",
+            "A.5.2"
+          ],
+          "eu_ai_act": [
+            "Art. 9",
+            "Art. 6"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "AI Risk Lead",
+        "recommended_action": "Run the use case through intake triage and record a human-confirmed risk tier with rationale in the intake register.",
+        "evidence_expected": [
+          "Intake register entry",
+          "Triage decision with rationale",
+          "Tiering approval record"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 6 = priority critical (3) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-024"
+      },
+      {
+        "question_id": "UC-SEC-Q3",
+        "question": "Is there a tested kill switch and rollback procedure that can disable the system, model, agent or individual tools quickly?",
+        "module": "security",
+        "domain": "security",
+        "controls": [
+          "IS-15"
+        ],
+        "primary_control": "IS-15",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MANAGE 2.4"
+          ],
+          "iso_42001": [
+            "A.6.2.6"
+          ],
+          "eu_ai_act": [
+            "Art. 14"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Platform Engineering / SRE",
+        "recommended_action": "Implement and test a kill switch and rollback runbook; record time-to-disable from the test.",
+        "evidence_expected": [
+          "Kill-switch procedure",
+          "Kill-switch test record with time-to-disable",
+          "Rollback runbook"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 6 = priority critical (3) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-025"
+      },
+      {
+        "question_id": "UC-HUM-Q1",
+        "question": "Is the human oversight design documented — who reviews which outputs or actions, when, and with authority to override or stop the system?",
+        "module": "human_oversight",
+        "domain": "oversight_operations",
+        "controls": [
+          "IS-09"
+        ],
+        "primary_control": "IS-09",
+        "control_priority": "critical",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 3.2",
+            "MAP 3.5"
+          ],
+          "iso_42001": [
+            "A.9.2",
+            "A.6.2.6"
+          ],
+          "eu_ai_act": [
+            "Art. 14",
+            "Art. 26"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Business Owner",
+        "recommended_action": "Document the oversight design (reviewer roles, review points, override and stop authority) and keep records of oversight in operation.",
+        "evidence_expected": [
+          "Oversight design document",
+          "Override/appeal procedures",
+          "Oversight operation records"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 6 = priority critical (3) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-026"
+      },
+      {
+        "question_id": "UC-CORE-Q5",
+        "question": "Have the legal, regulatory and contractual obligations that apply to this system (by jurisdiction) been identified and reviewed?",
+        "module": "core",
+        "domain": "strategy",
+        "controls": [
+          "AO-07"
+        ],
+        "primary_control": "AO-07",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.1"
+          ],
+          "iso_42001": [
+            "4.1",
+            "4.2",
+            "6.1"
+          ],
+          "eu_ai_act": [
+            "Art. 6",
+            "Art. 26"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Legal / Compliance",
+        "recommended_action": "Add the system to the obligations register and obtain a legal review of applicable obligations by jurisdiction.",
+        "evidence_expected": [
+          "Obligations register entry for this system",
+          "Legal review record"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 5 = priority high (2) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-027"
+      },
+      {
+        "question_id": "UC-CORE-Q7",
+        "question": "Are changes to the model, prompts, data, tools or vendor subject to change control with defined reassessment triggers?",
+        "module": "core",
+        "domain": "risk_lifecycle",
+        "controls": [
+          "GL-04",
+          "EI-05"
+        ],
+        "primary_control": "GL-04",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.4",
+            "MANAGE 2.4",
+            "MAP 4.1",
+            "GOVERN 1.6"
+          ],
+          "iso_42001": [
+            "6.3",
+            "A.6.2.6",
+            "A.4.4",
+            "A.6.2.3"
+          ],
+          "eu_ai_act": [
+            "Art. 43",
+            "Art. 11"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Engineering / Change Advisory Board",
+        "recommended_action": "Add AI-specific change triggers (model, prompt, data, tool, vendor) to change management and require reassessment when they fire.",
+        "evidence_expected": [
+          "Change policy with AI-specific triggers",
+          "Change tickets referencing reassessment",
+          "Model/prompt version history"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 5 = priority high (2) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-028"
+      },
+      {
+        "question_id": "UC-SEC-Q1",
+        "question": "Has an AI-specific threat model been completed for this system (e.g. prompt injection, data poisoning, model abuse, tool misuse)?",
+        "module": "security",
+        "domain": "security",
+        "controls": [
+          "IS-01"
+        ],
+        "primary_control": "IS-01",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MAP 5.1",
+            "MEASURE 2.7"
+          ],
+          "iso_42001": [
+            "6.1.2",
+            "A.6.1.3"
+          ],
+          "eu_ai_act": [
+            "Art. 15"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "CISO / Security Architecture",
+        "recommended_action": "Produce an AI-specific threat model covering injection, poisoning, abuse and tool misuse, and track mitigations to closure.",
+        "evidence_expected": [
+          "Threat model document",
+          "Mitigation tracking"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 5 = priority high (2) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-029"
+      },
+      {
+        "question_id": "UC-FAIR-Q1",
+        "question": "Has the system been tested for bias or discriminatory outcomes across relevant groups, with documented thresholds?",
+        "module": "fairness_safety",
+        "domain": "fairness_transparency",
+        "controls": [
+          "IS-05"
+        ],
+        "primary_control": "IS-05",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.11"
+          ],
+          "iso_42001": [
+            "A.5.4",
+            "A.7.4"
+          ],
+          "eu_ai_act": [
+            "Art. 10"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Medium",
+        "owner_role": "Responsible AI Lead / Data Science",
+        "recommended_action": "Define relevant groups and fairness metrics, test against thresholds and record mitigations.",
+        "evidence_expected": [
+          "Fairness test plan and results",
+          "Mitigation records"
+        ],
+        "rationale": "Implementation claimed without evidence. Severity score 5 = priority high (2) + tier High (2) + answer (1); capped at Medium for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-030"
+      },
+      {
+        "question_id": "UC-MON-Q4",
+        "question": "Is a periodic review / recertification of this system scheduled at the cadence required by its risk tier?",
+        "module": "monitoring_assurance",
+        "domain": "assurance",
+        "controls": [
+          "GL-12",
+          "EI-11"
+        ],
+        "primary_control": "GL-12",
+        "control_priority": "medium",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.5"
+          ],
+          "iso_42001": [
+            "9.3",
+            "9.1"
+          ],
+          "eu_ai_act": [
+            "Art. 9"
+          ]
+        },
+        "answer": "unknown",
+        "evidence_refs": [],
+        "reviewed_evidence": [],
+        "evidence_status": "Missing evidence",
+        "is_gap": true,
+        "gap_type": "implementation",
+        "severity": "Medium",
+        "owner_role": "AI Risk Lead",
+        "recommended_action": "Schedule periodic review and recertification at the cadence set for the system's risk tier.",
+        "evidence_expected": [
+          "Review calendar by tier",
+          "Recertification records"
+        ],
+        "rationale": "Severity score 5 = priority medium (1) + tier High (2) + answer 'unknown' (2).",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 90,
+        "due_date": "2027-01-19",
+        "horizon": "90",
+        "gap_id": "GAP-031"
+      },
+      {
+        "question_id": "UC-HUM-Q3",
+        "question": "Is there a defined escalation path for concerns and AI incidents involving this system?",
+        "module": "human_oversight",
+        "domain": "oversight_operations",
+        "controls": [
+          "AO-06",
+          "SE-04"
+        ],
+        "primary_control": "AO-06",
+        "control_priority": "high",
+        "framework_mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 2.1",
+            "GOVERN 4.3",
+            "MANAGE 4.3",
+            "MANAGE 2.3"
+          ],
+          "iso_42001": [
+            "5.3",
+            "A.3.3",
+            "10.2",
+            "A.8.4"
+          ],
+          "eu_ai_act": [
+            "Art. 26",
+            "Art. 73"
+          ]
+        },
+        "answer": "implemented",
+        "evidence_refs": [
+          "EVD-6429"
+        ],
+        "reviewed_evidence": [],
+        "evidence_status": "User-asserted",
+        "is_gap": true,
+        "gap_type": "evidence",
+        "severity": "Low",
+        "owner_role": "AI Governance Lead",
+        "recommended_action": "Define and communicate an escalation path and incident procedure for this system, with named contacts and timeframes.",
+        "evidence_expected": [
+          "Escalation matrix",
+          "AI incident procedure",
+          "Sample escalation records"
+        ],
+        "rationale": "Implementation claimed and evidence referenced, but not yet reviewed by a named reviewer. Severity score 4 = priority high (2) + tier High (2) + answer (0); capped at Low for evidence-only gaps.",
+        "notes": "synthetic dry-run answer",
+        "sla_days": 180,
+        "due_date": "2027-04-19",
+        "horizon": "backlog",
+        "gap_id": "GAP-032"
+      }
+    ],
+    "summary": {
+      "questions": 33,
+      "answered": 33,
+      "gaps": 32,
+      "by_severity": {
+        "Critical": 1,
+        "High": 22,
+        "Medium": 8,
+        "Low": 1
+      },
+      "by_evidence_status": {
+        "Verified": 1,
+        "User-asserted": 8,
+        "Inferred": 0,
+        "Missing evidence": 23,
+        "Critical gap": 1
+      }
+    },
+    "sla_days": {
+      "Critical": 30,
+      "High": 60,
+      "Medium": 90,
+      "Low": 180
+    }
+  },
+  "heat_map": [
+    {
+      "domain": "strategy",
+      "name": "Strategy & Accountability",
+      "questions": 2,
+      "verified": 0,
+      "implementation_indicator": 50.0,
+      "critical": 0,
+      "high": 1,
+      "medium": 1,
+      "low": 0,
+      "rating": "High exposure"
+    },
+    {
+      "domain": "inventory",
+      "name": "AI Inventory & Visibility",
+      "questions": 3,
+      "verified": 0,
+      "implementation_indicator": 0.0,
+      "critical": 0,
+      "high": 3,
+      "medium": 0,
+      "low": 0,
+      "rating": "High exposure"
+    },
+    {
+      "domain": "risk_lifecycle",
+      "name": "Risk Management & Lifecycle",
+      "questions": 7,
+      "verified": 1,
+      "implementation_indicator": 50.0,
+      "critical": 0,
+      "high": 4,
+      "medium": 2,
+      "low": 0,
+      "rating": "High exposure"
+    },
+    {
+      "domain": "data_privacy",
+      "name": "Data & Privacy",
+      "questions": 5,
+      "verified": 0,
+      "implementation_indicator": 40.0,
+      "critical": 1,
+      "high": 4,
+      "medium": 0,
+      "low": 0,
+      "rating": "Critical exposure"
+    },
+    {
+      "domain": "security",
+      "name": "Security & Resilience",
+      "questions": 4,
+      "verified": 0,
+      "implementation_indicator": 62.5,
+      "critical": 0,
+      "high": 2,
+      "medium": 2,
+      "low": 0,
+      "rating": "High exposure"
+    },
+    {
+      "domain": "fairness_transparency",
+      "name": "Fairness, Safety & Transparency",
+      "questions": 4,
+      "verified": 0,
+      "implementation_indicator": 37.5,
+      "critical": 0,
+      "high": 3,
+      "medium": 1,
+      "low": 0,
+      "rating": "High exposure"
+    },
+    {
+      "domain": "oversight_operations",
+      "name": "Human Oversight & Operations",
+      "questions": 5,
+      "verified": 0,
+      "implementation_indicator": 60.0,
+      "critical": 0,
+      "high": 3,
+      "medium": 1,
+      "low": 1,
+      "rating": "High exposure"
+    },
+    {
+      "domain": "assurance",
+      "name": "Assurance, Evidence & Improvement",
+      "questions": 3,
+      "verified": 0,
+      "implementation_indicator": 0.0,
+      "critical": 0,
+      "high": 2,
+      "medium": 1,
+      "low": 0,
+      "rating": "High exposure"
+    }
+  ],
+  "recommended_controls": [
+    {
+      "id": "IS-03",
+      "title": "Privacy assessment and data minimisation",
+      "pillar": "IS",
+      "priority": "critical",
+      "owner_role": "DPO / Privacy Lead",
+      "objective": "Assess privacy, consent, retention, cross-border transfer and minimisation requirements for AI processing of personal data.",
+      "evidence": [
+        "Privacy/data-protection impact assessment",
+        "Retention schedule",
+        "Transfer assessment"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 2.10",
+          "MAP 1.1"
+        ],
+        "iso_42001": [
+          "A.7.4",
+          "A.5.4"
+        ],
+        "eu_ai_act": [
+          "Art. 10"
+        ]
+      },
+      "related_gaps": [
+        "GAP-001",
+        "GAP-006",
+        "GAP-007"
+      ],
+      "related_questions": [
+        "UC-DATA-Q2",
+        "UC-DATA-Q4",
+        "UC-DATA-Q5"
+      ],
+      "highest_severity": "Critical"
+    },
+    {
+      "id": "AO-10",
+      "title": "Prohibited and restricted AI use policy",
+      "pillar": "AO",
+      "priority": "critical",
+      "owner_role": "Legal / AI Governance Lead",
+      "objective": "Define prohibited, restricted and conditionally permitted AI uses and screen every use case against them.",
+      "evidence": [
+        "Prohibited/restricted use list",
+        "Intake screening records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 1.1",
+          "MAP 1.1"
+        ],
+        "iso_42001": [
+          "A.9.4",
+          "A.2.2"
+        ],
+        "eu_ai_act": [
+          "Art. 5"
+        ]
+      },
+      "related_gaps": [
+        "GAP-004"
+      ],
+      "related_questions": [
+        "UC-CORE-Q6"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "EI-01",
+      "title": "Enterprise AI inventory (system of record)",
+      "pillar": "EI",
+      "priority": "critical",
+      "owner_role": "AI Governance Lead / CIO office",
+      "objective": "Maintain a complete, current inventory of AI systems, models, agents and vendor AI products in a single system of record.",
+      "evidence": [
+        "AI inventory export with record counts",
+        "Inventory coverage attestation",
+        "Last-updated timestamps"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 1.6"
+        ],
+        "iso_42001": [
+          "A.4.2",
+          "7.5"
+        ],
+        "eu_ai_act": [
+          "Art. 26",
+          "Art. 49"
+        ]
+      },
+      "related_gaps": [
+        "GAP-002"
+      ],
+      "related_questions": [
+        "UC-CORE-Q1"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "EI-03",
+      "title": "Accountable owner per AI system",
+      "pillar": "EI",
+      "priority": "critical",
+      "owner_role": "Business unit leaders",
+      "objective": "Assign a named accountable business owner and technical owner to every AI system.",
+      "evidence": [
+        "Owner fields populated in inventory",
+        "Owner acceptance records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 2.1"
+        ],
+        "iso_42001": [
+          "A.3.2",
+          "A.10.2"
+        ],
+        "eu_ai_act": [
+          "Art. 26"
+        ]
+      },
+      "related_gaps": [
+        "GAP-002"
+      ],
+      "related_questions": [
+        "UC-CORE-Q1"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "GL-02",
+      "title": "Pre-deployment risk and impact assessment",
+      "pillar": "GL",
+      "priority": "critical",
+      "owner_role": "AI Risk Lead",
+      "objective": "Complete a documented risk and impact assessment, proportionate to risk tier, before production deployment.",
+      "evidence": [
+        "Completed risk/impact assessment",
+        "Reviewer sign-off",
+        "Residual-risk statement"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 1.1",
+          "MAP 3.1",
+          "MAP 5.1",
+          "MEASURE 1.1"
+        ],
+        "iso_42001": [
+          "6.1.4",
+          "8.4",
+          "A.5.2",
+          "A.5.3",
+          "A.5.4"
+        ],
+        "eu_ai_act": [
+          "Art. 9",
+          "Art. 27"
+        ]
+      },
+      "related_gaps": [
+        "GAP-003"
+      ],
+      "related_questions": [
+        "UC-CORE-Q4"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "GL-03",
+      "title": "Risk-tiered approval gates",
+      "pillar": "GL",
+      "priority": "critical",
+      "owner_role": "AI Governance Forum",
+      "objective": "Require approvals by authorities proportionate to risk tier before deployment, with recorded conditions.",
+      "evidence": [
+        "Approval matrix by tier",
+        "Approval records with conditions"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MANAGE 1.1",
+          "GOVERN 1.4"
+        ],
+        "iso_42001": [
+          "8.1",
+          "A.6.2.5"
+        ],
+        "eu_ai_act": [
+          "Art. 9",
+          "Art. 43"
+        ]
+      },
+      "related_gaps": [
+        "GAP-003"
+      ],
+      "related_questions": [
+        "UC-CORE-Q4"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "IS-04",
+      "title": "Sensitive data redaction and masking",
+      "pillar": "IS",
+      "priority": "critical",
+      "owner_role": "Platform Engineering / Privacy Lead",
+      "objective": "Redact, mask or exclude sensitive data from prompts, responses, logs and external model calls.",
+      "evidence": [
+        "Redaction configuration",
+        "Redaction test results",
+        "Log samples showing masking"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 2.10"
+        ],
+        "iso_42001": [
+          "A.7.4",
+          "A.6.2.6"
+        ],
+        "eu_ai_act": [
+          "Art. 10"
+        ]
+      },
+      "related_gaps": [
+        "GAP-005"
+      ],
+      "related_questions": [
+        "UC-DATA-Q3"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "IS-11",
+      "title": "Least-privilege tool access",
+      "pillar": "IS",
+      "priority": "critical",
+      "owner_role": "Platform Engineering / IAM",
+      "objective": "Grant AI agents only the tools, scopes and data access required for their declared purpose; deny by default.",
+      "evidence": [
+        "Tool permission matrix",
+        "Access-scope configuration",
+        "Access review records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 2.7",
+          "MANAGE 2.2"
+        ],
+        "iso_42001": [
+          "A.6.2.6",
+          "A.4.4"
+        ],
+        "eu_ai_act": [
+          "Art. 15",
+          "Art. 14"
+        ]
+      },
+      "related_gaps": [
+        "GAP-006"
+      ],
+      "related_questions": [
+        "UC-DATA-Q4"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "AO-05",
+      "title": "AI literacy and role-based training",
+      "pillar": "AO",
+      "priority": "high",
+      "owner_role": "HR / Learning lead with AI Governance Lead",
+      "objective": "Provide role-based AI literacy and responsible-use training for staff, operators and decision-makers.",
+      "evidence": [
+        "Training curriculum",
+        "Completion records by role",
+        "Training effectiveness metrics"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 2.2"
+        ],
+        "iso_42001": [
+          "7.2",
+          "7.3",
+          "A.4.6"
+        ],
+        "eu_ai_act": [
+          "Art. 4"
+        ]
+      },
+      "related_gaps": [
+        "GAP-015"
+      ],
+      "related_questions": [
+        "UC-HUM-Q2"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "EI-04",
+      "title": "Intended purpose and context of use",
+      "pillar": "EI",
+      "priority": "high",
+      "owner_role": "Product Owner",
+      "objective": "Document intended purpose, users, affected parties, context of use and foreseeable misuse for each AI system.",
+      "evidence": [
+        "System profile with intended purpose",
+        "Users and affected parties",
+        "Foreseeable misuse analysis"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 1.1",
+          "MAP 1.2",
+          "MAP 3.4"
+        ],
+        "iso_42001": [
+          "A.6.2.2",
+          "A.9.4"
+        ],
+        "eu_ai_act": [
+          "Art. 11",
+          "Art. 13"
+        ]
+      },
+      "related_gaps": [
+        "GAP-008"
+      ],
+      "related_questions": [
+        "UC-CORE-Q2"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "EI-05",
+      "title": "Model, prompt and component registry",
+      "pillar": "EI",
+      "priority": "high",
+      "owner_role": "ML / Platform Engineering Lead",
+      "objective": "Record models, versions, prompts, system instructions, fine-tunes and configuration for each AI system.",
+      "evidence": [
+        "Model registry entries with versions",
+        "Prompt/config version history"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 4.1",
+          "GOVERN 1.6"
+        ],
+        "iso_42001": [
+          "A.4.4",
+          "A.6.2.3"
+        ],
+        "eu_ai_act": [
+          "Art. 11"
+        ]
+      },
+      "related_gaps": [
+        "GAP-010",
+        "GAP-019",
+        "GAP-028"
+      ],
+      "related_questions": [
+        "UC-SEC-Q2",
+        "UC-VEN-Q4",
+        "UC-CORE-Q7"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "EI-06",
+      "title": "Data source and lineage registry",
+      "pillar": "EI",
+      "priority": "high",
+      "owner_role": "Data Owner / CDO office",
+      "objective": "Record data sources, classifications, provenance and data flows used to train, ground or operate each AI system.",
+      "evidence": [
+        "Data source register",
+        "Data-flow diagrams",
+        "Data classification per source"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 2.3",
+          "MEASURE 2.10"
+        ],
+        "iso_42001": [
+          "A.4.3",
+          "A.7.5"
+        ],
+        "eu_ai_act": [
+          "Art. 10"
+        ]
+      },
+      "related_gaps": [
+        "GAP-009"
+      ],
+      "related_questions": [
+        "UC-DATA-Q1"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "EI-08",
+      "title": "Third-party and vendor AI inventory",
+      "pillar": "EI",
+      "priority": "high",
+      "owner_role": "Procurement / Vendor Risk",
+      "objective": "Inventory vendor AI products, embedded AI features and foundation-model providers with contract and data-processing details.",
+      "evidence": [
+        "Vendor AI register",
+        "Contract/DPA references"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 6.1"
+        ],
+        "iso_42001": [
+          "A.10.3"
+        ],
+        "eu_ai_act": [
+          "Art. 25"
+        ]
+      },
+      "related_gaps": [
+        "GAP-018"
+      ],
+      "related_questions": [
+        "UC-VEN-Q3"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "GL-04",
+      "title": "Change management and reassessment triggers",
+      "pillar": "GL",
+      "priority": "high",
+      "owner_role": "Engineering / Change Advisory Board",
+      "objective": "Subject model, prompt, data, vendor, tool and agent changes to change control and trigger reassessment when material.",
+      "evidence": [
+        "Change policy with AI triggers",
+        "Change tickets referencing reassessment"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 1.4",
+          "MANAGE 2.4"
+        ],
+        "iso_42001": [
+          "6.3",
+          "A.6.2.6"
+        ],
+        "eu_ai_act": [
+          "Art. 43"
+        ]
+      },
+      "related_gaps": [
+        "GAP-019",
+        "GAP-028"
+      ],
+      "related_questions": [
+        "UC-VEN-Q4",
+        "UC-CORE-Q7"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "GL-05",
+      "title": "Pre-release validation and testing",
+      "pillar": "GL",
+      "priority": "high",
+      "owner_role": "QA / ML Engineering",
+      "objective": "Validate performance, robustness and safety against acceptance criteria before release.",
+      "evidence": [
+        "Test plan and results",
+        "Acceptance criteria",
+        "Release sign-off"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 2.1",
+          "MEASURE 2.3",
+          "MEASURE 2.5"
+        ],
+        "iso_42001": [
+          "A.6.2.4"
+        ],
+        "eu_ai_act": [
+          "Art. 9",
+          "Art. 15"
+        ]
+      },
+      "related_gaps": [
+        "GAP-011"
+      ],
+      "related_questions": [
+        "UC-SEC-Q4"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "GL-06",
+      "title": "Technical documentation",
+      "pillar": "GL",
+      "priority": "high",
+      "owner_role": "Product / ML Engineering",
+      "objective": "Maintain technical documentation describing design, data, performance, limitations and controls for each material AI system.",
+      "evidence": [
+        "Technical documentation pack",
+        "Model/system card"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 2.2",
+          "MEASURE 2.9"
+        ],
+        "iso_42001": [
+          "7.5",
+          "A.6.2.7",
+          "A.6.2.3"
+        ],
+        "eu_ai_act": [
+          "Art. 11"
+        ]
+      },
+      "related_gaps": [
+        "GAP-023"
+      ],
+      "related_questions": [
+        "UC-MON-Q5"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "GL-08",
+      "title": "Post-deployment monitoring",
+      "pillar": "GL",
+      "priority": "high",
+      "owner_role": "ML Ops / Product Owner",
+      "objective": "Monitor production AI systems for performance, drift, misuse, incidents and unexpected behaviour with defined thresholds.",
+      "evidence": [
+        "Monitoring dashboards",
+        "Alert thresholds",
+        "Monitoring review records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 3.1",
+          "MANAGE 4.1"
+        ],
+        "iso_42001": [
+          "9.1",
+          "A.6.2.6"
+        ],
+        "eu_ai_act": [
+          "Art. 26",
+          "Art. 72"
+        ]
+      },
+      "related_gaps": [
+        "GAP-020"
+      ],
+      "related_questions": [
+        "UC-MON-Q1"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "GL-11",
+      "title": "Vendor AI due diligence and contract controls",
+      "pillar": "GL",
+      "priority": "high",
+      "owner_role": "Procurement / Vendor Risk",
+      "objective": "Perform AI-specific due diligence on vendors and include AI terms (data use, model changes, incident notice, audit rights) in contracts.",
+      "evidence": [
+        "Vendor AI questionnaire",
+        "Contract AI clauses",
+        "Due-diligence approval"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 6.1",
+          "MAP 4.1"
+        ],
+        "iso_42001": [
+          "A.10.3",
+          "A.10.4"
+        ],
+        "eu_ai_act": [
+          "Art. 25"
+        ]
+      },
+      "related_gaps": [
+        "GAP-016",
+        "GAP-017"
+      ],
+      "related_questions": [
+        "UC-VEN-Q1",
+        "UC-VEN-Q2"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "IS-02",
+      "title": "Data governance and quality",
+      "pillar": "IS",
+      "priority": "high",
+      "owner_role": "Data Owner",
+      "objective": "Govern the quality, representativeness and fitness of data used to train, fine-tune or ground AI systems.",
+      "evidence": [
+        "Data quality checks",
+        "Dataset documentation",
+        "Data approval records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 2.3",
+          "MEASURE 2.1"
+        ],
+        "iso_42001": [
+          "A.7.2",
+          "A.7.3",
+          "A.7.4",
+          "A.7.6"
+        ],
+        "eu_ai_act": [
+          "Art. 10"
+        ]
+      },
+      "related_gaps": [
+        "GAP-009"
+      ],
+      "related_questions": [
+        "UC-DATA-Q1"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "IS-06",
+      "title": "Safety and harm evaluation",
+      "pillar": "IS",
+      "priority": "high",
+      "owner_role": "Responsible AI Lead",
+      "objective": "Evaluate AI systems for safety risks and unintended harms to individuals, groups and society.",
+      "evidence": [
+        "Harm analysis",
+        "Safety evaluation results",
+        "Residual-risk sign-off"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 2.6",
+          "MAP 5.1"
+        ],
+        "iso_42001": [
+          "A.5.4",
+          "A.5.5"
+        ],
+        "eu_ai_act": [
+          "Art. 9"
+        ]
+      },
+      "related_gaps": [
+        "GAP-012"
+      ],
+      "related_questions": [
+        "UC-FAIR-Q2"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "IS-07",
+      "title": "Accuracy and robustness testing",
+      "pillar": "IS",
+      "priority": "high",
+      "owner_role": "ML Engineering",
+      "objective": "Measure accuracy and robustness, including degraded and adversarial conditions, against declared levels.",
+      "evidence": [
+        "Accuracy metrics with thresholds",
+        "Robustness test results"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 2.5"
+        ],
+        "iso_42001": [
+          "A.6.2.4"
+        ],
+        "eu_ai_act": [
+          "Art. 15"
+        ]
+      },
+      "related_gaps": [
+        "GAP-011"
+      ],
+      "related_questions": [
+        "UC-SEC-Q4"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "IS-08",
+      "title": "Transparency and AI disclosures",
+      "pillar": "IS",
+      "priority": "high",
+      "owner_role": "Product Owner / Legal",
+      "objective": "Inform users when they interact with AI or when AI materially influences a decision, and provide explanations where appropriate.",
+      "evidence": [
+        "Disclosure text and placement",
+        "Explanation approach",
+        "User-facing documentation"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 2.8",
+          "MEASURE 2.9"
+        ],
+        "iso_42001": [
+          "A.8.2",
+          "A.8.5"
+        ],
+        "eu_ai_act": [
+          "Art. 13",
+          "Art. 50"
+        ]
+      },
+      "related_gaps": [
+        "GAP-013",
+        "GAP-014"
+      ],
+      "related_questions": [
+        "UC-FAIR-Q3",
+        "UC-FAIR-Q4"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "IS-10",
+      "title": "Secure model and prompt supply chain",
+      "pillar": "IS",
+      "priority": "high",
+      "owner_role": "Security Architecture",
+      "objective": "Secure models, weights, prompts, plugins and dependencies against tampering and untrusted sources.",
+      "evidence": [
+        "Approved model/provider list",
+        "Integrity checks",
+        "Dependency scanning results"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 6.1",
+          "MEASURE 2.7"
+        ],
+        "iso_42001": [
+          "A.10.3",
+          "A.6.2.3"
+        ],
+        "eu_ai_act": [
+          "Art. 15"
+        ]
+      },
+      "related_gaps": [
+        "GAP-010"
+      ],
+      "related_questions": [
+        "UC-SEC-Q2"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "SE-02",
+      "title": "Evidence repository and retention",
+      "pillar": "SE",
+      "priority": "high",
+      "owner_role": "AI Governance Lead",
+      "objective": "Store governance evidence in a controlled repository with retention aligned to obligations.",
+      "evidence": [
+        "Evidence repository",
+        "Retention policy",
+        "Access controls on evidence"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 1.4"
+        ],
+        "iso_42001": [
+          "7.5"
+        ],
+        "eu_ai_act": [
+          "Art. 18",
+          "Art. 19"
+        ]
+      },
+      "related_gaps": [
+        "GAP-007",
+        "GAP-022"
+      ],
+      "related_questions": [
+        "UC-DATA-Q5",
+        "UC-MON-Q3"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "SE-04",
+      "title": "AI incident management and reporting",
+      "pillar": "SE",
+      "priority": "high",
+      "owner_role": "CISO / Operational Risk",
+      "objective": "Detect, triage, contain, report and learn from AI incidents, including regulatory notification where required.",
+      "evidence": [
+        "AI incident procedure",
+        "Incident log",
+        "Post-incident reviews"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MANAGE 4.3",
+          "MANAGE 2.3"
+        ],
+        "iso_42001": [
+          "10.2",
+          "A.8.4"
+        ],
+        "eu_ai_act": [
+          "Art. 73",
+          "Art. 26"
+        ]
+      },
+      "related_gaps": [
+        "GAP-021",
+        "GAP-032"
+      ],
+      "related_questions": [
+        "UC-MON-Q2",
+        "UC-HUM-Q3"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "SE-05",
+      "title": "Audit-ready evidence packs",
+      "pillar": "SE",
+      "priority": "high",
+      "owner_role": "AI Governance Lead",
+      "objective": "Produce an audit-ready evidence pack for any material AI system on request.",
+      "evidence": [
+        "Sample evidence pack",
+        "Time-to-produce metric"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 1.4",
+          "MEASURE 2.9"
+        ],
+        "iso_42001": [
+          "7.5",
+          "9.2"
+        ],
+        "eu_ai_act": [
+          "Art. 11",
+          "Art. 18"
+        ]
+      },
+      "related_gaps": [
+        "GAP-022"
+      ],
+      "related_questions": [
+        "UC-MON-Q3"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "SE-12",
+      "title": "Model performance and drift monitoring",
+      "pillar": "SE",
+      "priority": "high",
+      "owner_role": "ML Ops",
+      "objective": "Monitor model performance and data/concept drift against thresholds and trigger review when breached.",
+      "evidence": [
+        "Drift metrics and thresholds",
+        "Alert history",
+        "Review records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 2.4",
+          "MEASURE 3.1"
+        ],
+        "iso_42001": [
+          "A.6.2.6"
+        ],
+        "eu_ai_act": [
+          "Art. 72",
+          "Art. 15"
+        ]
+      },
+      "related_gaps": [
+        "GAP-020"
+      ],
+      "related_questions": [
+        "UC-MON-Q1"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "AO-09",
+      "title": "Third-party AI accountability",
+      "pillar": "AO",
+      "priority": "medium",
+      "owner_role": "Procurement / Vendor Risk",
+      "objective": "Assign accountability for vendor and third-party AI, including allocation of responsibilities between provider, deployer and customer.",
+      "evidence": [
+        "Responsibility allocation (e.g. RACI or contract schedule)",
+        "Vendor AI owner assignments"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 6.1",
+          "GOVERN 6.2"
+        ],
+        "iso_42001": [
+          "A.10.2",
+          "A.10.3"
+        ],
+        "eu_ai_act": [
+          "Art. 25",
+          "Art. 26"
+        ]
+      },
+      "related_gaps": [
+        "GAP-017",
+        "GAP-018"
+      ],
+      "related_questions": [
+        "UC-VEN-Q2",
+        "UC-VEN-Q3"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "AO-11",
+      "title": "Stakeholder engagement and feedback",
+      "pillar": "AO",
+      "priority": "medium",
+      "owner_role": "Product Owner",
+      "objective": "Collect and act on feedback from affected individuals, users and internal stakeholders about AI systems.",
+      "evidence": [
+        "Feedback channel",
+        "Feedback log",
+        "Actions taken"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 5.1",
+          "GOVERN 5.2"
+        ],
+        "iso_42001": [
+          "4.2",
+          "A.8.3",
+          "A.8.5"
+        ],
+        "eu_ai_act": [
+          "Art. 27"
+        ]
+      },
+      "related_gaps": [
+        "GAP-014"
+      ],
+      "related_questions": [
+        "UC-FAIR-Q4"
+      ],
+      "highest_severity": "High"
+    },
+    {
+      "id": "EI-02",
+      "title": "AI risk classification and tiering",
+      "pillar": "EI",
+      "priority": "critical",
+      "owner_role": "AI Risk Lead",
+      "objective": "Classify every AI system by business criticality, data sensitivity, decision impact, autonomy and regulatory relevance and assign a risk tier.",
+      "evidence": [
+        "Classification criteria",
+        "Risk tier per inventory record",
+        "Tiering approval records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 1.1",
+          "MAP 1.5",
+          "GOVERN 1.3"
+        ],
+        "iso_42001": [
+          "6.1.2",
+          "A.5.2"
+        ],
+        "eu_ai_act": [
+          "Art. 6"
+        ]
+      },
+      "related_gaps": [
+        "GAP-024"
+      ],
+      "related_questions": [
+        "UC-CORE-Q3"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "IS-09",
+      "title": "Human oversight design",
+      "pillar": "IS",
+      "priority": "critical",
+      "owner_role": "Business Owner",
+      "objective": "Design human review, override, escalation and appeal mechanisms proportionate to decision impact.",
+      "evidence": [
+        "Oversight design document",
+        "Override/appeal procedures",
+        "Oversight operation records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 3.2",
+          "MAP 3.5"
+        ],
+        "iso_42001": [
+          "A.9.2",
+          "A.6.2.6"
+        ],
+        "eu_ai_act": [
+          "Art. 14",
+          "Art. 26"
+        ]
+      },
+      "related_gaps": [
+        "GAP-026"
+      ],
+      "related_questions": [
+        "UC-HUM-Q1"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "IS-15",
+      "title": "Kill switch and rollback",
+      "pillar": "IS",
+      "priority": "critical",
+      "owner_role": "Platform Engineering / SRE",
+      "objective": "Be able to disable or roll back an AI system, model, agent, tool or tenant quickly after a security or safety incident.",
+      "evidence": [
+        "Kill-switch procedure",
+        "Kill-switch test record with time-to-disable",
+        "Rollback runbook"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MANAGE 2.4"
+        ],
+        "iso_42001": [
+          "A.6.2.6"
+        ],
+        "eu_ai_act": [
+          "Art. 14"
+        ]
+      },
+      "related_gaps": [
+        "GAP-025"
+      ],
+      "related_questions": [
+        "UC-SEC-Q3"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "AO-07",
+      "title": "Regulatory and contractual obligations register",
+      "pillar": "AO",
+      "priority": "high",
+      "owner_role": "Legal / Compliance",
+      "objective": "Maintain a register of AI-relevant legal, regulatory, contractual and customer obligations by jurisdiction and system.",
+      "evidence": [
+        "Obligations register",
+        "Legal review records",
+        "Mapping of obligations to AI systems"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 1.1"
+        ],
+        "iso_42001": [
+          "4.1",
+          "4.2",
+          "6.1"
+        ],
+        "eu_ai_act": [
+          "Art. 6",
+          "Art. 26"
+        ]
+      },
+      "related_gaps": [
+        "GAP-027"
+      ],
+      "related_questions": [
+        "UC-CORE-Q5"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "EI-12",
+      "title": "Use-case intake register",
+      "pillar": "EI",
+      "priority": "high",
+      "owner_role": "AI CoE",
+      "objective": "Capture every proposed AI use case through a standard intake before build or procurement.",
+      "evidence": [
+        "Intake form",
+        "Intake register with status"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 1.1"
+        ],
+        "iso_42001": [
+          "A.5.2",
+          "A.6.1.3"
+        ],
+        "eu_ai_act": [
+          "Art. 6"
+        ]
+      },
+      "related_gaps": [
+        "GAP-024"
+      ],
+      "related_questions": [
+        "UC-CORE-Q3"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "GL-01",
+      "title": "Intake triage workflow",
+      "pillar": "GL",
+      "priority": "high",
+      "owner_role": "AI CoE",
+      "objective": "Triage each intake against risk triggers to route it to the right assessment depth and approvers.",
+      "evidence": [
+        "Triage criteria",
+        "Triage decisions with rationale"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 1.1",
+          "MAP 1.6"
+        ],
+        "iso_42001": [
+          "8.1",
+          "A.6.1.3"
+        ],
+        "eu_ai_act": [
+          "Art. 9"
+        ]
+      },
+      "related_gaps": [
+        "GAP-024"
+      ],
+      "related_questions": [
+        "UC-CORE-Q3"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "IS-01",
+      "title": "AI threat modelling",
+      "pillar": "IS",
+      "priority": "high",
+      "owner_role": "CISO / Security Architecture",
+      "objective": "Threat-model AI systems, including prompt injection, data poisoning, model extraction and unsafe tool use.",
+      "evidence": [
+        "Threat model per material system",
+        "Mitigation tracking"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MAP 5.1",
+          "MEASURE 2.7"
+        ],
+        "iso_42001": [
+          "6.1.2",
+          "A.6.1.3"
+        ],
+        "eu_ai_act": [
+          "Art. 15"
+        ]
+      },
+      "related_gaps": [
+        "GAP-029"
+      ],
+      "related_questions": [
+        "UC-SEC-Q1"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "IS-05",
+      "title": "Bias and fairness testing",
+      "pillar": "IS",
+      "priority": "high",
+      "owner_role": "Responsible AI Lead / Data Science",
+      "objective": "Test AI systems for bias and discriminatory outcomes across relevant groups before release and periodically.",
+      "evidence": [
+        "Fairness test plan and results",
+        "Mitigation records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "MEASURE 2.11"
+        ],
+        "iso_42001": [
+          "A.5.4",
+          "A.7.4"
+        ],
+        "eu_ai_act": [
+          "Art. 10"
+        ]
+      },
+      "related_gaps": [
+        "GAP-030"
+      ],
+      "related_questions": [
+        "UC-FAIR-Q1"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "EI-11",
+      "title": "Inventory attestation and recertification",
+      "pillar": "EI",
+      "priority": "medium",
+      "owner_role": "AI Governance Lead",
+      "objective": "Require owners to periodically attest that inventory records are complete and accurate.",
+      "evidence": [
+        "Attestation records",
+        "Exceptions for stale records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 1.5"
+        ],
+        "iso_42001": [
+          "9.1"
+        ],
+        "eu_ai_act": []
+      },
+      "related_gaps": [
+        "GAP-031"
+      ],
+      "related_questions": [
+        "UC-MON-Q4"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "GL-12",
+      "title": "Periodic review and recertification",
+      "pillar": "GL",
+      "priority": "medium",
+      "owner_role": "AI Risk Lead",
+      "objective": "Re-review AI systems at a cadence set by risk tier and recertify continued use.",
+      "evidence": [
+        "Review calendar by tier",
+        "Recertification records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 1.5"
+        ],
+        "iso_42001": [
+          "9.3"
+        ],
+        "eu_ai_act": [
+          "Art. 9"
+        ]
+      },
+      "related_gaps": [
+        "GAP-031"
+      ],
+      "related_questions": [
+        "UC-MON-Q4"
+      ],
+      "highest_severity": "Medium"
+    },
+    {
+      "id": "AO-06",
+      "title": "Escalation paths and decision rights",
+      "pillar": "AO",
+      "priority": "high",
+      "owner_role": "AI Governance Lead",
+      "objective": "Define how AI issues, concerns and incidents are escalated, to whom, and within what timeframe.",
+      "evidence": [
+        "Escalation matrix",
+        "Concern-reporting channel",
+        "Sample escalation records"
+      ],
+      "mappings": {
+        "nist_ai_rmf": [
+          "GOVERN 2.1",
+          "GOVERN 4.3"
+        ],
+        "iso_42001": [
+          "5.3",
+          "A.3.3"
+        ],
+        "eu_ai_act": [
+          "Art. 26"
+        ]
+      },
+      "related_gaps": [
+        "GAP-032"
+      ],
+      "related_questions": [
+        "UC-HUM-Q3"
+      ],
+      "highest_severity": "Low"
+    }
+  ],
+  "roadmap": {
+    "30": [
+      {
+        "gap_id": "GAP-001",
+        "action": "Complete a privacy impact assessment (DPIA where required) covering lawful basis, minimisation, retention and transfers, signed off by the DPO/privacy lead.",
+        "controls": [
+          "IS-03"
+        ],
+        "owner_role": "DPO / Privacy Lead",
+        "due_date": "2026-11-20",
+        "severity": "Critical"
+      }
+    ],
+    "60": [
+      {
+        "gap_id": "GAP-002",
+        "action": "Register the system in the AI inventory with a named accountable business owner and technical owner, and capture owner acceptance.",
+        "controls": [
+          "EI-03",
+          "EI-01"
+        ],
+        "owner_role": "Business unit leaders",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-003",
+        "action": "Complete a tier-proportionate risk and impact assessment and obtain approval at the tier-appropriate gate before (further) production use.",
+        "controls": [
+          "GL-02",
+          "GL-03"
+        ],
+        "owner_role": "AI Risk Lead",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-004",
+        "action": "Screen the use case against the prohibited/restricted AI use list and record the outcome; escalate any match for legal review.",
+        "controls": [
+          "AO-10"
+        ],
+        "owner_role": "Legal / AI Governance Lead",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-005",
+        "action": "Deploy redaction/masking on prompts, responses, logs and external model calls; test it against representative records and retain the results.",
+        "controls": [
+          "IS-04"
+        ],
+        "owner_role": "Platform Engineering / Privacy Lead",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-006",
+        "action": "Restrict data access to the minimum records and fields required, using scoped service identities, and review access periodically.",
+        "controls": [
+          "IS-03",
+          "IS-11"
+        ],
+        "owner_role": "DPO / Privacy Lead",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-007",
+        "action": "Define and enforce retention periods for prompts, outputs, transcripts and logs consistent with the privacy assessment.",
+        "controls": [
+          "IS-03",
+          "SE-02"
+        ],
+        "owner_role": "DPO / Privacy Lead",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-008",
+        "action": "Document intended purpose, context of use, users, affected parties and explicitly out-of-scope or foreseeable misuse.",
+        "controls": [
+          "EI-04"
+        ],
+        "owner_role": "Product Owner",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-009",
+        "action": "Document every data source, its classification and the data flows into prompts, retrieval indexes, logs and external services.",
+        "controls": [
+          "EI-06",
+          "IS-02"
+        ],
+        "owner_role": "Data Owner / CDO office",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-010",
+        "action": "Restrict models and components to an approved list with integrity checks and dependency scanning.",
+        "controls": [
+          "IS-10",
+          "EI-05"
+        ],
+        "owner_role": "Security Architecture",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-011",
+        "action": "Define acceptance criteria, run pre-release validation and robustness tests, and retain signed-off results.",
+        "controls": [
+          "GL-05",
+          "IS-07"
+        ],
+        "owner_role": "QA / ML Engineering",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-012",
+        "action": "Complete a harm analysis and safety evaluation, including vulnerable-user scenarios, and obtain residual-risk sign-off.",
+        "controls": [
+          "IS-06"
+        ],
+        "owner_role": "Responsible AI Lead",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-013",
+        "action": "Add clear AI-interaction and AI-generated-content disclosures at the point of interaction; have Legal review the wording.",
+        "controls": [
+          "IS-08"
+        ],
+        "owner_role": "Product Owner / Legal",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-014",
+        "action": "Provide a route to a human, explanations proportionate to impact, and a contest/appeal channel whose outcomes are logged.",
+        "controls": [
+          "IS-08",
+          "AO-11"
+        ],
+        "owner_role": "Product Owner / Legal",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-015",
+        "action": "Deliver role-based training for operators and reviewers covering limitations, automation bias and escalation, and track completion.",
+        "controls": [
+          "AO-05"
+        ],
+        "owner_role": "HR / Learning lead with AI Governance Lead",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-016",
+        "action": "Complete AI-specific vendor due diligence covering security, data use, training on customer data and subprocessors.",
+        "controls": [
+          "GL-11"
+        ],
+        "owner_role": "Procurement / Vendor Risk",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-017",
+        "action": "Negotiate or confirm AI contract clauses for data use, training restrictions, retention, breach notification and audit rights.",
+        "controls": [
+          "GL-11",
+          "AO-09"
+        ],
+        "owner_role": "Procurement / Vendor Risk",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-018",
+        "action": "Record the vendor AI product in the third-party AI inventory with an accountable owner and contract/DPA references.",
+        "controls": [
+          "EI-08",
+          "AO-09"
+        ],
+        "owner_role": "Procurement / Vendor Risk",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-019",
+        "action": "Monitor vendor model/version announcements and route changes through change control with reassessment triggers.",
+        "controls": [
+          "GL-04",
+          "EI-05"
+        ],
+        "owner_role": "Engineering / Change Advisory Board",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-020",
+        "action": "Instrument performance, drift and misuse monitoring with thresholds, alerts and a recurring review.",
+        "controls": [
+          "GL-08",
+          "SE-12"
+        ],
+        "owner_role": "ML Ops / Product Owner",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-021",
+        "action": "Bring the system under the AI incident procedure with defined severity levels and reporting timelines; Legal to confirm external reporting duties.",
+        "controls": [
+          "SE-04"
+        ],
+        "owner_role": "CISO / Operational Risk",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-022",
+        "action": "Store control evidence for this system in the evidence repository with retention rules and assemble an audit-ready evidence pack.",
+        "controls": [
+          "SE-02",
+          "SE-05"
+        ],
+        "owner_role": "AI Governance Lead",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      },
+      {
+        "gap_id": "GAP-023",
+        "action": "Produce and maintain technical documentation including a system/model card, architecture, data, testing and known limitations.",
+        "controls": [
+          "GL-06"
+        ],
+        "owner_role": "Product / ML Engineering",
+        "due_date": "2026-12-20",
+        "severity": "High"
+      }
+    ],
+    "90": [
+      {
+        "gap_id": "GAP-024",
+        "action": "Run the use case through intake triage and record a human-confirmed risk tier with rationale in the intake register.",
+        "controls": [
+          "GL-01",
+          "EI-02",
+          "EI-12"
+        ],
+        "owner_role": "AI Risk Lead",
+        "due_date": "2027-01-19",
+        "severity": "Medium"
+      },
+      {
+        "gap_id": "GAP-025",
+        "action": "Implement and test a kill switch and rollback runbook; record time-to-disable from the test.",
+        "controls": [
+          "IS-15"
+        ],
+        "owner_role": "Platform Engineering / SRE",
+        "due_date": "2027-01-19",
+        "severity": "Medium"
+      },
+      {
+        "gap_id": "GAP-026",
+        "action": "Document the oversight design (reviewer roles, review points, override and stop authority) and keep records of oversight in operation.",
+        "controls": [
+          "IS-09"
+        ],
+        "owner_role": "Business Owner",
+        "due_date": "2027-01-19",
+        "severity": "Medium"
+      },
+      {
+        "gap_id": "GAP-027",
+        "action": "Add the system to the obligations register and obtain a legal review of applicable obligations by jurisdiction.",
+        "controls": [
+          "AO-07"
+        ],
+        "owner_role": "Legal / Compliance",
+        "due_date": "2027-01-19",
+        "severity": "Medium"
+      },
+      {
+        "gap_id": "GAP-028",
+        "action": "Add AI-specific change triggers (model, prompt, data, tool, vendor) to change management and require reassessment when they fire.",
+        "controls": [
+          "GL-04",
+          "EI-05"
+        ],
+        "owner_role": "Engineering / Change Advisory Board",
+        "due_date": "2027-01-19",
+        "severity": "Medium"
+      },
+      {
+        "gap_id": "GAP-029",
+        "action": "Produce an AI-specific threat model covering injection, poisoning, abuse and tool misuse, and track mitigations to closure.",
+        "controls": [
+          "IS-01"
+        ],
+        "owner_role": "CISO / Security Architecture",
+        "due_date": "2027-01-19",
+        "severity": "Medium"
+      },
+      {
+        "gap_id": "GAP-030",
+        "action": "Define relevant groups and fairness metrics, test against thresholds and record mitigations.",
+        "controls": [
+          "IS-05"
+        ],
+        "owner_role": "Responsible AI Lead / Data Science",
+        "due_date": "2027-01-19",
+        "severity": "Medium"
+      },
+      {
+        "gap_id": "GAP-031",
+        "action": "Schedule periodic review and recertification at the cadence set for the system's risk tier.",
+        "controls": [
+          "GL-12",
+          "EI-11"
+        ],
+        "owner_role": "AI Risk Lead",
+        "due_date": "2027-01-19",
+        "severity": "Medium"
+      }
+    ],
+    "backlog": [
+      {
+        "gap_id": "GAP-032",
+        "action": "Define and communicate an escalation path and incident procedure for this system, with named contacts and timeframes.",
+        "controls": [
+          "AO-06",
+          "SE-04"
+        ],
+        "owner_role": "AI Governance Lead",
+        "due_date": "2027-04-19",
+        "severity": "Low"
+      }
+    ]
+  },
+  "runtime_guardrails": [
+    {
+      "id": "RG-PII-REDACTION",
+      "title": "Redact personal and sensitive data in prompts, responses and logs",
+      "controls": [
+        "IS-04",
+        "IS-03"
+      ]
+    },
+    {
+      "id": "RG-ACTION-LOGGING",
+      "title": "Log every model and tool call with trace ID, redacted inputs and policy decision",
+      "controls": [
+        "SE-08"
+      ]
+    },
+    {
+      "id": "RG-KILL-SWITCH",
+      "title": "Provide a kill switch to disable the system, agent or individual tools",
+      "controls": [
+        "IS-15"
+      ]
+    },
+    {
+      "id": "RG-DISCLOSURE",
+      "title": "Display AI-interaction disclosure to end users",
+      "controls": [
+        "IS-08"
+      ]
+    }
+  ],
+  "shield_advice_summary": {
+    "overall_rating": "High",
+    "citations": [
+      "AO-06",
+      "AO-07",
+      "AO-09",
+      "EI-02",
+      "EI-04",
+      "EI-05",
+      "EI-06",
+      "EI-07",
+      "GL-03",
+      "GL-04",
+      "GL-07",
+      "GL-08"
+    ]
+  },
+  "approvals": [
+    {
+      "approval_id": "apr_mvi8hsa8ee470cd3",
+      "type": "confirm_risk_tier",
+      "status": "approved",
+      "resource": "sys_mvi8hs8acc1e916b",
+      "reason": "Confirm preliminary tier High",
+      "requested_by": "u-assessor-1",
+      "resolved_by": "u-approver-1",
+      "created_at": "2026-10-21T14:55:20+00:00"
+    }
+  ],
+  "audit_trace": [
+    {
+      "id": "aud_mvi8hv8m391883a8",
+      "ts": "2026-10-21T14:55:24.262931+00:00",
+      "trace_id": "trc_mvi8hv8le1cb9685",
+      "action": "agent.tool.start_assessment",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv8oedd9cc3d",
+      "ts": "2026-10-21T14:55:24.264549+00:00",
+      "trace_id": "trc_mvi8hv8n90831ab0",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv8qb52c63de",
+      "ts": "2026-10-21T14:55:24.266389+00:00",
+      "trace_id": "trc_mvi8hv8p57101fa9",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv8rc2398881",
+      "ts": "2026-10-21T14:55:24.267501+00:00",
+      "trace_id": "trc_mvi8hv8qefefe86a",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv8sd4d62673",
+      "ts": "2026-10-21T14:55:24.268655+00:00",
+      "trace_id": "trc_mvi8hv8r367f996e",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv8t585991e5",
+      "ts": "2026-10-21T14:55:24.269876+00:00",
+      "trace_id": "trc_mvi8hv8t0f9ad1f8",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv8v26a834b1",
+      "ts": "2026-10-21T14:55:24.271016+00:00",
+      "trace_id": "trc_mvi8hv8u1fe4cc3a",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv8w4cdc9c4b",
+      "ts": "2026-10-21T14:55:24.272213+00:00",
+      "trace_id": "trc_mvi8hv8vcdf0854a",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv8zd0f26f6a",
+      "ts": "2026-10-21T14:55:24.275414+00:00",
+      "trace_id": "trc_mvi8hv8x5a8631b7",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv90cb393bb1",
+      "ts": "2026-10-21T14:55:24.276803+00:00",
+      "trace_id": "trc_mvi8hv8z999fa064",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9363e5a885",
+      "ts": "2026-10-21T14:55:24.279451+00:00",
+      "trace_id": "trc_mvi8hv91b6880269",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv968e54e5ec",
+      "ts": "2026-10-21T14:55:24.282035+00:00",
+      "trace_id": "trc_mvi8hv9375c4e3b1",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv974da3d925",
+      "ts": "2026-10-21T14:55:24.283393+00:00",
+      "trace_id": "trc_mvi8hv963a2e6cac",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv987740cc5d",
+      "ts": "2026-10-21T14:55:24.284977+00:00",
+      "trace_id": "trc_mvi8hv977fe645fb",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9bccbd7177",
+      "ts": "2026-10-21T14:55:24.287361+00:00",
+      "trace_id": "trc_mvi8hv999fa95fcd",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9dae5c5268",
+      "ts": "2026-10-21T14:55:24.289613+00:00",
+      "trace_id": "trc_mvi8hv9bc69714f7",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9edb254ee1",
+      "ts": "2026-10-21T14:55:24.290897+00:00",
+      "trace_id": "trc_mvi8hv9ddf376145",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9g625ae53e",
+      "ts": "2026-10-21T14:55:24.292498+00:00",
+      "trace_id": "trc_mvi8hv9f78bd74d9",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9ib5261a4d",
+      "ts": "2026-10-21T14:55:24.294161+00:00",
+      "trace_id": "trc_mvi8hv9h200c3934",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9j7f681b8f",
+      "ts": "2026-10-21T14:55:24.295352+00:00",
+      "trace_id": "trc_mvi8hv9i92185958",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9k62d6672d",
+      "ts": "2026-10-21T14:55:24.296624+00:00",
+      "trace_id": "trc_mvi8hv9j06f70873",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9l48266ec4",
+      "ts": "2026-10-21T14:55:24.297784+00:00",
+      "trace_id": "trc_mvi8hv9kf51a42cc",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9o072c1d73",
+      "ts": "2026-10-21T14:55:24.300489+00:00",
+      "trace_id": "trc_mvi8hv9md09983f9",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9rebfc958e",
+      "ts": "2026-10-21T14:55:24.303305+00:00",
+      "trace_id": "trc_mvi8hv9oabbba292",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9u6d4b7f0a",
+      "ts": "2026-10-21T14:55:24.306017+00:00",
+      "trace_id": "trc_mvi8hv9r23f67bf3",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9v78135f12",
+      "ts": "2026-10-21T14:55:24.307897+00:00",
+      "trace_id": "trc_mvi8hv9ue7715ce7",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9x0de03b7e",
+      "ts": "2026-10-21T14:55:24.309212+00:00",
+      "trace_id": "trc_mvi8hv9w4948212d",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hv9y3f92eae6",
+      "ts": "2026-10-21T14:55:24.310631+00:00",
+      "trace_id": "trc_mvi8hv9x4c0c1ee1",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hva1abbd5a1c",
+      "ts": "2026-10-21T14:55:24.313556+00:00",
+      "trace_id": "trc_mvi8hv9za09dea51",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hva5183244bb",
+      "ts": "2026-10-21T14:55:24.317014+00:00",
+      "trace_id": "trc_mvi8hva272c3a454",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hva606729a9b",
+      "ts": "2026-10-21T14:55:24.318484+00:00",
+      "trace_id": "trc_mvi8hva51cc806c5",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hva7bd4d159e",
+      "ts": "2026-10-21T14:55:24.319884+00:00",
+      "trace_id": "trc_mvi8hva6d20ee523",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hva9769b24c6",
+      "ts": "2026-10-21T14:55:24.321667+00:00",
+      "trace_id": "trc_mvi8hva8d5220999",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hvabab0afe48",
+      "ts": "2026-10-21T14:55:24.323110+00:00",
+      "trace_id": "trc_mvi8hvaa9f37a88f",
+      "action": "agent.tool.submit_assessment_response",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hvae86ec1d2e",
+      "ts": "2026-10-21T14:55:24.326515+00:00",
+      "trace_id": "trc_mvi8hvae6e042289",
+      "action": "evidence.reviewed",
+      "actor": "u-approver-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hvagc2b2ef29",
+      "ts": "2026-10-21T14:55:24.328687+00:00",
+      "trace_id": "trc_mvi8hvagce36d114",
+      "action": "evidence.reviewed",
+      "actor": "u-approver-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hvaid0590a41",
+      "ts": "2026-10-21T14:55:24.330957+00:00",
+      "trace_id": "trc_mvi8hvaic96a67ec",
+      "action": "evidence.reviewed",
+      "actor": "u-approver-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hvan41843c80",
+      "ts": "2026-10-21T14:55:24.335510+00:00",
+      "trace_id": "trc_mvi8hvan7e21147f",
+      "action": "evidence.reviewed",
+      "actor": "u-approver-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hvap02ce7ada",
+      "ts": "2026-10-21T14:55:24.337814+00:00",
+      "trace_id": "trc_mvi8hvap4645185d",
+      "action": "evidence.reviewed",
+      "actor": "u-approver-1",
+      "outcome": "success"
+    },
+    {
+      "id": "aud_mvi8hvb15a540138",
+      "ts": "2026-10-21T14:55:24.349623+00:00",
+      "trace_id": "trc_mvi8hvaqc8f98d93",
+      "action": "agent.tool.identify_gaps",
+      "actor": "u-assessor-1",
+      "outcome": "success"
+    }
+  ],
+  "evidence_status_definitions": {
+    "Verified": "Evidence exists and has been reviewed",
+    "User-asserted": "User claims implementation, but evidence is absent",
+    "Inferred": "Inferred as a likely gap or fact from responses or metadata",
+    "Missing evidence": "Required evidence has not been provided",
+    "Critical gap": "Material privacy, security, safety, legal, or operational exposure"
+  },
+  "disclaimer": "AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.",
+  "template_disclaimer": "This use-case assessment produces an indicative view of governance readiness for a single AI system. Self-reported answers are User-asserted; only evidence reviewed by a named reviewer is Verified. Risk tiers are Inferred and require human confirmation. Framework mappings are indicative. AEGIS does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.",
+  "markdown_sha_note": "Markdown rendering available in the .md export"
+}

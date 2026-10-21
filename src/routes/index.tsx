@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { HomeScreen } from "@/features/governance/screens-core";
-import { pageHead } from "@/features/governance/meta";
+import { getSitePage } from "@/features/site/pages";
+import { SitePageView, sitePageHead } from "@/features/site/views";
+
+const home = getSitePage("/");
+
 export const Route = createFileRoute("/")({
-  head: () =>
-    pageHead(
-      "Governance overview",
-      "Assess enterprise AI governance maturity, release readiness and prioritized control gaps.",
-    ),
-  component: HomeScreen,
+  head: () => (home ? sitePageHead(home) : {}),
+  component: () => (home ? <SitePageView page={home} /> : null),
 });

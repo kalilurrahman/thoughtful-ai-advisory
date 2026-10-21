@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block main %}
+{% include "partials/page_header.html" %}
+{% set tool_anchor = {'maturity-assessment': 'assessment', 'guardrail-generator': 'guardrail-generator', 'ask-aegis': 'ask-aegis', 'risk-triage': 'risk-triage', 'waitlist': 'form-heading'}[page.tool] %}
+<div class="container page-body">
+  {% if body %}<p class="tool-jump"><a class="btn btn-primary" href="#{{ tool_anchor }}" data-cta="tool_jump_{{ page.tool }}">{{ 'Start the assessment' if page.tool == 'maturity-assessment' else ('Join the waitlist' if page.tool == 'waitlist' else 'Go to the tool') }}</a></p>{% endif %}
+  {% if body %}<div class="prose tool-intro">{{ body }}</div>{% endif %}
+  <noscript>
+    <div class="notice notice--warning"><p>This tool runs in your browser and needs JavaScript. If you prefer, <a href="{{ site.ctas.demo.url }}">request a demo</a> and we will walk you through it.</p></div>
+  </noscript>
+  {% if page.tool == 'maturity-assessment' %}{% include "partials/tool_assessment.html" %}
+  {% elif page.tool == 'guardrail-generator' %}{% include "partials/tool_guardrail.html" %}
+  {% elif page.tool == 'ask-aegis' %}{% include "partials/tool_ask.html" %}
+  {% elif page.tool == 'risk-triage' %}{% include "partials/tool_risk.html" %}
+  {% elif page.tool == 'waitlist' %}
+  <section class="form-panel" aria-labelledby="form-heading">
+    <h2 id="form-heading">Join the waitlist</h2>
+    {% with prefix="wl", tool_name=page.slug.strip('/').split('/')[-1] %}{% include "partials/form_fields.html" %}{% endwith %}
+  </section>
+  {% endif %}
+  {% include "partials/page_end.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,158 @@
+# AEGIS Runtime Policy Pack — Internal RAG Knowledge Assistant
+# ---------------------------------------------------------------------------
+# For employee-facing assistants answering questions from internal documents
+# via retrieval-augmented generation (RAG).
+# Design choices:
+#   * Read-only retrieval; the retrieval service enforces document ACLs for the
+#     calling identity (the policy requires the identity claims to pass through).
+#   * Retrieved documents are untrusted input: indirect prompt injection in tool
+#     output is denied before it reaches the model context.
+#   * Links in answers are restricted to intranet domains (markdown-image
+#     exfiltration defence).
+# Template status: draft. AEGIS supports readiness and evidence; it does not
+# certify compliance.
+# ---------------------------------------------------------------------------
+schema_version: aegis.policy/v1
+policy_id: pack-internal-rag-knowledge-assistant
+policy_name: Internal RAG Knowledge Assistant Runtime Policy
+description: >-
+  Guardrails for an internal knowledge assistant: ACL-aware read-only retrieval,
+  indirect-injection screening of retrieved content, PII redaction and
+  intranet-only links.
+version: 1.0.0
+status: draft
+owner: Head of Knowledge Management
+applies_to:
+  agent_name: ["*-knowledge-assistant", "rag-*"]
+  environment: [dev, test, staging, production]
+  risk_tier: [Low, Medium]
+  tenant: ["*"]
+  model: ["*"]
+rollout:
+  mode: observe
+  exit_criteria:
+    - At least 500 representative questions evaluated; would-be decisions reviewed
+    - Indirect-injection detections on retrieved documents triaged and sources cleaned
+    - Sampled answers checked for documents the asker should not see (ACL leakage)
+identity:
+  required: true
+  required_claims: [sub, tenant_id, roles, groups]
+  tenant_binding: true
+tools:
+  default_action: DENY
+  deny_list:
+    - kb.update_document
+    - kb.delete_document
+    - kb.export_collection
+  rules:
+    - id: tool.kb-search
+      tool: kb.search
+      operation: read
+      action: ALLOW
+      description: ACL-filtered semantic search; the retriever applies the caller's groups.
+      scopes: ["kb:search"]
+      parameters:
+        query: {type: string, required: true, max_length: 1000}
+        top_k: {type: integer, min: 1, max: 8}
+        collection: {type: string, enum: [policies, it_help, engineering_handbook, hr_public]}
+      max_calls_per_session: 30
+      citations: [IS-11, EI-07]
+    - id: tool.kb-get-document
+      tool: kb.get_document
+      operation: read
+      action: ALLOW
+      scopes: ["kb:read"]
+      parameters:
+        document_id: {type: string, required: true, regex: "^DOC-[A-Z0-9]{6,12}$"}
+      max_calls_per_session: 20
+      citations: [IS-11]
+    - id: tool.feedback-submit
+      tool: feedback.submit
+      operation: write
+      action: ALLOW
+      description: Record answer feedback (thumbs up/down and optional comment).
+      scopes: ["feedback:write"]
+      parameters:
+        rating: {type: string, required: true, enum: [up, down]}
+        comment: {type: string, max_length: 1000}
+      max_calls_per_session: 5
+      citations: [IS-11]
+content:
+  max_input_chars: 24000
+  pii_redaction:
+    enabled: true
+    entities: [email, phone, payment_card, iban, us_ssn, uk_nino, india_pan, india_aadhaar, api_key]
+    apply_to: [prompt, response, tool_output]
+    action: REDACT
+  prompt_injection:
+    enabled: true
+    apply_to: [prompt, tool_output]
+    action: DENY
+    decode_obfuscation: true
+  jailbreak:
+    enabled: true
+    apply_to: [prompt]
+    action: DENY
+    decode_obfuscation: true
+  transforms:
+    - id: transform.strip_unapproved_urls
+      type: strip_unapproved_urls
+      apply_to: [response]
+      domain_allow_list: [intranet.example.com, wiki.example.com]
+    - id: transform.truncate_response
+      type: truncate
+      apply_to: [response]
+      max_chars: 12000
+limits:
+  requests_per_minute: 60
+  tool_calls_per_session: 40
+  tokens_per_day: 2000000
+  cost_per_month_usd: 1500
+  action_on_breach: RATE_LIMIT
+  alert_at_percent: 80
+logging:
+  immutable_audit: true
+  prompt_logging: redacted
+  response_logging: redacted
+  tool_param_logging: redacted
+  sink: aegis_common.audit.AuditLog (hash-chained JSONL)
+kill_switch:
+  enabled: true
+  engaged: false
+  scopes: [agent, tool, model, tenant]
+  engaged_targets: []
+  authorized_roles: [Security Operations Lead, AI System Owner]
+  target_time_to_disable_minutes: 60
+rollback:
+  previous_version: null
+  strategy: disable
+  triggers:
+    - Restricted documents surfaced to unauthorized users
+    - Indirect injection from a document reaches the model context
+shadow_mode:
+  enabled: true
+  evaluate_as: enforce
+evidence_retention_days: 180
+approval:
+  required_approver_roles: [AI System Owner]
+  min_approvers: 1
+  separation_of_duties: true
+  approved_by: []
+  approved_at: null
+escalation:
+  queue: ai-platform-review
+  contact_role: AI System Owner
+change_history:
+  - version: 1.0.0
+    date: "2026-10-21"
+    author: AEGIS Governance Content Lead
+    change_type: created
+    summary: Initial internal RAG knowledge-assistant pack.
+citations: [IS-04, IS-11, IS-12, IS-14, IS-15, IS-16, SE-08, EI-06, EI-07]
+metadata:
+  pack: internal_rag_knowledge_assistant
+  evidence_status: Inferred
+  intended_use: Employee knowledge assistants over internal documents.
+  tailoring_notes:
+    - Replace intranet.example.com / wiki.example.com with your intranet domains.
+    - Document-level access control must be enforced by the retriever; this policy cannot see document ACLs.

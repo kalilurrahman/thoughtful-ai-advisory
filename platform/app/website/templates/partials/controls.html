@@ -1,0 +1,16 @@
+<div class="control-citations">
+  <p class="control-citations-label">AEGIS controls cited</p>
+  <ul class="control-list">
+    {% for c in controls %}
+    <li class="control-item">
+      <a class="control-link" href="{{ c.url }}"><span class="control-id">{{ c.id }}</span> <span class="control-title">{{ c.title }}</span></a>
+      <span class="control-meta">{{ c.pillar_name }} · priority: {{ c.priority }}</span>
+      {% set maps = c.mappings | selectattr('refs') | list %}
+      {% if maps %}
+      <span class="control-mappings">{% for m in maps %}<span class="mapping"><span class="mapping-fw">{{ m.framework }}:</span> {{ m.refs | join(', ') }}</span>{% if not loop.last %} <span aria-hidden="true">·</span> {% endif %}{% endfor %}</span>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  <p class="control-citations-note">{{ mapping_note }}</p>
+</div>

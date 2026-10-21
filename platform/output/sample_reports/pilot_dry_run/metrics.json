@@ -1,0 +1,388 @@
+{
+  "synthetic": true,
+  "organization": "Example Regional Bank (synthetic)",
+  "metrics": [
+    {
+      "metric": "AI systems registered",
+      "target": "≥ 25",
+      "result": "28",
+      "status": "Met (synthetic)"
+    },
+    {
+      "metric": "High-risk systems assessed",
+      "target": "100%",
+      "result": "12/12 (100%)",
+      "status": "Met (synthetic)"
+    },
+    {
+      "metric": "Agent-assisted assessment completion",
+      "target": "≥ 70%",
+      "result": "100% (all responses captured via agent tools; scripted)",
+      "status": "Met (synthetic — not a measure of user adoption)"
+    },
+    {
+      "metric": "Critical gaps documented with owners",
+      "target": "Yes",
+      "result": "40 critical gaps, all with owner role + due date",
+      "status": "Met (synthetic)"
+    },
+    {
+      "metric": "Runtime policies drafted",
+      "target": "≥ 2",
+      "result": "2",
+      "status": "Met (synthetic)"
+    },
+    {
+      "metric": "Executive report accepted",
+      "target": "Yes",
+      "result": "Report generated",
+      "status": "Requires real partner"
+    },
+    {
+      "metric": "Follow-on commercial discussion initiated",
+      "target": "Yes",
+      "result": "—",
+      "status": "Requires real partner"
+    }
+  ],
+  "tiers": {
+    "High": 12,
+    "Medium": 14,
+    "Low": 2
+  },
+  "gap_severity": {
+    "Critical": 40,
+    "High": 254,
+    "Medium": 90,
+    "Low": 19
+  },
+  "evidence_status": {
+    "Critical gap": 40,
+    "Missing evidence": 262,
+    "User-asserted": 101
+  },
+  "assessments": [
+    {
+      "system": "Retail credit scorecard",
+      "assessment_id": "asm_mvi8hsfwe8f24e78",
+      "tier": "High",
+      "questions": 34,
+      "summary": {
+        "questions": 34,
+        "answered": 34,
+        "gaps": 33,
+        "by_severity": {
+          "Critical": 5,
+          "High": 21,
+          "Medium": 5,
+          "Low": 2
+        },
+        "by_evidence_status": {
+          "Verified": 1,
+          "User-asserted": 7,
+          "Inferred": 0,
+          "Missing evidence": 21,
+          "Critical gap": 5
+        }
+      },
+      "report_dir": "03_deep_dives/retail_credit_scorecard"
+    },
+    {
+      "system": "KYC document verification",
+      "assessment_id": "asm_mvi8hsspbadefd4c",
+      "tier": "High",
+      "questions": 33,
+      "summary": {
+        "questions": 33,
+        "answered": 33,
+        "gaps": 30,
+        "by_severity": {
+          "Critical": 4,
+          "High": 19,
+          "Medium": 5,
+          "Low": 2
+        },
+        "by_evidence_status": {
+          "Verified": 3,
+          "User-asserted": 6,
+          "Inferred": 0,
+          "Missing evidence": 20,
+          "Critical gap": 4
+        }
+      },
+      "report_dir": "03_deep_dives/kyc_document_verification"
+    },
+    {
+      "system": "Biometric face match (ID&V)",
+      "assessment_id": "asm_mvi8ht2s5c1c5db4",
+      "tier": "High",
+      "questions": 33,
+      "summary": {
+        "questions": 33,
+        "answered": 33,
+        "gaps": 31,
+        "by_severity": {
+          "Critical": 2,
+          "High": 25,
+          "Medium": 3,
+          "Low": 1
+        },
+        "by_evidence_status": {
+          "Verified": 2,
+          "User-asserted": 4,
+          "Inferred": 0,
+          "Missing evidence": 25,
+          "Critical gap": 2
+        }
+      },
+      "report_dir": "03_deep_dives/biometric_face_match_idandv"
+    },
+    {
+      "system": "Collections outreach agent",
+      "assessment_id": "asm_mvi8hte89e12967f",
+      "tier": "High",
+      "questions": 43,
+      "summary": {
+        "questions": 43,
+        "answered": 43,
+        "gaps": 42,
+        "by_severity": {
+          "Critical": 6,
+          "High": 26,
+          "Medium": 8,
+          "Low": 2
+        },
+        "by_evidence_status": {
+          "Verified": 1,
+          "User-asserted": 8,
+          "Inferred": 0,
+          "Missing evidence": 28,
+          "Critical gap": 6
+        }
+      },
+      "report_dir": "03_deep_dives/collections_outreach_agent"
+    },
+    {
+      "system": "CV screening assistant",
+      "assessment_id": "asm_mvi8htshf3555a3a",
+      "tier": "High",
+      "questions": 38,
+      "summary": {
+        "questions": 38,
+        "answered": 38,
+        "gaps": 38,
+        "by_severity": {
+          "Critical": 4,
+          "High": 23,
+          "Medium": 9,
+          "Low": 2
+        },
+        "by_evidence_status": {
+          "Verified": 0,
+          "User-asserted": 10,
+          "Inferred": 0,
+          "Missing evidence": 24,
+          "Critical gap": 4
+        }
+      },
+      "report_dir": "03_deep_dives/cv_screening_assistant"
+    },
+    {
+      "system": "SME credit decisioning model",
+      "assessment_id": "asm_mvi8hu451d19c379",
+      "tier": "High",
+      "questions": 29,
+      "summary": {
+        "questions": 29,
+        "answered": 29,
+        "gaps": 29,
+        "by_severity": {
+          "Critical": 1,
+          "High": 19,
+          "Medium": 8,
+          "Low": 1
+        },
+        "by_evidence_status": {
+          "Verified": 0,
+          "User-asserted": 9,
+          "Inferred": 0,
+          "Missing evidence": 19,
+          "Critical gap": 1
+        }
+      },
+      "report_dir": "03_deep_dives/sme_credit_decisioning_model"
+    },
+    {
+      "system": "Card fraud detection",
+      "assessment_id": "asm_mvi8hudz8f5cf5f8",
+      "tier": "High",
+      "questions": 38,
+      "summary": {
+        "questions": 38,
+        "answered": 38,
+        "gaps": 36,
+        "by_severity": {
+          "Critical": 2,
+          "High": 24,
+          "Medium": 7,
+          "Low": 3
+        },
+        "by_evidence_status": {
+          "Verified": 2,
+          "User-asserted": 10,
+          "Inferred": 0,
+          "Missing evidence": 24,
+          "Critical gap": 2
+        }
+      },
+      "report_dir": "03_deep_dives/card_fraud_detection"
+    },
+    {
+      "system": "Customer support agent",
+      "assessment_id": "asm_mvi8huticaa149ce",
+      "tier": "High",
+      "questions": 43,
+      "summary": {
+        "questions": 43,
+        "answered": 43,
+        "gaps": 42,
+        "by_severity": {
+          "Critical": 6,
+          "High": 25,
+          "Medium": 10,
+          "Low": 1
+        },
+        "by_evidence_status": {
+          "Verified": 1,
+          "User-asserted": 10,
+          "Inferred": 0,
+          "Missing evidence": 26,
+          "Critical gap": 6
+        }
+      },
+      "report_dir": "03_deep_dives/customer_support_agent"
+    },
+    {
+      "system": "Mortgage valuation model",
+      "assessment_id": "asm_mvi8hv8m12237207",
+      "tier": "High",
+      "questions": 33,
+      "summary": {
+        "questions": 33,
+        "answered": 33,
+        "gaps": 32,
+        "by_severity": {
+          "Critical": 1,
+          "High": 22,
+          "Medium": 8,
+          "Low": 1
+        },
+        "by_evidence_status": {
+          "Verified": 1,
+          "User-asserted": 8,
+          "Inferred": 0,
+          "Missing evidence": 23,
+          "Critical gap": 1
+        }
+      },
+      "report_dir": "03_deep_dives/mortgage_valuation_model"
+    },
+    {
+      "system": "Robo-advice portfolio tool",
+      "assessment_id": "asm_mvi8hvlh69a8fa31",
+      "tier": "High",
+      "questions": 33,
+      "summary": {
+        "questions": 33,
+        "answered": 33,
+        "gaps": 31,
+        "by_severity": {
+          "Critical": 4,
+          "High": 17,
+          "Medium": 8,
+          "Low": 2
+        },
+        "by_evidence_status": {
+          "Verified": 2,
+          "User-asserted": 10,
+          "Inferred": 0,
+          "Missing evidence": 17,
+          "Critical gap": 4
+        }
+      },
+      "report_dir": "03_deep_dives/robo_advice_portfolio_tool"
+    },
+    {
+      "system": "Employee attrition model",
+      "assessment_id": "asm_mvi8hvwy44aaee37",
+      "tier": "High",
+      "questions": 29,
+      "summary": {
+        "questions": 29,
+        "answered": 29,
+        "gaps": 28,
+        "by_severity": {
+          "Critical": 3,
+          "High": 17,
+          "Medium": 7,
+          "Low": 1
+        },
+        "by_evidence_status": {
+          "Verified": 1,
+          "User-asserted": 7,
+          "Inferred": 0,
+          "Missing evidence": 18,
+          "Critical gap": 3
+        }
+      },
+      "report_dir": "03_deep_dives/employee_attrition_model"
+    },
+    {
+      "system": "Cyber threat detection",
+      "assessment_id": "asm_mvi8hw6z5329f62c",
+      "tier": "High",
+      "questions": 33,
+      "summary": {
+        "questions": 33,
+        "answered": 33,
+        "gaps": 31,
+        "by_severity": {
+          "Critical": 2,
+          "High": 16,
+          "Medium": 12,
+          "Low": 1
+        },
+        "by_evidence_status": {
+          "Verified": 2,
+          "User-asserted": 12,
+          "Inferred": 0,
+          "Missing evidence": 17,
+          "Critical gap": 2
+        }
+      },
+      "report_dir": "03_deep_dives/cyber_threat_detection"
+    }
+  ],
+  "policies": [
+    {
+      "agent": "Customer support agent",
+      "policy_id": "pol-customer-support-agent",
+      "version": "0.1.0",
+      "status": "draft",
+      "rollout_mode": "observe",
+      "rating": "High",
+      "validation_errors": 0,
+      "activation_approval": "apr_mvi8hwkv3b5b0409 (pending)"
+    },
+    {
+      "agent": "Collections outreach agent",
+      "policy_id": "pol-collections-outreach-agent",
+      "version": "0.1.0",
+      "status": "draft",
+      "rollout_mode": "observe",
+      "rating": "Critical",
+      "validation_errors": 0,
+      "activation_approval": "apr_mvi8hwlj3ae88ab5 (pending)"
+    }
+  ]
+}

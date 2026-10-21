@@ -1,0 +1,14 @@
+<section class="tool" id="risk-triage" data-tool="risk-triage" aria-labelledby="rt-heading" hidden>
+  <h2 id="rt-heading">Describe the AI system</h2>
+  <p class="small">Your answers produce a <strong>preliminary</strong> risk tier labelled <em>Inferred</em>. A tier only becomes authoritative when an accountable approver confirms it.</p>
+  <form class="tool-form" id="rt-form" novalidate>
+    {% with prefix="rt" %}{% include "partials/tool_fields.html" %}{% endwith %}
+    <button class="btn btn-primary" type="submit">Calculate preliminary tier</button>
+    <div class="form-status" id="rt-status" role="status" aria-live="polite"></div>
+  </form>
+  {% include "partials/tool_unavailable.html" %}
+  <section class="tool-result" id="rt-result" aria-labelledby="rt-result-heading" tabindex="-1" hidden>
+    <h2 id="rt-result-heading">Preliminary risk tier</h2>
+    <div class="rt-output"></div>
+  </section>
+</section>

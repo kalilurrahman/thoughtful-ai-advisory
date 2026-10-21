@@ -21,3 +21,7 @@
 - Keep public demo routes available without sign-in; personal Cloud loading and explicit saving require a validated session, with identity changes clearing prior private state.
 - Use a shared desktop sidebar and mobile bottom navigation with screen-specific responsive grids; this keeps all governance workflows available across device sizes.
 - Treat assessment, gate and guardrail scores as workspace-level values, and derive portfolio summaries from the live inventory; this avoids implying that systems have individual assessments that are not stored.
+- Serve the public website from Markdown pages in platform/content/website_pages and the control library in platform/content/controls; the Python platform, its tests and the React site then share one governed source.
+- Route public website pages through the root layout switch (site chrome for `/`, `/$` and `/framework/controls/*`; workspace shell for everything else); the governance workspace overview lives at `/workspace`.
+- Run the public tools (maturity assessment, risk triage, guardrail generator, Ask AEGIS) as browser ports of the Python reference engines, held to parity by fixtures exported from Python; there is no Python runtime in the deployed site.
+- Store public lead submissions only through the `submitLead` server function into the RLS-locked `site_leads` table; forms must say when nothing was recorded.

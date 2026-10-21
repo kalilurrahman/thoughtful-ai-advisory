@@ -1,0 +1,844 @@
+{
+  "synthetic": true,
+  "lead": {
+    "company": "ExampleSoft (synthetic)",
+    "name": "Synthetic VP Engineering"
+  },
+  "profile": {
+    "industry": "saas_product",
+    "org_size": "250-1000",
+    "ai_systems": "10-24",
+    "uses_agents": true,
+    "eu_operations": false
+  },
+  "answers": {
+    "STR-Q1": 4,
+    "STR-Q2": 3,
+    "STR-Q3": 4,
+    "INV-Q1": 4,
+    "INV-Q2": 3,
+    "INV-Q3": 4,
+    "RSK-Q1": 3,
+    "RSK-Q2": 4,
+    "RSK-Q3": 3,
+    "DAT-Q1": 4,
+    "DAT-Q2": 3,
+    "DAT-Q3": 4,
+    "SEC-Q1": 4,
+    "SEC-Q2": 3,
+    "SEC-Q3": 4,
+    "FST-Q1": 3,
+    "FST-Q2": 4,
+    "FST-Q3": 2,
+    "HUM-Q1": 3,
+    "HUM-Q2": 4,
+    "HUM-Q3": 3,
+    "ASR-Q1": 3,
+    "ASR-Q2": 3,
+    "ASR-Q3": 4
+  },
+  "result": {
+    "template_id": "AEGIS-SA-MATURITY",
+    "template_version": "1.0.0",
+    "evidence_status": "User-asserted",
+    "overall_score": 69.3,
+    "maturity_level": "Defined",
+    "level_interpretation": "Core governance is established; expand coverage and automation.",
+    "domains": [
+      {
+        "id": "strategy",
+        "name": "Strategy & Accountability",
+        "weight": 12,
+        "score": 73.3,
+        "answers": {
+          "STR-Q1": 4,
+          "STR-Q2": 3,
+          "STR-Q3": 4
+        }
+      },
+      {
+        "id": "inventory",
+        "name": "AI Inventory & Visibility",
+        "weight": 14,
+        "score": 73.3,
+        "answers": {
+          "INV-Q1": 4,
+          "INV-Q2": 3,
+          "INV-Q3": 4
+        }
+      },
+      {
+        "id": "risk_lifecycle",
+        "name": "Risk Management & Lifecycle",
+        "weight": 14,
+        "score": 66.7,
+        "answers": {
+          "RSK-Q1": 3,
+          "RSK-Q2": 4,
+          "RSK-Q3": 3
+        }
+      },
+      {
+        "id": "data_privacy",
+        "name": "Data & Privacy",
+        "weight": 12,
+        "score": 73.3,
+        "answers": {
+          "DAT-Q1": 4,
+          "DAT-Q2": 3,
+          "DAT-Q3": 4
+        }
+      },
+      {
+        "id": "security",
+        "name": "Security & Resilience",
+        "weight": 14,
+        "score": 73.3,
+        "answers": {
+          "SEC-Q1": 4,
+          "SEC-Q2": 3,
+          "SEC-Q3": 4
+        }
+      },
+      {
+        "id": "fairness_transparency",
+        "name": "Fairness, Safety & Transparency",
+        "weight": 12,
+        "score": 60.0,
+        "answers": {
+          "FST-Q1": 3,
+          "FST-Q2": 4,
+          "FST-Q3": 2
+        }
+      },
+      {
+        "id": "oversight_operations",
+        "name": "Human Oversight & Operations",
+        "weight": 12,
+        "score": 66.7,
+        "answers": {
+          "HUM-Q1": 3,
+          "HUM-Q2": 4,
+          "HUM-Q3": 3
+        }
+      },
+      {
+        "id": "assurance",
+        "name": "Assurance, Evidence & Improvement",
+        "weight": 10,
+        "score": 66.7,
+        "answers": {
+          "ASR-Q1": 3,
+          "ASR-Q2": 3,
+          "ASR-Q3": 4
+        }
+      }
+    ],
+    "strengths": [
+      {
+        "question_id": "INV-Q1",
+        "domain_id": "inventory",
+        "domain": "AI Inventory & Visibility",
+        "text": "Does your organization maintain a complete inventory of AI systems, models, agents, and vendor AI products?",
+        "score": 4,
+        "controls": [
+          "EI-01",
+          "EI-08",
+          "EI-09"
+        ]
+      },
+      {
+        "question_id": "INV-Q3",
+        "domain_id": "inventory",
+        "domain": "AI Inventory & Visibility",
+        "text": "Can you identify the owner, purpose, users, data sources, and dependencies for each material AI system?",
+        "score": 4,
+        "controls": [
+          "EI-03",
+          "EI-04",
+          "EI-06",
+          "EI-10"
+        ]
+      },
+      {
+        "question_id": "RSK-Q2",
+        "domain_id": "risk_lifecycle",
+        "domain": "Risk Management & Lifecycle",
+        "text": "Are model, prompt, data, vendor, and agent changes subject to change control and reassessment?",
+        "score": 4,
+        "controls": [
+          "GL-04",
+          "EI-05"
+        ]
+      },
+      {
+        "question_id": "SEC-Q1",
+        "domain_id": "security",
+        "domain": "Security & Resilience",
+        "text": "Are AI systems included in threat modeling, security review, and vulnerability-management processes?",
+        "score": 4,
+        "controls": [
+          "IS-01",
+          "IS-10"
+        ]
+      },
+      {
+        "question_id": "SEC-Q3",
+        "domain_id": "security",
+        "domain": "Security & Resilience",
+        "text": "Can you disable or roll back an AI system, model, agent, or tool quickly after a security or safety incident?",
+        "score": 4,
+        "controls": [
+          "IS-15"
+        ]
+      }
+    ],
+    "gaps": [
+      {
+        "question_id": "FST-Q3",
+        "domain_id": "fairness_transparency",
+        "domain": "Fairness, Safety & Transparency",
+        "text": "Are explanations, disclosures, and appeal mechanisms available for affected individuals where appropriate?",
+        "score": 2,
+        "controls": [
+          "IS-08",
+          "IS-09",
+          "AO-11"
+        ],
+        "action": "Provide explanation and appeal routes for individuals affected by AI-influenced decisions."
+      },
+      {
+        "question_id": "INV-Q2",
+        "domain_id": "inventory",
+        "domain": "AI Inventory & Visibility",
+        "text": "Are AI systems classified by business criticality, data sensitivity, decision impact, autonomy, and regulatory relevance?",
+        "score": 3,
+        "controls": [
+          "EI-02"
+        ],
+        "action": "Apply AEGIS risk-tier criteria to every inventory record and approve tier assignments."
+      },
+      {
+        "question_id": "RSK-Q1",
+        "domain_id": "risk_lifecycle",
+        "domain": "Risk Management & Lifecycle",
+        "text": "Do AI use cases undergo risk assessment before production deployment?",
+        "score": 3,
+        "controls": [
+          "GL-01",
+          "GL-02",
+          "GL-03"
+        ],
+        "action": "Make a tier-proportionate risk and impact assessment a mandatory gate before any production deployment."
+      },
+      {
+        "question_id": "RSK-Q3",
+        "domain_id": "risk_lifecycle",
+        "domain": "Risk Management & Lifecycle",
+        "text": "Is there a defined process for retiring, restricting, or remediating AI systems that no longer meet requirements?",
+        "score": 3,
+        "controls": [
+          "GL-09",
+          "GL-10"
+        ],
+        "action": "Define restrict/remediate/retire procedures and an exception register with expiry dates."
+      },
+      {
+        "question_id": "SEC-Q2",
+        "domain_id": "security",
+        "domain": "Security & Resilience",
+        "text": "Are LLM applications and agents tested for prompt injection, jailbreak, data leakage, and unsafe tool use?",
+        "score": 3,
+        "controls": [
+          "IS-14",
+          "IS-11",
+          "IS-12"
+        ],
+        "action": "Run adversarial testing (prompt injection, jailbreak, leakage, unsafe tool use) before release and after material change."
+      }
+    ],
+    "critical_flags": [],
+    "action_plan": {
+      "30": [
+        {
+          "question_id": "FST-Q3",
+          "domain": "Fairness, Safety & Transparency",
+          "action": "Provide explanation and appeal routes for individuals affected by AI-influenced decisions.",
+          "controls": [
+            "IS-08",
+            "IS-09",
+            "AO-11"
+          ],
+          "score": 2
+        }
+      ],
+      "60": [
+        {
+          "question_id": "INV-Q2",
+          "domain": "AI Inventory & Visibility",
+          "action": "Apply AEGIS risk-tier criteria to every inventory record and approve tier assignments.",
+          "controls": [
+            "EI-02"
+          ],
+          "score": 3
+        },
+        {
+          "question_id": "RSK-Q1",
+          "domain": "Risk Management & Lifecycle",
+          "action": "Make a tier-proportionate risk and impact assessment a mandatory gate before any production deployment.",
+          "controls": [
+            "GL-01",
+            "GL-02",
+            "GL-03"
+          ],
+          "score": 3
+        },
+        {
+          "question_id": "RSK-Q3",
+          "domain": "Risk Management & Lifecycle",
+          "action": "Define restrict/remediate/retire procedures and an exception register with expiry dates.",
+          "controls": [
+            "GL-09",
+            "GL-10"
+          ],
+          "score": 3
+        },
+        {
+          "question_id": "SEC-Q2",
+          "domain": "Security & Resilience",
+          "action": "Run adversarial testing (prompt injection, jailbreak, leakage, unsafe tool use) before release and after material change.",
+          "controls": [
+            "IS-14",
+            "IS-11",
+            "IS-12"
+          ],
+          "score": 3
+        },
+        {
+          "question_id": "STR-Q2",
+          "domain": "Strategy & Accountability",
+          "action": "Charter a cross-functional AI governance forum with documented authority to approve, restrict or stop use cases.",
+          "controls": [
+            "AO-02"
+          ],
+          "score": 3
+        }
+      ],
+      "90": [
+        {
+          "question_id": "INV-Q1",
+          "domain": "AI Inventory & Visibility",
+          "action": "Stand up an AI system of record and run inventory workshops plus shadow-AI discovery to reach full coverage.",
+          "controls": [
+            "EI-01",
+            "EI-08",
+            "EI-09"
+          ],
+          "score": 4
+        },
+        {
+          "question_id": "INV-Q3",
+          "domain": "AI Inventory & Visibility",
+          "action": "Complete owner, purpose, users, data-source and dependency fields for all material AI systems.",
+          "controls": [
+            "EI-03",
+            "EI-04",
+            "EI-06",
+            "EI-10"
+          ],
+          "score": 4
+        },
+        {
+          "question_id": "RSK-Q2",
+          "domain": "Risk Management & Lifecycle",
+          "action": "Add AI-specific change triggers (model, prompt, data, vendor, tool, agent) to change management with reassessment rules.",
+          "controls": [
+            "GL-04",
+            "EI-05"
+          ],
+          "score": 4
+        },
+        {
+          "question_id": "SEC-Q1",
+          "domain": "Security & Resilience",
+          "action": "Extend threat modelling, security review and vulnerability management to all AI systems and model supply chains.",
+          "controls": [
+            "IS-01",
+            "IS-10"
+          ],
+          "score": 4
+        },
+        {
+          "question_id": "SEC-Q3",
+          "domain": "Security & Resilience",
+          "action": "Implement and test a kill switch and rollback runbook for every production AI system and agent.",
+          "controls": [
+            "IS-15"
+          ],
+          "score": 4
+        }
+      ]
+    },
+    "action_plan_labels": {
+      "30": "First 30 days — stabilise",
+      "60": "Days 31–60 — standardise",
+      "90": "Days 61–90 — scale and automate"
+    },
+    "recommended_controls": [
+      {
+        "id": "IS-08",
+        "title": "Transparency and AI disclosures",
+        "pillar": "IS",
+        "priority": "high",
+        "mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.8",
+            "MEASURE 2.9"
+          ],
+          "iso_42001": [
+            "A.8.2",
+            "A.8.5"
+          ],
+          "eu_ai_act": [
+            "Art. 13",
+            "Art. 50"
+          ]
+        }
+      },
+      {
+        "id": "IS-09",
+        "title": "Human oversight design",
+        "pillar": "IS",
+        "priority": "critical",
+        "mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 3.2",
+            "MAP 3.5"
+          ],
+          "iso_42001": [
+            "A.9.2",
+            "A.6.2.6"
+          ],
+          "eu_ai_act": [
+            "Art. 14",
+            "Art. 26"
+          ]
+        }
+      },
+      {
+        "id": "AO-11",
+        "title": "Stakeholder engagement and feedback",
+        "pillar": "AO",
+        "priority": "medium",
+        "mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 5.1",
+            "GOVERN 5.2"
+          ],
+          "iso_42001": [
+            "4.2",
+            "A.8.3",
+            "A.8.5"
+          ],
+          "eu_ai_act": [
+            "Art. 27"
+          ]
+        }
+      },
+      {
+        "id": "EI-02",
+        "title": "AI risk classification and tiering",
+        "pillar": "EI",
+        "priority": "critical",
+        "mappings": {
+          "nist_ai_rmf": [
+            "MAP 1.1",
+            "MAP 1.5",
+            "GOVERN 1.3"
+          ],
+          "iso_42001": [
+            "6.1.2",
+            "A.5.2"
+          ],
+          "eu_ai_act": [
+            "Art. 6"
+          ]
+        }
+      },
+      {
+        "id": "GL-01",
+        "title": "Intake triage workflow",
+        "pillar": "GL",
+        "priority": "high",
+        "mappings": {
+          "nist_ai_rmf": [
+            "MAP 1.1",
+            "MAP 1.6"
+          ],
+          "iso_42001": [
+            "8.1",
+            "A.6.1.3"
+          ],
+          "eu_ai_act": [
+            "Art. 9"
+          ]
+        }
+      },
+      {
+        "id": "GL-02",
+        "title": "Pre-deployment risk and impact assessment",
+        "pillar": "GL",
+        "priority": "critical",
+        "mappings": {
+          "nist_ai_rmf": [
+            "MAP 1.1",
+            "MAP 3.1",
+            "MAP 5.1",
+            "MEASURE 1.1"
+          ],
+          "iso_42001": [
+            "6.1.4",
+            "8.4",
+            "A.5.2",
+            "A.5.3",
+            "A.5.4"
+          ],
+          "eu_ai_act": [
+            "Art. 9",
+            "Art. 27"
+          ]
+        }
+      },
+      {
+        "id": "GL-03",
+        "title": "Risk-tiered approval gates",
+        "pillar": "GL",
+        "priority": "critical",
+        "mappings": {
+          "nist_ai_rmf": [
+            "MANAGE 1.1",
+            "GOVERN 1.4"
+          ],
+          "iso_42001": [
+            "8.1",
+            "A.6.2.5"
+          ],
+          "eu_ai_act": [
+            "Art. 9",
+            "Art. 43"
+          ]
+        }
+      },
+      {
+        "id": "GL-09",
+        "title": "Retirement and decommissioning",
+        "pillar": "GL",
+        "priority": "medium",
+        "mappings": {
+          "nist_ai_rmf": [
+            "GOVERN 1.7",
+            "MANAGE 2.4"
+          ],
+          "iso_42001": [
+            "A.6.2.6"
+          ],
+          "eu_ai_act": []
+        }
+      },
+      {
+        "id": "GL-10",
+        "title": "Exceptions and risk acceptance",
+        "pillar": "GL",
+        "priority": "high",
+        "mappings": {
+          "nist_ai_rmf": [
+            "MANAGE 1.3",
+            "MANAGE 1.4"
+          ],
+          "iso_42001": [
+            "6.1.3"
+          ],
+          "eu_ai_act": [
+            "Art. 9"
+          ]
+        }
+      },
+      {
+        "id": "IS-14",
+        "title": "Prompt-injection and data-leakage testing",
+        "pillar": "IS",
+        "priority": "critical",
+        "mappings": {
+          "nist_ai_rmf": [
+            "MEASURE 2.7"
+          ],
+          "iso_42001": [
+            "A.6.2.4"
+          ],
+          "eu_ai_act": [
+            "Art. 15"
+          ]
+        }
+      }
+    ],
+    "readiness": [
+      {
+        "framework": "NIST AI RMF",
+        "groups": [
+          {
+            "id": "NIST-GOVERN",
+            "name": "GOVERN",
+            "value": 72.0,
+            "band": "Partial readiness",
+            "questions": [
+              "STR-Q1",
+              "STR-Q2",
+              "STR-Q3",
+              "HUM-Q3",
+              "ASR-Q3"
+            ]
+          },
+          {
+            "id": "NIST-MAP",
+            "name": "MAP",
+            "value": 72.0,
+            "band": "Partial readiness",
+            "questions": [
+              "INV-Q1",
+              "INV-Q2",
+              "INV-Q3",
+              "RSK-Q1",
+              "DAT-Q1"
+            ]
+          },
+          {
+            "id": "NIST-MEASURE",
+            "name": "MEASURE",
+            "value": 64.0,
+            "band": "Partial readiness",
+            "questions": [
+              "SEC-Q2",
+              "FST-Q1",
+              "HUM-Q2",
+              "ASR-Q1",
+              "DAT-Q2"
+            ]
+          },
+          {
+            "id": "NIST-MANAGE",
+            "name": "MANAGE",
+            "value": 68.0,
+            "band": "Partial readiness",
+            "questions": [
+              "RSK-Q2",
+              "RSK-Q3",
+              "SEC-Q3",
+              "HUM-Q1",
+              "ASR-Q2"
+            ]
+          }
+        ]
+      },
+      {
+        "framework": "ISO/IEC 42001",
+        "groups": [
+          {
+            "id": "ISO-C4-5",
+            "name": "Context & leadership (Cl. 4–5, A.2–A.3)",
+            "value": 73.3,
+            "band": "Partial readiness",
+            "questions": [
+              "STR-Q1",
+              "STR-Q2",
+              "STR-Q3"
+            ]
+          },
+          {
+            "id": "ISO-C6",
+            "name": "Planning & impact assessment (Cl. 6, A.5)",
+            "value": 60.0,
+            "band": "Partial readiness",
+            "questions": [
+              "INV-Q2",
+              "RSK-Q1",
+              "FST-Q1"
+            ]
+          },
+          {
+            "id": "ISO-C7",
+            "name": "Support & documented information (Cl. 7, A.4)",
+            "value": 66.7,
+            "band": "Partial readiness",
+            "questions": [
+              "HUM-Q3",
+              "INV-Q1",
+              "ASR-Q2"
+            ]
+          },
+          {
+            "id": "ISO-C8",
+            "name": "Operation & lifecycle (Cl. 8, A.6–A.7)",
+            "value": 75.0,
+            "band": "Substantial readiness",
+            "questions": [
+              "RSK-Q2",
+              "DAT-Q1",
+              "DAT-Q2",
+              "SEC-Q1"
+            ]
+          },
+          {
+            "id": "ISO-C9",
+            "name": "Performance evaluation (Cl. 9)",
+            "value": 70.0,
+            "band": "Partial readiness",
+            "questions": [
+              "HUM-Q2",
+              "ASR-Q1"
+            ]
+          },
+          {
+            "id": "ISO-C10",
+            "name": "Improvement (Cl. 10)",
+            "value": 70.0,
+            "band": "Partial readiness",
+            "questions": [
+              "ASR-Q3",
+              "RSK-Q3"
+            ]
+          }
+        ]
+      },
+      {
+        "framework": "EU AI Act",
+        "groups": [
+          {
+            "id": "EU-ART4",
+            "name": "AI literacy (Art. 4)",
+            "value": 60.0,
+            "band": "Partial readiness",
+            "questions": [
+              "HUM-Q3"
+            ]
+          },
+          {
+            "id": "EU-ART9",
+            "name": "Risk management (Art. 9)",
+            "value": 66.7,
+            "band": "Partial readiness",
+            "questions": [
+              "RSK-Q1",
+              "RSK-Q2",
+              "INV-Q2"
+            ]
+          },
+          {
+            "id": "EU-ART10",
+            "name": "Data governance (Art. 10)",
+            "value": 66.7,
+            "band": "Partial readiness",
+            "questions": [
+              "DAT-Q1",
+              "DAT-Q2",
+              "FST-Q1"
+            ]
+          },
+          {
+            "id": "EU-ART11-12",
+            "name": "Technical documentation & record-keeping (Art. 11–12)",
+            "value": 70.0,
+            "band": "Partial readiness",
+            "questions": [
+              "INV-Q3",
+              "ASR-Q2"
+            ]
+          },
+          {
+            "id": "EU-ART13-50",
+            "name": "Transparency (Art. 13, Art. 50)",
+            "value": 60.0,
+            "band": "Partial readiness",
+            "questions": [
+              "FST-Q2",
+              "FST-Q3"
+            ]
+          },
+          {
+            "id": "EU-ART14",
+            "name": "Human oversight (Art. 14)",
+            "value": 70.0,
+            "band": "Partial readiness",
+            "questions": [
+              "HUM-Q1",
+              "SEC-Q3"
+            ]
+          },
+          {
+            "id": "EU-ART15",
+            "name": "Accuracy, robustness & cybersecurity (Art. 15)",
+            "value": 70.0,
+            "band": "Partial readiness",
+            "questions": [
+              "SEC-Q1",
+              "SEC-Q2"
+            ]
+          },
+          {
+            "id": "EU-ART72-73",
+            "name": "Post-market monitoring & incidents (Art. 72–73)",
+            "value": 70.0,
+            "band": "Partial readiness",
+            "questions": [
+              "HUM-Q2",
+              "ASR-Q1"
+            ]
+          }
+        ]
+      }
+    ],
+    "recommended_modules": [
+      {
+        "module": "Assess",
+        "reason": "Establish an evidence-based baseline of maturity and use-case risk."
+      },
+      {
+        "module": "Shield",
+        "reason": "Enforce runtime guardrails, approvals and containment for LLM apps and agents."
+      },
+      {
+        "module": "Agent",
+        "reason": "Accelerate assessments, gap analysis and reporting with a citation-backed governance copilot."
+      }
+    ],
+    "lead": {
+      "tags": [
+        "platform_candidate",
+        "shield_candidate"
+      ],
+      "labels": [
+        "Platform candidate (10+ AI systems)",
+        "Runtime Shield candidate"
+      ]
+    },
+    "profile": {
+      "industry": "saas_product",
+      "org_size": "250-1000",
+      "ai_systems": "10-24",
+      "uses_agents": true,
+      "eu_operations": false
+    },
+    "disclaimer": "This self-assessment produces an indicative, self-reported view of AI governance maturity. All results are User-asserted: no evidence has been reviewed. Framework readiness indicators are not a determination of conformity with ISO/IEC 42001, compliance with the EU AI Act, or alignment with NIST AI RMF. AEGIS does not certify compliance and this report is not legal advice.",
+    "standard_disclaimer": "AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.",
+    "cta": {
+      "primary": {
+        "label": "Book an AEGIS Governance Baseline",
+        "url": "/contact/book-governance-baseline/",
+        "description": "A fixed-scope 4–6 week engagement — inventory up to 25 AI systems, validate this maturity baseline with evidence, deep-dive five priority systems, review two agents, and deliver a gap register, remediation roadmap and executive readiness report."
+      },
+      "secondary": {
+        "label": "Explore AEGIS Agent",
+        "url": "/solutions/agent/"
+      }
+    }
+  }
+}

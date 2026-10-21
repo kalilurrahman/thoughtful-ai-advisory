@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ page.description }}">
+{% if page.noindex %}
+<meta name="robots" content="noindex, follow">
+{% else %}
+<link rel="canonical" href="{{ canonical }}">
+{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.site_name }}">
+<meta property="og:locale" content="{{ site.locale }}">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+{% if canonical %}<meta property="og:url" content="{{ canonical }}">
+{% endif %}
+<meta property="og:image" content="{{ og_image }}">
+<meta property="og:image:width" content="{{ site.default_og_image.width }}">
+<meta property="og:image:height" content="{{ site.default_og_image.height }}">
+<meta property="og:image:alt" content="{{ site.default_og_image.alt }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title }}">
+<meta name="twitter:description" content="{{ page.description }}">
+<meta name="twitter:image" content="{{ og_image }}">
+<meta name="twitter:image:alt" content="{{ site.default_og_image.alt }}">
+<meta name="theme-color" content="#0c2340">
+<link rel="icon" href="{{ asset('img/favicon.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ asset('css/aegis.css') }}">
+<link rel="stylesheet" href="{{ asset('css/print.css') }}" media="print">
+<script type="application/ld+json">{{ jsonld }}</script>
+<script type="application/json" id="aegis-config">{{ client_config }}</script>
+{% for src in scripts %}
+<script src="{{ src }}" defer></script>
+{% endfor %}
+</head>
+<body class="tpl-{{ page.template }}{% if page.tool %} tool-{{ page.tool }}{% endif %}">
+<a class="skip-link" href="#main">Skip to main content</a>
+{% include "partials/header.html" %}
+{% if breadcrumbs %}
+{% include "partials/breadcrumbs.html" %}
+{% endif %}
+<main id="main" tabindex="-1">
+{% block main %}{% endblock %}
+</main>
+{% include "partials/footer.html" %}
+</body>
+</html>

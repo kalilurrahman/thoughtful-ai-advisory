@@ -1,0 +1,18 @@
+{# Generic labelled tool fields. Requires: tool_fields, prefix #}
+{% for f in tool_fields %}
+{% set fid = prefix ~ '-' ~ f.name %}
+<div class="field{% if f.type == 'textarea' %} field--wide{% endif %}">
+  <label for="{{ fid }}">{{ f.label }}{% if f.get('required') %} <span class="req">(required)</span>{% endif %}</label>
+  {% if f.get('hint') %}<p class="hint" id="{{ fid }}-hint">{{ f.get('hint') }}</p>{% endif %}
+  {% if f.type == 'select' %}
+  <select id="{{ fid }}" name="{{ f.name }}"{% if f.get('required') %} required{% endif %}{% if f.get('hint') %} aria-describedby="{{ fid }}-hint"{% endif %}>
+    {% for val, lab in f.options %}<option value="{{ val }}">{{ lab }}</option>{% endfor %}
+  </select>
+  {% elif f.type == 'textarea' %}
+  <textarea id="{{ fid }}" name="{{ f.name }}" rows="{{ f.get('rows') or 3 }}" maxlength="2000"{% if f.get('required') %} required{% endif %}{% if f.get('hint') %} aria-describedby="{{ fid }}-hint"{% endif %}></textarea>
+  {% else %}
+  <input id="{{ fid }}" name="{{ f.name }}" type="text" maxlength="200" autocomplete="off"{% if f.get('required') %} required{% endif %}{% if f.get('hint') %} aria-describedby="{{ fid }}-hint"{% endif %}>
+  {% endif %}
+  <p class="field-error" id="{{ fid }}-error" hidden></p>
+</div>
+{% endfor %}

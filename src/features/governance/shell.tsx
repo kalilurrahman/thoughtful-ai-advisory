@@ -23,14 +23,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
 const tabs = [
-  { to: "/", name: "Home", icon: House },
+  { to: "/workspace", name: "Home", icon: House },
   { to: "/assess", name: "Assess", icon: ListChecks },
   { to: "/inventory", name: "Inventory", icon: Stack },
   { to: "/roadmap", name: "Roadmap", icon: Path },
   { to: "/more", name: "More", icon: DotsThreeCircle },
 ] as const;
 const titles: Record<string, string> = {
-  "/": "Governance overview",
+  "/workspace": "Governance overview",
   "/assess": "GOVERN assessment",
   "/inventory": "AI inventory",
   "/roadmap": "Roadmap",
@@ -78,7 +78,7 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
   return (
     <div className="aegis-app">
       <aside className="desktop-sidebar">
-        <Link to="/" className="sidebar-brand">
+        <Link to="/workspace" className="sidebar-brand">
           <ShieldCheck weight="duotone" />
           <span>
             AEGIS<small>Governance & assurance</small>
@@ -135,7 +135,7 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
             </Link>
           </Button>
         )}
-        <Link to="/" className="wordmark">
+        <Link to="/workspace" className="wordmark">
           AEGIS
         </Link>
         <span className="client-name">{workspaceName}</span>

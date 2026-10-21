@@ -1,0 +1,175 @@
+# AEGIS Runtime Policy Pack — Healthcare Clinical-Documentation Assistant
+# ---------------------------------------------------------------------------
+# For assistants that draft clinical notes from encounter transcripts for
+# clinician review. The assistant drafts; clinicians decide and sign.
+# Design choices:
+#   * Notes can only be saved as drafts; signing, ordering and patient messaging
+#     are denied for the assistant (they stay in the clinician's EHR workflow).
+#   * Prompt/response logging is metadata-only (special-category data).
+#   * Every draft carries an AI-assistance notice for the reviewing clinician.
+# Limitation: built-in redaction detects structured identifiers only; it does
+# not detect patient names, addresses or free-text clinical details. Pair with
+# a clinical de-identification service and a vendor agreement that covers
+# health data before sending content to an external model.
+# Template status: draft. AEGIS supports readiness and evidence; it does not
+# certify compliance with HIPAA, GDPR, the EU AI Act or medical-device rules.
+# ---------------------------------------------------------------------------
+schema_version: aegis.policy/v1
+policy_id: pack-healthcare-clinical-documentation
+policy_name: Healthcare Clinical-Documentation Assistant Runtime Policy
+description: >-
+  Guardrails for an ambient/clinical documentation assistant that reads
+  encounter context and saves draft notes for clinician review and signature.
+version: 1.0.0
+status: draft
+owner: Chief Medical Information Officer
+applies_to:
+  agent_name: ["clinical-doc-*", "*-scribe"]
+  environment: [staging, production]
+  risk_tier: [High]
+  tenant: ["*"]
+  model: ["*"]
+rollout:
+  mode: observe
+  exit_criteria:
+    - Clinical safety review of sampled drafts completed by named clinicians
+    - At least 2,000 encounters evaluated; would-be decisions reviewed
+    - No identifiers observed in sampled metadata logs
+    - Kill-switch drill completed within 5 minutes
+identity:
+  required: true
+  required_claims: [sub, tenant_id, roles, facility_id]
+  allowed_roles: [physician, nurse_practitioner, physician_assistant]
+  tenant_binding: true
+tools:
+  default_action: DENY
+  deny_list:
+    - ehr.sign_note
+    - ehr.place_order
+    - ehr.prescribe
+    - portal.send_patient_message
+    - ehr.export_patient_records
+  rules:
+    - id: tool.ehr-get-encounter
+      tool: ehr.get_encounter
+      operation: read
+      action: ALLOW
+      description: Read the current encounter for the authenticated clinician's patient context only.
+      scopes: ["encounter:read:current"]
+      parameters:
+        encounter_id: {type: string, required: true, regex: "^ENC-[0-9]{8,12}$"}
+      max_calls_per_session: 10
+      citations: [IS-11, IS-03]
+    - id: tool.terminology-lookup
+      tool: terminology.lookup
+      operation: read
+      action: ALLOW
+      description: Look up clinical terminology codes.
+      scopes: ["terminology:read"]
+      parameters:
+        term: {type: string, required: true, max_length: 200}
+        system: {type: string, enum: [SNOMED-CT, ICD-10-CM, LOINC, RxNorm]}
+      citations: [IS-11]
+    - id: tool.ehr-save-draft-note
+      tool: ehr.save_draft_note
+      operation: write
+      action: ALLOW
+      description: Save an unsigned draft note; the clinician reviews, edits and signs in the EHR.
+      scopes: ["notes:draft:write"]
+      parameters:
+        encounter_id: {type: string, required: true, regex: "^ENC-[0-9]{8,12}$"}
+        note_type: {type: string, required: true, enum: [progress_note, history_and_physical, discharge_summary_draft]}
+        status: {type: string, required: true, enum: [draft]}
+        body: {type: string, required: true, max_length: 20000}
+      max_calls_per_session: 5
+      citations: [IS-11, IS-09]
+    - id: tool.ehr-amend-problem-list
+      tool: ehr.amend_problem_list
+      operation: write
+      action: REQUIRE_HUMAN_APPROVAL
+      description: Suggest a problem-list change; applied only after clinician approval.
+      scopes: ["problems:suggest"]
+      parameters:
+        encounter_id: {type: string, required: true, regex: "^ENC-[0-9]{8,12}$"}
+        code: {type: string, required: true, max_length: 20}
+        action: {type: string, required: true, enum: [add, resolve]}
+      approval_roles: [physician, nurse_practitioner]
+      max_calls_per_session: 5
+      citations: [IS-13, IS-09]
+content:
+  max_input_chars: 60000
+  pii_redaction:
+    enabled: true
+    entities: [email, phone, us_ssn, uk_nino, india_aadhaar, payment_card, iban, ip_address, api_key]
+    apply_to: [prompt, response, tool_output]
+    action: REDACT
+  prompt_injection:
+    enabled: true
+    apply_to: [prompt, tool_output, tool_params]
+    action: ESCALATE
+    decode_obfuscation: true
+  jailbreak:
+    enabled: true
+    apply_to: [prompt]
+    action: DENY
+    decode_obfuscation: true
+  transforms:
+    - id: transform.clinician_review_notice
+      type: append_disclosure
+      apply_to: [response]
+      text: "AI-drafted documentation — requires clinician review and signature before entering the record."
+limits:
+  requests_per_minute: 20
+  tool_calls_per_session: 25
+  tokens_per_day: 3000000
+  cost_per_month_usd: 6000
+  action_on_breach: RATE_LIMIT
+  alert_at_percent: 80
+logging:
+  immutable_audit: true
+  prompt_logging: metadata
+  response_logging: metadata
+  tool_param_logging: metadata
+  sink: aegis_common.audit.AuditLog (hash-chained JSONL) in the clinical audit store
+kill_switch:
+  enabled: true
+  engaged: false
+  scopes: [agent, tool, model, tenant]
+  engaged_targets: []
+  authorized_roles: [Security Operations Lead, Chief Medical Information Officer, SRE On-call]
+  target_time_to_disable_minutes: 5
+rollback:
+  previous_version: null
+  strategy: disable
+  triggers:
+    - Clinically unsafe draft pattern reported by clinicians
+    - Patient identifiers observed in logs or external model traffic
+    - Wrong-patient context in a draft
+shadow_mode:
+  enabled: true
+  evaluate_as: enforce
+evidence_retention_days: 2190
+approval:
+  required_approver_roles: [AI System Owner, Security Lead, Chief Medical Information Officer, Privacy Officer]
+  min_approvers: 4
+  separation_of_duties: true
+  approved_by: []
+  approved_at: null
+escalation:
+  queue: clinical-ai-safety
+  contact_role: Chief Medical Information Officer
+change_history:
+  - version: 1.0.0
+    date: "2026-10-21"
+    author: AEGIS Governance Content Lead
+    change_type: created
+    summary: Initial healthcare clinical-documentation pack.
+citations: [IS-03, IS-04, IS-06, IS-08, IS-09, IS-11, IS-12, IS-13, IS-14, IS-15, IS-16, SE-08, EI-07]
+metadata:
+  pack: healthcare_clinical_documentation
+  evidence_status: Inferred
+  intended_use: Clinical documentation drafting with clinician review.
+  limitations:
+    - Built-in redaction does not detect names, addresses, MRNs in free text or clinical narrative; use a dedicated clinical de-identification service.
+    - Retention of 2190 days (6 years) is a placeholder; confirm against applicable medical-records and audit-log obligations (AO-07).
+    - This pack does not determine whether the system is a medical device or high-risk AI system; that requires regulatory review.

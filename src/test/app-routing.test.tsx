@@ -26,4 +26,17 @@ describe("App routing", () => {
 
     expect(router.matchRoutes("/checklist").at(-1)?.routeId).toBe("/checklist");
   });
+
+  it("serves the public website and moves the workspace overview to /workspace", () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    expect(router.matchRoutes("/").at(-1)?.routeId).toBe("/");
+    expect(router.matchRoutes("/workspace").at(-1)?.routeId).toBe("/workspace");
+    expect(router.matchRoutes("/tools/risk-triage").at(-1)?.routeId).toBe("/$");
+    expect(router.matchRoutes("/framework/controls").at(-1)?.routeId).toBe("/framework/controls/");
+    expect(router.matchRoutes("/framework/controls/is-11").at(-1)?.routeId).toBe(
+      "/framework/controls/$controlId",
+    );
+    expect(router.matchRoutes("/inventory").at(-1)?.routeId).toBe("/inventory");
+  });
 });

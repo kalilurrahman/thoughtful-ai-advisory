@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="t">
+  <title id="t">AEGIS — Govern every AI system, agent and decision with evidence</title>
+  <rect width="1200" height="630" fill="#0c2340"/>
+  <rect y="616" width="1200" height="14" fill="#5ec4b6"/>
+  <g transform="translate(110 150) scale(5.2)">
+    <path d="M14 1 26 5.5v9.2c0 7.6-5 13.4-12 16.3C7 28.1 2 22.3 2 14.7V5.5L14 1Z" fill="#fff"/>
+    <path d="m8.5 16.2 3.8 3.8 7.4-8" fill="none" stroke="#0c2340" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="290" y="250" fill="#fff" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="120">AEGIS</text>
+  <text x="110" y="400" fill="#fff" font-family="Helvetica, Arial, sans-serif" font-size="46">Govern every AI system, agent and</text>
+  <text x="110" y="460" fill="#fff" font-family="Helvetica, Arial, sans-serif" font-size="46">decision with evidence.</text>
+  <text x="110" y="560" fill="#c8d3e0" font-family="Helvetica, Arial, sans-serif" font-size="26">Enterprise AI governance, runtime guardrails and evidence</text>
+</svg>

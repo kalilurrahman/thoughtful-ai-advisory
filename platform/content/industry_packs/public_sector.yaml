@@ -1,0 +1,139 @@
+# AEGIS Industry Pack — Public Sector
+# ---------------------------------------------------------------------------
+# Sector overlay on the AEGIS Control Library. Control IDs reference
+# content/controls/controls.yaml ONLY. Risk-tier hints are DEFAULTS that the
+# AEGIS risk-tier engine and a human approver must confirm per system (EI-02).
+# Sector regimes are described generally to prompt legal review — they are not
+# legal advice and their applicability must be verified with counsel.
+# ---------------------------------------------------------------------------
+pack:
+  id: public_sector
+  name: Public Sector
+  version: 1.0.0
+  status: draft-for-pilot-validation
+  effective_date: "2026-10-21"
+  owner: AEGIS Governance Content Lead
+  review_cadence: quarterly
+  profile_industry: public_sector
+  disclaimer: >-
+    This pack highlights AEGIS controls and evidence commonly relevant to government departments, agencies, local
+    authorities and public bodies. It does not determine which laws, mandates or policies apply, does not establish
+    conformity with any regulation or standard, and is not legal advice. Verify every regime with qualified counsel.
+
+summary: >-
+  Public bodies make decisions about citizens' rights, benefits and safety, often under transparency, equality and
+  public-records duties. Governance must emphasize impact assessment, human oversight and appeal, public transparency,
+  procurement-stage due diligence for vendor AI, and records that withstand audit and scrutiny.
+
+priority_use_cases:
+  - id: PS-UC-01
+    name: Benefits and public-service eligibility support
+    description: Model assesses eligibility, prioritizes cases or flags applications for review.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Access to essential public services for potentially vulnerable people; appeal and explanation expectations.
+    risk_profile_hint: {decision_impact: material, affected_parties: vulnerable, data_sensitivity: personal, autonomy: suggests, domain_category: essential_services}
+    key_controls: [GL-02, IS-05, IS-09, IS-08, AO-11, SE-11]
+  - id: PS-UC-02
+    name: Fraud and error detection in public programs
+    description: Model scores claims or payments for investigation.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Investigations affect individuals; historical bias in training data; reputational and legal exposure.
+    risk_profile_hint: {decision_impact: material, affected_parties: public, data_sensitivity: personal, autonomy: suggests, domain_category: essential_services}
+    key_controls: [IS-05, IS-07, IS-09, GL-02, SE-12]
+  - id: PS-UC-03
+    name: Citizen-facing virtual assistant
+    description: Chatbot answers questions about services, forms and entitlements.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Public-facing advice; inaccurate guidance can cause missed entitlements; disclosure and accessibility expected.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: public, data_sensitivity: personal, autonomy: suggests, domain_category: customer_service, genai: true}
+    key_controls: [IS-08, IS-12, IS-14, IS-04, AO-11]
+  - id: PS-UC-04
+    name: Caseworker and policy drafting copilots
+    description: GenAI summarizes case files or drafts correspondence and policy documents for officials.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Sensitive personal data in prompts; outputs may shape decisions even though officials retain authority.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: public, data_sensitivity: personal, autonomy: suggests, domain_category: other, genai: true}
+    key_controls: [IS-04, IS-10, IS-09, AO-05, SE-08]
+  - id: PS-UC-05
+    name: Law-enforcement, justice or migration analytics
+    description: Analytics or models supporting investigations, risk assessment, case prioritization or border processes — including any proposal resembling predictive policing or biometric categorisation.
+    default_risk_tier_hint: Prohibited-review
+    risk_tier_rationale: Some practices in these areas are prohibited or tightly restricted in several jurisdictions; legal screening is required before any further work.
+    risk_profile_hint: {decision_impact: material, affected_parties: vulnerable, data_sensitivity: special_category, autonomy: suggests, domain_category: law_enforcement}
+    key_controls: [AO-10, AO-07, GL-02, IS-09, IS-05]
+  - id: PS-UC-06
+    name: Education and skills assessment
+    description: Models score or route learners, or detect misconduct.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Decisions about access to education and evaluation of learners, including minors.
+    risk_profile_hint: {decision_impact: material, affected_parties: vulnerable, data_sensitivity: personal, autonomy: suggests, domain_category: education}
+    key_controls: [GL-02, IS-05, IS-08, IS-09]
+  - id: PS-UC-07
+    name: Infrastructure and operations optimization
+    description: Predictive maintenance, traffic, utilities or emergency-resource allocation.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Safety components of critical infrastructure can carry physical and continuity risk.
+    risk_profile_hint: {decision_impact: material, affected_parties: public, data_sensitivity: internal, autonomy: acts_with_approval, domain_category: critical_infrastructure}
+    key_controls: [IS-07, IS-15, IS-01, GL-08, SE-04]
+
+emphasized_controls:
+  - {id: GL-02, why: "Impact assessment proportionate to tier — including fundamental-rights considerations where required — before deployment."}
+  - {id: AO-10, why: "Screen every use case against prohibited and restricted practices; many concern public authorities."}
+  - {id: IS-09, why: "Officials must be able to review, override and explain decisions; appeal routes are expected."}
+  - {id: IS-05, why: "Equality duties and public scrutiny make subgroup fairness testing essential."}
+  - {id: IS-08, why: "Citizens should know when AI is used and how it influences decisions."}
+  - {id: SE-11, why: "Public transparency records about algorithmic tools may be expected or required."}
+  - {id: AO-11, why: "Stakeholder and community engagement and feedback channels for affected people."}
+  - {id: GL-11, why: "Most public-sector AI is procured; AI-specific due diligence and contract terms belong in procurement."}
+  - {id: SE-02, why: "Records must satisfy public-records, audit and information-access obligations."}
+  - {id: EI-01, why: "A published or publishable inventory of algorithmic tools underpins transparency commitments."}
+
+additional_evidence:
+  - {id: PS-EV-01, description: "Impact assessment including equality and fundamental-rights considerations, with consultation record where applicable.", related_controls: [GL-02, AO-11]}
+  - {id: PS-EV-02, description: "Public transparency record or algorithmic-tool register entry for each in-scope system.", related_controls: [SE-11, EI-01]}
+  - {id: PS-EV-03, description: "Procurement file showing AI due-diligence questions, vendor responses and contract AI clauses.", related_controls: [GL-11, EI-08]}
+  - {id: PS-EV-04, description: "Appeal and complaint records linked to AI-influenced decisions.", related_controls: [IS-09, AO-11, SE-06]}
+  - {id: PS-EV-05, description: "Legal screening record for any law-enforcement, migration, justice or biometric use.", related_controls: [AO-10, AO-07]}
+
+sector_regimes:
+  - name: EU AI Act obligations for public authorities as deployers (including fundamental rights impact assessment for certain deployers, Art. 27) and Annex III public-service areas
+    scope_summary: Bodies governed by public law deploying certain high-risk systems may need a fundamental rights impact assessment; several Annex III areas concern public services, law enforcement, migration and justice; some practices are prohibited.
+    aegis_relevance: Screening, impact-assessment workflow and evidence; timelines must be verified against the current Official Journal text and amendments.
+    related_controls: [AO-10, GL-02, AO-11, EI-02]
+    verify_with_counsel: true
+  - name: National government AI policies and mandates (e.g. US federal OMB memoranda on agency AI use; UK Algorithmic Transparency Recording Standard)
+    scope_summary: Inventory, risk-management, transparency and governance expectations for government use of AI; these documents are revised periodically and the current version must be confirmed.
+    aegis_relevance: Inventory, impact assessment, transparency records and governance roles.
+    related_controls: [EI-01, GL-02, SE-11, AO-02]
+    verify_with_counsel: true
+  - name: Equality and anti-discrimination duties (e.g. public-sector equality duties)
+    scope_summary: Duties to consider the impact of policies and services on protected groups.
+    aegis_relevance: Fairness testing and impact-assessment evidence.
+    related_controls: [IS-05, GL-02]
+    verify_with_counsel: true
+  - name: Public records, freedom-of-information and administrative-law requirements
+    scope_summary: Records retention, disclosure on request, and duties to give reasons for administrative decisions.
+    aegis_relevance: Evidence retention, logging and explanation design.
+    related_controls: [SE-02, SE-08, IS-08]
+    verify_with_counsel: true
+  - name: Public procurement rules
+    scope_summary: Rules on how AI products and services are sourced, evaluated and contracted.
+    aegis_relevance: Vendor due diligence and contract controls.
+    related_controls: [GL-11, AO-09]
+    verify_with_counsel: true
+
+recommended_policy_packs:
+  - {id: pack-baseline, purpose: "Default-deny tools, PII redaction, injection detection, limits, decision logging and kill switch for every LLM app or agent.", status: available}
+  - {id: pack-internal-rag-knowledge-assistant, purpose: "ACL-aware retrieval for caseworker and policy knowledge assistants, with PII redaction.", status: available}
+  - {id: citizen-assistant-safety, purpose: "Append AI disclosure; block eligibility determinations by the assistant; escalate vulnerable-user signals to staff.", status: proposed}
+  - {id: decision-support-oversight, purpose: "Require official approval before any AI-influenced decision is recorded or communicated.", status: proposed}
+
+pilot_discovery_questions:
+  - {id: PS-DQ-01, question: "Which AI or algorithmic tools influence decisions about individuals' benefits, services, investigations or education?", purpose: "Identify High and Prohibited-review candidates.", related_controls: [EI-02, AO-10]}
+  - {id: PS-DQ-02, question: "Has legal screened any law-enforcement, migration, justice or biometric use against prohibited and restricted practices?", purpose: "Confirm legal screening.", related_controls: [AO-10, AO-07]}
+  - {id: PS-DQ-03, question: "Do impact assessments consider equality and fundamental rights, and are affected communities consulted?", purpose: "Assess impact-assessment depth.", related_controls: [GL-02, AO-11]}
+  - {id: PS-DQ-04, question: "Are algorithmic tools published in a transparency register or similar record?", purpose: "Assess public transparency.", related_controls: [SE-11, EI-01]}
+  - {id: PS-DQ-05, question: "How can a citizen challenge an AI-influenced decision, and is the AI role explained?", purpose: "Test appeal and explanation routes.", related_controls: [IS-09, IS-08]}
+  - {id: PS-DQ-06, question: "Which AI is procured, and are AI-specific questions in procurement templates?", purpose: "Assess procurement controls.", related_controls: [GL-11, EI-08]}
+  - {id: PS-DQ-07, question: "Which staff use public GenAI tools for casework, and is personal data redacted?", purpose: "Surface shadow AI and leakage.", related_controls: [EI-09, IS-04]}
+  - {id: PS-DQ-08, question: "Can AI-related records be produced for audit or information-access requests?", purpose: "Assess records readiness.", related_controls: [SE-02, SE-05]}

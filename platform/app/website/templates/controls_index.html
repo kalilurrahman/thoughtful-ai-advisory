@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block main %}
+{% include "partials/page_header.html" %}
+<div class="container page-body">
+  {% if body %}<div class="prose">{{ body }}</div>{% else %}
+  <div class="prose">
+    <p>The AEGIS Control Library v{{ extra.library.version }} contains {{ extra.control_count }} controls across five pillars. Each control has an objective, an accountable owner role, examples of the evidence that demonstrates it, and indicative mappings to NIST AI RMF, ISO/IEC 42001 and the EU AI Act.</p>
+  </div>
+  {% endif %}
+  <nav class="toc" aria-label="Pillars">
+    <ul>
+      {% for g in extra.pillar_groups %}
+      <li><a href="#{{ g.anchor }}">{{ g.id }} — {{ g.name }} ({{ g.controls | length }})</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+  <aside class="disclaimer" aria-label="Mapping disclaimer"><p><strong>About the mappings:</strong> {{ extra.library.mapping_disclaimer }}</p></aside>
+  {% for g in extra.pillar_groups %}
+  <section class="pillar-group" aria-labelledby="{{ g.anchor }}">
+    <h2 id="{{ g.anchor }}">{{ g.id }} — {{ g.name }}</h2>
+    <p>{{ g.summary }}</p>
+    <div class="table-wrap" role="region" tabindex="0" aria-label="{{ g.name }} controls">
+      <table class="controls-table">
+        <thead><tr><th scope="col">Control</th><th scope="col">Objective</th><th scope="col">Priority</th><th scope="col">Applies to</th></tr></thead>
+        <tbody>
+          {% for c in g.controls %}
+          <tr>
+            <th scope="row"><a href="{{ c.url }}"><span class="control-id">{{ c.id }}</span> {{ c.title }}</a></th>
+            <td>{{ c.objective }}</td>
+            <td><span class="priority priority-{{ c.priority }}">{{ c.priority }}</span></td>
+            <td>{{ c.applies_to }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% endfor %}
+  {% set faq = page.faq %}
+  {% include "partials/page_end.html" %}
+</div>
+{% endblock %}

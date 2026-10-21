@@ -42,6 +42,28 @@ AEGIS features a responsive UI designed for desktop workstations, tablets, and m
 
 ---
 
+## 🌐 Public AEGIS Website & Platform Artefacts
+
+The repository now ships the full **AEGIS public website** alongside the governance workspace, plus the AEGIS launch-build platform it was generated from.
+
+| Area | Route(s) | Source |
+| :--- | :--- | :--- |
+| Marketing home | `/` | `platform/content/website_pages/index.md` |
+| Framework, pillars, maturity model, runbooks | `/framework/...` | `platform/content/website_pages/framework-*.md` |
+| 64-control library (generated) | `/framework/controls`, `/framework/controls/:id` | `platform/content/controls/controls.yaml` |
+| Solutions, compliance, industries, resources, legal, about | `/solutions/...`, `/compliance/...`, … | `platform/content/website_pages/*.md` |
+| Interactive tools (run in the browser) | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/guardrail-generator`, `/tools/ask-aegis` | TypeScript ports of the Python reference engines in `src/features/site/engines/` |
+| Lead forms (demo, baseline, blueprint, contact, newsletter, design partner, waitlist) | `/contact/...`, `/resources/blueprint` | `src/features/site/forms.tsx` → `submitLead` server function → `site_leads` table |
+| Governance workspace (previously at `/`) | `/workspace` + existing workspace routes | `src/features/governance/` |
+
+- **Single source of truth.** Pages are Markdown with YAML front matter and are bundled at build time; editing `platform/content/...` updates the site. Shortcodes `{{cta:key}}`, `{{disclaimer}}` and `{{controls:ID,ID}}` are supported.
+- **Engine parity.** The browser tools are ports of the Python engines and are tested against fixtures exported from the Python reference implementation (`platform/scripts/export_*_parity_fixtures.py`).
+- **Leads.** `drizzle/migrations/0007_aegis_site_leads.sql` adds an RLS-locked `site_leads` table written only by the server function (service role). If the database is unavailable, forms say that nothing was recorded.
+- **Sitemap.** Regenerate with `node scripts/generate-sitemap.mjs https://your-domain` after changing pages or the production domain.
+- **Platform (`platform/`).** The Python launch build: agent, policy engine, runtime shield, assessment engine, API, admin CLI, content, docs, diagrams, tests and synthetic sample reports. It is reference material and is not part of the Lovable build. See `platform/README.md` and `docs/aegis/AEGIS_STATUS_REPORT.md`.
+
+---
+
 ## ⚙️ Key Features & Functional Modules
 
 ### 📖 1. Interactive 12-Chapter AI Governance Playbook
@@ -125,7 +147,9 @@ AEGIS features a responsive UI designed for desktop workstations, tablets, and m
 ```
 ai-governance-advisory/
 ├── docs/
+│   ├── aegis/                      # AEGIS launch status report
 │   └── assets/                     # Screenshots and visual media
+├── platform/                       # AEGIS Python platform, governed content & docs (not built by Lovable)
 ├── drizzle/                        # Drizzle ORM migration files
 ├── public/                         # Static assets, manifests, and icons
 ├── src/
@@ -139,7 +163,9 @@ ai-governance-advisory/
 │   │       ├── model.ts            # Assessment scoring & classification formulas
 │   │       └── screens-playbook.tsx# Playbook reader component
 │   ├── routes/                     # TanStack file-based routes
-│   │   ├── index.tsx               # Dashboard view
+│   │   ├── index.tsx               # Public website home
+│   │   ├── $.tsx                   # All other public website pages
+│   │   ├── workspace.tsx           # Governance workspace dashboard
 │   │   ├── playbook.tsx            # Playbook view
 │   │   ├── inventory.tsx           # AI System Inventory view
 │   │   ├── incidents.tsx           # Incident Register view

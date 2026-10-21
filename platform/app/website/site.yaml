@@ -1,0 +1,159 @@
+# AEGIS public website configuration (read by app/website/build.py).
+#
+# site_url is a PLACEHOLDER (.example is a reserved TLD). Set the real production
+# origin before deploying: canonical URLs, Open Graph URLs, JSON-LD and
+# sitemap.xml are all generated from it. Override per build with
+#   python3 app/website/build.py --site-url https://www.example.com
+site_url: https://www.aegis-governance.example
+site_name: AEGIS
+site_tagline: Enterprise AI governance, runtime guardrails and evidence
+locale: en_US
+lang: en
+organization:
+  name: AEGIS
+  logo: /static/img/aegis-logo.png
+  # Placeholder contact address on the reserved .example domain.
+  email: hello@aegis-governance.example
+
+# Browser code calls the HTTP API (CONTRIBUTING.md §3) on the same origin.
+api_base: /api
+
+default_og_image:
+  path: /static/img/og-default.png
+  svg: /static/img/og-default.svg
+  width: 1200
+  height: 630
+  alt: "AEGIS — Govern every AI system, agent and decision with evidence"
+
+# Header navigation: section id (front-matter `section`) -> label. Menu items are
+# the pages in that section ordered by nav_order; a page whose slug is
+# /<section>/ becomes the section's overview link.
+nav_sections:
+  - {id: framework, label: Framework}
+  - {id: solutions, label: Solutions}
+  - {id: compliance, label: Compliance}
+  - {id: industries, label: Industries}
+  - {id: tools, label: Tools}
+  - {id: resources, label: Resources}
+
+# Labels for breadcrumb segments that have no page of their own.
+section_labels:
+  framework: Framework
+  solutions: Solutions
+  compliance: Compliance
+  industries: Industries
+  tools: Tools
+  resources: Resources
+  contact: Contact
+  legal: Legal
+  company: Company
+  controls: Control library
+  blog: Blog
+
+header_cta:
+  label: Book Governance Baseline
+  url: /contact/book-governance-baseline/
+
+privacy_url: /legal/privacy/
+
+# Footer link columns (sections) are generated from pages; these are extra links.
+footer_links:
+  - {label: Contact, url: /contact/}
+  - {label: Privacy notice, url: /legal/privacy/}
+
+# CTA blocks used by `{{cta:key}}` and by primary_cta / secondary_cta front matter.
+ctas:
+  assessment:
+    title: Measure your AI governance maturity
+    text: 24 questions across 8 domains. You get an indicative score straight away and a detailed report with a 30/60/90-day plan. All results are self-reported.
+    label: Start the self-assessment
+    url: /tools/maturity-assessment/
+  baseline:
+    title: Validate your position with evidence
+    text: The AEGIS Governance Baseline is a fixed-scope engagement that inventories your AI systems, reviews evidence and produces a gap register and remediation roadmap.
+    label: Book a Governance Baseline
+    url: /contact/book-governance-baseline/
+  agent:
+    title: See the AEGIS Agent at work
+    text: A governance copilot that drafts assessments and gap registers, cites AEGIS controls and labels the status of every piece of evidence.
+    label: Explore AEGIS Agent
+    url: /solutions/agent/
+  blueprint:
+    title: Get the AEGIS Enterprise Blueprint
+    text: The operating model, control library and rollout plan in one document.
+    label: Download the blueprint
+    url: /resources/blueprint/
+  demo:
+    title: See AEGIS with your own scenarios
+    text: A working session with our team on your AI inventory, risk tiers and runtime guardrails.
+    label: Request a demo
+    url: /contact/request-demo/
+  guardrails:
+    title: Draft runtime guardrails for an LLM app or agent
+    text: Describe your system and get a draft risk profile, tool permission matrix and policy-as-code starting point to review with your team.
+    label: Open the guardrail generator
+    url: /tools/guardrail-generator/
+
+# Generated control-library section (from content/controls/controls.yaml).
+control_library:
+  slug: /framework/controls/
+  nav_label: Control library
+  nav_order: 25
+
+# Gated download revealed after the blueprint form is submitted (the API returns the
+# same download_url). The build copies the first existing `sources` file to `path`;
+# if none exists it warns and the form only confirms the request.
+downloads:
+  blueprint:
+    path: /downloads/AEGIS_Enterprise_Blueprint.pdf
+    sources: [output/AEGIS_Enterprise_Blueprint.pdf]
+    label: Download the AEGIS Enterprise Blueprint (PDF)
+
+# Business email check (client-side convenience; the API enforces its own list in
+# aegis_api.integrations — tests keep this list equal to the server's free-mail + disposable sets).
+free_mail_domains:
+  - gmail.com
+  - googlemail.com
+  - yahoo.com
+  - yahoo.co.uk
+  - yahoo.co.in
+  - ymail.com
+  - hotmail.com
+  - hotmail.co.uk
+  - outlook.com
+  - live.com
+  - msn.com
+  - aol.com
+  - icloud.com
+  - me.com
+  - mac.com
+  - proton.me
+  - protonmail.com
+  - pm.me
+  - gmx.com
+  - gmx.de
+  - gmx.net
+  - web.de
+  - mail.com
+  - zoho.com
+  - yandex.com
+  - yandex.ru
+  - mail.ru
+  - qq.com
+  - 163.com
+  - 126.com
+  - rediffmail.com
+  - tutanota.com
+  - fastmail.com
+  - hey.com
+  - inbox.com
+  # disposable
+  - mailinator.com
+  - guerrillamail.com
+  - 10minutemail.com
+  - tempmail.com
+  - trashmail.com
+  - yopmail.com
+  - sharklasers.com
+  - getnada.com
+  - dispostable.com

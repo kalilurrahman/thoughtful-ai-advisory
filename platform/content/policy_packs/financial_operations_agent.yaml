@@ -1,0 +1,201 @@
+# AEGIS Runtime Policy Pack — Financial-Operations Agent
+# ---------------------------------------------------------------------------
+# For agents that support accounts payable / treasury operations: invoice
+# matching, payment preparation, remittance advice and reporting.
+# Design choices:
+#   * Every payment and every supplier bank-detail change requires human approval
+#     by a finance role (classic payment-fraud vectors), with hard caps.
+#   * Immediate wires, vendor creation and journal posting are denied for the agent.
+#   * Two-person approval of the policy itself plus separation of duties.
+# Template status: draft. Thresholds are illustrative — align them with your
+# delegation-of-authority matrix. AEGIS supports readiness and evidence; it
+# does not certify compliance.
+# ---------------------------------------------------------------------------
+schema_version: aegis.policy/v1
+policy_id: pack-financial-operations-agent
+policy_name: Financial-Operations Agent Runtime Policy
+description: >-
+  Guardrails for an accounts-payable / finance-operations agent: read and match
+  invoices freely within scope; payments, bank-detail changes, external
+  remittances and ledger exports are approval-gated.
+version: 1.0.0
+status: draft
+owner: Financial Controller
+applies_to:
+  agent_name: ["finance-*", "*-ap-agent"]
+  environment: [staging, production]
+  risk_tier: [High]
+  tenant: ["*"]
+  model: ["*"]
+rollout:
+  mode: observe
+  exit_criteria:
+    - At least 5,000 representative requests evaluated; would-be decisions reviewed by Finance and Security
+    - Approval workflow tested for payment, bank-detail change and export tools
+    - False-positive rate on sampled blocks below 3%
+    - Kill-switch drill for payment tools completed within 5 minutes
+identity:
+  required: true
+  required_claims: [sub, tenant_id, roles]
+  allowed_roles: [ap_clerk, ap_supervisor, finance_controller]
+  allowed_issuers: ["https://login.example.com/"]
+  tenant_binding: true
+tools:
+  default_action: DENY
+  deny_list:
+    - payments.execute_wire_immediately
+    - vendor_master.create_vendor
+    - gl.post_journal_entry
+    - payments.cancel_payment_run
+  rules:
+    - id: tool.erp-get-invoice
+      tool: erp.get_invoice
+      operation: read
+      action: ALLOW
+      scopes: ["invoices:read"]
+      parameters:
+        invoice_id: {type: string, required: true, regex: "^INV-[0-9]{8}$"}
+      citations: [IS-11, EI-07]
+    - id: tool.erp-match-po
+      tool: erp.match_po
+      operation: write
+      action: ALLOW
+      description: Record a three-way match proposal; posting remains a human step in the ERP.
+      scopes: ["invoices:match"]
+      parameters:
+        invoice_id: {type: string, required: true, regex: "^INV-[0-9]{8}$"}
+        po_number: {type: string, required: true, regex: "^PO-[0-9]{8}$"}
+        tolerance_pct: {type: number, min: 0, max: 2}
+      max_calls_per_session: 50
+      citations: [IS-11, IS-12]
+    - id: tool.payments-schedule-payment
+      tool: payments.schedule_payment
+      operation: payment
+      action: REQUIRE_HUMAN_APPROVAL
+      description: Schedule a supplier payment into the next payment run. Every call needs Finance Controller approval.
+      scopes: ["payments:schedule"]
+      parameters:
+        invoice_id: {type: string, required: true, regex: "^INV-[0-9]{8}$"}
+        amount: {type: number, required: true, min: 0.01, max: 250000}
+        currency: {type: string, required: true, enum: [USD, EUR]}
+        payee_iban: {type: string, required: true, max_length: 34}
+      allow_pii_entities: [iban]
+      approval_roles: [Finance Controller]
+      max_calls_per_session: 25
+      citations: [IS-11, IS-13, IS-16]
+    - id: tool.vendor-master-update-bank-details
+      tool: vendor_master.update_bank_details
+      operation: write
+      action: REQUIRE_HUMAN_APPROVAL
+      description: Supplier bank-detail change; approval requires out-of-band verification with the supplier.
+      scopes: ["vendors:bank_details:write"]
+      parameters:
+        vendor_id: {type: string, required: true, regex: "^V-[0-9]{6}$"}
+        new_iban: {type: string, required: true, max_length: 34}
+        verification_ticket: {type: string, required: true, regex: "^VRF-[0-9]{6}$"}
+      allow_pii_entities: [iban]
+      approval_roles: [Finance Controller]
+      max_calls_per_session: 1
+      citations: [IS-11, IS-13]
+    - id: tool.email-send-remittance
+      tool: email.send_remittance
+      operation: external_send
+      action: REQUIRE_HUMAN_APPROVAL
+      description: Send remittance advice to a supplier address held in the vendor master.
+      scopes: ["mail:send:remittance"]
+      parameters:
+        vendor_id: {type: string, required: true, regex: "^V-[0-9]{6}$"}
+        invoice_id: {type: string, required: true, regex: "^INV-[0-9]{8}$"}
+        body: {type: string, max_length: 4000}
+      approval_roles: [AP Supervisor]
+      max_calls_per_session: 25
+      citations: [IS-11, IS-13, IS-04]
+    - id: tool.reports-export-ledger
+      tool: reports.export_ledger
+      operation: export
+      action: REQUIRE_HUMAN_APPROVAL
+      scopes: ["reports:export"]
+      parameters:
+        period: {type: string, required: true, regex: "^[0-9]{4}-(0[1-9]|1[0-2])$"}
+        max_rows: {type: integer, min: 1, max: 5000}
+        format: {type: string, enum: [csv, xlsx]}
+      approval_roles: [Finance Controller]
+      max_calls_per_session: 2
+      citations: [IS-13, IS-04, IS-03]
+content:
+  max_input_chars: 16000
+  pii_redaction:
+    enabled: true
+    entities: [email, payment_card, iban, us_ssn, uk_nino, india_pan, india_aadhaar, phone, ip_address, api_key]
+    apply_to: [prompt, response, tool_params, tool_output]
+    action: REDACT
+  prompt_injection:
+    enabled: true
+    apply_to: [prompt, tool_output, tool_params]
+    action: ESCALATE
+    decode_obfuscation: true
+  jailbreak:
+    enabled: true
+    apply_to: [prompt]
+    action: DENY
+    decode_obfuscation: true
+  transforms:
+    - id: transform.truncate_response
+      type: truncate
+      apply_to: [response]
+      max_chars: 12000
+limits:
+  requests_per_minute: 30
+  tool_calls_per_session: 60
+  tokens_per_day: 800000
+  cost_per_month_usd: 4000
+  action_on_breach: ESCALATE
+  alert_at_percent: 75
+logging:
+  immutable_audit: true
+  prompt_logging: redacted
+  response_logging: redacted
+  tool_param_logging: redacted
+  sink: aegis_common.audit.AuditLog (hash-chained JSONL) forwarded to SIEM and WORM archive
+kill_switch:
+  enabled: true
+  engaged: false
+  scopes: [agent, tool, model, tenant]
+  engaged_targets: []
+  authorized_roles: [Security Operations Lead, Financial Controller, SRE On-call]
+  target_time_to_disable_minutes: 5
+rollback:
+  previous_version: null
+  strategy: disable
+  triggers:
+    - Payment or bank-detail change attempted outside approved parameters
+    - Invoice content carrying injection reaches a payment tool call
+    - Approval bypass or self-approval attempt detected
+shadow_mode:
+  enabled: true
+  evaluate_as: enforce
+evidence_retention_days: 2555
+approval:
+  required_approver_roles: [AI System Owner, Security Lead, Financial Controller]
+  min_approvers: 3
+  separation_of_duties: true
+  approved_by: []
+  approved_at: null
+escalation:
+  queue: finance-ai-review
+  contact_role: Financial Controller
+change_history:
+  - version: 1.0.0
+    date: "2026-10-21"
+    author: AEGIS Governance Content Lead
+    change_type: created
+    summary: Initial financial-operations agent pack.
+citations: [IS-03, IS-04, IS-11, IS-12, IS-13, IS-14, IS-15, IS-16, SE-08, SE-02, EI-07, AO-07]
+metadata:
+  pack: financial_operations_agent
+  evidence_status: Inferred
+  intended_use: Accounts-payable and finance-operations agents.
+  tailoring_notes:
+    - Align amount caps with the delegation-of-authority matrix.
+    - Evidence retention of 2555 days (7 years) is a placeholder; confirm against your records-retention obligations (AO-07).
+    - Injection detections ESCALATE to finance review rather than silently failing, so suspicious invoices are investigated.

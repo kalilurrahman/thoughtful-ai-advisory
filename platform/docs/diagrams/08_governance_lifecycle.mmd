@@ -1,0 +1,15 @@
+%% AEGIS initial assessment workflow / AI lifecycle governance
+flowchart LR
+  classDef step fill:#0B2545,stroke:#0B2545,color:#fff
+  classDef gate fill:#FDECEC,stroke:#C53030,color:#742A2A
+  classDef out fill:#E8F1F8,stroke:#0B2545,color:#0B2545
+  I[Intake<br/>EI-12]:::step --> T[Triage<br/>GL-01]:::step --> R[Preliminary risk tier<br/>EI-02 · Inferred]:::step
+  R --> H{Human confirms tier}:::gate
+  H --> S[Assessment scoping<br/>modules by tier]:::step --> EV[Evidence collection<br/>SE-02]:::step
+  EV --> DA[Domain assessments<br/>GL-02]:::step --> GM[Gap & control mapping]:::step --> RV[Review]:::step
+  RV --> AP{Approval gate by tier<br/>GL-03}:::gate
+  AP -->|approved with conditions| OB[Obligations & runtime policy<br/>IS-12]:::step --> MO[Monitoring<br/>GL-08 · SE-12]:::step --> PR[Periodic review<br/>GL-12]:::step
+  PR -->|material change GL-04| T
+  PR -->|no longer meets requirements| RT[Restrict / retire<br/>GL-09]:::step
+  AP -->|rejected / exception GL-10| X[Exception register<br/>approver + expiry]:::gate
+  GM --> O1[Risk heat map · gap register · remediation plan · audit pack]:::out

@@ -1,0 +1,154 @@
+# AEGIS Industry Pack — Banking, Financial Services & Insurance (BFSI)
+# ---------------------------------------------------------------------------
+# Sector overlay on the AEGIS Control Library. Control IDs reference
+# content/controls/controls.yaml ONLY. Risk-tier hints are DEFAULTS that the
+# AEGIS risk-tier engine and a human approver must confirm per system (EI-02).
+# Sector regimes are described generally to prompt legal review — they are not
+# legal advice and their applicability must be verified with counsel.
+# ---------------------------------------------------------------------------
+pack:
+  id: bfsi
+  name: Banking, Financial Services & Insurance
+  version: 1.0.0
+  status: draft-for-pilot-validation
+  effective_date: "2026-10-21"
+  owner: AEGIS Governance Content Lead
+  review_cadence: quarterly
+  profile_industry: bfsi
+  disclaimer: >-
+    This pack highlights AEGIS controls and evidence commonly relevant to banks, lenders, insurers, asset managers and
+    payment providers. It does not determine which laws or supervisory expectations apply, does not establish
+    conformity with any regulation or standard, and is not legal or regulatory advice. Verify every regime with
+    qualified counsel.
+
+summary: >-
+  Financial institutions usually have mature model risk management, operational resilience and third-party risk
+  functions. AI governance must plug into them rather than duplicate them: extend model inventories to GenAI and
+  agents, add fairness and explainability evidence for customer decisions, and govern agents that can move money or
+  contact customers.
+
+priority_use_cases:
+  - id: FS-UC-01
+    name: Credit decisioning and underwriting
+    description: Model scores applicants or recommends approve/decline/limit decisions for consumer or SME credit.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Material or automated decisions about individuals' access to credit; fairness and adverse-action explanation expectations.
+    risk_profile_hint: {decision_impact: automated_decision, affected_parties: customers, data_sensitivity: personal, autonomy: acts_autonomously, domain_category: credit}
+    key_controls: [GL-02, IS-05, IS-07, IS-08, IS-09, GL-06, SE-12, AO-07]
+  - id: FS-UC-02
+    name: Life and health insurance pricing and underwriting
+    description: Model informs risk assessment or pricing for life or health insurance.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Individual pricing and access decisions using personal and possibly health data.
+    risk_profile_hint: {decision_impact: material, affected_parties: customers, data_sensitivity: special_category, autonomy: suggests, domain_category: insurance}
+    key_controls: [GL-02, IS-03, IS-05, IS-08, IS-09, GL-06]
+  - id: FS-UC-03
+    name: Fraud and financial-crime detection
+    description: Models flag transactions, accounts or claims for investigation or block them in real time.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Can freeze customer funds or trigger reports; false positives affect customers, false negatives create financial-crime exposure.
+    risk_profile_hint: {decision_impact: material, affected_parties: customers, data_sensitivity: personal, autonomy: acts_with_approval, domain_category: financial_services}
+    key_controls: [IS-07, SE-12, IS-09, IS-05, GL-04, SE-08]
+  - id: FS-UC-04
+    name: Customer-service GenAI assistant
+    description: Chatbot or agent-assist answers account, product and complaint queries.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Customer-facing GenAI with personal data; mis-selling, hallucinated product terms and data-leakage risks.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: personal, autonomy: suggests, domain_category: customer_service, genai: true}
+    key_controls: [IS-08, IS-04, IS-12, IS-14, SE-04, AO-11]
+  - id: FS-UC-05
+    name: Payments and servicing agents
+    description: Agent initiates refunds, payments, limit changes or account updates via tools.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Irreversible financial actions via tools; manipulation through prompt injection could cause direct loss.
+    risk_profile_hint: {decision_impact: material, affected_parties: customers, data_sensitivity: personal, autonomy: acts_with_approval, domain_category: financial_services, genai: true, external_actions: true}
+    key_controls: [EI-07, IS-11, IS-13, IS-16, IS-15, IS-14, SE-08]
+  - id: FS-UC-06
+    name: Claims triage and settlement recommendation
+    description: Model routes claims, estimates reserves or recommends settlement amounts.
+    default_risk_tier_hint: High
+    risk_tier_rationale: Material financial impact on policyholders; explainability and complaint-handling expectations.
+    risk_profile_hint: {decision_impact: material, affected_parties: customers, data_sensitivity: personal, autonomy: suggests, domain_category: insurance}
+    key_controls: [IS-05, IS-07, IS-09, IS-08, GL-06]
+  - id: FS-UC-07
+    name: Research, advice and wealth-management copilots
+    description: GenAI summarizes research or drafts client communications for advisers.
+    default_risk_tier_hint: Medium
+    risk_tier_rationale: Outputs may influence investment advice; suitability and record-keeping expectations; advisers retain responsibility.
+    risk_profile_hint: {decision_impact: advisory, affected_parties: customers, data_sensitivity: confidential, autonomy: suggests, domain_category: financial_services, genai: true}
+    key_controls: [IS-12, IS-10, GL-05, SE-08, IS-08]
+  - id: FS-UC-08
+    name: Internal productivity and code assistants
+    description: GenAI tools for employees (drafting, summarization, coding) without customer decisions.
+    default_risk_tier_hint: Low
+    risk_tier_rationale: Internal and advisory, provided confidential data handling and approved providers are enforced.
+    risk_profile_hint: {decision_impact: none, affected_parties: internal, data_sensitivity: confidential, autonomy: suggests, domain_category: internal_productivity, genai: true}
+    key_controls: [IS-04, IS-10, AO-05, EI-09]
+
+emphasized_controls:
+  - {id: EI-01, why: "Extend the existing model inventory to GenAI applications, agents and vendor AI so there is one system of record."}
+  - {id: EI-02, why: "Align AI risk tiers with model-risk tiering so that one classification drives validation depth."}
+  - {id: GL-02, why: "Independent pre-deployment review is a long-standing expectation for material models."}
+  - {id: GL-04, why: "Prompt, model and vendor changes should route through the same change and revalidation triggers as other models."}
+  - {id: IS-05, why: "Customer decisions require fairness testing across relevant groups and documented mitigation."}
+  - {id: IS-08, why: "Customers may need explanations or notices for adverse decisions; AI interactions should be disclosed."}
+  - {id: IS-11, why: "Agents with payment or account tools need deny-by-default scopes."}
+  - {id: IS-13, why: "Money movement and customer-impacting changes require human approval with approver identity."}
+  - {id: GL-11, why: "Foundation-model and AI-vendor contracts need AI-specific terms (data use, model change notice, audit rights)."}
+  - {id: SE-12, why: "Performance and drift monitoring with thresholds supports ongoing model validation."}
+
+additional_evidence:
+  - {id: FS-EV-01, description: "Mapping of AEGIS risk tiers to the institution's model-risk tiers, approved by the model-risk function.", related_controls: [EI-02, AO-04]}
+  - {id: FS-EV-02, description: "Independent validation report for each High-tier model, including GenAI-specific testing (hallucination, prompt injection).", related_controls: [GL-02, GL-05, IS-14]}
+  - {id: FS-EV-03, description: "Fairness analysis with protected-characteristic proxies and adverse-action reason-code review.", related_controls: [IS-05, IS-08]}
+  - {id: FS-EV-04, description: "Register of critical AI third parties with exit plans and concentration analysis.", related_controls: [EI-08, GL-11, AO-09]}
+  - {id: FS-EV-05, description: "Runtime policy decision logs and approval records for agent-initiated payments or account changes.", related_controls: [IS-12, IS-13, SE-08]}
+  - {id: FS-EV-06, description: "Complaint data linked to AI-influenced decisions and corrective actions taken.", related_controls: [AO-11, SE-06]}
+
+sector_regimes:
+  - name: Model risk management supervisory guidance (e.g. US interagency guidance commonly referenced as SR 11-7; UK PRA expectations for model risk management)
+    scope_summary: Expectations for model inventory, tiering, independent validation, ongoing monitoring and governance; increasingly applied to AI and GenAI.
+    aegis_relevance: Inventory, tiering, validation, monitoring and evidence controls can feed existing MRM processes.
+    related_controls: [EI-01, EI-02, GL-02, GL-05, SE-12]
+    verify_with_counsel: true
+  - name: Fair lending, anti-discrimination and adverse-action notice rules (e.g. US equal credit opportunity requirements)
+    scope_summary: Prohibit discriminatory credit decisions and require specific reasons for adverse actions.
+    aegis_relevance: Fairness testing, explanation and human-review evidence.
+    related_controls: [IS-05, IS-08, IS-09]
+    verify_with_counsel: true
+  - name: EU AI Act Annex III areas for creditworthiness and certain life/health insurance uses
+    scope_summary: Certain credit-scoring and life/health insurance risk-assessment and pricing uses are listed as high-risk areas, subject to exceptions and role-specific obligations.
+    aegis_relevance: Classification evidence and readiness indicators only; timelines must be verified against the current Official Journal text and amendments.
+    related_controls: [EI-02, AO-07, GL-02, IS-09]
+    verify_with_counsel: true
+  - name: Operational resilience and ICT third-party risk rules (e.g. EU DORA)
+    scope_summary: ICT risk management, incident reporting and oversight of ICT third-party providers, which can include AI and cloud model providers.
+    aegis_relevance: Vendor AI inventory, due diligence, incident management and kill-switch evidence.
+    related_controls: [EI-08, GL-11, SE-04, IS-15]
+    verify_with_counsel: true
+  - name: Data-protection rules on automated decision-making and profiling (e.g. GDPR provisions on solely automated decisions)
+    scope_summary: Rights relating to solely automated decisions with legal or similarly significant effects, and transparency about the logic involved.
+    aegis_relevance: Human oversight design, disclosure and privacy-assessment evidence.
+    related_controls: [IS-09, IS-08, IS-03]
+    verify_with_counsel: true
+  - name: Conduct and consumer-outcome rules (e.g. UK Consumer Duty) and record-keeping obligations for advice
+    scope_summary: Expectations that firms deliver good customer outcomes and retain records of communications and advice.
+    aegis_relevance: Customer-facing GenAI guardrails, logging and complaint feedback loops.
+    related_controls: [IS-12, SE-08, AO-11]
+    verify_with_counsel: true
+
+recommended_policy_packs:
+  - {id: pack-baseline, purpose: "Default-deny tools, PII redaction, injection detection, limits, decision logging and kill switch for every LLM app or agent.", status: available}
+  - {id: pack-financial-operations-agent, purpose: "Approval-gated payments, bank-detail changes and exports with hard caps and separation of duties.", status: available}
+  - {id: pack-customer-support-agent, purpose: "Customer-service agent with tenant-bound order reads, bound replies and capped goodwill refunds.", status: available}
+  - {id: customer-assistant-conduct, purpose: "Append AI disclosure; block personalized investment advice and unapproved product claims; escalate complaints.", status: proposed}
+
+pilot_discovery_questions:
+  - {id: FS-DQ-01, question: "Does your model inventory already include GenAI applications, agents and vendor AI features? Who owns it?", purpose: "Decide whether to extend MRM inventory or stand up Register.", related_controls: [EI-01, EI-08]}
+  - {id: FS-DQ-02, question: "How do AI risk tiers relate to model-risk tiers today?", purpose: "Avoid duplicate classification.", related_controls: [EI-02, AO-04]}
+  - {id: FS-DQ-03, question: "Which AI systems influence credit, pricing, claims or fraud decisions about customers?", purpose: "Identify High-tier candidates for deep-dives.", related_controls: [GL-02, IS-05]}
+  - {id: FS-DQ-04, question: "Can any agent move money, change limits or contact customers? What approval is required?", purpose: "Identify high-impact agent actions for Shield.", related_controls: [EI-07, IS-11, IS-13]}
+  - {id: FS-DQ-05, question: "How are GenAI-specific risks (hallucination, prompt injection, leakage) covered in independent validation?", purpose: "Assess validation gaps.", related_controls: [GL-05, IS-14]}
+  - {id: FS-DQ-06, question: "Which AI providers are treated as critical ICT third parties, and do contracts cover model changes and incident notice?", purpose: "Assess third-party AI risk.", related_controls: [GL-11, AO-09]}
+  - {id: FS-DQ-07, question: "How are adverse-action reasons generated and reviewed for model-driven decisions?", purpose: "Assess explainability evidence.", related_controls: [IS-08, IS-09]}
+  - {id: FS-DQ-08, question: "What evidence would internal audit request for an AI system, and how long does it take to assemble today?", purpose: "Baseline evidence-pack effort for ROI.", related_controls: [SE-05, SE-10]}

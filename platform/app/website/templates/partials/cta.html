@@ -1,0 +1,5 @@
+<aside class="cta-block cta-block--{{ variant }}" aria-labelledby="{{ uid }}-title">
+  <h2 class="cta-title" id="{{ uid }}-title">{{ cta.title }}</h2>
+  <p class="cta-text">{{ cta.text }}</p>
+  <p class="cta-action"><a class="btn {{ 'btn-primary' if key in ('assessment', 'baseline') else 'btn-secondary' }}" href="{{ cta.url }}" data-cta="{{ key }}">{{ cta.label }}</a></p>
+</aside>

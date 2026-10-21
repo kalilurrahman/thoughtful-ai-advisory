@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useMatches,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -12,8 +13,10 @@ import { useEffect, type ReactNode } from "react";
 
 import { GovernanceProvider } from "@/features/governance/store";
 import { GovernanceShell } from "@/features/governance/shell";
+import { SiteLayout } from "@/features/site/layout";
 import "@lovable.dev/cloud-auth-js/styles.css";
 import appCss from "../styles.css?url";
+import siteCss from "../features/site/site.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -81,11 +84,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AI Governance and Advisory" },
-      { name: "description", content: "AI Governance and Advisory — coming soon" },
+      { title: "AEGIS — Enterprise AI governance, runtime guardrails and evidence" },
+      {
+        name: "description",
+        content:
+          "AEGIS helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously.",
+      },
       { name: "author", content: "AEGIS" },
-      { property: "og:title", content: "AI Governance and Advisory" },
-      { property: "og:description", content: "AI Governance and Advisory — coming soon" },
+      { property: "og:title", content: "AEGIS — Enterprise AI governance" },
+      {
+        property: "og:description",
+        content: "Govern every AI system, agent, and decision with evidence.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#f3f2f2" },
@@ -95,6 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "stylesheet", href: siteCss },
       { rel: "icon", href: "/aegis-icon-192.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/aegis-icon-192.png" },
       { rel: "manifest", href: "/manifest.webmanifest" },
@@ -126,15 +137,31 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+// Routes that belong to the public AEGIS website; every other route is the workspace.
+const SITE_ROUTE_IDS = new Set<string>([
+  "/",
+  "/$",
+  "/framework/controls/",
+  "/framework/controls/$controlId",
+]);
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const leafRouteId = useMatches({ select: (matches) => matches.at(-1)?.routeId ?? "" });
+  const isSite = SITE_ROUTE_IDS.has(leafRouteId);
 
   return (
     <QueryClientProvider client={queryClient}>
       <GovernanceProvider>
-        <GovernanceShell>
-          <Outlet />
-        </GovernanceShell>
+        {isSite ? (
+          <SiteLayout>
+            <Outlet />
+          </SiteLayout>
+        ) : (
+          <GovernanceShell>
+            <Outlet />
+          </GovernanceShell>
+        )}
       </GovernanceProvider>
     </QueryClientProvider>
   );

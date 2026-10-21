@@ -1,0 +1,136 @@
+{
+  "synthetic": true,
+  "profile": {
+    "name": "Customer support agent",
+    "purpose": "Answer customer queries and update tickets using CRM data",
+    "decision_impact": "advisory",
+    "affected_parties": "customers",
+    "data_sensitivity": "personal",
+    "autonomy": "acts_with_approval",
+    "tools": [
+      "crm_read",
+      "crm_write",
+      "send_email"
+    ],
+    "external_actions": true,
+    "domain_category": "customer_service",
+    "genai": true,
+    "vendor_model": true,
+    "eu_exposure": true,
+    "environment": "production"
+  },
+  "result": {
+    "tier": "High",
+    "score": 85,
+    "provisional": false,
+    "factors": [
+      {
+        "factor": "decision_impact",
+        "value": "advisory",
+        "points": 5,
+        "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+      },
+      {
+        "factor": "affected_parties",
+        "value": "customers",
+        "points": 10,
+        "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+      },
+      {
+        "factor": "data_sensitivity",
+        "value": "personal",
+        "points": 15,
+        "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+      },
+      {
+        "factor": "autonomy",
+        "value": "acts_with_approval",
+        "points": 15,
+        "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+      },
+      {
+        "factor": "tool_access",
+        "value": "3 tool(s), 2 with write/act capability",
+        "points": 15,
+        "citation": "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
+      },
+      {
+        "factor": "external_actions",
+        "value": true,
+        "points": 10,
+        "citation": "AEGIS Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)"
+      },
+      {
+        "factor": "domain_category",
+        "value": "customer_service",
+        "points": 0,
+        "citation": "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
+      },
+      {
+        "factor": "generative_ai",
+        "value": true,
+        "points": 5,
+        "citation": "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+      },
+      {
+        "factor": "third_party_model",
+        "value": true,
+        "points": 5,
+        "citation": "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)"
+      },
+      {
+        "factor": "eu_exposure",
+        "value": true,
+        "points": 5,
+        "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+      }
+    ],
+    "triggers": [],
+    "missing_fields": [],
+    "clarifying_questions": [],
+    "required_modules": [
+      "core",
+      "data_privacy",
+      "security",
+      "genai_llm",
+      "agentic",
+      "fairness_safety",
+      "human_oversight",
+      "vendor_third_party"
+    ],
+    "approval_authority": "AI Governance Forum",
+    "review_cadence_months": 6,
+    "evidence_status": "Inferred",
+    "requires_human_confirmation": true,
+    "rationale": "Preliminary tier High (score 85). Drivers: decision_impact=advisory (+5); affected_parties=customers (+10); data_sensitivity=personal (+15); autonomy=acts_with_approval (+15); tool_access=3 tool(s), 2 with write/act capability (+15); external_actions=True (+10); generative_ai=True (+5); third_party_model=True (+5); eu_exposure=True (+5). Inferred from user-provided intake; requires human confirmation.",
+    "citations": [
+      "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+      "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+      "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+      "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+      "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+      "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+      "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)",
+      "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+      "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)",
+      "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)",
+      "AEGIS Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)",
+      "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+    ],
+    "citation_ids": [
+      "AO-07",
+      "EI-02",
+      "EI-04",
+      "GL-01",
+      "GL-02",
+      "GL-03",
+      "GL-11",
+      "IS-03",
+      "IS-09",
+      "IS-11",
+      "IS-13",
+      "IS-14"
+    ],
+    "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+  }
+}

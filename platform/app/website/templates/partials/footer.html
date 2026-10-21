@@ -1,0 +1,35 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      {% for col in footer_columns %}
+      <div class="footer-col">
+        <h2 class="footer-heading">{{ col.label }}</h2>
+        <ul>
+          {% for item in col['items'] %}
+          <li><a href="{{ item.url }}">{{ item.label }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+      <div class="footer-col footer-newsletter">
+        <h2 class="footer-heading" id="newsletter-heading">Governance briefing</h2>
+        <p>A short, occasional note on AI governance practice and regulatory developments. No tracking pixels.</p>
+        {% with form_def=newsletter, form_key="newsletter", prefix="nl", compact=True %}
+        {% include "partials/form_fields.html" %}
+        {% endwith %}
+      </div>
+    </div>
+    <aside class="footer-disclaimer" aria-label="Disclaimer">
+      <p>{{ disclaimer }}</p>
+    </aside>
+    <div class="footer-meta">
+      <p>&copy; {{ year }} {{ site.organization.name }}</p>
+      <ul class="footer-links">
+        {% for l in site.footer_links %}
+        <li><a href="{{ l.url }}">{{ l.label }}</a></li>
+        {% endfor %}
+        <li><a href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

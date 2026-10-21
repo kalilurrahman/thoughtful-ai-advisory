@@ -1,0 +1,197 @@
+# AEGIS Runtime Policy Pack — Customer-Support Agent
+# ---------------------------------------------------------------------------
+# For customer-facing assistants that answer order/account questions, update
+# tickets, reply to customers and issue small goodwill refunds.
+# Design choices:
+#   * Customer replies go through a tool that resolves the recipient from the
+#     ticket server-side: the agent cannot choose an arbitrary recipient
+#     (undeclared parameters are rejected).
+#   * Refunds: hard cap per call; human approval above the auto-approval threshold.
+#   * Deletion, bulk export and account-ownership changes are denied for the agent.
+# Template status: draft — tailor tool names/parameters, then review and approve.
+# AEGIS supports readiness and evidence; it does not certify compliance.
+# ---------------------------------------------------------------------------
+schema_version: aegis.policy/v1
+policy_id: pack-customer-support-agent
+policy_name: Customer-Support Agent Runtime Policy
+description: >-
+  Guardrails for a customer-facing support agent with read access to orders,
+  ticket updates, bound customer replies and capped goodwill refunds.
+version: 1.0.0
+status: draft
+owner: Head of Customer Service
+applies_to:
+  agent_name: ["customer-support-*", "*-support-agent"]
+  environment: [staging, production]
+  risk_tier: [Medium, High]
+  tenant: ["*"]
+  model: ["*"]
+rollout:
+  mode: observe
+  exit_criteria:
+    - At least 1,000 representative conversations evaluated; would-be decisions reviewed
+    - Sampled would-be DENY/REDACT decisions reviewed; false-positive rate below 5%
+    - Refund approval path tested end-to-end with the Support Team Lead role
+    - Kill-switch drill for the refund tool completed within the target time
+identity:
+  required: true
+  required_claims: [sub, tenant_id, roles]
+  allowed_roles: [customer, support_agent, support_team_lead]
+  tenant_binding: true
+tools:
+  default_action: DENY
+  deny_list:
+    - crm.delete_customer
+    - crm.export_customers
+    - crm.change_account_owner
+    - payments.update_payment_method
+  rules:
+    - id: tool.kb-search
+      tool: kb.search
+      operation: read
+      action: ALLOW
+      description: Search the public help-centre knowledge base.
+      scopes: ["kb:read"]
+      parameters:
+        query: {type: string, required: true, max_length: 500}
+        top_k: {type: integer, min: 1, max: 10}
+      citations: [IS-11, EI-07]
+    - id: tool.crm-lookup-order
+      tool: crm.lookup_order
+      operation: read
+      action: ALLOW
+      description: Look up one order belonging to the authenticated customer's tenant.
+      scopes: ["orders:read"]
+      parameters:
+        order_id: {type: string, required: true, regex: "^ORD-[0-9]{6,10}$"}
+      max_calls_per_session: 20
+      citations: [IS-11, EI-07]
+    - id: tool.tickets-update
+      tool: tickets.update
+      operation: write
+      action: ALLOW
+      description: Add an internal note or change ticket status within a fixed set of states.
+      scopes: ["tickets:write"]
+      parameters:
+        ticket_id: {type: string, required: true, regex: "^TCK-[0-9]{6,10}$"}
+        status: {type: string, enum: [open, pending_customer, resolved]}
+        note: {type: string, max_length: 4000}
+      max_calls_per_session: 10
+      citations: [IS-11, IS-12]
+    - id: tool.email-send-customer-reply
+      tool: email.send_customer_reply
+      operation: external_send
+      action: ALLOW
+      description: >-
+        Reply to the customer on an existing ticket. The recipient is resolved
+        server-side from the ticket; the agent cannot supply an address.
+      scopes: ["tickets:reply"]
+      parameters:
+        ticket_id: {type: string, required: true, regex: "^TCK-[0-9]{6,10}$"}
+        body: {type: string, required: true, max_length: 6000}
+      additional_parameters: false
+      max_calls_per_session: 5
+      citations: [IS-11, IS-04, IS-13]
+    - id: tool.payments-issue-refund
+      tool: payments.issue_refund
+      operation: payment
+      action: ALLOW
+      description: >-
+        Goodwill refund to the original payment method. Up to 50 per call without
+        approval; above 50 requires Support Team Lead approval; hard cap 500.
+      scopes: ["refunds:create"]
+      parameters:
+        order_id: {type: string, required: true, regex: "^ORD-[0-9]{6,10}$"}
+        amount: {type: number, required: true, min: 0.01, max: 500}
+        currency: {type: string, required: true, enum: [USD, EUR, GBP]}
+        reason_code: {type: string, required: true, enum: [late_delivery, damaged_item, goodwill]}
+      require_approval_if:
+        - {param: amount, op: gt, value: 50, reason: refund above the 50 auto-approval threshold}
+        - {param: reason_code, op: eq, value: goodwill, reason: goodwill refunds need a team-lead decision}
+      approval_roles: [Support Team Lead]
+      max_calls_per_session: 2
+      citations: [IS-11, IS-13, IS-16]
+content:
+  max_input_chars: 16000
+  pii_redaction:
+    enabled: true
+    entities: [email, payment_card, iban, us_ssn, uk_nino, india_pan, india_aadhaar, phone, ip_address, api_key]
+    apply_to: [prompt, response, tool_params, tool_output]
+    action: REDACT
+  prompt_injection:
+    enabled: true
+    apply_to: [prompt, tool_output, tool_params]
+    action: DENY
+    decode_obfuscation: true
+  jailbreak:
+    enabled: true
+    apply_to: [prompt]
+    action: DENY
+    decode_obfuscation: true
+  transforms:
+    - id: transform.strip_unapproved_urls
+      type: strip_unapproved_urls
+      apply_to: [response]
+      domain_allow_list: [example.com]
+    - id: transform.ai_disclosure
+      type: append_disclosure
+      apply_to: [response]
+      text: "This response was generated with AI assistance. Ask for a human agent at any time."
+    - id: transform.truncate_response
+      type: truncate
+      apply_to: [response]
+      max_chars: 8000
+limits:
+  requests_per_minute: 30
+  tool_calls_per_session: 20
+  tokens_per_day: 1500000
+  cost_per_month_usd: 3000
+  action_on_breach: RATE_LIMIT
+  alert_at_percent: 80
+logging:
+  immutable_audit: true
+  prompt_logging: redacted
+  response_logging: redacted
+  tool_param_logging: redacted
+  sink: aegis_common.audit.AuditLog (hash-chained JSONL) forwarded to SIEM
+kill_switch:
+  enabled: true
+  engaged: false
+  scopes: [agent, tool, model, tenant]
+  engaged_targets: []
+  authorized_roles: [Security Operations Lead, Head of Customer Service, SRE On-call]
+  target_time_to_disable_minutes: 15
+rollback:
+  previous_version: null
+  strategy: disable
+  triggers:
+    - Refund tool abused or refund volume anomaly
+    - Customer data from another account appears in a response
+    - Injection via ticket content reaches a tool call
+shadow_mode:
+  enabled: true
+  evaluate_as: enforce
+evidence_retention_days: 365
+approval:
+  required_approver_roles: [AI System Owner, Security Lead]
+  min_approvers: 2
+  separation_of_duties: true
+  approved_by: []
+  approved_at: null
+escalation:
+  queue: support-ai-review
+  contact_role: Support Team Lead
+change_history:
+  - version: 1.0.0
+    date: "2026-10-21"
+    author: AEGIS Governance Content Lead
+    change_type: created
+    summary: Initial customer-support agent pack.
+citations: [IS-04, IS-08, IS-11, IS-12, IS-13, IS-14, IS-15, IS-16, SE-08, EI-07]
+metadata:
+  pack: customer_support_agent
+  evidence_status: Inferred
+  intended_use: Customer-facing support assistants with refunds and ticket actions.
+  tailoring_notes:
+    - Replace example.com in the URL allow-list with your help-centre domains.
+    - Confirm refund thresholds with Finance; thresholds are illustrative.
