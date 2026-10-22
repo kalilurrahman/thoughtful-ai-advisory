@@ -18,6 +18,7 @@ import "@lovable.dev/cloud-auth-js/styles.css";
 import appCss from "../styles.css?url";
 import siteCss from "../features/site/site.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { THEME_INIT_SCRIPT } from "../lib/theme";
 
 function NotFoundComponent() {
   return (
@@ -98,8 +99,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#f3f2f2" },
     ],
+    // Applies the viewer's light/dark preference (and theme-color) before first paint.
+    scripts: [{ children: THEME_INIT_SCRIPT }],
     links: [
       {
         rel: "stylesheet",
@@ -125,7 +127,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    // THEME_INIT_SCRIPT may add the `dark` class before React hydrates.
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

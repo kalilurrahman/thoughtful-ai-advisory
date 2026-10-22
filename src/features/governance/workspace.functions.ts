@@ -44,7 +44,6 @@ export const workspaceState = z.object({
   correctiveActions: correctiveActionListSchema,
   roadmap: z.array(item),
   qi: z.number().int().min(0).max(11),
-  dark: z.boolean(),
 });
 export const saveWorkspace = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -130,7 +129,6 @@ export const loadWorkspace = createServerFn({ method: "POST" })
       correctiveActions: ca.data?.actions ?? [],
       roadmap: r.data.items,
       qi: 0,
-      dark: false,
     });
     return { id: org.id, name: org.name, state };
   });

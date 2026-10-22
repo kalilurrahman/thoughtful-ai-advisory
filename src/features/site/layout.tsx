@@ -5,7 +5,9 @@ import { STANDARD_DISCLAIMER, siteConfig } from "./content";
 import { LeadForm } from "./forms";
 import { footerColumns, siteNav, type Crumb } from "./pages";
 import { SiteLink } from "./ui";
+import { Moon, Sun } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
+import { useDarkTheme } from "@/lib/theme";
 
 // Public website chrome — header with disclosure navigation, breadcrumbs and footer —
 // ported from platform/app/website/templates/partials/{header,breadcrumbs,footer}.html.
@@ -22,17 +24,36 @@ function BrandMark() {
     >
       <path
         d="M14 1 26 5.5v9.2c0 7.6-5 13.4-12 16.3C7 28.1 2 22.3 2 14.7V5.5L14 1Z"
-        fill="#0c2340"
+        fill="currentColor"
       />
       <path
+        className="brand-mark-check"
         d="m8.5 16.2 3.8 3.8 7.4-8"
         fill="none"
-        stroke="#ffffff"
         strokeWidth="2.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+
+/** Light/dark switch shared with the workspace header (same preference, same icons). */
+function ThemeToggle() {
+  const [dark, toggle] = useDarkTheme();
+  return (
+    <button
+      type="button"
+      className="theme-toggle"
+      aria-label={dark ? "Use light theme" : "Use dark theme"}
+      onClick={toggle}
+    >
+      {dark ? (
+        <Sun weight="duotone" aria-hidden="true" />
+      ) : (
+        <Moon weight="duotone" aria-hidden="true" />
+      )}
+    </button>
   );
 }
 
@@ -85,6 +106,7 @@ function SiteHeader() {
             siteConfig.header_cta.label
           )}
         </SiteLink>
+        <ThemeToggle />
         <Button
           variant="outline"
           className="nav-toggle"

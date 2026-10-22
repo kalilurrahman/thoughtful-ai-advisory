@@ -59,7 +59,6 @@ export type GovernanceState = {
   correctiveActions: CorrectiveAction[];
   roadmap: RoadmapItem[];
   qi: number;
-  dark: boolean;
 };
 export const initialState = (): GovernanceState => ({
   workspaceMode: "sample",
@@ -76,7 +75,6 @@ export const initialState = (): GovernanceState => ({
     p.items.map((it, i) => ({ ...it, key: phase + "." + i, phase })),
   ),
   qi: 0,
-  dark: false,
 });
 export function blankState(): GovernanceState {
   const sample = initialState();
@@ -110,7 +108,6 @@ export type Action =
   | { type: "transition-corrective-action"; id: string; status: CorrectiveAction["status"]; actor: string; note: string; changedAt: string }
   | { type: "roadmap"; control: Control }
   | { type: "done"; key: string }
-  | { type: "dark" }
   | { type: "load"; state: GovernanceState };
 export function reducer(s: GovernanceState, a: Action): GovernanceState {
   switch (a.type) {
@@ -252,8 +249,6 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
         ...s,
         roadmap: s.roadmap.map((i) => (i.key === a.key ? { ...i, done: !i.done } : i)),
       };
-    case "dark":
-      return { ...s, dark: !s.dark };
     case "load":
       return a.state;
   }
