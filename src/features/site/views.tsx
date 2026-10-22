@@ -20,6 +20,7 @@ import { InlineMarkdown, SiteMarkdown } from "./markdown";
 import { CONTROL_LIBRARY_PATH, breadcrumbsFor, type FaqItem, type SitePage } from "./pages";
 import { CtaBlock, SiteLink } from "./ui";
 import { TOOL_COMPONENTS } from "./tools/registry";
+import { WorkspaceGateway } from "./workspace-gateway";
 
 // Page templates — ported from platform/app/website/templates/{home,page,form,tool,
 // controls_index,control,404}.html.
@@ -111,6 +112,7 @@ function HomeTemplate({ page }: { page: SitePage }) {
           </p>
         </div>
       </section>
+      <WorkspaceGateway />
       <div className="container page-body">
         <SiteMarkdown className="prose prose--home" body={page.body} />
         <PageEnd faq={page.faq} updated={page.updated} />

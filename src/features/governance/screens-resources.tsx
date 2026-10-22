@@ -463,6 +463,8 @@ export function PlansScreen() {
 export function MoreScreen() {
   const { state, dispatch, userId } = useGovernance();
   const items = [
+    { to: "/", name: "AEGIS website", desc: "Framework, solutions and public tools", icon: ArrowSquareOut },
+    { to: "/assess", name: "GOVERN assessment", desc: "Six pillars mapped to NIST AI RMF", icon: CheckCircle },
     { to: "/gates", name: "Release gates", desc: "Readiness by risk tier", icon: TrafficSignal },
     {
       to: "/guardrails",
@@ -490,6 +492,7 @@ export function MoreScreen() {
       desc: "Triage, assign response ownership and track closure",
       icon: TrafficSignal,
     },
+    { to: "/actions", name: "Corrective actions", desc: "Owned remediation, evidence and effectiveness verification", icon: CheckCircle },
     {
       to: "/decisions",
       name: "Governance decisions",

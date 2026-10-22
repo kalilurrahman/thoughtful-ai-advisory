@@ -24,7 +24,7 @@ import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
 const tabs = [
   { to: "/workspace", name: "Home", icon: House },
-  { to: "/assess", name: "Assess", icon: ListChecks },
+  { to: "/assess", name: "GOVERN", icon: ListChecks },
   { to: "/inventory", name: "Inventory", icon: Stack },
   { to: "/roadmap", name: "Roadmap", icon: Path },
   { to: "/more", name: "More", icon: DotsThreeCircle },
@@ -45,6 +45,7 @@ const titles: Record<string, string> = {
   "/decisions": "Governance decisions",
   "/changes": "AI change reviews",
   "/monitoring": "AI system monitoring",
+  "/actions": "Corrective actions",
   "/checklist": "Governance lifecycle checklist",
   "/start": "Start here",
   "/export": "Reports & audit pack",
@@ -58,6 +59,7 @@ const studioTabs = [
   { to: "/playbook", name: "AI Playbook", icon: BookOpen },
   { to: "/templates", name: "Templates", icon: Books },
   { to: "/incidents", name: "Incidents", icon: TrafficSignal },
+  { to: "/actions", name: "Corrective actions", icon: ListChecks },
   { to: "/decisions", name: "Decisions", icon: ClipboardText },
   { to: "/changes", name: "Change reviews", icon: ArrowsClockwise },
   { to: "/monitoring", name: "Monitoring", icon: Gauge },
@@ -99,7 +101,7 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
                   ? "Overview"
                   : t.name === "More"
                     ? "Workspace & account"
-                    : t.name}
+                    : t.name === "GOVERN" ? "GOVERN assessment" : t.name}
               </Link>
             </Button>
           ))}
@@ -138,6 +140,9 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
         <Link to="/workspace" className="wordmark">
           AEGIS
         </Link>
+        <Button asChild variant="ghost" size="icon" aria-label="AEGIS public website">
+          <Link to="/"><House weight="duotone" /></Link>
+        </Button>
         <span className="client-name">{workspaceName}</span>
         <span className="workspace-badge">{userId ? "Personal workspace" : "Demo workspace"}</span>
         <Button

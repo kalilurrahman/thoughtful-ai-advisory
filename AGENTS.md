@@ -23,5 +23,6 @@
 - Treat assessment, gate and guardrail scores as workspace-level values, and derive portfolio summaries from the live inventory; this avoids implying that systems have individual assessments that are not stored.
 - Serve the public website from Markdown pages in platform/content/website_pages and the control library in platform/content/controls; the Python platform, its tests and the React site then share one governed source.
 - Route public website pages through the root layout switch (site chrome for `/`, `/$` and `/framework/controls/*`; workspace shell for everything else); the governance workspace overview lives at `/workspace`.
+- Expose practitioner workflows through the public Workspace menu and homepage gateway, with a content route for every built screen; the public website must not obscure the GOVERN studio.
 - Run the public tools (maturity assessment, risk triage, guardrail generator, Ask AEGIS) as browser ports of the Python reference engines, held to parity by fixtures exported from Python; there is no Python runtime in the deployed site.
 - Store public lead submissions only through the `submitLead` server function into the RLS-locked `site_leads` table; forms must say when nothing was recorded.
