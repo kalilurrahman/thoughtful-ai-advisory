@@ -1565,7 +1565,7 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .playbook-section li { margin: 4px 0; }
 .playbook-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; border-top: 1px solid var(--border); padding: 13px 0; margin-bottom: 10px; }
 .playbook-tools .kicker { width: 100%; }
-.playbook-template-cta { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 14px; margin: 0 0 18px; background: var(--accent); border-left: 3px solid var(--primary); }
+.playbook-template-cta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; padding: 14px; margin: 0 0 18px; background: var(--accent); border-left: 3px solid var(--primary); }
 .playbook-template-cta > span { display: grid; gap: 4px; }
 .template-layout { display: grid; gap: 24px; }
 .template-list { display: grid; gap: 8px; align-content: start; }
@@ -2592,6 +2592,7 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 }
 .playbook-template-cta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 14px;
