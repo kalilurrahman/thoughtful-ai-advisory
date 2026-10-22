@@ -1,4 +1,15 @@
-# AI Governance Advisory · AEGIS
+<!-- LOVABLE:BEGIN -->
+> [!IMPORTANT]
+> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
+> published git history — force pushing, or rebasing/amending/squashing commits
+> that are already pushed — as it rewrites history on Lovable's side and the
+> user will likely lose their project history.
+>
+> Commits you push to the connected branch sync back to Lovable and show up in
+> the editor, so keep the branch in a working state.
+<!-- LOVABLE:END -->
+
+# AI Governance Advisory · AEGIS Platform & Landing Site
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-thoughtful--ai--governance.lovable.app-0066CC?style=for-the-badge&logo=react)](https://thoughtful-ai-governance.lovable.app/)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-kalilurrahman%2Fai--governance--advisory-black?style=for-the-badge&logo=github)](https://github.com/kalilurrahman/ai-governance-advisory)
@@ -7,22 +18,55 @@
 [![TanStack Start](https://img.shields.io/badge/TanStack%20Start-1.168-FF4154?style=for-the-badge)](https://tanstack.com/router)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 
-**AEGIS** is an interactive, enterprise-grade AI governance playbook and assurance workspace designed for organizations establishing operational AI risk management, governance capabilities, safety controls, and regulatory compliance.
+**AEGIS** is an interactive, enterprise-grade AI governance platform, landing site, and assurance workspace designed for organizations establishing operational AI risk management, governance capabilities, safety controls, and regulatory compliance.
 
-Whether you are building across strategy, product development, risk management, cybersecurity, data privacy, procurement, or operations, AEGIS provides structured workflows aligned with international governance standards (including NIST AI RMF, EU AI Act, and ISO/IEC 42001).
+AEGIS integrates a full public marketing & content site, a 64-control governance library, in-browser interactive rule engines (Maturity Assessment, Risk Triage, Guardrail Generator, Ask AEGIS), and an operational governance workspace aligned with international standards (NIST AI RMF, EU AI Act, and ISO/IEC 42001).
 
 ---
 
 ## 🌟 Live Demo & Resources
 
-- **Hosted Web Application**: [https://thoughtful-ai-governance.lovable.app/](https://thoughtful-ai-governance.lovable.app/)
+- **Hosted Landing & Platform Web App**: [https://thoughtful-ai-governance.lovable.app/](https://thoughtful-ai-governance.lovable.app/)
 - **GitHub Repository**: [https://github.com/kalilurrahman/ai-governance-advisory](https://github.com/kalilurrahman/ai-governance-advisory)
+- **Interactive Video Walkthrough**: [Watch AEGIS Platform Video Demo](./docs/assets/landing-demo.webm)
 
 ---
 
-## 📸 Multi-Device Interface Showcase
+## 🎬 Video Walkthrough & Interactive Demo
 
-AEGIS features a responsive UI designed for desktop workstations, tablets, and mobile devices.
+Experience AEGIS in action—exploring the public landing site, framework, 64-control library, in-browser tools, and governance workspace:
+
+https://github.com/user-attachments/assets/landing-demo.webm
+
+*(Note: Click on `./docs/assets/landing-demo.webm` to watch or download the recording locally)*
+
+---
+
+## 📸 Public Landing Site & Interactive Tools Showcase
+
+AEGIS features a comprehensive public landing site with dedicated sections for framework pillars, compliance standards, industry solutions, an interactive 64-control library, and client-side AI risk engines.
+
+### Landing Page & Governance Framework
+
+| Landing Site Home Page | Governance Framework Overview |
+| :---: | :---: |
+| ![Landing Site Home](./docs/assets/landing-home.png) | ![Framework Overview](./docs/assets/landing-framework.png) |
+
+### 64-Control Library & Interactive Tools
+
+| 64-Control Governance Library | In-Browser AI Maturity Assessment Engine |
+| :---: | :---: |
+| ![64-Control Library](./docs/assets/landing-controls.png) | ![Maturity Assessment Tool](./docs/assets/landing-tools-maturity.png) |
+
+| Ask AEGIS AI Assistant & Knowledge Hub | Operational Governance Workspace Overview |
+| :---: | :---: |
+| ![Ask AEGIS Tool](./docs/assets/landing-tools-ask-aegis.png) | ![Governance Workspace](./docs/assets/landing-workspace.png) |
+
+---
+
+## 📱 Multi-Device Workspace Showcase
+
+AEGIS features a responsive UI designed for desktop workstations, tablets, and mobile devices across both public content pages and the operational workspace.
 
 ### Desktop Workstation View
 
@@ -42,76 +86,56 @@ AEGIS features a responsive UI designed for desktop workstations, tablets, and m
 
 ---
 
-## 🌐 Public AEGIS Website & Platform Artefacts
+## 🌐 Public AEGIS Website & Platform Architecture
 
-The repository now ships the full **AEGIS public website** alongside the governance workspace, plus the AEGIS launch-build platform it was generated from.
+The repository ships the full **AEGIS public landing website** alongside the governance workspace, plus the AEGIS launch-build platform from which it was generated.
 
-| Area | Route(s) | Source |
+| Area | Route(s) | Source File(s) / Engine |
 | :--- | :--- | :--- |
-| Marketing home | `/` | `platform/content/website_pages/index.md` |
-| Framework, pillars, maturity model, runbooks | `/framework/...` | `platform/content/website_pages/framework-*.md` |
-| 64-control library (generated) | `/framework/controls`, `/framework/controls/:id` | `platform/content/controls/controls.yaml` |
-| Solutions, compliance, industries, resources, legal, about | `/solutions/...`, `/compliance/...`, … | `platform/content/website_pages/*.md` |
-| Interactive tools (run in the browser) | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/guardrail-generator`, `/tools/ask-aegis` | TypeScript ports of the Python reference engines in `src/features/site/engines/` |
-| Lead forms (demo, baseline, blueprint, contact, newsletter, design partner, waitlist) | `/contact/...`, `/resources/blueprint` | `src/features/site/forms.tsx` → `submitLead` server function → `site_leads` table |
-| Governance workspace (previously at `/`) | `/workspace` + existing workspace routes | `src/features/governance/` |
+| **Marketing Home** | `/` | `platform/content/website_pages/index.md` |
+| **Framework & Pillars** | `/framework`, `/framework/pillars/*`, `/framework/runbooks` | `platform/content/website_pages/framework-*.md` |
+| **64-Control Library** | `/framework/controls`, `/framework/controls/:id` | `platform/content/controls/controls.yaml` |
+| **Compliance Guides** | `/compliance`, `/compliance/eu-ai-act`, `/compliance/nist-ai-rmf`, `/compliance/iso-42001`, `/compliance/gap-analysis` | `platform/content/website_pages/compliance*.md` |
+| **Industry Solutions** | `/solutions`, `/industries/*` | `platform/content/website_pages/solutions.md`, `industries-*.md` |
+| **Interactive Tools Engine** | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/guardrail-generator`, `/tools/ask-aegis` | Client-side TypeScript ports in `src/features/site/engines/` |
+| **Lead Submissions** | `/contact`, `/contact/request-demo`, `/resources/blueprint` | `src/features/site/forms.tsx` → `submitLead` server function → `site_leads` table |
+| **Governance Workspace** | `/workspace`, `/workspace/*` | `src/features/governance/` |
 
-- **Single source of truth.** Pages are Markdown with YAML front matter and are bundled at build time; editing `platform/content/...` updates the site. Shortcodes `{{cta:key}}`, `{{disclaimer}}` and `{{controls:ID,ID}}` are supported.
-- **Engine parity.** The browser tools are ports of the Python engines and are tested against fixtures exported from the Python reference implementation (`platform/scripts/export_*_parity_fixtures.py`).
-- **Leads.** `drizzle/migrations/0007_aegis_site_leads.sql` adds an RLS-locked `site_leads` table written only by the server function (service role). If the database is unavailable, forms say that nothing was recorded.
-- **Sitemap.** Regenerate with `node scripts/generate-sitemap.mjs https://your-domain` after changing pages or the production domain.
-- **Platform console (`/platform`).** Every Python-only capability now runs on the hosted site. It covers the AEGIS Agent with all roles, the runtime policy simulator, the pilot dress rehearsal, the ROI calculator, sample reports, content checks and the admin console. All are TypeScript ports tested against fixtures exported from Python. See `docs/aegis/PYTHON_PORT_MAP.md`.
-- **Database setup in Lovable Cloud.** Apply `drizzle/migrations/0007_aegis_site_leads.sql`, then `0008_aegis_platform_admin_analytics.sql`, which adds `site_admins` and `site_events`. To make yourself an admin, sign in, open `/platform/admin` and run the `insert into public.site_admins …` statement it shows.
-- **Optional CRM forwarding.** Set `AEGIS_CRM_WEBHOOK_URL` (https only), or `AEGIS_HUBSPOT_PORTAL_ID` and `AEGIS_HUBSPOT_FORM_GUID`. `AEGIS_RATE_LIMIT` caps analytics events per minute. E-mail sending (SMTP) is not available on the Workers runtime.
-- **Platform (`platform/`).** The Python launch build: agent, policy engine, runtime shield, assessment engine, API, admin CLI, content, docs, diagrams, tests and synthetic sample reports. It is reference material and is not part of the Lovable build. See `platform/README.md` and `docs/aegis/AEGIS_STATUS_REPORT.md`.
+### Key Architectural Highlights
+- **Single Source of Truth**: Content pages are authored in Markdown with YAML front matter (`platform/content/...`) and bundled at build time. Supports custom shortcodes like `{{cta:key}}`, `{{disclaimer}}`, and `{{controls:ID,ID}}`.
+- **Zero-Latency In-Browser Engines**: Interactive tools run entirely on the client side, parity-tested against Python reference engine exported fixtures (`platform/scripts/export_*_parity_fixtures.py`).
+- **Secure Lead Capture**: Lead forms submit via server function (`submitLead`) directly to the Supabase PostgreSQL `site_leads` table protected by strict Row Level Security (RLS).
+- **SEO & Sitemap Automation**: Dynamic sitemap generation script (`scripts/generate-sitemap.mjs`) builds valid sitemap XML for all landing and content pages.
 
 ---
 
 ## ⚙️ Key Features & Functional Modules
 
-### 📖 1. Interactive 12-Chapter AI Governance Playbook
-- **Comprehensive Lifecycle Coverage**: 12 structured chapters covering Mandate, System Inventory, Risk Classification, Data Governance, Algorithmic Transparency, Human Oversight, Security & Safety, Vendor/Supplier Due Diligence, Continuous Monitoring, Incident Response, Transparency Disclosures, and Continuous Improvement.
-- **Search & Filter**: Real-time full-text search and category filtering across all playbook content.
-- **Personalized Notes & Progress**: Track chapter completion and record private, browser-persisted notes that can be exported as structured Markdown files.
+### 🏛️ 1. Public Landing Site & 64-Control Library
+- **Structured Framework**: Covers Mandate, Governance Pillars, Maturity Models, and Operational Runbooks.
+- **Interactive Control Catalog**: Search, filter, and inspect 64 granular governance controls mapped across NIST AI RMF, EU AI Act, and ISO/IEC 42001.
 
-### 🛡️ 2. GOVERN Assessment & Maturity Index
-- **NIST AI RMF Alignment**: 12 evidence-aware controls mapped across `GOVERN`, `MAP`, `MEASURE`, and `MANAGE` functions.
-- **Maturity Scoring**: Real-time maturity classification (Initial, Developing, Established, Advanced) based on weightings and verified evidence attachments.
+### ⚡ 2. Client-Side Interactive AI Governance Engines
+- **Maturity Assessment Tool**: Step-by-step evaluation generating maturity index scores and improvement roadmaps.
+- **Risk Triage Engine**: Automated classification of AI model use cases into Low, Medium, High, or Prohibited risk categories.
+- **Guardrail Generator**: Custom safety, privacy, and operational policy rules based on deployment parameters.
+- **Ask AEGIS Assistant**: In-browser knowledge search engine referencing curated governance frameworks and regulatory guidelines.
 
-### 📋 3. AI System Inventory & Risk Classifier
-- **System Registration**: Register and manage internal and commercial AI models, services, and pipelines.
-- **Risk Tiering**: Automated classification into High, Medium, or Low risk tiers based on business context, data sensitivity, and autonomy.
-- **Filter & Export**: Search across ownership, data types, and suppliers; export full system inventories to spreadsheet-compatible CSV files.
+### 📖 3. Interactive 12-Chapter AI Governance Playbook
+- **Comprehensive Lifecycle Coverage**: 12 structured chapters covering Mandate, System Inventory, Risk Classification, Data Governance, Algorithmic Transparency, Human Oversight, Security & Safety, Vendor Due Diligence, Continuous Monitoring, Incident Response, Transparency Disclosures, and Continuous Improvement.
+- **Personalized Notes & Markdown Export**: Track chapter completion and export browser-persisted notes.
 
-### 🚨 4. Incident & Near-Miss Register
-- **Lifecycle Tracking**: Log AI incidents and near-misses, link specific inventory systems, assign response owners, and maintain containment notes.
-- **Audit History**: Timestamped status transition timeline (Triage -> Containment -> Remediation -> Closed).
-- **Multi-Tenant Security**: Persisted via organization-scoped Supabase Row Level Security (RLS) and atomic SQL save/restore functions.
+### 🛡️ 4. GOVERN Assessment & Maturity Index
+- **NIST AI RMF Alignment**: Evidence-aware controls mapped across `GOVERN`, `MAP`, `MEASURE`, and `MANAGE`.
+- **Maturity Scoring**: Real-time scoring (Initial, Developing, Established, Advanced) based on weightings and verified evidence attachments.
 
-### 🔁 AI Change Impact Reviews
-- **Pre-implementation review**: Register material changes to intended use, affected populations, model/provider, data, autonomy, controls, or deployment context.
-- **Impact screen**: Record safety, privacy, security, fairness, rights, and operational impacts; high or critical ratings are explicitly escalated for accountable review.
-- **Approval workflow**: Preserve reviewer, rationale, and status history; incomplete impact ratings block approval, and implementation cannot be recorded before approval.
-- **Evidence and ownership**: Include change records and workflow history in the governance evidence-pack previews and live lifecycle checklist.
+### 📋 5. AI System Inventory & Risk Classifier
+- **System Registration**: Manage internal and commercial AI models, services, and agentic pipelines.
+- **Risk Tiering & CSV Export**: Automated risk classification and spreadsheet-compatible export.
 
-### 📈 Operational AI Monitoring
-- **Owned monitoring plans**: Define a measurable signal, domain, unit, threshold, breach direction, accountable owner, cadence, and next due date for each system.
-- **Manual observations with history**: Record dated values, evidence references and review notes; breach and overdue states are derived from the stored plan and latest observation.
-- **Human follow-up**: Surface breach investigation prompts and link to incident intake; no incident classification or response is automated.
-- **Honest scope**: The workspace is a manual governance record, not a telemetry connector or live alerting system.
-
-### 🚦 5. Guardrails & Pre-Launch Release Gates
-- **Risk-Based Controls**: Automated blocker identification based on system risk tier before deployment.
-- **Gatekeeper Sign-off**: Verify prerequisite safety guardrails and regulatory compliance criteria prior to production releases.
-
-### 📑 6. Governance Starter Templates
-- **8 Adaptable Starter Documents**: Includes Governance Charters, AI Lifecycle Role Descriptions, Intake Forms, Impact Assessments, Supplier Due Diligence Questionnaires, Release Approval Templates, Monitoring Plans, and Incident Response Playbooks.
-- **In-Browser Editing & Markdown Export**: Customize templates directly in the workspace and download formatted Markdown files.
-
-### 🧮 7. Calculators, Knowledge Hub & Audit Packs
-- **Risk & ROI Calculators**: Specialized calculation models for risk tier determination and governance budget estimates.
-- **Knowledge Library**: Curated, verified external references, regulatory frameworks, and benchmark standards.
-- **Audit Pack Preview**: Generate consolidated governance packages and compliance summaries for internal or external auditors.
+### 🚨 6. Incident & Near-Miss Register
+- **Lifecycle Tracking**: Log AI incidents and near-misses, link specific inventory systems, assign response owners, and record containment timeline.
+- **Multi-Tenant Security**: Persisted via organization-scoped Supabase Row Level Security (RLS).
 
 ---
 
@@ -125,7 +149,7 @@ The repository now ships the full **AEGIS public website** alongside the governa
 | **Routing** | [TanStack Router](https://tanstack.com/router) | Type-safe file-based client and server routing |
 | **Build & Bundler** | [Vite 8](https://vitejs.dev/) / [Rolldown](https://rolldown.rs/) | Fast module bundling and HMR development server |
 | **Styling & Design** | [Tailwind CSS v4](https://tailwindcss.com/) | Utility-first CSS framework with custom design tokens |
-| **UI Components** | [Radix UI Primitives](https://www.radix-ui.com/) | Accessible, unstyled UI primitives (Dialog, Dropdown, Tabs, Accordion) |
+| **UI Components** | [Radix UI Primitives](https://www.radix-ui.com/) | Accessible UI primitives (Dialog, Dropdown, Tabs, Accordion) |
 | **Icons** | [Lucide React](https://lucide.dev/) & [Phosphor Icons](https://phosphoricons.com/) | Scalable icon sets for UI actions and navigation |
 | **Data Visualization** | [Recharts](https://recharts.org/) | Responsive SVG charting library for governance maturity scores |
 | **Form Management** | [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/) | Performant form state handling with runtime schema validation |
@@ -136,51 +160,39 @@ The repository now ships the full **AEGIS public website** alongside the governa
 
 ---
 
-## 🏗️ Architecture & Data Model
-
-- **State Management**: A unified, reducer-backed React Context state (`src/features/governance/governance-context.tsx`) acts as the single source of truth for workspace assessments, system inventory, incidents, and guardrails across all routes.
-- **Cloud Sync & Persistence**: Signed-in users sync state to Supabase PostgreSQL using atomic database functions (`0002_aegis_ai_incident_register.sql`). Cross-organization isolation is strictly enforced via Row Level Security (RLS) based on `organization_id`.
-- **Public Unauthenticated Mode**: Visitors can explore demo data and test tools entirely in-browser without authentication.
-- **Rule Engine & Constants**: Pure governance formulas, classifiers, and seed data live in `src/data/` and `src/features/governance/model.ts`, ensuring isolated, deterministic testability.
-
----
-
 ## 📁 Repository Structure
 
 ```
 ai-governance-advisory/
 ├── docs/
 │   ├── aegis/                      # AEGIS launch status report
-│   └── assets/                     # Screenshots and visual media
-├── platform/                       # AEGIS Python platform, governed content & docs (not built by Lovable)
+│   └── assets/                     # Screenshots, media assets & demo video
+│       ├── landing-home.png        # Landing site main showcase
+│       ├── landing-framework.png   # Framework page screenshot
+│       ├── landing-controls.png    # 64-control library screenshot
+│       ├── landing-tools-*.png     # Interactive tool screenshots
+│       └── landing-demo.webm       # Video demo recording
+├── platform/                       # AEGIS Python platform, governed content & docs
+│   └── content/
+│       ├── website_pages/          # Markdown content pages for public landing site
+│       └── controls/               # 64-control YAML library definition
 ├── drizzle/                        # Drizzle ORM migration files
 ├── public/                         # Static assets, manifests, and icons
+├── scripts/                        # Sitemap generation & build automation scripts
 ├── src/
 │   ├── components/                 # Reusable UI components (Radix + Tailwind)
-│   ├── data/                       # Playbook content, seed data, and rules
-│   │   ├── playbook.ts             # Source of truth for 12 playbook chapters
-│   │   └── templates.ts            # Governance document starters
+│   ├── data/                       # Playbook content, seed data, and governance rules
 │   ├── features/
-│   │   └── governance/             # Core business logic, hooks, and views
-│   │       ├── governance-context.tsx  # Workspace reducer & state context
-│   │       ├── model.ts            # Assessment scoring & classification formulas
-│   │       └── screens-playbook.tsx# Playbook reader component
+│   │   ├── site/                   # Landing site pages, Markdown parser & engines
+│   │   └── governance/             # Core workspace logic, hooks, and screens
 │   ├── routes/                     # TanStack file-based routes
-│   │   ├── index.tsx               # Public website home
-│   │   ├── $.tsx                   # All other public website pages
+│   │   ├── index.tsx               # Public landing site home
+│   │   ├── $.tsx                   # Public website page router
 │   │   ├── workspace.tsx           # Governance workspace dashboard
-│   │   ├── playbook.tsx            # Playbook view
-│   │   ├── inventory.tsx           # AI System Inventory view
-│   │   ├── incidents.tsx           # Incident Register view
-│   │   └── ...                     # Additional workspace modules
-│   ├── styles.css                  # Tailwind CSS configuration and theme rules
-│   ├── router.tsx                  # TanStack Router instance setup
+│   │   └── ...                     # Workspace module routes
 │   └── start.ts                    # TanStack Start server handler
-├── supabase/                       # Supabase SQL migrations and RLS policies
-├── package.json                    # Project dependencies and npm scripts
-├── tsconfig.json                   # TypeScript configuration
-├── vite.config.ts                  # Vite build configuration
-└── vitest.config.ts                # Vitest test runner setup
+├── package.json                    # Project dependencies and scripts
+└── vite.config.ts                  # Vite build configuration
 ```
 
 ---
@@ -201,42 +213,23 @@ ai-governance-advisory/
 
 2. **Install dependencies**:
    ```sh
-   npm install
+   bun install   # or npm install
    ```
 
 3. **Start the local development server**:
    ```sh
-   npm run dev
+   bun run dev   # or npm run dev
    ```
    The application will be accessible at `http://localhost:8080/`.
 
-4. **Run Unit Tests**:
+4. **Run Unit & Engine Tests**:
    ```sh
-   npm run test
+   bun x vitest run   # or npm run test
    ```
 
 5. **Build for Production**:
    ```sh
-   npm run build
-   ```
-
-6. **Preview Production Build**:
-   ```sh
-   npm run preview
-   ```
-
----
-
-## 🗄️ Database & Cloud Deployment
-
-When deploying or connecting your own Supabase instance:
-
-1. Ensure migrations in `supabase/` and `drizzle/` are applied to your database.
-2. In particular, migration `0002_aegis_ai_incident_register.sql` creates the organization-owned `ai_incidents` table and configures Row Level Security (RLS) policies along with the atomic workspace save function.
-3. Configure environment variables in `.env`:
-   ```env
-   VITE_SUPABASE_URL=https://your-supabase-project.supabase.co
-   VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+   bun run build
    ```
 
 ---
