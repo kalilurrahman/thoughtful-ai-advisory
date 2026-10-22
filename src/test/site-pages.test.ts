@@ -118,6 +118,10 @@ describe("safe Markdown rendering", () => {
     expect(html).toContain('class="table-wrap"');
   });
 
+  it("makes code blocks keyboard-focusable so they can be scrolled", () => {
+    expect(renderMarkdownHtml("```\nconst a = 1;\n```")).toContain('<pre tabindex="0">');
+  });
+
   it("keeps fragments and external URLs", () => {
     expect(safeHref("/framework/#pillars")).toBe("/framework#pillars");
     expect(safeHref("https://example.com/a/")).toBe("https://example.com/a/");

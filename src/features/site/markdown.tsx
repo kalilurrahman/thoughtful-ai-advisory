@@ -72,12 +72,16 @@ const md = new Marked({
 
 export function renderMarkdownHtml(text: string): string {
   const html = md.parse(text, { async: false });
-  return html
-    .replace(
-      /<table>/g,
-      '<div class="table-wrap" role="region" tabindex="0" aria-label="Scrollable table"><table>',
-    )
-    .replace(/<\/table>/g, "</table></div>");
+  return (
+    html
+      .replace(
+        /<table>/g,
+        '<div class="table-wrap" role="region" tabindex="0" aria-label="Scrollable table"><table>',
+      )
+      .replace(/<\/table>/g, "</table></div>")
+      // Code blocks scroll sideways; keyboard users need to be able to focus them.
+      .replace(/<pre>/g, '<pre tabindex="0">')
+  );
 }
 
 export function renderInlineMarkdown(text: string): string {

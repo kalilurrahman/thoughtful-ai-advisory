@@ -129,7 +129,7 @@ export function SamplesGallery() {
               <summary>
                 Preview: <code>{preview.path}</code>
               </summary>
-              <pre className="code-block">
+              <pre className="code-block" tabIndex={0}>
                 <code>{preview.content}</code>
               </pre>
             </details>
