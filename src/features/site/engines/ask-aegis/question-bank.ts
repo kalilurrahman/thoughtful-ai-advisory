@@ -740,3 +740,118 @@ export function recommendControls(
   });
   return { tier: risk.tier, controls: recs.slice(0, limit) };
 }
+
+// --------------------------------------------------------------------------- answers, severity, guardrails
+// (question_bank.py: answer_options, severity_rules, applicable_guardrails, parse_answer,
+// parse_evidence_refs — used by the role-aware agent in src/features/platform/agent.)
+
+export const ANSWER_IDS = [
+  "implemented",
+  "partial",
+  "not_implemented",
+  "unknown",
+  "not_applicable",
+] as const;
+export type AnswerId = (typeof ANSWER_IDS)[number];
+/** Order used when matching free-text answers: most specific first. */
+const MATCH_ORDER: AnswerId[] = [
+  "not_applicable",
+  "unknown",
+  "not_implemented",
+  "partial",
+  "implemented",
+];
+
+export interface AnswerOption {
+  id: AnswerId;
+  label: string;
+  credit: number | null;
+  severity_points: number;
+  synonyms?: string[];
+}
+
+export interface SeverityRules {
+  priority_points: Record<string, number>;
+  tier_points: Record<string, number>;
+  thresholds: Record<"Critical" | "High" | "Medium", number>;
+  evidence_gap_max_severity: string;
+  critical_override_min_tier: string;
+}
+
+const rawBank = (useCaseTemplate ?? {}) as {
+  answer_options?: AnswerOption[];
+  severity_rules?: SeverityRules;
+  runtime_guardrails?: GuardrailDef[];
+};
+
+const answerOptionMap: Record<string, AnswerOption> = Object.fromEntries(
+  (rawBank.answer_options ?? []).map((o) => [o.id, o]),
+);
+
+export function answerOptions(): Record<string, AnswerOption> {
+  return answerOptionMap;
+}
+
+export function severityRules(): SeverityRules {
+  return (
+    rawBank.severity_rules ?? {
+      priority_points: {},
+      tier_points: {},
+      thresholds: { Critical: 8, High: 6, Medium: 4 },
+      evidence_gap_max_severity: "Medium",
+      critical_override_min_tier: "Medium",
+    }
+  );
+}
+
+export interface RuntimeGuardrail {
+  id: string;
+  title: string;
+  controls: string[];
+}
+
+/** Runtime guardrail definitions whose applicability conditions hold for the profile. */
+export function applicableGuardrails(
+  profile: Profile,
+  tier: string | null = null,
+): RuntimeGuardrail[] {
+  return (rawBank.runtime_guardrails ?? [])
+    .filter((g) => applies(g.applies_when, profile, tier, []))
+    .map((g) => ({ ...g, controls: g.controls ?? [] }));
+}
+
+function answerNorm(s: string): string {
+  return s.toLowerCase().replace(/[^a-z0-9/'?]+/g, " ");
+}
+
+/** Map free text ("partially", "not sure", "yes — evidence EV-12") to an answer id. */
+export function parseAnswer(text: string): AnswerId | null {
+  let t = " " + answerNorm(text || "") + " ";
+  t = t.replaceAll("_", " ");
+  // "yes, but no evidence yet" is an implementation claim without evidence, not a "no".
+  t = t.replace(
+    / (no|without|missing) (written |formal |documented )?(evidence|documentation|docs|proof) /g,
+    " ",
+  );
+  for (const aid of MATCH_ORDER) {
+    if (t.includes(` ${aid.replaceAll("_", " ")} `)) return aid;
+    for (const syn of answerOptionMap[aid]?.synonyms ?? []) {
+      const s = " " + answerNorm(String(syn)) + " ";
+      if (t.includes(s)) return aid;
+    }
+  }
+  return null;
+}
+
+const EVIDENCE_REF_RE =
+  /\b((?:EV|EVD|DOC|EVIDENCE|TKT|JIRA|CONF|SP)[-_][A-Za-z0-9][A-Za-z0-9._-]{0,60})\b/gi;
+
+/** Evidence references such as EV-104, DOC-DPIA-07 (case-insensitively de-duplicated). */
+export function parseEvidenceRefs(text: string): string[] {
+  const refs: string[] = [];
+  for (const m of (text || "").matchAll(EVIDENCE_REF_RE)) {
+    const ref = (m[1] ?? "").replace(/[.,;]+$/, "");
+    if (!refs.some((r) => r.toUpperCase() === ref.toUpperCase())) refs.push(ref);
+  }
+  return refs;
+}

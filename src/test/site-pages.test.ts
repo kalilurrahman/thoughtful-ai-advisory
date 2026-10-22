@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { PLATFORM_TOOLS } from "@/features/platform/catalog";
 import { controls, getControl, siteConfig } from "@/features/site/content";
 import { renderMarkdownHtml, safeHref, splitShortcodes } from "@/features/site/markdown";
 import {
@@ -17,6 +18,8 @@ const knownPaths = new Set<string>([
   "/framework/controls",
   ...controls.map((c) => `/framework/controls/${c.id.toLowerCase()}`),
   "/workspace",
+  "/platform",
+  ...PLATFORM_TOOLS.map((t) => `/platform/${t.slug}`),
 ]);
 
 function internalLinks(markdown: string): string[] {
@@ -69,7 +72,10 @@ describe("public website pages", () => {
   });
 
   it("builds navigation whose links all resolve", () => {
-    expect(siteNav.map((s) => s.id)).toEqual(siteConfig.nav_sections.map((s) => s.id));
+    expect(siteNav.map((s) => s.id)).toEqual([
+      ...siteConfig.nav_sections.map((s) => s.id),
+      "platform",
+    ]);
     for (const item of siteNav.flatMap((s) => s.items))
       expect(knownPaths.has(item.url), item.url).toBe(true);
     expect(

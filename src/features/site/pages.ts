@@ -1,4 +1,5 @@
 import { parse } from "yaml";
+import { PLATFORM_TOOLS } from "../platform/catalog";
 import { siteConfig } from "./content";
 
 // Website pages are the Markdown + YAML front-matter files in
@@ -109,7 +110,7 @@ export interface NavSection {
 }
 
 /** Header navigation, built like the platform builder's build_nav(). */
-export const siteNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
+const publicNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
   const landing = byPath.get(`/${sec.id}`);
   const items: NavItem[] = sitePages
     .filter((p) => p.section === sec.id && !p.navExclude && !p.noindex && p !== landing)
@@ -132,6 +133,15 @@ export const siteNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
     entries.push({ label: items.length ? "Overview" : landing.navLabel, url: landing.path });
   entries.push(...items);
   return entries.length ? [{ id: sec.id, label: sec.label, items: entries }] : [];
+});
+
+// The Platform console is a React section rather than Markdown pages.
+siteNav.push({
+  id: "platform",
+  label: "Platform",
+  items: [{ label: "Overview", url: "/platform" }].concat(
+    PLATFORM_TOOLS.map((t) => ({ label: t.title, url: `/platform/${t.slug}` })),
+  ),
 });
 
 export const footerColumns = siteNav.map((s) => ({ label: s.label, items: s.items.slice(0, 7) }));
@@ -168,6 +178,7 @@ export function breadcrumbsFor(path: string, currentLabel: string): Crumb[] {
 export const SITE_SECTIONS = new Set([
   ...sitePages.map((p) => p.path.split("/")[1] ?? "").filter(Boolean),
   "framework",
+  "platform",
 ]);
 
 export function isSitePath(pathname: string): boolean {

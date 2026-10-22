@@ -143,6 +143,8 @@ const SITE_ROUTE_IDS = new Set<string>([
   "/$",
   "/framework/controls/",
   "/framework/controls/$controlId",
+  "/platform/",
+  "/platform/$tool",
 ]);
 
 function RootComponent() {

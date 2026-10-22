@@ -6,6 +6,10 @@ import { isFreeMailDomain } from "./content";
 // partner, waitlist and the maturity self-assessment gate). Mirrors the /api/contact
 // contract of the Python reference API: business-email gate, explicit consent and a
 // honeypot. Rows are written with the service role into an RLS-locked table.
+// After a successful insert, assessment leads are qualified (re-scored server-side and tagged
+// with the template's lead_rules, e.g. shield_candidate) and the lead is pushed to the CRM only
+// when AEGIS_CRM_* / AEGIS_HUBSPOT_* env vars are set (src/features/platform/integrations.server.ts).
+// CRM failures never fail the lead.
 
 export const LEAD_FORMS = [
   "baseline",
@@ -44,6 +48,10 @@ export const leadInput = z.object({
   website: z.string().max(200).optional().default(""),
   // Summary data attached by a tool (e.g. assessment score); never contact details.
   payload: z.record(z.string(), z.unknown()).optional(),
+  // Assessment lead qualification inputs (never raw answers): the organization profile and
+  // the ids of triggered critical flags, evaluated server-side against the lead_rules.
+  profile: z.record(z.string().max(40), z.union([z.string().max(40), z.boolean()])).optional(),
+  critical_flags: z.array(z.string().max(60)).max(20).optional(),
 });
 export type LeadInput = z.input<typeof leadInput>;
 
@@ -54,17 +62,43 @@ export const submitLead = createServerFn({ method: "POST" })
   .handler(async ({ data }): Promise<LeadResult> => {
     // Honeypot filled: report success without storing anything.
     if (data.website) return { ok: true, stored: false };
-    if (BUSINESS_EMAIL_FORMS.has(data.form) && isFreeMailDomain(data.email)) {
+    const integ = await import("@/features/platform/integrations.server");
+    if (
+      BUSINESS_EMAIL_FORMS.has(data.form) &&
+      (isFreeMailDomain(data.email) || !integ.isBusinessEmail(data.email))
+    ) {
       return { ok: false, error: "Please use your business email address." };
+    }
+    // Assessment leads: lead tags (e.g. shield_candidate) from the template's lead_rules.
+    // Raw answers are re-scored when supplied but never stored.
+    let payload: Record<string, unknown> = data.payload ?? {};
+    if (data.form === "assessment") {
+      const { answers: _answers, ...summary } = payload;
+      const q =
+        integ.qualifyAssessmentLead(payload) ??
+        integ.qualifyLeadSummary({
+          overall_score: summary["overall_score"],
+          domain_scores: summary["domain_scores"],
+          profile: data.profile,
+          critical_flags: data.critical_flags,
+        });
+      payload = { ...summary, ...(q ?? {}), source: "maturity-assessment" };
     }
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     // site_leads is newer than the generated Supabase types.
     const client = supabaseAdmin as unknown as {
       from: (table: string) => {
-        insert: (row: object) => Promise<{ error: { message: string } | null }>;
+        insert: (row: object) => {
+          select: (cols: string) => {
+            single: () => Promise<{
+              data: { id: string; created_at: string } | null;
+              error: { message: string } | null;
+            }>;
+          };
+        };
       };
     };
-    const { error } = await client.from("site_leads").insert({
+    const row = {
       form: data.form,
       email: data.email,
       name: data.name,
@@ -74,15 +108,24 @@ export const submitLead = createServerFn({ method: "POST" })
       ai_systems: data.ai_systems,
       tool: data.tool,
       message: data.message,
-      payload: data.payload ?? {},
+      payload,
       consent: true,
-    });
+    };
+    const { data: inserted, error } = await client
+      .from("site_leads")
+      .insert(row)
+      .select("id, created_at")
+      .single();
     if (error) {
       console.error("site lead insert failed", error.message);
       return {
         ok: false,
         error: "We could not record your request. Please try again or email us.",
       };
+    }
+    if (inserted) {
+      // Only when CRM env vars are set; never throws.
+      await integ.syncLeadToCrm({ ...row, id: inserted.id, created_at: inserted.created_at });
     }
     return { ok: true, stored: true };
   });

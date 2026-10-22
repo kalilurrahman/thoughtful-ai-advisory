@@ -92,6 +92,20 @@ main:focus { outline: none; }
 .nav-sub a:hover { background: var(--c-surface); color: var(--c-primary); text-decoration: underline; }
 .nav-sub a[aria-current="page"] { font-weight: 700; color: var(--c-primary); box-shadow: inset 3px 0 0 var(--c-primary); }
 .header-cta { margin-left: auto; padding: 0.5rem 0.8rem; font-size: 0.95rem; white-space: nowrap; }
+.workspace-gateway { background: var(--c-surface); border-bottom: 1px solid var(--c-border); padding: 1.75rem 0; }
+.workspace-gateway-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
+.workspace-gateway-heading h2 { margin: 0; font-size: 1.5rem; }
+.workspace-gateway-heading .eyebrow { margin-bottom: 0.4rem; }
+.workspace-gateway svg { width: 1rem; height: 1rem; flex-shrink: 0; }
+.workspace-pillar-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.25rem; }
+.workspace-pillar-link { display: flex; justify-content: flex-start; gap: 0.75rem; height: auto; min-height: 78px; border-top: 1px solid var(--c-border); border-radius: 0; padding: 0.75rem 0; color: var(--c-text); text-decoration: none; white-space: normal; }
+.workspace-pillar-link:hover { background: var(--c-surface-2); color: var(--c-primary); }
+.workspace-pillar-letter { color: var(--c-primary); font-size: 1.75rem; width: 1.75rem; flex-shrink: 0; }
+.workspace-pillar-name { flex: 1; min-width: 0; font-size: 0.95rem; }
+.workspace-pillar-name small { display: block; margin-top: 0.25rem; color: var(--c-muted); font-size: 0.75rem; }
+.workspace-shortcuts { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; margin-top: 1rem; }
+.workspace-shortcuts a { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 44px; font-size: 0.95rem; }
+@media (max-width: 36em) { .workspace-pillar-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 30em) {
   .cta-optional { display: none; }
   .header-inner { gap: 0.4rem; padding-left: 1rem; padding-right: 1rem; }
@@ -115,6 +129,7 @@ main:focus { outline: none; }
   .nav-sub { position: absolute; top: calc(100% + 0.25rem); left: 0; min-width: 16rem; background: #ffffff; border: 1px solid var(--c-border); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(12, 35, 64, 0.14); padding: 0.4rem; margin: 0; }
   .header-cta { order: 3; margin-left: 0.75rem; padding: 0.55rem 0.9rem; }
   .site-nav { order: 2; }
+  .nav-sub-workspace { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 34rem; max-height: min(70vh, 42rem); overflow-y: auto; }
 }
 
 /* Breadcrumbs */
@@ -365,3 +380,11 @@ progress::-moz-progress-bar { background: var(--c-primary); border-radius: 999px
   .preview-note { font-size: 0.85rem; color: var(--c-muted); }
   .download-list { list-style: none; padding: 0; display: grid; gap: 0.5rem; }
 }
+.aegis-site {
+  ul.code-actions { list-style: none; padding: 0; }
+  details > summary { cursor: pointer; font-weight: 600; min-height: 44px; }
+  pre.code-block { max-height: 30rem; overflow: auto; }
+  [role="tablist"] { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  fieldset + fieldset { margin-top: 1.25rem; }
+}
+.aegis-site .agent-console .chat-log { max-width: none; }
