@@ -65,7 +65,18 @@ export type AnswerSource =
       policy_id?: string;
       policy_version?: string;
       key: string;
-    };
+    }
+  | { type: "evidence"; id: string; status: string };
+
+/** A pending approval raised during a turn (role-aware agent only; a viewer never raises one). */
+export interface PendingApproval {
+  approval_id: string;
+  type?: string | null;
+  status?: string;
+  resource?: string | null;
+  message?: string;
+  [key: string]: unknown;
+}
 
 export interface RequiredApproval {
   action: string;
@@ -83,6 +94,7 @@ export class AnswerBuilder {
   missingEvidence: string[] = [];
   nextActions: string[] = [];
   requiredApprovals: RequiredApproval[] = [];
+  pendingApprovals: PendingApproval[] = [];
   cta: Cta | null = null;
   clarifyingQuestion: string | null = null;
   confidence: number | null = null;
@@ -156,6 +168,14 @@ export class AnswerBuilder {
     this.sources.push(doc);
   }
 
+  addEvidence(ref: string, status: string): void {
+    if (!this.has("evidence", ref)) this.sources.push({ type: "evidence", id: ref, status });
+  }
+
+  approval(rec: PendingApproval): void {
+    this.pendingApprovals.push(rec);
+  }
+
   claim(text: string, status: EvidenceStatus, sources: string[] = []): void {
     if (!VALID.has(status)) throw new Error(`Invalid evidence status: ${status}`);
     this.claims.push({ text, evidence_status: status, sources });
@@ -209,8 +229,10 @@ export class AnswerBuilder {
           L.push(`- Question ${s.id} (${s.template})`);
         } else if (s.type === "policy") {
           L.push(`- Policy ${s.id} v${s.policy_version || "?"} (${s.path ?? "None"})`);
-        } else {
+        } else if (s.type === "document") {
           L.push(`- ${s.path ?? "None"}` + (s.section ? ` § ${s.section}` : ""));
+        } else if (s.type === "evidence") {
+          L.push(`- Evidence ${s.id} (${s.status})`);
         }
       }
     }
@@ -220,12 +242,15 @@ export class AnswerBuilder {
     if (this.nextActions.length) {
       L.push("", "**Next actions**", ...this.nextActions.map((a, i) => `${i + 1}. ${a}`));
     }
-    if (this.requiredApprovals.length) {
-      L.push(
-        "",
-        "**Required approvals**",
-        ...this.requiredApprovals.map((a) => `- ${a.action}: ${a.why}`),
-      );
+    if (this.requiredApprovals.length || this.pendingApprovals.length) {
+      L.push("", "**Required approvals**");
+      for (const a of this.pendingApprovals) {
+        L.push(
+          `- ${a.approval_id} — ${a.type ?? "None"} — status: ${a.status || "pending"} ` +
+            "(resolved by a different user with an approver role)",
+        );
+      }
+      L.push(...this.requiredApprovals.map((a) => `- ${a.action}: ${a.why}`));
     }
     if (this.cta) L.push("", `**Next step:** [${this.cta.label}](${this.cta.url})`);
     if (this.disclaimer) L.push("", `_${STANDARD_DISCLAIMER}_`);

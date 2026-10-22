@@ -88,6 +88,7 @@ export function sha256Hex(text: string): string {
 
 function escapeString(s: string): string {
   // json.dumps(ensure_ascii=False): escape quotes, backslashes and control characters only.
+  // eslint-disable-next-line no-control-regex -- json.dumps escapes control characters
   return `"${s.replace(/[\\"\u0000-\u001f]/g, (ch) => {
     switch (ch) {
       case '"':

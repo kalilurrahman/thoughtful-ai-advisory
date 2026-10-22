@@ -30,8 +30,9 @@ export function plainInline(text: string): string {
     .replace(/[‘’]/g, "'")
     .replace(/[“”]/g, '"')
     .replace(/…/g, "...")
-    .replace(/ /g, " ")
-    .replace(/[←-⇿]/g, "->")
+    .replace(/\u00a0/g, " ")
+    .replace(/[\u2190-\u21ff]/g, "->")
+    // eslint-disable-next-line no-control-regex -- keep only Latin-1, which the built-in PDF fonts can draw
     .replace(/[^\x00-\xff]/g, "?");
 }
 

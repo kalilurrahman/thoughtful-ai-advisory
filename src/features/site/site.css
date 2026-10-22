@@ -372,3 +372,4 @@ progress::-moz-progress-bar { background: var(--c-primary); border-radius: 999px
   [role="tablist"] { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
   fieldset + fieldset { margin-top: 1.25rem; }
 }
+.aegis-site .agent-console .chat-log { max-width: none; }
