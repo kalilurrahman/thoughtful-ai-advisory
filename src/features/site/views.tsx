@@ -512,7 +512,6 @@ export function siteHead(opts: {
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: opts.title },
     { name: "twitter:description", content: opts.description },
-    { name: "theme-color", content: "#0c2340" },
   ];
   if (opts.noindex) meta.push({ name: "robots", content: "noindex, follow" });
   const scripts =
