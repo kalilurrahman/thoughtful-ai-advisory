@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import {
   House,
@@ -21,6 +21,7 @@ import {
   Gauge,
 } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
+import { useDarkTheme } from "@/lib/theme";
 import { useGovernance } from "./store";
 const tabs = [
   { to: "/workspace", name: "Home", icon: House },
@@ -69,11 +70,9 @@ const studioTabs = [
   { to: "/plans", name: "Plans", icon: Tag },
 ] as const;
 export function GovernanceShell({ children }: { children: ReactNode }) {
-  const { state, workspaceName, dispatch, userId } = useGovernance();
+  const { workspaceName, userId } = useGovernance();
   const { pathname } = useLocation();
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", state.dark);
-  }, [state.dark]);
+  const [dark, toggleDark] = useDarkTheme();
   if (pathname === "/onboarding")
     return <main className="aegis-app onboarding-app">{children}</main>;
   const active = tabs.find((t) => t.to === pathname)?.to ?? "/more";
@@ -148,10 +147,10 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
         <Button
           variant="ghost"
           size="icon"
-          aria-label={state.dark ? "Use light theme" : "Use dark theme"}
-          onClick={() => dispatch({ type: "dark" })}
+          aria-label={dark ? "Use light theme" : "Use dark theme"}
+          onClick={toggleDark}
         >
-          {state.dark ? <Sun weight="duotone" /> : <Moon weight="duotone" />}
+          {dark ? <Sun weight="duotone" /> : <Moon weight="duotone" />}
         </Button>
         <Button asChild variant="ghost" size="icon" aria-label="Export reports">
           <Link to="/export">

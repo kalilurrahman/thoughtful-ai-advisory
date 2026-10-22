@@ -29,6 +29,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { CALCS, SOURCES, PACKS } from "@/data/governance";
+import { useDarkTheme } from "@/lib/theme";
 import { useGovernance } from "./store";
 import { at, calculate } from "./model";
 import { Chip, Dot, Kicker } from "./screens-core";
@@ -461,7 +462,8 @@ export function PlansScreen() {
   );
 }
 export function MoreScreen() {
-  const { state, dispatch, userId } = useGovernance();
+  const { userId } = useGovernance();
+  const [dark, toggleDark] = useDarkTheme();
   const items = [
     { to: "/", name: "AEGIS website", desc: "Framework, solutions and public tools", icon: ArrowSquareOut },
     { to: "/assess", name: "GOVERN assessment", desc: "Six pillars mapped to NIST AI RMF", icon: CheckCircle },
@@ -550,8 +552,8 @@ export function MoreScreen() {
         </span>
         <Switch
           aria-label="Dark mode"
-          checked={state.dark}
-          onCheckedChange={() => dispatch({ type: "dark" })}
+          checked={dark}
+          onCheckedChange={toggleDark}
         />
       </label>
       <Button variant="ghost" asChild className="signout">
