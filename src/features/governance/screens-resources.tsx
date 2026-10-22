@@ -465,8 +465,18 @@ export function MoreScreen() {
   const { userId } = useGovernance();
   const [dark, toggleDark] = useDarkTheme();
   const items = [
-    { to: "/", name: "AEGIS website", desc: "Framework, solutions and public tools", icon: ArrowSquareOut },
-    { to: "/assess", name: "GOVERN assessment", desc: "Six pillars mapped to NIST AI RMF", icon: CheckCircle },
+    {
+      to: "/",
+      name: "AEGIS website",
+      desc: "Framework, solutions and public tools",
+      icon: ArrowSquareOut,
+    },
+    {
+      to: "/assess",
+      name: "GOVERN assessment",
+      desc: "Six pillars mapped to NIST AI RMF",
+      icon: CheckCircle,
+    },
     { to: "/gates", name: "Release gates", desc: "Readiness by risk tier", icon: TrafficSignal },
     {
       to: "/guardrails",
@@ -494,7 +504,12 @@ export function MoreScreen() {
       desc: "Triage, assign response ownership and track closure",
       icon: TrafficSignal,
     },
-    { to: "/actions", name: "Corrective actions", desc: "Owned remediation, evidence and effectiveness verification", icon: CheckCircle },
+    {
+      to: "/actions",
+      name: "Corrective actions",
+      desc: "Owned remediation, evidence and effectiveness verification",
+      icon: CheckCircle,
+    },
     {
       to: "/decisions",
       name: "Governance decisions",
@@ -550,11 +565,7 @@ export function MoreScreen() {
           <Moon weight="duotone" />
           Dark mode
         </span>
-        <Switch
-          aria-label="Dark mode"
-          checked={dark}
-          onCheckedChange={toggleDark}
-        />
+        <Switch aria-label="Dark mode" checked={dark} onCheckedChange={toggleDark} />
       </label>
       <Button variant="ghost" asChild className="signout">
         <Link

@@ -1,12 +1,14 @@
 import type { CorrectiveAction } from "./actions-schema";
 
-export type ActionTransition = {
-  action: CorrectiveAction;
-  error?: undefined;
-} | {
-  action?: undefined;
-  error: string;
-};
+export type ActionTransition =
+  | {
+      action: CorrectiveAction;
+      error?: undefined;
+    }
+  | {
+      action?: undefined;
+      error: string;
+    };
 
 export function transitionCorrectiveAction(
   action: CorrectiveAction,
@@ -34,7 +36,9 @@ export function transitionCorrectiveAction(
       ...action,
       status,
       updatedAt: changedAt,
-      ...(verified ? { verifiedBy: actor.trim(), verifiedAt: changedAt, verificationNote: note.trim() } : {}),
+      ...(verified
+        ? { verifiedBy: actor.trim(), verifiedAt: changedAt, verificationNote: note.trim() }
+        : {}),
       history: [...action.history, { status, changedAt, actor: actor.trim(), note: note.trim() }],
     },
   };

@@ -4,12 +4,17 @@ import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parse } from "yaml";
 
-const origin = (process.argv[2] ?? "https://thoughtful-ai-governance.lovable.app").replace(/\/+$/, "");
+const origin = (process.argv[2] ?? "https://thoughtful-ai-governance.lovable.app").replace(
+  /\/+$/,
+  "",
+);
 const root = new URL("..", import.meta.url).pathname;
 const pagesDir = join(root, "platform/content/website_pages");
 
 const entries = [];
-for (const file of readdirSync(pagesDir).filter((f) => f.endsWith(".md")).sort()) {
+for (const file of readdirSync(pagesDir)
+  .filter((f) => f.endsWith(".md"))
+  .sort()) {
   const text = readFileSync(join(pagesDir, file), "utf8");
   const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text);
   if (!fm) continue;

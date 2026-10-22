@@ -33,12 +33,17 @@ export const correctiveActionSchema = z.object({
   verificationNote: z.string().max(2000).default(""),
   verifiedBy: z.string().max(120).default(""),
   verifiedAt: z.string().datetime({ offset: true }).nullable().default(null),
-  history: z.array(z.object({
-    status: z.enum(correctiveActionStatuses),
-    changedAt: z.string().datetime({ offset: true }),
-    actor: z.string().max(120),
-    note: z.string().max(1000),
-  })).max(500).default([]),
+  history: z
+    .array(
+      z.object({
+        status: z.enum(correctiveActionStatuses),
+        changedAt: z.string().datetime({ offset: true }),
+        actor: z.string().max(120),
+        note: z.string().max(1000),
+      }),
+    )
+    .max(500)
+    .default([]),
 });
 
 export const correctiveActionListSchema = z.array(correctiveActionSchema).max(2000).default([]);
