@@ -73,10 +73,12 @@ describe("public website pages", () => {
 
   it("builds navigation whose links all resolve", () => {
     expect(siteNav.map((s) => s.id)).toEqual([
+      "workspace",
       ...siteConfig.nav_sections.map((s) => s.id),
       "platform",
     ]);
-    for (const item of siteNav.flatMap((s) => s.items))
+    // Workspace links are app routes, checked against the router in app-routing.test.tsx.
+    for (const item of siteNav.filter((s) => s.id !== "workspace").flatMap((s) => s.items))
       expect(knownPaths.has(item.url), item.url).toBe(true);
     expect(
       siteNav.find((s) => s.id === "framework")?.items.some((i) => i.url === "/framework/controls"),
