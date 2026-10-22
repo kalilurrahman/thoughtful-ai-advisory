@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import { AdminConsole } from "./admin-console";
 import { ContentChecks } from "./content-checks";
+import { PolicySimulator } from "./policy-simulator";
 import { RoiCalculator } from "./roi-calculator";
 import { SamplesGallery } from "./samples-gallery";
 
@@ -16,7 +17,7 @@ function Pending() {
 
 export const PLATFORM_COMPONENTS: Record<string, ComponentType> = {
   agent: Pending,
-  "policy-simulator": Pending,
+  "policy-simulator": PolicySimulator,
   "pilot-rehearsal": Pending,
   "roi-calculator": RoiCalculator,
   samples: SamplesGallery,

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { EvidenceBadge } from "../ui";
 import { advise, type AdviseResult, type RiskDimension } from "../engines/shield";
+import { renderAdviceMarkdown } from "../../platform/policy-engine/shield-render";
+import { downloadBlob } from "../../platform/reports/exporters";
 import {
   CitedControls,
   FormStatus,
@@ -246,6 +248,32 @@ export function GuardrailGeneratorTool() {
     : "";
   const fileBase = result?.policy.policy_id || "aegis-draft-policy";
 
+  const reportTitle = `AEGIS Runtime Shield Advisor — ${String(result?.app["app_name"] ?? "")}`;
+
+  const onDownloadMarkdown = () => {
+    if (!result) return;
+    downloadText(renderAdviceMarkdown(result), `${fileBase}_advisor.md`, "text/markdown");
+    setCopyStatus({ text: "Markdown report downloaded (draft, for review).", kind: "success" });
+  };
+
+  const onDownloadPdf = () => {
+    if (!result) return;
+    setCopyStatus({ text: "Preparing PDF…", kind: "" });
+    const md = renderAdviceMarkdown(result);
+    // jsPDF is loaded on demand so it stays out of the initial bundle.
+    import("../../platform/reports/pdf")
+      .then(({ markdownToPdfBlob }) => {
+        downloadBlob(markdownToPdfBlob(md, { title: reportTitle }), `${fileBase}_advisor.pdf`);
+        setCopyStatus({ text: "PDF report downloaded (draft, for review).", kind: "success" });
+      })
+      .catch(() =>
+        setCopyStatus({
+          text: "The PDF could not be generated in this browser; download the Markdown report instead.",
+          kind: "error",
+        }),
+      );
+  };
+
   const onCopy = () => {
     const clip = typeof navigator !== "undefined" ? navigator.clipboard : undefined;
     const fail = () =>
@@ -326,6 +354,22 @@ export function GuardrailGeneratorTool() {
               }
             >
               Download JSON
+            </button>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              id="gg-download-md"
+              onClick={onDownloadMarkdown}
+            >
+              Download Markdown report
+            </button>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              id="gg-download-pdf"
+              onClick={onDownloadPdf}
+            >
+              Download PDF
             </button>
             <FormStatus
               id="gg-copy-status"
