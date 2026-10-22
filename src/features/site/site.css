@@ -68,7 +68,7 @@ main:focus { outline: none; }
 .page-header .container::after, .hero .container::after { content: ""; display: block; height: 6px; border-top: 2px solid var(--c-rule); border-bottom: 1px solid var(--c-rule); }
 
 /* Buttons — min target 44x44 (exceeds WCAG 2.5.8) */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 44px; padding: 0.6rem 1.15rem; border-radius: var(--radius); border: 1px solid transparent; font: inherit; font-weight: 600; line-height: 1.2; text-decoration: none; cursor: pointer; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0.6rem 1.15rem; border-radius: var(--radius); border: 1px solid transparent; font: inherit; font-weight: 600; line-height: 1.2; text-decoration: none; cursor: pointer; }
 .btn-primary { background: var(--c-primary); color: var(--c-on-primary); }
 .btn-primary:hover { background: var(--c-primary-hover); color: var(--c-on-primary); text-decoration: none; }
 .btn-secondary { background: var(--c-card); color: var(--c-primary); border-color: var(--c-primary); }
