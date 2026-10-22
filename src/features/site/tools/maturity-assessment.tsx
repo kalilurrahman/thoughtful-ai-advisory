@@ -5,8 +5,10 @@
  * templates/partials/tool_assessment.html.
  *
  * Flow: profile -> 8 domain steps -> instant preliminary result -> business-email gate ->
- * submitLead (score summary only) -> detailed report rendered in the browser with Markdown
- * download and print-to-PDF. If the lead cannot be stored the report is still shown, with a
+ * submitLead (score summary, profile and flag ids only — never answers) -> detailed report
+ * rendered in the browser with Markdown and PDF downloads (jsPDF, loaded on demand) and
+ * print-to-PDF. Funnel events (assessment_start ... assessment_report_download) are sent with
+ * the cookieless analytics helper. If the lead cannot be stored the report is still shown, with a
  * notice that nothing was stored or emailed. Progress (profile, answers, step — never contact
  * details) is kept in sessionStorage only, and only touched from effects/handlers so the
  * component renders on the server without browser globals.
@@ -14,6 +16,9 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { controlUrl, isFreeMailDomain, siteConfig } from "../content";
 import { submitLead } from "../leads.functions";
+import { track } from "@/features/platform/analytics";
+import { downloadBlob } from "@/features/platform/reports/exporters";
+import { pdfFilename } from "@/features/platform/reports/maturity";
 import { EvidenceBadge, SiteLink } from "../ui";
 import {
   buildAssessmentBundle,
@@ -613,6 +618,20 @@ function downloadMarkdown(md: string, company: string) {
   }, 1000);
 }
 
+/** Render the browser Markdown report as a PDF (jsPDF is loaded only when asked for). */
+async function downloadPdf(md: string, company: string): Promise<boolean> {
+  try {
+    const { markdownToPdfBlob } = await import("@/features/platform/reports/pdf");
+    const blob = markdownToPdfBlob(md, {
+      title: `AI Governance Maturity Report — ${company || "Your organization"}`,
+    });
+    downloadBlob(blob, pdfFilename(company));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function stepErrors(n: number, profile: Profile, answers: Answers): FieldError[] {
   const errs: FieldError[] = [];
   if (n === 0) {
@@ -656,7 +675,7 @@ function gateValidation(g: GateFields): FieldError[] {
 }
 
 const FALLBACK_TAIL =
-  "Your detailed report has been generated in your browser below. Download it as Markdown or use “Print or save as PDF”.";
+  "Your detailed report has been generated in your browser below. Download it as Markdown or PDF, or use “Print or save as PDF”.";
 
 function fallbackMessage(reason: "unavailable" | "error"): string {
   return (
@@ -685,6 +704,7 @@ export function MaturityAssessmentTool() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [report, setReport] = useState<ReportState | null>(null);
+  const [pdfBusy, setPdfBusy] = useState(false);
   const [focusRequest, setFocusRequest] = useState<{ id: string; seq: number } | null>(null);
   const seq = useRef(0);
 
@@ -755,12 +775,24 @@ export function MaturityAssessmentTool() {
       requestFocus("assessment-errors");
       return;
     }
-    if (step === 0 && !started) setStarted(true);
+    if (step === 0 && !started) {
+      setStarted(true);
+      track("assessment_start", {});
+    }
     if (step < TOTAL - 1) {
+      track("assessment_step", { step: step + 1 });
       goToStep(step + 1);
     } else {
       setPhase("preliminary");
       requestFocus("prelim-title");
+      try {
+        track("assessment_preliminary", {
+          level: preliminaryResult(answers, profile, bundle).maturity_level,
+        });
+      } catch {
+        /* incomplete answers are reported by the preliminary view */
+      }
+      track("assessment_gate_view", {});
     }
   };
 
@@ -795,6 +827,12 @@ export function MaturityAssessmentTool() {
       return;
     }
     const summary = preliminaryResult(answers, profile, bundle);
+    let flagIds: string[] = [];
+    try {
+      flagIds = scoreAssessment(answers, profile, bundle).critical_flags.map((f) => f.id);
+    } catch {
+      flagIds = [];
+    }
     setSubmitting(true);
     setGateStatus({ message: "Preparing your report…", kind: "" });
     let outcome: "stored" | "unavailable" | "error" = "unavailable";
@@ -813,6 +851,9 @@ export function MaturityAssessmentTool() {
           tool: "maturity-assessment",
           consent: true,
           website: "",
+          // Lead qualification inputs (profile + triggered flag ids); answers stay here.
+          profile,
+          critical_flags: flagIds,
           payload: {
             template_id: summary.template_id,
             template_version: summary.template_version,
@@ -839,6 +880,7 @@ export function MaturityAssessmentTool() {
     setSubmitting(false);
     setGateStatus({ message: "", kind: "" });
     if (outcome === "stored") {
+      track("assessment_lead_submitted", { level: summary.maturity_level });
       showReport(
         company,
         true,
@@ -1155,16 +1197,44 @@ export function MaturityAssessmentTool() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() =>
+              onClick={() => {
                 downloadMarkdown(
                   toMarkdown(report.result, { bundle, company: report.company }),
                   report.company,
-                )
-              }
+                );
+                track("assessment_report_download", { format: "md", mode: "local" });
+              }}
             >
               Download Markdown
             </button>{" "}
-            <button type="button" className="btn btn-secondary" onClick={() => window.print()}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              disabled={pdfBusy}
+              onClick={() => {
+                setPdfBusy(true);
+                void downloadPdf(
+                  toMarkdown(report.result, { bundle, company: report.company }),
+                  report.company,
+                ).then((ok) => {
+                  setPdfBusy(false);
+                  if (ok) track("assessment_report_download", { format: "pdf", mode: "local" });
+                });
+              }}
+            >
+              {pdfBusy ? "Preparing PDF…" : "Download PDF"}
+            </button>{" "}
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => {
+                track("assessment_report_download", {
+                  format: "print",
+                  mode: report.stored ? "server" : "local",
+                });
+                window.print();
+              }}
+            >
               Print or save as PDF
             </button>
           </div>

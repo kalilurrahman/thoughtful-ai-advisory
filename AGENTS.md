@@ -26,3 +26,5 @@
 - Expose practitioner workflows through the public Workspace menu and homepage gateway, with a content route for every built screen; the public website must not obscure the GOVERN studio.
 - Run the public tools (maturity assessment, risk triage, guardrail generator, Ask AEGIS) as browser ports of the Python reference engines, held to parity by fixtures exported from Python; there is no Python runtime in the deployed site.
 - Store public lead submissions only through the `submitLead` server function into the RLS-locked `site_leads` table; forms must say when nothing was recorded.
+- Run every Python-only platform capability from the `/platform` console as TypeScript ports, which are held to parity by fixtures from `platform/scripts/export_*_parity_fixtures.py`. Keep demo data in the browser; only leads, analytics events and admin membership live in the database.
+- Gate the admin console behind sign-in and membership in `site_admins`. Admin server functions verify membership before reading with the service role.

@@ -60,6 +60,9 @@ The repository now ships the full **AEGIS public website** alongside the governa
 - **Engine parity.** The browser tools are ports of the Python engines and are tested against fixtures exported from the Python reference implementation (`platform/scripts/export_*_parity_fixtures.py`).
 - **Leads.** `drizzle/migrations/0007_aegis_site_leads.sql` adds an RLS-locked `site_leads` table written only by the server function (service role). If the database is unavailable, forms say that nothing was recorded.
 - **Sitemap.** Regenerate with `node scripts/generate-sitemap.mjs https://your-domain` after changing pages or the production domain.
+- **Platform console (`/platform`).** Every Python-only capability now runs on the hosted site. It covers the AEGIS Agent with all roles, the runtime policy simulator, the pilot dress rehearsal, the ROI calculator, sample reports, content checks and the admin console. All are TypeScript ports tested against fixtures exported from Python. See `docs/aegis/PYTHON_PORT_MAP.md`.
+- **Database setup in Lovable Cloud.** Apply `drizzle/migrations/0007_aegis_site_leads.sql`, then `0008_aegis_platform_admin_analytics.sql`, which adds `site_admins` and `site_events`. To make yourself an admin, sign in, open `/platform/admin` and run the `insert into public.site_admins …` statement it shows.
+- **Optional CRM forwarding.** Set `AEGIS_CRM_WEBHOOK_URL` (https only), or `AEGIS_HUBSPOT_PORTAL_ID` and `AEGIS_HUBSPOT_FORM_GUID`. `AEGIS_RATE_LIMIT` caps analytics events per minute. E-mail sending (SMTP) is not available on the Workers runtime.
 - **Platform (`platform/`).** The Python launch build: agent, policy engine, runtime shield, assessment engine, API, admin CLI, content, docs, diagrams, tests and synthetic sample reports. It is reference material and is not part of the Lovable build. See `platform/README.md` and `docs/aegis/AEGIS_STATUS_REPORT.md`.
 
 ---

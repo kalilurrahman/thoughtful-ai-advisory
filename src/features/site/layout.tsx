@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
+import { usePageViewTracking } from "../platform/analytics";
 import { STANDARD_DISCLAIMER, siteConfig } from "./content";
 import { LeadForm } from "./forms";
 import { footerColumns, siteNav, type Crumb } from "./pages";
@@ -216,6 +217,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const mainRef = useRef<HTMLElement>(null);
   const first = useRef(true);
+  usePageViewTracking();
   // Move focus to <main> after client-side navigation so screen readers announce the new page.
   useEffect(() => {
     if (first.current) {

@@ -380,3 +380,11 @@ progress::-moz-progress-bar { background: var(--c-primary); border-radius: 999px
   .preview-note { font-size: 0.85rem; color: var(--c-muted); }
   .download-list { list-style: none; padding: 0; display: grid; gap: 0.5rem; }
 }
+.aegis-site {
+  ul.code-actions { list-style: none; padding: 0; }
+  details > summary { cursor: pointer; font-weight: 600; min-height: 44px; }
+  pre.code-block { max-height: 30rem; overflow: auto; }
+  [role="tablist"] { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  fieldset + fieldset { margin-top: 1.25rem; }
+}
+.aegis-site .agent-console .chat-log { max-width: none; }

@@ -57,6 +57,13 @@
       "when": 1792600000000,
       "tag": "0007_aegis_site_leads",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1792700000000,
+      "tag": "0008_aegis_platform_admin_analytics",
+      "breakpoints": true
     }
   ]
 }
