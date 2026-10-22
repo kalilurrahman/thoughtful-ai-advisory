@@ -4,6 +4,7 @@ import { STANDARD_DISCLAIMER, siteConfig } from "./content";
 import { LeadForm } from "./forms";
 import { footerColumns, siteNav, type Crumb } from "./pages";
 import { SiteLink } from "./ui";
+import { Button } from "@/components/ui/button";
 
 // Public website chrome — header with disclosure navigation, breadcrumbs and footer —
 // ported from platform/app/website/templates/partials/{header,breadcrumbs,footer}.html.
@@ -73,9 +74,6 @@ function SiteHeader() {
           <BrandMark />
           <span className="brand-name">AEGIS</span>
         </Link>
-        <Link className="header-workspace cta-optional" to="/workspace">
-          Workspace
-        </Link>
         <SiteLink className="btn btn-primary header-cta" href={siteConfig.header_cta.url}>
           {ctaEnd !== undefined ? (
             <>
@@ -86,7 +84,8 @@ function SiteHeader() {
             siteConfig.header_cta.label
           )}
         </SiteLink>
-        <button
+        <Button
+          variant="outline"
           className="nav-toggle"
           type="button"
           aria-expanded={navOpen}
@@ -95,7 +94,7 @@ function SiteHeader() {
         >
           <span className="nav-toggle-bars" aria-hidden="true" />
           <span className="nav-toggle-label">Menu</span>
-        </button>
+        </Button>
         <nav id="site-nav" className={`site-nav${navOpen ? " is-open" : ""}`} aria-label="Primary">
           <ul className="nav-list">
             {siteNav.map((sec) => (
@@ -109,7 +108,7 @@ function SiteHeader() {
                   }}
                 >
                   <summary className="nav-summary">{sec.label}</summary>
-                  <ul className="nav-sub">
+                  <ul className={"nav-sub" + (sec.id === "workspace" ? " nav-sub-workspace" : "")}>
                     {sec.items.map((item) => (
                       <li key={item.url}>
                         <Link

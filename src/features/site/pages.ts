@@ -109,7 +109,7 @@ export interface NavSection {
 }
 
 /** Header navigation, built like the platform builder's build_nav(). */
-export const siteNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
+const publicNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
   const landing = byPath.get(`/${sec.id}`);
   const items: NavItem[] = sitePages
     .filter((p) => p.section === sec.id && !p.navExclude && !p.noindex && p !== landing)
@@ -134,6 +134,34 @@ export const siteNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
   return entries.length ? [{ id: sec.id, label: sec.label, items: entries }] : [];
 });
 
+export const workspaceNav: NavSection = {
+  id: "workspace",
+  label: "Workspace",
+  items: [
+    { label: "Governance overview", url: "/workspace" },
+    { label: "GOVERN assessment", url: "/assess" },
+    { label: "AI inventory", url: "/inventory" },
+    { label: "Roadmap", url: "/roadmap" },
+    { label: "Guardrails", url: "/guardrails" },
+    { label: "Release readiness", url: "/gates" },
+    { label: "Governance decisions", url: "/decisions" },
+    { label: "Change reviews", url: "/changes" },
+    { label: "Monitoring", url: "/monitoring" },
+    { label: "Incidents & near misses", url: "/incidents" },
+    { label: "Corrective actions", url: "/actions" },
+    { label: "Lifecycle checklist", url: "/checklist" },
+    { label: "AI Governance Playbook", url: "/playbook" },
+    { label: "Templates", url: "/templates" },
+    { label: "Knowledge hub", url: "/knowledge" },
+    { label: "Calculators", url: "/calculators" },
+    { label: "Start here", url: "/start" },
+    { label: "Reports & audit pack", url: "/export" },
+    { label: "Plans", url: "/plans" },
+    { label: "Workspace & account", url: "/more" },
+  ],
+};
+
+export const siteNav: NavSection[] = [workspaceNav, ...publicNav];
 export const footerColumns = siteNav.map((s) => ({ label: s.label, items: s.items.slice(0, 7) }));
 
 export interface Crumb {
