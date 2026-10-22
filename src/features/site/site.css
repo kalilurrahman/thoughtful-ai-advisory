@@ -147,8 +147,8 @@ main:focus { outline: none; }
   .nav-sub-workspace { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 34rem; max-height: min(70vh, 42rem); overflow-y: auto; }
   .nav-item:nth-last-child(-n+3) .nav-sub { left: auto; right: 0; }
 }
-/* Below 84em the full CTA label does not fit beside the desktop menu. */
-@media (min-width: 72em) and (max-width: 84em) { .header-cta .cta-optional { display: none; } }
+/* The full CTA label does not fit beside the desktop menu within the 72rem column. */
+@media (min-width: 72em) { .header-cta .cta-optional { display: none; } }
 
 /* Breadcrumbs */
 .breadcrumbs { background: transparent; border-bottom: 1px solid var(--c-border); font-size: 0.85rem; }
