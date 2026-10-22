@@ -78,15 +78,16 @@
   --secondary: oklch(0.947 0.006 240);
   --secondary-foreground: #201e1d;
   --muted: #eae7e7;
-  --muted-foreground: #75706f;
+  --muted-foreground: #6b6665;
   --border: #d7d3d3;
-  --input: #d7d3d3;
+  --input: #8e8988;
   --row-rule: rgba(32, 30, 29, 0.08);
   --scrim: rgba(32, 30, 29, 0.5);
   --workspace-shadow: 0 4px 18px oklch(0.25 0.015 240 / 0.04);
   --popover-shadow: 0 12px 32px oklch(0.25 0.015 240 / 0.14);
-  /* Brand and states */
-  --primary: #0088b0;
+  /* Brand and states. Text colours meet WCAG AA (4.5:1) on every surface above; --input and
+     --ring meet the 3:1 non-text minimum. --ring stays the brighter cyan. */
+  --primary: #007396;
   --primary-foreground: #f3f2f2;
   --accent: #e9f8ff;
   --accent-foreground: #004961;
@@ -95,7 +96,7 @@
   --destructive-foreground: #fff1f4;
   --success-ink: #006786;
   --danger-ink: #aa0b56;
-  --warning-ink: #9a6b00;
+  --warning-ink: #8a6000;
   --success-surface: #e9f8ff;
   --danger-surface: #fff1f4;
   --warning-surface: oklch(0.96 0.036 87);
@@ -128,7 +129,7 @@
   --muted: #444141;
   --muted-foreground: #bab6b6;
   --border: #444141;
-  --input: #605d5d;
+  --input: #77726f;
   --row-rule: rgba(243, 242, 242, 0.12);
   --workspace-shadow: none;
   --popover-shadow: 0 12px 32px oklch(0 0 0 / 0.5);
