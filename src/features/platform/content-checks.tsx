@@ -68,7 +68,7 @@ function Report({ r, title }: { r: CheckReport; title: string }) {
       )}
       <details>
         <summary>Script output</summary>
-        <pre className="code-block">
+        <pre className="code-block" tabIndex={0}>
           <code>{r.output}</code>
         </pre>
       </details>

@@ -30,7 +30,8 @@ export function Dot({ tone }: { tone: string }) {
   return <span className={"status-dot " + tone} />;
 }
 export function HomeScreen() {
-  const { state, dispatch, scores, index, band, gate, blocking, coverage, workspaceName } = useGovernance();
+  const { state, dispatch, scores, index, band, gate, blocking, coverage, workspaceName } =
+    useGovernance();
   const nav = useNavigate();
   const gaps = CONTROLS.map((c) => ({
     c,
@@ -48,58 +49,89 @@ export function HomeScreen() {
         <span>Assessment tier · {state.tier}</span>
       </div>
       <div className="overview-metrics">
-        <div className="overview-metric success"><StackIcon /><strong>{state.systems.length}</strong><span>AI systems registered</span></div>
-        <div className="overview-metric danger"><WarningCircle weight="duotone" /><strong>{state.systems.filter((s) => s.tier === "High-risk" || s.tier === "Prohibited").length}</strong><span>Elevated-risk systems</span></div>
-        <div className="overview-metric success"><ShieldCheck weight="duotone" /><strong>{coverage.percent}<small>%</small></strong><span>Guardrail coverage</span></div>
-        <div className="overview-metric warning"><CheckCircle weight="duotone" /><strong>{state.roadmap.filter((i) => i.done).length}<small>/{state.roadmap.length}</small></strong><span>Remediation complete</span></div>
-      </div>
-      <div className="overview-assessment">
-      <div className="overview-index">
-      <div className="index-summary">
-        <strong className="index-number">{index}</strong>
-        <div>
-          <Kicker>AEGIS Index</Kicker>
-          <h2>{band}</h2>
-          <p className="muted">Current workspace maturity</p>
+        <div className="overview-metric success">
+          <StackIcon />
+          <strong>{state.systems.length}</strong>
+          <span>AI systems registered</span>
+        </div>
+        <div className="overview-metric danger">
+          <WarningCircle weight="duotone" />
+          <strong>
+            {state.systems.filter((s) => s.tier === "High-risk" || s.tier === "Prohibited").length}
+          </strong>
+          <span>Elevated-risk systems</span>
+        </div>
+        <div className="overview-metric success">
+          <ShieldCheck weight="duotone" />
+          <strong>
+            {coverage.percent}
+            <small>%</small>
+          </strong>
+          <span>Guardrail coverage</span>
+        </div>
+        <div className="overview-metric warning">
+          <CheckCircle weight="duotone" />
+          <strong>
+            {state.roadmap.filter((i) => i.done).length}
+            <small>/{state.roadmap.length}</small>
+          </strong>
+          <span>Remediation complete</span>
         </div>
       </div>
-      <p className="muted index-caption">{Object.values(state.answers).filter((a) => a.e === 3).length} of {CONTROLS.length} controls have verified evidence</p>
-      <Button asChild className="overview-cta"><Link to="/assess">Continue assessment <ArrowRight /></Link></Button>
-      </div>
-      <div className="overview-pillars">
-      <Kicker>GOVERN pillars · mapped to NIST AI RMF</Kicker>
-      <div className="pillar-list">
-        {PILLARS.map((p, i) => (
-          <Button
-            variant="ghost"
-            className="pillar-row"
-            key={p.letter}
-            onClick={() => {
-              dispatch({ type: "question", qi: CONTROLS.findIndex((c) => c.p === i) });
-              nav({ to: "/assess" });
-            }}
-          >
-            <strong className="pillar-letter">{p.letter}</strong>
-            <div className="pillar-body">
-              <div className="pillar-label">
-                <span>{p.name}</span>
-                <span className="nist">{p.nist}</span>
-              </div>
-              <div className="pillar-track">
-                <span
-                  className={"pillar-fill " + scoreTone(scores[i] ?? 0)}
-                  style={{ width: (scores[i] ?? 0) + "%" }}
-                />
-                <i style={{ left: [80, 75, 75, 85, 80, 80][i] + "%" }} />
-              </div>
+      <div className="overview-assessment">
+        <div className="overview-index">
+          <div className="index-summary">
+            <strong className="index-number">{index}</strong>
+            <div>
+              <Kicker>AEGIS Index</Kicker>
+              <h2>{band}</h2>
+              <p className="muted">Current workspace maturity</p>
             </div>
-            <strong className={"pillar-score " + scoreTone(scores[i] ?? 0)}>
-              {scores[i] ?? 0}
-            </strong>
+          </div>
+          <p className="muted index-caption">
+            {Object.values(state.answers).filter((a) => a.e === 3).length} of {CONTROLS.length}{" "}
+            controls have verified evidence
+          </p>
+          <Button asChild className="overview-cta">
+            <Link to="/assess">
+              Continue assessment <ArrowRight />
+            </Link>
           </Button>
-        ))}
-      </div>
-      </div>
+        </div>
+        <div className="overview-pillars">
+          <Kicker>GOVERN pillars · mapped to NIST AI RMF</Kicker>
+          <div className="pillar-list">
+            {PILLARS.map((p, i) => (
+              <Button
+                variant="ghost"
+                className="pillar-row"
+                key={p.letter}
+                onClick={() => {
+                  dispatch({ type: "question", qi: CONTROLS.findIndex((c) => c.p === i) });
+                  nav({ to: "/assess" });
+                }}
+              >
+                <strong className="pillar-letter">{p.letter}</strong>
+                <div className="pillar-body">
+                  <div className="pillar-label">
+                    <span>{p.name}</span>
+                    <span className="nist">{p.nist}</span>
+                  </div>
+                  <div className="pillar-track">
+                    <span
+                      className={"pillar-fill " + scoreTone(scores[i] ?? 0)}
+                      style={{ width: (scores[i] ?? 0) + "%" }}
+                    />
+                    <i style={{ left: [80, 75, 75, 85, 80, 80][i] + "%" }} />
+                  </div>
+                </div>
+                <strong className={"pillar-score " + scoreTone(scores[i] ?? 0)}>
+                  {scores[i] ?? 0}
+                </strong>
+              </Button>
+            ))}
+          </div>
+        </div>
       </div>
       <Button variant="secondary" className="gate-card" asChild>
         <Link to="/gates">
@@ -116,8 +148,46 @@ export function HomeScreen() {
         </Link>
       </Button>
       <section className="portfolio-section">
-        <div className="section-heading"><h2>AI portfolio</h2><Button asChild variant="link"><Link to="/inventory">View inventory <ArrowRight /></Link></Button></div>
-        <div className="portfolio-grid">{state.systems.slice(0, 4).map((s, i) => <Button variant="secondary" asChild className="portfolio-item" key={s.name + i}><Link to="/inventory"><div className="split"><ShieldCheck weight="duotone" /><Chip tone={s.tier === "High-risk" || s.tier === "Prohibited" ? "danger" : "success"}>{s.tier}</Chip></div><h3>{s.name}</h3><p className="muted">{s.owner} · {s.kind}</p><span><Dot tone={s.status === "Approved" ? "success" : s.status === "Not approved" ? "danger" : "warning"} />{s.status}</span></Link></Button>)}</div>
+        <div className="section-heading">
+          <h2>AI portfolio</h2>
+          <Button asChild variant="link">
+            <Link to="/inventory">
+              View inventory <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+        <div className="portfolio-grid">
+          {state.systems.slice(0, 4).map((s, i) => (
+            <Button variant="secondary" asChild className="portfolio-item" key={s.name + i}>
+              <Link to="/inventory">
+                <div className="split">
+                  <ShieldCheck weight="duotone" />
+                  <Chip
+                    tone={s.tier === "High-risk" || s.tier === "Prohibited" ? "danger" : "success"}
+                  >
+                    {s.tier}
+                  </Chip>
+                </div>
+                <h3>{s.name}</h3>
+                <p className="muted">
+                  {s.owner} · {s.kind}
+                </p>
+                <span>
+                  <Dot
+                    tone={
+                      s.status === "Approved"
+                        ? "success"
+                        : s.status === "Not approved"
+                          ? "danger"
+                          : "warning"
+                    }
+                  />
+                  {s.status}
+                </span>
+              </Link>
+            </Button>
+          ))}
+        </div>
       </section>
       <section>
         <div className="section-heading">
@@ -397,8 +467,8 @@ export function GatesScreen() {
         <h2>{gate}</h2>
       </div>
       <p className="muted">
-        {state.systems.length} registered systems · Workspace assessment · {state.tier}-risk tier · Pillar floor {gateFloor(state.tier)} on
-        E, R, N
+        {state.systems.length} registered systems · Workspace assessment · {state.tier}-risk tier ·
+        Pillar floor {gateFloor(state.tier)} on E, R, N
       </p>
       <section>
         {PILLARS.slice(3).map((p, i) => (

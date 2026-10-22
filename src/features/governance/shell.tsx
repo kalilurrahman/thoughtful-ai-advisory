@@ -100,7 +100,9 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
                   ? "Overview"
                   : t.name === "More"
                     ? "Workspace & account"
-                    : t.name === "GOVERN" ? "GOVERN assessment" : t.name}
+                    : t.name === "GOVERN"
+                      ? "GOVERN assessment"
+                      : t.name}
               </Link>
             </Button>
           ))}
@@ -140,7 +142,9 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
           AEGIS
         </Link>
         <Button asChild variant="ghost" size="icon" aria-label="AEGIS public website">
-          <Link to="/"><House weight="duotone" /></Link>
+          <Link to="/">
+            <House weight="duotone" />
+          </Link>
         </Button>
         <span className="client-name">{workspaceName}</span>
         <span className="workspace-badge">{userId ? "Personal workspace" : "Demo workspace"}</span>

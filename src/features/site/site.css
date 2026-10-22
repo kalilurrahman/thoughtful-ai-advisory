@@ -15,13 +15,12 @@
   --c-text: var(--foreground);
   --c-heading: var(--foreground);
   --c-muted: var(--muted-foreground);
-  /* Bright brand cyan for rules, bars, numerals and selection. */
+  /* Brand teal: buttons, links, rules, bars and selection, as in the workspace. */
   --c-accent: var(--primary);
-  /* Filled actions and links use the deeper ink so text stays at AA contrast. */
-  --c-primary: var(--success-ink);
+  --c-primary: var(--primary);
   --c-primary-hover: var(--accent-foreground);
   --c-on-primary: var(--primary-foreground);
-  --c-link: var(--success-ink);
+  --c-link: var(--primary);
   --c-focus: var(--ring);
   --c-success: var(--success-ink);
   --c-success-bg: var(--success-surface);
@@ -30,7 +29,7 @@
   --c-warning: var(--warning-ink);
   --c-warning-bg: var(--warning-surface);
   --c-info-bg: var(--accent);
-  --c-input-border: var(--muted-foreground);
+  --c-input-border: var(--input);
   --maxw: 72rem;
   --font: "Source Serif 4", Georgia, serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
@@ -69,7 +68,7 @@ main:focus { outline: none; }
 .page-header .container::after, .hero .container::after { content: ""; display: block; height: 6px; border-top: 2px solid var(--c-rule); border-bottom: 1px solid var(--c-rule); }
 
 /* Buttons — min target 44x44 (exceeds WCAG 2.5.8) */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 44px; padding: 0.6rem 1.15rem; border-radius: var(--radius); border: 1px solid transparent; font: inherit; font-weight: 600; line-height: 1.2; text-decoration: none; cursor: pointer; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0.6rem 1.15rem; border-radius: var(--radius); border: 1px solid transparent; font: inherit; font-weight: 600; line-height: 1.2; text-decoration: none; cursor: pointer; }
 .btn-primary { background: var(--c-primary); color: var(--c-on-primary); }
 .btn-primary:hover { background: var(--c-primary-hover); color: var(--c-on-primary); text-decoration: none; }
 .btn-secondary { background: var(--c-card); color: var(--c-primary); border-color: var(--c-primary); }
@@ -191,8 +190,7 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 .end-ctas .cta-block { margin: 0; }
 @media (min-width: 56em) { .end-ctas { grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); } }
 
-/* Disclaimer & notices. Warning text stays in the body colour: the warning ink is for
-   borders and labels only, as it is below 4.5:1 on its surface. */
+/* Disclaimer & notices. Warning notices keep body-colour text; the warning ink marks the edge. */
 .disclaimer { background: var(--c-warning-bg); border: 1px solid var(--c-border); border-left: 3px solid var(--c-warning); color: var(--c-text); border-radius: var(--radius); padding: 0.9rem 1.1rem; margin: 1.5rem 0; max-width: 50rem; font-size: 0.95rem; }
 .disclaimer p { margin: 0; }
 .notice { border-radius: var(--radius); padding: 1rem 1.15rem; margin: 1rem 0; border: 1px solid var(--c-border); border-left: 3px solid var(--c-accent); background: var(--c-info-bg); color: var(--c-text); }
@@ -402,3 +400,4 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
 }
 .aegis-site .agent-console .chat-log { max-width: none; }
 .aegis-site .brand-mark-check { stroke: var(--c-bg); }
+.aegis-site .tool-loading { color: var(--c-muted); }

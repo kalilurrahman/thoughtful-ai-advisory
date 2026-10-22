@@ -1,12 +1,9 @@
-import type { ComponentType } from "react";
+import { lazy, type ComponentType } from "react";
 import { siteConfig } from "../content";
 import { SiteLink } from "../ui";
-import { AskAegisTool } from "./ask-aegis";
-import { GuardrailGeneratorTool } from "./guardrail-generator";
-import { MaturityAssessmentTool } from "./maturity-assessment";
-import { RiskTriageTool } from "./risk-triage";
 
 // Interactive tools mounted by the tool page template, keyed by front-matter `tool`.
+// Each tool (and its engine) loads only on its own page, so other pages stay light.
 
 function ToolPending() {
   const demo = siteConfig.ctas["demo"];
@@ -29,8 +26,12 @@ function ToolPending() {
 }
 
 export const TOOL_COMPONENTS: Record<string, ComponentType> = {
-  "maturity-assessment": MaturityAssessmentTool,
-  "guardrail-generator": GuardrailGeneratorTool,
-  "ask-aegis": AskAegisTool,
-  "risk-triage": RiskTriageTool,
+  "maturity-assessment": lazy(() =>
+    import("./maturity-assessment").then((m) => ({ default: m.MaturityAssessmentTool })),
+  ),
+  "guardrail-generator": lazy(() =>
+    import("./guardrail-generator").then((m) => ({ default: m.GuardrailGeneratorTool })),
+  ),
+  "ask-aegis": lazy(() => import("./ask-aegis").then((m) => ({ default: m.AskAegisTool }))),
+  "risk-triage": lazy(() => import("./risk-triage").then((m) => ({ default: m.RiskTriageTool }))),
 };

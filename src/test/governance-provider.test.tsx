@@ -6,10 +6,12 @@ vi.mock("@/features/governance/workspace.functions", () => ({
   loadWorkspace: vi.fn().mockResolvedValue(null),
 }));
 vi.mock("@/integrations/supabase/client", () => ({
-  supabase: { auth: {
-    getUser: vi.fn().mockResolvedValue({ data: { user: null } }),
-    onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
-  } },
+  supabase: {
+    auth: {
+      getUser: vi.fn().mockResolvedValue({ data: { user: null } }),
+      onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
+    },
+  },
 }));
 
 import { GovernanceProvider, useGovernance } from "@/features/governance/store";
@@ -22,10 +24,18 @@ function Consumer() {
 afterEach(cleanup);
 describe("Governance provider", () => {
   it("provides shared state and preserves it when consumers remount", () => {
-    const view = render(<GovernanceProvider><Consumer key="first" /></GovernanceProvider>);
+    const view = render(
+      <GovernanceProvider>
+        <Consumer key="first" />
+      </GovernanceProvider>,
+    );
     fireEvent.click(screen.getByRole("button", { name: "0" }));
     expect(screen.getByRole("button", { name: "5" })).toBeInTheDocument();
-    view.rerender(<GovernanceProvider><Consumer key="updated" /></GovernanceProvider>);
+    view.rerender(
+      <GovernanceProvider>
+        <Consumer key="updated" />
+      </GovernanceProvider>,
+    );
     expect(screen.getByRole("button", { name: "5" })).toBeInTheDocument();
   });
 });

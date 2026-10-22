@@ -74,7 +74,8 @@ export const loadWorkspace = createServerFn({ method: "POST" })
       .select("id,name")
       .eq("owner_id", context.userId);
     if (data?.organizationId) query = query.eq("id", data.organizationId);
-    const { data: org, error } = await query.order("created_at", { ascending: true })
+    const { data: org, error } = await query
+      .order("created_at", { ascending: true })
       .limit(1)
       .maybeSingle();
     if (error) throw new Error("Unable to load workspace.");
@@ -114,7 +115,17 @@ export const loadWorkspace = createServerFn({ method: "POST" })
         .eq("organization_id", org.id)
         .maybeSingle(),
     ]);
-    if (a.error || g.error || s.error || r.error || i.error || d.error || c.error || m.error || ca.error)
+    if (
+      a.error ||
+      g.error ||
+      s.error ||
+      r.error ||
+      i.error ||
+      d.error ||
+      c.error ||
+      m.error ||
+      ca.error
+    )
       throw new Error("Workspace data unavailable.");
     const state = workspaceState.parse({
       workspaceMode: "personal",
@@ -135,7 +146,11 @@ export const loadWorkspace = createServerFn({ method: "POST" })
 export const listWorkspaces = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { data, error } = await context.supabase.from("organizations").select("id,name,created_at").eq("owner_id", context.userId).order("created_at", { ascending: false });
+    const { data, error } = await context.supabase
+      .from("organizations")
+      .select("id,name,created_at")
+      .eq("owner_id", context.userId)
+      .order("created_at", { ascending: false });
     if (error) throw new Error("Unable to list workspaces.");
     return data;
   });

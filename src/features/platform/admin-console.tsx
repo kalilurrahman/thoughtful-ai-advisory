@@ -306,7 +306,7 @@ function FunnelTab() {
       </p>
       <details>
         <summary>CLI output</summary>
-        <pre className="code-block">
+        <pre className="code-block" tabIndex={0}>
           <code>{funnelText(f)}</code>
         </pre>
       </details>
@@ -391,7 +391,7 @@ function AuditTab() {
               ? "All audit chains verified."
               : `${rows.filter((r) => !r.ok).length} file(s) failed verification.`}
           </div>
-          <pre className="code-block">
+          <pre className="code-block" tabIndex={0}>
             <code>
               {rows.map((r) => auditVerifyLine(r.file, r.records, r.ok, r.message)).join("\n")}
             </code>
@@ -448,7 +448,7 @@ export function AdminConsole() {
             granted by an existing operator, who runs this statement in the Lovable Cloud SQL
             editor (it adds your user id to <code>public.site_admins</code>):
           </p>
-          <pre className="code-block">
+          <pre className="code-block" tabIndex={0}>
             <code>{grantAdminSql(access.userId)}</code>
           </pre>
           <p className="small">

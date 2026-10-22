@@ -78,7 +78,14 @@ export const initialState = (): GovernanceState => ({
 });
 export function blankState(): GovernanceState {
   const sample = initialState();
-  return { ...sample, workspaceMode: "personal", answers: Object.fromEntries(Object.keys(sample.answers).map((id) => [id, { s: 0, e: 0 }])), gr: Object.fromEntries(Object.keys(sample.gr).map((id) => [id, false])), systems: [], roadmap: [] };
+  return {
+    ...sample,
+    workspaceMode: "personal",
+    answers: Object.fromEntries(Object.keys(sample.answers).map((id) => [id, { s: 0, e: 0 }])),
+    gr: Object.fromEntries(Object.keys(sample.gr).map((id) => [id, false])),
+    systems: [],
+    roadmap: [],
+  };
 }
 export type Action =
   | { type: "answer"; id: string; patch: Partial<Answer> }
@@ -105,7 +112,14 @@ export type Action =
   | { type: "monitor-status"; id: string; status: "Active" | "Paused" }
   | { type: "corrective-action"; action: CorrectiveAction }
   | { type: "edit-corrective-evidence"; id: string; evidence: string }
-  | { type: "transition-corrective-action"; id: string; status: CorrectiveAction["status"]; actor: string; note: string; changedAt: string }
+  | {
+      type: "transition-corrective-action";
+      id: string;
+      status: CorrectiveAction["status"];
+      actor: string;
+      note: string;
+      changedAt: string;
+    }
   | { type: "roadmap"; control: Control }
   | { type: "done"; key: string }
   | { type: "load"; state: GovernanceState };
@@ -189,9 +203,7 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
       return updatedReview
         ? {
             ...s,
-            changeReviews: s.changeReviews.map((item) =>
-              item.id === a.id ? updatedReview : item,
-            ),
+            changeReviews: s.changeReviews.map((item) => (item.id === a.id ? updatedReview : item)),
           }
         : s;
     }
@@ -216,14 +228,24 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
     case "corrective-action":
       return { ...s, correctiveActions: [a.action, ...s.correctiveActions] };
     case "edit-corrective-evidence":
-      return { ...s, correctiveActions: s.correctiveActions.map((item) => item.id === a.id ? { ...item, completionEvidence: a.evidence.trim() } : item) };
+      return {
+        ...s,
+        correctiveActions: s.correctiveActions.map((item) =>
+          item.id === a.id ? { ...item, completionEvidence: a.evidence.trim() } : item,
+        ),
+      };
     case "transition-corrective-action": {
       const action = s.correctiveActions.find((item) => item.id === a.id);
       if (!action) return s;
       const result = transitionCorrectiveAction(action, a.status, a.actor, a.note, a.changedAt);
       const updatedAction = result.action;
       return updatedAction
-        ? { ...s, correctiveActions: s.correctiveActions.map((item) => item.id === a.id ? updatedAction : item) }
+        ? {
+            ...s,
+            correctiveActions: s.correctiveActions.map((item) =>
+              item.id === a.id ? updatedAction : item,
+            ),
+          }
         : s;
     }
     case "roadmap":
@@ -283,7 +305,10 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
         }
       }
     }
-    supabase.auth.getUser().then(({ data }) => apply(data.user?.id ?? null)).catch(() => apply(null));
+    supabase.auth
+      .getUser()
+      .then(({ data }) => apply(data.user?.id ?? null))
+      .catch(() => apply(null));
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {

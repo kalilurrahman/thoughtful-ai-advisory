@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Typecheck, lint, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      # package-lock.json resolves from the public npm registry; bun.lock is Lovable's.
+      - run: npm ci
+      - name: Typecheck
+        run: npx tsc --noEmit
+      - name: Lint
+        run: 'npx eslint . --rule "prettier/prettier: off"'
+      # Advisory: Lovable commits to main without running Prettier, so formatting alone
+      # should not turn the build red. Fix with `npx eslint . --fix`.
+      - name: Formatting (advisory)
+        continue-on-error: true
+        run: npx prettier --check "src/**/*.{ts,tsx}" "scripts/**/*.mjs"
+      - name: Unit tests
+        run: npm test
+      # The default build, as Lovable deploys it (Cloudflare target).
+      - name: Build
+        run: npm run build
+
+  smoke:
+    name: Browser smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      # Same app, built for Node so it can be served on the runner.
+      - name: Build for Node
+        run: npm run build
+        env:
+          NITRO_PRESET: node-server
+      - name: Start the app
+        run: |
+          PORT=4173 HOST=127.0.0.1 node .output/server/index.mjs > server.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf -o /dev/null http://127.0.0.1:4173/ && exit 0; sleep 1; done
+          cat server.log
+          exit 1
+      - name: Smoke test
+        run: npm run test:smoke -- http://127.0.0.1:4173
+      - name: Server log
+        if: failure()
+        run: cat server.log

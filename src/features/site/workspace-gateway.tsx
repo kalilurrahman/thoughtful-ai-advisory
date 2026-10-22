@@ -15,18 +15,26 @@ export function WorkspaceGateway() {
             <h2 id="workspace-heading">GOVERN assessment & assurance studio</h2>
           </div>
           <Button asChild variant="outline" className="btn btn-secondary">
-            <Link to="/workspace">Open workspace <ArrowRight aria-hidden="true" /></Link>
+            <Link to="/workspace">
+              Open workspace <ArrowRight aria-hidden="true" />
+            </Link>
           </Button>
         </div>
         <div className="workspace-pillar-grid">
           {PILLARS.map((pillar, index) => (
             <Button key={pillar.letter} asChild variant="ghost" className="workspace-pillar-link">
-              <Link to="/assess" onClick={() => {
-                const questionIndex = CONTROLS.findIndex((control) => control.p === index);
-                if (questionIndex >= 0) dispatch({ type: "question", qi: questionIndex });
-              }}>
+              <Link
+                to="/assess"
+                onClick={() => {
+                  const questionIndex = CONTROLS.findIndex((control) => control.p === index);
+                  if (questionIndex >= 0) dispatch({ type: "question", qi: questionIndex });
+                }}
+              >
                 <strong className="workspace-pillar-letter">{pillar.letter}</strong>
-                <span className="workspace-pillar-name">{pillar.name}<small>NIST · {pillar.nist.toUpperCase()}</small></span>
+                <span className="workspace-pillar-name">
+                  {pillar.name}
+                  <small>NIST · {pillar.nist.toUpperCase()}</small>
+                </span>
                 <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
@@ -39,7 +47,9 @@ export function WorkspaceGateway() {
           <Link to="/incidents">Incidents</Link>
           <Link to="/actions">Corrective actions</Link>
           <Link to="/export">Reports & audit pack</Link>
-          <Link to="/more">All workspace tools <ArrowRight aria-hidden="true" /></Link>
+          <Link to="/more">
+            All workspace tools <ArrowRight aria-hidden="true" />
+          </Link>
         </nav>
       </div>
     </section>
