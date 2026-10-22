@@ -1,4 +1,6 @@
 # AEGIS build
+- [ ] Restore discoverable GOVERN and built governance workflows across public and workspace navigation.
+- [ ] Match the earlier bookmarked design — awaiting the bookmarked URL or screenshot.
 - [ ] Add basic profiles and Google, Apple, Microsoft, Lovable, and email/password authentication.
 - [ ] Add private workspace selection and blank workspace creation while preserving the sample.
 - [ ] Generate clearly distinguished working reports from personal workspace records.
