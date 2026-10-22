@@ -33,6 +33,8 @@ import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as WorkspaceRouteImport } from './routes/workspace'
+import { Route as PlatformIndexRouteImport } from './routes/platform.index'
+import { Route as PlatformToolRouteImport } from './routes/platform.$tool'
 import { Route as FrameworkControlsIndexRouteImport } from './routes/framework.controls.index'
 import { Route as FrameworkControlsControlIdRouteImport } from './routes/framework.controls.$controlId'
 
@@ -156,6 +158,16 @@ const WorkspaceRoute = WorkspaceRouteImport.update({
   path: '/workspace',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlatformIndexRoute = PlatformIndexRouteImport.update({
+  id: '/platform/',
+  path: '/platform/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlatformToolRoute = PlatformToolRouteImport.update({
+  id: '/platform/$tool',
+  path: '/platform/$tool',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FrameworkControlsIndexRoute = FrameworkControlsIndexRouteImport.update({
   id: '/framework/controls/',
   path: '/framework/controls/',
@@ -193,6 +205,8 @@ export interface FileRoutesByFullPath {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
+  '/platform/$tool': typeof PlatformToolRoute
+  '/platform/': typeof PlatformIndexRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
 }
@@ -221,6 +235,8 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
+  '/platform/$tool': typeof PlatformToolRoute
+  '/platform': typeof PlatformIndexRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls': typeof FrameworkControlsIndexRoute
 }
@@ -250,6 +266,8 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
+  '/platform/$tool': typeof PlatformToolRoute
+  '/platform/': typeof PlatformIndexRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
 }
@@ -280,6 +298,8 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
+    | '/platform/$tool'
+    | '/platform/'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
   fileRoutesByTo: FileRoutesByTo
@@ -308,6 +328,8 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
+    | '/platform/$tool'
+    | '/platform'
     | '/framework/controls/$controlId'
     | '/framework/controls'
   id:
@@ -336,6 +358,8 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
+    | '/platform/$tool'
+    | '/platform/'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
   fileRoutesById: FileRoutesById
@@ -365,6 +389,8 @@ export interface RootRouteChildren {
   StartRoute: typeof StartRoute
   TemplatesRoute: typeof TemplatesRoute
   WorkspaceRoute: typeof WorkspaceRoute
+  PlatformToolRoute: typeof PlatformToolRoute
+  PlatformIndexRoute: typeof PlatformIndexRoute
   FrameworkControlsControlIdRoute: typeof FrameworkControlsControlIdRoute
   FrameworkControlsIndexRoute: typeof FrameworkControlsIndexRoute
 }
@@ -539,6 +565,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkspaceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/platform/': {
+      id: '/platform/'
+      path: '/platform'
+      fullPath: '/platform/'
+      preLoaderRoute: typeof PlatformIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/platform/$tool': {
+      id: '/platform/$tool'
+      path: '/platform/$tool'
+      fullPath: '/platform/$tool'
+      preLoaderRoute: typeof PlatformToolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/framework/controls/': {
       id: '/framework/controls/'
       path: '/framework/controls'
@@ -581,6 +621,8 @@ const rootRouteChildren: RootRouteChildren = {
   StartRoute: StartRoute,
   TemplatesRoute: TemplatesRoute,
   WorkspaceRoute: WorkspaceRoute,
+  PlatformToolRoute: PlatformToolRoute,
+  PlatformIndexRoute: PlatformIndexRoute,
   FrameworkControlsControlIdRoute: FrameworkControlsControlIdRoute,
   FrameworkControlsIndexRoute: FrameworkControlsIndexRoute,
 }

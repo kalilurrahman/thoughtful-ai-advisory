@@ -39,4 +39,11 @@ describe("App routing", () => {
     );
     expect(router.matchRoutes("/inventory").at(-1)?.routeId).toBe("/inventory");
   });
+
+  it("serves the platform console", () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    expect(router.matchRoutes("/platform").at(-1)?.routeId).toBe("/platform/");
+    expect(router.matchRoutes("/platform/agent").at(-1)?.routeId).toBe("/platform/$tool");
+  });
 });
