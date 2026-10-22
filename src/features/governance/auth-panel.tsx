@@ -14,7 +14,7 @@ const credentialsSchema = z.object({
   displayName: z.string().max(120),
 });
 type Credentials = z.infer<typeof credentialsSchema>;
-export function AuthPanel() {
+export function AuthPanel({ initialEmail = "" }: { initialEmail?: string }) {
   const navigate = useNavigate();
   const { userId } = useGovernance();
   const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
@@ -26,7 +26,7 @@ export function AuthPanel() {
     formState: { errors },
   } = useForm<Credentials>({
     resolver: zodResolver(credentialsSchema),
-    defaultValues: { email: "", password: "", displayName: "" },
+    defaultValues: { email: initialEmail, password: "", displayName: "" },
   });
   async function social(provider: "google" | "apple" | "microsoft" | "lovable") {
     setBusy(true);

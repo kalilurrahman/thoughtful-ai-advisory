@@ -605,16 +605,20 @@ export function OnboardingScreen() {
         />
       </label>
       <Button className="full-button" asChild>
-        <Link to="/workspace">
-          Sign in with SSO · demo
+        <Link to="/auth" search={email.trim() ? { email: email.trim() } : {}}>
+          Continue with email
           <ArrowRight />
         </Link>
+      </Button>
+      <Button variant="outline" className="full-button" asChild>
+        <Link to="/workspace">Explore the demo workspace</Link>
       </Button>
       <Button variant="outline" className="full-button" asChild>
         <Link to="/assess">Start free Governance Snapshot</Link>
       </Button>
       <p className="footnote">
-        All scoring runs on-device. Demo sign-in does not create an account.
+        All scoring runs on-device. The demo workspace does not create an account; sign in to keep
+        private workspaces.
       </p>
     </div>
   );
