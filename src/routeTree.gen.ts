@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
+import { Route as ActionsRouteImport } from './routes/actions'
 import { Route as AssessRouteImport } from './routes/assess'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CalculatorsRouteImport } from './routes/calculators'
@@ -46,6 +47,11 @@ const IndexRoute = IndexRouteImport.update({
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
   path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActionsRoute = ActionsRouteImport.update({
+  id: '/actions',
+  path: '/actions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssessRoute = AssessRouteImport.update({
@@ -183,6 +189,7 @@ const FrameworkControlsControlIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/actions': typeof ActionsRoute
   '/assess': typeof AssessRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
@@ -213,6 +220,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/actions': typeof ActionsRoute
   '/assess': typeof AssessRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
@@ -244,6 +252,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/actions': typeof ActionsRoute
   '/assess': typeof AssessRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
@@ -276,6 +285,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$'
+    | '/actions'
     | '/assess'
     | '/auth'
     | '/calculators'
@@ -306,6 +316,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
+    | '/actions'
     | '/assess'
     | '/auth'
     | '/calculators'
@@ -336,6 +347,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$'
+    | '/actions'
     | '/assess'
     | '/auth'
     | '/calculators'
@@ -367,6 +379,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  ActionsRoute: typeof ActionsRoute
   AssessRoute: typeof AssessRoute
   AuthRoute: typeof AuthRoute
   CalculatorsRoute: typeof CalculatorsRoute
@@ -409,6 +422,13 @@ declare module '@tanstack/react-router' {
       path: '/$'
       fullPath: '/$'
       preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/actions': {
+      id: '/actions'
+      path: '/actions'
+      fullPath: '/actions'
+      preLoaderRoute: typeof ActionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assess': {
@@ -599,6 +619,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  ActionsRoute: ActionsRoute,
   AssessRoute: AssessRoute,
   AuthRoute: AuthRoute,
   CalculatorsRoute: CalculatorsRoute,

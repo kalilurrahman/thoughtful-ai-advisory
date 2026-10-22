@@ -110,7 +110,7 @@ export interface NavSection {
 }
 
 /** Header navigation, built like the platform builder's build_nav(). */
-export const siteNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
+const publicNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
   const landing = byPath.get(`/${sec.id}`);
   const items: NavItem[] = sitePages
     .filter((p) => p.section === sec.id && !p.navExclude && !p.noindex && p !== landing)

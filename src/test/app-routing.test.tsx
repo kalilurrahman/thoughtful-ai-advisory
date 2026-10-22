@@ -3,10 +3,19 @@ import { createRouter, rootRouteId } from "@tanstack/react-router";
 import { describe, expect, it } from "vitest";
 
 import { routeTree } from "@/routeTree.gen";
+import { workspaceNav } from "@/features/site/pages";
 
 // Match routes without running loaders or rendering: loaders may need a server or
 // network the test run lacks, and jsdom never loads the stylesheets React waits on.
 describe("App routing", () => {
+  it("maps every practitioner menu destination to a real workspace route", () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+    for (const item of workspaceNav.items) {
+      expect(router.matchRoutes(item.url).at(-1)?.routeId).toBe(item.url);
+    }
+    expect(workspaceNav.items.some((item) => item.url === "/assess")).toBe(true);
+    expect(workspaceNav.items.some((item) => item.url === "/actions")).toBe(true);
+  });
   it("matches a page for / instead of falling back to not found", () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
 
