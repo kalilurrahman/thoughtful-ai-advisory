@@ -400,3 +400,4 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
 }
 .aegis-site .agent-console .chat-log { max-width: none; }
 .aegis-site .brand-mark-check { stroke: var(--c-bg); }
+.aegis-site .tool-loading { color: var(--c-muted); }

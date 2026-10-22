@@ -1,6 +1,7 @@
+import { Suspense } from "react";
 import { Link } from "@tanstack/react-router";
 import { Breadcrumbs } from "@/features/site/layout";
-import { siteHead } from "@/features/site/views";
+import { ToolLoading, siteHead } from "@/features/site/views";
 import { Disclaimer } from "@/features/site/ui";
 import { PLATFORM_TOOLS, getPlatformTool, type PlatformTool } from "./catalog";
 import { PLATFORM_COMPONENTS } from "./registry";
@@ -88,7 +89,11 @@ export function PlatformToolView({ slug }: { slug: string }) {
         </div>
       </div>
       <div className="container page-body">
-        {Component && <Component />}
+        {Component && (
+          <Suspense fallback={<ToolLoading />}>
+            <Component />
+          </Suspense>
+        )}
         <p className="page-updated">
           Hosted port of <code>{tool.python.join(", ")}</code> from the AEGIS Python platform.
         </p>
