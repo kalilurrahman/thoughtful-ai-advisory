@@ -18,9 +18,9 @@ export function PlatformIndexView() {
       <Breadcrumbs crumbs={[{ label: "Home", url: "/" }, { label: "Platform", url: "/platform", current: true }]} />
       <div className="page-header">
         <div className="container">
-          <h1>AEGIS Platform console</h1>
+          <h1>VERITRAIL Platform console</h1>
           <p className="lead">
-            The AEGIS platform engines — the agent, the runtime policy engine, the pilot rehearsal, reports and the
+            The VERITRAIL platform engines — the agent, the runtime policy engine, the pilot rehearsal, reports and the
             admin tools — running directly on this site. Nothing needs to be installed.
           </p>
         </div>
@@ -95,7 +95,7 @@ export function PlatformToolView({ slug }: { slug: string }) {
           </Suspense>
         )}
         <p className="page-updated">
-          Hosted port of <code>{tool.python.join(", ")}</code> from the AEGIS Python platform.
+          Hosted port of <code>{tool.python.join(", ")}</code> from the VERITRAIL Python platform.
         </p>
       </div>
     </div>
@@ -104,14 +104,14 @@ export function PlatformToolView({ slug }: { slug: string }) {
 
 export const platformIndexHead = () =>
   siteHead({
-    title: "AEGIS Platform console",
+    title: "VERITRAIL Platform console",
     description:
-      "Run the AEGIS Agent, runtime policy simulator, pilot dress rehearsal, ROI calculator, sample reports, content checks and admin tools in the browser.",
+      "Run the VERITRAIL Agent, runtime policy simulator, pilot dress rehearsal, ROI calculator, sample reports, content checks and admin tools in the browser.",
   });
 
 export function platformToolHead(slug: string) {
   const t = getPlatformTool(slug);
   return t
-    ? siteHead({ title: `${t.title} — AEGIS Platform`, description: t.summary, noindex: t.restricted ?? false })
+    ? siteHead({ title: `${t.title} — VERITRAIL Platform`, description: t.summary, noindex: t.restricted ?? false })
     : siteHead({ title: "Not found", description: "Unknown platform module.", noindex: true });
 }

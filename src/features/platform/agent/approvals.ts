@@ -1,9 +1,9 @@
 /**
  * Human-approval service: pending approvals, separation of duties, effects on approval
- * (aegis_agent/approvals.py).
+ * (veritrail_agent/approvals.py).
  *
  * The agent can only *request* approvals. Resolution happens outside the conversation (the
- * console's Approvals panel → AegisAgent.resolveApproval) by a user with an approver/admin role
+ * console's Approvals panel → VeritrailAgent.resolveApproval) by a user with an approver/admin role
  * who is NOT the requester. Every resolution attempt — including refusals — is audit-logged.
  */
 import { sha256Hex } from "../audit";

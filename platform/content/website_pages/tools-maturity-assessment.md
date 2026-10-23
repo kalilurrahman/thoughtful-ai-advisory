@@ -50,10 +50,10 @@ Answer each on a five-point scale, from **1 — Not started** to **5 — Measure
 
 **In the full report (business email required):**
 
-- Up to five strengths and five priority gaps, each citing AEGIS controls.
+- Up to five strengths and five priority gaps, each citing VERITRAIL controls.
 - Critical flags — for example, no reliable AI inventory, untested agents, or no kill switch — labelled *Critical gap*.
 - A 30/60/90-day action plan.
-- Recommended controls and AEGIS modules.
+- Recommended controls and VERITRAIL modules.
 - Indicative readiness indicators for NIST AI RMF, ISO/IEC 42001 and selected EU AI Act themes.
 
 ## Read before you start

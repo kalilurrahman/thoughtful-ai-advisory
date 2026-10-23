@@ -1,6 +1,6 @@
-/** Agent configuration: roles, permission levels and the user model (aegis_agent/config.py). */
+/** Agent configuration: roles, permission levels and the user model (veritrail_agent/config.py). */
 
-export { CTA_ASSESSMENT, CTA_BASELINE, CTA_SHIELD } from "@/features/site/engines/ask-aegis/compose";
+export { CTA_ASSESSMENT, CTA_BASELINE, CTA_SHIELD } from "@/features/site/engines/ask-veritrail/compose";
 
 // --------------------------------------------------------------------------- permissions
 export const READ = "read";

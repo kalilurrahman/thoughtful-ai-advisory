@@ -28,7 +28,7 @@ OUT_FILE = REPO_ROOT / "docs" / "COMPLIANCE_MAPPING.md"
 GENERATED_DATE = "2026-10-21"
 
 STANDARD_DISCLAIMER = (
-    "AEGIS supports governance readiness, control implementation and evidence collection. "
+    "VERITRAIL supports governance readiness, control implementation and evidence collection. "
     "It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or "
     "replace legal advice. Framework mappings are indicative."
 )
@@ -105,45 +105,45 @@ EU_ARTICLE_TITLES = {
     73: "Reporting of serious incidents",
 }
 
-# How AEGIS supports each mapped article — and where its support stops. Keeps the crosswalk honest for articles
-# whose core obligation AEGIS cannot discharge (e.g. conformity assessment, registration).
+# How VERITRAIL supports each mapped article — and where its support stops. Keeps the crosswalk honest for articles
+# whose core obligation VERITRAIL cannot discharge (e.g. conformity assessment, registration).
 EU_ARTICLE_NOTES = {
     5: "Supports screening of use cases against a prohibited/restricted list. Whether a practice is prohibited is a legal determination.",
-    6: "Supports classification evidence and intake triage. AEGIS risk tiers are not the legal high-risk classification.",
+    6: "Supports classification evidence and intake triage. VERITRAIL risk tiers are not the legal high-risk classification.",
     17: "Supports governance-policy, forum and testing evidence that can feed a provider's quality management system; does not constitute a QMS.",
     25: "Supports documenting role allocation and vendor accountability; role determination (provider/deployer/etc.) requires counsel.",
     27: "Supports impact-assessment workflow and stakeholder input; the FRIA content and any notification obligations must be confirmed by counsel.",
-    43: "Supports internal approval gates and change control that produce evidence a conformity assessment may use. AEGIS does NOT perform conformity assessment and is not a notified body.",
-    49: "Inventory data can help prepare registration information. AEGIS does NOT register systems in the EU database.",
+    43: "Supports internal approval gates and change control that produce evidence a conformity assessment may use. VERITRAIL does NOT perform conformity assessment and is not a notified body.",
+    49: "Inventory data can help prepare registration information. VERITRAIL does NOT register systems in the EU database.",
     72: "Supports monitoring plans and monitoring evidence; provider post-market monitoring obligations remain with the provider.",
     73: "Supports incident detection, triage and records; it does not file serious-incident reports with authorities.",
 }
 
-# Areas of the three frameworks that AEGIS v1.0.0 does NOT cover (or covers only as evidence support).
+# Areas of the three frameworks that VERITRAIL v1.0.0 does NOT cover (or covers only as evidence support).
 COVERAGE_GAPS = [
     ("EU AI Act", "Conformity assessment by notified bodies and internal-control conformity assessment procedures (Art. 43, Annexes VI–VII)",
-     "Not covered. GL-03/GL-04 produce approval and change evidence only. Notified-body assessment is performed by designated bodies; AEGIS is not one."),
+     "Not covered. GL-03/GL-04 produce approval and change evidence only. Notified-body assessment is performed by designated bodies; VERITRAIL is not one."),
     ("EU AI Act", "EU declaration of conformity (Art. 47) and CE marking (Art. 48)",
-     "Not covered. AEGIS does not draw up declarations or authorize CE marking."),
+     "Not covered. VERITRAIL does not draw up declarations or authorize CE marking."),
     ("EU AI Act", "Registration in the EU database (Art. 49, Art. 71)",
      "Not covered. EI-01 inventory data may help prepare registration information; registration itself is performed by the obligated party."),
     ("EU AI Act", "General-purpose AI (GPAI) model provider obligations, including systemic-risk models (Chapter V, Arts. 51–56) and codes of practice",
-     "Not covered in depth. AEGIS treats foundation models as third-party components (EI-08, GL-11, IS-10) from a deployer/downstream-provider perspective."),
+     "Not covered in depth. VERITRAIL treats foundation models as third-party components (EI-08, GL-11, IS-10) from a deployer/downstream-provider perspective."),
     ("EU AI Act", "Provider obligations as a whole (Art. 16), authorised representatives (Art. 22), importers (Art. 23) and distributors (Art. 24)",
      "Partially supported through evidence controls (GL-06, SE-02, SE-05) but role-specific obligations are not modelled."),
     ("EU AI Act", "Quality management system as a complete system (Art. 17) and technical documentation content per Annex IV",
-     "Partially supported. AO-01, AO-02, SE-01, SE-07 and GL-06 produce inputs; AEGIS does not validate Annex IV completeness."),
+     "Partially supported. AO-01, AO-02, SE-01, SE-07 and GL-06 produce inputs; VERITRAIL does not validate Annex IV completeness."),
     ("EU AI Act", "Serious-incident notification to market surveillance authorities (Art. 73) and cooperation with authorities (Art. 21)",
-     "Process support only (SE-04). AEGIS does not file reports or interact with authorities."),
+     "Process support only (SE-04). VERITRAIL does not file reports or interact with authorities."),
     ("EU AI Act", "Regulatory sandboxes, real-world testing (Arts. 57–63), penalties (Arts. 99–101) and governance bodies",
      "Not covered."),
     ("EU AI Act", "Annex I product legislation interplay (e.g. medical devices, machinery)",
      "Not covered. Sector product-safety conformity routes remain with the manufacturer and its notified body."),
     ("ISO/IEC 42001", "Certification audit by an accredited certification body",
-     "Not covered. AEGIS supports readiness and evidence; only an accredited certification body can issue certification."),
-    ("ISO/IEC 42001", "Clauses with no AEGIS control mapping in v1.0.0 (see unmapped list below), e.g. 4.3 scope and 4.4 AI management system",
+     "Not covered. VERITRAIL supports readiness and evidence; only an accredited certification body can issue certification."),
+    ("ISO/IEC 42001", "Clauses with no VERITRAIL control mapping in v1.0.0 (see unmapped list below), e.g. 4.3 scope and 4.4 AI management system",
      "Not mapped. The organization must define AIMS scope and the management system itself."),
-    ("NIST AI RMF", "Subcategories with no AEGIS control mapping in v1.0.0 (see unmapped list below)",
+    ("NIST AI RMF", "Subcategories with no VERITRAIL control mapping in v1.0.0 (see unmapped list below)",
      "Not mapped. Many relate to workforce diversity, organizational culture, TEVV methodology and third-party contingency; candidates for future controls."),
     ("All", "Jurisdictions and sector regimes outside the three frameworks (privacy law, sector regulators, US state AI laws, etc.)",
      "Not mapped in controls.yaml. Industry packs list regimes to consider, flagged 'verify with counsel'. AO-07 maintains the organization's own obligations register."),
@@ -217,14 +217,14 @@ def render() -> str:
     L: list[str] = []
     w = L.append
     w("---")
-    w('title: "AEGIS Compliance Mapping — NIST AI RMF, ISO/IEC 42001, EU AI Act"')
+    w('title: "VERITRAIL Compliance Mapping — NIST AI RMF, ISO/IEC 42001, EU AI Act"')
     w(f"generated: {GENERATED_DATE}")
     w(f"source: content/controls/controls.yaml ({lib['id']} v{lib['version']})")
     w("generator: docs/tools/gen_compliance_mapping.py")
-    w("owner: AEGIS Governance Content Lead")
+    w("owner: VERITRAIL Governance Content Lead")
     w("---")
     w("")
-    w("# AEGIS Compliance Mapping")
+    w("# VERITRAIL Compliance Mapping")
     w("")
     w("<!-- GENERATED FILE — do not edit by hand. Run: python3 docs/tools/gen_compliance_mapping.py -->")
     w("")
@@ -234,9 +234,9 @@ def render() -> str:
     w(">")
     w(f"> {lib['mapping_disclaimer'].strip()}")
     w(">")
-    w("> - This crosswalk is AEGIS's own indicative interpretation. It is **not** an official crosswalk published by")
+    w("> - This crosswalk is VERITRAIL's own indicative interpretation. It is **not** an official crosswalk published by")
     w(">   NIST, ISO/IEC or the European Commission.")
-    w("> - A mapping means an AEGIS control *can produce evidence relevant to* a framework element. It does **not** mean")
+    w("> - A mapping means an VERITRAIL control *can produce evidence relevant to* a framework element. It does **not** mean")
     w(">   that implementing the control satisfies that element.")
     w("> - **EU AI Act timelines:** applicability dates must be verified against the current Official Journal text of")
     w(">   Regulation (EU) 2024/1689 and any amendments. The Commission's 2025 \"Digital Omnibus\" proposals may change")
@@ -251,7 +251,7 @@ def render() -> str:
     w("4. ISO/IEC 42001:2023 crosswalk (clauses and Annex A)")
     w("5. EU AI Act crosswalk (by article)")
     w("6. Control-by-control matrix")
-    w("7. Coverage gaps — what AEGIS does not cover")
+    w("7. Coverage gaps — what VERITRAIL does not cover")
     w("8. EU AI Act applicability timeline — verification required")
     w("9. Maintenance")
     w("")
@@ -262,7 +262,7 @@ def render() -> str:
     w(f"   `content/controls/controls.yaml` (library {lib['id']} v{lib['version']}, effective {lib['effective_date']}).")
     w("   No mapping appears here that is not in that file.")
     w("2. **Mapping basis.** A control is mapped to a framework element when the control's objective and evidence")
-    w("   would be relevant to demonstrating the practice described by that element. Mappings were authored by the AEGIS")
+    w("   would be relevant to demonstrating the practice described by that element. Mappings were authored by the VERITRAIL")
     w("   Governance Content Lead and are subject to quarterly review.")
     w("3. **References.** NIST AI RMF references use AI 100-1 (AI RMF 1.0) subcategory identifiers; ISO/IEC 42001")
     w("   references use clause numbers and Annex A control identifiers of the 2023 edition; EU AI Act references use")
@@ -271,7 +271,7 @@ def render() -> str:
     w("4. **Many-to-many.** One control can map to several framework elements and vice versa. Coverage counts")
     w("   indicate breadth of evidence support, not depth or sufficiency.")
     w("5. **Gap analysis.** Framework elements not referenced by any control are listed in §7 together with areas that")
-    w("   AEGIS deliberately does not cover. Reference lists used for gap analysis are compiled from the published")
+    w("   VERITRAIL deliberately does not cover. Reference lists used for gap analysis are compiled from the published")
     w("   structures and should be checked against official copies.")
     w("6. **Readiness indicators.** The self-assessment's framework readiness indicators")
     w("   (`maturity_self_assessment.yaml` → `readiness_groups`) are a separate, coarser grouping of questions and are")
@@ -289,7 +289,7 @@ def render() -> str:
     no_eu = [c for c in controls if not c.get("mappings", {}).get("eu_ai_act")]
     w("| Measure | Value |")
     w("|---|---|")
-    w(f"| AEGIS controls | {len(controls)} |")
+    w(f"| VERITRAIL controls | {len(controls)} |")
     w(f"| Controls with ≥1 NIST AI RMF mapping | {sum(1 for c in controls if c['mappings'].get('nist_ai_rmf'))} |")
     w(f"| Controls with ≥1 ISO/IEC 42001 mapping | {sum(1 for c in controls if c['mappings'].get('iso_42001'))} |")
     w(f"| Controls with ≥1 EU AI Act mapping | {len(controls) - len(no_eu)} |")
@@ -305,7 +305,7 @@ def render() -> str:
     # ---------------------------------------------------------------- 3 NIST
     w("## 3. NIST AI RMF 1.0 crosswalk (by function)")
     w("")
-    w("Source: NIST AI 100-1. Voluntary framework; \"alignment\" here means AEGIS controls can produce evidence relevant")
+    w("Source: NIST AI 100-1. Voluntary framework; \"alignment\" here means VERITRAIL controls can produce evidence relevant")
     w("to the subcategory.")
     w("")
     for fn in NIST_FUNCTIONS:
@@ -316,7 +316,7 @@ def render() -> str:
         w("")
         w(f"*{NIST_FUNCTION_PURPOSE[fn]}* — {mapped} of {total} subcategories referenced.")
         w("")
-        w("| Subcategory | AEGIS controls | Control titles |")
+        w("| Subcategory | VERITRAIL controls | Control titles |")
         w("|---|---|---|")
         for k in keys:
             cs = sorted(nist[k], key=lambda c: c["id"])
@@ -330,7 +330,7 @@ def render() -> str:
     w("")
     w("### 4.1 Clauses 4–10")
     w("")
-    w("| Clause | Clause title | Sub-clause | AEGIS controls | Control titles |")
+    w("| Clause | Clause title | Sub-clause | VERITRAIL controls | Control titles |")
     w("|---|---|---|---|---|")
     clause_keys = sorted([k for k in iso if not k.startswith("A.")], key=_iso_key)
     for k in clause_keys:
@@ -340,7 +340,7 @@ def render() -> str:
     w("")
     w("### 4.2 Annex A reference controls")
     w("")
-    w("| Annex A group | Group title | Control | AEGIS controls | Control titles |")
+    w("| Annex A group | Group title | Control | VERITRAIL controls | Control titles |")
     w("|---|---|---|---|---|")
     annex_keys = sorted([k for k in iso if k.startswith("A.")], key=_iso_key)
     for k in annex_keys:
@@ -353,9 +353,9 @@ def render() -> str:
     w("")
     w("Regulation (EU) 2024/1689. Many articles apply only to specific roles (provider, deployer, importer,")
     w("distributor) and to specific risk categories; whether an article applies to a given organization or system is a")
-    w("legal determination. The \"AEGIS support boundary\" column states where AEGIS support stops.")
+    w("legal determination. The \"VERITRAIL support boundary\" column states where VERITRAIL support stops.")
     w("")
-    w("| Article | Title | AEGIS controls | AEGIS support boundary |")
+    w("| Article | Title | VERITRAIL controls | VERITRAIL support boundary |")
     w("|---|---|---|---|")
     for k in sorted(eu, key=_eu_num):
         n = _eu_num(k)
@@ -381,26 +381,26 @@ def render() -> str:
             e=", ".join(m.get("eu_ai_act") or []) or "—"))
     w("")
     # ---------------------------------------------------------------- 7 gaps
-    w("## 7. Coverage gaps — what AEGIS does not cover")
+    w("## 7. Coverage gaps — what VERITRAIL does not cover")
     w("")
-    w("AEGIS is a governance-readiness and evidence product. The following areas are outside its scope or only")
+    w("VERITRAIL is a governance-readiness and evidence product. The following areas are outside its scope or only")
     w("supported as evidence inputs. Buyers should plan for them separately.")
     w("")
     w("### 7.1 Out-of-scope and partially supported areas")
     w("")
-    w("| Framework | Area | AEGIS position |")
+    w("| Framework | Area | VERITRAIL position |")
     w("|---|---|---|")
     for fw, area, pos in COVERAGE_GAPS:
         w(f"| {fw} | {area} | {pos} |")
     w("")
-    w("### 7.2 NIST AI RMF subcategories not referenced by any AEGIS control (v{})".format(lib["version"]))
+    w("### 7.2 NIST AI RMF subcategories not referenced by any VERITRAIL control (v{})".format(lib["version"]))
     w("")
     unmapped_nist = [s for s in all_nist if s not in nist]
     for fn in NIST_FUNCTIONS:
         items = [s for s in unmapped_nist if s.startswith(fn + " ")]
         w(f"- **{fn}** ({len(items)}): " + (", ".join(items) if items else "none"))
     w("")
-    w("### 7.3 ISO/IEC 42001 elements not referenced by any AEGIS control (v{})".format(lib["version"]))
+    w("### 7.3 ISO/IEC 42001 elements not referenced by any VERITRAIL control (v{})".format(lib["version"]))
     w("")
     un_cl = [s for s in ISO_SUBCLAUSES if s not in iso]
     un_ax = [a for a in ISO_ANNEX_A_CONTROLS if a not in iso]

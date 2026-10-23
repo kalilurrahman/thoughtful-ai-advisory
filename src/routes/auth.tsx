@@ -5,7 +5,7 @@ export const Route = createFileRoute("/auth")({
   head: () =>
     pageHead(
       "Sign in",
-      "Access your private AEGIS governance workspaces with email, Google, Apple, Microsoft or Lovable.",
+      "Access your private VERITRAIL governance workspaces with email, Google, Apple, Microsoft or Lovable.",
     ),
   // ?email= prefills the form, e.g. from the onboarding screen.
   validateSearch: (search: Record<string, unknown>): { email?: string } => {

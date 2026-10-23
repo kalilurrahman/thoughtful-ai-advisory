@@ -4,12 +4,12 @@ import maturityYaml from "../../../platform/content/assessment_templates/maturit
 import useCaseYaml from "../../../platform/content/assessment_templates/use_case_assessment.yaml?raw";
 import siteYaml from "../../../platform/app/website/site.yaml?raw";
 
-// Governed AEGIS content is read straight from platform/content so the website, the
+// Governed VERITRAIL content is read straight from platform/content so the website, the
 // Python reference engines and the browser tools share a single source of truth.
 
 export type FrameworkKey = "nist_ai_rmf" | "iso_42001" | "eu_ai_act";
 
-export interface AegisControl {
+export interface VeritrailControl {
   id: string;
   title: string;
   pillar: string;
@@ -23,7 +23,7 @@ export interface AegisControl {
   mappings?: Partial<Record<FrameworkKey, Array<string | number>>>;
 }
 
-export interface AegisPillar {
+export interface VeritrailPillar {
   id: string;
   name: string;
   summary: string;
@@ -36,8 +36,8 @@ interface ControlLibraryFile {
     effective_date: string;
     mapping_disclaimer: string;
   };
-  pillars: AegisPillar[];
-  controls: AegisControl[];
+  pillars: VeritrailPillar[];
+  controls: VeritrailControl[];
 }
 
 export interface CtaDef {
@@ -72,15 +72,15 @@ export const useCaseTemplate = parse(useCaseYaml) as any;
 export const siteConfig = parse(siteYaml) as SiteConfig;
 
 export const controlLibrary = library.library;
-export const pillars: AegisPillar[] = library.pillars;
-export const controls: AegisControl[] = library.controls;
+export const pillars: VeritrailPillar[] = library.pillars;
+export const controls: VeritrailControl[] = library.controls;
 const byId = new Map(controls.map((c) => [c.id, c]));
 const pillarById = new Map(pillars.map((p) => [p.id, p]));
 
 export const CONTROL_ID_RE = /\b(AO|EI|GL|IS|SE)-\d{2}\b/;
 
 export const STANDARD_DISCLAIMER =
-  "AEGIS supports governance readiness, control implementation and evidence collection. " +
+  "VERITRAIL supports governance readiness, control implementation and evidence collection. " +
   "It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or " +
   "replace legal advice. Framework mappings are indicative.";
 
@@ -117,11 +117,11 @@ export const APPLIES_LABELS: Record<string, string> = {
   third_party: "Third-party / vendor AI",
 };
 
-export function getControl(id: string): AegisControl | undefined {
+export function getControl(id: string): VeritrailControl | undefined {
   return byId.get(id.toUpperCase());
 }
 
-export function getPillar(id: string): AegisPillar | undefined {
+export function getPillar(id: string): VeritrailPillar | undefined {
   return pillarById.get(id);
 }
 
@@ -130,14 +130,14 @@ export function controlUrl(id: string): string {
   return `/framework/controls/${id.toLowerCase()}`;
 }
 
-/** Human-readable citation, e.g. "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)". */
+/** Human-readable citation, e.g. "VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)". */
 export function controlCitation(id: string): string {
   const c = getControl(id);
-  if (!c) throw new Error(`Unknown AEGIS control ID: ${id}`);
-  return `AEGIS Control ${c.id}: ${c.title} (Control Library v${controlLibrary.version})`;
+  if (!c) throw new Error(`Unknown VERITRAIL control ID: ${id}`);
+  return `VERITRAIL Control ${c.id}: ${c.title} (Control Library v${controlLibrary.version})`;
 }
 
-export function controlMappings(c: AegisControl): Array<{ framework: string; refs: string[] }> {
+export function controlMappings(c: VeritrailControl): Array<{ framework: string; refs: string[] }> {
   return (Object.keys(FRAMEWORK_LABELS) as FrameworkKey[]).map((k) => ({
     framework: FRAMEWORK_LABELS[k],
     refs: (c.mappings?.[k] ?? []).map(String),

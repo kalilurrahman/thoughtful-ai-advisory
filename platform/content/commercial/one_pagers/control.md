@@ -1,11 +1,11 @@
 ---
-title: "One-pager — AEGIS Control"
+title: "One-pager — VERITRAIL Control"
 audience: CRO, Compliance, Legal, AI Governance Forum
 version: 1.0.0
 effective_date: 2026-10-21
 ---
 
-# AEGIS Control — policies, gates and lifecycle workflow
+# VERITRAIL Control — policies, gates and lifecycle workflow
 
 **Turn your AI policy into risk-proportionate gates that people actually follow.**
 
@@ -45,7 +45,7 @@ conditions; then change a prompt version and see the reassessment trigger.
 
 ## Limitations
 
-AEGIS workflows support your decisions; they do not make legal determinations. Integration with your ITSM or GRC
+VERITRAIL workflows support your decisions; they do not make legal determinations. Integration with your ITSM or GRC
 tooling is via API/CSV in the MVP.
 
 ## Commercials

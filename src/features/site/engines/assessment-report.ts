@@ -1,8 +1,8 @@
 /*
- * AEGIS Maturity Self-Assessment — Markdown report (pure).
+ * VERITRAIL Maturity Self-Assessment — Markdown report (pure).
  *
  * Port of toMarkdown() in platform/app/website/static/js/assessment-report.js, which mirrors
- * aegis_reports.maturity.render_maturity_markdown for the in-browser "Download Markdown" path.
+ * veritrail_reports.maturity.render_maturity_markdown for the in-browser "Download Markdown" path.
  * The internal lead qualification (result.lead) is never rendered.
  */
 import type { AssessmentBundle, AssessmentResult, ControlMappings } from "./assessment-engine";
@@ -53,7 +53,7 @@ export function controlCitationFrom(bundle: AssessmentBundle, id: string): strin
   const c = bundle.controls[id];
   if (!c) return null;
   return (
-    "AEGIS Control " +
+    "VERITRAIL Control " +
     id +
     ": " +
     c.title +
@@ -63,10 +63,10 @@ export function controlCitationFrom(bundle: AssessmentBundle, id: string): strin
   );
 }
 
-/** Safe download name, e.g. AEGIS_Maturity_Report_Acme_Corp.md */
+/** Safe download name, e.g. VERITRAIL_Maturity_Report_Acme_Corp.md */
 export function markdownFilename(company: string): string {
   return (
-    "AEGIS_Maturity_Report" +
+    "VERITRAIL_Maturity_Report" +
     (company ? "_" + company.replace(/[^A-Za-z0-9]+/g, "_").slice(0, 40) : "") +
     ".md"
   );
@@ -79,7 +79,7 @@ export interface MarkdownOptions {
   generated?: string;
 }
 
-/** Markdown report generated in the browser (not stored by AEGIS). */
+/** Markdown report generated in the browser (not stored by VERITRAIL). */
 export function toMarkdown(result: AssessmentResult, opts: MarkdownOptions): string {
   const bundle = opts.bundle;
   const tpl = bundle.template;
@@ -100,7 +100,7 @@ export function toMarkdown(result: AssessmentResult, opts: MarkdownOptions): str
       result.template_version +
       ")  ",
   );
-  L.push("**Generated:** " + gen + " (in your browser; not stored by AEGIS)  ");
+  L.push("**Generated:** " + gen + " (in your browser; not stored by VERITRAIL)  ");
   L.push(
     "**Evidence status:** " +
       result.evidence_status +
@@ -140,7 +140,7 @@ export function toMarkdown(result: AssessmentResult, opts: MarkdownOptions): str
   }
   L.push(
     "",
-    "Scoring: domain score = sum of answers ÷ maximum possible × 100; overall = Σ(domain score × weight). Source: AEGIS self-assessment template " +
+    "Scoring: domain score = sum of answers ÷ maximum possible × 100; overall = Σ(domain score × weight). Source: VERITRAIL self-assessment template " +
       result.template_id +
       " v" +
       result.template_version +
@@ -170,7 +170,7 @@ export function toMarkdown(result: AssessmentResult, opts: MarkdownOptions): str
   L.push("", "## 4. Top gaps", "");
   if (result.gaps.length) {
     L.push(
-      "| # | Domain | Question | Answer | Recommended action | AEGIS controls |",
+      "| # | Domain | Question | Answer | Recommended action | VERITRAIL controls |",
       "|---|---|---|---|---|---|",
     );
     result.gaps.forEach((g, i) => {
@@ -237,7 +237,7 @@ export function toMarkdown(result: AssessmentResult, opts: MarkdownOptions): str
     L.push("");
   }
   L.push(
-    "## 7. Recommended AEGIS controls",
+    "## 7. Recommended VERITRAIL controls",
     "",
     "| Control | Pillar | Priority | NIST AI RMF | ISO/IEC 42001 | EU AI Act |",
     "|---|---|---|---|---|---|",
@@ -264,7 +264,7 @@ export function toMarkdown(result: AssessmentResult, opts: MarkdownOptions): str
   }
   L.push(
     "",
-    "Framework mappings are indicative AEGIS interpretations (Control Library v" +
+    "Framework mappings are indicative VERITRAIL interpretations (Control Library v" +
       (bundle.control_library_version || "") +
       ").",
     "",
@@ -296,12 +296,13 @@ export function toMarkdown(result: AssessmentResult, opts: MarkdownOptions): str
     "These indicators summarise self-reported practices that relate to each framework area. They do not indicate conformity with ISO/IEC 42001, compliance with the EU AI Act, or alignment with NIST AI RMF, and EU AI Act applicability depends on your role (provider/deployer) and system classification.",
     "",
   );
-  L.push("## 9. Recommended AEGIS modules", "");
-  for (const m of result.recommended_modules) L.push("- **AEGIS " + m.module + "** — " + m.reason);
+  L.push("## 9. Recommended VERITRAIL modules", "");
+  for (const m of result.recommended_modules)
+    L.push("- **VERITRAIL " + m.module + "** — " + m.reason);
   L.push("");
   const cta = result.cta.primary;
   L.push(
-    "## 10. Next step: AEGIS Governance Baseline",
+    "## 10. Next step: VERITRAIL Governance Baseline",
     "",
     cta.description,
     "",
@@ -328,7 +329,7 @@ export function toMarkdown(result: AssessmentResult, opts: MarkdownOptions): str
     if (c) L.push("- " + c);
   }
   L.push(
-    "- AEGIS Self-Assessment template " + result.template_id + " v" + result.template_version,
+    "- VERITRAIL Self-Assessment template " + result.template_id + " v" + result.template_version,
     "",
   );
   L.push("*" + result.standard_disclaimer + "*", "");

@@ -1,10 +1,10 @@
-/* AEGIS guardrail generator: form -> POST /api/shield/advise -> risk profile, tool matrix, draft policy YAML. */
+/* VERITRAIL guardrail generator: form -> POST /api/shield/advise -> risk profile, tool matrix, draft policy YAML. */
 (function () {
   'use strict';
   var doc = document;
   var section = doc.getElementById('guardrail-generator');
-  if (!section || !window.AEGIS || !window.AegisTools) { return; }
-  var A = window.AEGIS, T = window.AegisTools, el = T.el;
+  if (!section || !window.VERITRAIL || !window.VeritrailTools) { return; }
+  var A = window.VERITRAIL, T = window.VeritrailTools, el = T.el;
   var cfg = A.readConfig(doc);
   var form = doc.getElementById('gg-form');
   var status = doc.getElementById('gg-status');
@@ -97,12 +97,12 @@
     }
     var assumptions = data.assumptions || [];
     if (assumptions.length) {
-      out.appendChild(el(doc, 'h3', { text: 'Assumptions AEGIS made' }));
+      out.appendChild(el(doc, 'h3', { text: 'Assumptions VERITRAIL made' }));
       var au = el(doc, 'ul');
       assumptions.forEach(function (a) { au.appendChild(el(doc, 'li', {}, [T.badge(doc, 'Inferred'), ' ' + a.field + ' = ' + a.assumed + (a.why ? ' — ' + a.why : '')])); });
       out.appendChild(au);
     }
-    out.appendChild(T.controlLinks(doc, data.citations || [], 'AEGIS controls cited: '));
+    out.appendChild(T.controlLinks(doc, data.citations || [], 'VERITRAIL controls cited: '));
     if (data.policy_validation && data.policy_validation.valid === false) {
       out.appendChild(el(doc, 'p', { className: 'notice notice--error', text: 'Schema validation reported issues: ' + (data.policy_validation.errors || []).join('; ') }));
     }
@@ -131,8 +131,8 @@
         A.setStatus(status, (r.data && r.data.error) || 'Please check your inputs.', 'error');
       } else {
         T.showUnavailable(section, r.kind === 'unavailable'
-          ? 'The guardrail generator needs the AEGIS service, which is not reachable from this page. Nothing you entered was sent or stored. Request a demo and we will generate draft guardrails for your system with you.'
-          : 'The AEGIS service returned an error, so no guardrails were generated. Please try again later or request a demo.');
+          ? 'The guardrail generator needs the VERITRAIL service, which is not reachable from this page. Nothing you entered was sent or stored. Request a demo and we will generate draft guardrails for your system with you.'
+          : 'The VERITRAIL service returned an error, so no guardrails were generated. Please try again later or request a demo.');
       }
     });
   });
@@ -142,7 +142,7 @@
       A.setStatus(copyStatus, ok ? 'Policy YAML copied to the clipboard.' : 'Copy is not available in this browser; select the text and copy it manually.', ok ? 'success' : 'error');
     });
   });
-  function fileBase() { return (current && current.policy && current.policy.policy_id) || 'aegis-draft-policy'; }
+  function fileBase() { return (current && current.policy && current.policy.policy_id) || 'veritrail-draft-policy'; }
   doc.getElementById('gg-download').addEventListener('click', function () {
     T.downloadText(doc, policyEl.textContent, fileBase() + '.yaml', 'application/yaml');
   });

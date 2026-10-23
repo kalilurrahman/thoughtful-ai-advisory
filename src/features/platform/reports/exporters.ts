@@ -1,5 +1,5 @@
 // File exporters (CSV, JSON, Markdown) with CSV-injection protection — a port of
-// platform/app/reports/aegis_reports/exporters.py, producing browser downloads.
+// platform/app/reports/veritrail_reports/exporters.py, producing browser downloads.
 
 const FORMULA_PREFIXES = ["=", "+", "-", "@", "\t", "\r"];
 

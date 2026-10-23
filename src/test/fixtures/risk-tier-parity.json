@@ -39,10 +39,10 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Medium (score 0). Triggers: Tier floored at Medium because key intake facts are missing (safest default). Provisional — missing: purpose, decision_impact, affected_parties, data_sensitivity, autonomy, domain_category. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -50,7 +50,7 @@
           "GL-02",
           "GL-03"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -93,10 +93,10 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Medium (score 0). Triggers: Tier floored at Medium because key intake facts are missing (safest default). Provisional — missing: purpose, decision_impact, affected_parties, data_sensitivity, autonomy, domain_category. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -104,7 +104,7 @@
           "GL-02",
           "GL-03"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -127,31 +127,31 @@
             "factor": "decision_impact",
             "value": "none",
             "points": 0,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "internal",
             "points": 0,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "internal",
             "points": 5,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "none",
             "points": 0,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "internal_productivity",
             "points": 0,
-            "citation": "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
           }
         ],
         "triggers": [],
@@ -166,13 +166,13 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Low (score 5). Drivers: data_sensitivity=internal (+5). Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -183,7 +183,7 @@
           "IS-03",
           "IS-09"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -205,25 +205,25 @@
             "factor": "decision_impact",
             "value": "none",
             "points": 0,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "internal",
             "points": 0,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "internal",
             "points": 5,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "suggests",
             "points": 5,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           }
         ],
         "triggers": [],
@@ -242,13 +242,13 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Low (score 10). Drivers: data_sensitivity=internal (+5); autonomy=suggests (+5). Provisional — missing: domain_category. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -259,7 +259,7 @@
           "IS-03",
           "IS-09"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -284,43 +284,43 @@
             "factor": "decision_impact",
             "value": "advisory",
             "points": 5,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "customers",
             "points": 10,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "personal",
             "points": 15,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "suggests",
             "points": 5,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "customer_service",
             "points": 0,
-            "citation": "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
           },
           {
             "factor": "generative_ai",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
           },
           {
             "factor": "third_party_model",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)"
           }
         ],
         "triggers": [],
@@ -339,15 +339,15 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Medium (score 45). Drivers: decision_impact=advisory (+5); affected_parties=customers (+10); data_sensitivity=personal (+15); autonomy=suggests (+5); generative_ai=True (+5); third_party_model=True (+5). Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)",
-          "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)",
+          "VERITRAIL Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -360,7 +360,7 @@
           "IS-09",
           "IS-14"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -385,37 +385,37 @@
             "factor": "decision_impact",
             "value": "automated_decision",
             "points": 30,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "customers",
             "points": 10,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "personal",
             "points": 15,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "acts_autonomously",
             "points": 30,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "credit — Creditworthiness / credit scoring (Annex III area 5)",
             "points": 30,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           },
           {
             "factor": "eu_exposure",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -438,14 +438,14 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier High (score 120). Drivers: decision_impact=automated_decision (+30); affected_parties=customers (+10); data_sensitivity=personal (+15); autonomy=acts_autonomously (+30); domain_category=credit — Creditworthiness / credit scoring (Annex III area 5) (+30); eu_exposure=True (+5). Triggers: Potential EU AI Act high-risk area: Creditworthiness / credit scoring (Annex III area 5) — legal classification review required (Art. 6); Material or automated decisions in a sensitive (Annex III-like) domain. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -457,7 +457,7 @@
           "IS-03",
           "IS-09"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -481,37 +481,37 @@
             "factor": "decision_impact",
             "value": "advisory",
             "points": 5,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "public",
             "points": 15,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "personal",
             "points": 15,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "suggests",
             "points": 5,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "employment — Employment and worker management (Annex III area 4)",
             "points": 30,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           },
           {
             "factor": "eu_exposure",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -532,14 +532,14 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier High (score 75). Drivers: decision_impact=advisory (+5); affected_parties=public (+15); data_sensitivity=personal (+15); autonomy=suggests (+5); domain_category=employment — Employment and worker management (Annex III area 4) (+30); eu_exposure=True (+5). Triggers: Potential EU AI Act high-risk area: Employment and worker management (Annex III area 4) — legal classification review required (Art. 6). Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -551,7 +551,7 @@
           "IS-03",
           "IS-09"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -575,37 +575,37 @@
             "factor": "decision_impact",
             "value": "material",
             "points": 20,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "vulnerable",
             "points": 25,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "special_category",
             "points": 25,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "acts_with_approval",
             "points": 15,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "healthcare",
             "points": 20,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           },
           {
             "factor": "generative_ai",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -629,15 +629,15 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier High (score 110). Drivers: decision_impact=material (+20); affected_parties=vulnerable (+25); data_sensitivity=special_category (+25); autonomy=acts_with_approval (+15); domain_category=healthcare (+20); generative_ai=True (+5). Triggers: Special-category data used for material decisions; Material decisions affecting vulnerable people. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)",
-          "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)",
+          "VERITRAIL Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -650,7 +650,7 @@
           "IS-09",
           "IS-14"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -681,43 +681,43 @@
             "factor": "decision_impact",
             "value": "none",
             "points": 0,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "internal",
             "points": 0,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "confidential",
             "points": 10,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "acts_autonomously",
             "points": 30,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "tool_access",
             "value": "4 tool(s), 3 with write/act capability",
             "points": 15,
-            "citation": "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
           },
           {
             "factor": "external_actions",
             "value": true,
             "points": 10,
-            "citation": "AEGIS Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "other",
             "points": 0,
-            "citation": "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -739,15 +739,15 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier High (score 65). Drivers: data_sensitivity=confidential (+10); autonomy=acts_autonomously (+30); tool_access=4 tool(s), 3 with write/act capability (+15); external_actions=True (+10). Triggers: Autonomous agent with write or external-action capability. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)",
-          "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)",
-          "AEGIS Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)",
+          "VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)",
+          "VERITRAIL Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -760,7 +760,7 @@
           "IS-11",
           "IS-13"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -784,37 +784,37 @@
             "factor": "decision_impact",
             "value": "material",
             "points": 20,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "customers",
             "points": 10,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "personal",
             "points": 15,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "acts_with_approval",
             "points": 15,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "tool_access",
             "value": "2 tool(s), 1 with write/act capability",
             "points": 15,
-            "citation": "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "financial_services",
             "points": 10,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [],
@@ -834,15 +834,15 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier High (score 85). Drivers: decision_impact=material (+20); affected_parties=customers (+10); data_sensitivity=personal (+15); autonomy=acts_with_approval (+15); tool_access=2 tool(s), 1 with write/act capability (+15); domain_category=financial_services (+10). Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)",
-          "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)",
+          "VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -855,7 +855,7 @@
           "IS-09",
           "IS-11"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -882,37 +882,37 @@
             "factor": "decision_impact",
             "value": "advisory",
             "points": 5,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "internal",
             "points": 0,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "internal",
             "points": 5,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "suggests",
             "points": 5,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "tool_access",
             "value": "2 tool(s), 0 with write/act capability",
             "points": 5,
-            "citation": "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "internal_productivity",
             "points": 0,
-            "citation": "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
           }
         ],
         "triggers": [],
@@ -929,14 +929,14 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Low (score 20). Drivers: decision_impact=advisory (+5); data_sensitivity=internal (+5); autonomy=suggests (+5); tool_access=2 tool(s), 0 with write/act capability (+5). Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)",
-          "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)",
+          "VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -948,7 +948,7 @@
           "IS-09",
           "IS-11"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -971,31 +971,31 @@
             "factor": "decision_impact",
             "value": "automated_decision",
             "points": 30,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "public",
             "points": 15,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "personal",
             "points": 15,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "acts_autonomously",
             "points": 30,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "public_sector",
             "points": 10,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -1017,15 +1017,15 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Prohibited-review (score 100). Drivers: decision_impact=automated_decision (+30); affected_parties=public (+15); data_sensitivity=personal (+15); autonomy=acts_autonomously (+30); domain_category=public_sector (+10). Triggers: Possible prohibited practice (EU AI Act Art. 5 screen): Social scoring. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control AO-10: Prohibited and restricted AI use policy (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control AO-10: Prohibited and restricted AI use policy (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -1038,7 +1038,7 @@
           "IS-03",
           "IS-09"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -1058,13 +1058,13 @@
             "factor": "domain_category",
             "value": "education — Education and vocational training (Annex III area 3)",
             "points": 30,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           },
           {
             "factor": "eu_exposure",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -1097,12 +1097,12 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Prohibited-review (score 35). Drivers: domain_category=education — Education and vocational training (Annex III area 3) (+30); eu_exposure=True (+5). Triggers: Potential EU AI Act high-risk area: Education and vocational training (Annex III area 3) — legal classification review required (Art. 6); Possible prohibited practice (EU AI Act Art. 5 screen): Emotion recognition (workplace/education contexts); Possible prohibited practice (EU AI Act Art. 5 screen): Manipulative techniques exploiting vulnerabilities. Provisional — missing: decision_impact, affected_parties, data_sensitivity, autonomy. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control AO-10: Prohibited and restricted AI use policy (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control AO-10: Prohibited and restricted AI use policy (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -1112,7 +1112,7 @@
           "GL-02",
           "GL-03"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -1132,13 +1132,13 @@
             "factor": "decision_impact",
             "value": "material",
             "points": 20,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "law_enforcement — Law enforcement (Annex III area 6)",
             "points": 30,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -1170,12 +1170,12 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Prohibited-review (score 50). Drivers: decision_impact=material (+20); domain_category=law_enforcement — Law enforcement (Annex III area 6) (+30). Triggers: Material or automated decisions in a sensitive (Annex III-like) domain; Possible prohibited practice (EU AI Act Art. 5 screen): Crime prediction based solely on profiling. Provisional — missing: purpose, affected_parties, data_sensitivity, autonomy. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control AO-10: Prohibited and restricted AI use policy (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control AO-10: Prohibited and restricted AI use policy (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -1185,7 +1185,7 @@
           "GL-02",
           "GL-03"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -1205,13 +1205,13 @@
             "factor": "data_sensitivity",
             "value": "special_category",
             "points": 25,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "biometric — Biometrics (Annex III area 1)",
             "points": 30,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -1240,13 +1240,13 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Prohibited-review (score 55). Drivers: data_sensitivity=special_category (+25); domain_category=biometric — Biometrics (Annex III area 1) (+30). Triggers: Possible prohibited practice (EU AI Act Art. 5 screen): Real-time remote biometric identification in public spaces. Provisional — missing: decision_impact, affected_parties, autonomy. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control AO-10: Prohibited and restricted AI use policy (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control AO-10: Prohibited and restricted AI use policy (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -1257,7 +1257,7 @@
           "GL-03",
           "IS-03"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -1280,7 +1280,7 @@
             "factor": "domain_category",
             "value": "gardening",
             "points": 0,
-            "citation": "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
           }
         ],
         "triggers": [],
@@ -1295,10 +1295,10 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Low (score 0). Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -1306,7 +1306,7 @@
           "GL-02",
           "GL-03"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -1329,25 +1329,25 @@
             "factor": "external_actions",
             "value": true,
             "points": 10,
-            "citation": "AEGIS Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "migration — Migration, asylum and border control (Annex III area 7)",
             "points": 30,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           },
           {
             "factor": "generative_ai",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
           },
           {
             "factor": "eu_exposure",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -1377,13 +1377,13 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Medium (score 50). Drivers: external_actions=True (+10); domain_category=migration — Migration, asylum and border control (Annex III area 7) (+30); generative_ai=True (+5); eu_exposure=True (+5). Triggers: Potential EU AI Act high-risk area: Migration, asylum and border control (Annex III area 7) — legal classification review required (Art. 6). Provisional — missing: decision_impact, affected_parties, data_sensitivity, autonomy. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)",
-          "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-13: Human approval for high-impact actions (Control Library v1.0.0)",
+          "VERITRAIL Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -1394,7 +1394,7 @@
           "IS-13",
           "IS-14"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -1417,31 +1417,31 @@
             "factor": "decision_impact",
             "value": "material",
             "points": 20,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "public",
             "points": 15,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "personal",
             "points": 15,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "acts_with_approval",
             "points": 15,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "other",
             "points": 0,
-            "citation": "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
           }
         ],
         "triggers": [],
@@ -1461,13 +1461,13 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier High (score 65). Drivers: decision_impact=material (+20); affected_parties=public (+15); data_sensitivity=personal (+15); autonomy=acts_with_approval (+15). Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -1478,7 +1478,7 @@
           "IS-03",
           "IS-09"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -1502,31 +1502,31 @@
             "factor": "decision_impact",
             "value": "material",
             "points": 20,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "vulnerable",
             "points": 25,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "personal",
             "points": 15,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "suggests",
             "points": 5,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "essential_services — Access to essential private/public services (Annex III area 5)",
             "points": 30,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [
@@ -1548,14 +1548,14 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier High (score 95). Drivers: decision_impact=material (+20); affected_parties=vulnerable (+25); data_sensitivity=personal (+15); autonomy=suggests (+5); domain_category=essential_services — Access to essential private/public services (Annex III area 5) (+30). Triggers: Material or automated decisions in a sensitive (Annex III-like) domain; Material decisions affecting vulnerable people. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -1567,7 +1567,7 @@
           "IS-03",
           "IS-09"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -1598,55 +1598,55 @@
             "factor": "decision_impact",
             "value": "none",
             "points": 0,
-            "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
           },
           {
             "factor": "affected_parties",
             "value": "public",
             "points": 15,
-            "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
           },
           {
             "factor": "data_sensitivity",
             "value": "public",
             "points": 0,
-            "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
           },
           {
             "factor": "autonomy",
             "value": "suggests",
             "points": 5,
-            "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
           },
           {
             "factor": "tool_access",
             "value": "1 tool(s), 1 with write/act capability",
             "points": 15,
-            "citation": "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)"
           },
           {
             "factor": "domain_category",
             "value": "other",
             "points": 0,
-            "citation": "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)"
           },
           {
             "factor": "generative_ai",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
           },
           {
             "factor": "third_party_model",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)"
           },
           {
             "factor": "eu_exposure",
             "value": true,
             "points": 5,
-            "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+            "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
           }
         ],
         "triggers": [],
@@ -1666,17 +1666,17 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Medium (score 50). Drivers: affected_parties=public (+15); autonomy=suggests (+5); tool_access=1 tool(s), 1 with write/act capability (+15); generative_ai=True (+5); third_party_model=True (+5); eu_exposure=True (+5). Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-          "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)",
-          "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-          "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)",
-          "AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)",
-          "AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
+          "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+          "VERITRAIL Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)",
+          "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+          "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)",
+          "VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)",
+          "VERITRAIL Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "AO-07",
@@ -1691,7 +1691,7 @@
           "IS-11",
           "IS-14"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     },
     {
@@ -1738,10 +1738,10 @@
         "requires_human_confirmation": true,
         "rationale": "Preliminary tier Medium (score 0). Triggers: Tier floored at Medium because key intake facts are missing (safest default). Provisional — missing: purpose, decision_impact, affected_parties, data_sensitivity, autonomy, domain_category. Inferred from user-provided intake; requires human confirmation.",
         "citations": [
-          "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-          "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-          "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-          "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
+          "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+          "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+          "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+          "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)"
         ],
         "citation_ids": [
           "EI-02",
@@ -1749,7 +1749,7 @@
           "GL-02",
           "GL-03"
         ],
-        "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+        "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
       }
     }
   ]

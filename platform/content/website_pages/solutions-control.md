@@ -1,17 +1,17 @@
 ---
-title: "AEGIS Control — risk-tiered AI intake, approval and lifecycle governance"
-h1: "AEGIS Control: risk-proportionate gates from intake to retirement"
+title: "VERITRAIL Control — risk-tiered AI intake, approval and lifecycle governance"
+h1: "VERITRAIL Control: risk-proportionate gates from intake to retirement"
 slug: /solutions/control/
-description: "AEGIS Control runs AI intake, triage, risk-tiered approvals, change triggers, exceptions and recertification as workflows that produce evidence by default."
+description: "VERITRAIL Control runs AI intake, triage, risk-tiered approvals, change triggers, exceptions and recertification as workflows that produce evidence by default."
 section: solutions
-nav_label: "AEGIS Control"
+nav_label: "VERITRAIL Control"
 nav_order: 40
 template: page
 schema_type: Service
 primary_cta: demo
 secondary_cta: baseline
 faq:
-  - q: "Can AEGIS Control approve use cases automatically?"
+  - q: "Can VERITRAIL Control approve use cases automatically?"
     a: "It can route and pre-populate decisions, but approvals are made by the human approvers defined in your approval matrix. Risk-tier changes and exception approvals always require a named human approver."
   - q: "Does Control replace our existing GRC or ticketing tools?"
     a: "Not necessarily. Control holds the AI-specific workflow and evidence; decisions and records can be exported to existing GRC or ticketing systems. Integration scope is agreed during onboarding."
@@ -20,7 +20,7 @@ updated: 2026-10-21
 
 **Core message: governance should be fast for low-risk AI and rigorous for high-risk AI — and leave a record either way.**
 
-AEGIS Control turns your AI policy into workflows. Every use case passes intake and triage; the risk tier determines assessment depth and the approver; approvals carry conditions that are checked before go-live; and material changes trigger reassessment. The result is a lifecycle that business teams can navigate and auditors can follow.
+VERITRAIL Control turns your AI policy into workflows. Every use case passes intake and triage; the risk tier determines assessment depth and the approver; approvals carry conditions that are checked before go-live; and material changes trigger reassessment. The result is a lifecycle that business teams can navigate and auditors can follow.
 
 ## Capabilities
 
@@ -66,7 +66,7 @@ This is an illustrative starting point; your forum should set and approve its ow
 
 ## Example: change triggers that catch what release processes miss
 
-Generative AI systems change in ways traditional change management does not notice. A typical AEGIS trigger set (GL-04) includes:
+Generative AI systems change in ways traditional change management does not notice. A typical VERITRAIL trigger set (GL-04) includes:
 
 | Change | Default handling |
 |---|---|
@@ -80,10 +80,10 @@ Generative AI systems change in ways traditional change management does not noti
 
 ## How it fits
 
-Control consumes inventory records from [AEGIS Register](/solutions/register/) and assessments from [AEGIS Assess](/solutions/assess/), hands approved runtime conditions to [AEGIS Shield](/solutions/shield/), and feeds decision records to [AEGIS Assurance](/solutions/assurance/). The [lifecycle pillar](/framework/pillars/lifecycle/) and [runbooks](/framework/runbooks/) describe the underlying method.
+Control consumes inventory records from [VERITRAIL Register](/solutions/register/) and assessments from [VERITRAIL Assess](/solutions/assess/), hands approved runtime conditions to [VERITRAIL Shield](/solutions/shield/), and feeds decision records to [VERITRAIL Assurance](/solutions/assurance/). The [lifecycle pillar](/framework/pillars/lifecycle/) and [runbooks](/framework/runbooks/) describe the underlying method.
 
 ## Limitations
 
-Workflows only produce evidence when teams use them. Control cannot detect AI deployed outside the process — that is why it is paired with shadow-AI reconciliation in Register. Approval quality depends on approvers having the time and information to challenge; AEGIS supplies the information, not the judgement.
+Workflows only produce evidence when teams use them. Control cannot detect AI deployed outside the process — that is why it is paired with shadow-AI reconciliation in Register. Approval quality depends on approvers having the time and information to challenge; VERITRAIL supplies the information, not the judgement.
 
 {{cta:demo}}

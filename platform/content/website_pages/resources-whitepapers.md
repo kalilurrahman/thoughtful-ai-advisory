@@ -1,8 +1,8 @@
 ---
-title: "AI governance whitepapers — coming soon from AEGIS"
+title: "AI governance whitepapers — coming soon from VERITRAIL"
 h1: "Whitepapers"
 slug: /resources/whitepapers/
-description: "Planned AEGIS whitepapers on agent governance, AI evidence, risk tiering and framework mappings. None are published yet — subscribe to be notified on release."
+description: "Planned VERITRAIL whitepapers on agent governance, AI evidence, risk tiering and framework mappings. None are published yet — subscribe for updates."
 section: resources
 nav_label: "Whitepapers"
 nav_order: 60
@@ -30,7 +30,7 @@ We are writing a small number of longer papers on problems that do not fit in a 
 
 ## In the meantime
 
-- Read the [AEGIS Enterprise Blueprint](/resources/blueprint/), available now.
+- Read the [VERITRAIL Enterprise Blueprint](/resources/blueprint/), available now.
 - Read the launch articles on the [blog](/resources/blog/).
 - Take the [maturity self-assessment](/tools/maturity-assessment/).
 

@@ -1,12 +1,12 @@
-"""Unit tests: the build-time quality checker (aegis_website.checks)."""
+"""Unit tests: the build-time quality checker (veritrail_website.checks)."""
 from __future__ import annotations
 
 from pathlib import Path
 
-from aegis_common.evidence import find_prohibited_claims
-from aegis_website.checks import analyze_html, check_site
+from veritrail_common.evidence import find_prohibited_claims
+from veritrail_website.checks import analyze_html, check_site
 
-GOOD = """<!DOCTYPE html><html lang="en"><head><title>T | AEGIS</title>
+GOOD = """<!DOCTYPE html><html lang="en"><head><title>T | VERITRAIL</title>
 <meta name="description" content="A description."><link rel="stylesheet" href="/static/a.css"></head>
 <body><a class="skip-link" href="#main">Skip</a><header><nav aria-label="Primary"><a href="/">Home</a></nav></header>
 <main id="main"><h1>Heading</h1>{body}</main><footer>f</footer></body></html>"""
@@ -99,7 +99,7 @@ def test_check_site_links_fragments_and_assets(tmp_path):
 def test_check_site_flags_prohibited_claims(tmp_path):
     (tmp_path / "static").mkdir()
     (tmp_path / "static" / "a.css").write_text("")
-    write(tmp_path, "index.html", "<p>With AEGIS your organization is fully compliant with the EU AI Act.</p>"
-                                  "<p>AEGIS does not certify compliance.</p>")
+    write(tmp_path, "index.html", "<p>With VERITRAIL your organization is fully compliant with the EU AI Act.</p>"
+                                  "<p>VERITRAIL does not certify compliance.</p>")
     errs = check_site(tmp_path, claim_checker=find_prohibited_claims)["errors"]
     assert len([e for e in errs if "prohibited compliance claim" in e]) == 1

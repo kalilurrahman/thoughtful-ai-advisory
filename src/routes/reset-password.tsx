@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { pageHead } from "@/features/governance/meta";
 export const Route = createFileRoute("/reset-password")({
-  head: () => pageHead("Reset password", "Securely reset the password for your AEGIS account."),
+  head: () => pageHead("Reset password", "Securely reset the password for your VERITRAIL account."),
   component: ResetPassword,
 });
 function ResetPassword() {

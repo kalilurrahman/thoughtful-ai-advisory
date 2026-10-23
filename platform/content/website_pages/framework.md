@@ -1,6 +1,6 @@
 ---
-title: "The AEGIS Framework — five pillars and 64 AI governance controls"
-h1: "The AEGIS Framework"
+title: "The VERITRAIL Framework — five pillars and 64 AI governance controls"
+h1: "The VERITRAIL Framework"
 slug: /framework/
 description: "Five pillars, 64 controls, an 8-domain maturity model and implementation runbooks — an evidence-first structure for governing AI systems and agents."
 section: framework
@@ -11,14 +11,14 @@ schema_type: WebPage
 primary_cta: blueprint
 secondary_cta: assessment
 faq:
-  - q: "Is the AEGIS Framework a standard?"
+  - q: "Is the VERITRAIL Framework a standard?"
     a: "No. It is an operational control framework that helps you implement and evidence AI governance. It maps indicatively to NIST AI RMF, ISO/IEC 42001 and the EU AI Act, but it is not an official crosswalk or a certification scheme."
   - q: "How often is the control library updated?"
-    a: "The control library is versioned and reviewed quarterly. Every control citation in AEGIS outputs includes the library version so you can trace which version a recommendation was based on."
+    a: "The control library is versioned and reviewed quarterly. Every control citation in VERITRAIL outputs includes the library version so you can trace which version a recommendation was based on."
 updated: 2026-10-21
 ---
 
-The AEGIS Framework is the backbone of everything AEGIS does. The self-assessment scores against it, the AEGIS Agent cites it, Shield policies reference it, and evidence packs are organized by it. It was designed around one test: **can an organization show, with evidence, that a control is operating?**
+The VERITRAIL Framework is the backbone of everything VERITRAIL does. The self-assessment scores against it, the VERITRAIL Agent cites it, Shield policies reference it, and evidence packs are organized by it. It was designed around one test: **can an organization show, with evidence, that a control is operating?**
 
 ## Why another framework?
 
@@ -29,7 +29,7 @@ NIST AI RMF, ISO/IEC 42001 and the EU AI Act each describe *what* good AI govern
 - **Evidence is an afterthought.** Policies get written; the records that prove the policy is followed do not.
 - **Agents are not covered well.** Tool access, autonomous actions and runtime containment need explicit controls, not just model-centric guidance.
 
-The AEGIS Framework addresses these by defining each control with an objective, a scope (`all`, `high_risk`, `genai`, `agentic` or `third_party`), an owner role, a priority, the evidence that demonstrates it, the AEGIS module that implements it, and indicative framework mappings.
+The VERITRAIL Framework addresses these by defining each control with an objective, a scope (`all`, `high_risk`, `genai`, `agentic` or `third_party`), an owner role, a priority, the evidence that demonstrates it, the VERITRAIL module that implements it, and indicative framework mappings.
 
 ## Structure
 
@@ -61,7 +61,7 @@ Of the 64 controls, 17 are marked **critical** priority. If you can evidence not
 
 ## Evidence-first by design
 
-Every AEGIS finding carries one of five evidence labels:
+Every VERITRAIL finding carries one of five evidence labels:
 
 | Label | Meaning |
 |---|---|
@@ -81,6 +81,6 @@ Each control carries indicative mappings to NIST AI RMF 1.0 subcategories, ISO/I
 
 ## Get the full framework
 
-The AEGIS Enterprise Blueprint packages the pillars, the control library, the maturity model and a phased rollout plan in a single document for your governance forum.
+The VERITRAIL Enterprise Blueprint packages the pillars, the control library, the maturity model and a phased rollout plan in a single document for your governance forum.
 
 {{cta:blueprint}}

@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""AEGIS ROI & business-case calculator.
+"""VERITRAIL ROI & business-case calculator.
 
-Transparent, assumption-labelled estimate of the annual value of AI governance automation with AEGIS.
+Transparent, assumption-labelled estimate of the annual value of AI governance automation with VERITRAIL.
 Every output line carries its formula and the assumptions it depends on. Every assumption carries a source label:
 
 * ``Customer input``                        — a fact the customer provides about today's operation
 * ``Customer estimate``                     — a judgement the customer makes (e.g. value of a day of delay)
-* ``AEGIS hypothesis — validate in pilot``  — an AEGIS effect-size assumption NOT yet measured with customers
+* ``VERITRAIL hypothesis — validate in pilot``  — an VERITRAIL effect-size assumption NOT yet measured with customers
 
-IMPORTANT: AEGIS has no measured customer results yet. The default effect sizes are planning hypotheses to be
+IMPORTANT: VERITRAIL has no measured customer results yet. The default effect sizes are planning hypotheses to be
 replaced with pilot measurements (see content/pilots/). Do not present outputs as guaranteed savings.
 
 Usage::
@@ -33,10 +33,10 @@ from dataclasses import MISSING, asdict, dataclass, fields
 
 CUSTOMER_INPUT = "Customer input"
 CUSTOMER_ESTIMATE = "Customer estimate"
-HYPOTHESIS = "AEGIS hypothesis — validate in pilot"
+HYPOTHESIS = "VERITRAIL hypothesis — validate in pilot"
 
 DISCLAIMER = (
-    "Illustrative business case. Effect sizes labelled 'AEGIS hypothesis — validate in pilot' have not been measured "
+    "Illustrative business case. Effect sizes labelled 'VERITRAIL hypothesis — validate in pilot' have not been measured "
     "with customers. Results are estimates, not guaranteed savings, and are not financial advice. Risk-reduction value "
     "is an expected-value estimate, not a prediction that incidents will or will not occur."
 )
@@ -56,9 +56,9 @@ class ROIInputs:
     delay_cost_per_day: float = 0.0               # value lost per use case per day of approval delay (0 = ignore)
     annual_incident_probability: float = 0.0      # probability of >=1 material AI incident per year (0..1)
     expected_incident_cost: float = 0.0           # expected total cost of such an incident
-    aegis_annual_cost: float = 0.0                # subscription (from proposal); 0 = benefits only
+    veritrail_annual_cost: float = 0.0                # subscription (from proposal); 0 = benefits only
     implementation_cost: float = 0.0              # one-time (e.g. Governance Baseline fee)
-    # --- AEGIS effect hypotheses (validate in pilot)
+    # --- VERITRAIL effect hypotheses (validate in pilot)
     assessment_effort_reduction: float = 0.40
     audit_prep_reduction: float = 0.50
     approval_cycle_reduction: float = 0.30
@@ -77,7 +77,7 @@ ASSUMPTION_META = {
     "delay_cost_per_day": (CUSTOMER_ESTIMATE, "Business value lost per use case per day of approval delay. Default 0 excludes this benefit."),
     "annual_incident_probability": (CUSTOMER_ESTIMATE, "Probability of at least one material AI incident in a year."),
     "expected_incident_cost": (CUSTOMER_ESTIMATE, "Expected cost of a material AI incident (response, remediation, legal, customer impact)."),
-    "aegis_annual_cost": (CUSTOMER_INPUT, "Annual AEGIS subscription from the commercial proposal (pricing is itself a hypothesis)."),
+    "veritrail_annual_cost": (CUSTOMER_INPUT, "Annual VERITRAIL subscription from the commercial proposal (pricing is itself a hypothesis)."),
     "implementation_cost": (CUSTOMER_INPUT, "One-time cost, e.g. Governance Baseline fee and internal implementation effort."),
     "assessment_effort_reduction": (HYPOTHESIS, "Share of assessment effort removed by agent-assisted, pre-populated assessments."),
     "audit_prep_reduction": (HYPOTHESIS, "Share of audit-preparation effort removed by continuous evidence capture and evidence packs."),
@@ -153,14 +153,14 @@ def calculate(inp: ROIInputs) -> dict:
                    ["realization_rate"])
     hours_freed = add("L14", "Governance hours freed per year (modelled)", "L3 + L6",
                       assess_hours_saved + audit_hours_saved, [], "hours")
-    year1_cost = add("L15", "Year-1 cost", "aegis_annual_cost + implementation_cost",
-                     inp.aegis_annual_cost + inp.implementation_cost, ["aegis_annual_cost", "implementation_cost"])
+    year1_cost = add("L15", "Year-1 cost", "veritrail_annual_cost + implementation_cost",
+                     inp.veritrail_annual_cost + inp.implementation_cost, ["veritrail_annual_cost", "implementation_cost"])
     net_y1 = add("L16", "Year-1 net benefit", "L13 − L15", realized - year1_cost, [])
-    net_steady = add("L17", "Steady-state annual net benefit", "L12 − aegis_annual_cost",
-                     gross - inp.aegis_annual_cost, ["aegis_annual_cost"])
+    net_steady = add("L17", "Steady-state annual net benefit", "L12 − veritrail_annual_cost",
+                     gross - inp.veritrail_annual_cost, ["veritrail_annual_cost"])
 
     roi_y1 = (net_y1 / year1_cost) if year1_cost > 0 else None
-    roi_steady = (net_steady / inp.aegis_annual_cost) if inp.aegis_annual_cost > 0 else None
+    roi_steady = (net_steady / inp.veritrail_annual_cost) if inp.veritrail_annual_cost > 0 else None
     payback_months = (year1_cost / (realized / 12)) if (realized > 0 and year1_cost > 0) else None
 
     assumptions = []
@@ -220,7 +220,7 @@ def _fmt(v, unit: str) -> str:
     return str(v)
 
 
-def to_markdown(result: dict, title: str = "AEGIS ROI estimate", currency: str = "USD") -> str:
+def to_markdown(result: dict, title: str = "VERITRAIL ROI estimate", currency: str = "USD") -> str:
     s = result["summary"]
     lines = [f"# {title}", "", f"> {result['disclaimer']}", "", f"Currency: {currency}. All values per year unless stated.",
              "", "## Summary", "", "| Measure | Value |", "|---|---|"]
@@ -274,13 +274,13 @@ EXAMPLE_INPUTS = ROIInputs(
     delay_cost_per_day=500,
     annual_incident_probability=0.10,
     expected_incident_cost=750_000,
-    aegis_annual_cost=75_000,
+    veritrail_annual_cost=75_000,
     implementation_cost=30_000,
 )
 
 
 def _parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="AEGIS ROI & business-case calculator (assumption-labelled).")
+    p = argparse.ArgumentParser(description="VERITRAIL ROI & business-case calculator (assumption-labelled).")
     p.add_argument("--example", action="store_true", help="use the synthetic worked-example inputs")
     p.add_argument("--format", choices=["md", "csv", "json"], default="md")
     p.add_argument("--scenarios", action="store_true", help="print conservative/base/optimistic summaries (md/json)")
@@ -291,7 +291,7 @@ def _parser() -> argparse.ArgumentParser:
         "approval_cycle_days": "--approval-cycle-days",
         "assessments_per_system_per_year": "--assessments-per-year", "new_use_cases_per_year": "--new-use-cases",
         "delay_cost_per_day": "--delay-cost-per-day", "annual_incident_probability": "--incident-probability",
-        "expected_incident_cost": "--incident-cost", "aegis_annual_cost": "--aegis-annual-cost",
+        "expected_incident_cost": "--incident-cost", "veritrail_annual_cost": "--veritrail-annual-cost",
         "implementation_cost": "--implementation-cost",
         "assessment_effort_reduction": "--assessment-effort-reduction",
         "audit_prep_reduction": "--audit-prep-reduction", "approval_cycle_reduction": "--approval-cycle-reduction",

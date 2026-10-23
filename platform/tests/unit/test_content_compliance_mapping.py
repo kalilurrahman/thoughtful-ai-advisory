@@ -5,14 +5,14 @@ import importlib.util
 import sys
 from pathlib import Path
 
-from aegis_common.content import controls
-from aegis_common.evidence import STANDARD_DISCLAIMER, find_prohibited_claims
+from veritrail_common.content import controls
+from veritrail_common.evidence import STANDARD_DISCLAIMER, find_prohibited_claims
 
 ROOT = Path(__file__).resolve().parents[2]
 DOC = ROOT / "docs" / "COMPLIANCE_MAPPING.md"
 GEN = ROOT / "docs" / "tools" / "gen_compliance_mapping.py"
 
-_spec = importlib.util.spec_from_file_location("aegis_gen_compliance_mapping", GEN)
+_spec = importlib.util.spec_from_file_location("veritrail_gen_compliance_mapping", GEN)
 gen = importlib.util.module_from_spec(_spec)
 sys.modules[_spec.name] = gen
 _dont = sys.dont_write_bytecode
@@ -70,7 +70,7 @@ def test_disclaimers_methodology_and_coverage_gaps_present():
     assert find_prohibited_claims(text) == []
 
 
-def test_support_boundaries_for_articles_aegis_cannot_discharge():
+def test_support_boundaries_for_articles_veritrail_cannot_discharge():
     text = DOC.read_text(encoding="utf-8")
     for art, phrase in (("Art. 43", "does NOT perform conformity assessment"),
                         ("Art. 49", "does NOT register systems"),

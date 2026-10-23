@@ -1,11 +1,11 @@
-# AEGIS Pilot Playbook
+# VERITRAIL Pilot Playbook
 
 Version 3.0 · 21 October 2026 · Owner: Delivery Lead · Status: Ready — awaiting design partners
 
 > **Both pilots are "Not started — awaiting design-partner recruitment."** No partner is signed and no results exist.
 > See [`content/pilots/pilot_status_tracker.md`](../content/pilots/pilot_status_tracker.md).
 
-This playbook ties together everything needed to recruit, run and close an AEGIS design-partner pilot. The same
+This playbook ties together everything needed to recruit, run and close an VERITRAIL design-partner pilot. The same
 playbook, with paid terms, runs the commercial **Governance Baseline**.
 
 ## 1. Why pilots
@@ -70,14 +70,14 @@ signals S1–S9 feed the ROI model, maturity calibration and Shield design.
 2. **Evidence labels on every finding.** Verified only with a named reviewer.
 3. **No compliance claims.** Readiness indicators only, with the standard disclaimer.
 4. **Human approval** for tier changes, exceptions, production runtime policy changes, sensitive exports and external
-   communications. AEGIS never activates partner runtime policy.
+   communications. VERITRAIL never activates partner runtime policy.
 5. **Real control IDs only**, from `content/controls/controls.yaml`.
 6. **No publicity** — names, logos, quotes or metrics — without written approval and verified metrics.
 7. **Honest scorecards** — empty until measured; misses explained, not hidden.
 
 ## 7. Roles and RACI
 
-| Activity | AEGIS delivery lead | AEGIS analyst | AEGIS Shield lead | AEGIS commercial lead | Partner sponsor | Partner pilot lead | System owners |
+| Activity | VERITRAIL delivery lead | VERITRAIL analyst | VERITRAIL Shield lead | VERITRAIL commercial lead | Partner sponsor | Partner pilot lead | System owners |
 |---|---|---|---|---|---|---|---|
 | Qualification & contract | C | — | — | A/R | C | C | — |
 | Safeguards sign-off | R | — | — | C | I | A | — |

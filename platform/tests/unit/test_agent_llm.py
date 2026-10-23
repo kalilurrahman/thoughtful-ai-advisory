@@ -1,10 +1,10 @@
 """Unit tests: optional LLM phrasing adapter — redaction in, validation out, deterministic fallback."""
 from __future__ import annotations
 
-from aegis_common.evidence import NO_SOURCE_MESSAGE
+from veritrail_common.evidence import NO_SOURCE_MESSAGE
 
-from aegis_agent import llm
-from aegis_agent.orchestrator import AegisAgent
+from veritrail_agent import llm
+from veritrail_agent.orchestrator import VeritrailAgent
 from agent_test_helpers import ASSESSOR
 
 
@@ -22,7 +22,7 @@ class Recorder:
 
 def test_default_is_deterministic(monkeypatch):
     llm.reset_llm_adapter()
-    monkeypatch.delenv("AEGIS_LLM_PROVIDER", raising=False)
+    monkeypatch.delenv("VERITRAIL_LLM_PROVIDER", raising=False)
     assert llm.get_llm_adapter() is None
     text, meta = llm.polish("IS-11 applies.", allowed_controls={"IS-11"}, allowed_questions=set())
     assert text == "IS-11 applies." and meta["used"] is False
@@ -30,13 +30,13 @@ def test_default_is_deterministic(monkeypatch):
 
 def test_env_configuration_requires_key_and_https(monkeypatch):
     llm.reset_llm_adapter()
-    monkeypatch.setenv("AEGIS_LLM_PROVIDER", "openai_compatible")
-    monkeypatch.setenv("AEGIS_LLM_API_KEY", "k")
-    monkeypatch.setenv("AEGIS_LLM_ENDPOINT", "http://insecure.example/v1/chat")
+    monkeypatch.setenv("VERITRAIL_LLM_PROVIDER", "openai_compatible")
+    monkeypatch.setenv("VERITRAIL_LLM_API_KEY", "k")
+    monkeypatch.setenv("VERITRAIL_LLM_ENDPOINT", "http://insecure.example/v1/chat")
     assert llm.get_llm_adapter() is None
-    monkeypatch.setenv("AEGIS_LLM_ENDPOINT", "https://llm.example/v1/chat")
+    monkeypatch.setenv("VERITRAIL_LLM_ENDPOINT", "https://llm.example/v1/chat")
     assert llm.get_llm_adapter().name == "openai_compatible"
-    monkeypatch.delenv("AEGIS_LLM_API_KEY")
+    monkeypatch.delenv("VERITRAIL_LLM_API_KEY")
     assert llm.get_llm_adapter() is None
 
 
@@ -83,10 +83,10 @@ def test_adapter_errors_fall_back():
 
 
 def test_agent_uses_adapter_only_when_valid(tmp_path):
-    good = AegisAgent(tmp_path / "a", llm_adapter=Recorder(lambda p: "Summary — " + p))
+    good = VeritrailAgent(tmp_path / "a", llm_adapter=Recorder(lambda p: "Summary — " + p))
     r = good.handle("What does IS-11 require?", "s", ASSESSOR)
     assert r["llm"]["used"] and r["answer"].startswith("Summary — ")
     assert good.audit.query(action="agent.llm.phrasing")
-    bad = AegisAgent(tmp_path / "b", llm_adapter=Recorder(lambda p: "You are certified. " + p))
+    bad = VeritrailAgent(tmp_path / "b", llm_adapter=Recorder(lambda p: "You are certified. " + p))
     r = bad.handle("Are we EU AI Act compliant?", "s", ASSESSOR)
     assert not r["llm"]["used"] and "certified. " not in r["answer"]

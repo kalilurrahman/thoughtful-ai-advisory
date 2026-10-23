@@ -1,8 +1,8 @@
 /**
- * AEGIS policy decision engine — browser port of
- * platform/app/policy-engine/aegis_policy/engine.py.
+ * VERITRAIL policy decision engine — browser port of
+ * platform/app/policy-engine/veritrail_policy/engine.py.
  *
- * "AI proposes. AEGIS evaluates. Approved actions execute."
+ * "AI proposes. VERITRAIL evaluates. Approved actions execute."
  *
  * `new PolicyEngine(policy).evaluate(request)` evaluates a prompt, model response, tool call or
  * tool output against one runtime policy. Evaluation order:
@@ -119,7 +119,7 @@ const SURFACE: Record<RequestType, string> = {
 
 // ------------------------------------------------------------------ types
 
-/** A policy document (aegis.policy/v1); validated by the shield schema port. */
+/** A policy document (veritrail.policy/v1); validated by the shield schema port. */
 export type Policy = Record<string, unknown>;
 type Dict = Record<string, unknown>;
 
@@ -264,7 +264,7 @@ export interface PolicyEngineOptions {
   validate?: boolean;
   /** Lifetime of a granted, unused human approval. */
   approvalTtlSeconds?: number;
-  /** Id factory (aegis_common.ids.new_id); injectable for deterministic tests. */
+  /** Id factory (veritrail_common.ids.new_id); injectable for deterministic tests. */
   newId?: (prefix: string) => string;
   /** High-resolution timer in seconds (time.perf_counter); used for latency_ms. */
   perfCounter?: () => number;
@@ -491,7 +491,7 @@ function nonEmptyList(v: unknown): unknown[] | null {
 
 // ------------------------------------------------------------------ engine
 
-/** Evaluate requests against one AEGIS runtime policy. */
+/** Evaluate requests against one VERITRAIL runtime policy. */
 export class PolicyEngine {
   readonly policy: Policy;
   readonly audit: AuditLog;

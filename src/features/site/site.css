@@ -1,9 +1,9 @@
-/* AEGIS public website styles.
-   Ported from platform/app/website/static/css/aegis.css and scoped under .aegis-site so
+/* VERITRAIL public website styles.
+   Ported from platform/app/website/static/css/veritrail.css and scoped under .veritrail-site so
    they never leak into the governance workspace. Mobile-first, WCAG 2.2 AA target.
-   Colour, type and shape follow the GOVERN workspace's Broadsheet theme: every colour
+   Colour, type and shape follow the TILLER workspace's Broadsheet theme: every colour
    below is a token from src/styles.css, so light and dark mode match the workspace. */
-.aegis-site {
+.veritrail-site {
 & {
   /* Broadsheet tokens under the site's names. */
   --c-bg: var(--background);
@@ -232,8 +232,8 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
 /* Forms */
 .form-panel { background: var(--c-card); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--workspace-shadow); }
 .form-panel h2 { margin-top: 0; }
-.aegis-form, .tool-form { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; max-width: 46rem; }
-.aegis-form > .btn, .tool-form > .btn, .chat-form > .btn { justify-self: start; min-width: 10rem; }
+.veritrail-form, .tool-form { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; max-width: 46rem; }
+.veritrail-form > .btn, .tool-form > .btn, .chat-form > .btn { justify-self: start; min-width: 10rem; }
 .tool-jump { margin-top: 1rem; }
 .field { display: grid; gap: 0.3rem; margin: 0; }
 .field label, fieldset legend { font-weight: 600; color: var(--c-text); }
@@ -257,7 +257,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px
 .form-status { padding: 0.75rem 1rem; border-radius: var(--radius); background: var(--c-info-bg); color: var(--c-text); }
 .form-status.is-success { background: var(--c-success-bg); color: var(--c-success); }
 .form-status.is-error { background: var(--c-danger-bg); color: var(--c-danger); }
-.aegis-form--compact { gap: 0.75rem; }
+.veritrail-form--compact { gap: 0.75rem; }
 fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .fieldset-inline .choice { display: inline-flex; align-items: center; gap: 0.4rem; margin-right: 1.5rem; min-height: 44px; }
 .fieldset-inline input { width: 1.3rem; height: 1.3rem; accent-color: var(--c-accent); }
@@ -288,7 +288,7 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
 .step-nav { display: flex; gap: 0.75rem; justify-content: space-between; flex-wrap: wrap; }
 .step-nav .btn-primary { margin-left: auto; }
 .assessment-preliminary, .assessment-report { max-width: 56rem; }
-/* Score panel styled like the workspace metric cards and AEGIS index. */
+/* Score panel styled like the workspace metric cards and VERITRAIL index. */
 .score-summary { background: var(--c-card); color: var(--c-text); border: 1px solid var(--c-border); border-top: 3px solid var(--c-accent); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: var(--workspace-shadow); }
 .score-summary strong { color: var(--c-heading); }
 .score-big { font-size: clamp(3rem, 2.4rem + 3vw, 4.5rem); font-weight: 600; line-height: 1; margin: 0 0 0.5rem; color: var(--c-link); }
@@ -361,10 +361,10 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
 /* Print / "Save as PDF" — ported from platform/app/website/static/css/print.css. */
 @media print {
   @page { margin: 16mm 14mm; }
-  .aegis-site {
+  .veritrail-site {
     font-size: 11pt; color: #000; background: #fff;
     .site-header, .site-footer, .breadcrumbs, .skip-link, .nav-toggle, .theme-toggle, .end-ctas, .hero-actions,
-    .aegis-form, .tool-form, .step-nav, .report-actions, .report-restart, .assessment-progress,
+    .veritrail-form, .tool-form, .step-nav, .report-actions, .report-restart, .assessment-progress,
     .gate, .code-actions, .chat-form, .tool-unavailable, .tool-jump { display: none !important; }
     .hero, .score-summary { background: #fff !important; color: #000 !important; border: 1px solid #000; }
     .hero h1, .hero .lead, .score-summary strong, .score-big, .score-max { color: #000 !important; }
@@ -379,25 +379,25 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
     .assessment-report, .assessment-preliminary { max-width: none; }
   }
   /* When the detailed report is visible, print only the report. */
-  .aegis-site.report-ready {
+  .veritrail-site.report-ready {
     .page-header, .tool-intro, .assessment-preliminary, .faq, .page-updated { display: none !important; }
   }
 }
 
 /* Additions for the React port. */
-.aegis-site {
+.veritrail-site {
   .brand-mark { flex: none; }
   .header-workspace { font-weight: 600; white-space: nowrap; text-decoration: none; padding: 0.5rem 0.25rem; }
   .preview-note { font-size: 0.85rem; color: var(--c-muted); }
   .download-list { list-style: none; padding: 0; display: grid; gap: 0.5rem; }
 }
-.aegis-site {
+.veritrail-site {
   ul.code-actions { list-style: none; padding: 0; }
   details > summary { cursor: pointer; font-weight: 600; min-height: 44px; }
   pre.code-block { max-height: 30rem; overflow: auto; }
   [role="tablist"] { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
   fieldset + fieldset { margin-top: 1.25rem; }
 }
-.aegis-site .agent-console .chat-log { max-width: none; }
-.aegis-site .brand-mark-check { stroke: var(--c-bg); }
-.aegis-site .tool-loading { color: var(--c-muted); }
+.veritrail-site .agent-console .chat-log { max-width: none; }
+.veritrail-site .brand-mark-check { stroke: var(--c-bg); }
+.veritrail-site .tool-loading { color: var(--c-muted); }

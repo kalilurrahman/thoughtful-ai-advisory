@@ -1,8 +1,8 @@
 ---
-title: "AEGIS pilot status tracker & design-partner recruitment"
+title: "VERITRAIL pilot status tracker & design-partner recruitment"
 version: 1.0.0
 as_of: 2026-10-21
-owner: AEGIS Commercial Lead with AEGIS Delivery Lead
+owner: VERITRAIL Commercial Lead with VERITRAIL Delivery Lead
 ---
 
 # Pilot status tracker
@@ -20,7 +20,7 @@ owner: AEGIS Commercial Lead with AEGIS Delivery Lead
 Qualified — contracting · Week 1–6 (in delivery) · Readout complete · Converted · Closed — not converted · Paused.
 
 **Product readiness for pilots** (being built in sprint 1 by other workstreams; see `docs/BACKLOG.md`): website and
-self-assessment, AEGIS Agent MVP, Runtime Shield Advisor and policy engine, report generation. Pilots can start once
+self-assessment, VERITRAIL Agent MVP, Runtime Shield Advisor and policy engine, report generation. Pilots can start once
 the readiness exit criteria in `docs/ROADMAP.md` Phase 5 are met.
 
 ---
@@ -35,7 +35,7 @@ the readiness exit criteria in `docs/ROADMAP.md` Phase 5 are met.
 | C2 | Named pilot lead able to commit ~4 hours/week for six weeks |
 | C3 | Willing to sign NDA, pilot agreement and (if needed) DPA; accepts metadata-only default |
 | C4 | Willing to give structured feedback (survey + sponsor interview) |
-| C5 | Accepts publication restriction in both directions: no AEGIS publicity without written approval; no claims of AEGIS endorsement |
+| C5 | Accepts publication restriction in both directions: no VERITRAIL publicity without written approval; no claims of VERITRAIL endorsement |
 | C6 | No conflict of interest (e.g. direct competitor) |
 
 ### Pilot A specifics
@@ -69,7 +69,7 @@ Score each prospect 0–3 per criterion (0 = absent, 1 = weak, 2 = adequate, 3 =
 | Q4 | Team availability | 2 | Named pilot lead + time commitment | — |
 | Q5 | Data-access feasibility | 2 | Security/privacy contact engaged; metadata-only accepted | — |
 | Q6 | Budget path after pilot | 2 | Budget holder identified; procurement route known | — |
-| Q7 | Learning value for AEGIS (sector/use-case diversity) | 1 | Sector; agent types | `industry` profile (`compliance_led` tag) |
+| Q7 | Learning value for VERITRAIL (sector/use-case diversity) | 1 | Sector; agent types | `industry` profile (`compliance_led` tag) |
 | Q8 | Reference potential (private reference, case study subject to approval) | 1 | Stated willingness | — |
 
 **Score** = Σ(score × weight); maximum 48. **Thresholds:** ≥ 32 qualify; 24–31 nurture (offer Governance Baseline or
@@ -77,8 +77,8 @@ self-assessment follow-up); < 24 decline politely. Q1 = 0 or Q5 = 0 disqualifies
 
 ## 3. Outreach sequence
 
-All outreach is from named AEGIS staff, to business addresses, respecting opt-outs and applicable marketing and
-privacy rules. Messages never claim existing customers, results or endorsements — AEGIS has none yet.
+All outreach is from named VERITRAIL staff, to business addresses, respecting opt-outs and applicable marketing and
+privacy rules. Messages never claim existing customers, results or endorsements — VERITRAIL has none yet.
 
 | Step | Channel | Content | Goal |
 |---|---|---|---|
@@ -104,4 +104,4 @@ privacy rules. Messages never claim existing customers, results or endorsements 
 
 | Date | Change | By |
 |---|---|---|
-| 2026-10-21 | Tracker created; both pilots Not started — awaiting design-partner recruitment | AEGIS content lead |
+| 2026-10-21 | Tracker created; both pilots Not started — awaiting design-partner recruitment | VERITRAIL content lead |

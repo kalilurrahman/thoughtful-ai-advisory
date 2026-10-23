@@ -118,8 +118,8 @@ describe("assessment Markdown report", () => {
   });
 
   it("builds a safe download filename", () => {
-    expect(markdownFilename("Acme Corp / <EU>")).toBe("AEGIS_Maturity_Report_Acme_Corp_EU_.md");
-    expect(markdownFilename("")).toBe("AEGIS_Maturity_Report.md");
+    expect(markdownFilename("Acme Corp / <EU>")).toBe("VERITRAIL_Maturity_Report_Acme_Corp_EU_.md");
+    expect(markdownFilename("")).toBe("VERITRAIL_Maturity_Report.md");
   });
 });
 
@@ -176,7 +176,9 @@ describe("MaturityAssessmentTool", () => {
     expect(byId(container, "prelim-score")).toHaveTextContent("60.0");
     expect(byId(container, "prelim-level")).toHaveTextContent("Defined");
 
-    const stored = JSON.parse(window.sessionStorage.getItem("aegis.assessment.v1") ?? "null") as {
+    const stored = JSON.parse(
+      window.sessionStorage.getItem("veritrail.assessment.v1") ?? "null",
+    ) as {
       step: number;
       answers: Record<string, number>;
       profile: Record<string, unknown>;
@@ -201,7 +203,7 @@ describe("MaturityAssessmentTool", () => {
     ).toBeInTheDocument();
     await waitFor(() => expect(byId(container, "report-delivery")).toHaveFocus());
     expect(byId(container, "report-delivery")).toHaveTextContent(
-      /could not reach the AEGIS service, so your details were not saved/,
+      /could not reach the VERITRAIL service, so your details were not saved/,
     );
     expect(screen.getByRole("button", { name: "Download Markdown" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Print or save as PDF" })).toBeInTheDocument();
@@ -211,7 +213,7 @@ describe("MaturityAssessmentTool", () => {
     expect(sent["form"]).toBe("assessment");
     expect(sent["email"]).toBe("ada@acme.example");
     expect(sent["payload"]).toEqual({
-      template_id: "AEGIS-SA-MATURITY",
+      template_id: "VERITRAIL-SA-MATURITY",
       template_version: bundle.template.template.version,
       overall_score: 60,
       maturity_level: "Defined",
@@ -219,7 +221,7 @@ describe("MaturityAssessmentTool", () => {
     });
     expect(JSON.stringify(sent)).not.toContain("answers");
     // contact details never reach sessionStorage
-    expect(window.sessionStorage.getItem("aegis.assessment.v1")).not.toContain("acme.example");
+    expect(window.sessionStorage.getItem("veritrail.assessment.v1")).not.toContain("acme.example");
 
     fireEvent.click(screen.getByRole("button", { name: "Start a new assessment" }));
     expect(await screen.findByRole("heading", { name: "Your organization" })).toHaveFocus();

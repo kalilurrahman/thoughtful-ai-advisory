@@ -1,8 +1,8 @@
 /**
- * Clock and ID source for the browser AEGIS Agent.
+ * Clock and ID source for the browser VERITRAIL Agent.
  *
- * The Python agent reads the wall clock (aegis_agent.store.utcnow, AuditLog timestamps,
- * date.today()) and random IDs (aegis_common.ids.new_id). In the browser the same calls go
+ * The Python agent reads the wall clock (veritrail_agent.store.utcnow, AuditLog timestamps,
+ * date.today()) and random IDs (veritrail_common.ids.new_id). In the browser the same calls go
  * through an `AgentRuntime`, so a run can be made fully deterministic (pilot dress rehearsal,
  * parity tests) by fixing the clock and numbering IDs per prefix.
  */
@@ -45,7 +45,7 @@ export interface DeterministicOptions {
 
 /**
  * Fixed clock and per-prefix sequential IDs (`sys_000001`, `trc_000042`, ...). The Python
- * parity exporter patches aegis_common.ids.new_id and the clocks the same way, so runs
+ * parity exporter patches veritrail_common.ids.new_id and the clocks the same way, so runs
  * driven by identical inputs produce identical IDs, timestamps, messages and audit hashes.
  */
 export function deterministicRuntime(opts: DeterministicOptions = {}): AgentRuntime & {

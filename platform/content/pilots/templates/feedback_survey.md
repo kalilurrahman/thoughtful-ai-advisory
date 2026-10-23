@@ -4,10 +4,10 @@ applies_to: [Pilot A, Pilot B]
 week: 6
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Product Lead
+owner: VERITRAIL Product Lead
 ---
 
-# AEGIS pilot feedback survey
+# VERITRAIL pilot feedback survey
 
 **Who:** every partner participant (sponsor, pilot lead, system owners, risk/legal/privacy/security, engineers).
 **When:** Week 6, before the executive readout is finalized; sponsor interview separately. **Time:** ~12 minutes.
@@ -19,7 +19,7 @@ Scale for Likert items: 1 = Strongly disagree, 2 = Disagree, 3 = Neutral, 4 = Ag
 
 - R1. Role: Executive sponsor / Governance or risk / Legal or privacy / Security / Engineering or platform / Business owner / Other
 - R2. Pilot: A (regulated enterprise) / B (AI-forward, agents)
-- R3. Which parts did you use? Website · Self-assessment · AEGIS Agent · Inventory workshop · Deep-dive · Agent review · Shield Advisor · Reports
+- R3. Which parts did you use? Website · Self-assessment · VERITRAIL Agent · Inventory workshop · Deep-dive · Agent review · Shield Advisor · Reports
 
 ## A. Framework clarity
 
@@ -44,7 +44,7 @@ Scale for Likert items: 1 = Strongly disagree, 2 = Disagree, 3 = Neutral, 4 = Ag
 - B5. Roughly how long did the self-assessment take you? (minutes)
 - B6 (open). Which questions were confusing or irrelevant?
 
-## C. AEGIS Agent — answer quality, citations, hallucination resistance
+## C. VERITRAIL Agent — answer quality, citations, hallucination resistance
 
 | ID | Statement | 1–5 |
 |---|---|---|
@@ -81,22 +81,22 @@ Scale for Likert items: 1 = Strongly disagree, 2 = Disagree, 3 = Neutral, 4 = Ag
 
 ## F. Integration barriers
 
-- F1. Which systems would AEGIS need to integrate with? (tick) Ticketing/ITSM · GRC tool · CMDB/asset inventory · Cloud/ML platform · LLM gateway · IAM/SSO · SIEM · Data catalog · Other
+- F1. Which systems would VERITRAIL need to integrate with? (tick) Ticketing/ITSM · GRC tool · CMDB/asset inventory · Cloud/ML platform · LLM gateway · IAM/SSO · SIEM · Data catalog · Other
 - F2 (1–5). Integration effort would be acceptable for our team.
-- F3 (open). What is the biggest technical, security or procurement barrier to adopting AEGIS?
+- F3 (open). What is the biggest technical, security or procurement barrier to adopting VERITRAIL?
 
 ## G. Willingness to pay and pricing preference
 
-- G1 (1–5). AEGIS addresses a problem we would allocate budget to in the next budget cycle.
+- G1 (1–5). VERITRAIL addresses a problem we would allocate budget to in the next budget cycle.
 - G2. Which module would you buy first? Governance Baseline · Register · Control · Shield · Assurance · Agent · Industry pack · None
 - G3. Preferred pricing model: Per AI system · Per user · Per business unit · Per environment/agent · Per governed action/usage · Enterprise subscription · Fixed-fee services
 - G4. Which budget would fund it? Risk/compliance · Security · CIO/IT · Data/AI CoE · Business unit · Other
-- G5 (open). Compared with alternatives (internal build, GRC extensions, consultants), what would AEGIS need to be worth to you?
+- G5 (open). Compared with alternatives (internal build, GRC extensions, consultants), what would VERITRAIL need to be worth to you?
 - G6. Would you be willing to (tick) continue to a paid engagement · act as a reference (private) · co-author a case study (subject to approval)
 
 ## H. Overall
 
-- H1 (0–10). How likely are you to recommend AEGIS to a peer?
+- H1 (0–10). How likely are you to recommend VERITRAIL to a peer?
 - H2 (open). The single most valuable thing about the pilot.
 - H3 (open). The single biggest thing to fix.
 

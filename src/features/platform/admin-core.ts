@@ -1,7 +1,7 @@
 /*
  * Admin console — pure helpers shared by the server functions and the UI.
  *
- * Port of the read-side of platform/app/admin/aegis_admin/cli.py: leads list/export, forms list,
+ * Port of the read-side of platform/app/admin/veritrail_admin/cli.py: leads list/export, forms list,
  * funnel analytics (see analytics-core.ts) and audit verification output. Lead rows come from the
  * `site_leads` table (written by submitLead); assessment leads correspond to the CLI's
  * var/leads/leads.jsonl and all other forms to var/forms/submissions.jsonl.

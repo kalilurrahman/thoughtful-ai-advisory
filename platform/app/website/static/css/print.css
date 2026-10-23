@@ -2,7 +2,7 @@
 @page { margin: 16mm 14mm; }
 body { font-size: 11pt; color: #000; background: #fff; }
 .site-header, .site-footer, .breadcrumbs, .skip-link, .nav-toggle, .end-ctas, .hero-actions,
-.aegis-form, .tool-form, .step-nav, .report-actions, .report-restart, .assessment-progress,
+.veritrail-form, .tool-form, .step-nav, .report-actions, .report-restart, .assessment-progress,
 .gate, .code-actions, .chat-form, .tool-unavailable, noscript { display: none !important; }
 .hero, .score-summary { background: #fff !important; color: #000 !important; border: 1px solid #000; }
 .hero h1, .hero .lead, .score-summary strong, .score-big, .score-max { color: #000 !important; }

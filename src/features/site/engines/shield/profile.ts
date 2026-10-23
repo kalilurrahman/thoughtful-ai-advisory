@@ -1,9 +1,9 @@
 /**
  * Normalization of Runtime Shield Advisor input profiles — port of
- * platform/app/runtime-shield/aegis_shield/profile.py.
+ * platform/app/runtime-shield/veritrail_shield/profile.py.
  *
  * Accepts the profile (see `PROFILE_FIELDS`) with tolerant aliases. Every value that
- * comes from the user is tracked as User-asserted; every value AEGIS fills in is
+ * comes from the user is tracked as User-asserted; every value VERITRAIL fills in is
  * tracked as Inferred (with the assumption stated) so outputs can be labelled.
  */
 import { OPERATIONS, PII_ENTITY_SET } from "./constants";

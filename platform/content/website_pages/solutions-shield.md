@@ -1,10 +1,10 @@
 ---
-title: "AEGIS Shield — Runtime guardrails for LLM apps and agents"
+title: "VERITRAIL Shield — Runtime guardrails for LLM apps and agents"
 h1: "Protect LLM apps and agents at runtime"
 slug: /solutions/shield/
-description: "AEGIS Shield evaluates prompts, responses and agent tool calls against versioned policy-as-code: redaction, least privilege, limits and human approval."
+description: "VERITRAIL Shield evaluates prompts, responses and agent tool calls against versioned policy-as-code: redaction, least privilege, limits and human approval."
 section: solutions
-nav_label: "AEGIS Shield"
+nav_label: "VERITRAIL Shield"
 nav_order: 50
 template: page
 schema_type: Service
@@ -20,9 +20,9 @@ faq:
 updated: 2026-10-21
 ---
 
-**Core message: AI proposes. AEGIS evaluates. Approved actions execute.**
+**Core message: AI proposes. VERITRAIL evaluates. Approved actions execute.**
 
-LLM applications and agents need controls that operate at the moment of action, not only in a policy document. AEGIS Shield places versioned policy-as-code between your applications and the models and tools they use. Every prompt, response and tool call is evaluated, and the decision — ALLOW, DENY, REDACT, TRANSFORM, REQUIRE_HUMAN_APPROVAL, ESCALATE or RATE_LIMIT — is logged with the policy version that produced it.
+LLM applications and agents need controls that operate at the moment of action, not only in a policy document. VERITRAIL Shield places versioned policy-as-code between your applications and the models and tools they use. Every prompt, response and tool call is evaluated, and the decision — ALLOW, DENY, REDACT, TRANSFORM, REQUIRE_HUMAN_APPROVAL, ESCALATE or RATE_LIMIT — is logged with the policy version that produced it.
 
 ## Capabilities
 
@@ -45,7 +45,7 @@ LLM applications and agents need controls that operate at the moment of action, 
 ## Example policy (illustrative excerpt)
 
 ```yaml
-schema_version: aegis.policy/v1
+schema_version: veritrail.policy/v1
 policy_id: support-agent-prod
 policy_name: Customer support agent — production
 version: 1.3.0
@@ -102,7 +102,7 @@ kill_switch:
 citations: [IS-12, SE-08, IS-04, IS-15]
 ```
 
-The excerpt omits required sections such as limits, logging, rollback, approval and change history. Use the [guardrail generator](/tools/guardrail-generator/) to produce a complete draft that validates against the AEGIS policy schema.
+The excerpt omits required sections such as limits, logging, rollback, approval and change history. Use the [guardrail generator](/tools/guardrail-generator/) to produce a complete draft that validates against the VERITRAIL policy schema.
 
 ## Staged rollout: Observe → Warn → Protect → Enforce → Contain
 

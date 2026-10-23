@@ -4,7 +4,7 @@ import { pageHead } from "@/features/governance/meta";
 export const Route = createFileRoute("/onboarding")({
   head: () =>
     pageHead(
-      "Welcome to AEGIS",
+      "Welcome to VERITRAIL",
       "AI Governance, Guardrails and Assurance Studio for responsible enterprise deployment.",
     ),
   component: OnboardingScreen,

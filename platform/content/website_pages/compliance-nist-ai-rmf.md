@@ -1,8 +1,8 @@
 ---
-title: "NIST AI RMF and AEGIS — indicative mapping to Govern, Map, Measure, Manage"
-h1: "NIST AI Risk Management Framework and AEGIS"
+title: "NIST AI RMF and VERITRAIL — indicative mapping to Govern, Map, Measure, Manage"
+h1: "NIST AI Risk Management Framework and VERITRAIL"
 slug: /compliance/nist-ai-rmf/
-description: "How AEGIS controls relate indicatively to the NIST AI RMF 1.0 functions Govern, Map, Measure and Manage, with subcategory-level mappings and known gaps."
+description: "How VERITRAIL controls relate indicatively to the NIST AI RMF 1.0 functions Govern, Map, Measure and Manage, with subcategory-level mappings and known gaps."
 section: compliance
 nav_label: "NIST AI RMF"
 nav_order: 20
@@ -13,8 +13,8 @@ secondary_cta: baseline
 faq:
   - q: "Is the NIST AI RMF mandatory?"
     a: "The NIST AI RMF 1.0 (NIST AI 100-1) is a voluntary framework. Some organizations adopt it as their internal reference, and some customers, contracts or sector expectations may refer to it. Whether it is required in your context is a question for your legal and compliance teams."
-  - q: "Does AEGIS cover the NIST Generative AI Profile?"
-    a: "AEGIS includes controls specific to generative and agentic AI (for example IS-04, IS-12, IS-14, IS-16), but Control Library v1.0.0 maps only to AI RMF 1.0 subcategories. It does not include a mapping to the Generative AI Profile (NIST AI 600-1)."
+  - q: "Does VERITRAIL cover the NIST Generative AI Profile?"
+    a: "VERITRAIL includes controls specific to generative and agentic AI (for example IS-04, IS-12, IS-14, IS-16), but Control Library v1.0.0 maps only to AI RMF 1.0 subcategories. It does not include a mapping to the Generative AI Profile (NIST AI 600-1)."
 updated: 2026-10-21
 ---
 
@@ -22,13 +22,13 @@ updated: 2026-10-21
 
 The NIST AI Risk Management Framework (AI RMF 1.0, published as NIST AI 100-1) organizes AI risk management into four functions. **GOVERN** cultivates a culture and structure of risk management and applies across the others; **MAP** establishes context and identifies risks; **MEASURE** analyzes, assesses and tracks them; **MANAGE** prioritizes and acts on them. Each function is broken into categories and subcategories describing outcomes.
 
-The AI RMF describes outcomes, not controls. AEGIS provides a set of concrete controls, with owners and evidence, that an organization can use to work toward those outcomes. The tables below list every AI RMF subcategory that at least one AEGIS control maps to in Control Library v1.0.0.
+The AI RMF describes outcomes, not controls. VERITRAIL provides a set of concrete controls, with owners and evidence, that an organization can use to work toward those outcomes. The tables below list every AI RMF subcategory that at least one VERITRAIL control maps to in Control Library v1.0.0.
 
 ## GOVERN
 
 GOVERN covers policies and processes, accountability structures, workforce and oversight roles, organizational culture, engagement with AI actors, and third-party risk.
 
-| AI RMF subcategory | AEGIS controls (indicative) |
+| AI RMF subcategory | VERITRAIL controls (indicative) |
 |---|---|
 | GOVERN 1.1 | AO-01, AO-07, AO-10 |
 | GOVERN 1.2 | AO-01, AO-08 |
@@ -54,7 +54,7 @@ GOVERN covers policies and processes, accountability structures, workforce and o
 
 MAP covers establishing context and intended purpose, categorizing the system, understanding capabilities and costs, mapping risks across components including third-party ones, and characterizing impacts.
 
-| AI RMF subcategory | AEGIS controls (indicative) |
+| AI RMF subcategory | VERITRAIL controls (indicative) |
 |---|---|
 | MAP 1.1 | AO-10, EI-02, EI-04, EI-12, GL-01, GL-02, IS-03 |
 | MAP 1.2 | EI-04 |
@@ -75,7 +75,7 @@ MAP covers establishing context and intended purpose, categorizing the system, u
 
 MEASURE covers selecting methods and metrics, evaluating trustworthy characteristics — validity, safety, security and resilience, transparency, privacy, fairness and others — tracking risks over time, and gathering feedback on measurement efficacy.
 
-| AI RMF subcategory | AEGIS controls (indicative) |
+| AI RMF subcategory | VERITRAIL controls (indicative) |
 |---|---|
 | MEASURE 1.1 | GL-02 |
 | MEASURE 1.3 | SE-01, SE-10 |
@@ -98,7 +98,7 @@ MEASURE covers selecting methods and metrics, evaluating trustworthy characteris
 
 MANAGE covers prioritizing and responding to risks, strategies to maximize benefits and minimize negative impacts (including mechanisms to supersede, disengage or deactivate systems), managing third-party risk, and risk treatment including incident response, recovery and communication.
 
-| AI RMF subcategory | AEGIS controls (indicative) |
+| AI RMF subcategory | VERITRAIL controls (indicative) |
 |---|---|
 | MANAGE 1.1 | GL-03 |
 | MANAGE 1.2 | GL-07 |
@@ -119,15 +119,15 @@ MANAGE covers prioritizing and responding to risks, strategies to maximize benef
 Mapping coverage is uneven, and we would rather say so than imply completeness:
 
 - **MANAGE 3 (third-party risk management)** has no direct mapping in v1.0.0. Third-party controls (AO-09, EI-08, GL-11, IS-10) currently map to GOVERN 6; organizations using the AI RMF as a reference should consider whether those controls also support MANAGE 3 outcomes in their context.
-- Several subcategories — for example parts of GOVERN 3 and GOVERN 4, MAP 2.1, MEASURE 2.2 and MEASURE 2.12–2.13 — are not mapped. That does not mean they are irrelevant; it means AEGIS does not yet have a control whose objective clearly corresponds to them.
+- Several subcategories — for example parts of GOVERN 3 and GOVERN 4, MAP 2.1, MEASURE 2.2 and MEASURE 2.12–2.13 — are not mapped. That does not mean they are irrelevant; it means VERITRAIL does not yet have a control whose objective clearly corresponds to them.
 - The Generative AI Profile (NIST AI 600-1) is not mapped.
 
 ## Using the mapping in practice
 
 1. **Choose your reference.** If the AI RMF is your organization's chosen reference, use the function view in the self-assessment's readiness indicators to see where self-reported practices are weakest.
-2. **Implement through controls.** Work through AEGIS controls with owners and evidence rather than trying to "implement a subcategory".
+2. **Implement through controls.** Work through VERITRAIL controls with owners and evidence rather than trying to "implement a subcategory".
 3. **Evidence once, reuse often.** The same evidence for SE-08 or GL-02 supports NIST, ISO/IEC 42001 and EU AI Act readiness work.
-4. **Profile your organization.** The AI RMF encourages organizations to build profiles for their context. AEGIS risk tiers and the [maturity model](/framework/maturity-model/) can inform your current and target profiles.
+4. **Profile your organization.** The AI RMF encourages organizations to build profiles for their context. VERITRAIL risk tiers and the [maturity model](/framework/maturity-model/) can inform your current and target profiles.
 
 The self-assessment groups questions into GOVERN, MAP, MEASURE and MANAGE readiness indicators — see the [maturity model](/framework/maturity-model/). Browse full mappings per control in the [control library](/framework/controls/).
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 
-from aegis_shield.integrations import decision_events
+from veritrail_shield.integrations import decision_events
 from pe_helpers import req
 
 RAW = "SSN 123-45-6789, card 4111 1111 1111 1111, IBAN GB82 WEST 1234 5698 7654 32, key sk-abcdefghijklmnop1234"

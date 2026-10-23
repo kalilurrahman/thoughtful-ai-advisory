@@ -1,6 +1,6 @@
 /**
  * Use-case governance readiness report: Markdown composition and MD/CSV/JSON export, PDF via
- * markdownToPdfBlob (aegis_agent/reporting.py). The browser has no file system, so exports are
+ * markdownToPdfBlob (veritrail_agent/reporting.py). The browser has no file system, so exports are
  * returned as strings and kept on the report record; "paths" are virtual names for parity.
  */
 import {
@@ -15,8 +15,8 @@ import {
   intakeFields,
   templateMeta,
   type Profile,
-} from "@/features/site/engines/ask-aegis/question-bank";
-import { findProhibitedClaims } from "@/features/site/engines/ask-aegis/safety";
+} from "@/features/site/engines/ask-veritrail/question-bank";
+import { findProhibitedClaims } from "@/features/site/engines/ask-veritrail/safety";
 import { toCsv } from "../reports/exporters";
 import {
   GAP_SEVERITIES,
@@ -33,7 +33,7 @@ import { pyFloat, pyStr } from "./py";
 import type { ApprovalRecord, AssessmentRecord, SystemRecord } from "./store";
 
 export const SYNTHETIC_BANNER =
-  "> **Synthetic example.** This report was generated from fictional data to illustrate AEGIS Agent " +
+  "> **Synthetic example.** This report was generated from fictional data to illustrate VERITRAIL Agent " +
   "output. It describes no real organization or system.";
 
 export const GAP_CSV_COLUMNS = [
@@ -160,7 +160,7 @@ export function buildReportData(args: {
   const tmpDisclaimer = (templateMeta as { disclaimer?: string }).disclaimer ?? "";
   return {
     report_id: args.reportId ?? "",
-    report_type: "AEGIS AI Use-Case Governance Readiness Report",
+    report_type: "VERITRAIL AI Use-Case Governance Readiness Report",
     synthetic: args.synthetic ?? false,
     generated_at: args.generatedAt,
     prepared_by: args.preparedBy,
@@ -234,7 +234,7 @@ export function renderMarkdown(d: ReportData): string {
         ["Generated (UTC)", d.generated_at],
         ["Prepared by", d.prepared_by],
         ["Question bank", `${d.template.id} v${d.template.version}`],
-        ["Control library", `AEGIS Control Library v${d.control_library_version}`],
+        ["Control library", `VERITRAIL Control Library v${d.control_library_version}`],
         [
           "Evidence basis",
           "Self-reported answers (User-asserted) unless evidence was reviewed by a named reviewer (Verified)",
@@ -318,7 +318,7 @@ export function renderMarkdown(d: ReportData): string {
     `- Approval authority for this tier: ${pyStr(risk["approval_authority"] ?? "—")}`,
     `- Review cadence: every ${pyStr(risk["review_cadence_months"] ?? "—")} months`,
     `- Assessment modules applied: ${d.modules.map((m) => m.name).join(", ") || "—"}`,
-    `- Method: ${pyStr(risk["method"] ?? "AEGIS risk-tier rules")}`,
+    `- Method: ${pyStr(risk["method"] ?? "VERITRAIL risk-tier rules")}`,
     "",
   );
 
@@ -364,7 +364,7 @@ export function renderMarkdown(d: ReportData): string {
       "",
     );
     L.push(
-      `Due dates apply the AEGIS severity SLAs (Critical ${GAP_SEVERITY_SLA_DAYS.Critical}, High ${GAP_SEVERITY_SLA_DAYS.High}, ` +
+      `Due dates apply the VERITRAIL severity SLAs (Critical ${GAP_SEVERITY_SLA_DAYS.Critical}, High ${GAP_SEVERITY_SLA_DAYS.High}, ` +
         `Medium ${GAP_SEVERITY_SLA_DAYS.Medium}, Low ${GAP_SEVERITY_SLA_DAYS.Low} days) from ${ga.as_of}.`,
       "",
     );
@@ -447,13 +447,13 @@ export function renderMarkdown(d: ReportData): string {
   if (d.shield_advice_summary) {
     L.push(
       "",
-      `AEGIS Shield advisor rating: ${pyStr(d.shield_advice_summary.overall_rating || "n/a")} ` +
+      `VERITRAIL Shield advisor rating: ${pyStr(d.shield_advice_summary.overall_rating || "n/a")} ` +
         "(see the draft runtime policy for details; activation in production requires human approval).",
     );
   }
   L.push(
     "",
-    "Draft guardrail policies can be generated with AEGIS Shield; activating or changing a production runtime " +
+    "Draft guardrail policies can be generated with VERITRAIL Shield; activating or changing a production runtime " +
       "policy requires human approval (IS-12, GL-04).",
     "",
   );
@@ -487,7 +487,7 @@ export function renderMarkdown(d: ReportData): string {
   L.push(
     "## Appendix B — Audit trace",
     "",
-    "Tool calls and agent turns for this assessment are recorded in the hash-chained AEGIS audit log (SE-08).",
+    "Tool calls and agent turns for this assessment are recorded in the hash-chained VERITRAIL audit log (SE-08).",
     "",
   );
   if (d.audit_trace.length) {
@@ -504,9 +504,9 @@ export function renderMarkdown(d: ReportData): string {
   L.push(
     "## Appendix C — Method and limitations",
     "",
-    "- Answers are self-reported; AEGIS has not inspected systems or documents unless evidence is marked Verified.",
+    "- Answers are self-reported; VERITRAIL has not inspected systems or documents unless evidence is marked Verified.",
     "- The risk tier is preliminary and rule-based; the EU AI Act category screen is a trigger for legal review, not a legal classification.",
-    "- Framework mappings are indicative AEGIS interpretations from the Control Library, not official crosswalks.",
+    "- Framework mappings are indicative VERITRAIL interpretations from the Control Library, not official crosswalks.",
     "- Regulatory applicability timelines must be verified against the current Official Journal text and any amendments.",
     "",
     "## Disclaimer",
@@ -547,7 +547,7 @@ function toJsonText(obj: unknown): string {
 export const REPORT_FORMATS = ["md", "pdf", "csv", "json"] as const;
 
 export function pdfTitleFor(d: Pick<ReportData, "synthetic" | "system">): string {
-  const title = `AEGIS Use-Case Readiness Report — ${d.system.name || ""}`;
+  const title = `VERITRAIL Use-Case Readiness Report — ${d.system.name || ""}`;
   return d.synthetic ? "Synthetic example — " + title : title;
 }
 
@@ -558,7 +558,7 @@ export function exportReport(
   formats: readonly string[] = REPORT_FORMATS,
   basename?: string | null,
 ): ReportExport {
-  const base = basename || `aegis_use_case_report_${d.report_id || "draft"}`;
+  const base = basename || `veritrail_use_case_report_${d.report_id || "draft"}`;
   const md = renderMarkdown(d);
   const claims = findProhibitedClaims(md);
   if (claims.length) {

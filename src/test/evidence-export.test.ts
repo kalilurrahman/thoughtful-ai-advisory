@@ -35,7 +35,7 @@ describe("governance evidence downloads", () => {
       "Historical per-response edit timestamps are not stored",
     );
     expect(reportFilename("Audit evidence pack", "Acme Health", "pdf")).toBe(
-      "AEGIS_Audit-evidence-pack_Acme-Health.pdf",
+      "VERITRAIL_Audit-evidence-pack_Acme-Health.pdf",
     );
   });
 

@@ -1,11 +1,11 @@
 ---
-title: "AEGIS pilot kits"
+title: "VERITRAIL pilot kits"
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead
+owner: VERITRAIL Delivery Lead
 ---
 
-# AEGIS pilot kits
+# VERITRAIL pilot kits
 
 > Status: both pilots **Not started — awaiting design-partner recruitment** (see
 > [`pilot_status_tracker.md`](pilot_status_tracker.md)). The playbook that ties everything together is
@@ -37,7 +37,7 @@ content/pilots/
     └── commercial_follow_on_proposal.md        # W6
 ```
 
-Rules that apply to every artefact: cite real AEGIS control IDs; label evidence (Verified / User-asserted / Inferred /
+Rules that apply to every artefact: cite real VERITRAIL control IDs; label evidence (Verified / User-asserted / Inferred /
 Missing evidence / Critical gap); never state that a partner is compliant or certified; metadata-only by default and
 no production data into external LLMs; high-impact actions require named human approval; never publish partner names
 or results without written approval.

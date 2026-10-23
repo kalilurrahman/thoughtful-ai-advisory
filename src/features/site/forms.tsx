@@ -3,7 +3,7 @@ import { isFreeMailDomain, siteConfig } from "./content";
 import { submitLead, type LeadForm as LeadFormKey } from "./leads.functions";
 import { SiteLink } from "./ui";
 
-// Lead forms — ported from platform/app/website/aegis_website/forms.py and the form
+// Lead forms — ported from platform/app/website/veritrail_website/forms.py and the form
 // handling in static/js/site.js (validation, error summary, business-email gate).
 
 type Option = [value: string, label: string];
@@ -44,12 +44,12 @@ const INDUSTRY_OPTIONS: Option[] = [
 ];
 const INTEREST_OPTIONS: Option[] = [
   ["", "Select…"],
-  ["assess", "AEGIS Assess"],
-  ["register", "AEGIS Register"],
-  ["control", "AEGIS Control"],
-  ["shield", "AEGIS Shield (runtime guardrails)"],
-  ["assurance", "AEGIS Assurance"],
-  ["agent", "AEGIS Agent"],
+  ["assess", "VERITRAIL Assess"],
+  ["register", "VERITRAIL Register"],
+  ["control", "VERITRAIL Control"],
+  ["shield", "VERITRAIL Shield (runtime guardrails)"],
+  ["assurance", "VERITRAIL Assurance"],
+  ["agent", "VERITRAIL Agent"],
   ["not_sure", "Not sure yet"],
 ];
 const NO_PERSONAL = "Optional. Do not include personal or confidential data about individuals.";
@@ -124,9 +124,9 @@ export const FORMS: Record<LeadFormKey, FormDef> = {
       AI_SYSTEMS,
       message("What would you like the Baseline to focus on?", 5),
     ],
-    consent: "I agree that AEGIS may contact me about this request.",
+    consent: "I agree that VERITRAIL may contact me about this request.",
     success:
-      "Thank you. Your request has been received. A member of the AEGIS team will contact you to schedule a scoping call.",
+      "Thank you. Your request has been received. A member of the VERITRAIL team will contact you to schedule a scoping call.",
   },
   demo: {
     businessEmail: true,
@@ -139,7 +139,7 @@ export const FORMS: Record<LeadFormKey, FormDef> = {
       { name: "tool", label: "Main area of interest", type: "select", options: INTEREST_OPTIONS },
       message("What would you like to see?", 5),
     ],
-    consent: "I agree that AEGIS may contact me about this request.",
+    consent: "I agree that VERITRAIL may contact me about this request.",
     success:
       "Thank you. Your demo request has been received and we will be in touch to arrange a time.",
   },
@@ -147,21 +147,21 @@ export const FORMS: Record<LeadFormKey, FormDef> = {
     businessEmail: false,
     submit: "Send message",
     fields: [NAME, EMAIL, COMPANY_OPT, message("Message", 6, true)],
-    consent: "I agree that AEGIS may use these details to respond to my message.",
+    consent: "I agree that VERITRAIL may use these details to respond to my message.",
     success: "Thank you. Your message has been received.",
   },
   newsletter: {
     businessEmail: false,
     submit: "Subscribe",
     fields: [EMAIL],
-    consent: "Send me the AEGIS governance briefing. I can unsubscribe at any time.",
+    consent: "Send me the VERITRAIL governance briefing. I can unsubscribe at any time.",
     success: "Thank you. Your subscription request has been recorded.",
   },
   blueprint: {
     businessEmail: true,
     submit: "Get the blueprint",
     fields: [NAME, WORK_EMAIL, COMPANY, ROLE],
-    consent: "I agree that AEGIS may send me the blueprint and related governance content.",
+    consent: "I agree that VERITRAIL may send me the blueprint and related governance content.",
     success: "Thank you. Your download is ready.",
   },
   design_partner: {
@@ -176,7 +176,7 @@ export const FORMS: Record<LeadFormKey, FormDef> = {
       AI_SYSTEMS,
       message("What would you like to pilot?", 5),
     ],
-    consent: "I agree that AEGIS may contact me about the design partner programme.",
+    consent: "I agree that VERITRAIL may contact me about the design partner programme.",
     success:
       "Thank you. Your application has been received and we will contact you to discuss fit and scope.",
   },
@@ -184,7 +184,7 @@ export const FORMS: Record<LeadFormKey, FormDef> = {
     businessEmail: true,
     submit: "Join the waitlist",
     fields: [NAME, WORK_EMAIL, COMPANY, ROLE, message("What would you use it for?", 4)],
-    consent: "I agree that AEGIS may contact me when this tool becomes available.",
+    consent: "I agree that VERITRAIL may contact me when this tool becomes available.",
     success:
       "Thank you. You are on the waitlist and we will contact you when the tool is available.",
   },
@@ -192,7 +192,7 @@ export const FORMS: Record<LeadFormKey, FormDef> = {
     businessEmail: true,
     submit: "Get my report",
     fields: [NAME, WORK_EMAIL, COMPANY, ROLE],
-    consent: "I agree that AEGIS may send me my report and related governance content.",
+    consent: "I agree that VERITRAIL may send me my report and related governance content.",
     success: "Thank you. Your report is ready.",
   },
 };
@@ -279,7 +279,7 @@ export function LeadForm({
     } catch {
       setStatus({
         kind: "error",
-        text: `We could not reach the AEGIS service, so nothing was recorded. Please email ${siteConfig.organization.email}.${
+        text: `We could not reach the VERITRAIL service, so nothing was recorded. Please email ${siteConfig.organization.email}.${
           offerDownload
             ? " You can still download the blueprint; your details were not recorded."
             : ""
@@ -292,7 +292,7 @@ export function LeadForm({
 
   return (
     <form
-      className={`aegis-form${compact ? " aegis-form--compact" : ""}`}
+      className={`veritrail-form${compact ? " veritrail-form--compact" : ""}`}
       noValidate
       onSubmit={onSubmit}
     >

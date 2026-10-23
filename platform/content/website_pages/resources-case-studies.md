@@ -1,8 +1,8 @@
 ---
-title: "AEGIS case studies — pilots in progress, design partners welcome"
+title: "VERITRAIL case studies — pilots in progress, design partners welcome"
 h1: "Case studies"
 slug: /resources/case-studies/
-description: "AEGIS pilots are in progress and no results are published yet. Learn what our case studies will report and how to join the AEGIS design-partner programme."
+description: "VERITRAIL pilots are in progress and no results are published yet. Learn what our case studies will report and how to join as a design partner."
 section: resources
 nav_label: "Case studies"
 nav_order: 80
@@ -13,7 +13,7 @@ secondary_cta: demo
 updated: 2026-10-21
 ---
 
-**We have no published case studies yet.** AEGIS pilots with design partners are in progress. We will publish results when pilots are complete, when partners have approved what we say, and when we can support every figure with evidence.
+**We have no published case studies yet.** VERITRAIL pilots with design partners are in progress. We will publish results when pilots are complete, when partners have approved what we say, and when we can support every figure with evidence.
 
 We would rather show an empty page than invented logos, testimonials or statistics. A governance product that overclaimed about itself would be a poor guide to evidence.
 
@@ -29,7 +29,7 @@ When pilots conclude, each case study will describe, with the partner's approval
 | Runtime controls | Agents under policy; mode progression from Observe to Enforce; approval volumes | Policy versions; decision and approval logs |
 | Evidence | Time to produce an evidence pack for a material system | Timed exercises |
 
-We will report what did not work as well as what did. We will not describe any partner as compliant or certified as a result of using AEGIS.
+We will report what did not work as well as what did. We will not describe any partner as compliant or certified as a result of using VERITRAIL.
 
 ## Become a design partner
 

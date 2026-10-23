@@ -1,8 +1,8 @@
-# AEGIS Industry Pack — Healthcare & Pharma
+# VERITRAIL Industry Pack — Healthcare & Pharma
 # ---------------------------------------------------------------------------
-# Sector overlay on the AEGIS Control Library. Control IDs reference
+# Sector overlay on the VERITRAIL Control Library. Control IDs reference
 # content/controls/controls.yaml ONLY. Risk-tier hints are DEFAULTS that the
-# AEGIS risk-tier engine and a human approver must confirm per system (EI-02).
+# VERITRAIL risk-tier engine and a human approver must confirm per system (EI-02).
 # Sector regimes are described generally to prompt legal review — they are not
 # legal advice and their applicability must be verified with counsel.
 # ---------------------------------------------------------------------------
@@ -12,11 +12,11 @@ pack:
   version: 1.0.0
   status: draft-for-pilot-validation
   effective_date: "2026-10-21"
-  owner: AEGIS Governance Content Lead
+  owner: VERITRAIL Governance Content Lead
   review_cadence: quarterly
   profile_industry: healthcare_pharma
   disclaimer: >-
-    This pack highlights AEGIS controls and evidence commonly relevant to healthcare providers, payers, life-sciences
+    This pack highlights VERITRAIL controls and evidence commonly relevant to healthcare providers, payers, life-sciences
     and pharmaceutical organizations. It does not determine which laws apply, does not establish conformity with any
     regulation or standard, and is not legal or regulatory advice. Verify every regime with qualified counsel.
 
@@ -107,27 +107,27 @@ additional_evidence:
 sector_regimes:
   - name: Health-data privacy laws (e.g. HIPAA in the US; GDPR special-category rules in the EU/EEA and UK)
     scope_summary: Rules on use, disclosure, safeguards and transfer of health information; contractual requirements for service providers that handle it.
-    aegis_relevance: Privacy assessment, minimisation, redaction, vendor agreements and logging evidence.
+    veritrail_relevance: Privacy assessment, minimisation, redaction, vendor agreements and logging evidence.
     related_controls: [IS-03, IS-04, GL-11, SE-08]
     verify_with_counsel: true
   - name: Medical-device software regimes (e.g. US FDA oversight of software and AI-enabled device functions; EU MDR/IVDR)
     scope_summary: Software intended for diagnosis, treatment or monitoring may be regulated as a medical device, with its own conformity and change-control routes.
-    aegis_relevance: Intended-purpose documentation, validation, change control and technical documentation evidence. AEGIS does not perform device conformity assessment.
+    veritrail_relevance: Intended-purpose documentation, validation, change control and technical documentation evidence. VERITRAIL does not perform device conformity assessment.
     related_controls: [EI-04, GL-05, GL-04, GL-06]
     verify_with_counsel: true
   - name: EU AI Act interplay with product legislation and Annex III areas
     scope_summary: AI that is a safety component of, or is itself, a product covered by EU harmonisation legislation (such as medical devices) may be high-risk; some healthcare access uses may fall within Annex III areas.
-    aegis_relevance: Classification evidence and readiness indicators only; timelines must be verified against the current Official Journal text and amendments.
+    veritrail_relevance: Classification evidence and readiness indicators only; timelines must be verified against the current Official Journal text and amendments.
     related_controls: [EI-02, AO-07, GL-02]
     verify_with_counsel: true
   - name: GxP and computerized-system expectations (e.g. electronic records and signatures rules; EU GMP guidance on computerized systems)
     scope_summary: Validation, audit-trail and data-integrity expectations for systems used in regulated manufacturing, clinical and quality processes.
-    aegis_relevance: Change control, validation, audit trail and evidence retention.
+    veritrail_relevance: Change control, validation, audit trail and evidence retention.
     related_controls: [GL-04, GL-05, SE-02, SE-08]
     verify_with_counsel: true
   - name: Pharmacovigilance and clinical-trial regulations
     scope_summary: Safety-reporting and trial-conduct rules that constrain how AI may support case processing and recruitment.
-    aegis_relevance: Validation and human review of AI-assisted safety and trial processes.
+    veritrail_relevance: Validation and human review of AI-assisted safety and trial processes.
     related_controls: [GL-05, IS-09, IS-03]
     verify_with_counsel: true
 

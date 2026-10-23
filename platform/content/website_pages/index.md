@@ -1,9 +1,9 @@
 ---
-title: "AEGIS Enterprise — AI governance, runtime guardrails and evidence"
+title: "VERITRAIL Enterprise — AI governance, runtime guardrails and evidence"
 h1: "Govern every AI system, agent, and decision with evidence."
-lead: "AEGIS Enterprise helps organizations inventory AI, assess risk, govern the lifecycle, protect LLM applications and agents at runtime, and prove responsible AI continuously."
+lead: "VERITRAIL Enterprise helps organizations inventory AI, assess risk, govern the lifecycle, protect LLM applications and agents at runtime, and prove responsible AI continuously."
 slug: /
-description: "AEGIS helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously."
+description: "VERITRAIL helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously."
 section: home
 nav_label: "Home"
 nav_order: 0
@@ -12,21 +12,21 @@ schema_type: WebPage
 primary_cta: assessment
 secondary_cta: baseline
 faq:
-  - q: "Does AEGIS make my organization compliant with the EU AI Act or ISO/IEC 42001?"
-    a: "No. AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, determine EU AI Act compliance or replace legal advice. Framework mappings are indicative."
+  - q: "Does VERITRAIL make my organization compliant with the EU AI Act or ISO/IEC 42001?"
+    a: "No. VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, determine EU AI Act compliance or replace legal advice. Framework mappings are indicative."
   - q: "Where should we start?"
-    a: "Most organizations start with the free 8-minute maturity self-assessment, then validate the result with evidence in a 4–6 week AEGIS Governance Baseline."
-  - q: "Does AEGIS work with agents as well as models?"
-    a: "Yes. AEGIS registers agents and their tools, and AEGIS Shield evaluates prompts, responses and tool calls against versioned runtime policy, including human approval for high-impact actions."
+    a: "Most organizations start with the free 8-minute maturity self-assessment, then validate the result with evidence in a 4–6 week VERITRAIL Governance Baseline."
+  - q: "Does VERITRAIL work with agents as well as models?"
+    a: "Yes. VERITRAIL registers agents and their tools, and VERITRAIL Shield evaluates prompts, responses and tool calls against versioned runtime policy, including human approval for high-impact actions."
 updated: 2026-10-21
 ---
 
 ## Four ways to start
 
 - [Run the AI Governance Maturity Self-Assessment](/tools/maturity-assessment/) — 24 questions, about 8 minutes, an indicative score across 8 domains.
-- [Book an AEGIS Governance Baseline](/contact/book-governance-baseline/) — a fixed-scope 4–6 week engagement that validates your position with evidence.
-- [Explore the AEGIS Agent](/solutions/agent/) — a governance copilot that cites controls and labels evidence.
-- [Download the AEGIS Enterprise Blueprint](/resources/blueprint/) — the operating model, control library and rollout plan in one document.
+- [Book an VERITRAIL Governance Baseline](/contact/book-governance-baseline/) — a fixed-scope 4–6 week engagement that validates your position with evidence.
+- [Explore the VERITRAIL Agent](/solutions/agent/) — a governance copilot that cites controls and labels evidence.
+- [Download the VERITRAIL Enterprise Blueprint](/resources/blueprint/) — the operating model, control library and rollout plan in one document.
 
 ## The problem: five questions most enterprises cannot answer with evidence
 
@@ -38,22 +38,22 @@ AI adoption has outpaced the governance designed to control it. Models arrive th
 4. **What stops an agent from doing something it should not?** Are tool permissions, data handling and high-impact actions governed at runtime, or only described in a policy document?
 5. **Could we produce evidence tomorrow?** If asked, could we hand over an evidence pack for a material AI system — logs, approvals, test results, monitoring — without a fire drill?
 
-AEGIS exists to turn each of those questions into a governed, evidenced answer.
+VERITRAIL exists to turn each of those questions into a governed, evidenced answer.
 
 ## Six layers, one governance system
 
-| Layer | What it does | AEGIS capability |
+| Layer | What it does | VERITRAIL capability |
 |---|---|---|
-| 1. Baseline | Establishes where you are today, with evidence status for every finding | [AEGIS Assess](/solutions/assess/) and the [maturity self-assessment](/tools/maturity-assessment/) |
-| 2. System of record | One owned, classified inventory of AI systems, models, agents and vendor AI | [AEGIS Register](/solutions/register/) |
-| 3. Lifecycle control | Risk-proportionate intake, approval, change, monitoring and retirement gates | [AEGIS Control](/solutions/control/) |
-| 4. Runtime protection | Policy-as-code guardrails for prompts, responses and agent tool calls | [AEGIS Shield](/solutions/shield/) |
-| 5. Assurance | Control testing, tamper-evident logs, incidents and audit-ready evidence packs | [AEGIS Assurance](/solutions/assurance/) |
-| 6. Copilot | A governance agent that drafts assessments, gap registers and reports with citations | [AEGIS Agent](/solutions/agent/) |
+| 1. Baseline | Establishes where you are today, with evidence status for every finding | [VERITRAIL Assess](/solutions/assess/) and the [maturity self-assessment](/tools/maturity-assessment/) |
+| 2. System of record | One owned, classified inventory of AI systems, models, agents and vendor AI | [VERITRAIL Register](/solutions/register/) |
+| 3. Lifecycle control | Risk-proportionate intake, approval, change, monitoring and retirement gates | [VERITRAIL Control](/solutions/control/) |
+| 4. Runtime protection | Policy-as-code guardrails for prompts, responses and agent tool calls | [VERITRAIL Shield](/solutions/shield/) |
+| 5. Assurance | Control testing, tamper-evident logs, incidents and audit-ready evidence packs | [VERITRAIL Assurance](/solutions/assurance/) |
+| 6. Copilot | A governance agent that drafts assessments, gap registers and reports with citations | [VERITRAIL Agent](/solutions/agent/) |
 
 ## Five pillars, 64 controls
 
-The [AEGIS Framework](/framework/) organizes governance into five pillars and a library of 64 controls, each with an objective, an owner role, the evidence that demonstrates it, and indicative mappings to NIST AI RMF, ISO/IEC 42001 and the EU AI Act.
+The [VERITRAIL Framework](/framework/) organizes governance into five pillars and a library of 64 controls, each with an objective, an owner role, the evidence that demonstrates it, and indicative mappings to NIST AI RMF, ISO/IEC 42001 and the EU AI Act.
 
 | Pillar | The question it answers |
 |---|---|
@@ -63,7 +63,7 @@ The [AEGIS Framework](/framework/) organizes governance into five pillars and a 
 | [Integrity, Safety & Security (IS)](/framework/pillars/integrity-safety-security/) | Are data, fairness, safety, security and runtime behavior controlled? |
 | [Stewardship, Evidence & Assurance (SE)](/framework/pillars/stewardship-assurance/) | Can we prove it, test it, learn from incidents and improve? |
 
-Browse every control in the [AEGIS Control Library](/framework/controls/).
+Browse every control in the [VERITRAIL Control Library](/framework/controls/).
 
 ## How it works
 
@@ -75,9 +75,9 @@ Browse every control in the [AEGIS Control Library](/framework/controls/).
 4. **Shield.** Put versioned runtime policy in front of LLM applications and agents: redact sensitive data, deny unregistered tools, and require human approval for high-impact actions. Roll out in stages — Observe, Warn, Protect, Enforce — with a tested Contain mode for incidents.
 5. **Assurance.** Test controls, retain tamper-evident logs, manage AI incidents and produce evidence packs on request.
 
-## What AEGIS does — and does not — claim
+## What VERITRAIL does — and does not — claim
 
-AEGIS supports governance readiness, control implementation and evidence collection. Our framework mappings to NIST AI RMF, ISO/IEC 42001 and the EU AI Act are indicative interpretations designed to help you organize evidence. They are not an official crosswalk, a legal opinion or a conformity assessment.
+VERITRAIL supports governance readiness, control implementation and evidence collection. Our framework mappings to NIST AI RMF, ISO/IEC 42001 and the EU AI Act are indicative interpretations designed to help you organize evidence. They are not an official crosswalk, a legal opinion or a conformity assessment.
 
 {{disclaimer}}
 
@@ -85,14 +85,14 @@ Read more in [Readiness is not compliance: how to read framework mappings](/reso
 
 ## Value by stakeholder
 
-| Stakeholder | What they need | What AEGIS provides |
+| Stakeholder | What they need | What VERITRAIL provides |
 |---|---|---|
 | CISO | Visibility and control over LLM apps, agents and AI data flows | Agent and tool registry, threat modelling, prompt-injection testing, runtime policy, kill switch and tamper-evident logs |
 | CIO / CTO | Scale AI safely without slowing delivery | Risk-proportionate gates, so low-risk use cases move quickly and high-risk ones get the right scrutiny |
 | Chief Risk / Compliance Officer | A defensible risk position and readiness evidence | Risk appetite linkage, tiering, exception register, indicative framework mappings and audit-ready evidence packs |
 | Head of AI CoE | A repeatable intake-to-production path | Standard intake, triage, assessment modules, approval workflow and reusable runbooks |
 | Engineering lead | Clear, testable requirements instead of policy prose | Policy-as-code with ALLOW / DENY / REQUIRE_HUMAN_APPROVAL rules, staged enforcement and change control |
-| Consultant / advisor | A structured, evidence-first method for client work | The control library, gap-analysis method, templates and the AEGIS Agent for drafting with citations |
+| Consultant / advisor | A structured, evidence-first method for client work | The control library, gap-analysis method, templates and the VERITRAIL Agent for drafting with citations |
 
 ## Start with an honest baseline
 

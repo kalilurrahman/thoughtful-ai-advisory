@@ -5,11 +5,11 @@ import json
 
 import yaml
 
-from aegis_common.evidence import find_prohibited_claims
-from aegis_common.paths import OUTPUT_DIR, REPO_ROOT
-from aegis_policy.schema import validate_policy
-from aegis_shield.__main__ import main as cli_main
-from aegis_shield.samples import write_samples
+from veritrail_common.evidence import find_prohibited_claims
+from veritrail_common.paths import OUTPUT_DIR, REPO_ROOT
+from veritrail_policy.schema import validate_policy
+from veritrail_shield.__main__ import main as cli_main
+from veritrail_shield.samples import write_samples
 
 SAMPLE_DIR = OUTPUT_DIR / "sample_reports" / "runtime_shield"
 KEYS = ("customer_support_agent", "financial_operations_agent")

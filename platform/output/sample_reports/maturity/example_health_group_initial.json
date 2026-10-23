@@ -38,7 +38,7 @@
     "ASR-Q3": 1
   },
   "result": {
-    "template_id": "AEGIS-SA-MATURITY",
+    "template_id": "VERITRAIL-SA-MATURITY",
     "template_version": "1.0.0",
     "evidence_status": "User-asserted",
     "overall_score": 30.9,
@@ -158,7 +158,7 @@
         "controls": [
           "EI-02"
         ],
-        "action": "Apply AEGIS risk-tier criteria to every inventory record and approve tier assignments."
+        "action": "Apply VERITRAIL risk-tier criteria to every inventory record and approve tier assignments."
       },
       {
         "question_id": "RSK-Q2",
@@ -298,7 +298,7 @@
         {
           "question_id": "INV-Q2",
           "domain": "AI Inventory & Visibility",
-          "action": "Apply AEGIS risk-tier criteria to every inventory record and approve tier assignments.",
+          "action": "Apply VERITRAIL risk-tier criteria to every inventory record and approve tier assignments.",
           "controls": [
             "EI-02"
           ],
@@ -810,16 +810,16 @@
       "uses_agents": false,
       "eu_operations": true
     },
-    "disclaimer": "This self-assessment produces an indicative, self-reported view of AI governance maturity. All results are User-asserted: no evidence has been reviewed. Framework readiness indicators are not a determination of conformity with ISO/IEC 42001, compliance with the EU AI Act, or alignment with NIST AI RMF. AEGIS does not certify compliance and this report is not legal advice.",
-    "standard_disclaimer": "AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.",
+    "disclaimer": "This self-assessment produces an indicative, self-reported view of AI governance maturity. All results are User-asserted: no evidence has been reviewed. Framework readiness indicators are not a determination of conformity with ISO/IEC 42001, compliance with the EU AI Act, or alignment with NIST AI RMF. VERITRAIL does not certify compliance and this report is not legal advice.",
+    "standard_disclaimer": "VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.",
     "cta": {
       "primary": {
-        "label": "Book an AEGIS Governance Baseline",
+        "label": "Book an VERITRAIL Governance Baseline",
         "url": "/contact/book-governance-baseline/",
         "description": "A fixed-scope 4–6 week engagement — inventory up to 25 AI systems, validate this maturity baseline with evidence, deep-dive five priority systems, review two agents, and deliver a gap register, remediation roadmap and executive readiness report."
       },
       "secondary": {
-        "label": "Explore AEGIS Agent",
+        "label": "Explore VERITRAIL Agent",
         "url": "/solutions/agent/"
       }
     }

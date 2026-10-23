@@ -18,7 +18,7 @@ const badgeClass: Record<string, string> = {
   "Critical gap": "badge badge-critical",
 };
 
-/** Evidence-status label shown next to every AEGIS finding. */
+/** Evidence-status label shown next to every VERITRAIL finding. */
 export function EvidenceBadge({ status }: { status: EvidenceStatus | string }) {
   return <span className={badgeClass[status] ?? "badge"}>{status}</span>;
 }
@@ -89,7 +89,7 @@ export function CtaBlock({ ctaKey, variant = "inline" }: { ctaKey: string; varia
 /** The `{{controls:ID,ID}}` citation block. Unknown IDs are skipped. */
 export function ControlCitations({
   ids,
-  label = "AEGIS controls cited",
+  label = "VERITRAIL controls cited",
 }: {
   ids: string[];
   label?: string;
@@ -128,7 +128,7 @@ export function ControlCitations({
         })}
       </ul>
       <p className="control-citations-note">
-        Framework mappings are indicative AEGIS interpretations (Control Library v
+        Framework mappings are indicative VERITRAIL interpretations (Control Library v
         {controlLibrary.version}); they are not legal advice and do not establish conformity or
         compliance.
       </p>
@@ -136,7 +136,7 @@ export function ControlCitations({
   );
 }
 
-/** Inline list of control links, e.g. "AEGIS controls cited: IS-11, IS-13". */
+/** Inline list of control links, e.g. "VERITRAIL controls cited: IS-11, IS-13". */
 export function ControlLinks({ ids, prefix }: { ids: string[]; prefix?: string }) {
   const known = [...new Set(ids)].filter((id) => getControl(id));
   if (!known.length) return null;

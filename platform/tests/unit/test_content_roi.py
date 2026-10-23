@@ -1,4 +1,4 @@
-"""Tests for the AEGIS ROI & business-case calculator (content/commercial/roi_calculator.py)."""
+"""Tests for the VERITRAIL ROI & business-case calculator (content/commercial/roi_calculator.py)."""
 from __future__ import annotations
 
 import csv
@@ -10,11 +10,11 @@ from pathlib import Path
 
 import pytest
 
-from aegis_common.evidence import find_prohibited_claims
+from veritrail_common.evidence import find_prohibited_claims
 
 ROOT = Path(__file__).resolve().parents[2]
 MOD_PATH = ROOT / "content" / "commercial" / "roi_calculator.py"
-spec = importlib.util.spec_from_file_location("aegis_roi_calculator", MOD_PATH)
+spec = importlib.util.spec_from_file_location("veritrail_roi_calculator", MOD_PATH)
 roi = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = roi  # dataclasses need the module registered
 _dont = sys.dont_write_bytecode
@@ -72,7 +72,7 @@ def test_minimal_inputs_and_no_cost_gives_no_roi():
 
 def test_zero_benefit_is_handled():
     r = roi.calculate(roi.ROIInputs(ai_systems=0, assessment_hours_per_system=0, hourly_cost=0,
-                                    aegis_annual_cost=10_000))
+                                    veritrail_annual_cost=10_000))
     assert r["summary"]["gross_annual_benefit"] == 0
     assert r["summary"]["payback_months"] is None
     assert r["summary"]["year1_roi_pct"] == -100.0

@@ -4,12 +4,12 @@ from __future__ import annotations
 import json
 import xml.etree.ElementTree as ET
 
-from aegis_website.ogimage import png_size, render_logo, render_og
-from aegis_website.pages import parse_page
-from aegis_website.seo import absolute, build_jsonld, robots_txt, safe_json, sitemap_xml
+from veritrail_website.ogimage import png_size, render_logo, render_og
+from veritrail_website.pages import parse_page
+from veritrail_website.seo import absolute, build_jsonld, robots_txt, safe_json, sitemap_xml
 
-SITE = {"site_url": "https://www.aegis-governance.example", "site_name": "AEGIS", "site_tagline": "Tagline",
-        "lang": "en", "organization": {"name": "AEGIS", "logo": "/static/img/aegis-logo.png"}}
+SITE = {"site_url": "https://www.veritrail-governance.example", "site_name": "VERITRAIL", "site_tagline": "Tagline",
+        "lang": "en", "organization": {"name": "VERITRAIL", "logo": "/static/img/veritrail-logo.png"}}
 
 
 def mk(meta: str):
@@ -29,7 +29,7 @@ def test_home_has_organization_and_website():
     assert types(ld)[:3] == ["Organization", "WebSite", "WebPage"]
     assert ld["@context"] == "https://schema.org"
     org = ld["@graph"][0]
-    assert org["logo"] == "https://www.aegis-governance.example/static/img/aegis-logo.png"
+    assert org["logo"] == "https://www.veritrail-governance.example/static/img/veritrail-logo.png"
 
 
 def test_service_faq_and_breadcrumbs():
@@ -43,7 +43,7 @@ def test_service_faq_and_breadcrumbs():
     assert faq["mainEntity"][0]["acceptedAnswer"]["text"] == "A bold link answer."
     bc = next(n for n in ld["@graph"] if n["@type"] == "BreadcrumbList")
     assert [i["position"] for i in bc["itemListElement"]] == [1, 2]  # unlinked crumb skipped
-    assert bc["itemListElement"][1]["item"] == "https://www.aegis-governance.example/solutions/shield/"
+    assert bc["itemListElement"][1]["item"] == "https://www.veritrail-governance.example/solutions/shield/"
 
 
 def test_faqpage_schema_type_puts_questions_on_the_page_node():
@@ -74,10 +74,10 @@ def test_sitemap_and_robots():
     root = ET.fromstring(xml)
     ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     locs = [e.text for e in root.findall("s:url/s:loc", ns)]
-    assert locs == ["https://www.aegis-governance.example/", "https://www.aegis-governance.example/b/"]
+    assert locs == ["https://www.veritrail-governance.example/", "https://www.veritrail-governance.example/b/"]
     assert root.find("s:url/s:lastmod", ns).text == "2026-10-21"
     robots = robots_txt(SITE["site_url"])
-    assert "Sitemap: https://www.aegis-governance.example/sitemap.xml" in robots
+    assert "Sitemap: https://www.veritrail-governance.example/sitemap.xml" in robots
     assert "Disallow: /api/" in robots
 
 

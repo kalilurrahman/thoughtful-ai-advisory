@@ -1,8 +1,8 @@
 ---
-title: "AI governance for the public sector — AEGIS"
+title: "AI governance for the public sector — VERITRAIL"
 h1: "AI governance for public-sector organizations"
 slug: /industries/public-sector/
-description: "AEGIS for public bodies: inventory AI use, assess impacts on people, design oversight and contestability, and keep transparent, evidence-backed records."
+description: "VERITRAIL for public bodies: inventory AI use, assess impacts on people, design oversight and contestability, and keep transparent, evidence-backed records."
 section: industries
 nav_label: "Public sector"
 nav_order: 60
@@ -11,8 +11,8 @@ schema_type: WebPage
 primary_cta: baseline
 secondary_cta: assessment
 faq:
-  - q: "Can AEGIS help us publish an AI use-case inventory?"
-    a: "AEGIS maintains the internal inventory (EI-01) with purpose, owners and risk tier. Which fields you publish, and in what format, depends on the requirements that apply to you; AEGIS can export records for your publication process."
+  - q: "Can VERITRAIL help us publish an AI use-case inventory?"
+    a: "VERITRAIL maintains the internal inventory (EI-01) with purpose, owners and risk tier. Which fields you publish, and in what format, depends on the requirements that apply to you; VERITRAIL can export records for your publication process."
   - q: "Do public bodies have specific obligations under the EU AI Act?"
     a: "Some. For example, bodies governed by public law that deploy certain high-risk AI systems must carry out a fundamental rights impact assessment (Art. 27). Applicability should be confirmed with legal advisers against the current text."
 updated: 2026-10-21
@@ -38,7 +38,7 @@ Public-sector organizations use AI where the stakes for individuals are high and
 - **Administrative law and equality duties** may require reasons for decisions, non-discrimination and routes to challenge.
 - **Procurement.** Much public-sector AI is procured, which makes vendor due diligence and contract terms central.
 
-## AEGIS emphasis
+## VERITRAIL emphasis
 
 - **Impact assessment (GL-02, AO-11).** Tier-proportionate risk and impact assessment with stakeholder input.
 - **Contestability and oversight (IS-09, IS-08).** Human review, explanations and appeal routes for people affected by AI-influenced decisions.

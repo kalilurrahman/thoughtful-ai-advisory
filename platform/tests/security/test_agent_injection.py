@@ -9,10 +9,10 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "unit"))
 
-from aegis_common.evidence import find_prohibited_claims  # noqa: E402
+from veritrail_common.evidence import find_prohibited_claims  # noqa: E402
 
-from aegis_agent.llm import SYSTEM_INSTRUCTIONS  # noqa: E402
-from aegis_agent.orchestrator import AegisAgent  # noqa: E402
+from veritrail_agent.llm import SYSTEM_INSTRUCTIONS  # noqa: E402
+from veritrail_agent.orchestrator import VeritrailAgent  # noqa: E402
 from agent_test_helpers import ASSESSOR, agent, run_guided  # noqa: E402,F401
 
 INJECTIONS = [
@@ -65,7 +65,7 @@ def test_injection_mid_assessment_does_not_change_answers(agent):
 def test_no_raw_pii_in_audit_log_or_transcript(agent):
     msg = "My email is jane.doe@acme.example and my card is 4111 1111 1111 1111 — what controls cover PII in prompts?"
     agent.handle(msg, "pii", ASSESSOR)
-    agent.call_tool("search_aegis_knowledge", ASSESSOR, query="jane.doe@acme.example asks about IS-04")
+    agent.call_tool("search_veritrail_knowledge", ASSESSOR, query="jane.doe@acme.example asks about IS-04")
     audit_raw = agent.store.audit_path.read_text(encoding="utf-8")
     session_raw = json.dumps(agent.store.get("sessions", "pii"))
     for raw in ("jane.doe@acme.example", "4111 1111 1111 1111"):
@@ -92,7 +92,7 @@ def test_llm_adapter_never_sees_raw_pii(tmp_path):
             seen.append(prompt)
             return prompt
 
-    a = AegisAgent(tmp_path / "a", llm_adapter=Spy())
+    a = VeritrailAgent(tmp_path / "a", llm_adapter=Spy())
     a.handle("Contact me at jane.doe@acme.example: what does IS-04 require?", "s", ASSESSOR)
     assert seen and all("jane.doe@acme.example" not in p for p in seen)
 

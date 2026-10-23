@@ -1,20 +1,20 @@
 ---
-title: "AEGIS Agent — a governance copilot that cites controls and labels evidence"
-h1: "AEGIS Agent: governance work, drafted with citations"
+title: "VERITRAIL Agent — a governance copilot that cites controls and labels evidence"
+h1: "VERITRAIL Agent: governance work, drafted with citations"
 slug: /solutions/agent/
-description: "The AEGIS Agent drafts AI assessments, gap registers and reports, cites AEGIS controls, labels evidence status and routes high-impact actions to humans."
+description: "The VERITRAIL Agent drafts AI assessments, gap registers and reports, cites VERITRAIL controls, labels evidence status and routes high-impact actions to humans."
 section: solutions
-nav_label: "AEGIS Agent"
+nav_label: "VERITRAIL Agent"
 nav_order: 70
 template: page
 schema_type: Service
 primary_cta: demo
 secondary_cta: baseline
 faq:
-  - q: "Can the AEGIS Agent approve a use case or change a risk tier?"
+  - q: "Can the VERITRAIL Agent approve a use case or change a risk tier?"
     a: "No. The Agent can propose a tier or draft an approval memo, but changing a risk tier, approving an exception, changing production runtime policy, exporting sensitive evidence and sending external communications all create a pending approval for a named human."
   - q: "What happens when the Agent has no source for an answer?"
-    a: "It says so. If no AEGIS control, assessment answer, policy or evidence supports a statement, the Agent responds with: No supporting evidence or framework source is available."
+    a: "It says so. If no VERITRAIL control, assessment answer, policy or evidence supports a statement, the Agent responds with: No supporting evidence or framework source is available."
   - q: "Is our data sent to an external LLM?"
     a: "Sensitive data is redacted before any external model call, and every call is logged. Deployment options, including which model provider is used, are agreed during onboarding."
 updated: 2026-10-21
@@ -22,22 +22,22 @@ updated: 2026-10-21
 
 **Core message: a copilot for AI governance teams that shows its sources, admits what it does not know, and never acts on its own authority.**
 
-Governance teams spend much of their time on structured drafting: turning workshop notes into assessments, assessments into gap registers, gap registers into roadmaps and board papers. The AEGIS Agent accelerates that work while following the same rules AEGIS applies to every AI system it governs.
+Governance teams spend much of their time on structured drafting: turning workshop notes into assessments, assessments into gap registers, gap registers into roadmaps and board papers. The VERITRAIL Agent accelerates that work while following the same rules VERITRAIL applies to every AI system it governs.
 
 ## Capabilities
 
 - **Guided use-case assessment.** Runs intake, suggests a risk tier with factors and citations, and walks the owner through the triggered [assessment modules](/framework/assessment-modules/).
-- **Ask AEGIS.** Answers questions about your controls, gaps and framework mappings with citations to AEGIS control IDs, assessment question IDs, policy versions or evidence items.
+- **Ask VERITRAIL.** Answers questions about your controls, gaps and framework mappings with citations to VERITRAIL control IDs, assessment question IDs, policy versions or evidence items.
 - **Gap register drafting.** Converts findings into register entries with control, severity, evidence label, owner and SLA date.
 - **Runtime guardrail drafting.** Produces a draft Shield policy from an agent profile for engineering and security review.
 - **Report drafting.** Executive summaries, maturity reports and evidence-pack indexes in Markdown or PDF.
-- **Framework lookups.** Indicative mappings from AEGIS controls to NIST AI RMF, ISO/IEC 42001 and EU AI Act references, always with the mapping disclaimer.
+- **Framework lookups.** Indicative mappings from VERITRAIL controls to NIST AI RMF, ISO/IEC 42001 and EU AI Act references, always with the mapping disclaimer.
 
 ## Built to the rules it enforces
 
 | Rule | How the Agent applies it |
 |---|---|
-| Citations | Every material recommendation cites at least one AEGIS control ID; when nothing supports a statement it says "No supporting evidence or framework source is available." |
+| Citations | Every material recommendation cites at least one VERITRAIL control ID; when nothing supports a statement it says "No supporting evidence or framework source is available." |
 | Evidence labels | Self-reported answers are User-asserted; suggested tiers are Inferred; only items reviewed by a named human are Verified |
 | No compliance claims | Outputs are checked for prohibited claims; the Agent describes readiness and evidence, never compliance or certification |
 | Human approval | Tools that change tiers, approve exceptions, change production policy, export sensitive evidence or send external communications create pending approvals |
@@ -45,11 +45,11 @@ Governance teams spend much of their time on structured drafting: turning worksh
 | Redaction first | Sensitive data is masked before any external LLM call or log write |
 | Audit | Material actions are written to a hash-chained audit log with a trace ID |
 
-## Example: an Ask AEGIS answer
+## Example: an Ask VERITRAIL answer
 
 > **Question:** Are we ready to move our customer-support agent to production?
 >
-> **AEGIS Agent:** Not yet, based on the evidence currently recorded. Three items block go-live under GL-07 (deployment conditions and go-live readiness):
+> **VERITRAIL Agent:** Not yet, based on the evidence currently recorded. Three items block go-live under GL-07 (deployment conditions and go-live readiness):
 >
 > 1. **Human approval for refunds — Critical gap.** The tool manifest shows `payments.issue_refund` with write access and no approval rule. Recommended: add a REQUIRE_HUMAN_APPROVAL condition above the agreed threshold. *Cites IS-13, IS-11.*
 > 2. **Prompt-injection testing — User-asserted.** The owner states testing was done (answer to SEC-Q2), but no test report is attached. Recommended: attach the report for review. *Cites IS-14.*
@@ -60,7 +60,7 @@ Governance teams spend much of their time on structured drafting: turning worksh
 >
 > I have drafted a gap register entry for each item. Sending the register to the vendor requires your approval.
 >
-> *AEGIS supports governance readiness, control implementation and evidence collection. This is not a compliance determination.*
+> *VERITRAIL supports governance readiness, control implementation and evidence collection. This is not a compliance determination.*
 
 ## Who it is for
 
@@ -70,14 +70,14 @@ Governance teams spend much of their time on structured drafting: turning worksh
 
 ## Try it
 
-The [Ask AEGIS demo](/tools/ask-aegis/) is a limited, public version that answers questions about the AEGIS framework and controls. It does not have access to any organization's data.
+The [Ask VERITRAIL demo](/tools/ask-veritrail/) is a limited, public version that answers questions about the VERITRAIL framework and controls. It does not have access to any organization's data.
 
 {{controls:IS-13,IS-04,SE-08,GL-02,EI-02}}
 
 ## Limitations
 
-The Agent drafts; people decide. It can misread ambiguous inputs, and its answers are only as current as the records in AEGIS. Framework mappings are indicative interpretations, not legal advice. Every draft should be reviewed by a qualified person before use, and outputs labelled User-asserted or Inferred should not be relied on as Verified.
+The Agent drafts; people decide. It can misread ambiguous inputs, and its answers are only as current as the records in VERITRAIL. Framework mappings are indicative interpretations, not legal advice. Every draft should be reviewed by a qualified person before use, and outputs labelled User-asserted or Inferred should not be relied on as Verified.
 
-See our [Responsible AI statement](/legal/responsible-ai/) for how AEGIS uses AI in its own product.
+See our [Responsible AI statement](/legal/responsible-ai/) for how VERITRAIL uses AI in its own product.
 
 {{cta:demo}}

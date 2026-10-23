@@ -1,5 +1,5 @@
 'use strict';
-/* Minimal DOM stand-in for node tests (enough for AegisTools / AegisReport rendering). */
+/* Minimal DOM stand-in for node tests (enough for VeritrailTools / VeritrailReport rendering). */
 
 function escapeText(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 function escapeAttr(s) { return escapeText(s).replace(/"/g, '&quot;'); }

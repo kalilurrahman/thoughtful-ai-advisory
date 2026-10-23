@@ -14,7 +14,7 @@ secondary_cta: demo
 updated: 2026-10-21
 ---
 
-*AEGIS editorial team · Published 21 October 2026 · About 9 minutes to read*
+*VERITRAIL editorial team · Published 21 October 2026 · About 9 minutes to read*
 
 When a language model answers a question, a person usually decides what to do with the answer. When an agent has tools, the model's output can *be* the action: a record updated, an email sent, a refund issued, a command run. That shift changes where governance has to operate. Policies, assessments and approvals before deployment remain necessary, but they are not sufficient for a system that makes many decisions a minute in production. Some controls must run at the moment of action.
 
@@ -79,7 +79,7 @@ Some practical notes:
 - **Time-box each stage.** "Observe for two weeks, then review" is a plan; "Observe until we are comfortable" is not.
 - **Write exit criteria before you start.** Put them in the policy itself, so the promotion decision is about evidence rather than mood.
 - **Treat promotion as a production change.** Moving a production policy between modes, or editing its rules, should create a pending approval for a named human, not execute automatically.
-- **Contain is not the last step in a sequence.** It is a mode you hope to use rarely, available from any stage, and tested in drills (Runbook 4 in the [AEGIS runbooks](/framework/runbooks/)).
+- **Contain is not the last step in a sequence.** It is a mode you hope to use rarely, available from any stage, and tested in drills (Runbook 4 in the [VERITRAIL runbooks](/framework/runbooks/)).
 
 ## A worked example
 
@@ -91,7 +91,7 @@ Consider a customer-support agent that can look up customers, issue refunds and 
 - **Kill switch:** agent and tool scopes; security operations and platform on-call authorized; target time-to-disable recorded.
 - **Rollout:** Observe for two weeks; Warn while the supervisor queue is staffed; Protect once redaction is verified; Enforce after forum approval.
 
-You can see a policy excerpt in this shape on the [AEGIS Shield](/solutions/shield/) page, and generate a draft for your own agent with the [guardrail generator](/tools/guardrail-generator/).
+You can see a policy excerpt in this shape on the [VERITRAIL Shield](/solutions/shield/) page, and generate a draft for your own agent with the [guardrail generator](/tools/guardrail-generator/).
 
 ## What runtime guardrails will not do
 

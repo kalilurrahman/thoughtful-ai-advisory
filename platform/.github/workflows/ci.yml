@@ -1,4 +1,4 @@
-name: AEGIS CI
+name: VERITRAIL CI
 
 on:
   push:
@@ -29,5 +29,5 @@ jobs:
       - name: Upload site artefact
         uses: actions/upload-artifact@v4
         with:
-          name: aegis-site
+          name: veritrail-site
           path: app/website/dist

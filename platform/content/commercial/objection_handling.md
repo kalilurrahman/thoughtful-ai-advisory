@@ -2,20 +2,20 @@
 title: "Objection-handling guide"
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Commercial Lead
+owner: VERITRAIL Commercial Lead
 ---
 
 # Objection-handling guide
 
 Principles: acknowledge, ask a clarifying question, answer with something verifiable (a control, a demo step, a
-document), and never overclaim. AEGIS has no customers or measured results yet — never imply otherwise.
+document), and never overclaim. VERITRAIL has no customers or measured results yet — never imply otherwise.
 
 | # | Objection | Clarify | Response | Proof to offer |
 |---|---|---|---|---|
-| 1 | "We already have a GRC tool." | "Does it hold your AI inventory, agent tool permissions and runtime decisions today?" | AEGIS complements GRC: it provides the AI-specific system of record (EI-01, EI-07), tiering (EI-02), runtime evidence (IS-12, SE-08) and evidence labels that can be exported to GRC via CSV/JSON. | Control library page; export demo |
-| 2 | "Our model risk team already does this." | "Does MRM cover GenAI apps, vendor AI features and agents with tools?" | Keep MRM as the validation authority; AEGIS extends inventory and tiering to GenAI and agents and maps AEGIS tiers to MRM tiers (BFSI pack FS-EV-01). | BFSI industry pack |
+| 1 | "We already have a GRC tool." | "Does it hold your AI inventory, agent tool permissions and runtime decisions today?" | VERITRAIL complements GRC: it provides the AI-specific system of record (EI-01, EI-07), tiering (EI-02), runtime evidence (IS-12, SE-08) and evidence labels that can be exported to GRC via CSV/JSON. | Control library page; export demo |
+| 2 | "Our model risk team already does this." | "Does MRM cover GenAI apps, vendor AI features and agents with tools?" | Keep MRM as the validation authority; VERITRAIL extends inventory and tiering to GenAI and agents and maps VERITRAIL tiers to MRM tiers (BFSI pack FS-EV-01). | BFSI industry pack |
 | 3 | "We'll build it ourselves." | "What's the plan for the control library, mappings, agent guardrails and evidence?" | Building is possible; the cost is maintaining 64 controls, mappings, a policy engine and evidence trails as regulations change. Use the ROI calculator with their numbers to compare. | `roi_calculator.py`; compliance mapping doc |
-| 4 | "Can you promise we will satisfy the EU AI Act?" | "Which obligations concern you most?" | No — and anyone who promises that should worry you. AEGIS supports readiness and evidence; legal determination stays with counsel and, where relevant, notified bodies. Show the coverage-gap section. | `docs/COMPLIANCE_MAPPING.md` §7 |
+| 4 | "Can you promise we will satisfy the EU AI Act?" | "Which obligations concern you most?" | No — and anyone who promises that should worry you. VERITRAIL supports readiness and evidence; legal determination stays with counsel and, where relevant, notified bodies. Show the coverage-gap section. | `docs/COMPLIANCE_MAPPING.md` §7 |
 | 5 | "We can't share data with a startup." | "What data would you be worried about?" | Default is metadata-only; no production data goes to external LLMs; NDA/DPA, least-privilege roles, retention and deletion are agreed in Week 1. | `data_access_privacy_safeguards.md` |
 | 6 | "Runtime guardrails will slow our developers." | "Where has friction hurt you before?" | Rollout starts in Observe (log only), then Warn, Protect, Enforce. Policies are code in your repo. Pilot B measures friction (survey E, signal S4). | Shield demo; rollout table |
 | 7 | "The self-assessment is just self-reported." | — | Correct — and labelled User-asserted. The Baseline validates answers against evidence and reports both scores. | Maturity model §6 |

@@ -4,9 +4,9 @@
 Checks
   1. Control library: unique IDs, valid pillars/domains, mapping keys.
   2. Self-assessment template: 24 questions, 8 domains, weights sum to 100, all control/question refs valid.
-  3. Every AEGIS control ID referenced anywhere in content/, docs/ and app/ exists in the library.
+  3. Every VERITRAIL control ID referenced anywhere in content/, docs/ and app/ exists in the library.
   4. Website page front matter (if present): required keys, unique slugs.
-  5. Policy packs validate against the policy schema (if aegis_policy is present).
+  5. Policy packs validate against the policy schema (if veritrail_policy is present).
   6. Prohibited-claim scan of content/ and docs/ (negation- and instruction-aware).
 Exit code 1 on any failure.
 """
@@ -23,8 +23,8 @@ for d in sorted((ROOT / "app").iterdir()):
 
 import yaml  # noqa: E402
 
-from aegis_common.content import controls_by_id, load_assessment_template  # noqa: E402
-from aegis_common.evidence import find_prohibited_claims  # noqa: E402
+from veritrail_common.content import controls_by_id, load_assessment_template  # noqa: E402
+from veritrail_common.evidence import find_prohibited_claims  # noqa: E402
 
 CTRL_RE = re.compile(r"\b(AO|EI|GL|IS|SE)-(\d{2})\b")
 INSTRUCTIONAL = re.compile(r"never|must not|do not|don't|prohibit|avoid|banned|trap|refus|forbid|not allowed|"
@@ -90,14 +90,14 @@ def main() -> int:
 
     packs = sorted((ROOT / "content" / "policy_packs").glob("*.y*ml"))
     try:
-        from aegis_policy.schema import validate_policy
+        from veritrail_policy.schema import validate_policy
         for p in packs:
             pol = yaml.safe_load(p.read_text(encoding="utf-8"))
             errs = validate_policy(pol)
             errors += [f"policy pack {p.name}: {e}" for e in errs]
         print(f"[5] policy packs validated: {len(packs)}")
     except ImportError:
-        print("[5] policy packs: aegis_policy not available — skipped")
+        print("[5] policy packs: veritrail_policy not available — skipped")
 
     hits = []
     for p in list(files(ROOT / "content", (".md", ".yaml", ".yml"))) + list(files(ROOT / "docs", (".md",))) + \

@@ -1,23 +1,23 @@
 ---
-title: "AEGIS Pillars"
+title: "VERITRAIL Pillars"
 version: 1.0.0
 status: published
 effective_date: 2026-10-21
-owner: AEGIS Governance Content Lead
+owner: VERITRAIL Governance Content Lead
 review_cadence: quarterly
-source: content/controls/controls.yaml (AEGIS-CTRL-LIB v1.0.0)
+source: content/controls/controls.yaml (VERITRAIL-CTRL-LIB v1.0.0)
 ---
 
-# The Five AEGIS Pillars
+# The Five VERITRAIL Pillars
 
-> AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
+> VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
 
-Every control in the AEGIS Control Library belongs to exactly one pillar. Control titles, owners, priorities and
+Every control in the VERITRAIL Control Library belongs to exactly one pillar. Control titles, owners, priorities and
 scopes below are taken verbatim from `content/controls/controls.yaml`; if this page and the YAML ever disagree, the
 YAML wins (a unit test, `tests/unit/test_content_framework.py`, checks that every control appears here).
 
 **How to read "maturity indicators".** Each pillar lists what an assessor would typically observe at three points on
-the AEGIS maturity scale. They are descriptive aids for validation interviews, not scoring rules — scoring is defined
+the VERITRAIL maturity scale. They are descriptive aids for validation interviews, not scoring rules — scoring is defined
 only in `maturity_self_assessment.yaml` and explained in [`maturity_model.md`](maturity_model.md).
 
 **Scope key.** `all` = every AI system; `high_risk` = systems tiered High; `genai` = generative AI / LLM systems;
@@ -285,7 +285,7 @@ post-market monitoring plan (SE-09); internal audit reports (SE-10); instruction
 
 ---
 
-## Cross-pillar control sets used across AEGIS
+## Cross-pillar control sets used across VERITRAIL
 
 | Set | Controls | Used by |
 |---|---|---|

@@ -8,8 +8,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "unit"))
 
-from aegis_agent.approvals import ApprovalError  # noqa: E402
-from aegis_agent.tools import TOOL_REGISTRY, ToolPermissionError  # noqa: E402
+from veritrail_agent.approvals import ApprovalError  # noqa: E402
+from veritrail_agent.tools import TOOL_REGISTRY, ToolPermissionError  # noqa: E402
 from agent_test_helpers import APPROVER, ASSESSOR, CS_PROFILE, VIEWER, agent, run_guided  # noqa: E402,F401
 
 ANON = None  # coerce_user(None) -> anonymous
@@ -31,7 +31,7 @@ def test_anonymous_cannot_read_inventory_or_runtime_logs(agent):
             agent.call_tool(name, ANON, assessment_id="asm_x")
     with pytest.raises(ToolPermissionError):
         agent.call_tool("search_runtime_logs", VIEWER)
-    assert agent.call_tool("search_aegis_knowledge", ANON, query="IS-11")["results"]
+    assert agent.call_tool("search_veritrail_knowledge", ANON, query="IS-11")["results"]
 
 
 def test_public_website_identity_cannot_create_records(agent):

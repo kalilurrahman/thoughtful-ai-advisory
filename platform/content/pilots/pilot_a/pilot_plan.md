@@ -3,7 +3,7 @@ title: "Pilot A plan — Regulated enterprise (20–100 AI systems)"
 pilot: A
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead
+owner: VERITRAIL Delivery Lead
 status: Not started — awaiting design-partner recruitment
 ---
 
@@ -23,7 +23,7 @@ an emerging AI governance function, and audit, regulatory or customer pressure t
 |---|---|---|
 | HA-1 | Structured workshops plus the intake template can register ≥ 25 AI systems in two weeks | M1 |
 | HA-2 | Tier-proportionate deep-dives make 100% coverage of High-tier systems feasible | M2 |
-| HA-3 | Governance teams will complete assessments through the AEGIS Agent rather than spreadsheets | M3 |
+| HA-3 | Governance teams will complete assessments through the VERITRAIL Agent rather than spreadsheets | M3 |
 | HA-4 | The control library and evidence labels produce an executive report leadership accepts | M5 |
 | HA-5 | Inventory, maturity and evidence pain converts to a paid Register/Control/Assurance engagement | M6, survey G1–G3 |
 | HA-6 | ROI hypotheses (assessment effort, evidence-prep effort, approval cycle) hold directionally | Baseline vs. pilot time measurements (S1–S3) |
@@ -64,7 +64,7 @@ unchanged.
 
 ## 6. Roles
 
-| AEGIS | Partner |
+| VERITRAIL | Partner |
 |---|---|
 | Delivery lead (accountable for pilot plan and scorecard) | Executive sponsor (CRO/CIO/CAIO) |
 | Governance analyst ×1–2 (workshops, assessments, gap register) | Pilot lead (AI governance / risk) |

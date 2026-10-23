@@ -27,8 +27,8 @@ test('isBusinessEmail rejects free-mail domains (case-insensitive, subdomains) a
 
 test('safeUrl only allows same-site paths or http(s) URLs, optionally under a prefix', () => {
   assert.equal(SITE.safeUrl('/api/reports/lead_abc.pdf?t=1', '/api/reports/'), '/api/reports/lead_abc.pdf?t=1');
-  assert.equal(SITE.safeUrl('https://www.aegis-governance.example/api/reports/x.md?t=2', '/api/reports/'),
-    'https://www.aegis-governance.example/api/reports/x.md?t=2');
+  assert.equal(SITE.safeUrl('https://www.veritrail-governance.example/api/reports/x.md?t=2', '/api/reports/'),
+    'https://www.veritrail-governance.example/api/reports/x.md?t=2');
   assert.equal(SITE.safeUrl('javascript:alert(1)'), null);
   assert.equal(SITE.safeUrl(' JavaScript:alert(1)'), null);
   assert.equal(SITE.safeUrl('data:text/html,<script>'), null);
@@ -92,7 +92,7 @@ test('validateLeadForm requires consent, required fields and a business email fo
     { name: 'email', id: 'lf-email', type: 'email', required: true, value: 'jane@gmail.com', label: 'Work email' },
     { name: 'consent', id: 'lf-consent', type: 'checkbox', required: true },
     { name: 'website', id: 'lf-website' }
-  ], { 'data-business-email': 'true', 'data-aegis-form': 'baseline' });
+  ], { 'data-business-email': 'true', 'data-veritrail-form': 'baseline' });
   const errs = SITE.validateLeadForm(form, { free_mail_domains: FREE });
   assert.deepEqual(errs.map((e) => e.id), ['lf-name', 'lf-email', 'lf-consent']);
   assert.match(errs[1].message, /business email/);
@@ -103,7 +103,7 @@ test('contactPayload matches the /api/contact contract (boolean consent, honeypo
     { name: 'name', id: 'n', value: ' Jane ' }, { name: 'email', id: 'e', value: 'jane@corp.com' },
     { name: 'company', id: 'c', value: 'Corp' }, { name: 'message', id: 'm', value: '' },
     { name: 'consent', id: 'k', type: 'checkbox', checked: true }, { name: 'website', id: 'w', value: '' }
-  ], { 'data-aegis-form': 'waitlist', 'data-tool': 'agentic-risk-checker' });
+  ], { 'data-veritrail-form': 'waitlist', 'data-tool': 'agentic-risk-checker' });
   const p = SITE.contactPayload(form);
   assert.equal(p.form, 'waitlist');
   assert.equal(p.consent, true);

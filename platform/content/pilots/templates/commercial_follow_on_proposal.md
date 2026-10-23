@@ -4,7 +4,7 @@ applies_to: [Pilot A, Pilot B, Governance Baseline]
 week: 6
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Commercial Lead
+owner: VERITRAIL Commercial Lead
 see_also: content/commercial/pilot_to_platform_proposal_template.md (full proposal)
 ---
 
@@ -12,7 +12,7 @@ see_also: content/commercial/pilot_to_platform_proposal_template.md (full propos
 
 This short proposal is presented at the Week 6 executive readout. The full contractual proposal uses
 `content/commercial/pilot_to_platform_proposal_template.md`. Prices are hypotheses being validated in pilots and must
-be confirmed by the AEGIS commercial lead before sharing.
+be confirmed by the VERITRAIL commercial lead before sharing.
 
 ## 1. What the pilot established
 

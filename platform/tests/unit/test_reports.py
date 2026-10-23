@@ -1,12 +1,12 @@
 import csv
 import json
 
-from aegis_assessment.engine import score_assessment
-from aegis_common.content import load_assessment_template
-from aegis_common.evidence import find_prohibited_claims
-from aegis_reports.exporters import write_csv, write_json, write_markdown
-from aegis_reports.maturity import render_maturity_markdown
-from aegis_reports.pdf import markdown_to_pdf
+from veritrail_assessment.engine import score_assessment
+from veritrail_common.content import load_assessment_template
+from veritrail_common.evidence import find_prohibited_claims
+from veritrail_reports.exporters import write_csv, write_json, write_markdown
+from veritrail_reports.maturity import render_maturity_markdown
+from veritrail_reports.pdf import markdown_to_pdf
 
 T = load_assessment_template()
 
@@ -18,8 +18,8 @@ def _result(v=2, **profile):
 def test_maturity_report_has_all_required_sections():
     md = render_maturity_markdown(_result(2, uses_agents=True, eu_operations=True), {"company": "Acme"})
     for heading in ["Overall maturity", "Domain scores", "Top strengths", "Top gaps", "Critical risk flags",
-                    "30/60/90-day action plan", "Recommended AEGIS controls", "Framework readiness indicators",
-                    "Recommended AEGIS modules", "AEGIS Governance Baseline"]:
+                    "30/60/90-day action plan", "Recommended VERITRAIL controls", "Framework readiness indicators",
+                    "Recommended VERITRAIL modules", "VERITRAIL Governance Baseline"]:
         assert heading in md, heading
     for fw in ["NIST AI RMF", "ISO/IEC 42001", "EU AI Act"]:
         assert fw in md

@@ -1,4 +1,4 @@
-"""Adversarial inputs against the AEGIS policy engine.
+"""Adversarial inputs against the VERITRAIL policy engine.
 
 Detected cases are asserted. Known detector limitations are pinned as *strict*
 xfail tests: they document, honestly, what the deterministic heuristics miss, and
@@ -15,10 +15,10 @@ import urllib.parse
 
 import pytest
 
-from aegis_common.audit import AuditLog
-from aegis_policy.detectors import scan_injection, scan_jailbreak
-from aegis_policy.engine import PolicyEngine
-from aegis_policy.loader import load_pack
+from veritrail_common.audit import AuditLog
+from veritrail_policy.detectors import scan_injection, scan_jailbreak
+from veritrail_policy.engine import PolicyEngine
+from veritrail_policy.loader import load_pack
 
 CTX = {"agent_name": "sec-agent", "environment": "production", "risk_tier": "High", "model": "m", "tenant": "acme"}
 ID = {"sub": "attacker-1", "tenant_id": "acme", "roles": ["support_agent"]}

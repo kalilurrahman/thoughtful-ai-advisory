@@ -1,8 +1,8 @@
 ---
-title: "AEGIS blog — practical AI governance, guardrails and evidence"
+title: "VERITRAIL blog — practical AI governance, guardrails and evidence"
 h1: "Blog"
 slug: /resources/blog/
-description: "Practical articles from AEGIS on AI inventories, runtime guardrails for agents, evidence and how to read framework mappings without overclaiming."
+description: "Practical articles from VERITRAIL on AI inventories, runtime guardrails for agents, evidence and how to read framework mappings without overclaiming."
 section: resources
 nav_label: "Blog"
 nav_order: 70

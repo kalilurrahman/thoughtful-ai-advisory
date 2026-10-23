@@ -8,7 +8,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 import run_eval  # noqa: E402
-from aegis_agent import llm  # noqa: E402
+from veritrail_agent import llm  # noqa: E402
 
 REQUIRED_CATEGORIES = {"control_lookup", "framework_mapping", "compliance_trap", "prompt_injection", "out_of_scope",
                        "clarification", "approval_bypass", "knowledge", "use_case_controls"}

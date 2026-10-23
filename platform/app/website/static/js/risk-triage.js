@@ -1,10 +1,10 @@
-/* AEGIS risk triage: form -> POST /api/risk-tier -> preliminary (Inferred) tier with factors and citations. */
+/* VERITRAIL risk triage: form -> POST /api/risk-tier -> preliminary (Inferred) tier with factors and citations. */
 (function () {
   'use strict';
   var doc = document;
   var section = doc.getElementById('risk-triage');
-  if (!section || !window.AEGIS || !window.AegisTools) { return; }
-  var A = window.AEGIS, T = window.AegisTools, el = T.el;
+  if (!section || !window.VERITRAIL || !window.VeritrailTools) { return; }
+  var A = window.VERITRAIL, T = window.VeritrailTools, el = T.el;
   var cfg = A.readConfig(doc);
   var form = doc.getElementById('rt-form');
   var status = doc.getElementById('rt-status');
@@ -51,7 +51,7 @@
     }
     out.appendChild(el(doc, 'h3', { text: 'Rationale' }));
     out.appendChild(el(doc, 'p', { text: d.rationale || '' }));
-    out.appendChild(T.controlLinks(doc, d.citation_ids || [], 'AEGIS controls cited: '));
+    out.appendChild(T.controlLinks(doc, d.citation_ids || [], 'VERITRAIL controls cited: '));
     if (d.method) { out.appendChild(el(doc, 'p', { className: 'small', text: 'Method: ' + d.method + '. EU AI Act category screens are indicative triggers for legal review, not a legal classification.' })); }
     result.hidden = false;
     result.focus();
@@ -73,7 +73,7 @@
       } else if (r.kind === 'client_error') {
         A.setStatus(status, (r.data && r.data.error) || 'Please check your inputs.', 'error');
       } else {
-        T.showUnavailable(section, 'Risk triage needs the AEGIS service, which is not reachable from this page. Nothing you entered was sent or stored. Request a demo to tier your use cases with our team.');
+        T.showUnavailable(section, 'Risk triage needs the VERITRAIL service, which is not reachable from this page. Nothing you entered was sent or stored. Request a demo to tier your use cases with our team.');
       }
     });
   });

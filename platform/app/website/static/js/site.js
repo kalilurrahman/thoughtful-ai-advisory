@@ -1,15 +1,15 @@
 /*
- * AEGIS site script (loaded deferred on every page; no dependencies, no cookies).
+ * VERITRAIL site script (loaded deferred on every page; no dependencies, no cookies).
  *  - progressive-enhancement navigation (mobile toggle, one-open disclosure menus, Escape)
  *  - accessible lead forms posting JSON to /api/contact (contract: CONTRIBUTING.md §3)
- *  - shared helpers exported as window.AEGIS (and module.exports for Node tests)
+ *  - shared helpers exported as window.VERITRAIL (and module.exports for Node tests)
  */
 (function (root, factory) {
   'use strict';
   var api = factory(root);
   if (typeof module === 'object' && module.exports) { module.exports = api; }
   else {
-    root.AEGIS = api;
+    root.VERITRAIL = api;
     if (root.document) {
       if (root.document.readyState === 'loading') { root.document.addEventListener('DOMContentLoaded', function () { api.init(root.document); }); }
       else { api.init(root.document); }
@@ -24,7 +24,7 @@
 
   function readConfig(doc) {
     try {
-      var el = doc && doc.getElementById('aegis-config');
+      var el = doc && doc.getElementById('veritrail-config');
       if (el) {
         var cfg = JSON.parse(el.textContent);
         Object.keys(DEFAULT_CONFIG).forEach(function (k) { if (cfg[k] === undefined) { cfg[k] = DEFAULT_CONFIG[k]; } });
@@ -106,7 +106,7 @@
   }
 
   function track(name, props) {
-    if (root.AegisAnalytics && typeof root.AegisAnalytics.track === 'function') { root.AegisAnalytics.track(name, props || {}); }
+    if (root.VeritrailAnalytics && typeof root.VeritrailAnalytics.track === 'function') { root.VeritrailAnalytics.track(name, props || {}); }
   }
 
   // ------------------------------------------------------------------ form errors
@@ -199,7 +199,7 @@
   }
 
   function contactPayload(form) {
-    var data = { form: form.getAttribute('data-aegis-form'), consent: true, website: fieldValue(form, 'website'),
+    var data = { form: form.getAttribute('data-veritrail-form'), consent: true, website: fieldValue(form, 'website'),
       source: (root.location && root.location.pathname) || '' };
     ['email', 'name', 'company', 'role', 'message', 'ai_systems', 'industry', 'tool'].forEach(function (k) {
       var v = fieldValue(form, k);
@@ -261,7 +261,7 @@
         } else {
           var contact = cfg.contact_email ? ' or email ' + cfg.contact_email : '';
           var text = r.kind === 'unavailable'
-            ? 'We could not reach the AEGIS service, so your request has not been sent or stored. Please try again later' + contact + '.'
+            ? 'We could not reach the VERITRAIL service, so your request has not been sent or stored. Please try again later' + contact + '.'
             : 'Something went wrong on our side and your request may not have been recorded. Please try again' + contact + '.';
           setStatus(statusEl, text, 'error');
           if (formName === 'blueprint' && download && r.kind === 'unavailable') {
@@ -315,7 +315,7 @@
   function init(doc) {
     var cfg = readConfig(doc);
     initNav(doc);
-    Array.prototype.forEach.call(doc.querySelectorAll('form[data-aegis-form]'), function (f) { initLeadForm(f, cfg); });
+    Array.prototype.forEach.call(doc.querySelectorAll('form[data-veritrail-form]'), function (f) { initLeadForm(f, cfg); });
   }
 
   return {

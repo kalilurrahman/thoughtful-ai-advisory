@@ -262,7 +262,7 @@ export function InventoryScreen() {
         remain Under review until an accountable human confirms disposition.
       </p>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="aegis-sheet">
+        <DialogContent className="veritrail-sheet">
           <DialogTitle>
             {editingIndex === null ? "Register & screen" : "Edit inventory record"}
           </DialogTitle>

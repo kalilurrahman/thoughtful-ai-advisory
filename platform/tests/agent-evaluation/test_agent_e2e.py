@@ -9,11 +9,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tests" / "unit"))
 
-from aegis_common.content import controls_by_id  # noqa: E402
-from aegis_common.evidence import STANDARD_DISCLAIMER, find_prohibited_claims  # noqa: E402
+from veritrail_common.content import controls_by_id  # noqa: E402
+from veritrail_common.evidence import STANDARD_DISCLAIMER, find_prohibited_claims  # noqa: E402
 
-from aegis_agent import llm  # noqa: E402
-from aegis_agent.orchestrator import AegisAgent  # noqa: E402
+from veritrail_agent import llm  # noqa: E402
+from veritrail_agent.orchestrator import VeritrailAgent  # noqa: E402
 
 ASSESSOR = {"id": "e2e-assessor", "role": "assessor", "name": "Asha Rao"}
 APPROVER = {"id": "e2e-approver", "role": "approver", "name": "Dana Lee"}
@@ -26,7 +26,7 @@ SCRIPT = {  # question -> answer; anything not listed is answered "unknown"
 
 def test_full_guided_assessment_and_exports(tmp_path):
     llm.set_llm_adapter(None)
-    agent = AegisAgent(tmp_path / "agent")
+    agent = VeritrailAgent(tmp_path / "agent")
     sid = "e2e"
     try:
         r = agent.handle("I want to assess a new use case", sid, ASSESSOR)
@@ -93,7 +93,7 @@ def test_full_guided_assessment_and_exports(tmp_path):
 
 
 def test_sample_run_generator(tmp_path):
-    from aegis_agent.sample_run import run_sample
+    from veritrail_agent.sample_run import run_sample
     s = run_sample(tmp_path / "out", tmp_path / "data")
     assert s["synthetic"] and s["audit_chain_valid"] and not s["report_errors"]
     for p in s["report"].values():

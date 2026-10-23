@@ -1,8 +1,8 @@
 ---
-title: "Request an AEGIS demo"
+title: "Request an VERITRAIL demo"
 h1: "Request a demo"
 slug: /contact/request-demo/
-description: "See AEGIS with your own scenarios: AI inventory and risk tiering, lifecycle approvals, runtime guardrails for agents, evidence packs and the AEGIS Agent."
+description: "See VERITRAIL with your own scenarios: AI inventory and risk tiering, lifecycle approvals, runtime guardrails for agents and evidence packs."
 section: contact
 nav_label: "Request a demo"
 nav_order: 30
@@ -14,7 +14,7 @@ secondary_cta: baseline
 updated: 2026-10-21
 ---
 
-A working session, not a slide show. Tell us which scenarios matter most and we will walk through them in AEGIS — using illustrative data, or a description of one of your own systems if you prefer.
+A working session, not a slide show. Tell us which scenarios matter most and we will walk through them in VERITRAIL — using illustrative data, or a description of one of your own systems if you prefer.
 
 ## Typical agenda (45–60 minutes)
 
@@ -23,7 +23,7 @@ A working session, not a slide show. Tell us which scenarios matter most and we 
 3. **Lifecycle control** — intake, assessment modules, approval with conditions, and change triggers.
 4. **Runtime guardrails** — an agent policy with default-deny tools, approval thresholds and redaction; moving from Observe to Enforce; triggering Contain.
 5. **Evidence** — the tamper-evident log, an evidence pack with evidence labels, and the gap register.
-6. **AEGIS Agent** — asking governance questions and drafting a gap register with control citations.
+6. **VERITRAIL Agent** — asking governance questions and drafting a gap register with control citations.
 
 ## Scenarios we can focus on
 

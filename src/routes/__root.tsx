@@ -85,14 +85,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AEGIS — Enterprise AI governance, runtime guardrails and evidence" },
+      { title: "VERITRAIL — Enterprise AI governance, runtime guardrails and evidence" },
       {
         name: "description",
         content:
-          "AEGIS helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously.",
+          "VERITRAIL helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously.",
       },
-      { name: "author", content: "AEGIS" },
-      { property: "og:title", content: "AEGIS — Enterprise AI governance" },
+      { name: "author", content: "VERITRAIL" },
+      { property: "og:title", content: "VERITRAIL — Enterprise AI governance" },
       {
         property: "og:description",
         content: "Govern every AI system, agent, and decision with evidence.",
@@ -108,8 +108,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "stylesheet", href: siteCss },
-      { rel: "icon", href: "/aegis-icon-192.png", type: "image/png" },
-      { rel: "apple-touch-icon", href: "/aegis-icon-192.png" },
+      { rel: "icon", href: "/veritrail-icon-192.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/veritrail-icon-192.png" },
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -140,7 +140,7 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-// Routes that belong to the public AEGIS website; every other route is the workspace.
+// Routes that belong to the public VERITRAIL website; every other route is the workspace.
 const SITE_ROUTE_IDS = new Set<string>([
   "/",
   "/$",

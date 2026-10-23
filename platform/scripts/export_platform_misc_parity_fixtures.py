@@ -6,13 +6,13 @@ src/test/platform-content-checks.test.ts) assert against:
 
 * roi            — content/commercial/roi_calculator.py: calculate(), to_markdown(), to_csv(),
                    scenarios() and the CLI --scenarios table, plus rejected inputs;
-* funnel         — app/admin/aegis_admin/cli.py funnel() + `analytics funnel` output over a
-                   synthetic events.jsonl written through AegisApp.event (server validation);
-* events         — AegisApp.event() storage normalisation (allow-list, path, props);
+* funnel         — app/admin/veritrail_admin/cli.py funnel() + `analytics funnel` output over a
+                   synthetic events.jsonl written through VeritrailApp.event (server validation);
+* events         — VeritrailApp.event() storage normalisation (allow-list, path, props);
 * leads          — score_assessment()["lead"] tags/labels, is_business_email(), the HubSpot
                    payload, and the CLI `leads list` / `leads export` / `forms list` output;
 * audit          — `audit verify` output lines for an intact and a tampered log;
-* maturity       — aegis_reports.maturity.render_maturity_markdown();
+* maturity       — veritrail_reports.maturity.render_maturity_markdown();
 * content_checks — check_content.py steps over the files bundled into the website and
                    check_website_pages.py -v output.
 
@@ -41,20 +41,20 @@ for d in sorted((PLATFORM / "app").iterdir()):
 
 import yaml  # noqa: E402
 
-from aegis_admin import cli as admin_cli  # noqa: E402
-from aegis_api import integrations as integ  # noqa: E402
-from aegis_api.server import AegisApp  # noqa: E402
-from aegis_assessment.engine import score_assessment  # noqa: E402
-from aegis_common.audit import AuditLog  # noqa: E402
-from aegis_common.content import controls_by_id, load_assessment_template  # noqa: E402
-from aegis_common.evidence import find_prohibited_claims  # noqa: E402
-from aegis_policy.schema import validate_policy  # noqa: E402
-from aegis_reports.maturity import render_maturity_markdown  # noqa: E402
+from veritrail_admin import cli as admin_cli  # noqa: E402
+from veritrail_api import integrations as integ  # noqa: E402
+from veritrail_api.server import VeritrailApp  # noqa: E402
+from veritrail_assessment.engine import score_assessment  # noqa: E402
+from veritrail_common.audit import AuditLog  # noqa: E402
+from veritrail_common.content import controls_by_id, load_assessment_template  # noqa: E402
+from veritrail_common.evidence import find_prohibited_claims  # noqa: E402
+from veritrail_policy.schema import validate_policy  # noqa: E402
+from veritrail_reports.maturity import render_maturity_markdown  # noqa: E402
 
 OUT = REPO / "src" / "test" / "fixtures" / "platform-misc-parity.json"
 
 sys.dont_write_bytecode = True
-_spec = importlib.util.spec_from_file_location("aegis_roi_calculator",
+_spec = importlib.util.spec_from_file_location("veritrail_roi_calculator",
                                                PLATFORM / "content" / "commercial" / "roi_calculator.py")
 roi = importlib.util.module_from_spec(_spec)
 sys.modules[_spec.name] = roi
@@ -75,7 +75,7 @@ def roi_cases() -> dict:
         ("example", ex),
         ("minimal_defaults", roi.ROIInputs(ai_systems=10, assessment_hours_per_system=8, hourly_cost=80)),
         ("zero_benefit", roi.ROIInputs(ai_systems=0, assessment_hours_per_system=0, hourly_cost=0,
-                                       aegis_annual_cost=10_000)),
+                                       veritrail_annual_cost=10_000)),
         ("fractional", replace(ex, assessment_hours_per_system=17.5, hourly_cost=112.25, approval_cycle_days=33,
                                annual_incident_probability=0.07, expected_incident_cost=1_234_567,
                                audit_prep_reduction=0.35, realization_rate=0.6)),
@@ -83,7 +83,7 @@ def roi_cases() -> dict:
         ("high_hypotheses", replace(ex, audit_prep_reduction=0.8, assessment_effort_reduction=0.7)),
         ("tiny_values", replace(ex, ai_systems=3, assessment_hours_per_system=1.25, hourly_cost=33.33,
                                 audit_prep_hours_per_year=7, new_use_cases_per_year=1, delay_cost_per_day=12.5,
-                                aegis_annual_cost=999, implementation_cost=1)),
+                                veritrail_annual_cost=999, implementation_cost=1)),
     ]
     out = []
     for cid, inp in cases:
@@ -141,8 +141,8 @@ RAW_EVENTS = [
 
 def analytics_fixture() -> dict:
     with tempfile.TemporaryDirectory() as td:
-        os.environ.pop("AEGIS_VAR_DIR", None)
-        app = AegisApp(var_dir=td, site_dir=td)
+        os.environ.pop("VERITRAIL_VAR_DIR", None)
+        app = VeritrailApp(var_dir=td, site_dir=td)
         statuses = []
         for ev in RAW_EVENTS:
             st, _h, body = app.handle("POST", "/api/events", {"Content-Type": "text/plain"},
@@ -385,7 +385,7 @@ def content_checks_fixture() -> dict:
     # Synthetic scan cases for the paragraph/negation logic of step 6.
     samples = {
         "plain.md": "Our platform is fully compliant with the EU AI Act.\n",
-        "negated.md": "AEGIS does not certify that you are compliant.\n",
+        "negated.md": "VERITRAIL does not certify that you are compliant.\n",
         "instructional.md": "Never say the system is compliant.\n",
         "wrapped.md": "First line of a paragraph\nthat continues and is now compliant.\n\n| table | is compliant |\n",
         "quoted.md": "Avoid claims like \"fully certified\".\n> The product is regulator-approved.\n",

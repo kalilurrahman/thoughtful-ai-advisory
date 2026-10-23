@@ -4,10 +4,10 @@
  * Ports of:
  *  - platform/app/website/static/js/analytics.js — event allow-list, Do-Not-Track / Global
  *    Privacy Control opt-out, client-side prop sanitising, path = location.pathname only;
- *  - platform/app/api/aegis_api/server.py (AegisApp.event, _str, RateLimiter) — server-side
+ *  - platform/app/api/veritrail_api/server.py (VeritrailApp.event, _str, RateLimiter) — server-side
  *    validation: allow-listed names, path without query string, at most 10 scalar props with
  *    keys <= 40 chars (no "email" keys) and values stringified to <= 120 chars;
- *  - platform/app/admin/aegis_admin/cli.py (FUNNEL, funnel()) — funnel computation.
+ *  - platform/app/admin/veritrail_admin/cli.py (FUNNEL, funnel()) — funnel computation.
  *
  * Cookieless: no cookies, no client or session identifiers, no IP address or user agent stored.
  */
@@ -101,7 +101,7 @@ export function buildEvent(name: string, props: unknown, pathname: string | unde
 
 // ----------------------------------------------------------------- server rules (server.py)
 
-/** AegisApp._str(): str(), strip, drop control characters, truncate. */
+/** VeritrailApp._str(): str(), strip, drop control characters, truncate. */
 export function cleanStr(v: unknown, maxlen = 200): string {
   if (v === null || v === undefined) return "";
   const s = pyStrip(pyStr(v))
@@ -118,7 +118,7 @@ export interface StoredEvent {
 
 export type EventValidation = { ok: true; event: StoredEvent } | { ok: false; error: string };
 
-/** AegisApp.event(): validate and normalise an incoming event before storage. */
+/** VeritrailApp.event(): validate and normalise an incoming event before storage. */
 export function validateEvent(data: unknown): EventValidation {
   const d = data && typeof data === "object" ? (data as Record<string, unknown>) : {};
   const name = cleanStr(d["name"], 60);

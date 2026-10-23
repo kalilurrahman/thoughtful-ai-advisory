@@ -6,11 +6,11 @@ from pathlib import Path
 
 import pytest
 
-from aegis_common.content import controls, load_assessment_template
+from veritrail_common.content import controls, load_assessment_template
 
 ROOT = Path(__file__).resolve().parents[2]
 DOCS = ROOT / "docs"
-BLUEPRINT = ROOT / "output" / "AEGIS_Launch_and_Enhancement_Blueprint_v3.md"
+BLUEPRINT = ROOT / "output" / "VERITRAIL_Launch_and_Enhancement_Blueprint_v3.md"
 
 
 def _read(p: Path) -> str:
@@ -117,7 +117,7 @@ def test_blueprint_is_v3_master_document():
 
 
 def test_blueprint_lists_all_agent_tools():
-    tools = pytest.importorskip("aegis_agent.tools")
+    tools = pytest.importorskip("veritrail_agent.tools")
     text = _read(BLUEPRINT)
     for name, spec in tools.TOOL_REGISTRY.items():
         assert f"`{name}` | {spec.permission} |" in text, name

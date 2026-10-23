@@ -1,4 +1,4 @@
-"""Shared helpers for AEGIS Agent tests (imported by test_agent_*.py modules)."""
+"""Shared helpers for VERITRAIL Agent tests (imported by test_agent_*.py modules)."""
 from __future__ import annotations
 
 import pytest
@@ -24,10 +24,10 @@ LOW_PROFILE = {
 
 @pytest.fixture
 def agent(tmp_path):
-    from aegis_agent import llm
-    from aegis_agent.orchestrator import AegisAgent
+    from veritrail_agent import llm
+    from veritrail_agent.orchestrator import VeritrailAgent
     llm.set_llm_adapter(None)  # deterministic regardless of environment
-    yield AegisAgent(tmp_path / "agent")
+    yield VeritrailAgent(tmp_path / "agent")
     llm.reset_llm_adapter()
 
 

@@ -1,9 +1,9 @@
 /**
- * AEGIS Agent (all roles) — browser port of platform/app/agent/aegis_agent.
+ * VERITRAIL Agent (all roles) — browser port of platform/app/agent/veritrail_agent.
  * Runs entirely in the browser: in-memory store (optionally persisted to localStorage),
  * hash-chained audit log, 14 least-privilege tools, human approvals with separation of duties.
  */
-export { AegisAgent, ReviewError, type AgentResponse, type AgentOptions, type ResponseSource } from "./orchestrator";
+export { VeritrailAgent, ReviewError, type AgentResponse, type AgentOptions, type ResponseSource } from "./orchestrator";
 export { ApprovalError, payloadHash } from "./approvals";
 export { AgentAuditLog } from "./audit-log";
 export {

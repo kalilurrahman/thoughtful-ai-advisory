@@ -1,12 +1,12 @@
-"""Export parity fixtures for the browser (TypeScript) ports of the AEGIS engines.
+"""Export parity fixtures for the browser (TypeScript) ports of the VERITRAIL engines.
 
     python3 platform/scripts/export_shield_parity_fixtures.py
 
 Writes deterministic JSON fixtures consumed by the website's Vitest suite:
 
-* src/test/fixtures/risk-tier-parity.json  -- aegis_assessment.risk_tier.calculate_risk_tier
+* src/test/fixtures/risk-tier-parity.json  -- veritrail_assessment.risk_tier.calculate_risk_tier
   (the `/api/risk-tier` response) for a set of varied intake profiles;
-* src/test/fixtures/shield-parity.json     -- aegis_shield.advisor.advise plus policy_yaml /
+* src/test/fixtures/shield-parity.json     -- veritrail_shield.advisor.advise plus policy_yaml /
   policy_json (the `/api/shield/advise` response) for the example profiles and edge cases.
 
 The generated policy's change-history date is normalised to FIXED_DATE (and policy_yaml /
@@ -25,15 +25,15 @@ for d in sorted((PLATFORM / "app").iterdir()):
     if d.is_dir() and str(d) not in sys.path:
         sys.path.insert(0, str(d))
 
-from aegis_assessment.risk_tier import calculate_risk_tier  # noqa: E402
-from aegis_shield.advisor import advise  # noqa: E402
-from aegis_shield.examples import (  # noqa: E402
+from veritrail_assessment.risk_tier import calculate_risk_tier  # noqa: E402
+from veritrail_shield.advisor import advise  # noqa: E402
+from veritrail_shield.examples import (  # noqa: E402
     AUTONOMOUS_HIGH_RISK_PROFILE,
     CUSTOMER_SUPPORT_PROFILE,
     FINANCIAL_OPS_PROFILE,
     INTERNAL_RAG_PROFILE,
 )
-from aegis_shield.generator import to_json, to_yaml  # noqa: E402
+from veritrail_shield.generator import to_json, to_yaml  # noqa: E402
 
 FIXED_DATE = "2000-01-01"
 OUT_DIR = REPO / "src" / "test" / "fixtures"
@@ -185,7 +185,7 @@ def _normalise_shield(out: dict) -> dict:
 
 
 def shield_api(profile: dict) -> dict:
-    """Same shape as AegisApp.shield_advise (advise + policy_yaml / policy_json)."""
+    """Same shape as VeritrailApp.shield_advise (advise + policy_yaml / policy_json)."""
     out = advise(copy.deepcopy(profile))
     pol = out.get("policy")
     if pol is not None:

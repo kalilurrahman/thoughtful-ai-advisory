@@ -1,9 +1,9 @@
-# AEGIS Agent — Design (Phase 3 MVP)
+# VERITRAIL Agent — Design (Phase 3 MVP)
 
-**Owner:** Agent workstream · **Package:** `app/agent/aegis_agent` · **Status:** MVP, deterministic, tested
+**Owner:** Agent workstream · **Package:** `app/agent/veritrail_agent` · **Status:** MVP, deterministic, tested
 **Related:** CONTRIBUTING.md §2–3, TECHNICAL_ARCHITECTURE.md, RUNTIME_SHIELD_DESIGN.md, COMPLIANCE_MAPPING.md
 
-The AEGIS Agent is a governance copilot for consultants, AI CoE leads, CISOs and compliance leads. It answers
+The VERITRAIL Agent is a governance copilot for consultants, AI CoE leads, CISOs and compliance leads. It answers
 governance questions with citations, runs a guided use-case assessment, produces a gap register and exports an
 audit-ready readiness report. **Trust is the product.** A confident wrong compliance answer does more harm than
 "I don't know". The agent therefore:
@@ -22,7 +22,7 @@ audit-ready readiness report. **Trust is the product.** A confident wrong compli
  user / API / CLI
       │  message, session_id, user{id, role, name}
       ▼
- AegisAgent.handle()  (orchestrator.py)
+ VeritrailAgent.handle()  (orchestrator.py)
   ├─ coerce_user → least-privilege role (anonymous < viewer < assessor < approver < admin)
   ├─ load session (owner-bound; a mismatched owner gets a fresh session)
   ├─ safety pre-checks (safety.py): injection/jailbreak, claim coercion, approval bypass
@@ -37,21 +37,21 @@ audit-ready readiness report. **Trust is the product.** A confident wrong compli
  knowledge.py   stdlib BM25 index over governed content (rebuilt when any source changes)
  question_bank  content/assessment_templates/use_case_assessment.yaml (9 modules, 43 questions)
  gaps.py        evidence classification, severity, SLA due dates, heat map, roadmap
- reporting.py   Markdown report → aegis_reports (PDF/CSV/JSON/MD)
+ reporting.py   Markdown report → veritrail_reports (PDF/CSV/JSON/MD)
  approvals.py   pending approvals, separation of duties, effects on approval
- store.py       JSON-file persistence under the data dir (default var/agent, env AEGIS_AGENT_DATA_DIR)
+ store.py       JSON-file persistence under the data dir (default var/agent, env VERITRAIL_AGENT_DATA_DIR)
 ```
 
 **Dependencies.** The agent uses these packages from other workstreams. It imports them lazily and has a fallback for each:
-`aegis_assessment.risk_tier.calculate_risk_tier` (fallback: tier High pending human review, clearly labelled),
-`aegis_reports.pdf/exporters` (fallback: stdlib writers; PDF reported as unavailable),
-`aegis_shield.advisor.advise` (fallback: guardrail recommendations from the question bank and a clear
+`veritrail_assessment.risk_tier.calculate_risk_tier` (fallback: tier High pending human review, clearly labelled),
+`veritrail_reports.pdf/exporters` (fallback: stdlib writers; PDF reported as unavailable),
+`veritrail_shield.advisor.advise` (fallback: guardrail recommendations from the question bank and a clear
 "Shield unavailable" message). The agent never edits shared files.
 
-**Interfaces (CONTRIBUTING.md §3).** `AegisAgent(data_dir).handle(message, session_id, user) -> dict` and
+**Interfaces (CONTRIBUTING.md §3).** `VeritrailAgent(data_dir).handle(message, session_id, user) -> dict` and
 `TOOL_REGISTRY[name] -> ToolSpec(name, permission, requires_approval, fn, description, min_role)`.
 Additional public methods: `call_tool(name, user, **kw)`, `resolve_approval(approval_id, decision, approver, note)`
-(used by `aegis_admin.cli approvals resolve`), `list_approvals(status)`, and `review_evidence(ref, reviewer)`.
+(used by `veritrail_admin.cli approvals resolve`), `list_approvals(status)`, and `review_evidence(ref, reviewer)`.
 
 **Response contract** (`handle()` returns JSON-serialisable dict): `session_id, trace_id, intent, state, answer`
 (direct answer), `message`/`markdown` (full rendered answer), `claims[{text, evidence_status, sources}]`,
@@ -80,9 +80,9 @@ Routing order matters. Safety checks run first:
 | 10 | `assessment_*` | "assess a use case: …" | Starts the guided assessment. |
 | 11 | `report`, `remediation_tasks`, `runtime_policy`, `runtime_logs`, `approvals_status`, `gap_analysis`, `inventory` | Imperatives. Questions such as "How do we export evidence?" are *not* treated as actions. | Tool calls. |
 | 12 | `risk_tier` | "Is our chatbot high risk?" | Uses the session tier, or computes one if ≥5 key facts were given. Otherwise asks a clarifying question. |
-| 13 | `control_lookup` / `control_not_found` | control IDs | Objective, owner, evidence, mappings and the questions that assess the control. Unknown IDs get "X is not an AEGIS control ID" plus the no-source message. |
+| 13 | `control_lookup` / `control_not_found` | control IDs | Objective, owner, evidence, mappings and the questions that assess the control. Unknown IDs get "X is not an VERITRAIL control ID" plus the no-source message. |
 | 14 | `question_lookup` | SEC-Q2, UC-AGT-Q3 | Question text, controls and expected evidence. |
-| 15 | `framework_mapping` | "Which controls map to EU AI Act Art. 14 / ISO A.6.2.8 / NIST GOVERN 1.1?" | Only `mappings` from controls.yaml. Labelled indicative. An unmapped reference gets "No AEGIS control … maps to …" plus the no-source message. |
+| 15 | `framework_mapping` | "Which controls map to EU AI Act Art. 14 / ISO A.6.2.8 / NIST GOVERN 1.1?" | Only `mappings` from controls.yaml. Labelled indicative. An unmapped reference gets "No VERITRAIL control … maps to …" plus the no-source message. |
 | 16 | `ask` / `clarify` / `no_source` / `out_of_scope` | anything else | BM25 retrieval with a confidence band (§4). |
 
 ### 2.1 "What controls apply to <use case>?"
@@ -136,18 +136,18 @@ values are *Inferred*. After the user confirms them at tier review they become *
 
 | Tool | Permission | Min role | Notes |
 |---|---|---|---|
-| search_aegis_knowledge | read | anonymous | BM25 results, confidence band, framework-reference matches |
+| search_veritrail_knowledge | read | anonymous | BM25 results, confidence band, framework-reference matches |
 | search_ai_inventory | read | viewer | System records |
 | create_ai_system_record | create_draft | assessor | Always `status: draft`; tier unconfirmed |
 | start_assessment | create_draft | assessor | Calls calculate_risk_tier and selects modules and questions |
 | submit_assessment_response | create_draft | assessor | User-asserted; evidence refs are registered as *pending review*; notes redacted |
-| calculate_risk_tier | compute | anonymous | Wraps aegis_assessment; output always *Inferred*, `requires_human_confirmation` |
+| calculate_risk_tier | compute | anonymous | Wraps veritrail_assessment; output always *Inferred*, `requires_human_confirmation` |
 | identify_gaps | compute | viewer | §6 |
 | recommend_controls | compute | anonymous | From gaps (needs an authenticated role) or from a profile |
 | create_remediation_task | write_confirm | assessor | Returns a preview unless `confirmed is True` (literal) |
 | generate_report | create_draft | assessor | MD/PDF/CSV/JSON, `status: draft` |
 | search_runtime_logs | read | assessor | `var/agent/runtime_logs`, `var/shield`, `var/runtime` `*.jsonl`; output redacted |
-| draft_runtime_policy | create_draft | assessor | AEGIS Shield advisor; draft, observe mode, non-production |
+| draft_runtime_policy | create_draft | assessor | VERITRAIL Shield advisor; draft, observe mode, non-production |
 | request_human_approval | create_draft | assessor | Pending approval only; deduplicates identical pending requests |
 | export_evidence_pack | approval_required | assessor | No approval → creates a pending approval. With an approved, unused approval for the same assessment, the original requester can export once. |
 
@@ -188,8 +188,8 @@ Each one is justified by real controls (EI-02/GL-03, GL-10, IS-12/GL-04, SE-02/S
 
 - The agent only **requests**. Records are written to `var/agent/approvals/<id>.json` with `approval_id, type,
   action_type, status, requested_by, reason, resource, payload, payload_hash, trace_id`. This format is compatible
-  with `aegis_admin.cli approvals list/resolve`.
-- **Resolution happens outside the chat.** `AegisAgent.resolve_approval()` (called by the admin CLI or an
+  with `veritrail_admin.cli approvals list/resolve`.
+- **Resolution happens outside the chat.** `VeritrailAgent.resolve_approval()` (called by the admin CLI or an
   approver UI) requires the approver or admin role and an identity that is not the requester's (both ID and
   name are checked). Each approval resolves once. Every outcome is audited (`approval.approved/rejected`,
   `approval.resolve_denied`).
@@ -204,18 +204,18 @@ Each one is justified by real controls (EI-02/GL-03, GL-10, IS-12/GL-04, SE-02/S
 
 ## 8. Logging and privacy
 
-- `var/agent/audit/agent_audit.jsonl` is the hash-chained `aegis_common.audit.AuditLog`; `aegis_admin.cli audit verify` picks it up.
+- `var/agent/audit/agent_audit.jsonl` is the hash-chained `veritrail_common.audit.AuditLog`; `veritrail_admin.cli audit verify` picks it up.
 - Each turn writes an `agent.turn` record: trace ID, role, redacted message, intent, state, tools, approvals,
   citations and whether the LLM was used.
 - Each tool call writes an `agent.tool.<name>` record with the same trace ID.
 - Security events: `agent.security.*`. Evidence reviews: `evidence.reviewed`. LLM phrasing decisions: `agent.llm.phrasing`.
-- Session transcripts and assessment notes are stored **redacted** (`aegis_common.redaction.redact`). Reports
+- Session transcripts and assessment notes are stored **redacted** (`veritrail_common.redaction.redact`). Reports
   include the audit trace IDs of the assessment (Appendix B).
 
 ## 9. Optional LLM adapter (`llm.py`)
 
-- **Off by default.** Set `AEGIS_LLM_PROVIDER=openai_compatible|anthropic` together with `AEGIS_LLM_API_KEY`
-  (plus `AEGIS_LLM_MODEL`, `AEGIS_LLM_ENDPOINT` (https only), `AEGIS_LLM_TIMEOUT`). Integrators can also call
+- **Off by default.** Set `VERITRAIL_LLM_PROVIDER=openai_compatible|anthropic` together with `VERITRAIL_LLM_API_KEY`
+  (plus `VERITRAIL_LLM_MODEL`, `VERITRAIL_LLM_ENDPOINT` (https only), `VERITRAIL_LLM_TIMEOUT`). Integrators can also call
   `set_llm_adapter()`.
 - **Phrasing only.** The adapter rephrases the deterministic *direct answer* of Ask-type intents. Structured fields
   (claims, sources, approvals) are never touched.
@@ -239,7 +239,7 @@ Each one is justified by real controls (EI-02/GL-03, GL-10, IS-12/GL-04, SE-02/S
   gap register; control recommendations with indicative mappings; 30/60/90 roadmap; audit-ready evidence
   checklist; runtime guardrail recommendations (question bank, plus the Shield rating when available); human
   approvals; appendices for status definitions, audit trace IDs and method & limitations; disclaimer.
-- **PDF** via `aegis_reports.pdf.markdown_to_pdf`.
+- **PDF** via `veritrail_reports.pdf.markdown_to_pdf`.
 - **CSV** gap register via `write_csv`, which protects against CSV injection.
 - **JSON** containing the full data.
 
@@ -291,7 +291,7 @@ These global invariants are checked on every case:
 authored held-out set (e.g. from pilot transcripts) is the next step.
 
 A synthetic sample run lives in `output/sample_reports/agent/`. It includes the transcript, the report in MD, PDF, CSV and JSON, and a run summary.
-Regenerate it with `python3 -m aegis_agent.sample_run`.
+Regenerate it with `python3 -m veritrail_agent.sample_run`.
 
 ## 12. Limitations (honest)
 
@@ -312,4 +312,4 @@ Regenerate it with `python3 -m aegis_agent.sample_run`.
   clause-text questions beyond them, and regulatory timelines are not verified post-2025.
 - **Runtime logs.** Log search reads local JSONL files only.
 - **External communications.** These are queued after approval but never sent.
-- **Redaction.** Redaction is pattern-based (see `aegis_common.redaction`). It may miss free-text identifiers such as names.
+- **Redaction.** Redaction is pattern-based (see `veritrail_common.redaction`). It may miss free-text identifiers such as names.

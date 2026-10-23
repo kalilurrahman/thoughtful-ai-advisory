@@ -92,9 +92,9 @@ function SiteHeader() {
   return (
     <header className="site-header" ref={headerRef}>
       <div className="container header-inner">
-        <Link className="brand" to="/" aria-label="AEGIS home">
+        <Link className="brand" to="/" aria-label="VERITRAIL home">
           <BrandMark />
-          <span className="brand-name">AEGIS</span>
+          <span className="brand-name">VERITRAIL</span>
         </Link>
         <SiteLink className="btn btn-primary header-cta" href={siteConfig.header_cta.url}>
           {ctaEnd !== undefined ? (
@@ -249,7 +249,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
     mainRef.current?.focus({ preventScroll: true });
   }, [pathname]);
   return (
-    <div className="aegis-site">
+    <div className="veritrail-site">
       <a className="skip-link" href="#main">
         Skip to main content
       </a>

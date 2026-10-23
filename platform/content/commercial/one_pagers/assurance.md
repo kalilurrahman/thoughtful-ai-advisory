@@ -1,11 +1,11 @@
 ---
-title: "One-pager — AEGIS Assurance"
+title: "One-pager — VERITRAIL Assurance"
 audience: Internal Audit, second line, Chief Compliance Officer
 version: 1.0.0
 effective_date: 2026-10-21
 ---
 
-# AEGIS Assurance — evidence you can produce on request
+# VERITRAIL Assurance — evidence you can produce on request
 
 **From "we think it's governed" to an audit-ready evidence pack in hours, not weeks.**
 
@@ -44,7 +44,7 @@ Generate an evidence pack for a system, see each item's label and reviewer, and 
 
 ## Limitations
 
-AEGIS organizes and labels evidence; *Verified* status always requires a named human reviewer. Evidence packs support
+VERITRAIL organizes and labels evidence; *Verified* status always requires a named human reviewer. Evidence packs support
 readiness and assurance; they do not certify conformity with any standard or compliance with any law.
 
 ## Commercials

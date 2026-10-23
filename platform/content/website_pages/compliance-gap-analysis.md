@@ -1,8 +1,8 @@
 ---
-title: "AEGIS gap-analysis method — severity, evidence status and SLAs"
+title: "VERITRAIL gap-analysis method — severity, evidence status and SLAs"
 h1: "Gap analysis method"
 slug: /compliance/gap-analysis/
-description: "The AEGIS gap-analysis method: five evidence statuses, four severities with 30/60/90/180-day remediation SLAs, and a human-reviewed workflow."
+description: "The VERITRAIL gap-analysis method: five evidence statuses, four severities with 30/60/90/180-day remediation SLAs, and a human-reviewed workflow."
 section: compliance
 nav_label: "Gap analysis method"
 nav_order: 50
@@ -20,7 +20,7 @@ updated: 2026-10-21
 
 {{disclaimer}}
 
-A gap analysis is only as useful as it is honest. The AEGIS method is designed so that anyone reading a gap register can tell, for every line, **what the gap is, how sure we are, how serious it is, who owns it and when it must be fixed.** It is the method used in the Governance Baseline, by the AEGIS Agent, and in every AEGIS report.
+A gap analysis is only as useful as it is honest. The VERITRAIL method is designed so that anyone reading a gap register can tell, for every line, **what the gap is, how sure we are, how serious it is, who owns it and when it must be fixed.** It is the method used in the Governance Baseline, by the VERITRAIL Agent, and in every VERITRAIL report.
 
 ## 1. Evidence status
 
@@ -37,7 +37,7 @@ Every finding carries exactly one evidence status:
 Two rules keep the labels honest:
 
 - **Self-assessment answers are always User-asserted.** A high score in the self-assessment is a claim, not evidence.
-- **Only a named human can make something Verified.** Automated checks can support review, but AEGIS records the reviewer's identity and date for every Verified item.
+- **Only a named human can make something Verified.** Automated checks can support review, but VERITRAIL records the reviewer's identity and date for every Verified item.
 
 ## 2. Severity and remediation SLAs
 
@@ -72,7 +72,7 @@ For use-case assessments, severity is calculated from three inputs: the **priori
 1. **Scope.** Agree the systems, frameworks and evidence period. Confirm roles (for example provider or deployer under the EU AI Act) with legal where relevant.
 2. **Collect.** Self-assessment and use-case assessments; evidence requests mapped to each control's evidence list.
 3. **Label.** Assign an evidence status to each control per system. Unreviewed submissions stay User-asserted.
-4. **Map.** Link each finding to AEGIS controls and, indicatively, to framework references from the control library.
+4. **Map.** Link each finding to VERITRAIL controls and, indicatively, to framework references from the control library.
 5. **Rate.** Calculate severity; assign owners; set SLA due dates.
 6. **Review.** A named human reviewer confirms findings, tiers and severities. Tier changes and exception approvals are decisions for accountable approvers, never automated.
 7. **Plan.** Group findings into a 30/60/90-day plan and a longer remediation roadmap.
@@ -85,6 +85,6 @@ It does not determine legal applicability or compliance. A register with no open
 
 ## Use it
 
-The method is applied in the [Governance Baseline](/contact/book-governance-baseline/), and the [AEGIS Agent](/solutions/agent/) drafts gap register entries in this format for human review.
+The method is applied in the [Governance Baseline](/contact/book-governance-baseline/), and the [VERITRAIL Agent](/solutions/agent/) drafts gap register entries in this format for human review.
 
 {{cta:baseline}}

@@ -1,8 +1,8 @@
 ---
-title: "AEGIS design-partner programme — shape enterprise AI governance"
+title: "VERITRAIL design-partner programme — shape enterprise AI governance"
 h1: "Design-partner programme"
 slug: /contact/design-partner-programme/
-description: "Join the AEGIS design-partner programme: Pilot A for regulated enterprises with 20–100 AI systems, Pilot B for AI-forward SaaS and GCCs with agents."
+description: "Join the VERITRAIL design-partner programme: Pilot A for regulated enterprises with 20–100 AI systems, Pilot B for AI-forward SaaS and GCCs with agents."
 section: contact
 nav_label: "Design-partner programme"
 nav_order: 50
@@ -21,7 +21,7 @@ faq:
 updated: 2026-10-21
 ---
 
-AEGIS is early. We are working with a small number of organizations to test the product against real AI estates and real governance teams, and to shape what we build next. If you want influence over an AI governance platform — and are willing to tell us candidly what does not work — we would like to talk.
+VERITRAIL is early. We are working with a small number of organizations to test the product against real AI estates and real governance teams, and to shape what we build next. If you want influence over an AI governance platform — and are willing to tell us candidly what does not work — we would like to talk.
 
 ## Two pilot tracks
 
@@ -38,8 +38,8 @@ AEGIS is early. We are working with a small number of organizations to test the 
 ## What partners get
 
 - A Governance Baseline-style starting point: inventory, validated maturity assessment, gap register and 90-day plan.
-- Early access to AEGIS modules and features before general release.
-- Direct access to the team building AEGIS, including regular working sessions.
+- Early access to VERITRAIL modules and features before general release.
+- Direct access to the team building VERITRAIL, including regular working sessions.
 - Influence over the roadmap, control library and templates.
 - Draft runtime policies for in-scope agents (Pilot B).
 

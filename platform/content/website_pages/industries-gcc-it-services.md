@@ -1,8 +1,8 @@
 ---
-title: "AI governance for GCCs and IT services — AEGIS"
+title: "AI governance for GCCs and IT services — VERITRAIL"
 h1: "AI governance for global capability centers and IT services"
 slug: /industries/gcc-it-services/
-description: "AEGIS for global capability centers and IT services firms building AI and agents at scale: role allocation, agent registries, guardrails, evidence."
+description: "VERITRAIL for global capability centers and IT services firms building AI and agents at scale: role allocation, agent registries, guardrails, evidence."
 section: industries
 nav_label: "GCCs & IT services"
 nav_order: 40
@@ -12,9 +12,9 @@ primary_cta: guardrails
 secondary_cta: baseline
 faq:
   - q: "Who is accountable when a GCC builds AI for its parent organization?"
-    a: "Accountability should be explicitly allocated. AEGIS records business and technical owners per system (EI-03) and the allocation of responsibilities between the builder, the deploying business and any vendors (AO-09). The legal role under regimes like the EU AI Act depends on the facts and needs legal review."
-  - q: "Can AEGIS support multiple clients or business units separately?"
-    a: "AEGIS policies can be scoped by agent, environment, model and tenant, and evidence can be organized per client or business unit. Specific multi-tenant deployment arrangements are agreed during onboarding."
+    a: "Accountability should be explicitly allocated. VERITRAIL records business and technical owners per system (EI-03) and the allocation of responsibilities between the builder, the deploying business and any vendors (AO-09). The legal role under regimes like the EU AI Act depends on the facts and needs legal review."
+  - q: "Can VERITRAIL support multiple clients or business units separately?"
+    a: "VERITRAIL policies can be scoped by agent, environment, model and tenant, and evidence can be organized per client or business unit. Specific multi-tenant deployment arrangements are agreed during onboarding."
 updated: 2026-10-21
 ---
 
@@ -36,7 +36,7 @@ Global capability centers (GCCs) and IT services firms increasingly build, opera
 - **Data protection across jurisdictions.** Cross-border processing brings multiple data-protection regimes into play — for example the GDPR for EU personal data and India's Digital Personal Data Protection Act, 2023 where applicable.
 - **Client requirements.** Clients increasingly include AI-specific clauses, questionnaires and audit rights in contracts.
 
-## AEGIS emphasis
+## VERITRAIL emphasis
 
 - **Accountability allocation (AO-09, EI-03).** Named owners on both sides and a responsibility matrix per system.
 - **Agent and tool registry (EI-07).** Every agent's tools, scopes and permitted operations — especially for agents with access to production infrastructure.

@@ -7,10 +7,10 @@ import json
 import pytest
 import yaml
 
-from aegis_policy.schema import validate_policy
-from aegis_shield.advisor import advise
-from aegis_shield.examples import CUSTOMER_SUPPORT_PROFILE, FINANCIAL_OPS_PROFILE, INTERNAL_RAG_PROFILE
-from aegis_shield.generator import (
+from veritrail_policy.schema import validate_policy
+from veritrail_shield.advisor import advise
+from veritrail_shield.examples import CUSTOMER_SUPPORT_PROFILE, FINANCIAL_OPS_PROFILE, INTERNAL_RAG_PROFILE
+from veritrail_shield.generator import (
     add_approval,
     bump_version,
     diff_policies,
@@ -72,7 +72,7 @@ def test_yaml_json_round_trip(profile):
     assert from_json(to_json(from_yaml(y))) == p
     assert from_yaml(to_yaml(from_json(j))) == p
     assert yaml.safe_load(y) == json.loads(j)
-    assert y.startswith("# AEGIS runtime policy")
+    assert y.startswith("# VERITRAIL runtime policy")
     assert validate_policy(from_yaml(y)) == []
 
 
@@ -159,7 +159,7 @@ def test_add_approval_guards(pol):
     with pytest.raises(PermissionError, match="not a required approver role"):
         add_approval(p, {"name": "Dev", "role": "Developer"})
     with pytest.raises(PermissionError, match="separation of duties"):
-        add_approval(p, {"name": "AEGIS Runtime Shield Advisor (automated draft)", "role": "AI System Owner"})
+        add_approval(p, {"name": "VERITRAIL Runtime Shield Advisor (automated draft)", "role": "AI System Owner"})
     p = add_approval(p, OWNER)
     with pytest.raises(ValueError, match="already approved"):
         add_approval(p, {"name": "Alex Owner", "role": "Security Lead"})

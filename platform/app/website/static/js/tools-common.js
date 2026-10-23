@@ -1,5 +1,5 @@
 /*
- * Shared helpers for AEGIS interactive tools (guardrail generator, Ask AEGIS, risk triage).
+ * Shared helpers for VERITRAIL interactive tools (guardrail generator, Ask VERITRAIL, risk triage).
  * DOM is built with createElement/textContent only. renderMarkdown() is a deliberately small,
  * safe Markdown subset (headings, paragraphs, lists, bold/italic/code, links, pipe tables):
  * it never uses innerHTML and only allows http(s), mailto and same-site links.
@@ -8,7 +8,7 @@
   'use strict';
   var api = factory();
   if (typeof module === 'object' && module.exports) { module.exports = api; }
-  else { root.AegisTools = api; }
+  else { root.VeritrailTools = api; }
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
@@ -135,7 +135,7 @@
   }
 
   function controlLinks(doc, ids, label) {
-    var p = el(doc, 'p', { className: 'cite' }, [label || 'AEGIS controls cited: ']);
+    var p = el(doc, 'p', { className: 'cite' }, [label || 'VERITRAIL controls cited: ']);
     var list = (ids || []).filter(function (x) { return CONTROL_ID.test(String(x)); });
     if (!list.length) { p.appendChild(doc.createTextNode('No supporting evidence or framework source is available.')); return p; }
     list.forEach(function (id, i) {

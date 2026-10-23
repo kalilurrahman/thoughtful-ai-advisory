@@ -1,11 +1,11 @@
 /**
- * Shared vocabulary for AEGIS runtime policy-as-code — port of
- * platform/app/policy-engine/aegis_policy/constants.py.
+ * Shared vocabulary for VERITRAIL runtime policy-as-code — port of
+ * platform/app/policy-engine/veritrail_policy/constants.py.
  *
- * "AI proposes. AEGIS evaluates. Approved actions execute."
+ * "AI proposes. VERITRAIL evaluates. Approved actions execute."
  */
 
-export const SCHEMA_VERSION = "aegis.policy/v1";
+export const SCHEMA_VERSION = "veritrail.policy/v1";
 
 export const DECISIONS = [
   "ALLOW",
@@ -59,8 +59,8 @@ export const CHANGE_TYPES = [
 ] as const;
 
 /**
- * Entity names known to the AEGIS redaction module (keys of
- * aegis_common.redaction.PII_PATTERNS, in declaration order).
+ * Entity names known to the VERITRAIL redaction module (keys of
+ * veritrail_common.redaction.PII_PATTERNS, in declaration order).
  */
 export const PII_ENTITIES = [
   "email",

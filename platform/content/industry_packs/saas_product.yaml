@@ -1,8 +1,8 @@
-# AEGIS Industry Pack — SaaS & AI Product Companies
+# VERITRAIL Industry Pack — SaaS & AI Product Companies
 # ---------------------------------------------------------------------------
-# Sector overlay on the AEGIS Control Library. Control IDs reference
+# Sector overlay on the VERITRAIL Control Library. Control IDs reference
 # content/controls/controls.yaml ONLY. Risk-tier hints are DEFAULTS that the
-# AEGIS risk-tier engine and a human approver must confirm per system (EI-02).
+# VERITRAIL risk-tier engine and a human approver must confirm per system (EI-02).
 # Sector regimes are described generally to prompt legal review — they are not
 # legal advice and their applicability must be verified with counsel.
 # ---------------------------------------------------------------------------
@@ -12,11 +12,11 @@ pack:
   version: 1.0.0
   status: draft-for-pilot-validation
   effective_date: "2026-10-21"
-  owner: AEGIS Governance Content Lead
+  owner: VERITRAIL Governance Content Lead
   review_cadence: quarterly
   profile_industry: saas_product
   disclaimer: >-
-    This pack highlights AEGIS controls and evidence commonly relevant to software companies that ship AI features or
+    This pack highlights VERITRAIL controls and evidence commonly relevant to software companies that ship AI features or
     AI-native products to customers. It does not determine which laws apply, does not establish conformity with any
     regulation or standard, and is not legal advice. Verify every regime with qualified counsel.
 
@@ -99,22 +99,22 @@ additional_evidence:
 sector_regimes:
   - name: EU AI Act provider and deployer obligations, including transparency obligations for certain AI systems (Art. 50)
     scope_summary: Vendors placing AI systems on the EU market may be providers; some product features (chatbots, generated content) carry transparency duties; high-risk use cases carry further obligations.
-    aegis_relevance: Classification, transparency and documentation evidence; timelines must be verified against the current Official Journal text and amendments.
+    veritrail_relevance: Classification, transparency and documentation evidence; timelines must be verified against the current Official Journal text and amendments.
     related_controls: [IS-08, AO-07, GL-06, SE-11]
     verify_with_counsel: true
   - name: Processor obligations under data-protection laws (e.g. GDPR processor terms, sub-processor notice)
     scope_summary: Using customer personal data in AI features, and engaging model providers as sub-processors, must fit processor commitments.
-    aegis_relevance: Privacy assessment, vendor due diligence and data lineage.
+    veritrail_relevance: Privacy assessment, vendor due diligence and data lineage.
     related_controls: [IS-03, GL-11, EI-06]
     verify_with_counsel: true
   - name: US state AI and automated-decision laws (e.g. Colorado's AI Act; New York City rules on automated employment decision tools)
     scope_summary: Developer and deployer duties, bias audits or notices for certain consequential or employment decisions; effective dates have been amended and must be checked.
-    aegis_relevance: Impact assessment, fairness testing and disclosure evidence.
+    veritrail_relevance: Impact assessment, fairness testing and disclosure evidence.
     related_controls: [GL-02, IS-05, IS-08]
     verify_with_counsel: true
   - name: Customer assurance frameworks (e.g. SOC 2 reports, ISO/IEC 27001 and ISO/IEC 42001 certification requests)
     scope_summary: Customers request third-party assurance; ISO/IEC 42001 certification is issued only by accredited certification bodies.
-    aegis_relevance: Readiness evidence and assurance packs; AEGIS does not certify.
+    veritrail_relevance: Readiness evidence and assurance packs; VERITRAIL does not certify.
     related_controls: [SE-01, SE-05, SE-10]
     verify_with_counsel: true
 

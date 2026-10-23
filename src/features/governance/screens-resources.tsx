@@ -240,9 +240,9 @@ export function KnowledgeScreen() {
         Checked 20 Oct 2026. Checks cover publisher identity and resource relevance; each entry
         records its check method. They do not certify compliance or guarantee future availability.
         Tier A: public institutions, standards bodies and independent research/security
-        organisations; Tier B: vendor documentation; Tier C: AEGIS-authored advice. Standards and
-        frameworks are not laws. No live regulatory feed. Next review 2027-01-15; confirm current
-        legal text and implementation guidance before relying on obligations or dates.
+        organisations; Tier B: vendor documentation; Tier C: VERITRAIL-authored advice. Standards
+        and frameworks are not laws. No live regulatory feed. Next review 2027-01-15; confirm
+        current legal text and implementation guidance before relying on obligations or dates.
       </p>
     </>
   );
@@ -375,8 +375,8 @@ export function ExportScreen() {
           <Files weight="duotone" />
           <div>
             <strong>
-              AEGIS_{pack.name.replace(/ /g, "-")}_{workspaceName.replace(/[^a-zA-Z0-9]+/g, "-")}.
-              {format.toLowerCase()}
+              VERITRAIL_{pack.name.replace(/ /g, "-")}_
+              {workspaceName.replace(/[^a-zA-Z0-9]+/g, "-")}.{format.toLowerCase()}
             </strong>
             <p>Preview ready · v1.3 · generated {new Date().toLocaleString()}</p>
           </div>
@@ -411,7 +411,7 @@ export function PlansScreen() {
             name: "Govern",
             buyer: "Scaling AI",
             includes:
-              "Full GOVERN modules, policy generator, guardrails designer, calculators and evidence pack.",
+              "Full TILLER modules, policy generator, guardrails designer, calculators and evidence pack.",
             price: "Annual subscription + implementation",
             cta: "Explore governance",
             tone: "success",
@@ -467,13 +467,13 @@ export function MoreScreen() {
   const items = [
     {
       to: "/",
-      name: "AEGIS website",
+      name: "VERITRAIL website",
       desc: "Framework, solutions and public tools",
       icon: ArrowSquareOut,
     },
     {
       to: "/assess",
-      name: "GOVERN assessment",
+      name: "TILLER assessment",
       desc: "Six pillars mapped to NIST AI RMF",
       icon: CheckCircle,
     },
@@ -578,7 +578,7 @@ export function MoreScreen() {
           {userId ? "Sign out" : "Sign out of demo"}
         </Link>
       </Button>
-      <p className="footnote">AEGIS · AI Governance, Guardrails & Assurance Studio</p>
+      <p className="footnote">VERITRAIL · AI Governance, Guardrails & Assurance Studio</p>
     </>
   );
 }
@@ -586,7 +586,7 @@ export function OnboardingScreen() {
   const [email, setEmail] = useState("");
   return (
     <div className="onboarding">
-      <p className="onboarding-wordmark">AEGIS</p>
+      <p className="onboarding-wordmark">VERITRAIL</p>
       <p className="muted">AI Governance, Guardrails & Assurance Studio</p>
       <div className="newspaper-rule" />
       <Kicker>Govern · Map · Measure · Manage</Kicker>

@@ -1,4 +1,4 @@
-# AEGIS Website Content Plan
+# VERITRAIL Website Content Plan
 
 Version 3.0 · 21 October 2026 · Owner: Marketing Lead with Governance Content Lead · Status: Active
 
@@ -10,7 +10,7 @@ targets, conversion paths and content governance. The IA below reflects the page
 
 | Goal | Measure (privacy-friendly events, no cookies) |
 |---|---|
-| Establish AEGIS as an evidence-first, credible AI governance voice | Engaged sessions on framework/compliance pages; returning visitors (aggregate) |
+| Establish VERITRAIL as an evidence-first, credible AI governance voice | Engaged sessions on framework/compliance pages; returning visitors (aggregate) |
 | Drive self-assessment completions | `assessment_started`, `assessment_completed`, completion rate |
 | Convert to qualified conversations | Baseline bookings, demo requests, design-partner applications |
 | Grow a nurture audience | Blueprint downloads, newsletter sign-ups |
@@ -30,7 +30,7 @@ No visitor-level tracking, no third-party analytics, no cookies (PRD-1-06).
 ├── /solutions/                     Assess · Register · Control · Shield · Assurance · Agent
 ├── /compliance/                    Overview · NIST AI RMF · ISO/IEC 42001 · EU AI Act readiness · Gap-analysis method
 ├── /industries/                    Healthcare & pharma · Banking & FS · GCCs & IT services · SaaS & product · Public sector
-├── /tools/                         Maturity self-assessment · Guardrail generator · Ask AEGIS · Risk triage · (planned) Agentic risk checker · (planned) EU AI Act readiness checker
+├── /tools/                         Maturity self-assessment · Guardrail generator · Ask VERITRAIL · Risk triage · (planned) Agentic risk checker · (planned) EU AI Act readiness checker
 ├── /resources/                     Blueprint · Assessment templates · Policy packs · Runbooks · Whitepapers · Blog · Case studies
 ├── /contact/                       Contact · Book Governance Baseline · Request demo · Newsletter · Design-partner programme
 ├── /about/
@@ -73,7 +73,7 @@ No visitor-level tracking, no third-party analytics, no cookies (PRD-1-06).
 | tools | /tools/ | page | | assessment | guardrails |
 | tools | /tools/maturity-assessment/ | tool | maturity-assessment | baseline | agent |
 | tools | /tools/guardrail-generator/ | tool | guardrail-generator | guardrails | demo |
-| tools | /tools/ask-aegis/ | tool | ask-aegis | demo | agent |
+| tools | /tools/ask-veritrail/ | tool | ask-veritrail | demo | agent |
 | tools | /tools/risk-triage/ | tool | risk-triage | baseline | guardrails |
 | tools | /tools/agentic-risk-checker/ | tool | waitlist (planned) | guardrails | assessment |
 | tools | /tools/eu-ai-act-readiness-checker/ | tool | waitlist (planned) | assessment | baseline |
@@ -100,18 +100,18 @@ enterprise tone; evidence-first; none of the prohibited terms in `CONTRIBUTING.m
 
 | Page | Audience | Job | Key messages | Proof / content blocks | CTA | Must include | Must avoid |
 |---|---|---|---|---|---|---|---|
-| Home | P1, P2, P3, P8 | Understand AEGIS in 10 seconds; start assessment | Know it, gate it, guard it, prove it; 5 pillars, 64 controls; runtime guardrails for agents; evidence labels | Pillar strip; how-it-works; tools teaser; "readiness, not certification" note | Self-assessment; Baseline | Disclaimer link; design-partner status honesty | Customer logos, invented metrics |
-| Framework overview | P1, P2, P5 | Evaluate rigor | Pillars, six layers, lifecycle, evidence labels, risk tiers | Excerpts from `content/aegis_framework.md`; control library link | Blueprint; assessment | `{{disclaimer}}` | Claims of official framework endorsement |
+| Home | P1, P2, P3, P8 | Understand VERITRAIL in 10 seconds; start assessment | Know it, gate it, guard it, prove it; 5 pillars, 64 controls; runtime guardrails for agents; evidence labels | Pillar strip; how-it-works; tools teaser; "readiness, not certification" note | Self-assessment; Baseline | Disclaimer link; design-partner status honesty | Customer logos, invented metrics |
+| Framework overview | P1, P2, P5 | Evaluate rigor | Pillars, six layers, lifecycle, evidence labels, risk tiers | Excerpts from `content/veritrail_framework.md`; control library link | Blueprint; assessment | `{{disclaimer}}` | Claims of official framework endorsement |
 | Pillar pages (×5) | P1, P2, P3 | Understand a pillar's controls | Purpose, outcomes, key controls, evidence, maturity indicators | `{{controls:…}}` from `content/pillars.md` | Baseline / guardrails | Real control IDs only | Paraphrased control IDs |
 | Control library (generated) | P1, P5, P6 | Browse controls | Every control with evidence and indicative mappings | Generated from `controls.yaml` | Baseline | Mapping disclaimer | Edits outside YAML |
 | Maturity model | P1, P8 | Understand scoring before assessing | 1–5 scale, 8 weighted domains, 5 levels, User-asserted | From `content/maturity_model.md` | Assessment | Formula and weights | Implying the score is an audit |
 | Solutions (×6) | Persona per module | Map pain to module | Problem → capabilities → controls → outputs → limitations | One-pagers in `content/commercial/one_pagers/` | Per page | Limitations section | Unbuilt features presented as available |
 | Compliance overview + NIST / ISO / EU pages | P2, P5 | Understand alignment and limits | Indicative mappings; coverage gaps; readiness indicators | `docs/COMPLIANCE_MAPPING.md` tables and §7 gaps | Baseline; assessment | Standard disclaimer; EU timelines "verify against current Official Journal text and amendments (e.g. 2025 Digital Omnibus proposals)" | Dates presented as settled; "compliance guaranteed" |
-| Gap-analysis method | P2, P6 | Trust the method | Evidence labels, severities, SLAs (30/60/90/180) | `aegis_common.evidence` | Baseline | Label definitions | — |
+| Gap-analysis method | P2, P6 | Trust the method | Evidence labels, severities, SLAs (30/60/90/180) | `veritrail_common.evidence` | Baseline | Label definitions | — |
 | Industry pages (×5) | Sector leads | See sector relevance | Priority use cases, emphasized controls, regimes to consider (verify with counsel) | `content/industry_packs/*.yaml` | Baseline / guardrails | "Verify with counsel" | Legal conclusions |
 | Maturity self-assessment tool | P8 | Get a baseline | 8 minutes; instant result; detailed report on email | Engine output | Baseline | User-asserted label; consent text | Collecting PII before value |
 | Guardrail generator | P3, P4 | Draft runtime policy | Risk profile, tool matrix, draft policy-as-code | Shield Advisor | Guardrails / demo | "Draft — review before use" | Implied production readiness |
-| Ask AEGIS (demo) | P8 | Try the copilot | Cited answers; declines unsupported questions | Agent | Demo | Limited-demo notice; no sensitive data | — |
+| Ask VERITRAIL (demo) | P8 | Try the copilot | Cited answers; declines unsupported questions | Agent | Demo | Limited-demo notice; no sensitive data | — |
 | Risk triage | P7, P8 | Suggest a tier | Inferred tier, factors, requires human confirmation | `calculate_risk_tier` | Baseline | Inferred label | "Legal classification" wording |
 | Planned tools (×2) | P8 | Join waitlist | Clearly "planned" | — | Waitlist | "Planned" in title | Pretending availability |
 | Blueprint | All | Download master document | Operating model, control library, rollout | Gated PDF | Download | Consent; business email | — |
@@ -136,7 +136,7 @@ SEO tool before prioritizing. Clusters below are hypotheses based on buyer langu
 
 On-page rules: one H1; title ≤ 60 chars where possible; meta description 120–160 chars; descriptive slugs; internal
 links from every cluster page to the assessment and to the relevant solution; FAQ JSON-LD only for genuine FAQs;
-never target "certification" or "compliance software" phrasing that implies AEGIS certifies.
+never target "certification" or "compliance software" phrasing that implies VERITRAIL certifies.
 
 ## 5. Conversion paths
 

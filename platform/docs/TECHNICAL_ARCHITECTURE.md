@@ -1,13 +1,13 @@
-# AEGIS Technical Architecture
+# VERITRAIL Technical Architecture
 
 Version 1.0 (MVP) · 21 October 2026 · Owner: Enterprise Architect / Orchestrator
 
 ## 1. Purpose and scope
 
-This document describes the architecture of the AEGIS MVP as built in this repository:
+This document describes the architecture of the VERITRAIL MVP as built in this repository:
 - the public website
 - the AI Governance Maturity Self-Assessment
-- the AEGIS Agent
+- the VERITRAIL Agent
 - the Runtime Shield Advisor and policy engine
 - reports, the API and the admin console
 
@@ -17,22 +17,22 @@ Diagram sources live in [`docs/diagrams/`](diagrams/): Mermaid `.mmd` files plus
 
 ## 2. Solution architecture
 
-![AEGIS solution architecture](diagrams/01_solution_architecture.png)
+![VERITRAIL solution architecture](diagrams/01_solution_architecture.png)
 
-AEGIS Enterprise has **six connected layers**, organized under the **five AEGIS pillars** (AO, EI, GL, IS, SE):
+VERITRAIL Enterprise has **six connected layers**, organized under the **five VERITRAIL pillars** (AO, EI, GL, IS, SE):
 
 | Layer | Responsibility | MVP implementation | Module |
 |---|---|---|---|
 | 1 AI System of Record | Inventory of systems, models, agents, tools, vendors and data | Agent `create_ai_system_record` / `search_ai_inventory` (JSON store), pilot inventory CSV template | Register |
-| 2 Assessment & Risk Engine | Maturity, use-case, agentic and vendor assessment; risk tiering | `aegis_assessment` (maturity engine, `calculate_risk_tier`), use-case question bank | Assess |
+| 2 Assessment & Risk Engine | Maturity, use-case, agentic and vendor assessment; risk tiering | `veritrail_assessment` (maturity engine, `calculate_risk_tier`), use-case question bank | Assess |
 | 3 Policy & Control Library | Versioned controls with framework mappings | `content/controls/controls.yaml` (64 controls) | Control |
 | 4 Lifecycle Governance | Intake → approval → change → monitoring → retirement | Approval service, remediation tasks, risk-tier confirmation, approval gates | Control |
-| 5 Runtime Shield | Evaluate prompts, responses and tool calls against policy | `aegis_policy` engine + `aegis_shield` advisor/generator, policy packs | Shield |
-| 6 Assurance & Evidence | Logs, evidence packs, reports, KPIs | `aegis_common.audit`, `aegis_reports`, `export_evidence_pack`, admin funnel/audit verify | Assurance |
+| 5 Runtime Shield | Evaluate prompts, responses and tool calls against policy | `veritrail_policy` engine + `veritrail_shield` advisor/generator, policy packs | Shield |
+| 6 Assurance & Evidence | Logs, evidence packs, reports, KPIs | `veritrail_common.audit`, `veritrail_reports`, `export_evidence_pack`, admin funnel/audit verify | Assurance |
 
 ## 3. Technical / deployment architecture
 
-![AEGIS technical architecture](diagrams/02_technical_architecture.png)
+![VERITRAIL technical architecture](diagrams/02_technical_architecture.png)
 
 ### 3.1 Components
 
@@ -40,14 +40,14 @@ AEGIS Enterprise has **six connected layers**, organized under the **five AEGIS 
 |---|---|---|---|
 | Static website | `app/website/` → `dist/` | Python SSG (Markdown + Jinja2), vanilla JS/CSS | No cookies, no CDNs. CSP-compatible (no inline script). SEO artefacts generated at build |
 | Browser assessment engine | `app/website/static/js/assessment-engine.js` | ES2020 | Interprets the same YAML rules as Python. Parity-tested |
-| API | `app/api/aegis_api/` | stdlib `ThreadingHTTPServer` | Validation, rate limiting, security headers, lead capture, gated reports, tool endpoints |
-| Assessment engine | `app/assessment-engine/aegis_assessment/` | Python | Reference scoring, flags, plan, modules, lead rules. Use-case risk tiering |
-| Reports | `app/reports/aegis_reports/` | reportlab | Markdown → PDF. CSV (formula-injection safe), JSON |
-| AEGIS Agent | `app/agent/aegis_agent/` | Python | Deterministic orchestrator, BM25 retrieval, 14 tools, approvals, optional LLM adapter |
-| Policy engine | `app/policy-engine/aegis_policy/` | Python | Policy schema/validator, evaluator, rollout modes, kill switch, limits |
-| Runtime Shield Advisor | `app/runtime-shield/aegis_shield/` | Python | Risk profile, tool matrix, rules → versioned YAML/JSON policy |
-| Common | `app/common/aegis_common/` | Python | Content loaders, hash-chained audit log, redaction, injection detection, evidence labels, claim guard |
-| Admin console | `app/admin/aegis_admin/` | CLI | Audit verification, approvals (separation of duties), leads export, funnel |
+| API | `app/api/veritrail_api/` | stdlib `ThreadingHTTPServer` | Validation, rate limiting, security headers, lead capture, gated reports, tool endpoints |
+| Assessment engine | `app/assessment-engine/veritrail_assessment/` | Python | Reference scoring, flags, plan, modules, lead rules. Use-case risk tiering |
+| Reports | `app/reports/veritrail_reports/` | reportlab | Markdown → PDF. CSV (formula-injection safe), JSON |
+| VERITRAIL Agent | `app/agent/veritrail_agent/` | Python | Deterministic orchestrator, BM25 retrieval, 14 tools, approvals, optional LLM adapter |
+| Policy engine | `app/policy-engine/veritrail_policy/` | Python | Policy schema/validator, evaluator, rollout modes, kill switch, limits |
+| Runtime Shield Advisor | `app/runtime-shield/veritrail_shield/` | Python | Risk profile, tool matrix, rules → versioned YAML/JSON policy |
+| Common | `app/common/veritrail_common/` | Python | Content loaders, hash-chained audit log, redaction, injection detection, evidence labels, claim guard |
+| Admin console | `app/admin/veritrail_admin/` | CLI | Audit verification, approvals (separation of duties), leads export, funnel |
 
 ### 3.2 Data stores (MVP)
 
@@ -82,12 +82,12 @@ AEGIS Enterprise has **six connected layers**, organized under the **five AEGIS 
 - Cookieless analytics with no personal data. DNT/GPC respected by the client.
 - Lead data minimised to name, business email, company, role, answers and profile. Explicit consent is required. Marketing opt-in is separate.
 - Audit logs hold lead IDs and email **domains**, never full emails.
-- Redaction (`aegis_common.redaction`) runs before any external LLM call and before audit writes.
+- Redaction (`veritrail_common.redaction`) runs before any external LLM call and before audit writes.
 - Retention: leads 24 months by default, audit 7 years for production systems (configurable; legal review pending — RISK_REGISTER).
 
-### 4.3 Governance controls applied to AEGIS itself (dogfooding)
+### 4.3 Governance controls applied to VERITRAIL itself (dogfooding)
 
-| Principle | Implementation | AEGIS control |
+| Principle | Implementation | VERITRAIL control |
 |---|---|---|
 | Immutable audit | Hash-chained JSONL plus `audit verify` | SE-08 |
 | Human approval for high-impact actions | Approval queue for tier changes, exceptions, prod policy, evidence export, external comms | IS-13, GL-10 |
@@ -99,7 +99,7 @@ AEGIS Enterprise has **six connected layers**, organized under the **five AEGIS 
 
 ### 4.4 Observability
 - Trace IDs on every agent turn and tool call, plus API audit records.
-- Funnel analytics from `aegis-admin analytics funnel`.
+- Funnel analytics from `veritrail-admin analytics funnel`.
 - Production should export logs to a SIEM and metrics to Prometheus/OpenTelemetry (backlog).
 
 ### 4.5 Performance
@@ -124,9 +124,9 @@ CI: `.github/workflows/ci.yml` runs `make check`, `make site` and `make test`.
 ```
 make install && make site && make serve           # http://127.0.0.1:8080
 # or
-docker build -t aegis . && docker run -p 8080:8080 -v aegis-data:/data aegis
+docker build -t veritrail . && docker run -p 8080:8080 -v veritrail-data:/data veritrail
 ```
-Put it behind a TLS-terminating reverse proxy (nginx, Caddy or a cloud load balancer). Mount `/data` (`AEGIS_VAR_DIR`) on persistent, encrypted storage. Set `AEGIS_SECRET`, `AEGIS_PUBLIC_BASE_URL`, and the CRM/mail backend variables (API_SPECIFICATION §3).
+Put it behind a TLS-terminating reverse proxy (nginx, Caddy or a cloud load balancer). Mount `/data` (`VERITRAIL_VAR_DIR`) on persistent, encrypted storage. Set `VERITRAIL_SECRET`, `VERITRAIL_PUBLIC_BASE_URL`, and the CRM/mail backend variables (API_SPECIFICATION §3).
 
 ### 6.2 Static-only hosting
 `app/website/dist/` can be deployed to any static host or CDN. The self-assessment still produces the preliminary score and the full report client-side (Markdown download and print-to-PDF). Lead capture, emailed reports, the agent and the Shield advisor need the API. Route `/api/*` from the CDN to the API origin.

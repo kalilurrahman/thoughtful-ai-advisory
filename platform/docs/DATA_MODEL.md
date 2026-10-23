@@ -1,8 +1,8 @@
-# AEGIS Data Model
+# VERITRAIL Data Model
 
 Version 1.0 (MVP) · 21 October 2026
 
-![AEGIS data model](diagrams/06_data_model.png)
+![VERITRAIL data model](diagrams/06_data_model.png)
 
 This document has two parts:
 1. **Canonical model.** The target logical model that a production PostgreSQL schema should implement.
@@ -16,7 +16,7 @@ This document has two parts:
 | Pillar | same | `pillars[].id` | — | AO, EI, GL, IS, SE |
 | Maturity template | `content/assessment_templates/maturity_self_assessment.yaml` | `template.id` | `template.version` | domains (weights), 24 questions, scale, scoring rules, flags, readiness groups, module/lead rules, CTA |
 | Use-case question bank | `content/assessment_templates/use_case_assessment.yaml` | module id / question id | file version | Deep-dive modules with questions mapped to controls and expected evidence |
-| Runtime policy pack | `content/policy_packs/*.yaml` | `policy_id` | `version` (semver) | Validated by `aegis_policy.schema.validate_policy` |
+| Runtime policy pack | `content/policy_packs/*.yaml` | `policy_id` | `version` (semver) | Validated by `veritrail_policy.schema.validate_policy` |
 | Industry pack | `content/industry_packs/*.yaml` | `id` | `version` | Use cases, emphasised controls, evidence expectations, regimes to consider |
 | Email template | `content/email_templates.yaml` | template key | `version` | `status` + `approval{approved_by, approved_at, approval_ref}` |
 
@@ -31,7 +31,7 @@ This document has two parts:
 | lifecycle_status | enum | draft · intake · assessment · approved · production · restricted · retired |
 | risk_tier | enum | Low · Medium · High · Prohibited-review |
 | risk_tier_status | enum | preliminary (Inferred) · confirmed (human) · change_pending (approval) |
-| decision_impact, affected_parties, data_sensitivity, autonomy, domain_category | enum | Risk-tier inputs (see `aegis_assessment.risk_tier.INTAKE_FIELDS`) |
+| decision_impact, affected_parties, data_sensitivity, autonomy, domain_category | enum | Risk-tier inputs (see `veritrail_assessment.risk_tier.INTAKE_FIELDS`) |
 | tools[] | list | Agent tools/APIs (EI-07) |
 | genai, vendor_model, eu_exposure, external_actions | bool | |
 | environment | enum | development · staging · production |
@@ -100,7 +100,7 @@ Child records of AI_SYSTEM with version, provider, contract/DPA reference, permi
 `id`, `assessment_id`, `formats[]` (md, pdf, csv, json), `paths`, `status` (draft · issued), `generated_at`, `trace_ids[]`.
 
 ### AUDIT_RECORD — control SE-08
-`id`, `ts`, `trace_id`, `actor`, `action`, `resource`, `outcome`, `details` (redacted), `prev_hash`, `hash`. Append-only. Chain verified by `aegis-admin audit verify`.
+`id`, `ts`, `trace_id`, `actor`, `action`, `resource`, `outcome`, `details` (redacted), `prev_hash`, `hash`. Append-only. Chain verified by `veritrail-admin audit verify`.
 
 ### LEAD / FORM_SUBMISSION / ANALYTICS_EVENT (go-to-market)
 | Entity | Fields | Personal data |

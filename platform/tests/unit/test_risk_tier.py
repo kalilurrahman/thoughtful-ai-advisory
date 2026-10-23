@@ -1,5 +1,5 @@
-from aegis_assessment.risk_tier import INTAKE_FIELDS, KEY_FIELDS, calculate_risk_tier
-from aegis_common.content import controls_by_id
+from veritrail_assessment.risk_tier import INTAKE_FIELDS, KEY_FIELDS, calculate_risk_tier
+from veritrail_common.content import controls_by_id
 
 SUPPORT_AGENT = {
     "name": "Customer support agent", "purpose": "Answer customer queries using CRM data",
@@ -65,7 +65,7 @@ def test_citations_are_real_controls():
     lib = controls_by_id()
     r = calculate_risk_tier(SUPPORT_AGENT)
     assert r["citation_ids"] and all(c in lib for c in r["citation_ids"])
-    assert all(f["citation"].startswith("AEGIS Control ") for f in r["factors"])
+    assert all(f["citation"].startswith("VERITRAIL Control ") for f in r["factors"])
 
 
 def test_string_tools_and_booleans():

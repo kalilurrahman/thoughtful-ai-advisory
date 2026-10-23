@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { RateLimiter, validateEvent } from "./analytics-core";
 
-// Cookieless analytics endpoint — port of POST /api/events in platform/app/api/aegis_api/server.py.
+// Cookieless analytics endpoint — port of POST /api/events in platform/app/api/veritrail_api/server.py.
 // Events are validated against the allow-list and written with the service role into the
 // RLS-locked `site_events` table (migration 0008). No IP address, user agent, cookie, user id or
 // session id is stored; the client address is used only, hashed with a per-isolate salt, for
@@ -29,7 +29,7 @@ export const trackEvent = createServerFn({ method: "POST" })
       const h = getRequest()?.headers;
       const client =
         h?.get("cf-connecting-ip") ?? h?.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
-      limiter ??= new RateLimiter(Number(process.env["AEGIS_RATE_LIMIT"] ?? "60") || 60);
+      limiter ??= new RateLimiter(Number(process.env["VERITRAIL_RATE_LIMIT"] ?? "60") || 60);
       if (!limiter.allow(client, "events")) {
         return { ok: false, error: "Too many requests. Please retry shortly." };
       }

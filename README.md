@@ -11,7 +11,7 @@
 
 <!-- LOVABLE:END -->
 
-# AI Governance Advisory · AEGIS Platform & Landing Site
+# AI Governance Advisory · VERITRAIL Platform & Landing Site
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-thoughtful--ai--governance.lovable.app-0066CC?style=for-the-badge&logo=react)](https://thoughtful-ai-governance.lovable.app/)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-kalilurrahman%2Fai--governance--advisory-black?style=for-the-badge&logo=github)](https://github.com/kalilurrahman/ai-governance-advisory)
@@ -20,9 +20,11 @@
 [![TanStack Start](https://img.shields.io/badge/TanStack%20Start-1.168-FF4154?style=for-the-badge)](https://tanstack.com/router)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 
-**AEGIS** is an interactive, enterprise-grade AI governance platform, landing site, and assurance workspace designed for organizations establishing operational AI risk management, governance capabilities, safety controls, and regulatory compliance.
+**VERITRAIL** is an interactive, enterprise-grade AI governance platform, landing site, and assurance workspace designed for organizations establishing operational AI risk management, governance capabilities, safety controls, and regulatory compliance.
 
-AEGIS integrates a full public marketing & content site, a 64-control governance library, in-browser interactive rule engines (Maturity Assessment, Risk Triage, Guardrail Generator, Ask AEGIS), and an operational governance workspace aligned with international standards (NIST AI RMF, EU AI Act, and ISO/IEC 42001).
+VERITRAIL integrates a full public marketing & content site, a 64-control governance library, in-browser interactive rule engines (Maturity Assessment, Risk Triage, Guardrail Generator, Ask VERITRAIL), and an operational governance workspace aligned with international standards (NIST AI RMF, EU AI Act, and ISO/IEC 42001).
+
+> **Naming.** The platform was previously called _AEGIS_ and its assessment studio _GOVERN_. Both names collide with established industry terms (Forrester's AEGIS framework and the NIST AI RMF GOVERN function), so the platform is now **VERITRAIL** and the assessment studio is **TILLER**. References to _GOVERN_, _MAP_, _MEASURE_ and _MANAGE_ that remain in control mappings refer to the NIST AI RMF functions. Code identifiers, routes (`/tools/ask-veritrail`), Python packages (`veritrail_*`) and environment variables (`VERITRAIL_*`, formerly `AEGIS_*`) follow the new name; already-applied database migrations keep their original file names, and migration 0009 renames the workspace save function.
 
 ---
 
@@ -30,13 +32,13 @@ AEGIS integrates a full public marketing & content site, a 64-control governance
 
 - **Hosted Landing & Platform Web App**: [https://thoughtful-ai-governance.lovable.app/](https://thoughtful-ai-governance.lovable.app/)
 - **GitHub Repository**: [https://github.com/kalilurrahman/ai-governance-advisory](https://github.com/kalilurrahman/ai-governance-advisory)
-- **Interactive Video Walkthrough**: [Watch AEGIS Platform Video Demo](./docs/assets/landing-demo.webm)
+- **Interactive Video Walkthrough**: [Watch VERITRAIL Platform Video Demo](./docs/assets/landing-demo.webm)
 
 ---
 
 ## 🎬 Video Walkthrough & Interactive Demo
 
-Experience AEGIS in action—exploring the public landing site, framework, 64-control library, in-browser tools, and governance workspace:
+Experience VERITRAIL in action—exploring the public landing site, framework, 64-control library, in-browser tools, and governance workspace:
 
 https://github.com/user-attachments/assets/landing-demo.webm
 
@@ -46,7 +48,7 @@ _(Note: Click on `./docs/assets/landing-demo.webm` to watch or download the reco
 
 ## 📸 Public Landing Site & Interactive Tools Showcase
 
-AEGIS features a comprehensive public landing site with dedicated sections for framework pillars, compliance standards, industry solutions, an interactive 64-control library, and client-side AI risk engines.
+VERITRAIL features a comprehensive public landing site with dedicated sections for framework pillars, compliance standards, industry solutions, an interactive 64-control library, and client-side AI risk engines.
 
 ### Landing Page & Governance Framework
 
@@ -60,15 +62,15 @@ AEGIS features a comprehensive public landing site with dedicated sections for f
 | :-------------------------------------------------------: | :-------------------------------------------------------------------: |
 | ![64-Control Library](./docs/assets/landing-controls.png) | ![Maturity Assessment Tool](./docs/assets/landing-tools-maturity.png) |
 
-|            Ask AEGIS AI Assistant & Knowledge Hub            |          Operational Governance Workspace Overview           |
+|            Ask VERITRAIL AI Assistant & Knowledge Hub            |          Operational Governance Workspace Overview           |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![Ask AEGIS Tool](./docs/assets/landing-tools-ask-aegis.png) | ![Governance Workspace](./docs/assets/landing-workspace.png) |
+| ![Ask VERITRAIL Tool](./docs/assets/landing-tools-ask-veritrail.png) | ![Governance Workspace](./docs/assets/landing-workspace.png) |
 
 ---
 
 ## 📱 Multi-Device Workspace Showcase
 
-AEGIS features a responsive UI designed for desktop workstations, tablets, and mobile devices across both public content pages and the operational workspace.
+VERITRAIL features a responsive UI designed for desktop workstations, tablets, and mobile devices across both public content pages and the operational workspace.
 
 ### Desktop Workstation View
 
@@ -88,9 +90,9 @@ AEGIS features a responsive UI designed for desktop workstations, tablets, and m
 
 ---
 
-## 🌐 Public AEGIS Website & Platform Architecture
+## 🌐 Public VERITRAIL Website & Platform Architecture
 
-The repository ships the full **AEGIS public landing website** alongside the governance workspace, plus the AEGIS launch-build platform from which it was generated.
+The repository ships the full **VERITRAIL public landing website** alongside the governance workspace, plus the VERITRAIL launch-build platform from which it was generated.
 
 | Area                         | Route(s)                                                                                                               | Source File(s) / Engine                                                           |
 | :--------------------------- | :--------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------- |
@@ -99,7 +101,7 @@ The repository ships the full **AEGIS public landing website** alongside the gov
 | **64-Control Library**       | `/framework/controls`, `/framework/controls/:id`                                                                       | `platform/content/controls/controls.yaml`                                         |
 | **Compliance Guides**        | `/compliance`, `/compliance/eu-ai-act`, `/compliance/nist-ai-rmf`, `/compliance/iso-42001`, `/compliance/gap-analysis` | `platform/content/website_pages/compliance*.md`                                   |
 | **Industry Solutions**       | `/solutions`, `/industries/*`                                                                                          | `platform/content/website_pages/solutions.md`, `industries-*.md`                  |
-| **Interactive Tools Engine** | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/guardrail-generator`, `/tools/ask-aegis`                   | Client-side TypeScript ports in `src/features/site/engines/`                      |
+| **Interactive Tools Engine** | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/guardrail-generator`, `/tools/ask-veritrail`                   | Client-side TypeScript ports in `src/features/site/engines/`                      |
 | **Lead Submissions**         | `/contact`, `/contact/request-demo`, `/resources/blueprint`                                                            | `src/features/site/forms.tsx` → `submitLead` server function → `site_leads` table |
 | **Governance Workspace**     | `/workspace`, `/workspace/*`                                                                                           | `src/features/governance/`                                                        |
 
@@ -124,14 +126,14 @@ The repository ships the full **AEGIS public landing website** alongside the gov
 - **Maturity Assessment Tool**: Step-by-step evaluation generating maturity index scores and improvement roadmaps.
 - **Risk Triage Engine**: Automated classification of AI model use cases into Low, Medium, High, or Prohibited risk categories.
 - **Guardrail Generator**: Custom safety, privacy, and operational policy rules based on deployment parameters.
-- **Ask AEGIS Assistant**: In-browser knowledge search engine referencing curated governance frameworks and regulatory guidelines.
+- **Ask VERITRAIL Assistant**: In-browser knowledge search engine referencing curated governance frameworks and regulatory guidelines.
 
 ### 📖 3. Interactive 12-Chapter AI Governance Playbook
 
 - **Comprehensive Lifecycle Coverage**: 12 structured chapters covering Mandate, System Inventory, Risk Classification, Data Governance, Algorithmic Transparency, Human Oversight, Security & Safety, Vendor Due Diligence, Continuous Monitoring, Incident Response, Transparency Disclosures, and Continuous Improvement.
 - **Personalized Notes & Markdown Export**: Track chapter completion and export browser-persisted notes.
 
-### 🛡️ 4. GOVERN Assessment & Maturity Index
+### 🛡️ 4. TILLER Assessment & Maturity Index
 
 - **NIST AI RMF Alignment**: Evidence-aware controls mapped across `GOVERN`, `MAP`, `MEASURE`, and `MANAGE`.
 - **Maturity Scoring**: Real-time scoring (Initial, Developing, Established, Advanced) based on weightings and verified evidence attachments.
@@ -175,14 +177,14 @@ The repository ships the full **AEGIS public landing website** alongside the gov
 ```
 ai-governance-advisory/
 ├── docs/
-│   ├── aegis/                      # AEGIS launch status report
+│   ├── veritrail/                      # VERITRAIL launch status report
 │   └── assets/                     # Screenshots, media assets & demo video
 │       ├── landing-home.png        # Landing site main showcase
 │       ├── landing-framework.png   # Framework page screenshot
 │       ├── landing-controls.png    # 64-control library screenshot
 │       ├── landing-tools-*.png     # Interactive tool screenshots
 │       └── landing-demo.webm       # Video demo recording
-├── platform/                       # AEGIS Python platform, governed content & docs
+├── platform/                       # VERITRAIL Python platform, governed content & docs
 │   └── content/
 │       ├── website_pages/          # Markdown content pages for public landing site
 │       └── controls/               # 64-control YAML library definition

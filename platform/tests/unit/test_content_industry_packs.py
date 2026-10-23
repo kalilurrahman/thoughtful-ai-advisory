@@ -1,4 +1,4 @@
-"""Structure and citation checks for AEGIS industry packs (content/industry_packs/*.yaml)."""
+"""Structure and citation checks for VERITRAIL industry packs (content/industry_packs/*.yaml)."""
 from __future__ import annotations
 
 import re
@@ -7,8 +7,8 @@ from pathlib import Path
 import pytest
 import yaml
 
-from aegis_common.content import controls_by_id, load_assessment_template
-from aegis_common.evidence import find_prohibited_claims
+from veritrail_common.content import controls_by_id, load_assessment_template
+from veritrail_common.evidence import find_prohibited_claims
 
 ROOT = Path(__file__).resolve().parents[2]
 PACK_DIR = ROOT / "content" / "industry_packs"
@@ -116,14 +116,14 @@ def test_every_control_id_exists(name):
 def test_regimes_flagged_verify_with_counsel(name):
     for r in PACKS[name]["sector_regimes"]:
         assert r.get("verify_with_counsel") is True, r["name"]
-        assert r["scope_summary"] and r["aegis_relevance"]
+        assert r["scope_summary"] and r["veritrail_relevance"]
 
 
 @pytest.mark.parametrize("name", sorted(PACKS))
 def test_eu_ai_act_regimes_carry_timeline_caveat(name):
     for r in PACKS[name]["sector_regimes"]:
         if "EU AI Act" in r["name"]:
-            assert "Official Journal" in r["aegis_relevance"] or "Official Journal" in r["scope_summary"], r["name"]
+            assert "Official Journal" in r["veritrail_relevance"] or "Official Journal" in r["scope_summary"], r["name"]
 
 
 @pytest.mark.parametrize("name", sorted(PACKS))
@@ -145,7 +145,7 @@ def test_policy_pack_references(name):
 
 def test_tier_hints_agree_with_risk_tier_engine():
     """Default hints should match what the risk-tier engine infers from the hint profile."""
-    rt = pytest.importorskip("aegis_assessment.risk_tier")
+    rt = pytest.importorskip("veritrail_assessment.risk_tier")
     mismatches = []
     for name, d in PACKS.items():
         for uc in d["priority_use_cases"]:

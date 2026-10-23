@@ -1,6 +1,6 @@
-# AEGIS website (`app/website/`)
+# VERITRAIL website (`app/website/`)
 
-Static site generator, templates, CSS and browser JavaScript for the public AEGIS site. Pages come
+Static site generator, templates, CSS and browser JavaScript for the public VERITRAIL site. Pages come
 from `content/website_pages/*.md` (front matter: CONTRIBUTING.md §4). This directory only contains
 engineering; page copy is owned by the web-content workstream.
 
@@ -10,10 +10,10 @@ engineering; page copy is owned by the web-content workstream.
 python3 app/website/build.py                       # content/website_pages -> app/website/dist (runs checks)
 python3 app/website/build.py --site-url https://www.example.com
 python3 app/website/build.py --pages tests/fixtures/website_pages --out /tmp/site
-python3 -m aegis_api.server --port 8080            # serves dist/ + /api (PYTHONPATH=$(ls -d app/*/ | tr '\n' ':'))
+python3 -m veritrail_api.server --port 8080            # serves dist/ + /api (PYTHONPATH=$(ls -d app/*/ | tr '\n' ':'))
 ```
 
-`site_url` in `site.yaml` is a **placeholder** (`https://www.aegis-governance.example`, a reserved
+`site_url` in `site.yaml` is a **placeholder** (`https://www.veritrail-governance.example`, a reserved
 domain). Set the production origin before deploying: canonical URLs, Open Graph, JSON-LD, sitemap and
 robots are all derived from it.
 
@@ -28,16 +28,16 @@ don't fail the build.
 |---|---|
 | `build.py` | CLI entry point (`make site`) |
 | `site.yaml` | site URL, nav sections, CTAs, footer, free-mail list, downloads |
-| `aegis_website/builder.py` | pipeline: pages → shortcodes → safe Markdown → Jinja2 → assets → SEO → checks |
-| `aegis_website/pages.py` | front-matter parsing/validation (skips `README.md` and `_*.md`) |
-| `aegis_website/shortcodes.py` | `{{cta:key}}`, `{{disclaimer}}`, `{{controls:ID,ID}}` |
-| `aegis_website/markdown_render.py` | Markdown with raw HTML **escaped**, URL scheme allow-list, h1 demotion, table regions |
-| `aegis_website/seo.py` | JSON-LD (`@graph`), `safe_json`, sitemap.xml, robots.txt |
-| `aegis_website/checks.py` | post-build quality gate |
-| `aegis_website/ogimage.py` | pure-Python PNG rasterizer for `og-default.png` / `aegis-logo.png` (`python3 -m aegis_website.ogimage`) |
-| `aegis_website/forms.py`, `tools.py` | lead-form and tool field definitions (API field names) |
+| `veritrail_website/builder.py` | pipeline: pages → shortcodes → safe Markdown → Jinja2 → assets → SEO → checks |
+| `veritrail_website/pages.py` | front-matter parsing/validation (skips `README.md` and `_*.md`) |
+| `veritrail_website/shortcodes.py` | `{{cta:key}}`, `{{disclaimer}}`, `{{controls:ID,ID}}` |
+| `veritrail_website/markdown_render.py` | Markdown with raw HTML **escaped**, URL scheme allow-list, h1 demotion, table regions |
+| `veritrail_website/seo.py` | JSON-LD (`@graph`), `safe_json`, sitemap.xml, robots.txt |
+| `veritrail_website/checks.py` | post-build quality gate |
+| `veritrail_website/ogimage.py` | pure-Python PNG rasterizer for `og-default.png` / `veritrail-logo.png` (`python3 -m veritrail_website.ogimage`) |
+| `veritrail_website/forms.py`, `tools.py` | lead-form and tool field definitions (API field names) |
 | `templates/` | `base`, `home`, `page`, `tool`, `form`, `controls_index`, `control`, `404` + partials |
-| `static/css/` | `aegis.css` (mobile-first, system fonts), `print.css` (report "Save as PDF") |
+| `static/css/` | `veritrail.css` (mobile-first, system fonts), `print.css` (report "Save as PDF") |
 | `static/js/` | see below; every file is plain ES5, no dependencies, deferred, Node-exportable where testable |
 
 Generated pages: `/framework/controls/` (all 64 controls by pillar) and one page per control
@@ -47,16 +47,16 @@ Generated pages: `/framework/controls/` (all 64 controls by pillar) and one page
 
 | File | Loaded on | Role |
 |---|---|---|
-| `site.js` | all pages | nav disclosure/mobile toggle, lead forms → `POST /api/contact`, shared helpers (`AEGIS`) |
+| `site.js` | all pages | nav disclosure/mobile toggle, lead forms → `POST /api/contact`, shared helpers (`VERITRAIL`) |
 | `analytics.js` | all pages | cookieless `{name, path, props}` → `/api/events` via `sendBeacon`; off under DNT/GPC |
-| `assessment-engine.js` | maturity tool | scoring — field-for-field parity with `aegis_assessment.engine` |
-| `assessment-report.js` | maturity tool | DOM report renderer + Markdown export (mirrors `aegis_reports.maturity`) |
+| `assessment-engine.js` | maturity tool | scoring — field-for-field parity with `veritrail_assessment.engine` |
+| `assessment-report.js` | maturity tool | DOM report renderer + Markdown export (mirrors `veritrail_reports.maturity`) |
 | `assessment-ui.js` | maturity tool | profile → 8 steps → preliminary → email gate → `/api/leads` → report or offline fallback |
 | `tools-common.js` | other tools | safe DOM/Markdown helpers |
-| `guardrail.js`, `risk-triage.js`, `ask-aegis.js` | their tool pages | `/api/shield/advise`, `/api/risk-tier`, `/api/agent/message` |
+| `guardrail.js`, `risk-triage.js`, `ask-veritrail.js` | their tool pages | `/api/shield/advise`, `/api/risk-tier`, `/api/agent/message` |
 
 The assessment template, cited controls and standard disclaimer are embedded at build time as
-`<script type="application/json" id="aegis-assessment-data">`. All untrusted text is inserted with
+`<script type="application/json" id="veritrail-assessment-data">`. All untrusted text is inserted with
 `textContent`; no `innerHTML`, `eval`, inline scripts, inline styles or event-handler attributes,
 so pages work under the API's CSP (`script-src 'self'; style-src 'self'`).
 
@@ -72,7 +72,7 @@ Missing/empty `<title>` or meta description, missing or multiple `h1`, images wi
 controls without labels, duplicate IDs, broken internal links and `#fragments`, missing local assets,
 external scripts/styles/fonts, non-deferred scripts, inline executable scripts/styles/handlers,
 invalid JSON-LD, missing `lang`/landmarks/skip link, and prohibited compliance claims
-(`aegis_common.evidence.find_prohibited_claims`).
+(`veritrail_common.evidence.find_prohibited_claims`).
 
 ## Tests
 

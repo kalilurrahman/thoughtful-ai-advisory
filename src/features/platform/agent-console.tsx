@@ -1,5 +1,5 @@
 /**
- * AEGIS Agent console — the full, role-aware AEGIS Agent running entirely in this browser.
+ * VERITRAIL Agent console — the full, role-aware VERITRAIL Agent running entirely in this browser.
  *
  * Chat as a viewer / assessor / approver / admin, and use the side panels the way the
  * platform's approver UI and admin CLI are used: assessments, gap register, reports, pending
@@ -21,7 +21,7 @@ import { ControlLinks, EvidenceBadge, SiteLink, normalizeHref } from "@/features
 import { SafeMarkdown } from "@/features/site/tools/safe-markdown";
 import { toCsv, toJson, downloadBlob, downloadText } from "./reports/exporters";
 import {
-  AegisAgent,
+  VeritrailAgent,
   GAP_CSV_COLUMNS,
   clearPersisted,
   gapRows,
@@ -87,7 +87,7 @@ function AgentMessage({ response: d }: { response: AgentResponse }) {
     <>
       <SafeMarkdown markdown={message} headingBase={4} />
       {d.citations.length ? (
-        <ControlLinks ids={d.citations} prefix="AEGIS controls cited: " />
+        <ControlLinks ids={d.citations} prefix="VERITRAIL controls cited: " />
       ) : (
         <p className="cite">{NO_SOURCE_MESSAGE}</p>
       )}
@@ -169,12 +169,12 @@ function Tabs({
 
 // --------------------------------------------------------------------------- component
 /**
- * The AEGIS Agent console: chat with the full agent under any role, then resolve approvals,
+ * The VERITRAIL Agent console: chat with the full agent under any role, then resolve approvals,
  * review evidence, download gap registers and reports, and verify the audit chain.
  */
 export function AgentConsole() {
   const uid = useId();
-  const [agent, setAgent] = useState(() => new AegisAgent({ runtime: systemRuntime() }));
+  const [agent, setAgent] = useState(() => new VeritrailAgent({ runtime: systemRuntime() }));
   const [version, setVersion] = useState(0);
   const [chatId, setChatId] = useState<Identity>({ role: "assessor", name: "Asha Rao (demo assessor)" });
   const [approverId, setApproverId] = useState<Identity>({ role: "approver", name: "Dana Lee (demo approver)" });
@@ -204,7 +204,7 @@ export function AgentConsole() {
   useEffect(() => {
     const saved = loadPersisted();
     if (saved) {
-      const restored = new AegisAgent({ runtime: systemRuntime() });
+      const restored = new VeritrailAgent({ runtime: systemRuntime() });
       try {
         restoreInto(restored, saved.snapshot);
         setAgent(restored);
@@ -217,7 +217,7 @@ export function AgentConsole() {
   }, []);
 
   const persist = useCallback(
-    (a: AegisAgent) => {
+    (a: VeritrailAgent) => {
       const userId = chatUser.id;
       const sid = sessions.current[userId];
       const ok = savePersisted(a, sid ? { sessionId: sid, userId } : undefined);
@@ -361,7 +361,7 @@ export function AgentConsole() {
       setStatus({ text: "This report's files are not available in this browser.", kind: "error" });
       return;
     }
-    const base = `aegis_use_case_report_${reportId}`;
+    const base = `veritrail_use_case_report_${reportId}`;
     try {
       if (fmt === "md") downloadText(art.md, `${base}.md`, "text/markdown");
       else if (fmt === "csv") downloadText(art.csv, `${base}_gap_register.csv`, "text/csv");
@@ -377,7 +377,7 @@ export function AgentConsole() {
 
   function downloadGaps(fmt: "csv" | "json") {
     if (!view.gaps) return;
-    const base = `aegis_gap_register_${view.asmId}`;
+    const base = `veritrail_gap_register_${view.asmId}`;
     if (fmt === "csv") downloadText(toCsv(gapRows(view.gaps), GAP_CSV_COLUMNS), `${base}.csv`, "text/csv");
     else downloadText(toJson(view.gaps), `${base}.json`, "application/json");
   }
@@ -394,7 +394,7 @@ export function AgentConsole() {
   function resetDemo() {
     clearPersisted();
     sessions.current = {};
-    setAgent(new AegisAgent({ runtime: systemRuntime() }));
+    setAgent(new VeritrailAgent({ runtime: systemRuntime() }));
     setMessages([]);
     setSelectedAsm("");
     setNotes({});
@@ -409,10 +409,10 @@ export function AgentConsole() {
 
   return (
     <section className="tool agent-console" aria-labelledby={`${uid}-heading`}>
-      <h2 id={`${uid}-heading`}>AEGIS Agent console</h2>
+      <h2 id={`${uid}-heading`}>VERITRAIL Agent console</h2>
       <p className="notice notice--warning">
         <strong>Runs entirely in this browser — synthetic demo use only.</strong> This is the
-        deterministic AEGIS Agent (no AI model, no server). Records, approvals and the audit log
+        deterministic VERITRAIL Agent (no AI model, no server). Records, approvals and the audit log
         stay in this browser&apos;s storage and are never sent anywhere. Do not enter customer,
         personal or confidential data; use fictional examples.
       </p>
@@ -479,7 +479,7 @@ export function AgentConsole() {
         role="log"
         aria-live="polite"
         aria-relevant="additions"
-        aria-label="Conversation with the AEGIS Agent"
+        aria-label="Conversation with the VERITRAIL Agent"
         tabIndex={0}
       >
         {messages.length === 0 && (
@@ -496,7 +496,7 @@ export function AgentConsole() {
             </div>
           ) : (
             <div key={m.id} className="chat-msg chat-msg--agent" data-intent={m.response.intent}>
-              <p className="chat-msg-author">AEGIS Agent</p>
+              <p className="chat-msg-author">VERITRAIL Agent</p>
               <AgentMessage response={m.response} />
             </div>
           ),
@@ -834,7 +834,7 @@ export function AgentConsole() {
             <button
               type="button"
               className="btn btn-secondary"
-              onClick={() => downloadText(agent.audit.toJsonl(), "aegis_agent_audit.jsonl", "application/jsonl")}
+              onClick={() => downloadText(agent.audit.toJsonl(), "veritrail_agent_audit.jsonl", "application/jsonl")}
             >
               Download audit log (JSONL)
             </button>
@@ -890,7 +890,7 @@ export function AgentConsole() {
         {storageNote}
       </p>
       <p className="small">
-        Deterministic browser port of the AEGIS Agent: optional LLM phrasing is not included. The
+        Deterministic browser port of the VERITRAIL Agent: optional LLM phrasing is not included. The
         agent reports governance readiness and evidence status; it never determines or certifies
         compliance.
       </p>

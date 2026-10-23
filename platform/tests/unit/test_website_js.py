@@ -9,8 +9,8 @@ from pathlib import Path
 
 import pytest
 
-from aegis_website.builder import SiteBuilder
-from aegis_website.paths import FIXTURE_PAGES_DIR
+from veritrail_website.builder import SiteBuilder
+from veritrail_website.paths import FIXTURE_PAGES_DIR
 
 JS_TEST_DIR = Path(__file__).resolve().parent / "js"
 NODE = shutil.which("node")
@@ -24,7 +24,7 @@ def test_js_unit_suite(tmp_path):
     files = sorted(str(p) for p in JS_TEST_DIR.glob("*.test.js"))
     assert files, "no JS tests found"
     proc = subprocess.run([NODE, "--test", *files], capture_output=True, text=True, timeout=120,
-                          env={**os.environ, "AEGIS_ASSESSMENT_BUNDLE": str(bundle_file)})
+                          env={**os.environ, "VERITRAIL_ASSESSMENT_BUNDLE": str(bundle_file)})
     out = proc.stdout + proc.stderr
     assert proc.returncode == 0, out[-6000:]
     assert "# fail 0" in out

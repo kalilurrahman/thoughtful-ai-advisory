@@ -1,8 +1,8 @@
 ---
-title: "Website terms of use — AEGIS (template, legal review required)"
+title: "Website terms of use — VERITRAIL (template, legal review required)"
 h1: "Website terms of use"
 slug: /legal/terms/
-description: "Terms for using the AEGIS website, free tools and published content, including disclaimers about readiness indicators. Template pending legal review."
+description: "Terms for using the VERITRAIL website, free tools and published content, including disclaimers about readiness indicators. Template pending legal review."
 section: legal
 nav_label: "Terms of use"
 nav_order: 20
@@ -11,19 +11,19 @@ schema_type: WebPage
 updated: 2026-10-21
 ---
 
-> **Template — legal review required.** These terms are a working draft. Items in [square brackets] must be completed, and the terms must be reviewed by qualified legal counsel before publication. They govern use of the public website only; AEGIS platform and services are provided under separate written agreements.
+> **Template — legal review required.** These terms are a working draft. Items in [square brackets] must be completed, and the terms must be reviewed by qualified legal counsel before publication. They govern use of the public website only; VERITRAIL platform and services are provided under separate written agreements.
 
 **Last updated:** 21 October 2026
 
 ## 1. About these terms
 
-These terms apply to your use of this website, including its free tools (the maturity self-assessment, risk triage, guardrail generator and Ask AEGIS demo) and published content. The website is operated by [legal entity name], [registered address]. By using the website you agree to these terms.
+These terms apply to your use of this website, including its free tools (the maturity self-assessment, risk triage, guardrail generator and Ask VERITRAIL demo) and published content. The website is operated by [legal entity name], [registered address]. By using the website you agree to these terms.
 
 ## 2. No professional advice; no compliance determination
 
 Content and tool outputs on this website are provided for general information and to support governance readiness. They are **not legal, regulatory, audit or other professional advice**.
 
-AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative interpretations and are not endorsed by NIST, ISO or the European Commission.
+VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative interpretations and are not endorsed by NIST, ISO or the European Commission.
 
 Self-assessment results are self-reported and labelled User-asserted. Suggested risk tiers are Inferred and require human confirmation. Generated policies are drafts that require review, testing and approval before any use.
 
@@ -36,11 +36,11 @@ Self-assessment results are self-reported and labelled User-asserted. Suggested 
 
 ## 4. Acceptable use
 
-You must not misuse the website, including by attempting to gain unauthorized access, interfering with its operation, scraping it at a volume that degrades service, submitting malicious content, or using the Ask AEGIS demo to generate unlawful or harmful content.
+You must not misuse the website, including by attempting to gain unauthorized access, interfering with its operation, scraping it at a volume that degrades service, submitting malicious content, or using the Ask VERITRAIL demo to generate unlawful or harmful content.
 
 ## 5. Intellectual property
 
-The website, the AEGIS Framework, control library, templates and published content are owned by [legal entity name] or its licensors. [Specify any permitted use — for example, internal non-commercial use of published templates with attribution.] Framework and standard names belong to their respective owners; references to them do not imply endorsement.
+The website, the VERITRAIL Framework, control library, templates and published content are owned by [legal entity name] or its licensors. [Specify any permitted use — for example, internal non-commercial use of published templates with attribution.] Framework and standard names belong to their respective owners; references to them do not imply endorsement.
 
 ## 6. Third-party links
 

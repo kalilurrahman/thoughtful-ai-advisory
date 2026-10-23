@@ -1,7 +1,7 @@
 {# Generic lead form. Requires: form_def, form_key, prefix. Optional: compact. #}
 {% set p = prefix %}
-<form class="aegis-form{% if compact is defined and compact %} aegis-form--compact{% endif %}" id="{{ p }}-form" action="/api/contact" method="post" novalidate
-      data-aegis-form="{{ form_def.api_form }}" data-business-email="{{ 'true' if form_def.business_email else 'false' }}"
+<form class="veritrail-form{% if compact is defined and compact %} veritrail-form--compact{% endif %}" id="{{ p }}-form" action="/api/contact" method="post" novalidate
+      data-veritrail-form="{{ form_def.api_form }}" data-business-email="{{ 'true' if form_def.business_email else 'false' }}"
       data-success="{{ form_def.success }}"{% if form_key == 'blueprint' %} data-download-label="{{ site.downloads.blueprint.label }}"{% if blueprint_available %} data-download="{{ site.downloads.blueprint.path }}"{% endif %}{% endif %}{% if tool_name is defined and tool_name %} data-tool="{{ tool_name }}"{% endif %}>
   <div class="error-summary" id="{{ p }}-errors" role="alert" tabindex="-1" hidden>
     <h3 class="error-summary-title">Please correct the following</h3>

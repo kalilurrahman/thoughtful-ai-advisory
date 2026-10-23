@@ -1,8 +1,8 @@
-"""Unit tests: orchestrator journeys — Ask AEGIS answer structure, guided state machine, sessions."""
+"""Unit tests: orchestrator journeys — Ask VERITRAIL answer structure, guided state machine, sessions."""
 from __future__ import annotations
 
-from aegis_common.content import controls_by_id
-from aegis_common.evidence import NO_SOURCE_MESSAGE, find_prohibited_claims
+from veritrail_common.content import controls_by_id
+from veritrail_common.evidence import NO_SOURCE_MESSAGE, find_prohibited_claims
 
 from agent_test_helpers import ASSESSOR, CS_DESCRIPTION, VIEWER, agent, run_guided  # noqa: F401
 

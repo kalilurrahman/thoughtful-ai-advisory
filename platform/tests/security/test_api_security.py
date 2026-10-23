@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from aegis_api.server import MAX_BODY, AegisApp
+from veritrail_api.server import MAX_BODY, VeritrailApp
 
 
 @pytest.fixture()
@@ -12,7 +12,7 @@ def app(tmp_path):
     site.mkdir()
     (site / "index.html").write_text("ok")
     (tmp_path / "secret.txt").write_text("TOP SECRET")
-    return AegisApp(var_dir=tmp_path / "var", site_dir=site)
+    return VeritrailApp(var_dir=tmp_path / "var", site_dir=site)
 
 
 @pytest.mark.parametrize("p", ["/../secret.txt", "/%2e%2e/secret.txt", "/..%2fsecret.txt", "/./../secret.txt",
@@ -40,8 +40,8 @@ def test_malformed_json(app, body):
 
 
 def test_rate_limit(tmp_path, monkeypatch):
-    monkeypatch.setenv("AEGIS_RATE_LIMIT", "5")
-    app = AegisApp(var_dir=tmp_path / "v", site_dir=tmp_path)
+    monkeypatch.setenv("VERITRAIL_RATE_LIMIT", "5")
+    app = VeritrailApp(var_dir=tmp_path / "v", site_dir=tmp_path)
     codes = [app.handle("POST", "/api/events", {"Content-Type": "application/json"},
                         json.dumps({"name": "page_view", "path": "/"}).encode(), client="1.2.3.4")[0] for _ in range(7)]
     assert codes[:5] == [204] * 5 and codes[5:] == [429, 429]

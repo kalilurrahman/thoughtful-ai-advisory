@@ -1,8 +1,8 @@
 ---
-title: "Responsible AI at AEGIS — how our product uses AI"
+title: "Responsible AI at VERITRAIL — how our product uses AI"
 h1: "Responsible AI statement"
 slug: /legal/responsible-ai/
-description: "How AEGIS uses AI in its own product: control citations, evidence labels, human approval for high-impact actions, redaction, audit logs, no overclaiming."
+description: "How VERITRAIL uses AI in its own product: control citations, evidence labels, human approval for high-impact actions, redaction, audit logs, no overclaiming."
 section: legal
 nav_label: "Responsible AI"
 nav_order: 30
@@ -13,24 +13,24 @@ secondary_cta: demo
 updated: 2026-10-21
 ---
 
-AEGIS helps organizations govern AI. That obliges us to govern our own use of AI at least as carefully as we ask our customers to. This statement explains where AEGIS uses AI, the rules it follows, and the limits we acknowledge.
+VERITRAIL helps organizations govern AI. That obliges us to govern our own use of AI at least as carefully as we ask our customers to. This statement explains where VERITRAIL uses AI, the rules it follows, and the limits we acknowledge.
 
 **Last updated:** 21 October 2026
 
-## Where AEGIS uses AI
+## Where VERITRAIL uses AI
 
 | Feature | Role of AI | Role of deterministic logic |
 |---|---|---|
-| AEGIS Agent and Ask AEGIS demo | Interpreting questions, drafting answers, assessments, gap registers and reports | Tool permissions, approval routing, citation checks, prohibited-claim checks, audit logging |
+| VERITRAIL Agent and Ask VERITRAIL demo | Interpreting questions, drafting answers, assessments, gap registers and reports | Tool permissions, approval routing, citation checks, prohibited-claim checks, audit logging |
 | Maturity self-assessment | None in scoring | Scoring, levels, flags and action plans are rule-based and published |
 | Risk triage | None in tiering | Tier suggestions come from published rules with citations |
-| Guardrail generator and AEGIS Shield | None in runtime policy evaluation | Draft policies are generated from AEGIS rules; runtime evaluation is rule-based, versioned and logged |
+| Guardrail generator and VERITRAIL Shield | None in runtime policy evaluation | Draft policies are generated from VERITRAIL rules; runtime evaluation is rule-based, versioned and logged |
 
 We use AI where it helps people draft and navigate, and deterministic, published logic where results must be reproducible — such as scores, tiers and runtime decisions.
 
 ## The rules our AI follows
 
-**1. Cite or say so.** Every material recommendation cites at least one AEGIS control ID, and where relevant an assessment question, policy version, evidence item or indicative framework mapping. If nothing supports a statement, the response is: "No supporting evidence or framework source is available."
+**1. Cite or say so.** Every material recommendation cites at least one VERITRAIL control ID, and where relevant an assessment question, policy version, evidence item or indicative framework mapping. If nothing supports a statement, the response is: "No supporting evidence or framework source is available."
 
 **2. Label evidence honestly.** Self-reported information is User-asserted; derived information is Inferred; only evidence reviewed by a named person is Verified. Missing evidence and critical gaps are named as such.
 
@@ -48,7 +48,7 @@ We use AI where it helps people draft and navigate, and deterministic, published
 
 ## Transparency to users
 
-AI-generated content in AEGIS is identified as such (IS-08). Drafts are labelled as drafts. The Ask AEGIS demo states that it is a limited demo and what it can and cannot do.
+AI-generated content in VERITRAIL is identified as such (IS-08). Drafts are labelled as drafts. The Ask VERITRAIL demo states that it is a limited demo and what it can and cannot do.
 
 ## Known limitations
 
@@ -59,10 +59,10 @@ AI-generated content in AEGIS is identified as such (IS-08). Drafts are labelled
 
 ## Governing our own AI
 
-We apply the same framework to AEGIS itself. Our commitments: our AI features are recorded in our own inventory with owners and risk tiers; changes to models and prompts follow change control; and the Agent's tools and approval requirements are defined in policy. We will report material changes to this statement on this page.
+We apply the same framework to VERITRAIL itself. Our commitments: our AI features are recorded in our own inventory with owners and risk tiers; changes to models and prompts follow change control; and the Agent's tools and approval requirements are defined in policy. We will report material changes to this statement on this page.
 
 ## Questions or concerns
 
-If you believe an AEGIS output is wrong, misleading or harmful, please [contact us](/contact/). We review every report.
+If you believe an VERITRAIL output is wrong, misleading or harmful, please [contact us](/contact/). We review every report.
 
 {{cta:demo}}

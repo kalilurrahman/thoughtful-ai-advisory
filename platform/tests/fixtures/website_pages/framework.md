@@ -1,7 +1,7 @@
 ---
 title: "Fixture framework overview"
 slug: /framework/
-description: "Fixture framework landing page for the AEGIS website generator tests, with a table, a disclaimer shortcode and a code sample."
+description: "Fixture framework landing page for the VERITRAIL website generator tests, with a table, a disclaimer shortcode and a code sample."
 section: framework
 nav_label: Framework
 nav_order: 10

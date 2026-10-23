@@ -2,7 +2,7 @@
 title: "AI governance assessment templates — maturity and use-case question banks"
 h1: "Assessment templates"
 slug: /resources/assessment-templates/
-description: "AEGIS assessment templates: the 24-question AI governance maturity self-assessment and the use-case risk and control question bank, each citing AEGIS controls."
+description: "VERITRAIL assessment templates: the 24-question AI governance maturity self-assessment and the use-case risk and control question bank."
 section: resources
 nav_label: "Assessment templates"
 nav_order: 30
@@ -13,14 +13,14 @@ secondary_cta: baseline
 updated: 2026-10-21
 ---
 
-AEGIS assessments are defined as versioned templates: every question names the domain it scores, the AEGIS controls it relates to and — for use-case questions — the evidence an assessor expects to see. That structure is what makes results reproducible and citable.
+VERITRAIL assessments are defined as versioned templates: every question names the domain it scores, the VERITRAIL controls it relates to and — for use-case questions — the evidence an assessor expects to see. That structure is what makes results reproducible and citable.
 
 ## Available templates
 
 | Template | Version | Scope | Questions | How to use it now |
 |---|---|---|---|---|
 | AI Governance Maturity Self-Assessment | 1.0.0 | Organization or business unit | 24 questions across 8 domains, plus 5 profile questions | [Take it online](/tools/maturity-assessment/) |
-| AI Use-Case Risk & Control Assessment | 1.0.0 | One AI system or use case | Intake fields plus questions in 9 modules, selected by risk profile | Through the [AEGIS Agent](/solutions/agent/) or a [Governance Baseline](/contact/book-governance-baseline/) |
+| AI Use-Case Risk & Control Assessment | 1.0.0 | One AI system or use case | Intake fields plus questions in 9 modules, selected by risk profile | Through the [VERITRAIL Agent](/solutions/agent/) or a [Governance Baseline](/contact/book-governance-baseline/) |
 
 Editable spreadsheet and document versions of both templates are **coming soon**. If you need them now — for example to run a facilitated workshop — [contact us](/contact/) and we will share the current version.
 

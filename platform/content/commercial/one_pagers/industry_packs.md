@@ -1,11 +1,11 @@
 ---
-title: "One-pager — AEGIS Industry Packs"
+title: "One-pager — VERITRAIL Industry Packs"
 audience: Sector compliance and risk leads
 version: 1.0.0
 effective_date: 2026-10-21
 ---
 
-# AEGIS Industry Packs
+# VERITRAIL Industry Packs
 
 **Start from your sector's real use cases, not a blank template.**
 
@@ -15,7 +15,7 @@ effective_date: 2026-10-21
 |---|---|
 | Priority use cases with default risk-tier hints (confirmed per system by your approver) | Credit decisioning — High; internal productivity assistants — Low |
 | Emphasized controls with sector rationale | IS-05 fairness testing for customer decisions; IS-13 human approval for payments agents |
-| Additional evidence expectations | Mapping of AEGIS tiers to model-risk tiers (FS-EV-01) |
+| Additional evidence expectations | Mapping of VERITRAIL tiers to model-risk tiers (FS-EV-01) |
 | Sector regimes to consider — described generally, flagged "verify with counsel" | Model risk management guidance; fair lending rules; operational-resilience rules |
 | Recommended runtime policy packs | `pack-financial-operations-agent` (approval-gated payments); `pack-customer-support-agent`; `pack-baseline` |
 | Pilot discovery questions | "Can any agent move money, change limits or contact customers?" |

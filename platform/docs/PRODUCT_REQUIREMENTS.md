@@ -1,16 +1,16 @@
-# AEGIS Product Requirements Document (PRD)
+# VERITRAIL Product Requirements Document (PRD)
 
 Version 3.0 · 21 October 2026 · Owner: Product Lead (content: Governance Content Lead) · Status: Approved for MVP build
 
 Related: [ROADMAP](ROADMAP.md) · [BACKLOG](BACKLOG.md) · [RISK_REGISTER](RISK_REGISTER.md) ·
 [COMPLIANCE_MAPPING](COMPLIANCE_MAPPING.md) · [TECHNICAL_ARCHITECTURE](TECHNICAL_ARCHITECTURE.md) ·
-[API_SPECIFICATION](API_SPECIFICATION.md) · Blueprint v3: `output/AEGIS_Launch_and_Enhancement_Blueprint_v3.md`
+[API_SPECIFICATION](API_SPECIFICATION.md) · Blueprint v3: `output/VERITRAIL_Launch_and_Enhancement_Blueprint_v3.md`
 
-> AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
+> VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
 
 ## 1. Product vision
 
-AEGIS helps enterprises **know, gate, guard and prove** their AI: a complete AI system of record, risk-proportionate
+VERITRAIL helps enterprises **know, gate, guard and prove** their AI: a complete AI system of record, risk-proportionate
 lifecycle controls, runtime guardrails for LLM apps and agents, and audit-ready evidence — all tied to a 64-control
 library with indicative mappings to NIST AI RMF, ISO/IEC 42001 and the EU AI Act.
 
@@ -29,7 +29,7 @@ tamper-evident by default; least privilege; readiness, not certification.
 | P6 | **Internal audit** | Needs evidence that controls operate | Assurance |
 | P7 | **Business / product owner of an AI system** | Must register, assess and get approval without becoming a governance expert | Register, Agent |
 | P8 | **Website visitor / evaluator** | Researching AI governance; self-assesses before talking to sales | Website, self-assessment, tools |
-| P9 | **AEGIS delivery consultant** | Runs Governance Baselines and pilots | All, pilot kits |
+| P9 | **VERITRAIL delivery consultant** | Runs Governance Baselines and pilots | All, pilot kits |
 
 ## 3. Jobs to be done
 
@@ -54,7 +54,7 @@ Priority: **Must** (MVP blocker), **Should**, **Could**. Phases and their exit c
 | ID | Requirement | Priority | Acceptance criteria |
 |---|---|---|---|
 | PRD-0-01 | Single control library of 64 controls across 5 pillars with objective, evidence, owner, priority, scope, modules and indicative mappings | Must | `controls.yaml` loads; IDs unique `AO/EI/GL/IS/SE-NN`; every control has ≥ 1 NIST and ISO mapping |
-| PRD-0-02 | Framework, pillar and maturity-model documentation consistent with the library | Must | `content/aegis_framework.md`, `pillars.md`, `maturity_model.md` exist; tests confirm every control appears in `pillars.md` and every cited ID exists |
+| PRD-0-02 | Framework, pillar and maturity-model documentation consistent with the library | Must | `content/veritrail_framework.md`, `pillars.md`, `maturity_model.md` exist; tests confirm every control appears in `pillars.md` and every cited ID exists |
 | PRD-0-03 | Generated compliance crosswalk with methodology, disclaimers and coverage gaps | Must | `docs/COMPLIANCE_MAPPING.md` regenerates byte-identically from `docs/tools/gen_compliance_mapping.py`; contains EU AI Act timeline-verification caveat |
 | PRD-0-04 | Five industry packs with use cases, tier hints, emphasized controls, evidence, regimes (verify with counsel), policy packs and discovery questions | Should | Pack tests pass; tier hints agree with risk-tier engine |
 
@@ -82,11 +82,11 @@ Priority: **Must** (MVP blocker), **Should**, **Could**. Phases and their exit c
 | PRD-2-06 | Lead qualification tags computed internally and never shown to the respondent | Must | Tags absent from respondent-facing API/report |
 | PRD-2-07 | Median completion ≤ 10 minutes | Should | Event analytics median time; survey B5 in pilots |
 
-### Phase 3 — AEGIS Agent MVP
+### Phase 3 — VERITRAIL Agent MVP
 
 | ID | Requirement | Priority | Acceptance criteria |
 |---|---|---|---|
-| PRD-3-01 | Journeys: Ask AEGIS, guided assessment, gap analysis, report generation | Must | Each journey demonstrable end-to-end via `/api/agent/message` |
+| PRD-3-01 | Journeys: Ask VERITRAIL, guided assessment, gap analysis, report generation | Must | Each journey demonstrable end-to-end via `/api/agent/message` |
 | PRD-3-02 | 14 tools with declared permission levels (read, compute, create_draft, write_confirm, approval_required) | Must | `TOOL_REGISTRY` has 14 entries; RBAC enforced; every call audited |
 | PRD-3-03 | Citations on every material recommendation; exact no-source message otherwise | Must | Agent evaluation suite: 100% of recommendations cite valid control IDs; out-of-scope prompts return `No supporting evidence or framework source is available.` |
 | PRD-3-04 | Human approval for tier changes, exceptions, production policy changes, sensitive exports, external communications | Must | Attempts create pending approvals; approvals resolved by a different user with approver role |
@@ -99,7 +99,7 @@ Priority: **Must** (MVP blocker), **Should**, **Could**. Phases and their exit c
 | ID | Requirement | Priority | Acceptance criteria |
 |---|---|---|---|
 | PRD-4-01 | Shield Advisor: profile → risk profile, tool matrix, data handling, approval rules, limits, monitoring, incident response, rollout, citations, draft policy | Must | `/api/shield/advise` returns all sections; policy validates with zero errors |
-| PRD-4-02 | Policy-as-code schema `aegis.policy/v1` with validator and evaluator | Must | `validate_policy` and `PolicyEngine.evaluate` covered by policy-engine tests |
+| PRD-4-02 | Policy-as-code schema `veritrail.policy/v1` with validator and evaluator | Must | `validate_policy` and `PolicyEngine.evaluate` covered by policy-engine tests |
 | PRD-4-03 | Decisions ALLOW, DENY, REDACT, TRANSFORM, REQUIRE_HUMAN_APPROVAL, ESCALATE, RATE_LIMIT with precedence | Must | Engine tests per decision type |
 | PRD-4-04 | Rollout modes Observe → Warn → Protect → Enforce → Contain | Must | Mode behaviour tests (Observe never blocks; Contain denies all in scope) |
 | PRD-4-05 | Default-deny tools; high-impact operations require approval | Must | Validator rejects default ALLOW |

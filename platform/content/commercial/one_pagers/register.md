@@ -1,11 +1,11 @@
 ---
-title: "One-pager — AEGIS Register"
+title: "One-pager — VERITRAIL Register"
 audience: CIO office, AI CoE, Head of AI Governance
 version: 1.0.0
 effective_date: 2026-10-21
 ---
 
-# AEGIS Register — the AI system of record
+# VERITRAIL Register — the AI system of record
 
 **One owned, classified inventory of every AI system, model, agent and vendor AI product.**
 
@@ -45,8 +45,8 @@ tier through an approval step, and export the inventory with evidence labels.
 
 ## Limitations
 
-Discovery depends on the signals you can import (procurement, API keys, SaaS admin data); AEGIS does not scan your
-network. Risk tiers are AEGIS readiness tiers, not legal classifications under any law.
+Discovery depends on the signals you can import (procurement, API keys, SaaS admin data); VERITRAIL does not scan your
+network. Risk tiers are VERITRAIL readiness tiers, not legal classifications under any law.
 
 ## Commercials
 

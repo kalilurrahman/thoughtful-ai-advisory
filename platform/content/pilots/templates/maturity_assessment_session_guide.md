@@ -4,8 +4,8 @@ applies_to: [Pilot A, Pilot B, Governance Baseline]
 week: 3
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead
-source: content/assessment_templates/maturity_self_assessment.yaml (AEGIS-SA-MATURITY v1.0.0)
+owner: VERITRAIL Delivery Lead
+source: content/assessment_templates/maturity_self_assessment.yaml (VERITRAIL-SA-MATURITY v1.0.0)
 ---
 
 # Maturity assessment session guide
@@ -18,12 +18,12 @@ score adjusted for evidence reviewed — plus the evidence index that supports t
 
 | Step | Duration | Participants |
 |---|---|---|
-| A. Pre-read and individual self-assessment (web tool or AEGIS Agent guided assessment) | ~8–15 min each | 4–8 partner stakeholders across business, technology, risk, legal/privacy, security |
-| B. Facilitated calibration session | 90 min | Same group + AEGIS facilitator |
-| C. Evidence sampling | Rolling, Week 3 | Partner owners + AEGIS analyst |
-| D. Validated score and readout to pilot lead | 30 min | Partner pilot lead, AEGIS delivery lead |
+| A. Pre-read and individual self-assessment (web tool or VERITRAIL Agent guided assessment) | ~8–15 min each | 4–8 partner stakeholders across business, technology, risk, legal/privacy, security |
+| B. Facilitated calibration session | 90 min | Same group + VERITRAIL facilitator |
+| C. Evidence sampling | Rolling, Week 3 | Partner owners + VERITRAIL analyst |
+| D. Validated score and readout to pilot lead | 30 min | Partner pilot lead, VERITRAIL delivery lead |
 
-**Agent-assisted completion (M3):** invite each participant to complete step A through the AEGIS Agent guided assessment
+**Agent-assisted completion (M3):** invite each participant to complete step A through the VERITRAIL Agent guided assessment
 journey. Record per participant whether they started and completed it through the Agent and the elapsed time (logged
 in the pilot workspace audit log).
 

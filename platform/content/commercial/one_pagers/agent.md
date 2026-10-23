@@ -1,11 +1,11 @@
 ---
-title: "One-pager — AEGIS Agent"
+title: "One-pager — VERITRAIL Agent"
 audience: AI governance teams, risk analysts, product owners
 version: 1.0.0
 effective_date: 2026-10-21
 ---
 
-# AEGIS Agent — a governance copilot that cites its sources
+# VERITRAIL Agent — a governance copilot that cites its sources
 
 **Faster assessments, gap analysis and reports — with every recommendation tied to a control.**
 
@@ -18,7 +18,7 @@ answer compliance questions confidently and wrongly.
 
 | Journey | What happens | Guardrails |
 |---|---|---|
-| **Ask AEGIS** | Answers governance questions from the AEGIS control library, assessment template and your registered content | Cites control IDs; if nothing supports an answer it says: "No supporting evidence or framework source is available." |
+| **Ask VERITRAIL** | Answers governance questions from the VERITRAIL control library, assessment template and your registered content | Cites control IDs; if nothing supports an answer it says: "No supporting evidence or framework source is available." |
 | **Guided assessment** | Walks a user through the maturity self-assessment or a use-case assessment conversationally | Answers labelled User-asserted; pre-filled answers labelled Inferred |
 | **Gap analysis** | Turns answers and evidence into a gap register with severities and owners | Every gap cites controls and evidence status |
 | **Report generation** | Drafts maturity reports, executive summaries and evidence-pack covers | Standard disclaimer; prohibited-claim check; drafts only |
@@ -44,7 +44,7 @@ decline; attempt to change a risk tier and see a pending approval created instea
 
 ## Limitations
 
-The Agent's knowledge is bounded by the AEGIS library and the content you provide; it does not give legal advice, and
+The Agent's knowledge is bounded by the VERITRAIL library and the content you provide; it does not give legal advice, and
 its answers should be reviewed. Answer quality, citation accuracy and hallucination resistance are measured in pilots
 (feedback survey section C) and in the agent evaluation suite.
 

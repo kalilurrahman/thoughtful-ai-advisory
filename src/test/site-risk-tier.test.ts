@@ -10,7 +10,7 @@ interface RiskCase {
 
 const cases = (fixtures as { cases: RiskCase[] }).cases;
 
-describe("risk tier engine parity with aegis_assessment.risk_tier", () => {
+describe("risk tier engine parity with veritrail_assessment.risk_tier", () => {
   it("has fixtures", () => {
     expect(cases.length).toBeGreaterThanOrEqual(20);
   });

@@ -1,5 +1,5 @@
 /*
- * AEGIS Maturity Self-Assessment — interactive tool (route /tools/maturity-assessment).
+ * VERITRAIL Maturity Self-Assessment — interactive tool (route /tools/maturity-assessment).
  *
  * Port of platform/app/website/static/js/assessment-ui.js and
  * templates/partials/tool_assessment.html.
@@ -43,7 +43,7 @@ import {
   toMarkdown,
 } from "../engines/assessment-report";
 
-export const STORE_KEY = "aegis.assessment.v1";
+export const STORE_KEY = "veritrail.assessment.v1";
 
 /** Display labels for profile select options (builder.py PROFILE_OPTION_LABELS). */
 const PROFILE_OPTION_LABELS: Record<string, Record<string, string>> = {
@@ -236,7 +236,7 @@ export function DomainBars({
 function ControlRefs({ ids }: { ids: string[] }) {
   return (
     <span className="cite">
-      AEGIS controls:{" "}
+      VERITRAIL controls:{" "}
       {ids.map((id, i) => (
         <span key={id}>
           {i > 0 && ", "}
@@ -374,7 +374,7 @@ export function AssessmentReportView({
         </div>
       </Section>
 
-      <Section id="rpt-controls" title="Recommended AEGIS controls">
+      <Section id="rpt-controls" title="Recommended VERITRAIL controls">
         <div className="table-wrap" role="region" tabIndex={0} aria-label="Recommended controls">
           <table>
             <thead>
@@ -407,8 +407,8 @@ export function AssessmentReportView({
           </table>
         </div>
         <p className="small">
-          Framework mappings are indicative AEGIS interpretations, not legal advice or an official
-          crosswalk.
+          Framework mappings are indicative VERITRAIL interpretations, not legal advice or an
+          official crosswalk.
         </p>
       </Section>
 
@@ -452,11 +452,11 @@ export function AssessmentReportView({
         ))}
       </Section>
 
-      <Section id="rpt-modules" title="Recommended AEGIS modules">
+      <Section id="rpt-modules" title="Recommended VERITRAIL modules">
         <ul>
           {result.recommended_modules.map((m) => (
             <li key={m.module}>
-              <strong>AEGIS {m.module}</strong> — {m.reason}
+              <strong>VERITRAIL {m.module}</strong> — {m.reason}
             </li>
           ))}
         </ul>
@@ -680,8 +680,8 @@ const FALLBACK_TAIL =
 function fallbackMessage(reason: "unavailable" | "error"): string {
   return (
     (reason === "unavailable"
-      ? "We could not reach the AEGIS service, so your details were not saved and this report has not been emailed to you. "
-      : "The AEGIS service returned an error, so your details may not have been saved and this report has not been emailed to you. ") +
+      ? "We could not reach the VERITRAIL service, so your details were not saved and this report has not been emailed to you. "
+      : "The VERITRAIL service returned an error, so your details may not have been saved and this report has not been emailed to you. ") +
     FALLBACK_TAIL
   );
 }
@@ -1045,12 +1045,12 @@ export function MaturityAssessmentTool() {
             <h3 id="gate-title">Get your detailed report</h3>
             <p>
               Your detailed report includes strengths, gaps, critical risk flags, a 30/60/90-day
-              plan, recommended AEGIS controls with framework mappings, and indicative readiness
+              plan, recommended VERITRAIL controls with framework mappings, and indicative readiness
               indicators.
             </p>
             <form
               id="assessment-gate"
-              className="aegis-form"
+              className="veritrail-form"
               noValidate
               aria-labelledby="gate-title"
               onSubmit={(ev) => void onGateSubmit(ev)}
@@ -1156,8 +1156,8 @@ export function MaturityAssessmentTool() {
                   {...gateInvalid("gate-consent")}
                 />
                 <label htmlFor="gate-consent">
-                  I agree that AEGIS may store my details and my score summary to prepare my report.
-                  See our <SiteLink href={siteConfig.privacy_url}>privacy notice</SiteLink>.{" "}
+                  I agree that VERITRAIL may store my details and my score summary to prepare my
+                  report. See our <SiteLink href={siteConfig.privacy_url}>privacy notice</SiteLink>.{" "}
                   <span className="req">(required)</span>
                 </label>
                 <FieldErrorText id="gate-consent" error={errorFor(gateErrors, "gate-consent")} />

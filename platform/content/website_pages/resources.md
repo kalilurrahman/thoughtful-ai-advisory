@@ -2,7 +2,7 @@
 title: "AI governance resources — blueprint, templates, runbooks, articles"
 h1: "Resources"
 slug: /resources/
-description: "AEGIS resources for AI governance teams: the Enterprise Blueprint, assessment templates, policy packs, runbooks, articles, and planned whitepapers."
+description: "VERITRAIL resources for AI governance teams: the Enterprise Blueprint, assessment templates, policy packs, runbooks, articles, and planned whitepapers."
 section: resources
 nav_label: "All resources"
 nav_order: 10
@@ -19,13 +19,13 @@ Practical material for people who run AI governance programmes. We publish what 
 
 | Resource | What it is | Availability |
 |---|---|---|
-| [AEGIS Enterprise Blueprint](/resources/blueprint/) | The operating model, five pillars, control library overview, maturity model and phased rollout plan in one document | Available — business email required |
+| [VERITRAIL Enterprise Blueprint](/resources/blueprint/) | The operating model, five pillars, control library overview, maturity model and phased rollout plan in one document | Available — business email required |
 | [Assessment templates](/resources/assessment-templates/) | The maturity self-assessment and the use-case risk and control question bank | Self-assessment online now; editable templates on request |
 | [Policy packs](/resources/policy-packs/) | Governance policy templates and runtime guardrail policy packs | Draft runtime policies via the guardrail generator; packs coming soon |
-| [Runbook library](/resources/runbooks/) | Editable versions of the AEGIS implementation runbooks | Method published; editable versions coming soon |
+| [Runbook library](/resources/runbooks/) | Editable versions of the VERITRAIL implementation runbooks | Method published; editable versions coming soon |
 | [Whitepapers](/resources/whitepapers/) | Longer analyses of specific governance problems | Coming soon — subscribe to be notified |
 | [Blog](/resources/blog/) | Practical articles on AI governance, guardrails and evidence | Available |
-| [Case studies](/resources/case-studies/) | Outcomes from AEGIS engagements | Pilots in progress — no published results yet |
+| [Case studies](/resources/case-studies/) | Outcomes from VERITRAIL engagements | Pilots in progress — no published results yet |
 
 ## Latest articles
 
@@ -35,12 +35,12 @@ Practical material for people who run AI governance programmes. We publish what 
 
 ## Reference material on this site
 
-- [The AEGIS Framework](/framework/) and the [control library](/framework/controls/)
+- [The VERITRAIL Framework](/framework/) and the [control library](/framework/controls/)
 - [Maturity model](/framework/maturity-model/) and [assessment modules](/framework/assessment-modules/)
 - [Gap analysis method](/compliance/gap-analysis/)
 
 ## Stay informed
 
-Subscribe to the [AEGIS newsletter](/contact/newsletter/) for new articles, template releases and changes to the control library. No more than one or two emails a month, and you can unsubscribe at any time.
+Subscribe to the [VERITRAIL newsletter](/contact/newsletter/) for new articles, template releases and changes to the control library. No more than one or two emails a month, and you can unsubscribe at any time.
 
 {{cta:blueprint}}

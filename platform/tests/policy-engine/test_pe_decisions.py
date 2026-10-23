@@ -3,8 +3,8 @@ from __future__ import annotations
 
 import pytest
 
-from aegis_policy.constants import DECISIONS
-from aegis_policy.engine import PolicyEngine, PolicyValidationError
+from veritrail_policy.constants import DECISIONS
+from veritrail_policy.engine import PolicyEngine, PolicyValidationError
 from pe_helpers import APPROVER, IDENTITY, FakeClock, _base_policy, req
 
 

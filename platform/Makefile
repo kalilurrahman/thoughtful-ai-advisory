@@ -27,11 +27,11 @@ site:
 	$(PY) app/website/build.py
 
 serve: site
-	$(PY) -m aegis_api.server --port $(PORT)
+	$(PY) -m veritrail_api.server --port $(PORT)
 
 samples:
-	$(PY) -m aegis_agent.sample_run
-	$(PY) -m aegis_shield samples
+	$(PY) -m veritrail_agent.sample_run
+	$(PY) -m veritrail_shield samples
 	$(PY) scripts/generate_samples.py
 	$(PY) scripts/pilot_dry_run.py
 
@@ -39,7 +39,7 @@ check:
 	$(PY) scripts/check_content.py
 
 verify-audit:
-	$(PY) -m aegis_admin.cli audit verify
+	$(PY) -m veritrail_admin.cli audit verify
 
 package:
 	$(PY) scripts/package.py

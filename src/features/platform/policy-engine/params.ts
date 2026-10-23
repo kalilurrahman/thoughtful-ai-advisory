@@ -1,6 +1,6 @@
 /**
  * Tool-call parameter validation (least privilege at the argument level) — port of
- * platform/app/policy-engine/aegis_policy/params.py. Messages never echo parameter values.
+ * platform/app/policy-engine/veritrail_policy/params.py. Messages never echo parameter values.
  */
 import { cpLen, isPlainObject, pyNumStr, pyRepr, pyTruthy } from "../../site/engines/shield/py";
 import { PyTypeError, pyCompare, pyEq, pyFullmatch, pyIn } from "./pyre";

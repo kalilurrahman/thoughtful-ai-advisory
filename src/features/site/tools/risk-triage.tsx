@@ -16,7 +16,7 @@ const YES_NO_UNKNOWN = [
   ["no", "No"],
 ] as const;
 
-/** RISK_TRIAGE_FIELDS from platform/app/website/aegis_website/tools.py. */
+/** RISK_TRIAGE_FIELDS from platform/app/website/veritrail_website/tools.py. */
 const RISK_TRIAGE_FIELDS: readonly ToolFieldDef[] = [
   {
     name: "name",
@@ -331,7 +331,7 @@ function RiskResult({ d }: { d: RiskTierResult }) {
       )}
       <h3>Rationale</h3>
       <p>{d.rationale}</p>
-      <CitedControls ids={d.citation_ids} prefix="AEGIS controls cited: " />
+      <CitedControls ids={d.citation_ids} prefix="VERITRAIL controls cited: " />
       {d.method && (
         <p className="small">
           Method: {d.method}. EU AI Act category screens are indicative triggers for legal review,

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { PLAYBOOK_CHAPTERS } from "@/data/playbook";
 import { Chip, Kicker } from "./screens-core";
 
-const progressKey = "aegis-playbook-progress-v1";
+const progressKey = "veritrail-playbook-progress-v1";
 
 export function PlaybookScreen() {
   const hash = useLocation({ select: (location) => location.hash });
@@ -93,11 +93,11 @@ export function PlaybookScreen() {
     const body = entries
       .map((chapter) => `## ${chapter.title}\n\n${notes[chapter.id]?.trim() ?? ""}`)
       .join("\n\n");
-    const markdown = `# AEGIS Playbook Notes\n\nReviewed chapters: ${completed.length} / ${PLAYBOOK_CHAPTERS.length}\n\n${body || "No chapter notes have been added yet."}\n`;
+    const markdown = `# VERITRAIL Playbook Notes\n\nReviewed chapters: ${completed.length} / ${PLAYBOOK_CHAPTERS.length}\n\n${body || "No chapter notes have been added yet."}\n`;
     const url = URL.createObjectURL(new Blob([markdown], { type: "text/markdown;charset=utf-8" }));
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = "aegis-playbook-notes.md";
+    anchor.download = "veritrail-playbook-notes.md";
     anchor.click();
     URL.revokeObjectURL(url);
   }
@@ -208,7 +208,7 @@ export function PlaybookScreen() {
                     </section>
                   ))}
                   <div className="playbook-tools">
-                    <Kicker>Continue in AEGIS</Kicker>
+                    <Kicker>Continue in VERITRAIL</Kicker>
                     {chapter.tools.map((tool) => (
                       <Button key={tool.href + tool.label} asChild variant="link">
                         <Link to={tool.href}>{tool.label} →</Link>

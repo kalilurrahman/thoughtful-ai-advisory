@@ -4,12 +4,12 @@ applies_to: [Pilot A, Pilot B, Governance Baseline]
 week: 5
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead
+owner: VERITRAIL Delivery Lead
 ---
 
 # Remediation roadmap — [Organization] — [date]
 
-> Prepared from the gap register dated [date]. All items cite AEGIS controls. Status labels follow the AEGIS evidence
+> Prepared from the gap register dated [date]. All items cite VERITRAIL controls. Status labels follow the VERITRAIL evidence
 > model. This roadmap supports governance readiness; it is not a compliance determination or legal advice.
 
 ## 1. Summary
@@ -19,7 +19,7 @@ owner: AEGIS Delivery Lead
 | Gaps in register | [n] (Critical [n] / High [n] / Medium [n] / Low [n]) |
 | Critical gaps (must close in 30 days) | [n] |
 | Systems in scope | [n] |
-| Recommended AEGIS modules | [from engine `recommended_modules`, e.g. Register, Control, Shield] |
+| Recommended VERITRAIL modules | [from engine `recommended_modules`, e.g. Register, Control, Shield] |
 
 ## 2. Horizons
 

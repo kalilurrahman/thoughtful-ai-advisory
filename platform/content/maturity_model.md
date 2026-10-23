@@ -1,23 +1,23 @@
 ---
-title: "AEGIS AI Governance Maturity Model"
+title: "VERITRAIL AI Governance Maturity Model"
 version: 1.0.0
 status: published
 effective_date: 2026-10-21
-owner: AEGIS Governance Content Lead
+owner: VERITRAIL Governance Content Lead
 review_cadence: quarterly
-source: content/assessment_templates/maturity_self_assessment.yaml (AEGIS-SA-MATURITY v1.0.0)
+source: content/assessment_templates/maturity_self_assessment.yaml (VERITRAIL-SA-MATURITY v1.0.0)
 ---
 
-# AEGIS AI Governance Maturity Model
+# VERITRAIL AI Governance Maturity Model
 
 > All self-assessment results are **User-asserted**: answers are self-reported and no evidence has been reviewed.
-> Results are readiness indicators only. AEGIS supports governance readiness, control implementation and evidence
+> Results are readiness indicators only. VERITRAIL supports governance readiness, control implementation and evidence
 > collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.
 > Framework mappings are indicative.
 
 ## 1. Purpose and authority
 
-This document explains the AEGIS maturity model in prose: what each level means in each domain, how scores are
+This document explains the VERITRAIL maturity model in prose: what each level means in each domain, how scores are
 calculated, and what evidence a validator would expect at each level. **The scoring rules themselves live only in
 `content/assessment_templates/maturity_self_assessment.yaml`** and are implemented identically by the Python engine
 (`app/assessment-engine`) and the browser engine (`app/website`), with parity enforced by an engine-parity
@@ -211,7 +211,7 @@ self-reported level against evidence. Typical expectations:
 | Managed | Records across all material systems: inventory export with owners and tiers, approval records, change tickets with reassessment, monitoring dashboards, runtime policy decision logs | Verified on sample testing |
 | Optimized | Metrics over time, automated evidence, management review minutes, independent review reports, corrective actions closed | Verified, with trend data |
 
-**Validation rules used in AEGIS engagements**
+**Validation rules used in VERITRAIL engagements**
 
 1. A finding is **Verified** only when a named reviewer has examined the evidence item; record evidence ID,
    reviewer and date.
@@ -223,7 +223,7 @@ self-reported level against evidence. Typical expectations:
 ## 7. Limitations
 
 - The self-assessment has three questions per domain; it is a screening instrument, not an audit.
-- Self-reported answers tend to be optimistic; validation typically adjusts some scores downward. AEGIS has not yet
+- Self-reported answers tend to be optimistic; validation typically adjusts some scores downward. VERITRAIL has not yet
   measured the size of this effect — pilots will collect it (see `content/pilots/`).
 - Framework readiness indicators are indicative groupings of questions, not official framework scoring.
-- Weights are AEGIS design choices to be reviewed after pilot feedback.
+- Weights are VERITRAIL design choices to be reviewed after pilot feedback.

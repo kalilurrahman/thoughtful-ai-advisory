@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import pytest
 
-from aegis_shield.integrations import Blocked, ShieldedLLM, ToolGuard
+from veritrail_shield.integrations import Blocked, ShieldedLLM, ToolGuard
 from pe_helpers import CTX, IDENTITY
 
 

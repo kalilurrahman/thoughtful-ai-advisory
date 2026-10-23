@@ -1,14 +1,14 @@
 ---
-title: "AEGIS ROI worked example (synthetic)"
+title: "VERITRAIL ROI worked example (synthetic)"
 status: illustrative
 effective_date: 2026-10-21
 generated_by: content/commercial/roi_calculator.py --example
 ---
 
-# AEGIS ROI worked example — synthetic organization
+# VERITRAIL ROI worked example — synthetic organization
 
 > **Synthetic data.** "Example Co" is fictional. No figure below is a customer result or a market statistic. Effect
-> sizes labelled *AEGIS hypothesis — validate in pilot* have not been measured. Pricing used here is itself a
+> sizes labelled *VERITRAIL hypothesis — validate in pilot* have not been measured. Pricing used here is itself a
 > hypothesis (see `pricing_models.md`).
 
 ## Scenario
@@ -17,7 +17,7 @@ Example Co is a regulated enterprise with **40 AI systems**, a manual assessment
 assessment, one assessment per system per year), **600 hours/year** of AI evidence preparation for audits and customer
 reviews, a **45-day** approval cycle and **12 new use cases** per year. Its governance team estimates that each day of
 approval delay costs **USD 500** per use case in deferred value, and that there is a **10%** annual chance of a
-material AI incident costing **USD 750,000**. The illustrative AEGIS proposal is **USD 75,000/year** plus a
+material AI incident costing **USD 750,000**. The illustrative VERITRAIL proposal is **USD 75,000/year** plus a
 **USD 30,000** Governance Baseline.
 
 Reproduce:
@@ -30,7 +30,7 @@ python3 content/commercial/roi_calculator.py --example --scenarios     # sensiti
 
 ## Result
 
-> Illustrative business case. Effect sizes labelled 'AEGIS hypothesis — validate in pilot' have not been measured with customers. Results are estimates, not guaranteed savings, and are not financial advice. Risk-reduction value is an expected-value estimate, not a prediction that incidents will or will not occur.
+> Illustrative business case. Effect sizes labelled 'VERITRAIL hypothesis — validate in pilot' have not been measured with customers. Results are estimates, not guaranteed savings, and are not financial advice. Risk-reduction value is an expected-value estimate, not a prediction that incidents will or will not occur.
 
 Currency: USD. All values per year unless stated.
 
@@ -67,9 +67,9 @@ Currency: USD. All values per year unless stated.
 | L12 | Gross modelled annual benefit | `L4 + L7 + L9 + L11` | 160,980 |
 | L13 | Year-1 realized benefit | `L12 × realization_rate` | 120,735 |
 | L14 | Governance hours freed per year (modelled) | `L3 + L6` | 684.0 h |
-| L15 | Year-1 cost | `aegis_annual_cost + implementation_cost` | 105,000 |
+| L15 | Year-1 cost | `veritrail_annual_cost + implementation_cost` | 105,000 |
 | L16 | Year-1 net benefit | `L13 − L15` | 15,735 |
-| L17 | Steady-state annual net benefit | `L12 − aegis_annual_cost` | 85,980 |
+| L17 | Steady-state annual net benefit | `L12 − veritrail_annual_cost` | 85,980 |
 
 ### Assumptions
 
@@ -85,13 +85,13 @@ Currency: USD. All values per year unless stated.
 | `delay_cost_per_day` | 500 | Customer estimate | Business value lost per use case per day of approval delay. Default 0 excludes this benefit. |
 | `annual_incident_probability` | 0.1 | Customer estimate | Probability of at least one material AI incident in a year. |
 | `expected_incident_cost` | 750000 | Customer estimate | Expected cost of a material AI incident (response, remediation, legal, customer impact). |
-| `aegis_annual_cost` | 75000 | Customer input | Annual AEGIS subscription from the commercial proposal (pricing is itself a hypothesis). |
+| `veritrail_annual_cost` | 75000 | Customer input | Annual VERITRAIL subscription from the commercial proposal (pricing is itself a hypothesis). |
 | `implementation_cost` | 30000 | Customer input | One-time cost, e.g. Governance Baseline fee and internal implementation effort. |
-| `assessment_effort_reduction` | 0.4 | AEGIS hypothesis — validate in pilot | Share of assessment effort removed by agent-assisted, pre-populated assessments. |
-| `audit_prep_reduction` | 0.5 | AEGIS hypothesis — validate in pilot | Share of audit-preparation effort removed by continuous evidence capture and evidence packs. |
-| `approval_cycle_reduction` | 0.3 | AEGIS hypothesis — validate in pilot | Share of approval cycle time removed by triage, routing and complete submissions. |
-| `incident_likelihood_reduction` | 0.2 | AEGIS hypothesis — validate in pilot | Relative reduction in material-incident likelihood from runtime guardrails, testing and oversight. |
-| `realization_rate` | 0.75 | AEGIS hypothesis — validate in pilot | Share of modelled benefit realized in year 1, reflecting adoption ramp. |
+| `assessment_effort_reduction` | 0.4 | VERITRAIL hypothesis — validate in pilot | Share of assessment effort removed by agent-assisted, pre-populated assessments. |
+| `audit_prep_reduction` | 0.5 | VERITRAIL hypothesis — validate in pilot | Share of audit-preparation effort removed by continuous evidence capture and evidence packs. |
+| `approval_cycle_reduction` | 0.3 | VERITRAIL hypothesis — validate in pilot | Share of approval cycle time removed by triage, routing and complete submissions. |
+| `incident_likelihood_reduction` | 0.2 | VERITRAIL hypothesis — validate in pilot | Relative reduction in material-incident likelihood from runtime guardrails, testing and oversight. |
+| `realization_rate` | 0.75 | VERITRAIL hypothesis — validate in pilot | Share of modelled benefit realized in year 1, reflecting adoption ramp. |
 
 Hypotheses to validate in pilots: `assessment_effort_reduction`, `audit_prep_reduction`, `approval_cycle_reduction`, `incident_likelihood_reduction`, `realization_rate`
 
@@ -109,7 +109,7 @@ USD 79,980, a year-1 net of USD −45,015 and a steady-state net of USD 4,980. I
 
 1. At this scale, **efficiency savings alone roughly cover the subscription but not the first year**. The business
    case depends materially on faster approvals (time-to-value) and on risk reduction — both of which are customer
-   estimates multiplied by unvalidated AEGIS hypotheses.
+   estimates multiplied by unvalidated VERITRAIL hypotheses.
 2. The pilot scorecards therefore measure assessment time per system, evidence-pack assembly time and approval
    cycle time before and after (see `content/pilots/pilot_a/success_metrics_scorecard.md`). Replace the hypotheses
    with measured values before using this model in a proposal.
@@ -118,5 +118,5 @@ USD 79,980, a year-1 net of USD −45,015 and a steady-state net of USD 4,980. I
 ## How to use in a sales conversation
 
 - Fill the *Customer input* lines with the prospect during discovery; let them set the *Customer estimate* lines.
-- Keep AEGIS hypotheses at defaults or lower; never raise them above the optimistic scenario without pilot data.
+- Keep VERITRAIL hypotheses at defaults or lower; never raise them above the optimistic scenario without pilot data.
 - Attach the Markdown or CSV output to the proposal so the customer's finance team can audit every formula.

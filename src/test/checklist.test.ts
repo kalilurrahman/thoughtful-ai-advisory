@@ -48,7 +48,7 @@ describe("workspace lifecycle checklist", () => {
           rationale: "Inferred; reviewer confirmation required.",
           citations: [],
           citation_ids: [],
-          method: "AEGIS risk-tier rules v1.0",
+          method: "VERITRAIL risk-tier rules v1.0",
         },
         assessedAt: "2026-10-23T00:00:00.000Z",
       },

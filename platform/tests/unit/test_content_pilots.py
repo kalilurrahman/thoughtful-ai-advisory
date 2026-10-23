@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from aegis_common.evidence import GAP_SEVERITIES, EvidenceStatus
+from veritrail_common.evidence import GAP_SEVERITIES, EvidenceStatus
 
 ROOT = Path(__file__).resolve().parents[2]
 PILOTS = ROOT / "content" / "pilots"
@@ -77,7 +77,7 @@ def test_scorecards_have_core_metrics_with_method_and_source_and_no_results(pilo
 
 
 def test_intake_template_matches_risk_tier_engine():
-    rt = pytest.importorskip("aegis_assessment.risk_tier")
+    rt = pytest.importorskip("veritrail_assessment.risk_tier")
     rows = _csv(PILOTS / "templates" / "ai_inventory_intake_template.csv")
     header = set(rows[0].keys())
     assert set(rt.INTAKE_FIELDS) <= header, set(rt.INTAKE_FIELDS) - header

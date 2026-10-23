@@ -312,7 +312,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      save_aegis_workspace: {
+      save_veritrail_workspace: {
         Args: { p_name: string; p_org: string; p_sources: Json; p_state: Json }
         Returns: string
       }

@@ -1,5 +1,5 @@
 /**
- * Parity tests: the browser AEGIS Agent (all roles) against the Python reference.
+ * Parity tests: the browser VERITRAIL Agent (all roles) against the Python reference.
  *
  * Fixtures come from platform/scripts/export_agent_parity_fixtures.py, which drives the Python
  * agent through scripted multi-turn sessions (agent-evaluation cases, unit/security journeys and
@@ -18,9 +18,9 @@ import {
   answerQuestion,
   createAskSession,
   findProhibitedClaims,
-} from "@/features/site/engines/ask-aegis";
+} from "@/features/site/engines/ask-veritrail";
 import {
-  AegisAgent,
+  VeritrailAgent,
   TOOL_REGISTRY,
   deterministicRuntime,
   runSample,
@@ -64,7 +64,7 @@ const data = fixture as unknown as {
 
 /** Deliberate deviation: the browser points approvers to the approvals workflow, not the Python CLI. */
 const BROWSER_BYPASS_NEXT_ACTION =
-  "A named approver with the approver role must approve or reject the pending item in the AEGIS approvals workflow; it cannot be bypassed from this chat.";
+  "A named approver with the approver role must approve or reject the pending item in the VERITRAIL approvals workflow; it cannot be bypassed from this chat.";
 
 function normalisePython(v: unknown): unknown {
   if (typeof v === "string")
@@ -75,7 +75,7 @@ function normalisePython(v: unknown): unknown {
   return v;
 }
 
-function effects(agent: AegisAgent): Loose {
+function effects(agent: VeritrailAgent): Loose {
   const st = agent.store;
   return {
     approvals: st
@@ -99,10 +99,10 @@ function effects(agent: AegisAgent): Loose {
   };
 }
 
-function projectTool(agent: AegisAgent, name: string, res: Loose): Loose {
+function projectTool(agent: VeritrailAgent, name: string, res: Loose): Loose {
   const pick = (keys: string[]) => Object.fromEntries(keys.map((k) => [k, res[k] ?? null]));
   switch (name) {
-    case "search_aegis_knowledge":
+    case "search_veritrail_knowledge":
       return {
         band: res["band"],
         confidence: res["confidence"],
@@ -202,7 +202,7 @@ function projectTool(agent: AegisAgent, name: string, res: Loose): Loose {
   }
 }
 
-function exec(agent: AegisAgent, st: Loose & { op: string }): unknown {
+function exec(agent: VeritrailAgent, st: Loose & { op: string }): unknown {
   const user = st["user"] as UserInput;
   switch (st.op) {
     case "handle": {
@@ -271,12 +271,12 @@ function exec(agent: AegisAgent, st: Loose & { op: string }): unknown {
 }
 
 interface ReplayResult {
-  agent: AegisAgent;
+  agent: VeritrailAgent;
   steps: Array<{ out?: unknown; error?: { type: string; message: string } }>;
 }
 
 function replay(sc: Scenario): ReplayResult {
-  const agent = new AegisAgent({ runtime: deterministicRuntime() });
+  const agent = new VeritrailAgent({ runtime: deterministicRuntime() });
   const steps = sc.recorded.map((rec) => {
     try {
       return { out: JSON.parse(JSON.stringify(exec(agent, rec.step))) as unknown };
@@ -314,10 +314,10 @@ function checkScenario(sc: Scenario) {
 const evalScenarios = data.scenarios.filter((s) => s.group === "eval");
 const journeyScenarios = data.scenarios.filter((s) => s.group !== "eval");
 
-describe("AEGIS Agent tools and configuration", () => {
+describe("VERITRAIL Agent tools and configuration", () => {
   it("declares the 14 least-privilege tools with permission levels and minimum roles", () => {
     const expected: Record<string, [string, string]> = {
-      search_aegis_knowledge: ["read", "anonymous"],
+      search_veritrail_knowledge: ["read", "anonymous"],
       search_ai_inventory: ["read", "viewer"],
       create_ai_system_record: ["create_draft", "assessor"],
       start_assessment: ["create_draft", "assessor"],
@@ -341,7 +341,7 @@ describe("AEGIS Agent tools and configuration", () => {
   });
 });
 
-describe("AEGIS Agent parity — agent-evaluation cases (all roles, with setups)", () => {
+describe("VERITRAIL Agent parity — agent-evaluation cases (all roles, with setups)", () => {
   it("covers every eval case, including those the viewer suite skips", () => {
     expect(evalScenarios.length).toBeGreaterThanOrEqual(73);
     expect(evalScenarios.map((s) => s.id)).toEqual(
@@ -382,18 +382,18 @@ describe("AEGIS Agent parity — agent-evaluation cases (all roles, with setups)
   });
 });
 
-describe("AEGIS Agent parity — orchestrator, tools, reports, RBAC and approvals journeys", () => {
+describe("VERITRAIL Agent parity — orchestrator, tools, reports, RBAC and approvals journeys", () => {
   it.each(journeyScenarios.map((s) => [s.id, s] as const))("%s", (_id, sc) => {
     checkScenario(sc);
   });
 });
 
-describe("AEGIS Agent behaviour", () => {
+describe("VERITRAIL Agent behaviour", () => {
   const ASSESSOR = { id: "u-assessor", role: "assessor", name: "Asha Rao" };
   const APPROVER = { id: "u-approver", role: "approver", name: "Dana Lee" };
 
   it("refuses self-approval with the separation-of-duties message and audits the refusal", () => {
-    const agent = new AegisAgent({ runtime: deterministicRuntime() });
+    const agent = new VeritrailAgent({ runtime: deterministicRuntime() });
     agent.handle(
       "assess a use case: A customer-support agent called HelpBot that reads CRM data, drafts replies to customers and can issue refunds with supervisor approval, using GPT-4 via Azure OpenAI for EU customers.",
       "s",
@@ -411,7 +411,7 @@ describe("AEGIS Agent behaviour", () => {
     expect(agent.audit.verify().ok).toBe(true);
   });
 
-  it("keeps the viewer path identical to the public Ask AEGIS engine", () => {
+  it("keeps the viewer path identical to the public Ask VERITRAIL engine", () => {
     const prompts = [
       "What does IS-11 require?",
       "who should approve a high-risk AI system?",
@@ -425,7 +425,7 @@ describe("AEGIS Agent behaviour", () => {
       "What controls should we have before deploying an agent that can send emails?",
     ];
     for (const p of prompts) {
-      const agent = new AegisAgent({ runtime: deterministicRuntime() });
+      const agent = new VeritrailAgent({ runtime: deterministicRuntime() });
       const full = agent.handle(p, "v", { id: "public-demo", role: "viewer" });
       const site = answerQuestion(p, createAskSession());
       expect(full.message, p).toBe(site.message);
@@ -436,11 +436,11 @@ describe("AEGIS Agent behaviour", () => {
 
   it("persists to and restores from a snapshot without breaking the audit chain", async () => {
     const { restoreInto } = await import("@/features/platform/agent");
-    const agent = new AegisAgent({ runtime: deterministicRuntime() });
+    const agent = new VeritrailAgent({ runtime: deterministicRuntime() });
     agent.handle("What does IS-13 require?", "s", ASSESSOR);
     agent.callTool("create_ai_system_record", ASSESSOR, { profile: { name: "Demo" } });
     const snap = JSON.parse(JSON.stringify(agent.store.snapshot([...agent.audit.records])));
-    const copy = new AegisAgent({ runtime: deterministicRuntime({ tag: "b" }) });
+    const copy = new VeritrailAgent({ runtime: deterministicRuntime({ tag: "b" }) });
     restoreInto(copy, snap);
     expect(copy.store.list("systems")).toEqual(agent.store.list("systems"));
     expect(copy.audit.verify().ok).toBe(true);
@@ -463,8 +463,8 @@ describe("AEGIS Agent behaviour", () => {
   });
 
   it("anchors every tool in the registry to a callable implementation", () => {
-    const agent = new AegisAgent({ runtime: deterministicRuntime() });
-    expect(() => agent.callTool("search_aegis_knowledge", null, { query: "" })).toThrow(
+    const agent = new VeritrailAgent({ runtime: deterministicRuntime() });
+    expect(() => agent.callTool("search_veritrail_knowledge", null, { query: "" })).toThrow(
       "query is required",
     );
     expect(() => agent.callTool("nope" as ToolName, ASSESSOR, {} as never)).toThrow(

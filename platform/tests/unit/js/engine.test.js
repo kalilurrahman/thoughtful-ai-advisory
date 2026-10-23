@@ -13,7 +13,7 @@ const R = require(path.join(JS, 'assessment-report.js'));
 const T = require(path.join(JS, 'tools-common.js'));
 
 // Bundle exported by the Python test harness (written before node runs) or a minimal inline one.
-const BUNDLE_FILE = process.env.AEGIS_ASSESSMENT_BUNDLE;
+const BUNDLE_FILE = process.env.VERITRAIL_ASSESSMENT_BUNDLE;
 const bundle = BUNDLE_FILE && fs.existsSync(BUNDLE_FILE) ? JSON.parse(fs.readFileSync(BUNDLE_FILE, 'utf8')) : null;
 
 test('roundHalfUp1dp implements floor((20*num + den) / (2*den)) / 10', () => {

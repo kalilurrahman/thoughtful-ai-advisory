@@ -1,6 +1,6 @@
 """Export parity fixtures for the React port of the maturity self-assessment engine.
 
-Runs the Python REFERENCE engine (app/assessment-engine/aegis_assessment/engine.py) over a
+Runs the Python REFERENCE engine (app/assessment-engine/veritrail_assessment/engine.py) over a
 deterministic set of answer/profile cases and writes inputs + expected outputs to
 src/test/fixtures/assessment-parity.json, which src/test/site-assessment-engine.test.ts
 asserts against. Also records:
@@ -29,10 +29,10 @@ for d in sorted((PLATFORM / "app").iterdir()):
     if d.is_dir() and str(d) not in sys.path:
         sys.path.insert(0, str(d))
 
-from aegis_assessment.engine import AssessmentInputError, preliminary_result, score_assessment  # noqa: E402
-from aegis_common.content import load_assessment_template  # noqa: E402
-from aegis_website.builder import SiteBuilder  # noqa: E402
-from aegis_website.paths import FIXTURE_PAGES_DIR, STATIC_DIR  # noqa: E402
+from veritrail_assessment.engine import AssessmentInputError, preliminary_result, score_assessment  # noqa: E402
+from veritrail_common.content import load_assessment_template  # noqa: E402
+from veritrail_website.builder import SiteBuilder  # noqa: E402
+from veritrail_website.paths import FIXTURE_PAGES_DIR, STATIC_DIR  # noqa: E402
 
 OUT = REPO / "src" / "test" / "fixtures" / "assessment-parity.json"
 GENERATED = "2026-10-21"

@@ -1,8 +1,8 @@
 ---
-title: "AI governance for SaaS and product companies — AEGIS"
+title: "AI governance for SaaS and product companies — VERITRAIL"
 h1: "AI governance for SaaS and product companies"
 slug: /industries/saas-product/
-description: "AEGIS for SaaS and product companies shipping AI features and agents: provider documentation, transparency, runtime guardrails and evidence customers ask for."
+description: "VERITRAIL for SaaS and product companies shipping AI features and agents: provider documentation, transparency, runtime guardrails and evidence."
 section: industries
 nav_label: "SaaS & product"
 nav_order: 50
@@ -11,9 +11,9 @@ schema_type: WebPage
 primary_cta: guardrails
 secondary_cta: assessment
 faq:
-  - q: "Our enterprise customers send AI security questionnaires. Can AEGIS help?"
-    a: "Yes, as a source of structured, labelled evidence. The AEGIS Agent can draft answers from your AEGIS records with control citations, for your team to review. Sending responses externally requires human approval."
-  - q: "Will AEGIS slow down our release cadence?"
+  - q: "Our enterprise customers send AI security questionnaires. Can VERITRAIL help?"
+    a: "Yes, as a source of structured, labelled evidence. The VERITRAIL Agent can draft answers from your VERITRAIL records with control citations, for your team to review. Sending responses externally requires human approval."
+  - q: "Will VERITRAIL slow down our release cadence?"
     a: "It should not, if tiers are calibrated. Low-risk feature changes follow a light path; material changes to models, prompts or agent tools trigger reassessment proportionate to risk (GL-04)."
 updated: 2026-10-21
 ---
@@ -34,9 +34,9 @@ For SaaS and product companies, AI governance is a product-quality and customer-
 
 - **Provider responsibilities.** If you place an AI system on the EU market under your name, you may be its provider under the EU AI Act, with documentation, transparency and other obligations that depend on the system's classification. Your customers may be deployers with their own obligations and will expect information from you to meet them.
 - **Customer contracts and questionnaires** increasingly require statements about model providers, data use for training, sub-processors, testing and incident notification.
-- **Management-system standards.** Some customers ask about ISO/IEC 42001. AEGIS supports readiness work; certification is a separate decision by an accredited body.
+- **Management-system standards.** Some customers ask about ISO/IEC 42001. VERITRAIL supports readiness work; certification is a separate decision by an accredited body.
 
-## AEGIS emphasis
+## VERITRAIL emphasis
 
 - **Model and prompt registry (EI-05).** Versioned models and prompts so you can answer "what changed?" for any release.
 - **Transparency and documentation (IS-08, SE-11, GL-06).** Customer-facing AI documentation, instructions for use and in-product disclosure.

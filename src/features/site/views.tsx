@@ -12,7 +12,7 @@ import {
   maturityTemplate,
   pillars,
   siteConfig,
-  type AegisControl,
+  type VeritrailControl,
 } from "./content";
 import { FORMS, LeadForm, formSubmitLabel } from "./forms";
 import type { LeadForm as LeadFormKey } from "./leads.functions";
@@ -29,7 +29,7 @@ import { WorkspaceGateway } from "./workspace-gateway";
 const TOOL_META: Record<string, { anchor: string; jump: string }> = {
   "maturity-assessment": { anchor: "assessment", jump: "Start the assessment" },
   "guardrail-generator": { anchor: "guardrail-generator", jump: "Go to the tool" },
-  "ask-aegis": { anchor: "ask-aegis", jump: "Go to the tool" },
+  "ask-veritrail": { anchor: "ask-veritrail", jump: "Go to the tool" },
   "risk-triage": { anchor: "risk-triage", jump: "Go to the tool" },
 };
 
@@ -108,7 +108,7 @@ function HomeTemplate({ page }: { page: SitePage }) {
             )}
           </p>
           <p className="hero-note">
-            AEGIS supports readiness and evidence. It does not certify compliance.{" "}
+            VERITRAIL supports readiness and evidence. It does not certify compliance.{" "}
             <Link to="/workspace">Open the governance workspace</Link>.
           </p>
         </div>
@@ -233,14 +233,14 @@ export function ControlLibraryView() {
       <Breadcrumbs
         crumbs={breadcrumbsFor(CONTROL_LIBRARY_PATH, siteConfig.control_library.nav_label)}
       />
-      <PageHeader h1="AEGIS Control Library" />
+      <PageHeader h1="VERITRAIL Control Library" />
       <div className="container page-body">
         <div className="prose">
           <p>
-            The AEGIS Control Library v{controlLibrary.version} contains {controls.length} controls
-            across five pillars. Each control has an objective, an accountable owner role, examples
-            of the evidence that demonstrates it, and indicative mappings to NIST AI RMF, ISO/IEC
-            42001 and the EU AI Act.
+            The VERITRAIL Control Library v{controlLibrary.version} contains {controls.length}{" "}
+            controls across five pillars. Each control has an objective, an accountable owner role,
+            examples of the evidence that demonstrates it, and indicative mappings to NIST AI RMF,
+            ISO/IEC 42001 and the EU AI Act.
           </p>
         </div>
         <nav className="toc" aria-label="Pillars">
@@ -321,7 +321,7 @@ interface TemplateFlag {
   controls: string[];
 }
 
-export function ControlView({ control }: { control: AegisControl }) {
+export function ControlView({ control }: { control: VeritrailControl }) {
   const c = control;
   const pillar = getPillar(c.pillar);
   const idx = controls.findIndex((x) => x.id === c.id);
@@ -365,7 +365,7 @@ export function ControlView({ control }: { control: AegisControl }) {
             <dd>{c.owner_role}</dd>
             {c.modules && c.modules.length > 0 && (
               <>
-                <dt>AEGIS modules</dt>
+                <dt>VERITRAIL modules</dt>
                 <dd>{c.modules.join(", ")}</dd>
               </>
             )}
@@ -375,8 +375,8 @@ export function ControlView({ control }: { control: AegisControl }) {
           <h2 id="evidence">Evidence that demonstrates this control</h2>
           <p>
             Examples of records an assessor would expect to see. Until a named reviewer has examined
-            them, evidence is labelled <em>User-asserted</em> or <em>Missing evidence</em> in AEGIS
-            outputs, never <em>Verified</em>.
+            them, evidence is labelled <em>User-asserted</em> or <em>Missing evidence</em> in
+            VERITRAIL outputs, never <em>Verified</em>.
           </p>
           <ul>
             {(c.evidence ?? []).map((e) => (
@@ -465,7 +465,7 @@ export function SiteNotFound() {
           <h2>Popular destinations</h2>
           <ul>
             <li>
-              <Link to="/">AEGIS home</Link>
+              <Link to="/">VERITRAIL home</Link>
             </li>
             {["assessment", "baseline", "agent", "blueprint"].map((key) => {
               const cta = siteConfig.ctas[key];
@@ -476,7 +476,7 @@ export function SiteNotFound() {
               ) : null;
             })}
             <li>
-              <Link to={CONTROL_LIBRARY_PATH}>AEGIS Control Library</Link>
+              <Link to={CONTROL_LIBRARY_PATH}>VERITRAIL Control Library</Link>
             </li>
             <li>
               <Link to="/workspace">Governance workspace</Link>
@@ -521,7 +521,7 @@ export function siteHead(opts: {
     { property: "og:image", content: OG_IMAGE },
     {
       property: "og:image:alt",
-      content: "AEGIS — Govern every AI system, agent and decision with evidence",
+      content: "VERITRAIL — Govern every AI system, agent and decision with evidence",
     },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: opts.title },
@@ -553,13 +553,13 @@ export function controlHead(id: string) {
       noindex: true,
     });
   return siteHead({
-    title: `${c.id} ${c.title} — AEGIS control`,
-    description: `AEGIS control ${c.id} (${c.title}): ${c.objective}`.slice(0, 158),
+    title: `${c.id} ${c.title} — VERITRAIL control`,
+    description: `VERITRAIL control ${c.id} (${c.title}): ${c.objective}`.slice(0, 158),
   });
 }
 
 export const controlLibraryHead = () =>
   siteHead({
-    title: `AEGIS Control Library — ${controls.length} AI governance controls`,
-    description: `All ${controls.length} AEGIS AI governance controls by pillar, with objectives, owners, evidence and indicative NIST AI RMF, ISO/IEC 42001 and EU AI Act mappings.`,
+    title: `VERITRAIL Control Library — ${controls.length} AI governance controls`,
+    description: `All ${controls.length} VERITRAIL AI governance controls by pillar, with objectives, owners, evidence and indicative NIST AI RMF, ISO/IEC 42001 and EU AI Act mappings.`,
   });

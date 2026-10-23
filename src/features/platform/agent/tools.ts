@@ -1,6 +1,6 @@
 /**
- * AEGIS Agent tools (14) with declared permission levels, RBAC and audit logging
- * (aegis_agent/tools.py).
+ * VERITRAIL Agent tools (14) with declared permission levels, RBAC and audit logging
+ * (veritrail_agent/tools.py).
  *
  * Every tool runs through `invoke(ctx, name, args)`, which
  *   1. checks the caller's role against the tool's permission level and minimum role (least privilege),
@@ -14,7 +14,7 @@
  *     single-use approval resolved by a different user with an approver role.
  */
 import { NO_SOURCE_MESSAGE, controlCitation, getControl } from "@/features/site/content";
-import { getIndex, parseFrameworkRefs, controlsForFrameworkRef, searchKnowledge } from "@/features/site/engines/ask-aegis/knowledge";
+import { getIndex, parseFrameworkRefs, controlsForFrameworkRef, searchKnowledge } from "@/features/site/engines/ask-veritrail/knowledge";
 import {
   ANSWER_IDS,
   applicableGuardrails,
@@ -23,8 +23,8 @@ import {
   selectModules,
   templateMeta,
   type Profile,
-} from "@/features/site/engines/ask-aegis/question-bank";
-import { redact } from "@/features/site/engines/ask-aegis/safety";
+} from "@/features/site/engines/ask-veritrail/question-bank";
+import { redact } from "@/features/site/engines/ask-veritrail/safety";
 import { calculateRiskTier as riskEngine, type RiskTierResult } from "@/features/site/engines/risk-tier";
 import { advise, type AdviseResult } from "@/features/site/engines/shield";
 import * as approvalsSvc from "./approvals";
@@ -186,8 +186,8 @@ export interface ApprovalToolResult {
   message: string;
 }
 
-// --------------------------------------------------------------------------- 1 search_aegis_knowledge
-function searchAegisKnowledge(
+// --------------------------------------------------------------------------- 1 search_veritrail_knowledge
+function searchVeritrailKnowledge(
   _ctx: ToolContext,
   a: { query: string; k?: number; kinds?: string[] | null },
 ): KnowledgeToolResult {
@@ -297,7 +297,7 @@ function createAiSystemRecord(
 function calculateRiskTier(_ctx: ToolContext, a: { profile: Loose }): RiskToolResult {
   need(a.profile && typeof a.profile === "object", "profile must be an object");
   const res = riskEngine(a.profile);
-  return { ...res, engine: "aegis_assessment.risk_tier", evidence_status: "Inferred", requires_human_confirmation: true };
+  return { ...res, engine: "veritrail_assessment.risk_tier", evidence_status: "Inferred", requires_human_confirmation: true };
 }
 
 export function selectModulesFull(profile: Loose, tier: string | null, required: string[] = []): SelectedModuleFull[] {
@@ -508,7 +508,7 @@ function createRemediationTask(
       status: "open",
       created_by: ctx.user.id,
       confirmed_by: ctx.user.id,
-      source: "AEGIS Agent gap analysis",
+      source: "VERITRAIL Agent gap analysis",
     });
     created.push(t.id);
   }
@@ -565,7 +565,7 @@ function generateReport(
     gapResult: g,
     approvals: apprs,
     auditTrace: trace,
-    preparedBy: `${userDisplay(ctx.user)} via AEGIS Agent`,
+    preparedBy: `${userDisplay(ctx.user)} via VERITRAIL Agent`,
     generatedAt: ctx.store.runtime.utcnow(),
     synthetic: a.synthetic ?? false,
     reportId: rid,
@@ -646,7 +646,7 @@ const ENV_MAP: Record<string, string> = {
   production: "production",
 };
 
-/** Translate an agent intake profile into the AEGIS Shield advisor profile. */
+/** Translate an agent intake profile into the VERITRAIL Shield advisor profile. */
 export function shieldProfile(profile: Loose, tier: string | null = null): Loose {
   const p = profile ?? {};
   const tools = ((p["tools"] as unknown[] | undefined) ?? []).map((t) => {
@@ -697,7 +697,7 @@ function draftRuntimePolicy(
     return {
       status: "unavailable",
       guardrails: fallback,
-      message: `AEGIS Shield advisor failed (${exc instanceof Error ? exc.name : "Error"}); no policy drafted.`,
+      message: `VERITRAIL Shield advisor failed (${exc instanceof Error ? exc.name : "Error"}); no policy drafted.`,
     };
   }
   const policy = (advice.policy ?? null) as unknown as Loose | null;
@@ -721,7 +721,7 @@ function draftRuntimePolicy(
     guardrails: fallback,
     advice,
     message:
-      "Draft runtime policy created by AEGIS Shield (status: draft, observe/monitor mode, not active). " +
+      "Draft runtime policy created by VERITRAIL Shield (status: draft, observe/monitor mode, not active). " +
       "Activating it in production requires human approval.",
   };
 }
@@ -825,7 +825,7 @@ function exportEvidencePack(
 
 // --------------------------------------------------------------------------- registry
 export interface ToolSignatures {
-  search_aegis_knowledge: [Parameters<typeof searchAegisKnowledge>[1], KnowledgeToolResult];
+  search_veritrail_knowledge: [Parameters<typeof searchVeritrailKnowledge>[1], KnowledgeToolResult];
   search_ai_inventory: [Parameters<typeof searchAiInventory>[1], ReturnType<typeof searchAiInventory>];
   create_ai_system_record: [
     Parameters<typeof createAiSystemRecord>[1],
@@ -876,7 +876,7 @@ function spec<N extends ToolName>(
 
 export const TOOL_REGISTRY: Record<ToolName, ToolSpec> = Object.fromEntries(
   [
-    spec("search_aegis_knowledge", READ, false, searchAegisKnowledge,
+    spec("search_veritrail_knowledge", READ, false, searchVeritrailKnowledge,
       "BM25 retrieval over controls, assessment templates, policy/industry packs and compliance mapping docs.", "anonymous"),
     spec("search_ai_inventory", READ, false, searchAiInventory, "Search AI system records.", "viewer"),
     spec("create_ai_system_record", CREATE_DRAFT, false, createAiSystemRecord,
@@ -890,7 +890,7 @@ export const TOOL_REGISTRY: Record<ToolName, ToolSpec> = Object.fromEntries(
     spec("identify_gaps", COMPUTE, false, identifyGaps,
       "Classify findings by evidence status and severity; owners and due dates.", "viewer"),
     spec("recommend_controls", COMPUTE, false, recommendControls,
-      "Recommend AEGIS controls from gaps or from a profile.", "anonymous"),
+      "Recommend VERITRAIL controls from gaps or from a profile.", "anonymous"),
     spec("create_remediation_task", WRITE_CONFIRM, false, createRemediationTask,
       "Create remediation tasks (requires explicit user confirmation).", "assessor"),
     spec("generate_report", CREATE_DRAFT, false, generateReport,
@@ -898,7 +898,7 @@ export const TOOL_REGISTRY: Record<ToolName, ToolSpec> = Object.fromEntries(
     spec("search_runtime_logs", READ, false, searchRuntimeLogs,
       "Search runtime guardrail decision logs (redacted).", "assessor"),
     spec("draft_runtime_policy", CREATE_DRAFT, false, draftRuntimePolicy,
-      "Draft a runtime guardrail policy (draft, observe mode, not active) via AEGIS Shield.", "assessor"),
+      "Draft a runtime guardrail policy (draft, observe mode, not active) via VERITRAIL Shield.", "assessor"),
     spec("request_human_approval", CREATE_DRAFT, false, requestHumanApproval,
       "Create a pending approval for a sensitive action (never self-executes).", "assessor"),
     spec("export_evidence_pack", APPROVAL_REQUIRED, true, exportEvidencePack,

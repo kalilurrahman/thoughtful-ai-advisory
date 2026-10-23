@@ -9,13 +9,13 @@ assumption,new_use_cases_per_year,new_use_cases_per_year,,12,,Customer input,New
 assumption,delay_cost_per_day,delay_cost_per_day,,500,,Customer estimate,Business value lost per use case per day of approval delay. Default 0 excludes this benefit.
 assumption,annual_incident_probability,annual_incident_probability,,0.1,,Customer estimate,Probability of at least one material AI incident in a year.
 assumption,expected_incident_cost,expected_incident_cost,,750000,,Customer estimate,"Expected cost of a material AI incident (response, remediation, legal, customer impact)."
-assumption,aegis_annual_cost,aegis_annual_cost,,75000,,Customer input,Annual AEGIS subscription from the commercial proposal (pricing is itself a hypothesis).
+assumption,veritrail_annual_cost,veritrail_annual_cost,,75000,,Customer input,Annual VERITRAIL subscription from the commercial proposal (pricing is itself a hypothesis).
 assumption,implementation_cost,implementation_cost,,30000,,Customer input,"One-time cost, e.g. Governance Baseline fee and internal implementation effort."
-assumption,assessment_effort_reduction,assessment_effort_reduction,,0.4,,AEGIS hypothesis — validate in pilot,"Share of assessment effort removed by agent-assisted, pre-populated assessments."
-assumption,audit_prep_reduction,audit_prep_reduction,,0.5,,AEGIS hypothesis — validate in pilot,Share of audit-preparation effort removed by continuous evidence capture and evidence packs.
-assumption,approval_cycle_reduction,approval_cycle_reduction,,0.3,,AEGIS hypothesis — validate in pilot,"Share of approval cycle time removed by triage, routing and complete submissions."
-assumption,incident_likelihood_reduction,incident_likelihood_reduction,,0.2,,AEGIS hypothesis — validate in pilot,"Relative reduction in material-incident likelihood from runtime guardrails, testing and oversight."
-assumption,realization_rate,realization_rate,,0.75,,AEGIS hypothesis — validate in pilot,"Share of modelled benefit realized in year 1, reflecting adoption ramp."
+assumption,assessment_effort_reduction,assessment_effort_reduction,,0.4,,VERITRAIL hypothesis — validate in pilot,"Share of assessment effort removed by agent-assisted, pre-populated assessments."
+assumption,audit_prep_reduction,audit_prep_reduction,,0.5,,VERITRAIL hypothesis — validate in pilot,Share of audit-preparation effort removed by continuous evidence capture and evidence packs.
+assumption,approval_cycle_reduction,approval_cycle_reduction,,0.3,,VERITRAIL hypothesis — validate in pilot,"Share of approval cycle time removed by triage, routing and complete submissions."
+assumption,incident_likelihood_reduction,incident_likelihood_reduction,,0.2,,VERITRAIL hypothesis — validate in pilot,"Relative reduction in material-incident likelihood from runtime guardrails, testing and oversight."
+assumption,realization_rate,realization_rate,,0.75,,VERITRAIL hypothesis — validate in pilot,"Share of modelled benefit realized in year 1, reflecting adoption ramp."
 calculation,L1,Assessment effort today (hours/yr),ai_systems × assessment_hours_per_system × assessments_per_system_per_year,960.0,hours,derived,"depends on: ai_systems, assessment_hours_per_system, assessments_per_system_per_year"
 calculation,L2,Assessment cost today,L1 × hourly_cost,91200.0,currency,derived,depends on: hourly_cost
 calculation,L3,Assessment hours saved,L1 × assessment_effort_reduction,384.0,hours,derived,depends on: assessment_effort_reduction
@@ -30,9 +30,9 @@ calculation,L11,Risk-reduction value (expected),L10 × incident_likelihood_reduc
 calculation,L12,Gross modelled annual benefit,L4 + L7 + L9 + L11,160980.0,currency,derived,derived
 calculation,L13,Year-1 realized benefit,L12 × realization_rate,120735.0,currency,derived,depends on: realization_rate
 calculation,L14,Governance hours freed per year (modelled),L3 + L6,684.0,hours,derived,derived
-calculation,L15,Year-1 cost,aegis_annual_cost + implementation_cost,105000.0,currency,derived,"depends on: aegis_annual_cost, implementation_cost"
+calculation,L15,Year-1 cost,veritrail_annual_cost + implementation_cost,105000.0,currency,derived,"depends on: veritrail_annual_cost, implementation_cost"
 calculation,L16,Year-1 net benefit,L13 − L15,15735.0,currency,derived,derived
-calculation,L17,Steady-state annual net benefit,L12 − aegis_annual_cost,85980.0,currency,derived,depends on: aegis_annual_cost
+calculation,L17,Steady-state annual net benefit,L12 − veritrail_annual_cost,85980.0,currency,derived,depends on: veritrail_annual_cost
 summary,gross_annual_benefit,gross_annual_benefit,,160980.0,,derived,
 summary,year1_realized_benefit,year1_realized_benefit,,120735.0,,derived,
 summary,year1_cost,year1_cost,,105000.0,,derived,

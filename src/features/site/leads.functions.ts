@@ -8,7 +8,7 @@ import { isFreeMailDomain } from "./content";
 // honeypot. Rows are written with the service role into an RLS-locked table.
 // After a successful insert, assessment leads are qualified (re-scored server-side and tagged
 // with the template's lead_rules, e.g. shield_candidate) and the lead is pushed to the CRM only
-// when AEGIS_CRM_* / AEGIS_HUBSPOT_* env vars are set (src/features/platform/integrations.server.ts).
+// when VERITRAIL_CRM_* / VERITRAIL_HUBSPOT_* env vars are set (src/features/platform/integrations.server.ts).
 // CRM failures never fail the lead.
 
 export const LEAD_FORMS = [

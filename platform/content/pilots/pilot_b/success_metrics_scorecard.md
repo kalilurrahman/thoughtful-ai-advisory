@@ -3,7 +3,7 @@ title: "Pilot B success-metrics scorecard"
 pilot: B
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead with AEGIS Shield Lead
+owner: VERITRAIL Delivery Lead with VERITRAIL Shield Lead
 status: Not started — no measurements recorded
 ---
 
@@ -12,16 +12,16 @@ status: Not started — no measurements recorded
 > **No results recorded.** The pilot has not started. Every "Result" cell stays empty until measured. Never estimate
 > or back-fill a result. Machine-readable version: [`success_metrics_scorecard.csv`](success_metrics_scorecard.csv).
 
-## Core metrics (from the AEGIS Blueprint)
+## Core metrics (from the VERITRAIL Blueprint)
 
 | ID | Metric | Target | Measurement method | Data source | When | Owner | Result | Met? |
 |---|---|---|---|---|---|---|---|---|
-| M1 | AI systems registered | ≥ 25 | Count Register records (LLM features, agents, internal AI tools, vendor AI) meeting the completeness definition and confirmed by owner | Register export + owner confirmation log | End W2; final W6 | AEGIS delivery lead | | |
-| M2 | High-risk systems assessed | 100% of confirmed High-tier systems in scope | (High-tier systems with completed, owner-reviewed GL-02 assessment) ÷ (confirmed High-tier systems in scope) | Register tier field + deep-dive records + tier approval records | End W4; final W6 | AEGIS delivery lead | | |
-| M3 | Agent-assisted assessment completion | ≥ 70% | Participants completing the self-assessment through the AEGIS Agent ÷ participants invited | Pilot workspace audit log | End W3 | AEGIS product lead | | |
-| M4 | Runtime policies drafted | ≥ 2 | Draft `aegis.policy/v1` policies for the reviewed agents that pass `validate_policy` with zero errors and were reviewed with the agent owner | Policy files + validation output + review record | End W4–W5 | AEGIS Shield lead | | |
-| M5 | Executive report accepted | Accepted | Sponsor written confirmation (accept / accept with changes / decline) | Sponsor sign-off record | W6 | AEGIS delivery lead | | |
-| M6 | Follow-on commercial discussion initiated | Yes | Proposal presented and dated next meeting with a budget holder agreed | CRM record + proposal | W6 | AEGIS commercial lead | | |
+| M1 | AI systems registered | ≥ 25 | Count Register records (LLM features, agents, internal AI tools, vendor AI) meeting the completeness definition and confirmed by owner | Register export + owner confirmation log | End W2; final W6 | VERITRAIL delivery lead | | |
+| M2 | High-risk systems assessed | 100% of confirmed High-tier systems in scope | (High-tier systems with completed, owner-reviewed GL-02 assessment) ÷ (confirmed High-tier systems in scope) | Register tier field + deep-dive records + tier approval records | End W4; final W6 | VERITRAIL delivery lead | | |
+| M3 | Agent-assisted assessment completion | ≥ 70% | Participants completing the self-assessment through the VERITRAIL Agent ÷ participants invited | Pilot workspace audit log | End W3 | VERITRAIL product lead | | |
+| M4 | Runtime policies drafted | ≥ 2 | Draft `veritrail.policy/v1` policies for the reviewed agents that pass `validate_policy` with zero errors and were reviewed with the agent owner | Policy files + validation output + review record | End W4–W5 | VERITRAIL Shield lead | | |
+| M5 | Executive report accepted | Accepted | Sponsor written confirmation (accept / accept with changes / decline) | Sponsor sign-off record | W6 | VERITRAIL delivery lead | | |
+| M6 | Follow-on commercial discussion initiated | Yes | Proposal presented and dated next meeting with a budget holder agreed | CRM record + proposal | W6 | VERITRAIL commercial lead | | |
 
 ## Pilot B supplementary signals (not pass/fail)
 
@@ -35,5 +35,5 @@ status: Not started — no measurements recorded
 
 ## Evidence labels for scorecard entries
 
-Results from partner statements are **User-asserted**; results from logs or documents reviewed by a named AEGIS
+Results from partner statements are **User-asserted**; results from logs or documents reviewed by a named VERITRAIL
 reviewer are **Verified**.

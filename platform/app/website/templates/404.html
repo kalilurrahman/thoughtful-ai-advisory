@@ -8,11 +8,11 @@
     {% endif %}
     <h2>Popular destinations</h2>
     <ul>
-      <li><a href="/">AEGIS home</a></li>
+      <li><a href="/">VERITRAIL home</a></li>
       {% for key in ['assessment', 'baseline', 'agent', 'blueprint'] %}
       <li><a href="{{ site.ctas[key].url }}">{{ site.ctas[key].label }}</a></li>
       {% endfor %}
-      <li><a href="{{ site.control_library.slug }}">AEGIS Control Library</a></li>
+      <li><a href="{{ site.control_library.slug }}">VERITRAIL Control Library</a></li>
     </ul>
   </div>
 </div>

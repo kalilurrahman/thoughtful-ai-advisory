@@ -64,6 +64,13 @@
       "when": 1792700000000,
       "tag": "0008_aegis_platform_admin_analytics",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1792736982889,
+      "tag": "0009_veritrail_rename_workspace_function",
+      "breakpoints": true
     }
   ]
 }

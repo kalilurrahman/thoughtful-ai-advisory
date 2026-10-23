@@ -180,7 +180,7 @@ export function reportFilename(pack: string, workspace: string, extension: strin
       .replace(/[^a-zA-Z0-9]+/g, "-")
       .replace(/^-|-$/g, "")
       .slice(0, 80);
-  return `AEGIS_${safe(pack)}_${safe(workspace)}.${extension}`;
+  return `VERITRAIL_${safe(pack)}_${safe(workspace)}.${extension}`;
 }
 
 export function maturityLabel(score: number) {

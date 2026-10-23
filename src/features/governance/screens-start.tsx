@@ -148,7 +148,7 @@ export function StartScreen() {
         <div>
           <Kicker>Your AI governance starting path</Kicker>
           <p>
-            Choose your role, programme stage and immediate goal. AEGIS will suggest a focused
+            Choose your role, programme stage and immediate goal. VERITRAIL will suggest a focused
             reading path and first actions.
           </p>
         </div>

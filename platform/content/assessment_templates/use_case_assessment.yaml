@@ -1,10 +1,10 @@
-# AEGIS AI Use-Case Assessment — question bank (owner: agent workstream)
+# VERITRAIL AI Use-Case Assessment — question bank (owner: agent workstream)
 # ---------------------------------------------------------------------------
-# Used by the AEGIS Agent guided assessment (app/agent/aegis_agent) to deep-dive a
+# Used by the VERITRAIL Agent guided assessment (app/agent/veritrail_agent) to deep-dive a
 # single AI system / use case after intake and risk tiering.
 #
 # Rules:
-#   * Every question cites AEGIS control IDs from content/controls/controls.yaml
+#   * Every question cites VERITRAIL control IDs from content/controls/controls.yaml
 #     (validated by tests/unit/test_agent_question_bank.py).
 #   * Every question lists the evidence an assessor expects to see. Answers are
 #     User-asserted until evidence is attached AND reviewed by a named reviewer.
@@ -20,19 +20,19 @@
 # A question may carry its own `applies_when` (same grammar) to narrow further.
 # ---------------------------------------------------------------------------
 template:
-  id: AEGIS-UC-ASSESS
+  id: VERITRAIL-UC-ASSESS
   name: AI Use-Case Risk & Control Assessment
   version: 1.0.0
   status: published
   effective_date: "2026-10-21"
-  owner: AEGIS Governance Content Lead
+  owner: VERITRAIL Governance Content Lead
   control_library_version: 1.0.0
   evidence_status: User-asserted
   disclaimer: >-
     This use-case assessment produces an indicative view of governance readiness for a
     single AI system. Self-reported answers are User-asserted; only evidence reviewed by
     a named reviewer is Verified. Risk tiers are Inferred and require human confirmation.
-    Framework mappings are indicative. AEGIS does not certify ISO/IEC 42001 conformity,
+    Framework mappings are indicative. VERITRAIL does not certify ISO/IEC 42001 conformity,
     guarantee EU AI Act compliance, or replace legal advice.
 
 answer_options:
@@ -52,7 +52,7 @@ severity_rules:
   # Not implemented on a question flagged critical_if_not_implemented at tier Medium or above.
   critical_override_min_tier: Medium
 
-# Intake fields gathered before tiering. Keys match aegis_assessment.risk_tier profile keys.
+# Intake fields gathered before tiering. Keys match veritrail_assessment.risk_tier profile keys.
 intake_fields:
   - {id: name,              required: true,  type: text,    prompt: "What is the name of the AI system or use case?"}
   - {id: purpose,           required: true,  type: text,    prompt: "Briefly describe its intended purpose and who uses it."}

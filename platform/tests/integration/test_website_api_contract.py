@@ -1,4 +1,4 @@
-"""Integration: the browser's API payloads against the real in-process API (aegis_api.server.AegisApp).
+"""Integration: the browser's API payloads against the real in-process API (veritrail_api.server.VeritrailApp).
 
 Ensures what site.js / assessment-ui.js / analytics.js send is accepted by the API, that the
 built site is served with the API's CSP, and that the responses contain what the browser renders.
@@ -10,10 +10,10 @@ import re
 
 import pytest
 
-from aegis_website.builder import SiteBuilder
-from aegis_website.paths import FIXTURE_PAGES_DIR
+from veritrail_website.builder import SiteBuilder
+from veritrail_website.paths import FIXTURE_PAGES_DIR
 
-server = pytest.importorskip("aegis_api.server")
+server = pytest.importorskip("veritrail_api.server")
 
 
 @pytest.fixture(scope="module")
@@ -25,8 +25,8 @@ def built(tmp_path_factory):
 
 @pytest.fixture()
 def app(built, tmp_path, monkeypatch):
-    monkeypatch.setenv("AEGIS_RATE_LIMIT", "1000")
-    return server.AegisApp(var_dir=tmp_path / "var", site_dir=built)
+    monkeypatch.setenv("VERITRAIL_RATE_LIMIT", "1000")
+    return server.VeritrailApp(var_dir=tmp_path / "var", site_dir=built)
 
 
 def post(app, path, body, ctype="application/json"):
@@ -36,7 +36,7 @@ def post(app, path, body, ctype="application/json"):
 
 
 def answers(v=2):
-    from aegis_common.content import load_assessment_template
+    from veritrail_common.content import load_assessment_template
     return {q["id"]: v for q in load_assessment_template()["questions"]}
 
 
@@ -53,7 +53,7 @@ def gate_payload(**over):
 
 def test_static_pages_served_from_dist(app):
     status, headers, body = app.handle("GET", "/tools/maturity-assessment/")
-    assert status == 200 and b'id="aegis-assessment-data"' in body
+    assert status == 200 and b'id="veritrail-assessment-data"' in body
     status, _, body = app.handle("GET", "/no/such/page/")
     assert status == 404 and b"Page not found" in body
     status, headers, _ = app.handle("GET", "/static/js/assessment-engine.js")
@@ -82,9 +82,9 @@ def test_free_mail_rejected_with_field_for_inline_error(app):
 
 def test_client_free_mail_list_matches_the_api(app, built):
     cfg_html = (built / "index.html").read_text()
-    cfg = json.loads(re.search(r'<script type="application/json" id="aegis-config">(.*?)</script>', cfg_html, re.S).group(1))
+    cfg = json.loads(re.search(r'<script type="application/json" id="veritrail-config">(.*?)</script>', cfg_html, re.S).group(1))
     assert len(cfg["free_mail_domains"]) >= 30
-    from aegis_api import integrations
+    from veritrail_api import integrations
     client = set(cfg["free_mail_domains"])
     accepted_by_server = sorted(d for d in client if integrations.is_business_email(f"x@{d}"))
     assert accepted_by_server == [], "client blocks domains the API would accept"

@@ -1,5 +1,5 @@
 /**
- * In-memory persistence for agent records — the browser replacement for aegis_agent/store.py
+ * In-memory persistence for agent records — the browser replacement for veritrail_agent/store.py
  * (one JSON file per record). Records are stored as JSON text, so every get/list returns a
  * fresh copy exactly like re-reading a file, and the whole store can be snapshotted to
  * localStorage (see persistence.ts). Single tenant, single browser: synthetic demo data only.

@@ -1,8 +1,8 @@
 /*
- * AEGIS Maturity Self-Assessment — browser scoring engine (pure TypeScript, no DOM).
+ * VERITRAIL Maturity Self-Assessment — browser scoring engine (pure TypeScript, no DOM).
  *
  * Port of platform/app/website/static/js/assessment-engine.js, which mirrors the Python
- * reference engine platform/app/assessment-engine/aegis_assessment/engine.py
+ * reference engine platform/app/assessment-engine/veritrail_assessment/engine.py
  * (score_assessment / preliminary_result) field-for-field. Parity is enforced by
  * src/test/site-assessment-engine.test.ts against fixtures exported from the Python engine
  * (platform/scripts/export_assessment_parity_fixtures.py). All score arithmetic uses integers

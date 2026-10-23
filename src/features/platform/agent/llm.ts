@@ -1,5 +1,5 @@
 /**
- * Optional LLM phrasing (aegis_agent/llm.py) — deterministic adapter only.
+ * Optional LLM phrasing (veritrail_agent/llm.py) — deterministic adapter only.
  *
  * The Python agent can pass a composed answer to an LLM provider for rephrasing and keeps the
  * output only if it passes citation and prohibited-claim validation. The browser build ships

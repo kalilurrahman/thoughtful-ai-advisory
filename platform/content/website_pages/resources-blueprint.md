@@ -1,8 +1,8 @@
 ---
-title: "Download the AEGIS Enterprise Blueprint for AI governance"
-h1: "The AEGIS Enterprise Blueprint"
+title: "Download the VERITRAIL Enterprise Blueprint for AI governance"
+h1: "The VERITRAIL Enterprise Blueprint"
 slug: /resources/blueprint/
-description: "The AEGIS Enterprise Blueprint: AI governance operating model, five pillars, 64-control library overview, maturity model and phased rollout plan."
+description: "The VERITRAIL Enterprise Blueprint: AI governance operating model, five pillars, 64-control library overview, maturity model and phased rollout plan."
 section: resources
 nav_label: "Enterprise Blueprint"
 nav_order: 20

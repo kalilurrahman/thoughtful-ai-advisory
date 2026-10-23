@@ -1,6 +1,6 @@
 /*
  * Synthetic sample reports — regenerates the samples of platform/scripts/generate_samples.py and
- * aegis_shield.samples in the browser with the TypeScript engines and offers Markdown, JSON,
+ * veritrail_shield.samples in the browser with the TypeScript engines and offers Markdown, JSON,
  * YAML and PDF downloads. Every sample is fictional and labelled "Synthetic example".
  */
 import { useMemo, useState } from "react";
@@ -51,7 +51,7 @@ export function SamplesGallery() {
       <h2 id="samples-title">Synthetic sample reports</h2>
       <p className="notice notice--warning">
         <strong>Synthetic examples.</strong> Fictional organizations and self-reported answers,
-        generated in your browser to demonstrate AEGIS outputs. They are not evidence about any
+        generated in your browser to demonstrate VERITRAIL outputs. They are not evidence about any
         real organization. PDFs are previews rendered with jsPDF and are not signed exports.
       </p>
       <form className="tool-form" noValidate onSubmit={(e) => e.preventDefault()}>

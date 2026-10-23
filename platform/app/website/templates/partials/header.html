@@ -1,8 +1,8 @@
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/" aria-label="AEGIS home">
+    <a class="brand" href="/" aria-label="VERITRAIL home">
       <svg class="brand-mark" width="28" height="32" viewBox="0 0 28 32" aria-hidden="true" focusable="false"><path d="M14 1 26 5.5v9.2c0 7.6-5 13.4-12 16.3C7 28.1 2 22.3 2 14.7V5.5L14 1Z" fill="currentColor"/><path class="brand-mark-check" d="m8.5 16.2 3.8 3.8 7.4-8" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="brand-name">AEGIS</span>
+      <span class="brand-name">VERITRAIL</span>
     </a>
     {% set cta_parts = site.header_cta.label.split(' Governance ') %}
     <a class="btn btn-primary header-cta" href="{{ site.header_cta.url }}" data-cta="header_baseline">{% if cta_parts | length == 2 %}{{ cta_parts[0] }}<span class="cta-optional">&nbsp;Governance</span>&nbsp;{{ cta_parts[1] }}{% else %}{{ site.header_cta.label }}{% endif %}</a>

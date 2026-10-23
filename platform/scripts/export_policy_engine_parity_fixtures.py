@@ -1,9 +1,9 @@
-"""Export parity fixtures for the browser (TypeScript) port of the AEGIS policy engine.
+"""Export parity fixtures for the browser (TypeScript) port of the VERITRAIL policy engine.
 
     python3 platform/scripts/export_policy_engine_parity_fixtures.py
 
-Runs the Python reference implementation (aegis_policy engine, detectors, params, versioning,
-loader and aegis_shield.render / integrations) over a deterministic set of cases and writes
+Runs the Python reference implementation (veritrail_policy engine, detectors, params, versioning,
+loader and veritrail_shield.render / integrations) over a deterministic set of cases and writes
 src/test/fixtures/policy-engine-parity.json, consumed by src/test/platform-policy-engine.test.ts.
 
 Determinism:
@@ -36,16 +36,16 @@ for d in sorted((PLATFORM / "app").iterdir()):
         sys.path.insert(0, str(d))
 sys.path.insert(0, str(PLATFORM / "tests" / "policy-engine"))
 
-import aegis_common.audit as audit_mod  # noqa: E402
-import aegis_policy.engine as engine_mod  # noqa: E402
-import aegis_policy.versioning as versioning_mod  # noqa: E402
-from aegis_common.audit import AuditLog  # noqa: E402
-from aegis_policy import detectors, params  # noqa: E402
-from aegis_policy.engine import PolicyEngine, PolicyValidationError, apply_mode  # noqa: E402
-from aegis_policy.loader import list_packs, load_pack  # noqa: E402
-from aegis_policy.schema import validate_policy  # noqa: E402
-from aegis_shield.integrations import decision_events  # noqa: E402
-from aegis_shield.render import render_advice_markdown  # noqa: E402
+import veritrail_common.audit as audit_mod  # noqa: E402
+import veritrail_policy.engine as engine_mod  # noqa: E402
+import veritrail_policy.versioning as versioning_mod  # noqa: E402
+from veritrail_common.audit import AuditLog  # noqa: E402
+from veritrail_policy import detectors, params  # noqa: E402
+from veritrail_policy.engine import PolicyEngine, PolicyValidationError, apply_mode  # noqa: E402
+from veritrail_policy.loader import list_packs, load_pack  # noqa: E402
+from veritrail_policy.schema import validate_policy  # noqa: E402
+from veritrail_shield.integrations import decision_events  # noqa: E402
+from veritrail_shield.render import render_advice_markdown  # noqa: E402
 from pe_helpers import APPROVER, CTX, IDENTITY, _base_policy  # noqa: E402
 
 OUT = REPO / "src" / "test" / "fixtures" / "policy-engine-parity.json"
@@ -99,7 +99,7 @@ class FakeClock:
         return self.t
 
 
-TMP = Path(tempfile.mkdtemp(prefix="aegis-pe-parity-"))
+TMP = Path(tempfile.mkdtemp(prefix="veritrail-pe-parity-"))
 _LOG_N = {"n": 0}
 
 
@@ -854,7 +854,7 @@ UNITS["fnmatch"] = [{"name": n, "pat": p, "result": __import__("fnmatch").fnmatc
                                           "test-\nagent", "", "p.refund"]]
 
 # versioning
-from aegis_policy.versioning import (  # noqa: E402
+from veritrail_policy.versioning import (  # noqa: E402
     add_approval, approvals_complete, bump_version, diff_policies, latest, new_version, summarize_diff,
     transition_status,
 )

@@ -14,7 +14,7 @@ Every artefact required for Pilot B, with Pilot B-specific tailoring. Shared tem
 |---|---|---|---|
 | 1 | Pilot plan | [`pilot_plan.md`](pilot_plan.md) | Agent governance, runtime guardrails, developer adoption, policy-as-code |
 | 2 | Success-metrics scorecard | [`success_metrics_scorecard.md`](success_metrics_scorecard.md) / [`.csv`](success_metrics_scorecard.csv) | Signals S4, S5, S9 |
-| 3 | Onboarding checklist | [`onboarding_checklist.md`](onboarding_checklist.md) | Runtime-safety gate (AEGIS never activates partner policy) |
+| 3 | Onboarding checklist | [`onboarding_checklist.md`](onboarding_checklist.md) | Runtime-safety gate (VERITRAIL never activates partner policy) |
 | 4 | Data-access & privacy safeguards | [`../templates/data_access_privacy_safeguards.md`](../templates/data_access_privacy_safeguards.md) | Tool manifests and config excerpts are redacted; no production prompts leave partner environment |
 | 5 | AI inventory workshop kit | [`../templates/inventory_workshop_kit.md`](../templates/inventory_workshop_kit.md) + [`intake CSV`](../templates/ai_inventory_intake_template.csv) | Engineering-led; feature-level LLM inventory; API-key and coding-assistant discovery prompts |
 | 6 | Maturity assessment session guide | [`../templates/maturity_assessment_session_guide.md`](../templates/maturity_assessment_session_guide.md) | 60-minute calibration focused on security, data, oversight |

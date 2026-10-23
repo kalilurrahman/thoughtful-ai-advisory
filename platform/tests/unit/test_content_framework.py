@@ -1,4 +1,4 @@
-"""Citation, claim and consistency checks for AEGIS framework content and all docs/GTM workstream files."""
+"""Citation, claim and consistency checks for VERITRAIL framework content and all docs/GTM workstream files."""
 from __future__ import annotations
 
 import re
@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from aegis_common.content import controls, controls_by_id, load_assessment_template
-from aegis_common.evidence import find_prohibited_claims
+from veritrail_common.content import controls, controls_by_id, load_assessment_template
+from veritrail_common.evidence import find_prohibited_claims
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTROL_RE = re.compile(r"\b(?:AO|EI|GL|IS|SE)-\d{2}\b")
@@ -15,7 +15,7 @@ TEXT_EXT = {".md", ".yaml", ".yml", ".csv", ".py"}
 
 
 def owned_files() -> list[Path]:
-    files = [ROOT / "content" / n for n in ("aegis_framework.md", "pillars.md", "maturity_model.md")]
+    files = [ROOT / "content" / n for n in ("veritrail_framework.md", "pillars.md", "maturity_model.md")]
     files += sorted((ROOT / "content" / "industry_packs").glob("*.yaml"))
     for d in ("commercial", "pilots"):
         files += sorted(p for p in (ROOT / "content" / d).rglob("*")
@@ -24,7 +24,7 @@ def owned_files() -> list[Path]:
         "PRODUCT_REQUIREMENTS", "COMPLIANCE_MAPPING", "WEBSITE_CONTENT_PLAN", "PILOT_PLAYBOOK", "GTM_PLAN",
         "ROADMAP", "RISK_REGISTER", "BACKLOG")]
     files += [ROOT / "docs" / "tools" / "gen_compliance_mapping.py",
-              ROOT / "output" / "AEGIS_Launch_and_Enhancement_Blueprint_v3.md"]
+              ROOT / "output" / "VERITRAIL_Launch_and_Enhancement_Blueprint_v3.md"]
     return files
 
 
@@ -79,7 +79,7 @@ def test_maturity_model_weights_and_levels_match_template():
 
 
 def test_maturity_worked_example_matches_engine():
-    engine = pytest.importorskip("aegis_assessment.engine")
+    engine = pytest.importorskip("veritrail_assessment.engine")
     answers = {"STR-Q1": 3, "STR-Q2": 2, "STR-Q3": 3, "INV-Q1": 2, "INV-Q2": 2, "INV-Q3": 3,
                "RSK-Q1": 3, "RSK-Q2": 2, "RSK-Q3": 2, "DAT-Q1": 3, "DAT-Q2": 4, "DAT-Q3": 2,
                "SEC-Q1": 3, "SEC-Q2": 2, "SEC-Q3": 3, "FST-Q1": 2, "FST-Q2": 3, "FST-Q3": 2,
@@ -97,7 +97,7 @@ def test_maturity_worked_example_matches_engine():
 
 
 def test_framework_doc_covers_layers_modules_and_limits():
-    text = (ROOT / "content" / "aegis_framework.md").read_text(encoding="utf-8")
+    text = (ROOT / "content" / "veritrail_framework.md").read_text(encoding="utf-8")
     for layer in ("AI System of Record", "Assessment & Risk Engine", "Policy & Control Library",
                   "Lifecycle Governance", "Runtime Shield", "Assurance & Evidence"):
         assert layer in text

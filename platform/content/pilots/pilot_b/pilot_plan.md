@@ -3,7 +3,7 @@ title: "Pilot B plan — AI-forward SaaS / GCC / enterprise with LLM apps and ag
 pilot: B
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead with AEGIS Shield Lead
+owner: VERITRAIL Delivery Lead with VERITRAIL Shield Lead
 status: Not started — awaiting design-partner recruitment
 ---
 
@@ -34,7 +34,7 @@ owner accountable for agent risk.
 2. **Runtime guardrails** — versioned runtime policy, redaction, approvals, limits, kill switch (IS-04, IS-12, IS-13,
    IS-15, IS-16).
 3. **Developer adoption** — policy files in the repository, schema validation in CI, Observe-mode decision logs (SE-08).
-4. **Policy-as-code** — `aegis.policy/v1` policies drafted, validated and staged through rollout modes.
+4. **Policy-as-code** — `veritrail.policy/v1` policies drafted, validated and staged through rollout modes.
 
 ## 4. Scope
 
@@ -59,7 +59,7 @@ owner accountable for agent risk.
 
 ## 6. Roles
 
-| AEGIS | Partner |
+| VERITRAIL | Partner |
 |---|---|
 | Delivery lead | Executive sponsor (CTO/CISO/VP Engineering) |
 | Shield lead (accountable for agent reviews and policies) | Platform/AI engineering lead |
@@ -76,6 +76,6 @@ Pilot B supplementary signals S4 (Observe-mode decision review) and S5 (develope
 
 - Weekly status with platform lead and governance contact; scorecard updated weekly.
 - Scope-change and stop rules as in Pilot A (§8 of `../pilot_a/pilot_plan.md`).
-- **Runtime safety rule:** AEGIS never activates or changes partner runtime policy. Any Observe-mode trial runs in a
+- **Runtime safety rule:** VERITRAIL never activates or changes partner runtime policy. Any Observe-mode trial runs in a
   non-production environment chosen and operated by the partner; moving beyond Observe requires the partner's named
   approver (IS-12, IS-13).

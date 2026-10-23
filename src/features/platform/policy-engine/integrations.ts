@@ -1,5 +1,5 @@
 /**
- * Integration helpers — port of platform/app/runtime-shield/aegis_shield/integrations.py:
+ * Integration helpers — port of platform/app/runtime-shield/veritrail_shield/integrations.py:
  *
  * - `ShieldedLLM` — SDK wrapper around any `(prompt) => string` model call;
  * - `ToolGuard` — agent-framework hook: every tool call is evaluated before execution and every
@@ -184,9 +184,9 @@ export interface IntegrationSnippet {
 /** The four integration patterns (docs/RUNTIME_SHIELD_DESIGN.md §7) as copyable snippets. */
 export function integrationSnippets(policyFile = "policy.yaml"): IntegrationSnippet[] {
   const load =
-    "from aegis_common.audit import AuditLog\n" +
-    "from aegis_policy.engine import PolicyEngine\n" +
-    "from aegis_policy.loader import load_policy\n\n" +
+    "from veritrail_common.audit import AuditLog\n" +
+    "from veritrail_policy.engine import PolicyEngine\n" +
+    "from veritrail_policy.loader import load_policy\n\n" +
     `engine = PolicyEngine(load_policy("${policyFile}"), AuditLog("var/audit/runtime_shield.jsonl"),\n` +
     '                      default_context={"agent_name": "my-agent", "environment": "staging"})\n';
   return [
@@ -198,7 +198,7 @@ export function integrationSnippets(policyFile = "policy.yaml"): IntegrationSnip
       language: "python",
       code:
         load +
-        "from aegis_shield.integrations import Blocked, ShieldedLLM\n\n" +
+        "from veritrail_shield.integrations import Blocked, ShieldedLLM\n\n" +
         "llm = ShieldedLLM(engine, call_model, identity=user_claims, session_id=session_id)\n" +
         "try:\n" +
         "    answer = llm(user_prompt)[\"text\"]\n" +
@@ -213,7 +213,7 @@ export function integrationSnippets(policyFile = "policy.yaml"): IntegrationSnip
       language: "python",
       code:
         load +
-        "from aegis_shield.integrations import ToolGuard\n\n" +
+        "from veritrail_shield.integrations import ToolGuard\n\n" +
         'guard = ToolGuard(engine, {"crm.lookup_order": lookup_order})\n' +
         'result = guard.call("crm.lookup_order", {"order_id": "ORD-123456"}, identity=user_claims,\n' +
         "                    session_id=session_id, approval_id=approval_id)\n" +
@@ -242,7 +242,7 @@ export function integrationSnippets(policyFile = "policy.yaml"): IntegrationSnip
       language: "python",
       code:
         load +
-        "import json\nfrom aegis_shield.integrations import decision_events\n\n" +
+        "import json\nfrom veritrail_shield.integrations import decision_events\n\n" +
         "for event in decision_events(engine):\n" +
         "    siem.send(json.dumps(event))\n",
     },

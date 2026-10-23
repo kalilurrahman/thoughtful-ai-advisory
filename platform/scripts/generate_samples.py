@@ -16,15 +16,15 @@ for d in sorted((ROOT / "app").iterdir()):
     if d.is_dir():
         sys.path.insert(0, str(d))
 
-from aegis_assessment.engine import score_assessment  # noqa: E402
-from aegis_assessment.risk_tier import calculate_risk_tier  # noqa: E402
-from aegis_reports.exporters import write_json, write_markdown  # noqa: E402
-from aegis_reports.maturity import render_maturity_markdown  # noqa: E402
-from aegis_reports.pdf import markdown_to_pdf  # noqa: E402
+from veritrail_assessment.engine import score_assessment  # noqa: E402
+from veritrail_assessment.risk_tier import calculate_risk_tier  # noqa: E402
+from veritrail_reports.exporters import write_json, write_markdown  # noqa: E402
+from veritrail_reports.maturity import render_maturity_markdown  # noqa: E402
+from veritrail_reports.pdf import markdown_to_pdf  # noqa: E402
 
 OUT = ROOT / "output" / "sample_reports"
 BANNER = ("> **Synthetic example.** Fictional organization and self-reported answers generated to demonstrate "
-          "AEGIS outputs. Not evidence about any real organization.\n\n")
+          "VERITRAIL outputs. Not evidence about any real organization.\n\n")
 
 PERSONAS = [
     {
@@ -100,11 +100,11 @@ def main() -> int:
         write_json({"synthetic": True, "profile": prof, "result": r}, rdir / f"{k}.json")
         print(f"risk tier: {k}: {r['tier']} ({r['score']})")
 
-    bp = ROOT / "output" / "AEGIS_Launch_and_Enhancement_Blueprint_v3.md"
+    bp = ROOT / "output" / "VERITRAIL_Launch_and_Enhancement_Blueprint_v3.md"
     if bp.exists():
-        markdown_to_pdf(bp.read_text(encoding="utf-8"), ROOT / "output" / "AEGIS_Enterprise_Blueprint.pdf",
-                        title="AEGIS Enterprise Blueprint v3.0")
-        print("blueprint pdf: output/AEGIS_Enterprise_Blueprint.pdf")
+        markdown_to_pdf(bp.read_text(encoding="utf-8"), ROOT / "output" / "VERITRAIL_Enterprise_Blueprint.pdf",
+                        title="VERITRAIL Enterprise Blueprint v3.0")
+        print("blueprint pdf: output/VERITRAIL_Enterprise_Blueprint.pdf")
     return 0
 
 

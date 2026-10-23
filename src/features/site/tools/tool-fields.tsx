@@ -2,7 +2,7 @@ import { Fragment, type ReactNode } from "react";
 import { NO_SOURCE_MESSAGE, getControl } from "../content";
 import { ControlLinks } from "../ui";
 
-/** Field definition for the interactive tools (mirrors platform/app/website/aegis_website/tools.py). */
+/** Field definition for the interactive tools (mirrors platform/app/website/veritrail_website/tools.py). */
 export interface ToolFieldDef {
   name: string;
   label: string;

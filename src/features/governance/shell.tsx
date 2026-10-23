@@ -25,14 +25,14 @@ import { useDarkTheme } from "@/lib/theme";
 import { useGovernance } from "./store";
 const tabs = [
   { to: "/workspace", name: "Home", icon: House },
-  { to: "/assess", name: "GOVERN", icon: ListChecks },
+  { to: "/assess", name: "TILLER", icon: ListChecks },
   { to: "/inventory", name: "Inventory", icon: Stack },
   { to: "/roadmap", name: "Roadmap", icon: Path },
   { to: "/more", name: "More", icon: DotsThreeCircle },
 ] as const;
 const titles: Record<string, string> = {
   "/workspace": "Governance overview",
-  "/assess": "GOVERN assessment",
+  "/assess": "TILLER assessment",
   "/inventory": "AI inventory",
   "/roadmap": "Roadmap",
   "/more": "More",
@@ -74,15 +74,15 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const [dark, toggleDark] = useDarkTheme();
   if (pathname === "/onboarding")
-    return <main className="aegis-app onboarding-app">{children}</main>;
+    return <main className="veritrail-app onboarding-app">{children}</main>;
   const active = tabs.find((t) => t.to === pathname)?.to ?? "/more";
   return (
-    <div className="aegis-app">
+    <div className="veritrail-app">
       <aside className="desktop-sidebar">
         <Link to="/workspace" className="sidebar-brand">
           <ShieldCheck weight="duotone" />
           <span>
-            AEGIS<small>Governance & assurance</small>
+            VERITRAIL<small>Governance & assurance</small>
           </span>
         </Link>
         <p className="kicker sidebar-label">Workspace</p>
@@ -100,8 +100,8 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
                   ? "Overview"
                   : t.name === "More"
                     ? "Workspace & account"
-                    : t.name === "GOVERN"
-                      ? "GOVERN assessment"
+                    : t.name === "TILLER"
+                      ? "TILLER assessment"
                       : t.name}
               </Link>
             </Button>
@@ -139,9 +139,9 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
           </Button>
         )}
         <Link to="/workspace" className="wordmark">
-          AEGIS
+          VERITRAIL
         </Link>
-        <Button asChild variant="ghost" size="icon" aria-label="AEGIS public website">
+        <Button asChild variant="ghost" size="icon" aria-label="VERITRAIL public website">
           <Link to="/">
             <House weight="duotone" />
           </Link>
@@ -163,7 +163,7 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
         </Button>
       </header>
       <main className={"app-content page-" + (pathname.slice(1) || "home")}>
-        <h1 className="screen-title">{titles[pathname] ?? "AEGIS"}</h1>
+        <h1 className="screen-title">{titles[pathname] ?? "VERITRAIL"}</h1>
         {children}
       </main>
       <nav className="bottom-nav" aria-label="Main navigation">

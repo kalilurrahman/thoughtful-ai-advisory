@@ -1,8 +1,8 @@
 ---
-title: "AEGIS solutions — Assess, Register, Control, Shield, Assurance, Agent"
+title: "VERITRAIL solutions — Assess, Register, Control, Shield, Assurance, Agent"
 h1: "One governance system, six modules"
 slug: /solutions/
-description: "AEGIS modules for AI governance: baseline assessment, AI inventory, lifecycle control, runtime guardrails for agents, assurance evidence and a copilot."
+description: "VERITRAIL modules for AI governance: baseline assessment, AI inventory, lifecycle control, runtime guardrails for agents, assurance evidence and a copilot."
 section: solutions
 nav_label: "All solutions"
 nav_order: 10
@@ -13,16 +13,16 @@ secondary_cta: demo
 updated: 2026-10-21
 ---
 
-AEGIS is built as six modules that share one control library, one inventory and one evidence store. You can start with the module that addresses your most pressing gap and add the rest as your programme matures — every module cites the same [64 controls](/framework/controls/) and writes to the same tamper-evident audit trail.
+VERITRAIL is built as six modules that share one control library, one inventory and one evidence store. You can start with the module that addresses your most pressing gap and add the rest as your programme matures — every module cites the same [64 controls](/framework/controls/) and writes to the same tamper-evident audit trail.
 
 | Module | Core message | Primary buyers | Key controls |
 |---|---|---|---|
-| [AEGIS Assess](/solutions/assess/) | Know where you stand, with evidence labels on every finding | Chief Risk Officer, AI Governance Lead, consultants | GL-02, EI-02, AO-04 |
-| [AEGIS Register](/solutions/register/) | One owned, classified system of record for every AI system and agent | CIO office, AI CoE, CISO | EI-01, EI-03, EI-07 |
-| [AEGIS Control](/solutions/control/) | Risk-proportionate gates from intake to retirement | AI CoE, Risk, Compliance | GL-01, GL-03, GL-04 |
-| [AEGIS Shield](/solutions/shield/) | Runtime guardrails for LLM apps and agents, with human approval for high-impact actions | CISO, Platform Engineering | IS-11, IS-12, IS-13 |
-| [AEGIS Assurance](/solutions/assurance/) | Control testing, incidents and audit-ready evidence packs | Second line, Internal Audit, Compliance | SE-01, SE-05, SE-08 |
-| [AEGIS Agent](/solutions/agent/) | A governance copilot that cites controls and labels evidence | AI Governance Lead, consultants, CoE | All pillars |
+| [VERITRAIL Assess](/solutions/assess/) | Know where you stand, with evidence labels on every finding | Chief Risk Officer, AI Governance Lead, consultants | GL-02, EI-02, AO-04 |
+| [VERITRAIL Register](/solutions/register/) | One owned, classified system of record for every AI system and agent | CIO office, AI CoE, CISO | EI-01, EI-03, EI-07 |
+| [VERITRAIL Control](/solutions/control/) | Risk-proportionate gates from intake to retirement | AI CoE, Risk, Compliance | GL-01, GL-03, GL-04 |
+| [VERITRAIL Shield](/solutions/shield/) | Runtime guardrails for LLM apps and agents, with human approval for high-impact actions | CISO, Platform Engineering | IS-11, IS-12, IS-13 |
+| [VERITRAIL Assurance](/solutions/assurance/) | Control testing, incidents and audit-ready evidence packs | Second line, Internal Audit, Compliance | SE-01, SE-05, SE-08 |
+| [VERITRAIL Agent](/solutions/agent/) | A governance copilot that cites controls and labels evidence | AI Governance Lead, consultants, CoE | All pillars |
 
 ## How the modules connect
 
@@ -43,13 +43,13 @@ AEGIS is built as six modules that share one control library, one inventory and 
 | "Approvals are inconsistent and slow" | Control | Assurance |
 | "Our team is stretched and needs leverage" | Agent | Assess |
 
-## How AEGIS is delivered
+## How VERITRAIL is delivered
 
-AEGIS combines software with an initial structured engagement. The [Governance Baseline](/contact/book-governance-baseline/) is the usual entry point: in 4–6 weeks it inventories up to 25 AI systems, validates your maturity assessment with evidence, deep-dives five priority systems, reviews two agents, and leaves you with a gap register, remediation roadmap, runtime policy drafts, executive report and 90-day plan.
+VERITRAIL combines software with an initial structured engagement. The [Governance Baseline](/contact/book-governance-baseline/) is the usual entry point: in 4–6 weeks it inventories up to 25 AI systems, validates your maturity assessment with evidence, deep-dives five priority systems, reviews two agents, and leaves you with a gap register, remediation roadmap, runtime policy drafts, executive report and 90-day plan.
 
 We are currently running a [design-partner programme](/contact/design-partner-programme/) with a small number of organizations to shape the product. We do not yet publish customer results; see [case studies](/resources/case-studies/) for why.
 
-## What AEGIS does not do
+## What VERITRAIL does not do
 
 - It does not certify your organization or systems against any standard or law.
 - It does not make legal determinations, such as whether a system is "high-risk" under the EU AI Act — it gives you the structured evidence your legal team needs to decide.
