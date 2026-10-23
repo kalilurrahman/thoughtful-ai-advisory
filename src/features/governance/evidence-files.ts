@@ -26,6 +26,18 @@ function reportLines(report: EvidenceReport) {
       (item) =>
         `${item.name} | ${item.tier} risk | ${item.status} | ${item.kind} | Owner: ${item.owner} | Vendor: ${item.vendor} | Data: ${item.data}`,
     ),
+    ...report.inventory.flatMap((item) =>
+      item.triageEvidenceStatus === "Not triaged"
+        ? []
+        : [
+            `Preliminary use-case triage | ${item.name} | Tier: ${item.triageTier} | Rule score: ${item.triageScore} (not a percentage) | Status: ${item.triageEvidenceStatus} | Assessed: ${item.triageAssessedAt}`,
+            `Intake profile: ${item.triageProfile}`,
+            `Rationale: ${item.triageRationale}`,
+            `Drivers: ${item.triageDrivers || "None quantified"} | Triggers: ${item.triageTriggers || "None"} | Missing facts: ${item.triageMissingFacts || "None"}`,
+            `Suggested modules: ${item.triageModules || "Not recorded"} | Authority: ${item.triageApprovalAuthority || "Not recorded"} | Review cadence: ${item.triageReviewCadenceMonths || "Not recorded"} months`,
+            `Method: ${item.triageMethod || "Not recorded"} | Citation IDs: ${item.triageCitations || "Not recorded"}`,
+          ],
+    ),
     "",
     "ROADMAP AND OWNERS",
     ...report.roadmap.map(
@@ -214,6 +226,20 @@ async function makeXlsx(report: EvidenceReport) {
       { header: "Owner", key: "owner", width: 24 },
       { header: "Vendor", key: "vendor", width: 26 },
       { header: "Data classification", key: "data", width: 24 },
+      { header: "Preliminary triage tier", key: "triageTier", width: 22 },
+      { header: "Triage score (not a percentage)", key: "triageScore", width: 26 },
+      { header: "Triage evidence status", key: "triageEvidenceStatus", width: 22 },
+      { header: "Triage profile", key: "triageProfile", width: 60 },
+      { header: "Triage rationale", key: "triageRationale", width: 70 },
+      { header: "Triage drivers", key: "triageDrivers", width: 55 },
+      { header: "Triage review triggers", key: "triageTriggers", width: 55 },
+      { header: "Triage missing facts", key: "triageMissingFacts", width: 45 },
+      { header: "Triage assessed at", key: "triageAssessedAt", width: 28 },
+      { header: "Suggested review modules", key: "triageModules", width: 48 },
+      { header: "Suggested approval authority", key: "triageApprovalAuthority", width: 42 },
+      { header: "Review cadence (months)", key: "triageReviewCadenceMonths", width: 24 },
+      { header: "Risk method", key: "triageMethod", width: 62 },
+      { header: "Source citation IDs", key: "triageCitations", width: 32 },
     ],
     report.inventory,
   );
@@ -432,7 +458,7 @@ async function makePptx(report: EvidenceReport) {
         .slice(i, i + 5)
         .map(
           (item) =>
-            `${item.name} | ${item.tier} | ${item.status} | ${item.kind} | Owner: ${item.owner} | Vendor: ${item.vendor} | Data: ${item.data}`,
+            `${item.name} | ${item.tier} | ${item.status} | ${item.kind} | Owner: ${item.owner} | Vendor: ${item.vendor} | Data: ${item.data} | Preliminary triage: ${item.triageTier} (score ${item.triageScore || "n/a"}; ${item.triageEvidenceStatus}) | ${item.triageRationale} | Modules: ${item.triageModules} | Authority: ${item.triageApprovalAuthority} | Citations: ${item.triageCitations}`,
         ),
     );
   }

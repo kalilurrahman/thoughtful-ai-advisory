@@ -115,6 +115,21 @@ export function buildLifecycleChecklist(state: GovernanceState): ChecklistPhase[
           } of ${systems.length} profiles complete`,
         },
         {
+          id: "use-case-risk-triage",
+          title: "Complete preliminary risk triage for every AI system",
+          detail:
+            "Record purpose, impact, affected people, data, autonomy, tools and review triggers. Inferred results require human confirmation.",
+          href: "/inventory",
+          action: "Review use-case triage",
+          status:
+            systems.length === 0
+              ? "not-applicable"
+              : systems.every((system) => Boolean(system.riskTriage))
+                ? "complete"
+                : "action",
+          progress: `${systems.filter((system) => Boolean(system.riskTriage)).length} of ${systems.length} systems triaged`,
+        },
+        {
           id: "disposition",
           title: "Record a governance disposition for each system",
           detail:
