@@ -98,7 +98,7 @@ export function buildEvidenceReport(
     assessment: CONTROLS.map((control) => {
       const answer = state.answers[control.id] ?? { s: control.s, e: control.e };
       return {
-        id: control.id,
+        id: control.code,
         pillar: PILLARS[control.p]?.name ?? "Unassigned",
         control: control.text,
         weight: control.w,

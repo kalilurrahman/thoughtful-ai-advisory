@@ -24,6 +24,7 @@ from pathlib import Path
 
 from veritrail_common.audit import AuditLog
 from veritrail_common.paths import VAR_DIR
+from veritrail_common.env import getenv
 
 APPROVER_ROLES = {"approver", "admin"}
 FUNNEL = ["page_view", "assessment_start", "assessment_preliminary", "assessment_gate_view",
@@ -31,7 +32,7 @@ FUNNEL = ["page_view", "assessment_start", "assessment_preliminary", "assessment
 
 
 def _var(args) -> Path:
-    return Path(args.var_dir or os.environ.get("VERITRAIL_VAR_DIR") or VAR_DIR)
+    return Path(args.var_dir or getenv("VERITRAIL_VAR_DIR") or VAR_DIR)
 
 
 def _jsonl(p: Path) -> list[dict]:

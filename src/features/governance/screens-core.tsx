@@ -360,7 +360,7 @@ export function AssessScreen() {
             className={"control-list-row " + (state.qi === i ? "active" : "")}
             onClick={() => dispatch({ type: "question", qi: i })}
           >
-            <span className="success">{x.id}</span>
+            <span className="success">{x.code}</span>
             <div>
               <span>{x.text}</span>
               <Chip
@@ -382,7 +382,7 @@ export function AssessScreen() {
       <Dialog open={drawer} onOpenChange={setDrawer}>
         <DialogContent className="veritrail-sheet">
           <Kicker>
-            {c.id} · {p.name} · {c.w} · Mandatory
+            {c.code} · {p.name} · {c.w} · Mandatory
           </Kicker>
           <DialogTitle>{c.text}</DialogTitle>
           <DialogDescription>{c.hint}</DialogDescription>
@@ -405,7 +405,7 @@ export function AssessScreen() {
             <Button
               variant="outline"
               onClick={() =>
-                patch({ attachment: c.id + "-evidence-2026-10.pdf", e: Math.max(a.e, 1) })
+                patch({ attachment: c.code + "-evidence-2026-10.pdf", e: Math.max(a.e, 1) })
               }
             >
               <Paperclip />
@@ -418,7 +418,7 @@ export function AssessScreen() {
             <Button
               variant="outline"
               onClick={() =>
-                patch({ attachment: c.id + "-test-result (demo)", e: Math.max(a.e, 1) })
+                patch({ attachment: c.code + "-test-result (demo)", e: Math.max(a.e, 1) })
               }
             >
               Link test
@@ -468,7 +468,10 @@ export function GatesScreen() {
       </div>
       <p className="muted">
         {state.systems.length} registered systems · Workspace assessment · {state.tier}-risk tier ·
-        Pillar floor {gateFloor(state.tier)} on E, R, N
+        Pillar floor {gateFloor(state.tier)} on{" "}
+        {PILLARS.slice(3)
+          .map((p) => p.name)
+          .join(", ")}
       </p>
       <section>
         {PILLARS.slice(3).map((p, i) => (
@@ -498,7 +501,7 @@ export function GatesScreen() {
               nav({ to: "/assess" });
             }}
           >
-            <span className="danger">{c.id}</span>
+            <span className="danger">{c.code}</span>
             <span>{c.text}</span>
             <CaretRight />
           </Button>

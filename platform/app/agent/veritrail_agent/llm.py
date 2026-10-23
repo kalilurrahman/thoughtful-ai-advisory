@@ -21,13 +21,13 @@ Tests and integrators may inject an adapter with `set_llm_adapter()`.
 from __future__ import annotations
 
 import json
-import os
 import urllib.request
 from typing import Protocol
 
 from veritrail_common.redaction import redact
 
 from .safety import detect_injection, output_problems
+from veritrail_common.env import getenv
 
 SYSTEM_INSTRUCTIONS = (
     "You rephrase governance answers for clarity. Rules: keep every VERITRAIL control ID and question ID exactly as "
@@ -93,18 +93,18 @@ def reset_llm_adapter() -> None:
 def get_llm_adapter() -> LLMAdapter | None:
     if _OVERRIDE["set"]:
         return _OVERRIDE["adapter"]
-    provider = (os.environ.get("VERITRAIL_LLM_PROVIDER") or "none").strip().lower()
-    key = os.environ.get("VERITRAIL_LLM_API_KEY", "")
-    timeout = float(os.environ.get("VERITRAIL_LLM_TIMEOUT", "15"))
+    provider = (getenv("VERITRAIL_LLM_PROVIDER") or "none").strip().lower()
+    key = getenv("VERITRAIL_LLM_API_KEY", "")
+    timeout = float(getenv("VERITRAIL_LLM_TIMEOUT", "15"))
     if provider in ("", "none", "off", "deterministic") or not key:
         return None
     if provider == "openai_compatible":
-        endpoint = os.environ.get("VERITRAIL_LLM_ENDPOINT", "")
+        endpoint = getenv("VERITRAIL_LLM_ENDPOINT", "")
         if not endpoint.startswith("https://"):
             return None  # refuse plaintext / unset endpoints
-        return OpenAICompatibleAdapter(endpoint, key, os.environ.get("VERITRAIL_LLM_MODEL", "gpt-4o-mini"), timeout)
+        return OpenAICompatibleAdapter(endpoint, key, getenv("VERITRAIL_LLM_MODEL", "gpt-4o-mini"), timeout)
     if provider == "anthropic":
-        return AnthropicAdapter(key, os.environ.get("VERITRAIL_LLM_MODEL", "claude-sonnet-4-5"), timeout)
+        return AnthropicAdapter(key, getenv("VERITRAIL_LLM_MODEL", "claude-sonnet-4-5"), timeout)
     return None
 
 

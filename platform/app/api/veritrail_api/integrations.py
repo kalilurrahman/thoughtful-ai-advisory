@@ -13,7 +13,6 @@ without an approval record is NOT sent; it is queued for human approval
 from __future__ import annotations
 
 import json
-import os
 import smtplib
 import urllib.request
 from datetime import datetime, timezone
@@ -23,6 +22,7 @@ from pathlib import Path
 import yaml
 
 from veritrail_common.paths import CONTENT_DIR
+from veritrail_common.env import getenv
 
 FREE_MAIL_DOMAINS = {
     "gmail.com", "googlemail.com", "yahoo.com", "yahoo.co.uk", "yahoo.co.in", "ymail.com", "hotmail.com",
@@ -96,11 +96,11 @@ class HubSpotFormsCRM(WebhookCRM):
 
 
 def get_crm(var_dir: Path):
-    backend = os.environ.get("VERITRAIL_CRM_BACKEND", "jsonl")
-    if backend == "webhook" and os.environ.get("VERITRAIL_CRM_WEBHOOK_URL"):
-        return WebhookCRM(os.environ["VERITRAIL_CRM_WEBHOOK_URL"])
-    if backend == "hubspot" and os.environ.get("VERITRAIL_HUBSPOT_PORTAL_ID") and os.environ.get("VERITRAIL_HUBSPOT_FORM_GUID"):
-        return HubSpotFormsCRM(os.environ["VERITRAIL_HUBSPOT_PORTAL_ID"], os.environ["VERITRAIL_HUBSPOT_FORM_GUID"])
+    backend = getenv("VERITRAIL_CRM_BACKEND", "jsonl")
+    if backend == "webhook" and getenv("VERITRAIL_CRM_WEBHOOK_URL"):
+        return WebhookCRM(getenv("VERITRAIL_CRM_WEBHOOK_URL"))
+    if backend == "hubspot" and getenv("VERITRAIL_HUBSPOT_PORTAL_ID") and getenv("VERITRAIL_HUBSPOT_FORM_GUID"):
+        return HubSpotFormsCRM(getenv("VERITRAIL_HUBSPOT_PORTAL_ID"), getenv("VERITRAIL_HUBSPOT_FORM_GUID"))
     return JsonlCRM(var_dir)
 
 
@@ -127,10 +127,10 @@ class SMTPMailer:
     name = "smtp"
 
     def __init__(self):
-        self.host = os.environ["VERITRAIL_SMTP_HOST"]
-        self.port = int(os.environ.get("VERITRAIL_SMTP_PORT", "587"))
-        self.user = os.environ.get("VERITRAIL_SMTP_USER")
-        self.password = os.environ.get("VERITRAIL_SMTP_PASSWORD")
+        self.host = getenv("VERITRAIL_SMTP_HOST")
+        self.port = int(getenv("VERITRAIL_SMTP_PORT", "587"))
+        self.user = getenv("VERITRAIL_SMTP_USER")
+        self.password = getenv("VERITRAIL_SMTP_PASSWORD")
 
     def send(self, msg: EmailMessage, msg_id: str) -> dict:
         try:
@@ -145,7 +145,7 @@ class SMTPMailer:
 
 
 def get_mailer(var_dir: Path):
-    if os.environ.get("VERITRAIL_MAIL_BACKEND") == "smtp" and os.environ.get("VERITRAIL_SMTP_HOST"):
+    if getenv("VERITRAIL_MAIL_BACKEND") == "smtp" and getenv("VERITRAIL_SMTP_HOST"):
         return SMTPMailer()
     return OutboxMailer(var_dir)
 
