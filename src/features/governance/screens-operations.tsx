@@ -13,10 +13,42 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { GR, PHASES, type Tier } from "@/data/governance";
-import { classify, requiredGuardrail } from "./model";
+import { calculateRiskTier, type RiskProfile } from "@/features/site/engines/risk-tier";
+import { requiredGuardrail } from "./model";
 import { useGovernance } from "./store";
 import { filterInventory, inventoryCsv } from "./inventory-export";
 import { Chip, Dot, Kicker } from "./screens-core";
+const triageSelects: [string, string, string][] = [
+  [
+    "decision_impact",
+    "Decision impact",
+    "none|No decisions about people;advisory|Advisory — human decides;material|Materially influences decisions;automated_decision|Automated decision",
+  ],
+  [
+    "affected_parties",
+    "Affected people",
+    "internal|Internal staff;customers|Customers;public|General public;vulnerable|Potentially vulnerable people",
+  ],
+  [
+    "data_sensitivity",
+    "Data sensitivity",
+    "public|Public;internal|Internal;confidential|Confidential;personal|Personal data;special_category|Special-category / highly sensitive",
+  ],
+  [
+    "autonomy",
+    "System autonomy",
+    "none|No autonomy — produces content only;suggests|Suggests actions;acts_with_approval|Acts after human approval;acts_autonomously|Acts autonomously",
+  ],
+  [
+    "domain_category",
+    "Use-case domain",
+    "customer_service|Customer service;internal_productivity|Internal productivity;healthcare|Healthcare;life_sciences|Pharma / life sciences;gcc_shared_services|GCC / shared services;financial_services|Financial services;public_sector|Public sector;credit|Credit / lending;employment|Employment / HR;insurance|Insurance;biometric|Biometrics;education|Education;critical_infrastructure|Critical infrastructure;essential_services|Essential services;law_enforcement|Law enforcement;migration|Migration / border control;justice|Justice;other|Other",
+  ],
+  ["external_actions", "External actions enabled?", "yes|Yes;no|No"],
+  ["eu_exposure", "EU exposure?", "yes|Yes;no|No"],
+  ["vendor_model", "Third-party model or vendor AI?", "yes|Yes;no|No"],
+  ["genai", "Generative AI / LLM?", "yes|Yes;no|No"],
+];
 export function InventoryScreen() {
   const { state, dispatch } = useGovernance();
   const [filter, setFilter] = useState("All"),
@@ -33,22 +65,18 @@ export function InventoryScreen() {
       "Minimal",
     ),
     [status, setStatus] = useState("Under review"),
-    [q, setQ] = useState([false, false, false, false]);
-  const tier = classify(q);
+    [riskProfile, setRiskProfile] = useState<RiskProfile>({});
+  const triage = calculateRiskTier({ ...riskProfile, name });
+  const tier = (
+    {
+      Low: "Minimal",
+      Medium: "Limited",
+      High: "High-risk",
+      "Prohibited-review": "Prohibited",
+    } as const
+  )[triage.tier];
+  const triageEnabled = editingIndex === null || Boolean(state.systems[editingIndex]?.riskTriage);
   const visibleSystems = filterInventory(state.systems, filter, statusFilter, search);
-  const questions = [
-    "Used in employment, credit, health, education, critical infrastructure or law enforcement?",
-    "Makes or materially influences decisions about individuals?",
-    "Interacts with people or generates synthetic content?",
-    "Social scoring, manipulation or real-time remote biometric identification?",
-  ];
-  const notes: Record<string, string> = {
-    Prohibited: "EU AI Act Art. 5 — do not deploy; escalate to legal.",
-    "High-risk":
-      "Annex III candidate — Art. 9–15 obligations apply; full GOVERN assessment and release gate required.",
-    Limited: "Art. 50 transparency duties apply; standard guardrail bundle.",
-    Minimal: "Minimal risk — acceptable-use policy and inventory entry suffice.",
-  };
   function openRegistration() {
     setEditingIndex(null);
     setName("");
@@ -56,7 +84,7 @@ export function InventoryScreen() {
     setKind("");
     setVendor("");
     setData("");
-    setQ([false, false, false, false]);
+    setRiskProfile({});
     setOpen(true);
   }
   function openEditor(system: (typeof state.systems)[number], index: number) {
@@ -66,6 +94,7 @@ export function InventoryScreen() {
     setKind(system.kind);
     setVendor(system.vendor);
     setData(system.data);
+    setRiskProfile(system.riskTriage?.profile ?? {});
     setEditedTier(system.tier as typeof editedTier);
     setStatus(system.status);
     setOpen(true);
@@ -117,7 +146,7 @@ export function InventoryScreen() {
         </Button>
         <Button onClick={openRegistration}>
           <Plus />
-          Register system
+          Register & triage
         </Button>
       </div>
       <div className="inventory-summary" aria-label="Inventory status summary">
@@ -192,6 +221,28 @@ export function InventoryScreen() {
               {s.status}
             </p>
             <p className="muted">{s.vendor}</p>
+            {s.riskTriage && (
+              <details className="decision-history">
+                <summary>
+                  Preliminary triage · {s.riskTriage.result.evidence_status} · score{" "}
+                  {s.riskTriage.result.score} (not a percentage)
+                </summary>
+                <p>{s.riskTriage.result.rationale}</p>
+                <p>
+                  Human confirmation required.{" "}
+                  {s.riskTriage.result.missing_fields.length
+                    ? `Missing facts: ${s.riskTriage.result.missing_fields.join(", ")}.`
+                    : "Intake facts are complete; reviewer confirmation is still required."}
+                </p>
+                <p>
+                  Drivers:{" "}
+                  {s.riskTriage.result.factors
+                    .filter((factor) => factor.points > 0)
+                    .map((factor) => `${factor.factor} (+${factor.points})`)
+                    .join(", ") || "No quantified drivers"}
+                </p>
+              </details>
+            )}
             <Button variant="ghost" size="sm" onClick={() => openEditor(s, index)}>
               <PencilSimple />
               Edit record
@@ -204,11 +255,11 @@ export function InventoryScreen() {
       )}
       <Button className="full-button" onClick={openRegistration}>
         <Plus />
-        Register & classify a system
+        Register and run structured risk triage
       </Button>
       <p className="footnote">
-        Screening informed by EU AI Act Art. 5–6 / Annex III. Final applicability requires legal
-        review.
+        Screening is a preliminary inference, not a legal classification or approval. New records
+        remain Under review until an accountable human confirms disposition.
       </p>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="aegis-sheet">
@@ -264,18 +315,25 @@ export function InventoryScreen() {
           </div>
           {editingIndex !== null && (
             <div className="registration-fields">
-              <label>
-                Review tier
-                <select
-                  value={editedTier}
-                  onChange={(event) => setEditedTier(event.target.value as typeof editedTier)}
-                >
-                  <option>High-risk</option>
-                  <option>Limited</option>
-                  <option>Minimal</option>
-                  <option>Prohibited</option>
-                </select>
-              </label>
+              {state.systems[editingIndex]?.riskTriage ? (
+                <p className="muted">
+                  Inferred tier comes from the saved structured triage. Re-run the intake after a
+                  material change.
+                </p>
+              ) : (
+                <label>
+                  Legacy display tier
+                  <select
+                    value={editedTier}
+                    onChange={(event) => setEditedTier(event.target.value as typeof editedTier)}
+                  >
+                    <option>High-risk</option>
+                    <option>Limited</option>
+                    <option>Minimal</option>
+                    <option>Prohibited</option>
+                  </select>
+                </label>
+              )}
               <label>
                 Governance status
                 <select value={status} onChange={(event) => setStatus(event.target.value)}>
@@ -287,43 +345,115 @@ export function InventoryScreen() {
               </label>
             </div>
           )}
-          {editingIndex === null &&
-            questions.map((text, i) => (
-              <label className="toggle-row classifier-question" key={text}>
-                <span>{text}</span>
-                <Switch
-                  checked={q[i] ?? false}
-                  onCheckedChange={(on) => setQ(q.map((x, j) => (j === i ? on : x)))}
+          {triageEnabled && (
+            <>
+              <label>
+                Intended purpose
+                <textarea
+                  value={String(riskProfile.purpose ?? "")}
+                  onChange={(event) =>
+                    setRiskProfile((previous) => ({ ...previous, purpose: event.target.value }))
+                  }
+                  placeholder="What does the system do, for whom, and in what context?"
                 />
               </label>
-            ))}
-          {editingIndex === null && (
-            <div className="screening-result">
-              <Kicker>Screening result</Kicker>
-              <h2>
-                <Chip tone={tier === "High-risk" || tier === "Prohibited" ? "danger" : "success"}>
-                  {tier}
-                </Chip>
-              </h2>
-              <p>{notes[tier]}</p>
-            </div>
+              <div className="registration-fields">
+                {triageSelects.map(([field, label, encodedOptions]) => (
+                  <label key={field}>
+                    {label}
+                    <select
+                      value={String(riskProfile[field] ?? "")}
+                      onChange={(event) =>
+                        setRiskProfile((previous) => ({
+                          ...previous,
+                          [field]: event.target.value || undefined,
+                        }))
+                      }
+                    >
+                      <option value="">Not sure / unanswered</option>
+                      {encodedOptions.split(";").map((entry) => {
+                        const [value, optionLabel] = entry.split("|");
+                        return value && optionLabel ? (
+                          <option key={value} value={value}>
+                            {optionLabel}
+                          </option>
+                        ) : null;
+                      })}
+                    </select>
+                  </label>
+                ))}
+                <label>
+                  Tools and permissions
+                  <input
+                    value={
+                      Array.isArray(riskProfile.tools)
+                        ? riskProfile.tools.join(", ")
+                        : String(riskProfile.tools ?? "")
+                    }
+                    onChange={(event) =>
+                      setRiskProfile((previous) => ({ ...previous, tools: event.target.value }))
+                    }
+                    placeholder="e.g. crm_read, send_email, issue_refund"
+                  />
+                </label>
+              </div>
+              <div className="screening-result">
+                <Kicker>Inferred screening result · human confirmation required</Kicker>
+                <h2>
+                  <Chip tone={tier === "High-risk" || tier === "Prohibited" ? "danger" : "success"}>
+                    {tier}
+                  </Chip>{" "}
+                  <small>Rule score {triage.score} (not a percentage)</small>
+                </h2>
+                <p>{triage.rationale}</p>
+                {triage.missing_fields.length > 0 && (
+                  <p>
+                    <strong>Missing facts:</strong> {triage.missing_fields.join(", ")}
+                  </p>
+                )}
+                {triage.triggers.length > 0 && (
+                  <p>
+                    <strong>Review triggers:</strong> {triage.triggers.join(" · ")}
+                  </p>
+                )}
+                <p>
+                  <strong>Suggested modules:</strong> {triage.required_modules.join(", ")}
+                </p>
+                <p>
+                  <strong>Suggested authority:</strong> {triage.approval_authority} ·{" "}
+                  <strong>Review cadence:</strong>{" "}
+                  {triage.review_cadence_months
+                    ? "Every " + triage.review_cadence_months + " months"
+                    : "Pause and escalate"}
+                </p>
+              </div>
+            </>
           )}
           <Button
             disabled={!name.trim()}
             onClick={() => {
               const system = {
                 name: name.trim(),
-                tier: editingIndex === null ? tier : editedTier,
+                tier: triageEnabled ? tier : editedTier,
                 kind: kind.trim() || "Registered system",
                 owner: owner.trim() || "Unassigned",
                 data: data.trim() || "Not specified",
-                status:
-                  editingIndex === null
-                    ? tier === "Prohibited"
-                      ? "Not approved"
-                      : "Under review"
-                    : status,
+                status: editingIndex === null ? "Under review" : status,
                 vendor: vendor.trim() || "Not specified",
+                ...(triageEnabled
+                  ? {
+                      riskTriage: {
+                        profile: Object.fromEntries(
+                          Object.entries({ ...riskProfile, name: name.trim() }).filter(
+                            (entry): entry is [string, string | boolean | string[]] =>
+                              entry[1] !== undefined,
+                          ),
+                        ),
+                        result: triage,
+                        assessedAt: new Date().toISOString(),
+                      },
+                    }
+                  : {}),
               };
               dispatch(
                 editingIndex === null

@@ -152,7 +152,8 @@ export interface RiskProfile {
   eu_exposure?: boolean | string;
   vendor_model?: boolean | string;
   genai?: boolean | string;
-  [key: string]: unknown;
+  /** Profiles are persisted in authenticated workspace snapshots; keep values JSON-safe. */
+  [key: string]: string | boolean | string[] | undefined;
 }
 
 export interface RiskFactor {

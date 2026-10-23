@@ -1,4 +1,5 @@
 <!-- LOVABLE:BEGIN -->
+
 > [!IMPORTANT]
 > This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
 > published git history — force pushing, or rebasing/amending/squashing commits
@@ -7,6 +8,7 @@
 >
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
+
 <!-- LOVABLE:END -->
 
 # AI Governance Advisory · AEGIS Platform & Landing Site
@@ -38,7 +40,7 @@ Experience AEGIS in action—exploring the public landing site, framework, 64-co
 
 https://github.com/user-attachments/assets/landing-demo.webm
 
-*(Note: Click on `./docs/assets/landing-demo.webm` to watch or download the recording locally)*
+_(Note: Click on `./docs/assets/landing-demo.webm` to watch or download the recording locally)_
 
 ---
 
@@ -48,18 +50,18 @@ AEGIS features a comprehensive public landing site with dedicated sections for f
 
 ### Landing Page & Governance Framework
 
-| Landing Site Home Page | Governance Framework Overview |
-| :---: | :---: |
+|                Landing Site Home Page                |               Governance Framework Overview                |
+| :--------------------------------------------------: | :--------------------------------------------------------: |
 | ![Landing Site Home](./docs/assets/landing-home.png) | ![Framework Overview](./docs/assets/landing-framework.png) |
 
 ### 64-Control Library & Interactive Tools
 
-| 64-Control Governance Library | In-Browser AI Maturity Assessment Engine |
-| :---: | :---: |
+|               64-Control Governance Library               |               In-Browser AI Maturity Assessment Engine                |
+| :-------------------------------------------------------: | :-------------------------------------------------------------------: |
 | ![64-Control Library](./docs/assets/landing-controls.png) | ![Maturity Assessment Tool](./docs/assets/landing-tools-maturity.png) |
 
-| Ask AEGIS AI Assistant & Knowledge Hub | Operational Governance Workspace Overview |
-| :---: | :---: |
+|            Ask AEGIS AI Assistant & Knowledge Hub            |          Operational Governance Workspace Overview           |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![Ask AEGIS Tool](./docs/assets/landing-tools-ask-aegis.png) | ![Governance Workspace](./docs/assets/landing-workspace.png) |
 
 ---
@@ -70,18 +72,18 @@ AEGIS features a responsive UI designed for desktop workstations, tablets, and m
 
 ### Desktop Workstation View
 
-| Overview & Maturity Index | Interactive Playbook Reader |
-| :---: | :---: |
+|                Overview & Maturity Index                |               Interactive Playbook Reader               |
+| :-----------------------------------------------------: | :-----------------------------------------------------: |
 | ![Desktop Overview](./docs/assets/desktop-overview.png) | ![Desktop Playbook](./docs/assets/desktop-playbook.png) |
 
-| AI Systems Inventory | Incident & Near-Miss Register |
-| :---: | :---: |
+|                   AI Systems Inventory                    |               Incident & Near-Miss Register               |
+| :-------------------------------------------------------: | :-------------------------------------------------------: |
 | ![Desktop Inventory](./docs/assets/desktop-inventory.png) | ![Desktop Incidents](./docs/assets/desktop-incidents.png) |
 
 ### Tablet & Mobile Responsive View
 
-| Tablet Viewport (768px) | Mobile Viewport (375px - Overview) | Mobile Viewport (375px - Playbook) |
-| :---: | :---: | :---: |
+|                Tablet Viewport (768px)                |          Mobile Viewport (375px - Overview)           |          Mobile Viewport (375px - Playbook)           |
+| :---------------------------------------------------: | :---------------------------------------------------: | :---------------------------------------------------: |
 | ![Tablet Overview](./docs/assets/tablet-overview.png) | ![Mobile Overview](./docs/assets/mobile-overview.png) | ![Mobile Playbook](./docs/assets/mobile-playbook.png) |
 
 ---
@@ -90,18 +92,19 @@ AEGIS features a responsive UI designed for desktop workstations, tablets, and m
 
 The repository ships the full **AEGIS public landing website** alongside the governance workspace, plus the AEGIS launch-build platform from which it was generated.
 
-| Area | Route(s) | Source File(s) / Engine |
-| :--- | :--- | :--- |
-| **Marketing Home** | `/` | `platform/content/website_pages/index.md` |
-| **Framework & Pillars** | `/framework`, `/framework/pillars/*`, `/framework/runbooks` | `platform/content/website_pages/framework-*.md` |
-| **64-Control Library** | `/framework/controls`, `/framework/controls/:id` | `platform/content/controls/controls.yaml` |
-| **Compliance Guides** | `/compliance`, `/compliance/eu-ai-act`, `/compliance/nist-ai-rmf`, `/compliance/iso-42001`, `/compliance/gap-analysis` | `platform/content/website_pages/compliance*.md` |
-| **Industry Solutions** | `/solutions`, `/industries/*` | `platform/content/website_pages/solutions.md`, `industries-*.md` |
-| **Interactive Tools Engine** | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/guardrail-generator`, `/tools/ask-aegis` | Client-side TypeScript ports in `src/features/site/engines/` |
-| **Lead Submissions** | `/contact`, `/contact/request-demo`, `/resources/blueprint` | `src/features/site/forms.tsx` → `submitLead` server function → `site_leads` table |
-| **Governance Workspace** | `/workspace`, `/workspace/*` | `src/features/governance/` |
+| Area                         | Route(s)                                                                                                               | Source File(s) / Engine                                                           |
+| :--------------------------- | :--------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------- |
+| **Marketing Home**           | `/`                                                                                                                    | `platform/content/website_pages/index.md`                                         |
+| **Framework & Pillars**      | `/framework`, `/framework/pillars/*`, `/framework/runbooks`                                                            | `platform/content/website_pages/framework-*.md`                                   |
+| **64-Control Library**       | `/framework/controls`, `/framework/controls/:id`                                                                       | `platform/content/controls/controls.yaml`                                         |
+| **Compliance Guides**        | `/compliance`, `/compliance/eu-ai-act`, `/compliance/nist-ai-rmf`, `/compliance/iso-42001`, `/compliance/gap-analysis` | `platform/content/website_pages/compliance*.md`                                   |
+| **Industry Solutions**       | `/solutions`, `/industries/*`                                                                                          | `platform/content/website_pages/solutions.md`, `industries-*.md`                  |
+| **Interactive Tools Engine** | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/guardrail-generator`, `/tools/ask-aegis`                   | Client-side TypeScript ports in `src/features/site/engines/`                      |
+| **Lead Submissions**         | `/contact`, `/contact/request-demo`, `/resources/blueprint`                                                            | `src/features/site/forms.tsx` → `submitLead` server function → `site_leads` table |
+| **Governance Workspace**     | `/workspace`, `/workspace/*`                                                                                           | `src/features/governance/`                                                        |
 
 ### Key Architectural Highlights
+
 - **Single Source of Truth**: Content pages are authored in Markdown with YAML front matter (`platform/content/...`) and bundled at build time. Supports custom shortcodes like `{{cta:key}}`, `{{disclaimer}}`, and `{{controls:ID,ID}}`.
 - **Zero-Latency In-Browser Engines**: Interactive tools run entirely on the client side, parity-tested against Python reference engine exported fixtures (`platform/scripts/export_*_parity_fixtures.py`).
 - **Secure Lead Capture**: Lead forms submit via server function (`submitLead`) directly to the Supabase PostgreSQL `site_leads` table protected by strict Row Level Security (RLS).
@@ -112,28 +115,35 @@ The repository ships the full **AEGIS public landing website** alongside the gov
 ## ⚙️ Key Features & Functional Modules
 
 ### 🏛️ 1. Public Landing Site & 64-Control Library
+
 - **Structured Framework**: Covers Mandate, Governance Pillars, Maturity Models, and Operational Runbooks.
 - **Interactive Control Catalog**: Search, filter, and inspect 64 granular governance controls mapped across NIST AI RMF, EU AI Act, and ISO/IEC 42001.
 
 ### ⚡ 2. Client-Side Interactive AI Governance Engines
+
 - **Maturity Assessment Tool**: Step-by-step evaluation generating maturity index scores and improvement roadmaps.
 - **Risk Triage Engine**: Automated classification of AI model use cases into Low, Medium, High, or Prohibited risk categories.
 - **Guardrail Generator**: Custom safety, privacy, and operational policy rules based on deployment parameters.
 - **Ask AEGIS Assistant**: In-browser knowledge search engine referencing curated governance frameworks and regulatory guidelines.
 
 ### 📖 3. Interactive 12-Chapter AI Governance Playbook
+
 - **Comprehensive Lifecycle Coverage**: 12 structured chapters covering Mandate, System Inventory, Risk Classification, Data Governance, Algorithmic Transparency, Human Oversight, Security & Safety, Vendor Due Diligence, Continuous Monitoring, Incident Response, Transparency Disclosures, and Continuous Improvement.
 - **Personalized Notes & Markdown Export**: Track chapter completion and export browser-persisted notes.
 
 ### 🛡️ 4. GOVERN Assessment & Maturity Index
+
 - **NIST AI RMF Alignment**: Evidence-aware controls mapped across `GOVERN`, `MAP`, `MEASURE`, and `MANAGE`.
 - **Maturity Scoring**: Real-time scoring (Initial, Developing, Established, Advanced) based on weightings and verified evidence attachments.
 
 ### 📋 5. AI System Inventory & Risk Classifier
+
 - **System Registration**: Manage internal and commercial AI models, services, and agentic pipelines.
-- **Risk Tiering & CSV Export**: Automated risk classification and spreadsheet-compatible export.
+- **Explainable Use-Case Triage**: Capture purpose, decision impact, affected people, data, autonomy, domain, tools, external actions, EU exposure, vendor and GenAI use; save the inferred result, rationale, missing facts and review triggers with each inventory record. New entries remain Under review pending human confirmation.
+- **Risk Tiering & CSV Export**: Spreadsheet-compatible inventory export includes the structured triage profile, evidence status, rule score, drivers and review triggers.
 
 ### 🚨 6. Incident & Near-Miss Register
+
 - **Lifecycle Tracking**: Log AI incidents and near-misses, link specific inventory systems, assign response owners, and record containment timeline.
 - **Multi-Tenant Security**: Persisted via organization-scoped Supabase Row Level Security (RLS).
 
@@ -141,22 +151,22 @@ The repository ships the full **AEGIS public landing website** alongside the gov
 
 ## 🛠️ Complete Tech Stack
 
-| Domain | Technology / Library | Description |
-| :--- | :--- | :--- |
-| **Framework & Runtime** | [React 19](https://react.dev/) | Modern UI component rendering with Server/Client capabilities |
-| **Language** | [TypeScript 5.8](https://www.typescriptlang.org/) | End-to-end type safety and contract definitions |
-| **Fullstack Framework** | [TanStack Start](https://tanstack.com/router) | SSR framework powered by TanStack Router and Nitro |
-| **Routing** | [TanStack Router](https://tanstack.com/router) | Type-safe file-based client and server routing |
-| **Build & Bundler** | [Vite 8](https://vitejs.dev/) / [Rolldown](https://rolldown.rs/) | Fast module bundling and HMR development server |
-| **Styling & Design** | [Tailwind CSS v4](https://tailwindcss.com/) | Utility-first CSS framework with custom design tokens |
-| **UI Components** | [Radix UI Primitives](https://www.radix-ui.com/) | Accessible UI primitives (Dialog, Dropdown, Tabs, Accordion) |
-| **Icons** | [Lucide React](https://lucide.dev/) & [Phosphor Icons](https://phosphoricons.com/) | Scalable icon sets for UI actions and navigation |
-| **Data Visualization** | [Recharts](https://recharts.org/) | Responsive SVG charting library for governance maturity scores |
-| **Form Management** | [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/) | Performant form state handling with runtime schema validation |
-| **Backend & Auth** | [Supabase](https://supabase.com/) & [@lovable.dev/cloud-auth-js](https://lovable.dev) | Authentication and PostgreSQL database with Row Level Security (RLS) |
-| **Database & ORM** | [PostgreSQL](https://www.postgresql.org/) & [Drizzle ORM](https://orm.drizzle.team/) | Relational database schema migrations and query builder |
-| **Testing** | [Vitest](https://vitest.dev/) & [Playwright](https://playwright.dev/) | Unit testing runner and browser automation for E2E verification |
-| **Code Quality** | [ESLint 9](https://eslint.org/) & [Prettier](https://prettier.io/) | Linting, formatting, and code style enforcement |
+| Domain                  | Technology / Library                                                                  | Description                                                          |
+| :---------------------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------------- |
+| **Framework & Runtime** | [React 19](https://react.dev/)                                                        | Modern UI component rendering with Server/Client capabilities        |
+| **Language**            | [TypeScript 5.8](https://www.typescriptlang.org/)                                     | End-to-end type safety and contract definitions                      |
+| **Fullstack Framework** | [TanStack Start](https://tanstack.com/router)                                         | SSR framework powered by TanStack Router and Nitro                   |
+| **Routing**             | [TanStack Router](https://tanstack.com/router)                                        | Type-safe file-based client and server routing                       |
+| **Build & Bundler**     | [Vite 8](https://vitejs.dev/) / [Rolldown](https://rolldown.rs/)                      | Fast module bundling and HMR development server                      |
+| **Styling & Design**    | [Tailwind CSS v4](https://tailwindcss.com/)                                           | Utility-first CSS framework with custom design tokens                |
+| **UI Components**       | [Radix UI Primitives](https://www.radix-ui.com/)                                      | Accessible UI primitives (Dialog, Dropdown, Tabs, Accordion)         |
+| **Icons**               | [Lucide React](https://lucide.dev/) & [Phosphor Icons](https://phosphoricons.com/)    | Scalable icon sets for UI actions and navigation                     |
+| **Data Visualization**  | [Recharts](https://recharts.org/)                                                     | Responsive SVG charting library for governance maturity scores       |
+| **Form Management**     | [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)             | Performant form state handling with runtime schema validation        |
+| **Backend & Auth**      | [Supabase](https://supabase.com/) & [@lovable.dev/cloud-auth-js](https://lovable.dev) | Authentication and PostgreSQL database with Row Level Security (RLS) |
+| **Database & ORM**      | [PostgreSQL](https://www.postgresql.org/) & [Drizzle ORM](https://orm.drizzle.team/)  | Relational database schema migrations and query builder              |
+| **Testing**             | [Vitest](https://vitest.dev/) & [Playwright](https://playwright.dev/)                 | Unit testing runner and browser automation for E2E verification      |
+| **Code Quality**        | [ESLint 9](https://eslint.org/) & [Prettier](https://prettier.io/)                    | Linting, formatting, and code style enforcement                      |
 
 ---
 
@@ -200,29 +210,35 @@ ai-governance-advisory/
 ## 🚀 Local Development Setup
 
 ### Prerequisites
+
 - **Node.js**: v20.0.0 or higher (v22 recommended)
 - **Package Manager**: `npm` (v10+) or `bun` (v1.2+)
 
 ### Installation & Run
 
 1. **Clone the repository**:
+
    ```sh
    git clone https://github.com/kalilurrahman/ai-governance-advisory.git
    cd ai-governance-advisory
    ```
 
 2. **Install dependencies**:
+
    ```sh
    bun install   # or npm install
    ```
 
 3. **Start the local development server**:
+
    ```sh
    bun run dev   # or npm run dev
    ```
+
    The application will be accessible at `http://localhost:8080/`.
 
 4. **Run Unit & Engine Tests**:
+
    ```sh
    bun x vitest run   # or npm run test
    ```
