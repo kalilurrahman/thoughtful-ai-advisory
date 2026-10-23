@@ -1,11 +1,11 @@
 """Agent configuration: paths, roles, permission levels and the user model."""
 from __future__ import annotations
 
-import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from veritrail_common.paths import CONTENT_DIR, REPO_ROOT, VAR_DIR
+from veritrail_common.env import getenv
 
 DEFAULT_DATA_DIR = VAR_DIR / "agent"
 USE_CASE_TEMPLATE_FILE = CONTENT_DIR / "assessment_templates" / "use_case_assessment.yaml"
@@ -22,7 +22,7 @@ CTA_SHIELD = {"label": "Generate runtime guardrails with VERITRAIL Shield", "url
 def data_dir_from_env(explicit: str | Path | None = None) -> Path:
     if explicit:
         return Path(explicit)
-    env = os.environ.get("VERITRAIL_AGENT_DATA_DIR")
+    env = getenv("VERITRAIL_AGENT_DATA_DIR")
     return Path(env) if env else DEFAULT_DATA_DIR
 
 

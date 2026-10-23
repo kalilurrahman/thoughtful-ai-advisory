@@ -1,16 +1,20 @@
 // Seed content supplied in the VERITRAIL handoff.
+// The six workspace pillars spell TILLER. `letter` is the display initial; it is not unique
+// (two L pillars), so controls carry a display `code` (T1, I1, L1 … L4, E1, R1) alongside a
+// stable `id` that persisted workspace snapshots key answers and roadmap items on.
 export const PILLARS = [
-  { letter: "G", name: "Governance & Accountability", nist: "Govern" },
-  { letter: "O", name: "Inventory & Oversight", nist: "Map" },
-  { letter: "V", name: "Value & Use-Case Control", nist: "Map" },
-  { letter: "E", name: "Ethics, Risk & Compliance", nist: "Measure" },
-  { letter: "R", name: "Reliability & Guardrails", nist: "Measure" },
-  { letter: "N", name: "Operations & Monitoring", nist: "Manage" },
+  { letter: "T", name: "Trust & Accountability", nist: "Govern" },
+  { letter: "I", name: "Inventory & Oversight", nist: "Map" },
+  { letter: "L", name: "Lifecycle & Use-Case Control", nist: "Map" },
+  { letter: "L", name: "Lawfulness, Ethics & Compliance", nist: "Measure" },
+  { letter: "E", name: "Engineering Reliability & Guardrails", nist: "Measure" },
+  { letter: "R", name: "Runtime Operations & Monitoring", nist: "Manage" },
 ];
 
 export const CONTROLS = [
   {
     id: "G1",
+    code: "T1",
     p: 0,
     w: "Critical",
     text: "Is there a named executive owner for AI risk with decision rights?",
@@ -27,6 +31,7 @@ export const CONTROLS = [
   },
   {
     id: "G2",
+    code: "T2",
     p: 0,
     w: "High",
     text: "Does an AI council or review board meet on a defined cadence?",
@@ -43,6 +48,7 @@ export const CONTROLS = [
   },
   {
     id: "O1",
+    code: "I1",
     p: 1,
     w: "Critical",
     text: "Is an inventory of AI systems, agents and vendors maintained?",
@@ -59,6 +65,7 @@ export const CONTROLS = [
   },
   {
     id: "O2",
+    code: "I2",
     p: 1,
     w: "High",
     text: "Is there a shadow-AI discovery process?",
@@ -75,6 +82,7 @@ export const CONTROLS = [
   },
   {
     id: "V1",
+    code: "L1",
     p: 2,
     w: "High",
     text: "Do AI use cases pass through an intake with a benefit case and approval?",
@@ -91,6 +99,7 @@ export const CONTROLS = [
   },
   {
     id: "V2",
+    code: "L2",
     p: 2,
     w: "Critical",
     text: "Are AI tools published as approved, approved with limits, or not approved?",
@@ -107,6 +116,7 @@ export const CONTROLS = [
   },
   {
     id: "E1",
+    code: "L3",
     p: 3,
     w: "Critical",
     text: "Is an AI risk register with DPIA/AIA maintained for high-risk use cases?",
@@ -123,6 +133,7 @@ export const CONTROLS = [
   },
   {
     id: "E2",
+    code: "L4",
     p: 3,
     w: "High",
     text: "Is a regulatory mapping (EU AI Act, ISO 42001, sector rules) kept current?",
@@ -139,6 +150,7 @@ export const CONTROLS = [
   },
   {
     id: "R1",
+    code: "E1",
     p: 4,
     w: "Critical",
     text: "Are prompt-injection and jailbreak tests executed before release?",
@@ -155,6 +167,7 @@ export const CONTROLS = [
   },
   {
     id: "R2",
+    code: "E2",
     p: 4,
     w: "Critical",
     text: "Are input/output guardrails deployed on high-risk use cases?",
@@ -171,6 +184,7 @@ export const CONTROLS = [
   },
   {
     id: "N1",
+    code: "R1",
     p: 5,
     w: "Critical",
     text: "Is production drift, abuse and policy violation monitored?",
@@ -187,6 +201,7 @@ export const CONTROLS = [
   },
   {
     id: "N2",
+    code: "R2",
     p: 5,
     w: "High",
     text: "Is there an AI incident response and escalation procedure?",

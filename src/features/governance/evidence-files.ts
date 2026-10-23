@@ -155,7 +155,7 @@ async function makeDocx(report: EvidenceReport) {
         pageBreakBefore: ["ASSESSMENT RESPONSES AND EVIDENCE"].includes(line),
       });
     }
-    if (/^[GOVERN]\d\s\|/.test(line)) {
+    if (/^[TILER]\d\s\|/.test(line)) {
       return new Paragraph({ children: [new TextRun({ text: line, font: "Aptos", size: 20 })] });
     }
     return new Paragraph({ text: line });

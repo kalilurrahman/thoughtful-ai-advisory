@@ -32,6 +32,7 @@ from veritrail_common.ids import new_id
 from veritrail_common.paths import APP_DIR, VAR_DIR
 
 from . import integrations as integ
+from veritrail_common.env import getenv
 
 MAX_BODY = 256 * 1024
 SITE_DIR_DEFAULT = APP_DIR / "website" / "dist"
@@ -87,16 +88,16 @@ class RateLimiter:
 class VeritrailApp:
     def __init__(self, var_dir: str | Path | None = None, site_dir: str | Path | None = None,
                  public_base_url: str = ""):
-        self.var = Path(var_dir or os.environ.get("VERITRAIL_VAR_DIR") or VAR_DIR)
+        self.var = Path(var_dir or getenv("VERITRAIL_VAR_DIR") or VAR_DIR)
         self.var.mkdir(parents=True, exist_ok=True)
         self.site = Path(site_dir or SITE_DIR_DEFAULT)
-        self.base_url = public_base_url or os.environ.get("VERITRAIL_PUBLIC_BASE_URL", "")
+        self.base_url = public_base_url or getenv("VERITRAIL_PUBLIC_BASE_URL", "")
         self.audit = AuditLog(self.var / "audit" / "api_audit.jsonl")
         self.crm = integ.get_crm(self.var)
         self.mailer = integ.get_mailer(self.var)
-        self.sender = os.environ.get("VERITRAIL_MAIL_FROM", "VERITRAIL <reports@veritrail-governance.example>")
+        self.sender = getenv("VERITRAIL_MAIL_FROM", "VERITRAIL <reports@veritrail-governance.example>")
         self.secret = self._load_secret()
-        self.limiter = RateLimiter(limit=int(os.environ.get("VERITRAIL_RATE_LIMIT", "60")))
+        self.limiter = RateLimiter(limit=int(getenv("VERITRAIL_RATE_LIMIT", "60")))
         self._agent = None
         self._agent_lock = threading.Lock()
         (self.var / "leads").mkdir(parents=True, exist_ok=True)
@@ -107,7 +108,7 @@ class VeritrailApp:
 
     # ------------------------------------------------------------ utils
     def _load_secret(self) -> bytes:
-        env = os.environ.get("VERITRAIL_SECRET")
+        env = getenv("VERITRAIL_SECRET")
         if env:
             return env.encode()
         p = self.var / "secret.key"
