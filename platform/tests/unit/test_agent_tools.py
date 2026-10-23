@@ -5,12 +5,12 @@ import json
 
 import pytest
 
-from aegis_agent.config import PERMISSION_LEVELS, coerce_user
-from aegis_agent.tools import TOOL_REGISTRY, ToolContext, ToolInputError, invoke
+from veritrail_agent.config import PERMISSION_LEVELS, coerce_user
+from veritrail_agent.tools import TOOL_REGISTRY, ToolContext, ToolInputError, invoke
 from agent_test_helpers import ASSESSOR, CS_PROFILE, agent  # noqa: F401
 
 EXPECTED = {
-    "search_aegis_knowledge": "read", "search_ai_inventory": "read", "create_ai_system_record": "create_draft",
+    "search_veritrail_knowledge": "read", "search_ai_inventory": "read", "create_ai_system_record": "create_draft",
     "start_assessment": "create_draft", "submit_assessment_response": "create_draft", "calculate_risk_tier": "compute",
     "identify_gaps": "compute", "recommend_controls": "compute", "create_remediation_task": "write_confirm",
     "generate_report": "create_draft", "search_runtime_logs": "read", "draft_runtime_policy": "create_draft",
@@ -32,8 +32,8 @@ def test_registry_declares_all_14_tools_with_permissions():
 
 def test_invoke_audits_with_trace_and_redacted_inputs(agent):
     ctx = _ctx(agent)
-    invoke(ctx, "search_aegis_knowledge", query="contact jane.doe@example.com about IS-11")
-    recs = agent.audit.query(action="agent.tool.search_aegis_knowledge")
+    invoke(ctx, "search_veritrail_knowledge", query="contact jane.doe@example.com about IS-11")
+    recs = agent.audit.query(action="agent.tool.search_veritrail_knowledge")
     assert recs and recs[-1]["trace_id"] == "trc_test" and recs[-1]["outcome"] == "success"
     assert "jane.doe@example.com" not in json.dumps(recs[-1]) and "[REDACTED:email]" in json.dumps(recs[-1])
     assert agent.audit.verify()[0]
@@ -42,7 +42,7 @@ def test_invoke_audits_with_trace_and_redacted_inputs(agent):
 def test_calculate_risk_tier_is_inferred_and_needs_confirmation(agent):
     res = invoke(_ctx(agent), "calculate_risk_tier", profile=CS_PROFILE)
     assert res["tier"] == "High" and res["evidence_status"] == "Inferred" and res["requires_human_confirmation"]
-    assert res["engine"] == "aegis_assessment.risk_tier"
+    assert res["engine"] == "veritrail_assessment.risk_tier"
 
 
 def test_system_record_is_draft_and_assessment_flow(agent):

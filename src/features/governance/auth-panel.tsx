@@ -95,7 +95,7 @@ export function AuthPanel({ initialEmail = "" }: { initialEmail?: string }) {
           ? "Create your account"
           : mode === "forgot"
             ? "Reset your password"
-            : "Sign in to AEGIS"}
+            : "Sign in to VERITRAIL"}
       </h2>
       <div className="grid gap-3 sm:grid-cols-2">
         {(["google", "apple", "microsoft", "lovable"] as const).map((provider) => (

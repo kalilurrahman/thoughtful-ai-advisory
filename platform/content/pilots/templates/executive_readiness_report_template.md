@@ -4,15 +4,15 @@ applies_to: [Pilot A, Pilot B, Governance Baseline]
 week: 6
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead
+owner: VERITRAIL Delivery Lead
 ---
 
 # AI Governance Readiness Report — [Organization]
 
 **Prepared for:** [Executive sponsor role] · **Date:** [date] · **Engagement:** [Pilot A / Pilot B / Governance Baseline]
-**Prepared by:** AEGIS · **Classification:** Confidential — [Organization] internal
+**Prepared by:** VERITRAIL · **Classification:** Confidential — [Organization] internal
 
-> AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
+> VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
 > Self-assessment results are User-asserted; validated findings state the evidence reviewed.
 
 ## 1. Executive summary (one page)

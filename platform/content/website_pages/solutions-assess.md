@@ -1,10 +1,10 @@
 ---
-title: "AEGIS Assess — AI governance baseline and use-case risk assessment"
-h1: "AEGIS Assess: know where you stand, with evidence"
+title: "VERITRAIL Assess — AI governance baseline and use-case risk assessment"
+h1: "VERITRAIL Assess: know where you stand, with evidence"
 slug: /solutions/assess/
-description: "AEGIS Assess baselines AI governance maturity and triages each AI use case by risk, with evidence labels and control citations on every finding."
+description: "VERITRAIL Assess baselines AI governance maturity and triages each AI use case by risk, with evidence labels and control citations on every finding."
 section: solutions
-nav_label: "AEGIS Assess"
+nav_label: "VERITRAIL Assess"
 nav_order: 20
 template: page
 schema_type: Service
@@ -20,11 +20,11 @@ updated: 2026-10-21
 
 **Core message: before you can govern AI, you need an honest baseline — one that separates what is evidenced from what is assumed.**
 
-Most AI governance programmes start with a questionnaire and end with a slide that says "Developing". AEGIS Assess goes further: every finding cites the AEGIS control it relates to, carries an evidence label, and becomes a line in a gap register with a severity, an owner and a remediation SLA.
+Most AI governance programmes start with a questionnaire and end with a slide that says "Developing". VERITRAIL Assess goes further: every finding cites the VERITRAIL control it relates to, carries an evidence label, and becomes a line in a gap register with a severity, an owner and a remediation SLA.
 
 ## Capabilities
 
-- **Organization maturity assessment.** 24 questions across eight weighted domains, scored deterministically against the [AEGIS maturity model](/framework/maturity-model/). Produces an overall level, domain scores, critical flags and a 30/60/90-day plan.
+- **Organization maturity assessment.** 24 questions across eight weighted domains, scored deterministically against the [VERITRAIL maturity model](/framework/maturity-model/). Produces an overall level, domain scores, critical flags and a 30/60/90-day plan.
 - **Use-case intake and risk triage.** A short intake suggests a risk tier — Prohibited-review, High, Medium or Low — with the factors and citations behind it. The tier is labelled Inferred and requires human confirmation.
 - **Deep-dive assessment modules.** Core, data and privacy, security, generative AI, agentic AI, fairness and safety, human oversight, vendor AI, and monitoring modules, selected automatically by the intake profile. See [Assessment modules](/framework/assessment-modules/).
 - **Evidence-aware findings.** Each answer can carry attached evidence; findings move from User-asserted to Verified only when a named reviewer accepts the evidence.
@@ -57,11 +57,11 @@ Most AI governance programmes start with a questionnaire and end with a slide th
 
 ## How it fits
 
-Assess is usually the first module used, through the free [self-assessment](/tools/maturity-assessment/) or the [risk triage tool](/tools/risk-triage/), and then in depth during a [Governance Baseline](/contact/book-governance-baseline/). Findings feed [AEGIS Register](/solutions/register/) (tiers and owners), [AEGIS Control](/solutions/control/) (approval gates) and [AEGIS Shield](/solutions/shield/) (runtime guardrail recommendations).
+Assess is usually the first module used, through the free [self-assessment](/tools/maturity-assessment/) or the [risk triage tool](/tools/risk-triage/), and then in depth during a [Governance Baseline](/contact/book-governance-baseline/). Findings feed [VERITRAIL Register](/solutions/register/) (tiers and owners), [VERITRAIL Control](/solutions/control/) (approval gates) and [VERITRAIL Shield](/solutions/shield/) (runtime guardrail recommendations).
 
 ## Limitations
 
-Self-assessment answers reflect the respondent's view and are labelled User-asserted. Suggested risk tiers are calculated from intake answers and can be wrong if the intake is incomplete; AEGIS lists missing fields and never finalizes a tier without human confirmation. Readiness indicators are not a substitute for legal review or a formal audit.
+Self-assessment answers reflect the respondent's view and are labelled User-asserted. Suggested risk tiers are calculated from intake answers and can be wrong if the intake is incomplete; VERITRAIL lists missing fields and never finalizes a tier without human confirmation. Readiness indicators are not a substitute for legal review or a formal audit.
 
 {{disclaimer}}
 

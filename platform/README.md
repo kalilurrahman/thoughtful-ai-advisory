@@ -1,22 +1,24 @@
-> **In this repository:** `platform/` is the AEGIS Python reference implementation and governed content. Lovable does **not** run any Python. The deployed website (`src/`) bundles the Markdown/YAML in `platform/content` at build time and runs TypeScript ports of the engines in the browser. To run the Python code, use a local Python 3.11+ environment (`make install && make test`).
+> **In this repository:** `platform/` is the VERITRAIL Python reference implementation and governed content. Lovable does **not** run any Python. The deployed website (`src/`) bundles the Markdown/YAML in `platform/content` at build time and runs TypeScript ports of the engines in the browser. To run the Python code, use a local Python 3.11+ environment (`make install && make test`).
 
-# AEGIS Enterprise AI Governance
+# VERITRAIL Enterprise AI Governance
 
 **Govern every AI system, agent, and decision with evidence.**
 
-This repository holds the AEGIS launch build:
+This repository holds the VERITRAIL launch build:
 - the enhanced website
 - the AI Governance Maturity Self-Assessment (lead magnet)
-- the AEGIS Agent MVP (governance copilot)
+- the VERITRAIL Agent MVP (governance copilot)
 - the Runtime Shield Advisor and policy-as-code engine
 - the design-partner pilot kit
 - the commercial kit
 
-It is built in bounded increments under the AEGIS operating principles: evidence-driven, citation-first, governance-safe and transparent.
+It is built in bounded increments under the VERITRAIL operating principles: evidence-driven, citation-first, governance-safe and transparent.
 
-> AEGIS supports governance readiness, control implementation and evidence collection. It does **not** certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
+> VERITRAIL supports governance readiness, control implementation and evidence collection. It does **not** certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
 
-![AEGIS solution architecture](docs/diagrams/01_solution_architecture.png)
+> **Naming.** This platform was previously called *AEGIS*. Python packages (`veritrail_*`), environment variables (`VERITRAIL_*`, formerly `AEGIS_*`), the policy schema id (`veritrail.policy/v1`) and output file names follow the new name. Set the `VERITRAIL_*` variables wherever `AEGIS_*` values were configured before.
+
+![VERITRAIL solution architecture](docs/diagrams/01_solution_architecture.png)
 
 ## Quick start
 
@@ -30,7 +32,7 @@ make samples        # regenerate synthetic sample reports + pilot dress rehearsa
 make package        # build deliverable zips into /mnt/session/outputs
 ```
 
-Agent CLI: `PYTHONPATH=$(ls -d app/*/ | tr '\n' ':') python3 -m aegis_agent` · Shield CLI: `python3 -m aegis_shield --help` · Admin: `python3 -m aegis_admin.cli --help`
+Agent CLI: `PYTHONPATH=$(ls -d app/*/ | tr '\n' ':') python3 -m veritrail_agent` · Shield CLI: `python3 -m veritrail_shield --help` · Admin: `python3 -m veritrail_admin.cli --help`
 
 ## What's in the box
 
@@ -39,7 +41,7 @@ Agent CLI: `PYTHONPATH=$(ls -d app/*/ | tr '\n' ':') python3 -m aegis_agent` · 
 | Foundation | 64-control library, 5 pillars, indicative NIST AI RMF / ISO/IEC 42001 / EU AI Act mappings | `content/controls/controls.yaml`, `docs/COMPLIANCE_MAPPING.md` |
 | 1 Website | Static site: framework, solutions, compliance, industries, tools, resources, contact. SEO, structured data, a11y checks | `app/website/`, `content/website_pages/` |
 | 2 Self-assessment | 24 questions, 8 weighted domains, instant score, business-email gate, MD/PDF report, CRM/email adapters | `content/assessment_templates/`, `app/assessment-engine/`, `app/api/`, `app/reports/` |
-| 3 AEGIS Agent | Ask AEGIS, guided use-case assessment, gap analysis, reports (MD/PDF/CSV/JSON), 14 least-privilege tools, approvals, audit | `app/agent/`, `docs/AGENT_DESIGN.md` |
+| 3 VERITRAIL Agent | Ask VERITRAIL, guided use-case assessment, gap analysis, reports (MD/PDF/CSV/JSON), 14 least-privilege tools, approvals, audit | `app/agent/`, `docs/AGENT_DESIGN.md` |
 | 4 Runtime Shield | Advisor (risk profile, tool matrix, rules) → versioned YAML/JSON policy. Engine with 7 decisions and 5 rollout modes | `app/runtime-shield/`, `app/policy-engine/`, `content/policy_packs/` |
 | 5 Pilots | Pilot A/B plans, metrics, onboarding, safeguards, workshop kits, templates, feedback survey, proposals, synthetic dress rehearsal | `content/pilots/`, `docs/PILOT_PLAYBOOK.md`, `output/sample_reports/pilot_dry_run/` |
 | 6 Commercial | Pricing hypotheses, one-pagers, proposal template, ROI calculator, demo script, objection handling, case-study template, 90-day onboarding | `content/commercial/`, `docs/GTM_PLAN.md` |
@@ -48,10 +50,10 @@ Agent CLI: `PYTHONPATH=$(ls -d app/*/ | tr '\n' ':') python3 -m aegis_agent` · 
 - Product: [PRODUCT_REQUIREMENTS](docs/PRODUCT_REQUIREMENTS.md) · [ROADMAP](docs/ROADMAP.md) · [BACKLOG](docs/BACKLOG.md) · [STATUS](STATUS.md)
 - Architecture: [TECHNICAL_ARCHITECTURE](docs/TECHNICAL_ARCHITECTURE.md) · [DATA_MODEL](docs/DATA_MODEL.md) · [API_SPECIFICATION](docs/API_SPECIFICATION.md) · [diagrams](docs/diagrams/)
 - Components: [AGENT_DESIGN](docs/AGENT_DESIGN.md) · [RUNTIME_SHIELD_DESIGN](docs/RUNTIME_SHIELD_DESIGN.md)
-- Governance content: [COMPLIANCE_MAPPING](docs/COMPLIANCE_MAPPING.md) · [aegis_framework](content/aegis_framework.md) · [pillars](content/pillars.md) · [maturity_model](content/maturity_model.md)
+- Governance content: [COMPLIANCE_MAPPING](docs/COMPLIANCE_MAPPING.md) · [veritrail_framework](content/veritrail_framework.md) · [pillars](content/pillars.md) · [maturity_model](content/maturity_model.md)
 - Go-to-market: [WEBSITE_CONTENT_PLAN](docs/WEBSITE_CONTENT_PLAN.md) · [GTM_PLAN](docs/GTM_PLAN.md) · [PILOT_PLAYBOOK](docs/PILOT_PLAYBOOK.md)
 - Governance of the build: [RISK_REGISTER](docs/RISK_REGISTER.md) · [DECISION_LOG](docs/DECISION_LOG.md) · [CONTRIBUTING (conventions & contracts)](CONTRIBUTING.md)
-- Master document: [AEGIS Launch & Enhancement Blueprint v3.0](output/AEGIS_Launch_and_Enhancement_Blueprint_v3.md)
+- Master document: [VERITRAIL Launch & Enhancement Blueprint v3.0](output/VERITRAIL_Launch_and_Enhancement_Blueprint_v3.md)
 
 ## Repository layout
 ```

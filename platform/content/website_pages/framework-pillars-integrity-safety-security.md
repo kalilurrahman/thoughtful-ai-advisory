@@ -1,8 +1,8 @@
 ---
-title: "Integrity, Safety & Security (IS) — AEGIS Framework pillar"
+title: "Integrity, Safety & Security (IS) — VERITRAIL Framework pillar"
 h1: "Pillar 4: Integrity, Safety & Security"
 slug: /framework/pillars/integrity-safety-security/
-description: "AEGIS IS controls cover data quality, privacy, redaction, fairness, safety, robustness, transparency, human oversight and runtime guardrails for AI agents."
+description: "VERITRAIL IS controls cover data quality, privacy, redaction, fairness, safety, robustness, transparency, human oversight and runtime guardrails for AI agents."
 section: framework
 nav_label: "Integrity & Security (IS)"
 nav_order: 19
@@ -20,7 +20,7 @@ updated: 2026-10-21
 
 **Core question: are data, fairness, safety, security and runtime behavior actually controlled?**
 
-This pillar contains 16 controls — the largest in the framework — because it spans two disciplines that are converging. Responsible-AI teams have long worked on data quality, fairness, safety and transparency. Security teams are now dealing with prompt injection, model supply chain risk, and agents that can call tools and take actions. AEGIS puts them in one pillar so that a single assessment covers both, and so that runtime protection is designed with oversight in mind.
+This pillar contains 16 controls — the largest in the framework — because it spans two disciplines that are converging. Responsible-AI teams have long worked on data quality, fairness, safety and transparency. Security teams are now dealing with prompt injection, model supply chain risk, and agents that can call tools and take actions. VERITRAIL puts them in one pillar so that a single assessment covers both, and so that runtime protection is designed with oversight in mind.
 
 ## Three groups of controls
 
@@ -69,15 +69,15 @@ A conventional ML model produces an output that a person or system then acts on.
 ## Common failure modes
 
 - **Redaction only on the way in.** Sensitive data is masked in prompts but appears verbatim in logs or model responses. IS-04 covers prompts, responses, logs and external calls.
-- **Guardrails in permanent observe mode.** Policies are deployed but never move beyond logging. AEGIS Shield uses a staged rollout so that enforcement is planned, not postponed.
+- **Guardrails in permanent observe mode.** Policies are deployed but never move beyond logging. VERITRAIL Shield uses a staged rollout so that enforcement is planned, not postponed.
 - **Oversight that is a rubber stamp.** Human review exists but reviewers lack time, information or authority to override. IS-09 asks for oversight *design*, including how reviewers can disagree.
 - **Untested kill switches.** A procedure exists but nobody knows how long disabling an agent actually takes. Test it and record time-to-disable.
 
-## How AEGIS helps
+## How VERITRAIL helps
 
-- [AEGIS Shield](/solutions/shield/) implements IS-04, IS-11, IS-12, IS-13, IS-15 and IS-16 as policy-as-code with a staged Observe → Warn → Protect → Enforce rollout and a Contain mode for incidents.
+- [VERITRAIL Shield](/solutions/shield/) implements IS-04, IS-11, IS-12, IS-13, IS-15 and IS-16 as policy-as-code with a staged Observe → Warn → Protect → Enforce rollout and a Contain mode for incidents.
 - The [guardrail generator](/tools/guardrail-generator/) drafts a starter policy from a short profile of your LLM application or agent.
-- [AEGIS Assess](/solutions/assess/) provides deep-dive modules for privacy, fairness and harm, and security and agentic risk.
+- [VERITRAIL Assess](/solutions/assess/) provides deep-dive modules for privacy, fairness and harm, and security and agentic risk.
 
 Read [Runtime guardrails for AI agents: a practical rollout model](/resources/blog/runtime-guardrails-for-ai-agents/).
 

@@ -1,10 +1,10 @@
-# AEGIS Control Library
+# VERITRAIL Control Library
 # ---------------------------------------------------------------------------
-# Single source of truth for AEGIS control IDs. Every recommendation produced by
-# the assessment engine, AEGIS Agent, Runtime Shield Advisor and reports MUST
+# Single source of truth for VERITRAIL control IDs. Every recommendation produced by
+# the assessment engine, VERITRAIL Agent, Runtime Shield Advisor and reports MUST
 # cite control IDs from this file.
 #
-# Framework mappings are AEGIS's INDICATIVE interpretation for governance-readiness
+# Framework mappings are VERITRAIL's INDICATIVE interpretation for governance-readiness
 # purposes. They are not legal advice, not an official crosswalk published by NIST,
 # ISO or the European Commission, and they do not establish conformity or
 # compliance. Jurisdiction-specific use requires qualified legal review.
@@ -17,14 +17,14 @@
 # applies_to scopes: all | high_risk | genai | agentic | third_party
 # ---------------------------------------------------------------------------
 library:
-  id: AEGIS-CTRL-LIB
+  id: VERITRAIL-CTRL-LIB
   version: 1.0.0
   status: published
   effective_date: "2026-10-21"
-  owner: AEGIS Governance Content Lead
+  owner: VERITRAIL Governance Content Lead
   review_cadence: quarterly
   mapping_disclaimer: >-
-    Framework mappings are indicative AEGIS interpretations to support governance
+    Framework mappings are indicative VERITRAIL interpretations to support governance
     readiness and evidence collection. They do not constitute legal advice, a
     certification, or a determination of conformity with ISO/IEC 42001 or
     compliance with the EU AI Act or any other law.

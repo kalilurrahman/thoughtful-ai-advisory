@@ -2,16 +2,16 @@
 title: "Pilot-to-platform proposal template"
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Commercial Lead
+owner: VERITRAIL Commercial Lead
 ---
 
-# Proposal: AEGIS platform for [Organization]
+# Proposal: VERITRAIL platform for [Organization]
 
-**Date:** [date] · **Prepared for:** [Sponsor name, role] · **Prepared by:** [AEGIS commercial lead] · **Valid until:** [date]
+**Date:** [date] · **Prepared for:** [Sponsor name, role] · **Prepared by:** [VERITRAIL commercial lead] · **Valid until:** [date]
 **Reference:** [Pilot A / Pilot B / Governance Baseline] completed [date]
 
-> Pricing in this proposal is based on AEGIS pricing hypotheses under validation; final figures require commercial lead
-> approval. AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.
+> Pricing in this proposal is based on VERITRAIL pricing hypotheses under validation; final figures require commercial lead
+> approval. VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.
 
 ## 1. Executive summary
 
@@ -66,7 +66,7 @@ Terms: [term length, payment terms, renewal, multi-year discount if any].
 ## 6. Business case
 
 Attach the ROI calculator output (`content/commercial/roi_calculator.py`) with the customer's inputs, the scenario
-table (conservative/base/optimistic) and the assumptions table. Replace AEGIS hypotheses with pilot measurements
+table (conservative/base/optimistic) and the assumptions table. Replace VERITRAIL hypotheses with pilot measurements
 (S1–S3) where available and say which were replaced.
 
 ## 7. Success plan
@@ -81,7 +81,7 @@ no-production-data-to-external-LLM rule — carried over from the pilot safeguar
 
 ## 9. Responsibilities
 
-| AEGIS | [Organization] |
+| VERITRAIL | [Organization] |
 |---|---|
 | Platform provisioning, configuration, training, success management | Sponsor, governance lead, champions, approvers; decisions on tiers, exceptions and production policies |
 
@@ -89,11 +89,11 @@ no-production-data-to-external-LLM rule — carried over from the pilot safeguar
 
 - Legal determinations, certification and conformity assessment are excluded.
 - Integrations beyond [listed] are excluded or quoted separately.
-- AEGIS never activates or changes production runtime policy without the customer's named approver.
+- VERITRAIL never activates or changes production runtime policy without the customer's named approver.
 
 ## 11. Acceptance
 
 | | Name | Role | Signature | Date |
 |---|---|---|---|---|
 | [Organization] | | | | |
-| AEGIS | | | | |
+| VERITRAIL | | | | |

@@ -14,17 +14,17 @@ secondary_cta: blueprint
 updated: 2026-10-21
 ---
 
-*AEGIS editorial team · Published 21 October 2026 · About 8 minutes to read*
+*VERITRAIL editorial team · Published 21 October 2026 · About 8 minutes to read*
 
 Framework mappings — also called crosswalks — are among the most useful and most misused artifacts in AI governance. A well-built mapping lets one control, implemented and evidenced once, support work against several frameworks at the same time. A badly read mapping turns "this control is relevant to that clause" into "we comply with that clause", and that is where organizations get into trouble with auditors, customers and regulators.
 
-This article explains how we think about mappings in AEGIS, why we label them indicative, and how to use them without overclaiming.
+This article explains how we think about mappings in VERITRAIL, why we label them indicative, and how to use them without overclaiming.
 
 {{disclaimer}}
 
 ## What a mapping actually says
 
-Take a concrete example from the AEGIS control library. Control SE-08, immutable action logging, has the objective: log AI decisions, tool calls, policy decisions and approvals in tamper-evident, retained logs. Its indicative mappings are:
+Take a concrete example from the VERITRAIL control library. Control SE-08, immutable action logging, has the objective: log AI decisions, tool calls, policy decisions and approvals in tamper-evident, retained logs. Its indicative mappings are:
 
 - NIST AI RMF: MEASURE 2.8 and MANAGE 4.1
 - ISO/IEC 42001: Annex A.6.2.8
@@ -46,11 +46,11 @@ What it does not say:
 
 **2. Conditions and scope.** Legal obligations typically apply only when conditions are met: the system is high-risk, the organization is a provider, the system is placed on a particular market, a date has passed. A mapping cannot evaluate those conditions; only analysis of the facts can.
 
-**3. Texts change.** Standards are revised, guidance is issued, and laws are amended. For the EU AI Act, applicability timelines must be verified against the current Official Journal text and any amendments, including the European Commission's 2025 "Digital Omnibus" proposals. A mapping is a snapshot; AEGIS versions its control library and reviews it quarterly, but no mapping replaces checking the current source.
+**3. Texts change.** Standards are revised, guidance is issued, and laws are amended. For the EU AI Act, applicability timelines must be verified against the current Official Journal text and any amendments, including the European Commission's 2025 "Digital Omnibus" proposals. A mapping is a snapshot; VERITRAIL versions its control library and reviews it quarterly, but no mapping replaces checking the current source.
 
 ## Readiness, alignment, evidence — and why the words matter
 
-In AEGIS we use a deliberate vocabulary:
+In VERITRAIL we use a deliberate vocabulary:
 
 - **Readiness** describes how prepared an organization is to meet a requirement, based on the practices and evidence it has.
 - **Alignment indicators** describe how self-reported practices relate to areas of a framework.
@@ -60,7 +60,7 @@ We do not state that an organization or system is compliant, certified or approv
 
 ## The evidence label matters as much as the mapping
 
-A mapping tells you where a control is relevant. An evidence label tells you how much you can rely on it. AEGIS uses five:
+A mapping tells you where a control is relevant. An evidence label tells you how much you can rely on it. VERITRAIL uses five:
 
 | Label | What it tells a reader |
 |---|---|
@@ -74,11 +74,11 @@ A readiness indicator that says "Substantial readiness" for EU AI Act Art. 14 ba
 
 ## How to use mappings well
 
-**Use them to find relevant evidence.** When an auditor asks about ISO/IEC 42001 Annex A.6.2.6 (AI system operation and monitoring), the mapping tells you that twelve AEGIS controls are relevant, from runtime guardrails to drift monitoring. That is a fast way to assemble the right material.
+**Use them to find relevant evidence.** When an auditor asks about ISO/IEC 42001 Annex A.6.2.6 (AI system operation and monitoring), the mapping tells you that twelve VERITRAIL controls are relevant, from runtime guardrails to drift monitoring. That is a fast way to assemble the right material.
 
 **Use them to avoid duplicate work.** If your team is preparing for both an ISO/IEC 42001 audit and EU AI Act readiness, the mapping shows where one body of evidence serves both — for example pre-deployment impact assessment (GL-02), which maps to ISO/IEC 42001 clause 6.1.4 and 8.4 and to EU AI Act Art. 9 and Art. 27.
 
-**Use them to spot gaps in your control set.** If a framework area has no mapped controls — in AEGIS v1.0.0, for example, the NIST AI RMF MANAGE 3 category has no direct mapping and the EU AI Act's general-purpose AI model obligations are not mapped — that is a prompt for analysis, not a sign the area does not matter. We publish those gaps on our [NIST AI RMF](/compliance/nist-ai-rmf/) and [EU AI Act](/compliance/eu-ai-act/) pages.
+**Use them to spot gaps in your control set.** If a framework area has no mapped controls — in VERITRAIL v1.0.0, for example, the NIST AI RMF MANAGE 3 category has no direct mapping and the EU AI Act's general-purpose AI model obligations are not mapped — that is a prompt for analysis, not a sign the area does not matter. We publish those gaps on our [NIST AI RMF](/compliance/nist-ai-rmf/) and [EU AI Act](/compliance/eu-ai-act/) pages.
 
 **Then go to the source.** For anything that matters — a contractual representation, a regulatory submission, a board statement — read the current text and involve qualified legal or audit professionals.
 
@@ -103,7 +103,7 @@ Each statement is specific, evidence-oriented and honest about status. None of t
 ## Where to go next
 
 - Browse the indicative mappings for every control in the [control library](/framework/controls/).
-- Read how AEGIS rates findings in the [gap analysis method](/compliance/gap-analysis/).
+- Read how VERITRAIL rates findings in the [gap analysis method](/compliance/gap-analysis/).
 - See the [EU AI Act readiness](/compliance/eu-ai-act/) and [ISO/IEC 42001](/compliance/iso-42001/) guides.
 
 If you need to turn self-reported readiness into evidence that holds up, a [Governance Baseline](/contact/book-governance-baseline/) is designed to do exactly that.

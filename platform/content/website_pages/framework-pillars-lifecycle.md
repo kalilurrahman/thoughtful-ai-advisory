@@ -1,8 +1,8 @@
 ---
-title: "Governance & Lifecycle Control (GL) — AEGIS Framework pillar"
+title: "Governance & Lifecycle Control (GL) — VERITRAIL Framework pillar"
 h1: "Pillar 3: Governance & Lifecycle Control"
 slug: /framework/pillars/lifecycle/
-description: "AEGIS GL controls set risk-proportionate gates from intake and assessment through approval, change, monitoring, exceptions and retirement of AI systems."
+description: "VERITRAIL GL controls set risk-proportionate gates from intake and assessment through approval, change, monitoring, exceptions and retirement of AI systems."
 section: framework
 nav_label: "Lifecycle (GL)"
 nav_order: 18
@@ -14,7 +14,7 @@ faq:
   - q: "Will lifecycle gates slow down AI delivery?"
     a: "They should not for low-risk use cases. GL controls are risk-proportionate: triage routes low-tier use cases through a light path and reserves full assessment and forum approval for higher tiers."
   - q: "What counts as a material change that triggers reassessment?"
-    a: "AEGIS recommends defining triggers for model or version changes, prompt and system-instruction changes, new data sources, new vendors, new agent tools or permissions, and changes in intended purpose or user population (GL-04)."
+    a: "VERITRAIL recommends defining triggers for model or version changes, prompt and system-instruction changes, new data sources, new vendors, new agent tools or permissions, and changes in intended purpose or user population (GL-04)."
 updated: 2026-10-21
 ---
 
@@ -22,7 +22,7 @@ updated: 2026-10-21
 
 The lifecycle pillar is where governance meets delivery. It defines the path an AI use case takes from idea to production and, eventually, to retirement — and it makes that path proportionate to risk. A chatbot that summarizes internal policies should not wait for the same approvals as a model that influences credit decisions. Both should leave a record.
 
-## The AEGIS lifecycle
+## The VERITRAIL lifecycle
 
 | Stage | What happens | Key controls | Gate evidence |
 |---|---|---|---|
@@ -57,7 +57,7 @@ The lifecycle pillar is where governance meets delivery. It defines the path an 
 
 ## Proportionality in practice
 
-AEGIS risk tiers are **Prohibited-review**, **High**, **Medium** and **Low**. A typical configuration — which your forum should adapt and approve under AO-04 — looks like this:
+VERITRAIL risk tiers are **Prohibited-review**, **High**, **Medium** and **Low**. A typical configuration — which your forum should adapt and approve under AO-04 — looks like this:
 
 | Tier | Assessment depth | Approver | Review cadence |
 |---|---|---|---|
@@ -66,7 +66,7 @@ AEGIS risk tiers are **Prohibited-review**, **High**, **Medium** and **Low**. A 
 | Medium | Standard assessment | Accountable executive or delegated risk lead | Periodic (for example, annually) |
 | Low | Light intake record and screening | Business owner | Periodic attestation |
 
-Changing a system's risk tier or approving an exception are decisions AEGIS always routes to a named human approver; neither the platform nor the AEGIS Agent changes a tier on its own.
+Changing a system's risk tier or approving an exception are decisions VERITRAIL always routes to a named human approver; neither the platform nor the VERITRAIL Agent changes a tier on its own.
 
 ## Common failure modes
 
@@ -74,9 +74,9 @@ Changing a system's risk tier or approving an exception are decisions AEGIS alwa
 - **Permanent exceptions.** Exceptions without expiry become shadow policy. GL-10 requires an approver, expiry date and compensating controls.
 - **Vendor AI bypassing the gate.** Procurement of AI features skips intake. GL-11 integrates AI due diligence into purchasing.
 
-## How AEGIS helps
+## How VERITRAIL helps
 
-[AEGIS Control](/solutions/control/) runs intake, triage, approvals, change triggers and exceptions as workflows that create evidence by default. [AEGIS Assess](/solutions/assess/) provides the assessment modules described in [Assessment modules](/framework/assessment-modules/), and the [runbooks](/framework/runbooks/) describe how to stand the process up.
+[VERITRAIL Control](/solutions/control/) runs intake, triage, approvals, change triggers and exceptions as workflows that create evidence by default. [VERITRAIL Assess](/solutions/assess/) provides the assessment modules described in [Assessment modules](/framework/assessment-modules/), and the [runbooks](/framework/runbooks/) describe how to stand the process up.
 
 ## Indicative framework alignment
 

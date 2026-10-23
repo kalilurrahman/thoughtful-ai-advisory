@@ -1,5 +1,5 @@
 // Tamper-evident (hash-chained), append-only audit log — a browser port of
-// platform/app/common/aegis_common/audit.py. Each record carries the SHA-256 of the
+// platform/app/common/veritrail_common/audit.py. Each record carries the SHA-256 of the
 // previous record, so verify() detects modification, deletion or reordering. This is
 // tamper EVIDENCE, not tamper PROOF. Records must only ever hold redacted payloads.
 
@@ -130,7 +130,7 @@ export function canonicalJson(value: unknown): string {
 
 // ------------------------------------------------------------------ ids
 
-/** Sortable-ish unique id: <prefix>_<ms timestamp base36><random hex> (aegis_common.ids.new_id). */
+/** Sortable-ish unique id: <prefix>_<ms timestamp base36><random hex> (veritrail_common.ids.new_id). */
 export function newId(prefix: string): string {
   const rand = new Uint8Array(4);
   globalThis.crypto.getRandomValues(rand);

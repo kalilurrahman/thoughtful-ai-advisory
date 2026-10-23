@@ -1,6 +1,6 @@
 /**
- * AEGIS use-case risk tiering (preliminary, explainable) — TypeScript port of
- * platform/app/assessment-engine/aegis_assessment/risk_tier.py.
+ * VERITRAIL use-case risk tiering (preliminary, explainable) — TypeScript port of
+ * platform/app/assessment-engine/veritrail_assessment/risk_tier.py.
  *
  * Produces a PRELIMINARY risk tier with a factor-by-factor rationale. Output is
  * labelled *Inferred* and always `requires_human_confirmation: true`: a risk tier
@@ -134,7 +134,7 @@ export const TIER_RULES: Record<
 };
 
 export const RISK_TIER_METHOD =
-  "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)";
+  "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)";
 
 /** Profile accepted by the risk tiering engine (all fields optional; booleans may be "yes"/"no"). */
 export interface RiskProfile {

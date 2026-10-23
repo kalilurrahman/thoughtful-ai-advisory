@@ -1,8 +1,8 @@
 ---
-title: "About AEGIS — evidence-first AI governance"
-h1: "About AEGIS"
+title: "About VERITRAIL — evidence-first AI governance"
+h1: "About VERITRAIL"
 slug: /about/
-description: "AEGIS builds enterprise AI governance software and services on one principle: govern every AI system, agent and decision with evidence, and never overclaim."
+description: "VERITRAIL builds enterprise AI governance software and services on one principle: govern every AI system, agent and decision with evidence, and never overclaim."
 section: company
 nav_label: "About"
 nav_order: 10
@@ -13,13 +13,13 @@ secondary_cta: baseline
 updated: 2026-10-21
 ---
 
-AEGIS exists because AI adoption has outrun the ability of most organizations to answer simple questions about it — what AI they run, who owns it, how risky it is, what stops an agent from doing harm, and whether they could prove any of it tomorrow.
+VERITRAIL exists because AI adoption has outrun the ability of most organizations to answer simple questions about it — what AI they run, who owns it, how risky it is, what stops an agent from doing harm, and whether they could prove any of it tomorrow.
 
 We build software and structured services that help enterprises inventory AI, assess risk, govern the lifecycle, protect LLM applications and agents at runtime, and evidence responsible AI continuously.
 
 ## What we believe
 
-**Evidence over assertion.** A policy that nobody can show is followed is not a control. Every AEGIS finding carries an evidence label, and only evidence reviewed by a named person is Verified.
+**Evidence over assertion.** A policy that nobody can show is followed is not a control. Every VERITRAIL finding carries an evidence label, and only evidence reviewed by a named person is Verified.
 
 **Proportionality.** Governance should be light for low-risk AI and rigorous for high-risk AI. Risk tiers decide the path, and humans confirm the tiers.
 
@@ -31,8 +31,8 @@ We build software and structured services that help enterprises inventory AI, as
 
 ## What we build
 
-- **The AEGIS Framework** — five pillars and a versioned library of 64 controls with owners, evidence requirements and indicative mappings. See [the framework](/framework/).
-- **Six modules** — [Assess](/solutions/assess/), [Register](/solutions/register/), [Control](/solutions/control/), [Shield](/solutions/shield/), [Assurance](/solutions/assurance/) and the [AEGIS Agent](/solutions/agent/).
+- **The VERITRAIL Framework** — five pillars and a versioned library of 64 controls with owners, evidence requirements and indicative mappings. See [the framework](/framework/).
+- **Six modules** — [Assess](/solutions/assess/), [Register](/solutions/register/), [Control](/solutions/control/), [Shield](/solutions/shield/), [Assurance](/solutions/assurance/) and the [VERITRAIL Agent](/solutions/agent/).
 - **The Governance Baseline** — a fixed-scope [4–6 week engagement](/contact/book-governance-baseline/) that establishes an evidenced starting point.
 - **Free tools** — the [maturity self-assessment](/tools/maturity-assessment/), [risk triage](/tools/risk-triage/) and [guardrail generator](/tools/guardrail-generator/).
 
@@ -42,7 +42,7 @@ CISOs, CIOs and CTOs, chief risk and compliance officers, AI CoE heads, engineer
 
 ## How we use AI ourselves
 
-We hold our own product to the standard we recommend. Our [Responsible AI statement](/legal/responsible-ai/) explains how AEGIS uses AI, what safeguards apply and what we will not claim.
+We hold our own product to the standard we recommend. Our [Responsible AI statement](/legal/responsible-ai/) explains how VERITRAIL uses AI, what safeguards apply and what we will not claim.
 
 {{controls:AO-01,IS-13,SE-08}}
 

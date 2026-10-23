@@ -1,7 +1,7 @@
 /*
- * AEGIS ROI & business-case calculator — browser UI for src/features/platform/roi/roi.ts
+ * VERITRAIL ROI & business-case calculator — browser UI for src/features/platform/roi/roi.ts
  * (port of platform/content/commercial/roi_calculator.py). Everything runs in the browser; no
- * input is sent anywhere. Effect sizes are labelled as AEGIS hypotheses to validate in a pilot.
+ * input is sent anywhere. Effect sizes are labelled as VERITRAIL hypotheses to validate in a pilot.
  */
 import { useId, useMemo, useState, type ReactNode } from "react";
 import { downloadText } from "./reports/exporters";
@@ -41,7 +41,7 @@ const LABELS: Record<ROIKey, string> = {
   delay_cost_per_day: "Value lost per use case per day of delay",
   annual_incident_probability: "Annual probability of a material AI incident (0–1)",
   expected_incident_cost: "Expected cost of a material AI incident",
-  aegis_annual_cost: "AEGIS annual subscription",
+  veritrail_annual_cost: "VERITRAIL annual subscription",
   implementation_cost: "One-time implementation cost",
   assessment_effort_reduction: "Assessment effort reduction (0–1)",
   audit_prep_reduction: "Audit-preparation reduction (0–1)",
@@ -63,7 +63,7 @@ const GROUPS: Array<{ source: string; title: string; note: string }> = [
   },
   {
     source: HYPOTHESIS,
-    title: "AEGIS hypotheses — validate in pilot",
+    title: "VERITRAIL hypotheses — validate in pilot",
     note: "Planning hypotheses that have not been measured with customers. Replace them with pilot measurements before using the model in a proposal.",
   },
 ];
@@ -154,7 +154,7 @@ export function RoiCalculator() {
   const markdown = () => {
     if (!computed) return "";
     return (
-      toMarkdown(computed.result, "AEGIS ROI estimate", currency || "USD") +
+      toMarkdown(computed.result, "VERITRAIL ROI estimate", currency || "USD") +
       "\n## Sensitivity (effect hypotheses × 0.5 / 1.0 / 1.5)\n\n" +
       scenariosMarkdown(computed.sc)
     );
@@ -164,7 +164,7 @@ export function RoiCalculator() {
     <section className="tool" aria-labelledby={`${uid}-title`}>
       <h2 id={`${uid}-title`}>ROI &amp; business-case calculator</h2>
       <p className="notice notice--warning">
-        Illustrative estimate. AEGIS has no measured customer results yet: values labelled{" "}
+        Illustrative estimate. VERITRAIL has no measured customer results yet: values labelled{" "}
         <strong>{HYPOTHESIS}</strong> are planning hypotheses, not measurements. Results are not
         guaranteed savings and are not financial advice. Your inputs stay in this browser.
       </p>
@@ -248,7 +248,7 @@ export function RoiCalculator() {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => downloadText(markdown(), "AEGIS_ROI_estimate.md", "text/markdown")}
+                onClick={() => downloadText(markdown(), "VERITRAIL_ROI_estimate.md", "text/markdown")}
               >
                 Download Markdown
               </button>{" "}
@@ -256,7 +256,7 @@ export function RoiCalculator() {
                 type="button"
                 className="btn btn-secondary"
                 onClick={() =>
-                  downloadText(toCsv(computed.result), "AEGIS_ROI_estimate.csv", "text/csv")
+                  downloadText(toCsv(computed.result), "VERITRAIL_ROI_estimate.csv", "text/csv")
                 }
               >
                 Download CSV
@@ -265,7 +265,7 @@ export function RoiCalculator() {
 
             <h3>Sensitivity — read this before using the numbers</h3>
             <p className="small">
-              Every AEGIS effect hypothesis is scaled by 0.5 / 1.0 / 1.5. Present ranges, never a
+              Every VERITRAIL effect hypothesis is scaled by 0.5 / 1.0 / 1.5. Present ranges, never a
               single headline number.
             </p>
             <Table

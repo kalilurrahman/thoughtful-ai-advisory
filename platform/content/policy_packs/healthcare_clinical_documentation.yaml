@@ -1,4 +1,4 @@
-# AEGIS Runtime Policy Pack — Healthcare Clinical-Documentation Assistant
+# VERITRAIL Runtime Policy Pack — Healthcare Clinical-Documentation Assistant
 # ---------------------------------------------------------------------------
 # For assistants that draft clinical notes from encounter transcripts for
 # clinician review. The assistant drafts; clinicians decide and sign.
@@ -11,10 +11,10 @@
 # not detect patient names, addresses or free-text clinical details. Pair with
 # a clinical de-identification service and a vendor agreement that covers
 # health data before sending content to an external model.
-# Template status: draft. AEGIS supports readiness and evidence; it does not
+# Template status: draft. VERITRAIL supports readiness and evidence; it does not
 # certify compliance with HIPAA, GDPR, the EU AI Act or medical-device rules.
 # ---------------------------------------------------------------------------
-schema_version: aegis.policy/v1
+schema_version: veritrail.policy/v1
 policy_id: pack-healthcare-clinical-documentation
 policy_name: Healthcare Clinical-Documentation Assistant Runtime Policy
 description: >-
@@ -130,7 +130,7 @@ logging:
   prompt_logging: metadata
   response_logging: metadata
   tool_param_logging: metadata
-  sink: aegis_common.audit.AuditLog (hash-chained JSONL) in the clinical audit store
+  sink: veritrail_common.audit.AuditLog (hash-chained JSONL) in the clinical audit store
 kill_switch:
   enabled: true
   engaged: false
@@ -161,7 +161,7 @@ escalation:
 change_history:
   - version: 1.0.0
     date: "2026-10-21"
-    author: AEGIS Governance Content Lead
+    author: VERITRAIL Governance Content Lead
     change_type: created
     summary: Initial healthcare clinical-documentation pack.
 citations: [IS-03, IS-04, IS-06, IS-08, IS-09, IS-11, IS-12, IS-13, IS-14, IS-15, IS-16, SE-08, EI-07]

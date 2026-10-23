@@ -1,8 +1,8 @@
 ---
-title: "The five AEGIS pillars of enterprise AI governance"
+title: "The five VERITRAIL pillars of enterprise AI governance"
 h1: "Five pillars of AI governance"
 slug: /framework/pillars/
-description: "Accountability, inventory, lifecycle control, integrity and security, and assurance: how the five AEGIS pillars organize 64 controls into one operating model."
+description: "Accountability, inventory, lifecycle control, integrity and security, and assurance: how the five VERITRAIL pillars organize 64 controls."
 section: framework
 nav_label: "Five pillars"
 nav_order: 15
@@ -13,7 +13,7 @@ secondary_cta: blueprint
 updated: 2026-10-21
 ---
 
-The five AEGIS pillars divide AI governance into parts that each have a clear owner, a clear purpose and clear evidence. They are deliberately ordered: accountability comes first because without decision rights nothing else sticks, and assurance comes last because it tests whether everything before it actually works.
+The five VERITRAIL pillars divide AI governance into parts that each have a clear owner, a clear purpose and clear evidence. They are deliberately ordered: accountability comes first because without decision rights nothing else sticks, and assurance comes last because it tests whether everything before it actually works.
 
 | Pillar | Prefix | Controls | Core question | Typical accountable owner |
 |---|---|---|---|---|
@@ -35,9 +35,9 @@ Consider a business team that wants to deploy an agent that drafts customer refu
 
 No single pillar is sufficient. An inventory without lifecycle gates is a list. Runtime guardrails without accountability are configuration nobody owns. Assurance without the first four pillars has nothing to test.
 
-## Pillars and the AEGIS modules
+## Pillars and the VERITRAIL modules
 
-| AEGIS module | Primary pillars | What it operationalizes |
+| VERITRAIL module | Primary pillars | What it operationalizes |
 |---|---|---|
 | [Assess](/solutions/assess/) | AO, EI, GL | Maturity baseline, use-case triage and risk/impact assessment |
 | [Register](/solutions/register/) | EI | AI system of record, agent and tool registry, vendor AI inventory |
@@ -52,6 +52,6 @@ If you are unsure where you stand, take the [maturity self-assessment](/tools/ma
 
 {{controls:AO-02,EI-01,GL-02,IS-13,SE-08}}
 
-The complete list of controls, with objectives, evidence and indicative mappings, is in the [AEGIS Control Library](/framework/controls/).
+The complete list of controls, with objectives, evidence and indicative mappings, is in the [VERITRAIL Control Library](/framework/controls/).
 
 {{cta:assessment}}

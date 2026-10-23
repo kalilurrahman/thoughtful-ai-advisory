@@ -1,0 +1,1 @@
+"""VERITRAIL admin console (CLI)."""

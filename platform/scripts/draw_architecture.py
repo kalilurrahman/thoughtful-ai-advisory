@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw the flagship AEGIS solution-architecture diagram (PNG, SVG, PDF) with matplotlib.
+"""Draw the flagship VERITRAIL solution-architecture diagram (PNG, SVG, PDF) with matplotlib.
 
 Output: docs/diagrams/01_solution_architecture.{png,svg,pdf}
 """
@@ -37,8 +37,8 @@ def main():
     ax.set_ylim(0, 1)
     ax.axis("off")
 
-    ax.text(0.02, 0.975, "AEGIS Enterprise — Solution Architecture", fontsize=18, fontweight="bold", color=NAVY, va="top")
-    ax.text(0.02, 0.945, "Govern every AI system, agent, and decision with evidence.  ·  AI proposes. AEGIS evaluates. Approved actions execute.",
+    ax.text(0.02, 0.975, "VERITRAIL Enterprise — Solution Architecture", fontsize=18, fontweight="bold", color=NAVY, va="top")
+    ax.text(0.02, 0.945, "Govern every AI system, agent, and decision with evidence.  ·  AI proposes. VERITRAIL evaluates. Approved actions execute.",
             fontsize=10.5, color=GREY, va="top")
 
     # Users
@@ -50,9 +50,9 @@ def main():
 
     # Channels
     band(ax, 0.715, 0.11, "CHANNELS (built in this MVP)")
-    ch = [("AEGIS Website", "framework · solutions · compliance\nindustries · resources · forms"),
+    ch = [("VERITRAIL Website", "framework · solutions · compliance\nindustries · resources · forms"),
           ("Maturity Self-Assessment", "24 questions · 8 weighted domains\ninstant score · gated report"),
-          ("AEGIS Agent", "Ask · Guided assessment\nGap analysis · Reports"),
+          ("VERITRAIL Agent", "Ask · Guided assessment\nGap analysis · Reports"),
           ("Runtime Shield Advisor", "risk profile · tool matrix\npolicy-as-code generator"),
           ("Admin Console", "approvals · audit verify\nleads · funnel analytics")]
     w = 0.176
@@ -66,7 +66,7 @@ def main():
     arrow(ax, 0.5, 0.715, 0.5, 0.70)
 
     # Layers
-    band(ax, 0.235, 0.46, "AEGIS ENTERPRISE — SIX CONNECTED LAYERS")
+    band(ax, 0.235, 0.46, "VERITRAIL ENTERPRISE — SIX CONNECTED LAYERS")
     layers = [
         ("1  AI System of Record", "Inventory & classify AI systems, models, agents, tools, vendors, data", "Register", "EI-01 · EI-02 · EI-07"),
         ("2  Assessment & Risk Engine", "Maturity, use-case, agentic, privacy, security & vendor assessments; risk tiering", "Assess", "GL-01 · GL-02 · EI-02"),
@@ -81,7 +81,7 @@ def main():
         box(ax, 0.04, y, 0.6, lh, "", NAVY, NAVY, WHITE)
         ax.text(0.052, y + lh * 0.66, t, ha="left", va="center", fontsize=10.5, fontweight="bold", color=WHITE)
         ax.text(0.052, y + lh * 0.28, d, ha="left", va="center", fontsize=8.2, color="#D6E2EE")
-        box(ax, 0.65, y + 0.008, 0.1, lh - 0.016, f"AEGIS {mod}", LIGHT, NAVY, NAVY, 8.5, True)
+        box(ax, 0.65, y + 0.008, 0.1, lh - 0.016, f"VERITRAIL {mod}", LIGHT, NAVY, NAVY, 8.5, True)
         box(ax, 0.76, y + 0.008, 0.11, lh - 0.016, ctr, WHITE, "#C9D2DC", GREY, 7.8)
     # continuous improvement loop
     ax.add_patch(FancyArrowPatch((0.9, top - 5 * (lh + gap) + lh / 2), (0.9, top + lh / 2),
@@ -91,7 +91,7 @@ def main():
     ax.text(0.76, 0.684, "Key controls", fontsize=8, color=GREY, va="top")
 
     # Pillars
-    band(ax, 0.135, 0.09, "FIVE AEGIS PILLARS (framework)")
+    band(ax, 0.135, 0.09, "FIVE VERITRAIL PILLARS (framework)")
     pillars = ["AO · Accountability &\nOperating Model", "EI · Enterprise\nAI Inventory", "GL · Governance &\nLifecycle Control",
                "IS · Integrity, Safety\n& Security", "SE · Stewardship,\nEvidence & Assurance"]
     w = 0.176
@@ -108,7 +108,7 @@ def main():
 
     ax.text(0.02, 0.035,
             "Evidence labels: Verified · User-asserted · Inferred · Missing evidence · Critical gap.   "
-            "AEGIS supports governance readiness, control implementation and evidence collection; it does not certify ISO/IEC 42001 "
+            "VERITRAIL supports governance readiness, control implementation and evidence collection; it does not certify ISO/IEC 42001 "
             "conformity or guarantee EU AI Act compliance.", fontsize=7.6, color=GREY, va="center")
 
     OUT.mkdir(parents=True, exist_ok=True)

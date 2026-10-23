@@ -1,10 +1,10 @@
 ---
-title: "AEGIS Assurance — AI control testing, incidents and evidence packs"
-h1: "AEGIS Assurance: prove AI governance works, continuously"
+title: "VERITRAIL Assurance — AI control testing, incidents and evidence packs"
+h1: "VERITRAIL Assurance: prove AI governance works, continuously"
 slug: /solutions/assurance/
-description: "AEGIS Assurance tests AI controls, retains evidence, logs actions tamper-evidently, manages AI incidents and produces audit-ready evidence packs on request."
+description: "VERITRAIL Assurance tests AI controls, retains evidence, logs actions tamper-evidently, manages AI incidents and produces audit-ready evidence packs on request."
 section: solutions
-nav_label: "AEGIS Assurance"
+nav_label: "VERITRAIL Assurance"
 nav_order: 60
 template: page
 schema_type: Service
@@ -12,15 +12,15 @@ primary_cta: baseline
 secondary_cta: demo
 faq:
   - q: "Who can mark evidence as Verified?"
-    a: "Only a named human reviewer. AEGIS records who reviewed each item and when. Automated checks can support review but cannot by themselves make evidence Verified."
-  - q: "Does AEGIS decide whether an AI incident must be reported to a regulator?"
-    a: "No. AEGIS structures the incident record and prompts the notification assessment, but whether a notification obligation applies is a determination for your legal and compliance teams."
+    a: "Only a named human reviewer. VERITRAIL records who reviewed each item and when. Automated checks can support review but cannot by themselves make evidence Verified."
+  - q: "Does VERITRAIL decide whether an AI incident must be reported to a regulator?"
+    a: "No. VERITRAIL structures the incident record and prompts the notification assessment, but whether a notification obligation applies is a determination for your legal and compliance teams."
 updated: 2026-10-21
 ---
 
 **Core message: governance that cannot be evidenced on request is governance you cannot rely on.**
 
-When an auditor, customer, board member or authority asks "show me", most organizations assemble evidence by hand from email threads, shared drives and screenshots. AEGIS Assurance makes evidence a by-product of governance: controls are tested on a schedule, decisions are logged tamper-evidently, incidents follow a defined path, and an evidence pack for any material AI system can be produced from the record.
+When an auditor, customer, board member or authority asks "show me", most organizations assemble evidence by hand from email threads, shared drives and screenshots. VERITRAIL Assurance makes evidence a by-product of governance: controls are tested on a schedule, decisions are logged tamper-evidently, incidents follow a defined path, and an evidence pack for any material AI system can be produced from the record.
 
 ## Capabilities
 
@@ -68,11 +68,11 @@ A pack like this is useful precisely because it shows the gaps. It is not a comp
 
 ## How it fits
 
-Assurance draws on records from [Register](/solutions/register/), decisions from [Control](/solutions/control/) and policy decisions from [Shield](/solutions/shield/). The [AEGIS Agent](/solutions/agent/) can draft an evidence index and highlight missing items; exporting sensitive evidence outside the organization requires human approval.
+Assurance draws on records from [Register](/solutions/register/), decisions from [Control](/solutions/control/) and policy decisions from [Shield](/solutions/shield/). The [VERITRAIL Agent](/solutions/agent/) can draft an evidence index and highlight missing items; exporting sensitive evidence outside the organization requires human approval.
 
 ## Limitations
 
-AEGIS can show what evidence exists and who reviewed it; it cannot attest to the truth of evidence supplied to it. Hash-chained logs are tamper-evident, not tamper-proof, and depend on protecting the log store. Whether an evidence pack satisfies a particular auditor, certification body or authority is their determination.
+VERITRAIL can show what evidence exists and who reviewed it; it cannot attest to the truth of evidence supplied to it. Hash-chained logs are tamper-evident, not tamper-proof, and depend on protecting the log store. Whether an evidence pack satisfies a particular auditor, certification body or authority is their determination.
 
 {{disclaimer}}
 

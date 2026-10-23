@@ -1,10 +1,10 @@
 """Unit tests: BM25 retrieval, framework reference parsing, keyword extraction."""
 from __future__ import annotations
 
-from aegis_common.content import controls_by_id
+from veritrail_common.content import controls_by_id
 
-from aegis_agent import knowledge as k
-from aegis_agent.extraction import extract_profile, parse_field_assignments, parse_field_value
+from veritrail_agent import knowledge as k
+from veritrail_agent.extraction import extract_profile, parse_field_assignments, parse_field_value
 
 
 def test_index_covers_controls_and_questions():

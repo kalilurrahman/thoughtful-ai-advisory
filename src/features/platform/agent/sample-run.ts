@@ -1,10 +1,10 @@
 /**
- * Synthetic AEGIS Agent sample run (aegis_agent/sample_run.py): the full SupportPilot journey —
+ * Synthetic VERITRAIL Agent sample run (veritrail_agent/sample_run.py): the full SupportPilot journey —
  * intake → risk tier → modules → answers with evidence → named evidence review → gap analysis →
  * remediation tasks (with confirmation) → runtime policy draft → approval requests → report.
  * All names, IDs and answers are fictional ("Synthetic example").
  */
-import { AegisAgent, type AgentResponse } from "./orchestrator";
+import { VeritrailAgent, type AgentResponse } from "./orchestrator";
 import { deterministicRuntime, type AgentRuntime } from "./runtime";
 
 export const SAMPLE_ASSESSOR = {
@@ -73,7 +73,7 @@ export const SAMPLE_ANSWERS: Record<string, string> = {
 export const SAMPLE_REVIEWED = ["EV-SP-001", "EV-SP-020", "EV-SP-030"];
 
 export interface SampleRunResult {
-  agent: AegisAgent;
+  agent: VeritrailAgent;
   transcript: Array<{ who: string; message: string; response: AgentResponse }>;
   transcriptMarkdown: string;
   reportMarkdown: string;
@@ -84,7 +84,7 @@ export interface SampleRunResult {
 }
 
 export function runSample(runtime: AgentRuntime = deterministicRuntime()): SampleRunResult {
-  const agent = new AegisAgent({ runtime });
+  const agent = new VeritrailAgent({ runtime });
   const sid = "sess_synthetic_supportpilot";
   const transcript: SampleRunResult["transcript"] = [];
   const say = (msg: string) => {
@@ -92,7 +92,7 @@ export function runSample(runtime: AgentRuntime = deterministicRuntime()): Sampl
     transcript.push({ who: SAMPLE_ASSESSOR.name, message: msg, response: res });
     return res;
   };
-  say("What does AEGIS expect for human approval of agent actions like refunds?");
+  say("What does VERITRAIL expect for human approval of agent actions like refunds?");
   say("Are we EU AI Act compliant?");
   say(SAMPLE_DESCRIPTION);
   let res = say("continue");
@@ -128,7 +128,7 @@ export function runSample(runtime: AgentRuntime = deterministicRuntime()): Sampl
   });
   const artifacts = agent.store.get("reports", rep.report_id)?.artifacts;
   const md: string[] = [
-    "# AEGIS Agent — sample session transcript",
+    "# VERITRAIL Agent — sample session transcript",
     "",
     "> **Synthetic example.** Fictional organization, people, system and evidence IDs. Generated in this " +
       "browser against the deterministic agent (no LLM).",

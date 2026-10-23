@@ -3,8 +3,8 @@ from __future__ import annotations
 
 import copy
 
-from aegis_common.audit import AuditLog
-from aegis_policy.engine import PolicyEngine
+from veritrail_common.audit import AuditLog
+from veritrail_policy.engine import PolicyEngine
 
 CTX = {"agent_name": "test-agent", "environment": "production", "risk_tier": "Medium", "model": "test-model",
        "tenant": "acme"}
@@ -14,7 +14,7 @@ APPROVER = {"name": "Dana Lead", "role": "Team Lead"}
 
 def _base_policy() -> dict:
     return {
-        "schema_version": "aegis.policy/v1",
+        "schema_version": "veritrail.policy/v1",
         "policy_id": "pol-test-agent",
         "policy_name": "Test Agent Runtime Policy",
         "version": "1.2.0",

@@ -1,4 +1,4 @@
-# AEGIS Decision Log
+# VERITRAIL Decision Log
 
 Architecture and product decisions, newest last. Each entry: context → decision → consequences.
 Status values: Accepted, Superseded, Proposed.
@@ -12,7 +12,7 @@ Status values: Accepted, Superseded, Proposed.
 | DEC-0005 | 2026-10-21 | Python static site generator + vanilla JS instead of Next.js/Astro for the MVP | Accepted | Orchestrator |
 | DEC-0006 | 2026-10-21 | Stdlib HTTP API with pluggable CRM/email adapters; local adapters by default | Accepted | Orchestrator |
 | DEC-0007 | 2026-10-21 | Transactional email templates pre-approved once; all other external email needs per-message approval | Accepted | Product Lead / Marketing |
-| DEC-0008 | 2026-10-21 | Deterministic-first AEGIS Agent; LLM optional and phrasing-only | Accepted | AI/Agent Engineer |
+| DEC-0008 | 2026-10-21 | Deterministic-first VERITRAIL Agent; LLM optional and phrasing-only | Accepted | AI/Agent Engineer |
 | DEC-0009 | 2026-10-21 | Hash-chained JSONL audit log as MVP immutability mechanism | Accepted | Security Engineer |
 | DEC-0010 | 2026-10-21 | All self-assessment output labelled User-asserted; risk tiers labelled Inferred and require human confirmation | Accepted | Governance Content Lead |
 | DEC-0011 | 2026-10-21 | Framework mappings published as "indicative" with explicit coverage gaps | Accepted | Governance Content Lead |
@@ -32,7 +32,7 @@ Status values: Accepted, Superseded, Proposed.
 
 ### DEC-0002 — Twin engines, one rule set
 **Context.** The self-assessment must give an instant result on a static site, and also produce a server-side PDF and CRM record.
-**Decision.** Scoring, flags, action plan, modules and lead rules are data in `maturity_self_assessment.yaml`. Python (`aegis_assessment.engine`) is the reference engine. The browser engine interprets the same data. `tests/integration/test_website_engine_parity.py` compares the two on random and edge-case inputs.
+**Decision.** Scoring, flags, action plan, modules and lead rules are data in `maturity_self_assessment.yaml`. Python (`veritrail_assessment.engine`) is the reference engine. The browser engine interprets the same data. `tests/integration/test_website_engine_parity.py` compares the two on random and edge-case inputs.
 **Consequences.** Any rule change is a YAML change plus a parity run. Logic that can't be expressed as data needs a decision entry.
 
 ### DEC-0003 — Integer arithmetic for scores
@@ -51,7 +51,7 @@ Status values: Accepted, Superseded, Proposed.
 **Consequences.** Zero runtime dependencies and a deterministic build that deploys to any static host or CDN. Content stays portable Markdown with front matter, so moving to Astro later is a template rewrite only. Trade-off: no component framework, and no on-demand ISR.
 
 ### DEC-0006 — Stdlib API, pluggable integrations
-**Decision.** `aegis_api` uses `http.server` (ThreadingHTTPServer) behind a reverse proxy in production. CRM adapters: JSONL (default), generic webhook, HubSpot Forms. Mail: `.eml` outbox (default) or SMTP.
+**Decision.** `veritrail_api` uses `http.server` (ThreadingHTTPServer) behind a reverse proxy in production. CRM adapters: JSONL (default), generic webhook, HubSpot Forms. Mail: `.eml` outbox (default) or SMTP.
 **Consequences.** Works end to end with no third-party accounts. Production needs TLS termination, a proxy and persistent storage (see TECHNICAL_ARCHITECTURE §Deployment).
 
 ### DEC-0007 — External communications approval model
@@ -65,14 +65,14 @@ Status values: Accepted, Superseded, Proposed.
 **Consequences.** Answers are reproducible and testable (agent-evaluation suite). Phrasing is more templated than an LLM's.
 
 ### DEC-0009 — Tamper-evident audit log
-**Decision.** Append-only JSONL with SHA-256 hash chaining (`aegis_common.audit`). `aegis-admin audit verify` detects modification, deletion and reordering.
+**Decision.** Append-only JSONL with SHA-256 hash chaining (`veritrail_common.audit`). `veritrail-admin audit verify` detects modification, deletion and reordering.
 **Consequences.** This gives tamper *evidence*, not prevention. Production must also ship records to WORM/object-lock storage or a SIEM (Risk R-SEC-03).
 
 ### DEC-0010 — Evidence labelling defaults
 **Decision.** All self-assessment output is *User-asserted*. Risk tiers and advisor outputs are *Inferred* and carry `requires_human_confirmation`. *Verified* needs an evidence reference plus a named reviewer.
 
 ### DEC-0011 — Indicative mappings with explicit gaps
-**Decision.** Mappings are labelled indicative AEGIS interpretations. COMPLIANCE_MAPPING lists what AEGIS does not cover (e.g. notified-body conformity assessment, CE marking, EU database registration, GPAI provider obligations).
+**Decision.** Mappings are labelled indicative VERITRAIL interpretations. COMPLIANCE_MAPPING lists what VERITRAIL does not cover (e.g. notified-body conformity assessment, CE marking, EU database registration, GPAI provider obligations).
 
 ### DEC-0012 — Regulatory timelines
 **Context.** No web access was available in the build session, and post-2025 amendments (e.g. the Commission's November 2025 "Digital Omnibus" proposals affecting high-risk timelines) could not be verified.
@@ -82,13 +82,13 @@ Status values: Accepted, Superseded, Proposed.
 **Decision.** Pilot kits, the commercial kit and the ROI calculator are built and tested. Pilot execution is **Blocked** until real design partners sign. No case studies, logos, testimonials or results are published until then. Price points are labelled hypotheses.
 
 ### DEC-0014 — Repository layout
-**Decision.** Keep the required `/app/<hyphenated>` directories. Each holds an importable package (`aegis_assessment`, `aegis_policy`, `aegis_shield`, …). The root `conftest.py` and the Makefile set `PYTHONPATH`.
+**Decision.** Keep the required `/app/<hyphenated>` directories. Each holds an importable package (`veritrail_assessment`, `veritrail_policy`, `veritrail_shield`, …). The root `conftest.py` and the Makefile set `PYTHONPATH`.
 
 ### DEC-0015 — Lead qualification is internal
 **Decision.** Lead tags (baseline_priority, shield_candidate, …) are computed for CRM routing and stripped from API responses to respondents. The browser engine computes them but the UI never shows them.
 
 ### DEC-0016 — Honest limitation tests
-**Decision.** Detector gaps (paraphrased or non-English injection, names, addresses, DOB, passport numbers, free-text health data) are encoded as `xfail(strict=True)` tests. They document the limitation and fail as soon as it is fixed, which forces the docs to be updated. AWS `AKIA…` keys, GitHub `ghp_…` tokens and chat-template tokens (`<|im_start|>`) were added to `aegis_common.redaction`, so the cloud-token limitation became a passing test. `redact(text, entities=[])` now redacts nothing. The audit log caches the last hash, keyed on file size, to avoid an O(n) rescan on every append.
+**Decision.** Detector gaps (paraphrased or non-English injection, names, addresses, DOB, passport numbers, free-text health data) are encoded as `xfail(strict=True)` tests. They document the limitation and fail as soon as it is fixed, which forces the docs to be updated. AWS `AKIA…` keys, GitHub `ghp_…` tokens and chat-template tokens (`<|im_start|>`) were added to `veritrail_common.redaction`, so the cloud-token limitation became a passing test. `redact(text, entities=[])` now redacts nothing. The audit log caches the last hash, keyed on file size, to avoid an O(n) rescan on every append.
 
 ### DEC-0017 — Public demo identity
 **Decision.** `POST /api/agent/message` always runs as `{"id": "public-demo", "role": "viewer"}`, so the website demo provides Q&A, risk-tier previews and control recommendations only. Recording answers, generating stored reports and requesting approvals need the assessor role, which needs SSO before customer use (backlog).

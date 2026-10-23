@@ -3,10 +3,10 @@ import random
 
 import pytest
 
-from aegis_assessment.engine import (AssessmentInputError, preliminary_result, round_half_up_1dp,
+from veritrail_assessment.engine import (AssessmentInputError, preliminary_result, round_half_up_1dp,
                                      score_assessment)
-from aegis_common.content import controls_by_id, load_assessment_template
-from aegis_common.evidence import find_prohibited_claims
+from veritrail_common.content import controls_by_id, load_assessment_template
+from veritrail_common.evidence import find_prohibited_claims
 
 T = load_assessment_template()
 QIDS = [q["id"] for q in T["questions"]]
@@ -77,7 +77,7 @@ def test_overall_matches_float_formula_randomised():
 
 def test_level_boundaries():
     levels = T["scoring"]["levels"]
-    from aegis_assessment.engine import _level_for
+    from veritrail_assessment.engine import _level_for
     assert _level_for(39.9, levels)["name"] == "Initial"
     assert _level_for(40.0, levels)["name"] == "Developing"
     assert _level_for(59.9, levels)["name"] == "Developing"

@@ -1,14 +1,14 @@
 import json
 
-from aegis_admin.cli import funnel, main
-from aegis_api.server import AegisApp
-from aegis_common.content import load_assessment_template
+from veritrail_admin.cli import funnel, main
+from veritrail_api.server import VeritrailApp
+from veritrail_common.content import load_assessment_template
 
 QIDS = [q["id"] for q in load_assessment_template()["questions"]]
 
 
 def _seed(tmp_path):
-    app = AegisApp(var_dir=tmp_path, site_dir=tmp_path / "nosite")
+    app = VeritrailApp(var_dir=tmp_path, site_dir=tmp_path / "nosite")
     body = {"email": "a@corp.example", "name": "A", "company": "Corp", "consent": True,
             "answers": {q: 2 for q in QIDS}, "profile": {"uses_agents": True}}
     app.handle("POST", "/api/leads", {"Content-Type": "application/json"}, json.dumps(body).encode())

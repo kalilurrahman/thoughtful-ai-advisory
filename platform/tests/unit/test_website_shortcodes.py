@@ -3,13 +3,13 @@ from __future__ import annotations
 
 import pytest
 
-from aegis_common.content import controls_by_id
-from aegis_common.evidence import STANDARD_DISCLAIMER
-from aegis_website.builder import SiteBuilder
-from aegis_website.errors import BuildError
-from aegis_website.pages import parse_page
-from aegis_website.paths import FIXTURE_PAGES_DIR
-from aegis_website.shortcodes import ShortcodeProcessor, parse_control_ids
+from veritrail_common.content import controls_by_id
+from veritrail_common.evidence import STANDARD_DISCLAIMER
+from veritrail_website.builder import SiteBuilder
+from veritrail_website.errors import BuildError
+from veritrail_website.pages import parse_page
+from veritrail_website.paths import FIXTURE_PAGES_DIR
+from veritrail_website.shortcodes import ShortcodeProcessor, parse_control_ids
 
 
 @pytest.fixture(scope="module")
@@ -32,7 +32,7 @@ def test_controls_shortcode_pulls_titles_and_mappings(builder):
     for ref in lib["AO-01"]["mappings"]["nist_ai_rmf"]:
         assert ref in html
     assert "NIST AI RMF:" in html and "ISO/IEC 42001:" in html
-    assert "indicative AEGIS interpretations" in html
+    assert "indicative VERITRAIL interpretations" in html
     # order preserved, block not wrapped in <p>
     assert html.index("IS-11") < html.index("AO-01")
     assert "<p><div" not in html

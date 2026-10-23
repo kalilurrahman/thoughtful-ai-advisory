@@ -1,4 +1,4 @@
-# Email templates used by the AEGIS API.
+# Email templates used by the VERITRAIL API.
 # Governance rule: external communications require human approval. Transactional
 # templates are approved ONCE (approver + date recorded here, change-controlled via
 # git review); the API refuses to send any template whose status is not "approved"
@@ -13,11 +13,11 @@ templates:
       approved_by: "PLACEHOLDER — Head of Marketing (replace with named approver before launch)"
       approved_at: "2026-10-21"
       approval_ref: DEC-0007
-    subject: "Your AEGIS AI Governance Maturity Report — {maturity_level} ({overall_score}/100)"
+    subject: "Your VERITRAIL AI Governance Maturity Report — {maturity_level} ({overall_score}/100)"
     body: |
       Hello {name},
 
-      Thank you for completing the AEGIS AI Governance Maturity Self-Assessment.
+      Thank you for completing the VERITRAIL AI Governance Maturity Self-Assessment.
 
       Overall score: {overall_score}/100 — {maturity_level}
       Your detailed report is attached (PDF and Markdown). You can also download it here:
@@ -26,12 +26,12 @@ templates:
       Important: your results are self-reported (User-asserted) and indicative. They are not a
       certification or a determination of compliance with any law or standard.
 
-      The fastest way to validate these findings with evidence is an AEGIS Governance Baseline:
+      The fastest way to validate these findings with evidence is an VERITRAIL Governance Baseline:
       a fixed-scope 4–6 week engagement covering inventory, maturity validation, five deep-dive
       assessments, two agent reviews, a gap register and a remediation roadmap.
       Book a conversation: {baseline_url}
 
-      — The AEGIS team
+      — The VERITRAIL team
 
       You received this email because you requested your report. We will not send marketing email
       unless you opted in. Privacy notice: {privacy_url}
@@ -43,13 +43,13 @@ templates:
       approved_by: "PLACEHOLDER — Head of Marketing (replace with named approver before launch)"
       approved_at: "2026-10-21"
       approval_ref: DEC-0007
-    subject: "We received your AEGIS {form_label} request"
+    subject: "We received your VERITRAIL {form_label} request"
     body: |
       Hello {name},
 
-      Thanks for your {form_label} request. A member of the AEGIS team will reply within two business days.
+      Thanks for your {form_label} request. A member of the VERITRAIL team will reply within two business days.
 
-      — The AEGIS team
+      — The VERITRAIL team
 
       Privacy notice: {privacy_url}
   nurture_day3_followup:
@@ -57,6 +57,6 @@ templates:
     status: draft
     purpose: Marketing follow-up three days after report delivery (opt-in only).
     approval: {}
-    subject: "Three quick wins from your AEGIS maturity report"
+    subject: "Three quick wins from your VERITRAIL maturity report"
     body: |
       Hello {name}, ...

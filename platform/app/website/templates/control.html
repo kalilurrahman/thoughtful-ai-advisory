@@ -16,11 +16,11 @@
       <dt>Priority</dt><dd>{{ c.priority }}</dd>
       <dt>Applies to</dt><dd>{{ c.applies_to }}</dd>
       <dt>Typical owner</dt><dd>{{ c.owner_role }}</dd>
-      {% if c.modules %}<dt>AEGIS modules</dt><dd>{{ c.modules | join(', ') }}</dd>{% endif %}
+      {% if c.modules %}<dt>VERITRAIL modules</dt><dd>{{ c.modules | join(', ') }}</dd>{% endif %}
       <dt>Control library</dt><dd>v{{ extra.library_version }}</dd>
     </dl>
     <h2 id="evidence">Evidence that demonstrates this control</h2>
-    <p>Examples of records an assessor would expect to see. Until a named reviewer has examined them, evidence is labelled <em>User-asserted</em> or <em>Missing evidence</em> in AEGIS outputs, never <em>Verified</em>.</p>
+    <p>Examples of records an assessor would expect to see. Until a named reviewer has examined them, evidence is labelled <em>User-asserted</em> or <em>Missing evidence</em> in VERITRAIL outputs, never <em>Verified</em>.</p>
     <ul>
       {% for e in c.evidence %}<li>{{ e }}</li>{% endfor %}
     </ul>

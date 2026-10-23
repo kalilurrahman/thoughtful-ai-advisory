@@ -1,12 +1,12 @@
-# AEGIS Runtime Shield — Design
+# VERITRAIL Runtime Shield — Design
 
-> **AI proposes. AEGIS evaluates. Approved actions execute.**
+> **AI proposes. VERITRAIL evaluates. Approved actions execute.**
 
-Status: v1.0.0 (MVP). Owner: Shield workstream. Packages: `aegis_policy` (`app/policy-engine/`),
-`aegis_shield` (`app/runtime-shield/`). Policy packs: `content/policy_packs/`. Tests: `tests/policy-engine/`,
+Status: v1.0.0 (MVP). Owner: Shield workstream. Packages: `veritrail_policy` (`app/policy-engine/`),
+`veritrail_shield` (`app/runtime-shield/`). Policy packs: `content/policy_packs/`. Tests: `tests/policy-engine/`,
 `tests/security/test_policy_*.py`. Samples: `output/sample_reports/runtime_shield/` (Synthetic examples).
 
-AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.
+VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.
 Runtime detection is heuristic: it lowers risk and produces evidence, it does not guarantee that every unsafe
 input or output is caught.
 
@@ -16,13 +16,13 @@ input or output is caught.
 
 Engineering and security teams describe an LLM application or agent and receive:
 
-1. **Advice** (`aegis_shield.advisor.advise`) — risk profile, tool permission matrix, data-handling and redaction
+1. **Advice** (`veritrail_shield.advisor.advise`) — risk profile, tool permission matrix, data-handling and redaction
    rules, human-approval rules, rate/budget limits, monitoring plan, incident-response and kill-switch plan, a
    five-stage rollout plan with exit criteria, missing inputs and clarifying questions, evidence labels and
    control citations.
-2. **A draft, versioned policy** (`aegis_shield.generator.generate_policy`) — policy-as-code valid against
-   `aegis_policy.schema`, always `status: draft`, `rollout.mode: observe`, no approvals recorded.
-3. **A decision engine** (`aegis_policy.engine.PolicyEngine`) — evaluates prompts, responses, tool calls and
+2. **A draft, versioned policy** (`veritrail_shield.generator.generate_policy`) — policy-as-code valid against
+   `veritrail_policy.schema`, always `status: draft`, `rollout.mode: observe`, no approvals recorded.
+3. **A decision engine** (`veritrail_policy.engine.PolicyEngine`) — evaluates prompts, responses, tool calls and
    tool outputs against an approved policy and writes every decision to the hash-chained audit log.
 
 Primary controls: IS-11 (least-privilege tool access), IS-12 (runtime guardrails and policy enforcement), IS-13
@@ -36,7 +36,7 @@ GL-04 (change management).
  profile (Phase-4 inputs)            reviewers (owner, security, risk)
         |                                   |
         v                                   v
- aegis_shield.advisor.advise ---> draft policy ---> versioning.transition_status
+ veritrail_shield.advisor.advise ---> draft policy ---> versioning.transition_status
    risk profile, tool matrix,      (YAML/JSON)        draft -> in_review -> approved -> active
    limits, monitoring, rollout          |             (add_approval: required roles, SoD)
         |                               |                       |
@@ -48,28 +48,28 @@ GL-04 (change management).
                                                        | detectors, tool rules, limits,
                                                        | transforms, approvals, rollout mode
                                                        v
-                                         aegis_common.audit.AuditLog (hash-chained, redacted)
+                                         veritrail_common.audit.AuditLog (hash-chained, redacted)
                                                        |
                                          integrations.decision_events --> SIEM / data lake
 ```
 
 | Module | Responsibility |
 |---|---|
-| `aegis_policy.constants` | Decisions, precedence, rollout modes, statuses, operations |
-| `aegis_policy.schema` | Declarative schema (`POLICY_SCHEMA`), `validate_policy`, `lint_policy`, `validate_parameter_specs`, semver helpers |
-| `aegis_policy.detectors` | Wraps `aegis_common.redaction`: normalization, de-obfuscation, structured redaction |
-| `aegis_policy.params` | Tool-parameter validation and approval conditions |
-| `aegis_policy.engine` | `PolicyEngine`, `Decision`, `apply_mode`, in-memory counters, approvals, kill switch |
-| `aegis_policy.versioning` | `bump_version`, `new_version`, `diff_policies`, `record_change`, `add_approval`, `transition_status` |
-| `aegis_policy.loader` | `load_policy`, `list_packs`, `load_pack` |
-| `aegis_shield.profile` | Tolerant, type-safe normalization of untrusted advisor input |
-| `aegis_shield.advisor` | `advise(profile)`, `analyze(profile)` |
-| `aegis_shield.generator` | `generate_policy`, `to_yaml`, `to_json`, `from_yaml`, `from_json` (+ re-exported versioning helpers) |
-| `aegis_shield.render` | Markdown report of advisor output |
-| `aegis_shield.integrations` | `ShieldedLLM`, `ToolGuard`, `decision_events` |
-| `aegis_shield.samples` / `__main__` | Sample generation and CLI |
+| `veritrail_policy.constants` | Decisions, precedence, rollout modes, statuses, operations |
+| `veritrail_policy.schema` | Declarative schema (`POLICY_SCHEMA`), `validate_policy`, `lint_policy`, `validate_parameter_specs`, semver helpers |
+| `veritrail_policy.detectors` | Wraps `veritrail_common.redaction`: normalization, de-obfuscation, structured redaction |
+| `veritrail_policy.params` | Tool-parameter validation and approval conditions |
+| `veritrail_policy.engine` | `PolicyEngine`, `Decision`, `apply_mode`, in-memory counters, approvals, kill switch |
+| `veritrail_policy.versioning` | `bump_version`, `new_version`, `diff_policies`, `record_change`, `add_approval`, `transition_status` |
+| `veritrail_policy.loader` | `load_policy`, `list_packs`, `load_pack` |
+| `veritrail_shield.profile` | Tolerant, type-safe normalization of untrusted advisor input |
+| `veritrail_shield.advisor` | `advise(profile)`, `analyze(profile)` |
+| `veritrail_shield.generator` | `generate_policy`, `to_yaml`, `to_json`, `from_yaml`, `from_json` (+ re-exported versioning helpers) |
+| `veritrail_shield.render` | Markdown report of advisor output |
+| `veritrail_shield.integrations` | `ShieldedLLM`, `ToolGuard`, `decision_events` |
+| `veritrail_shield.samples` / `__main__` | Sample generation and CLI |
 
-## 3. Policy schema reference (`aegis.policy/v1`)
+## 3. Policy schema reference (`veritrail.policy/v1`)
 
 Validation is implemented in Python (no jsonschema dependency). `validate_policy(policy) -> list[str]` returns
 structural errors (types, enums, formats, unknown fields) and semantic errors (below). `lint_policy` returns
@@ -77,7 +77,7 @@ non-blocking reviewer warnings.
 
 | Field | Type / values | Notes |
 |---|---|---|
-| `schema_version` | `aegis.policy/v1` | |
+| `schema_version` | `veritrail.policy/v1` | |
 | `policy_id` | `^[a-z0-9][a-z0-9._-]{2,79}$` | |
 | `policy_name`, `description`, `owner` | string | `owner` = accountable role |
 | `version` | SemVer 2.0 | `rollback.previous_version` must be lower |
@@ -91,7 +91,7 @@ non-blocking reviewer warnings.
 | `parameters.<name>` | `type` (string/integer/number/boolean/array), `required`, `min`, `max`, `min_length`, `max_length`, `max_items`, `regex` (full match), `enum`, `domain_allow_list` | undeclared parameters are rejected unless `additional_parameters: true` |
 | `require_approval_if[]` | `{param, op: gt/gte/lt/lte/eq/ne/in/not_in, value, reason}` | a missing parameter counts as *met* (conservative) |
 | `content.max_input_chars` | int | oversize payloads are denied unscanned and not logged |
-| `content.pii_redaction` | `enabled`, `entities[]` (from `aegis_common.redaction.PII_PATTERNS`), `apply_to[]` (prompt/response/tool_params/tool_output), `action` (REDACT/DENY/ESCALATE) | |
+| `content.pii_redaction` | `enabled`, `entities[]` (from `veritrail_common.redaction.PII_PATTERNS`), `apply_to[]` (prompt/response/tool_params/tool_output), `action` (REDACT/DENY/ESCALATE) | |
 | `content.prompt_injection`, `content.jailbreak` | `enabled`, `apply_to[]`, `action` (DENY/ESCALATE/REQUIRE_HUMAN_APPROVAL), `decode_obfuscation` | |
 | `content.transforms[]` | `append_disclosure` (`text`), `strip_unapproved_urls` (`domain_allow_list`), `truncate` (`max_chars`) | responses only |
 | `limits` | `requests_per_minute`, `tool_calls_per_session`, `tokens_per_day`, `cost_per_month_usd`, `action_on_breach` (RATE_LIMIT/ESCALATE), `alert_at_percent` | |
@@ -103,7 +103,7 @@ non-blocking reviewer warnings.
 | `approval` | `required_approver_roles[]`, `min_approvers`, `separation_of_duties`, `approved_by[{name, role, approved_at}]`, `approved_at` | |
 | `escalation` | `queue`, `contact_role` | |
 | `change_history[]` | `{version, date, author, change_type, summary}` | must include the current version |
-| `citations[]` | AEGIS control IDs | must exist in `content/controls/controls.yaml` |
+| `citations[]` | VERITRAIL control IDs | must exist in `content/controls/controls.yaml` |
 | `metadata` | free-form | |
 
 Semantic rules enforced by the validator: unique rule IDs and tools; deny-list conflicts; compilable regexes;
@@ -181,7 +181,7 @@ never override DENY, ESCALATE, RATE_LIMIT or the kill switch.
 
 ### 4.5 Audit
 
-Each evaluation appends to `aegis_common.audit.AuditLog` (SHA-256 hash chain; `verify()` detects modification,
+Each evaluation appends to `veritrail_common.audit.AuditLog` (SHA-256 hash chain; `verify()` detects modification,
 deletion and reordering). Content is logged per the policy's logging level and is **always** masked with *all*
 known entities regardless of the policy's own redaction list; oversize content is never logged; long content is
 truncated; the actor is masked if it looks like an e-mail address. Kill-switch engagement/release and approval
@@ -205,7 +205,7 @@ for `evaluate_as` (typically `enforce`) and records it in the decision and log w
 **Promotion.** Each stage change is a new policy version (`new_version` → draft, approvals cleared, previous
 version recorded for rollback) moving `draft → in_review → approved → active`. `add_approval` enforces required
 roles and separation of duties; `transition_status("approved")` requires complete approvals; activation must be
-performed by a holder of a required approver role. The advisor and generator never call these: AEGIS never
+performed by a holder of a required approver role. The advisor and generator never call these: VERITRAIL never
 promotes or activates a policy on its own.
 
 Advisor exit criteria (scaled by risk): observe — minimum representative volume (500 / 1,000 / 5,000 / 10,000),
@@ -217,7 +217,7 @@ reviewed; enforce — kill-switch drill passed, steady-state targets met; contai
 
 ## 6. Runtime Shield Advisor
 
-**Inputs** (`aegis_shield.profile.PROFILE_FIELDS`): app name, purpose, users/business functions, model, vendor,
+**Inputs** (`veritrail_shield.profile.PROFILE_FIELDS`): app name, purpose, users/business functions, model, vendor,
 tools (each with operation type, optional `parameters`, `max_amount`, `auto_approve_below`, `currencies`,
 `allowed_domains`, `recipient_param`, `approval_roles`, `allow_pii_entities`, `requires_approval`,
 `data_sensitivity`), data categories, data sensitivity, autonomy, human-approval model, environment, risk tier,
@@ -233,7 +233,7 @@ export/external_send 3, delete/payment 4), data exposure (sensitivity, autonomou
 parties, production state changes, ungated irreversible actions). Composite = 0.7 × mean + 0.3 × max; Low < 1.75 ≤
 Medium < 2.5 ≤ High < 3.5 ≤ Critical. Floors: any Critical dimension → ≥ High; asserted High → ≥ High;
 Prohibited-review → Critical; autonomous + irreversible → ≥ High; special-category data → ≥ Medium (≥ High with egress).
-If the asserted tier is lower than the inferred tier the mismatch is flagged; AEGIS does not change the tier
+If the asserted tier is lower than the inferred tier the mismatch is flagged; VERITRAIL does not change the tier
 (EI-02; a tier change needs human approval). The policy scope keeps the registered tier.
 
 **Tool matrix.** `allowed` / `conditional` / `approval` / `denied` with reasons, scopes, parameter constraints,
@@ -255,8 +255,8 @@ by a named human.
 **SDK wrapper** — wrap the model call; the model only ever sees the permitted (e.g. redacted) payload:
 
 ```python
-from aegis_policy.engine import PolicyEngine
-from aegis_shield.integrations import ShieldedLLM, Blocked
+from veritrail_policy.engine import PolicyEngine
+from veritrail_shield.integrations import ShieldedLLM, Blocked
 engine = PolicyEngine(approved_policy, "var/audit/runtime_shield.jsonl",
                       default_context={"agent_name": "northwind-support-agent", "environment": "production"})
 llm = ShieldedLLM(engine, call_model, identity=user_claims, session_id=session_id)
@@ -269,7 +269,7 @@ except Blocked as b:
 **Gateway / proxy** — run `PolicyEngine.evaluate` in an HTTP proxy in front of the model and tool APIs (one engine
 per policy; identity from the verified JWT; context from routing). Return 403 for DENY, 429 for RATE_LIMIT, 202 with
 `approval_request_id` for REQUIRE_HUMAN_APPROVAL. This centralizes enforcement for applications that cannot embed the
-SDK. (The AEGIS API in this repo exposes the advisor at `POST /api/shield/advise`; a production enforcement gateway is
+SDK. (The VERITRAIL API in this repo exposes the advisor at `POST /api/shield/advise`; a production enforcement gateway is
 a deployment component, not part of the MVP server.)
 
 **Agent-framework hooks** — register `ToolGuard.call` as the framework's pre-tool-execution hook: tool calls are
@@ -328,7 +328,7 @@ the record hash for correlation with the tamper-evident log.
 - **Audit log is tamper-evident, not tamper-proof**, and single-writer per file; ship to WORM storage. The shared
   `AuditLog.append` rescans the file to find the previous hash, so append cost grows with log size (≈3 ms per
   evaluation end-to-end on a small log); rotate logs per day/policy or cache the last hash (proposed to the
-  `aegis_common` owner).
+  `veritrail_common` owner).
 - **Advisor scoring is a transparent heuristic**, not a validated risk model; outputs are Inferred and require human
   confirmation. Limits, retention periods and thresholds are starting points to calibrate.
 - **No compliance determination.** Control mappings are indicative; regulatory applicability and timelines must be
@@ -337,14 +337,14 @@ the record hash for correlation with the tamper-evident log.
 ## 10. Running and testing
 
 ```bash
-cd /work/aegis
+cd /work/veritrail
 python3 -m pytest tests/policy-engine tests/security/test_policy_adversarial.py \
   tests/security/test_policy_redaction_leakage.py tests/security/test_policy_fuzz.py -q
 export PYTHONPATH=$(ls -d app/*/ | tr '\n' ':')
-python3 -m aegis_shield samples                  # regenerate output/sample_reports/runtime_shield/
-python3 -m aegis_shield advise profile.yaml --out /tmp/shield
-python3 -m aegis_shield validate content/policy_packs/*.yaml
-python3 -m aegis_shield diff old_policy.yaml new_policy.yaml
+python3 -m veritrail_shield samples                  # regenerate output/sample_reports/runtime_shield/
+python3 -m veritrail_shield advise profile.yaml --out /tmp/shield
+python3 -m veritrail_shield validate content/policy_packs/*.yaml
+python3 -m veritrail_shield diff old_policy.yaml new_policy.yaml
 ```
 
 Policy packs: `baseline`, `customer_support_agent`, `financial_operations_agent`,

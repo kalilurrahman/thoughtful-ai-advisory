@@ -1,8 +1,8 @@
 ---
-title: "AEGIS implementation runbooks — standing up AI governance controls"
+title: "VERITRAIL implementation runbooks — standing up AI governance controls"
 h1: "Implementation runbooks"
 slug: /framework/runbooks/
-description: "Step-by-step AEGIS runbooks for AI inventory, intake and approval, agent onboarding, kill-switch drills, AI incidents, evidence packs and vendor AI review."
+description: "Step-by-step VERITRAIL runbooks for AI inventory, intake and approval, agent onboarding, kill-switch drills, AI incidents, evidence packs and vendor AI review."
 section: framework
 nav_label: "Runbooks"
 nav_order: 50
@@ -13,7 +13,7 @@ secondary_cta: blueprint
 updated: 2026-10-21
 ---
 
-Controls say *what* must be true. Runbooks say *how* to make it true and keep it true. Each AEGIS runbook names a trigger, an owner, the steps, the evidence produced and the controls it implements. They are written for the people who do the work — AI CoE leads, platform engineers, risk analysts — and are designed to be adapted to your tooling and approved by your governance forum.
+Controls say *what* must be true. Runbooks say *how* to make it true and keep it true. Each VERITRAIL runbook names a trigger, an owner, the steps, the evidence produced and the controls it implements. They are written for the people who do the work — AI CoE leads, platform engineers, risk analysts — and are designed to be adapted to your tooling and approved by your governance forum.
 
 Downloadable editable versions are listed in the [runbook library](/resources/runbooks/).
 
@@ -79,7 +79,7 @@ Downloadable editable versions are listed in the [runbook library](/resources/ru
 1. **Detect and log.** Sources include monitoring alerts, policy denials, user reports and the concern-reporting channel (AO-06).
 2. **Triage.** Classify: harmful or incorrect output, data leakage, unauthorized action, security compromise, fairness concern, drift.
 3. **Contain.** Apply Contain mode, revoke tools or disable the system as needed (IS-15).
-4. **Assess notification obligations.** Legal and compliance determine whether any regulatory, contractual or customer notification applies (SE-04). AEGIS does not make that determination.
+4. **Assess notification obligations.** Legal and compliance determine whether any regulatory, contractual or customer notification applies (SE-04). VERITRAIL does not make that determination.
 5. **Remediate and review.** Root cause, corrective actions (SE-06), and lessons fed into policies and tests.
 
 **Evidence produced:** incident record; containment timeline; notification decision record; post-incident review.

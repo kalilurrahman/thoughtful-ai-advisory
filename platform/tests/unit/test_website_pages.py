@@ -1,12 +1,12 @@
-"""Unit tests: front-matter parsing/validation and page loading (aegis_website.pages)."""
+"""Unit tests: front-matter parsing/validation and page loading (veritrail_website.pages)."""
 from __future__ import annotations
 
 import textwrap
 
 import pytest
 
-from aegis_website.errors import BuildError
-from aegis_website.pages import load_pages, parse_page
+from veritrail_website.errors import BuildError
+from veritrail_website.pages import load_pages, parse_page
 
 
 def page(meta: str, body: str = "Body text.") -> str:
@@ -14,11 +14,11 @@ def page(meta: str, body: str = "Body text.") -> str:
 
 
 VALID = """
-title: "AEGIS Shield — Runtime guardrails"
+title: "VERITRAIL Shield — Runtime guardrails"
 slug: /solutions/shield/
 description: "A description that is long enough to be a real meta description for search engines and social cards."
 section: solutions
-nav_label: "AEGIS Shield"
+nav_label: "VERITRAIL Shield"
 nav_order: 40
 template: page
 schema_type: Service
@@ -32,7 +32,7 @@ updated: 2026-10-21
 
 def test_parse_valid_page_defaults_and_fields():
     p = parse_page(page(VALID, "Hello **world**"), "x.md")
-    assert p.title.startswith("AEGIS Shield")
+    assert p.title.startswith("VERITRAIL Shield")
     assert p.h1 == p.title  # h1 defaults to title
     assert p.slug == "/solutions/shield/"
     assert p.schema_type == "Service"

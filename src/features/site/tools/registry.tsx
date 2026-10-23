@@ -32,6 +32,8 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
   "guardrail-generator": lazy(() =>
     import("./guardrail-generator").then((m) => ({ default: m.GuardrailGeneratorTool })),
   ),
-  "ask-aegis": lazy(() => import("./ask-aegis").then((m) => ({ default: m.AskAegisTool }))),
+  "ask-veritrail": lazy(() =>
+    import("./ask-veritrail").then((m) => ({ default: m.AskVeritrailTool })),
+  ),
   "risk-triage": lazy(() => import("./risk-triage").then((m) => ({ default: m.RiskTriageTool }))),
 };

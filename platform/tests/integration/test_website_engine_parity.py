@@ -3,7 +3,7 @@
 Runs node once over ~70 random and edge-case answer/profile sets and compares the full
 score_assessment() and preliminary_result() outputs (JSON round-tripped), plus validation errors.
 Also checks the offline Markdown report (assessment-report.js toMarkdown) against
-aegis_reports.maturity.render_maturity_markdown.
+veritrail_reports.maturity.render_maturity_markdown.
 """
 from __future__ import annotations
 
@@ -16,10 +16,10 @@ from pathlib import Path
 
 import pytest
 
-from aegis_assessment.engine import AssessmentInputError, preliminary_result, score_assessment
-from aegis_common.content import load_assessment_template
-from aegis_website.builder import SiteBuilder
-from aegis_website.paths import FIXTURE_PAGES_DIR, STATIC_DIR
+from veritrail_assessment.engine import AssessmentInputError, preliminary_result, score_assessment
+from veritrail_common.content import load_assessment_template
+from veritrail_website.builder import SiteBuilder
+from veritrail_website.paths import FIXTURE_PAGES_DIR, STATIC_DIR
 
 NODE = shutil.which("node")
 pytestmark = pytest.mark.skipif(NODE is None, reason="node is not installed")
@@ -180,7 +180,7 @@ def test_engine_parity_validation_errors(bundle):
 
 def test_offline_markdown_matches_server_report(bundle):
     """The client-side Markdown download mirrors the server report section-for-section."""
-    from aegis_reports.maturity import render_maturity_markdown
+    from veritrail_reports.maturity import render_maturity_markdown
 
     qids = _qids()
     rnd = random.Random(7)
@@ -195,5 +195,5 @@ def test_offline_markdown_matches_server_report(bundle):
         py_md = render_maturity_markdown(result, {"company": case["markdown"]}, generated="2026-10-21")
         js_md = js["md"]
         # the browser version states it was generated locally; otherwise identical
-        js_md = js_md.replace(" (in your browser; not stored by AEGIS)", "")
+        js_md = js_md.replace(" (in your browser; not stored by VERITRAIL)", "")
         assert js_md == py_md

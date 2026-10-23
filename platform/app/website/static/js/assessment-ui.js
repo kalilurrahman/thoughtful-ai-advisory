@@ -1,6 +1,6 @@
 /*
- * AEGIS Maturity Self-Assessment — browser UI.
- * Depends on site.js (AEGIS), assessment-engine.js (AegisAssessment), assessment-report.js (AegisReport).
+ * VERITRAIL Maturity Self-Assessment — browser UI.
+ * Depends on site.js (VERITRAIL), assessment-engine.js (VeritrailAssessment), assessment-report.js (VeritrailReport).
  *
  * Flow: profile -> 8 domain steps -> instant preliminary result -> business-email gate ->
  * POST /api/leads -> detailed report with server PDF/MD links. If the API is unreachable
@@ -12,9 +12,9 @@
   'use strict';
   var doc = document;
   var root = doc.getElementById('assessment');
-  if (!root || !window.AegisAssessment || !window.AegisReport || !window.AEGIS) { return; }
-  var A = window.AEGIS, E = window.AegisAssessment, R = window.AegisReport;
-  var STORE_KEY = 'aegis.assessment.v1';
+  if (!root || !window.VeritrailAssessment || !window.VeritrailReport || !window.VERITRAIL) { return; }
+  var A = window.VERITRAIL, E = window.VeritrailAssessment, R = window.VeritrailReport;
+  var STORE_KEY = 'veritrail.assessment.v1';
   var bundle = E.loadBundle(doc);
   var cfg = A.readConfig(doc);
   var form = doc.getElementById('assessment-form');
@@ -184,7 +184,7 @@
     var url = URL.createObjectURL(blob);
     var a = doc.createElement('a');
     a.href = url;
-    a.download = 'AEGIS_Maturity_Report' + (company ? '_' + company.replace(/[^A-Za-z0-9]+/g, '_').slice(0, 40) : '') + '.md';
+    a.download = 'VERITRAIL_Maturity_Report' + (company ? '_' + company.replace(/[^A-Za-z0-9]+/g, '_').slice(0, 40) : '') + '.md';
     doc.body.appendChild(a);
     a.click();
     setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1000);
@@ -221,8 +221,8 @@
   function localFallback(info, reason) {
     var result = E.scoreAssessment(state.answers, state.profile, bundle);
     var msg = (reason === 'unavailable'
-      ? 'We could not reach the AEGIS service, so your details were not saved and this report has not been emailed to you. '
-      : 'The AEGIS service returned an error, so your details may not have been saved and this report has not been emailed to you. ')
+      ? 'We could not reach the VERITRAIL service, so your details were not saved and this report has not been emailed to you. '
+      : 'The VERITRAIL service returned an error, so your details may not have been saved and this report has not been emailed to you. ')
       + 'Your detailed report has been generated in your browser below. Download it as Markdown or use “Print or save as PDF”.';
     showReport(result, 'local', { company: info.company, message: msg });
   }
@@ -252,7 +252,7 @@
         var msg = 'Your detailed report is ready. ' + (es === 'sent'
           ? 'A copy has also been emailed to you.'
           : es === 'pending_approval'
-            ? 'Emailing a copy is queued for review by our team (AEGIS requires human approval for external communications), so please use the download links below.'
+            ? 'Emailing a copy is queued for review by our team (VERITRAIL requires human approval for external communications), so please use the download links below.'
             : 'We were not able to email a copy, so please use the download links below.');
         showReport(r.data.result, 'server', { company: info.company, message: msg, pdf: r.data.report_pdf_url, md: r.data.report_md_url });
       } else if (r.kind === 'client_error') {

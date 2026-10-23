@@ -5,8 +5,8 @@ import copy
 
 import pytest
 
-from aegis_common.audit import AuditLog
-from aegis_policy.engine import PolicyEngine
+from veritrail_common.audit import AuditLog
+from veritrail_policy.engine import PolicyEngine
 from pe_helpers import CTX, _base_policy
 
 

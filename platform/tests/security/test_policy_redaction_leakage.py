@@ -11,10 +11,10 @@ import json
 
 import pytest
 
-from aegis_common.audit import AuditLog
-from aegis_policy.detectors import redact_text
-from aegis_policy.engine import PolicyEngine
-from aegis_policy.loader import load_pack
+from veritrail_common.audit import AuditLog
+from veritrail_policy.detectors import redact_text
+from veritrail_policy.engine import PolicyEngine
+from veritrail_policy.loader import load_pack
 
 CTX = {"agent_name": "leak-agent", "environment": "production", "risk_tier": "High", "model": "m", "tenant": "acme"}
 ID = {"sub": "u-1", "tenant_id": "acme", "roles": ["support_agent"]}
@@ -104,7 +104,7 @@ def test_limitation_dob_and_passport():
 
 
 def test_cloud_tokens_redacted():
-    # Formerly a pinned limitation; fixed by adding aws_access_key / github_token patterns to aegis_common.redaction.
+    # Formerly a pinned limitation; fixed by adding aws_access_key / github_token patterns to veritrail_common.redaction.
     out = redact_text("AKIAIOSFODNN7EXAMPLE and ghp_abcdefghijklmnopqrstuvwxyz0123456789", None).text
     assert "AKIAIOSFODNN7EXAMPLE" not in out and "ghp_" not in out
 

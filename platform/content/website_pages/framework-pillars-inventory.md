@@ -1,8 +1,8 @@
 ---
-title: "Enterprise AI Inventory (EI) — AEGIS Framework pillar"
+title: "Enterprise AI Inventory (EI) — VERITRAIL Framework pillar"
 h1: "Pillar 2: Enterprise AI Inventory"
 slug: /framework/pillars/inventory/
-description: "AEGIS EI controls build one owned, classified system of record for AI systems, models, prompts, data, agents, tools, vendor AI and shadow AI use."
+description: "VERITRAIL EI controls build one owned, classified system of record for AI systems, models, prompts, data, agents, tools, vendor AI and shadow AI use."
 section: framework
 nav_label: "Inventory (EI)"
 nav_order: 17
@@ -12,15 +12,15 @@ primary_cta: baseline
 secondary_cta: assessment
 faq:
   - q: "What counts as an AI system for inventory purposes?"
-    a: "AEGIS recommends a broad scope: in-house models, LLM applications, agents, vendor AI products, AI features embedded in SaaS tools and foundation-model APIs. Scope decisions should be documented so that exclusions are deliberate."
+    a: "VERITRAIL recommends a broad scope: in-house models, LLM applications, agents, vendor AI products, AI features embedded in SaaS tools and foundation-model APIs. Scope decisions should be documented so that exclusions are deliberate."
   - q: "Can we use our CMDB as the AI inventory?"
-    a: "Sometimes, if it can hold the AI-specific fields: intended purpose, risk tier, models and prompts, data sources, agent tools and permitted actions, and owner attestations. AEGIS Register can complement or feed an existing CMDB."
+    a: "Sometimes, if it can hold the AI-specific fields: intended purpose, risk tier, models and prompts, data sources, agent tools and permitted actions, and owner attestations. VERITRAIL Register can complement or feed an existing CMDB."
 updated: 2026-10-21
 ---
 
 **Core question: what AI do we run, who owns it, and how risky is it?**
 
-Every governance activity depends on knowing what exists. You cannot assess, approve, monitor, protect or evidence an AI system that is not in your inventory. That is why the AEGIS self-assessment raises a **Critical gap** flag when inventory maturity is low — and why the inventory pillar is usually the first workstream in a Governance Baseline.
+Every governance activity depends on knowing what exists. You cannot assess, approve, monitor, protect or evidence an AI system that is not in your inventory. That is why the VERITRAIL self-assessment raises a **Critical gap** flag when inventory maturity is low — and why the inventory pillar is usually the first workstream in a Governance Baseline.
 
 ## What good looks like
 
@@ -53,7 +53,7 @@ Every governance activity depends on knowing what exists. You cannot assess, app
 
 ## The minimum viable record
 
-A complete record can hold dozens of fields. To get to coverage quickly, AEGIS recommends starting with a minimum viable record and enriching material systems afterward:
+A complete record can hold dozens of fields. To get to coverage quickly, VERITRAIL recommends starting with a minimum viable record and enriching material systems afterward:
 
 | Field | Why it matters | Control |
 |---|---|---|
@@ -74,9 +74,9 @@ A complete record can hold dozens of fields. To get to coverage quickly, AEGIS r
 - **Agents without tool manifests.** An agent's risk depends heavily on what it can do. Without EI-07, runtime least-privilege (IS-11) has no baseline.
 - **Tiers nobody confirmed.** Automated tier suggestions are useful but are **Inferred** until a human confirms them.
 
-## How AEGIS helps
+## How VERITRAIL helps
 
-- [AEGIS Register](/solutions/register/) provides the system of record, intake register, agent and tool registry, and attestation workflow.
+- [VERITRAIL Register](/solutions/register/) provides the system of record, intake register, agent and tool registry, and attestation workflow.
 - The [AI use-case risk triage](/tools/risk-triage/) tool suggests a provisional tier from a short intake; the result is labelled Inferred and requires human confirmation.
 - The Governance Baseline inventories up to 25 AI systems as a starting point.
 

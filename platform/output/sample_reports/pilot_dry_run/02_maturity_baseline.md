@@ -1,10 +1,10 @@
 # AI Governance Maturity Report — Example Regional Bank (synthetic)
 
-**Assessment:** AI Governance Maturity Self-Assessment (template AEGIS-SA-MATURITY v1.0.0)  
+**Assessment:** AI Governance Maturity Self-Assessment (template VERITRAIL-SA-MATURITY v1.0.0)  
 **Generated:** 2026-10-21  
 **Evidence status:** User-asserted — all answers are self-reported; no evidence has been reviewed.
 
-> This self-assessment produces an indicative, self-reported view of AI governance maturity. All results are User-asserted: no evidence has been reviewed. Framework readiness indicators are not a determination of conformity with ISO/IEC 42001, compliance with the EU AI Act, or alignment with NIST AI RMF. AEGIS does not certify compliance and this report is not legal advice.
+> This self-assessment produces an indicative, self-reported view of AI governance maturity. All results are User-asserted: no evidence has been reviewed. Framework readiness indicators are not a determination of conformity with ISO/IEC 42001, compliance with the EU AI Act, or alignment with NIST AI RMF. VERITRAIL does not certify compliance and this report is not legal advice.
 
 ## 1. Overall maturity
 
@@ -25,7 +25,7 @@
 | Human Oversight & Operations | 12% | 53.3 | `[###########.........]` |
 | Assurance, Evidence & Improvement | 10% | 46.7 | `[#########...........]` |
 
-Scoring: domain score = sum of answers ÷ maximum possible × 100; overall = Σ(domain score × weight). Source: AEGIS self-assessment template AEGIS-SA-MATURITY v1.0.0.
+Scoring: domain score = sum of answers ÷ maximum possible × 100; overall = Σ(domain score × weight). Source: VERITRAIL self-assessment template VERITRAIL-SA-MATURITY v1.0.0.
 
 ## 3. Top strengths
 
@@ -33,10 +33,10 @@ Scoring: domain score = sum of answers ÷ maximum possible × 100; overall = Σ(
 
 ## 4. Top gaps
 
-| # | Domain | Question | Answer | Recommended action | AEGIS controls |
+| # | Domain | Question | Answer | Recommended action | VERITRAIL controls |
 |---|---|---|---|---|---|
 | 1 | AI Inventory & Visibility | INV-Q1: Does your organization maintain a complete inventory of AI systems, models, agents, and vendor AI products? | 2/5 | Stand up an AI system of record and run inventory workshops plus shadow-AI discovery to reach full coverage. | EI-01, EI-08, EI-09 |
-| 2 | AI Inventory & Visibility | INV-Q2: Are AI systems classified by business criticality, data sensitivity, decision impact, autonomy, and regulatory relevance? | 2/5 | Apply AEGIS risk-tier criteria to every inventory record and approve tier assignments. | EI-02 |
+| 2 | AI Inventory & Visibility | INV-Q2: Are AI systems classified by business criticality, data sensitivity, decision impact, autonomy, and regulatory relevance? | 2/5 | Apply VERITRAIL risk-tier criteria to every inventory record and approve tier assignments. | EI-02 |
 | 3 | AI Inventory & Visibility | INV-Q3: Can you identify the owner, purpose, users, data sources, and dependencies for each material AI system? | 2/5 | Complete owner, purpose, users, data-source and dependency fields for all material AI systems. | EI-03, EI-04, EI-06, EI-10 |
 | 4 | Risk Management & Lifecycle | RSK-Q2: Are model, prompt, data, vendor, and agent changes subject to change control and reassessment? | 2/5 | Add AI-specific change triggers (model, prompt, data, vendor, tool, agent) to change management with reassessment rules. | GL-04, EI-05 |
 | 5 | Risk Management & Lifecycle | RSK-Q3: Is there a defined process for retiring, restricting, or remediating AI systems that no longer meet requirements? | 2/5 | Define restrict/remediate/retire procedures and an exception register with expiry dates. | GL-09, GL-10 |
@@ -55,7 +55,7 @@ Scoring: domain score = sum of answers ÷ maximum possible × 100; overall = Σ(
 ### First 30 days — stabilise
 
 - Stand up an AI system of record and run inventory workshops plus shadow-AI discovery to reach full coverage. (AI Inventory & Visibility; INV-Q1; controls EI-01, EI-08, EI-09)
-- Apply AEGIS risk-tier criteria to every inventory record and approve tier assignments. (AI Inventory & Visibility; INV-Q2; controls EI-02)
+- Apply VERITRAIL risk-tier criteria to every inventory record and approve tier assignments. (AI Inventory & Visibility; INV-Q2; controls EI-02)
 - Complete owner, purpose, users, data-source and dependency fields for all material AI systems. (AI Inventory & Visibility; INV-Q3; controls EI-03, EI-04, EI-06, EI-10)
 - Add AI-specific change triggers (model, prompt, data, vendor, tool, agent) to change management with reassessment rules. (Risk Management & Lifecycle; RSK-Q2; controls GL-04, EI-05)
 - Define restrict/remediate/retire procedures and an exception register with expiry dates. (Risk Management & Lifecycle; RSK-Q3; controls GL-09, GL-10)
@@ -72,7 +72,7 @@ Scoring: domain score = sum of answers ÷ maximum possible × 100; overall = Σ(
 
 - No actions in this horizon based on your answers.
 
-## 7. Recommended AEGIS controls
+## 7. Recommended VERITRAIL controls
 
 | Control | Pillar | Priority | NIST AI RMF | ISO/IEC 42001 | EU AI Act |
 |---|---|---|---|---|---|
@@ -87,7 +87,7 @@ Scoring: domain score = sum of answers ÷ maximum possible × 100; overall = Σ(
 | **SE-05** Audit-ready evidence packs | SE | high | GOVERN 1.4, MEASURE 2.9 | 7.5, 9.2 | Art. 11, Art. 18 |
 | **SE-08** Immutable action logging | SE | critical | MEASURE 2.8, MANAGE 4.1 | A.6.2.8 | Art. 12, Art. 19, Art. 26 |
 
-Framework mappings are indicative AEGIS interpretations (Control Library v1.0.0).
+Framework mappings are indicative VERITRAIL interpretations (Control Library v1.0.0).
 
 ## 8. Framework readiness indicators (indicative — not a compliance determination)
 
@@ -126,20 +126,20 @@ Framework mappings are indicative AEGIS interpretations (Control Library v1.0.0)
 
 These indicators summarise self-reported practices that relate to each framework area. They do not indicate conformity with ISO/IEC 42001, compliance with the EU AI Act, or alignment with NIST AI RMF, and EU AI Act applicability depends on your role (provider/deployer) and system classification.
 
-## 9. Recommended AEGIS modules
+## 9. Recommended VERITRAIL modules
 
-- **AEGIS Assess** — Establish an evidence-based baseline of maturity and use-case risk.
-- **AEGIS Register** — Create a single, owned and classified AI system of record.
-- **AEGIS Control** — Operationalise policies, approval gates and lifecycle workflows.
-- **AEGIS Shield** — Enforce runtime guardrails, approvals and containment for LLM apps and agents.
-- **AEGIS Assurance** — Test controls continuously and produce audit-ready evidence packs.
-- **AEGIS Agent** — Accelerate assessments, gap analysis and reporting with a citation-backed governance copilot.
+- **VERITRAIL Assess** — Establish an evidence-based baseline of maturity and use-case risk.
+- **VERITRAIL Register** — Create a single, owned and classified AI system of record.
+- **VERITRAIL Control** — Operationalise policies, approval gates and lifecycle workflows.
+- **VERITRAIL Shield** — Enforce runtime guardrails, approvals and containment for LLM apps and agents.
+- **VERITRAIL Assurance** — Test controls continuously and produce audit-ready evidence packs.
+- **VERITRAIL Agent** — Accelerate assessments, gap analysis and reporting with a citation-backed governance copilot.
 
-## 10. Next step: AEGIS Governance Baseline
+## 10. Next step: VERITRAIL Governance Baseline
 
 A fixed-scope 4–6 week engagement — inventory up to 25 AI systems, validate this maturity baseline with evidence, deep-dive five priority systems, review two agents, and deliver a gap register, remediation roadmap and executive readiness report.
 
-**Book an AEGIS Governance Baseline:** /contact/book-governance-baseline/
+**Book an VERITRAIL Governance Baseline:** /contact/book-governance-baseline/
 
 ---
 
@@ -174,17 +174,17 @@ A fixed-scope 4–6 week engagement — inventory up to 25 AI systems, validate 
 
 ### Appendix B — Sources
 
-- AEGIS Control EI-01: Enterprise AI inventory (system of record) (Control Library v1.0.0)
-- AEGIS Control EI-09: Shadow AI discovery (Control Library v1.0.0)
-- AEGIS Control IS-04: Sensitive data redaction and masking (Control Library v1.0.0)
-- AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)
-- AEGIS Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)
-- AEGIS Control IS-11: Least-privilege tool access (Control Library v1.0.0)
-- AEGIS Control IS-12: Runtime guardrails and policy enforcement (Control Library v1.0.0)
-- AEGIS Control IS-15: Kill switch and rollback (Control Library v1.0.0)
-- AEGIS Control SE-05: Audit-ready evidence packs (Control Library v1.0.0)
-- AEGIS Control SE-08: Immutable action logging (Control Library v1.0.0)
-- AEGIS Control IS-08: Transparency and AI disclosures (Control Library v1.0.0)
-- AEGIS Self-Assessment template AEGIS-SA-MATURITY v1.0.0
+- VERITRAIL Control EI-01: Enterprise AI inventory (system of record) (Control Library v1.0.0)
+- VERITRAIL Control EI-09: Shadow AI discovery (Control Library v1.0.0)
+- VERITRAIL Control IS-04: Sensitive data redaction and masking (Control Library v1.0.0)
+- VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)
+- VERITRAIL Control IS-14: Prompt-injection and data-leakage testing (Control Library v1.0.0)
+- VERITRAIL Control IS-11: Least-privilege tool access (Control Library v1.0.0)
+- VERITRAIL Control IS-12: Runtime guardrails and policy enforcement (Control Library v1.0.0)
+- VERITRAIL Control IS-15: Kill switch and rollback (Control Library v1.0.0)
+- VERITRAIL Control SE-05: Audit-ready evidence packs (Control Library v1.0.0)
+- VERITRAIL Control SE-08: Immutable action logging (Control Library v1.0.0)
+- VERITRAIL Control IS-08: Transparency and AI disclosures (Control Library v1.0.0)
+- VERITRAIL Self-Assessment template VERITRAIL-SA-MATURITY v1.0.0
 
-*AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.*
+*VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.*

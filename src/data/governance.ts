@@ -1,4 +1,4 @@
-// Seed content supplied in the AEGIS handoff.
+// Seed content supplied in the VERITRAIL handoff.
 export const PILLARS = [
   { letter: "G", name: "Governance & Accountability", nist: "Govern" },
   { letter: "O", name: "Inventory & Oversight", nist: "Map" },
@@ -777,8 +777,8 @@ export const SOURCES = [
     tier: "C",
     type: "Advisory",
     jurisdiction: "Authored",
-    title: "AEGIS gate thresholds & priority formula",
-    publisher: "AEGIS authored advisory model",
+    title: "VERITRAIL gate thresholds & priority formula",
+    publisher: "VERITRAIL authored advisory model",
     summary:
       "Workspace gate floors and remediation priorities are consulting assumptions, not external standards.",
     highlight1:
@@ -988,7 +988,7 @@ export const CALCS = [
   {
     id: "maturity",
     name: "Maturity score",
-    desc: "The AEGIS Index — computed live from the assessment.",
+    desc: "The VERITRAIL Index — computed live from the assessment.",
     inputs: [],
   },
   {
@@ -1100,8 +1100,8 @@ export const PACKS = [
     icon: "ph-duotone ph-newspaper",
     desc: "Index, maturity band, pillar chart, top risks, gate status, recommendations.",
     contents: [
-      "AEGIS Index & maturity band",
-      "GOVERN pillar scores vs targets",
+      "VERITRAIL Index & maturity band",
+      "TILLER pillar scores vs targets",
       "Release-gate status",
       "Top 5 gaps & recommendations",
     ],

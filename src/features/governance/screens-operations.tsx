@@ -45,7 +45,7 @@ export function InventoryScreen() {
   const notes: Record<string, string> = {
     Prohibited: "EU AI Act Art. 5 — do not deploy; escalate to legal.",
     "High-risk":
-      "Annex III candidate — Art. 9–15 obligations apply; full GOVERN assessment and release gate required.",
+      "Annex III candidate — Art. 9–15 obligations apply; full TILLER assessment and release gate required.",
     Limited: "Art. 50 transparency duties apply; standard guardrail bundle.",
     Minimal: "Minimal risk — acceptable-use policy and inventory entry suffice.",
   };
@@ -211,7 +211,7 @@ export function InventoryScreen() {
         review.
       </p>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="aegis-sheet">
+        <DialogContent className="veritrail-sheet">
           <DialogTitle>
             {editingIndex === null ? "Register & screen" : "Edit inventory record"}
           </DialogTitle>

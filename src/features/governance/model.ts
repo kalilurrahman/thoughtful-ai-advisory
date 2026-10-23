@@ -179,7 +179,7 @@ export function calculate(
   if (id === "maturity") {
     const index = indexScore(scores);
     return {
-      headline: "AEGIS Index",
+      headline: "VERITRAIL Index",
       value: index + " · " + maturityBand(index),
       raw: index,
       rows: PILLARS.map((p, i) => [p.letter + " · " + p.name, String(scores[i])]),

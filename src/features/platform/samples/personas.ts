@@ -2,7 +2,7 @@
  * Synthetic sample inputs (fictional organizations; not customer data).
  *
  * PERSONAS and USE_CASES are copied from platform/scripts/generate_samples.py and SHIELD_SAMPLES
- * from platform/app/runtime-shield/aegis_shield/examples.py (SAMPLES). Key order matters: it
+ * from platform/app/runtime-shield/veritrail_shield/examples.py (SAMPLES). Key order matters: it
  * drives the order of answers/profile fields in the generated JSON, exactly as in Python.
  */
 

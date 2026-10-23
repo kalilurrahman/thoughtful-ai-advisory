@@ -5,10 +5,10 @@ import re
 
 import pytest
 
-from aegis_website.builder import SiteBuilder
-from aegis_website.paths import FIXTURE_PAGES_DIR, STATIC_DIR
+from veritrail_website.builder import SiteBuilder
+from veritrail_website.paths import FIXTURE_PAGES_DIR, STATIC_DIR
 
-CSS = (STATIC_DIR / "css" / "aegis.css").read_text(encoding="utf-8")
+CSS = (STATIC_DIR / "css" / "veritrail.css").read_text(encoding="utf-8")
 
 
 def _vars() -> dict[str, str]:
@@ -107,11 +107,11 @@ def test_assessment_widgets_are_grouped_and_announced(site):
 
 
 def test_tool_results_and_statuses_are_live_regions(site):
-    for rel in ["tools/risk-triage/index.html", "tools/guardrail-generator/index.html", "tools/ask-aegis/index.html"]:
+    for rel in ["tools/risk-triage/index.html", "tools/guardrail-generator/index.html", "tools/ask-veritrail/index.html"]:
         html = (site.out_dir / rel).read_text()
         assert 'role="status" aria-live="polite"' in html, rel
         assert "<noscript>" in html
-    chat = (site.out_dir / "tools/ask-aegis/index.html").read_text()
+    chat = (site.out_dir / "tools/ask-veritrail/index.html").read_text()
     assert 'role="log"' in chat
 
 

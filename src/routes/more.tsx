@@ -4,7 +4,7 @@ import { pageHead } from "@/features/governance/meta";
 export const Route = createFileRoute("/more")({
   head: () =>
     pageHead(
-      "AEGIS tools",
+      "VERITRAIL tools",
       "Access release gates, guardrails, calculators, references and advisory plans.",
     ),
   component: MoreScreen,

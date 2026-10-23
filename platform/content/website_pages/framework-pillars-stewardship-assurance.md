@@ -1,8 +1,8 @@
 ---
-title: "Stewardship, Evidence & Assurance (SE) — AEGIS Framework pillar"
+title: "Stewardship, Evidence & Assurance (SE) — VERITRAIL Framework pillar"
 h1: "Pillar 5: Stewardship, Evidence & Assurance"
 slug: /framework/pillars/stewardship-assurance/
-description: "AEGIS SE controls cover control testing, evidence retention, tamper-evident logging, AI incidents, monitoring, internal audit and audit-ready evidence packs."
+description: "VERITRAIL SE controls cover control testing, evidence retention, tamper-evident logging, AI incidents, monitoring, internal audit and evidence packs."
 section: framework
 nav_label: "Assurance (SE)"
 nav_order: 20
@@ -14,7 +14,7 @@ faq:
   - q: "What is an audit-ready evidence pack?"
     a: "A structured bundle for one AI system containing its inventory record, risk assessment, approvals and conditions, test results, runtime policy versions, monitoring outputs, incidents and corrective actions — each item labelled with its evidence status."
   - q: "Does an evidence pack prove compliance?"
-    a: "No. It organizes evidence so that auditors, customers or regulators can evaluate it. Whether that evidence satisfies a particular legal or certification requirement is a judgement for qualified reviewers, not for AEGIS."
+    a: "No. It organizes evidence so that auditors, customers or regulators can evaluate it. Whether that evidence satisfies a particular legal or certification requirement is a judgement for qualified reviewers, not for VERITRAIL."
 updated: 2026-10-21
 ---
 
@@ -53,7 +53,7 @@ The assurance pillar closes the loop. Controls that are never tested drift into 
 
 ## Evidence quality, not evidence volume
 
-More documents do not mean better assurance. AEGIS labels every evidence item so reviewers can see its strength at a glance:
+More documents do not mean better assurance. VERITRAIL labels every evidence item so reviewers can see its strength at a glance:
 
 | Label | What it means for assurance |
 |---|---|
@@ -67,7 +67,7 @@ See [Gap analysis](/compliance/gap-analysis/) for how labels combine with severi
 
 ## Tamper-evident logging
 
-SE-08 asks for logs whose integrity can be checked. AEGIS's own platform writes material actions — policy decisions, approvals, evidence exports, assessment results — to a hash-chained audit log in which each entry includes the hash of the previous one, so that deletion or alteration of an entry is detectable on verification. Hash chaining is tamper-evident, not tamper-proof: protect the log store, restrict administrative access, and retain verification results as evidence too.
+SE-08 asks for logs whose integrity can be checked. VERITRAIL's own platform writes material actions — policy decisions, approvals, evidence exports, assessment results — to a hash-chained audit log in which each entry includes the hash of the previous one, so that deletion or alteration of an entry is detectable on verification. Hash chaining is tamper-evident, not tamper-proof: protect the log store, restrict administrative access, and retain verification results as evidence too.
 
 ## Common failure modes
 
@@ -75,9 +75,9 @@ SE-08 asks for logs whose integrity can be checked. AEGIS's own platform writes 
 - **Incident processes that ignore AI.** The security incident process has no category for harmful outputs, model drift or agent misbehavior, so AI incidents go unrecorded.
 - **Evidence assembled on demand.** Evidence packs are built in a scramble before each audit. Measure time-to-produce and make it a KPI (SE-03, SE-05).
 
-## How AEGIS helps
+## How VERITRAIL helps
 
-[AEGIS Assurance](/solutions/assurance/) provides control testing, evidence repository, incident workflow and evidence-pack generation. [AEGIS Shield](/solutions/shield/) feeds policy decisions and approvals into the tamper-evident log. The [AEGIS Agent](/solutions/agent/) can assemble a draft evidence index for a system, labelling each item — export of sensitive evidence always requires human approval.
+[VERITRAIL Assurance](/solutions/assurance/) provides control testing, evidence repository, incident workflow and evidence-pack generation. [VERITRAIL Shield](/solutions/shield/) feeds policy decisions and approvals into the tamper-evident log. The [VERITRAIL Agent](/solutions/agent/) can assemble a draft evidence index for a system, labelling each item — export of sensitive evidence always requires human approval.
 
 ## Indicative framework alignment
 

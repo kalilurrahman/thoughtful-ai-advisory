@@ -2,7 +2,7 @@
 title: "AI use-case risk triage — suggest a risk tier in 3 minutes"
 h1: "AI use-case risk triage"
 slug: /tools/risk-triage/
-description: "Answer a short intake about one AI use case and get a suggested AEGIS risk tier, the factors behind it and the modules it needs. Human confirmation required."
+description: "Answer a short intake about one AI use case and get a suggested VERITRAIL risk tier, the factors behind it and the modules it needs. A human confirms it."
 section: tools
 nav_label: "Risk triage"
 nav_order: 50
@@ -13,13 +13,13 @@ primary_cta: baseline
 secondary_cta: guardrails
 faq:
   - q: "Is the suggested tier the same as EU AI Act high-risk classification?"
-    a: "No. AEGIS tiers are an internal governance classification. The triage flags regulatory relevance — for example, domains such as credit, employment or essential services — so that your legal team can assess classification under the EU AI Act or other law."
+    a: "No. VERITRAIL tiers are an internal governance classification. The triage flags regulatory relevance — for example, domains such as credit, employment or essential services — so that your legal team can assess classification under the EU AI Act or other law."
   - q: "Why does the result say it requires human confirmation?"
     a: "Because changing or confirming a risk tier is a governance decision. The triage result is labelled Inferred; an accountable approver must confirm or change it (EI-02)."
 updated: 2026-10-21
 ---
 
-Describe one AI system or use case and get a suggested **AEGIS risk tier — Prohibited-review, High, Medium or Low** — with the reasoning behind it. Use it at intake to decide how much assessment a use case needs and who should approve it.
+Describe one AI system or use case and get a suggested **VERITRAIL risk tier — Prohibited-review, High, Medium or Low** — with the reasoning behind it. Use it at intake to decide how much assessment a use case needs and who should approve it.
 
 ## The intake
 

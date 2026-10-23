@@ -1,8 +1,8 @@
-# AEGIS Roadmap
+# VERITRAIL Roadmap
 
 Version 3.0 · 21 October 2026 · Owner: Product Lead · Status: Active
 
-This roadmap sequences AEGIS as **increments with dependencies, definitions of done and exit criteria**. It
+This roadmap sequences VERITRAIL as **increments with dependencies, definitions of done and exit criteria**. It
 deliberately carries **no calendar estimates for future work**: an increment starts when its dependencies meet their
 exit criteria, and it ends when its own exit criteria are met. Stories live in [BACKLOG](BACKLOG.md); risks in
 [RISK_REGISTER](RISK_REGISTER.md); requirements in [PRODUCT_REQUIREMENTS](PRODUCT_REQUIREMENTS.md).
@@ -14,7 +14,7 @@ exit criteria, and it ends when its own exit criteria are met. Stories live in [
 | 0 | Framework & content foundation | Content built in sprint 1 (control library, framework docs, mappings, industry packs) — pending human review |
 | 1 | Website | In progress — built in sprint 1 |
 | 2 | Maturity self-assessment & lead capture | In progress — built in sprint 1 |
-| 3 | AEGIS Agent MVP | In progress — built in sprint 1 |
+| 3 | VERITRAIL Agent MVP | In progress — built in sprint 1 |
 | 4 | Runtime Shield Advisor & policy-as-code | In progress — built in sprint 1 |
 | 5 | Design-partner pilots | Kits ready; execution **Blocked — requires real design partners** |
 | 6 | Commercial launch & GTM | Commercial kit ready; execution **Blocked — requires real design partners/customers** |
@@ -35,7 +35,7 @@ exit criteria, and it ends when its own exit criteria are met. Stories live in [
                      │                   │               │
                      │           ┌───────▼───────┐       │
                      │           │ Phase 3       │◄──────┘ (draft_runtime_policy tool)
-                     │           │ AEGIS Agent   │
+                     │           │ VERITRAIL Agent   │
                      │           └───────┬───────┘
                      │                   │
                ┌─────▼───────────────────▼───────────────▼─────┐
@@ -89,11 +89,11 @@ exit criteria, and it ends when its own exit criteria are met. Stories live in [
 | Definition of done | Engine and report tests pass; parity test passes; User-asserted labels and disclaimer on all outputs; tags never returned to respondent |
 | Exit criteria | End-to-end flow demonstrated on synthetic data; median completion time measured in internal testing |
 
-### Phase 3 — AEGIS Agent MVP
+### Phase 3 — VERITRAIL Agent MVP
 
 | Item | Detail |
 |---|---|
-| Scope | Journeys: Ask AEGIS, guided assessment, gap analysis, report generation; 14 tools with permissions; approvals; audit; redaction; optional LLM |
+| Scope | Journeys: Ask VERITRAIL, guided assessment, gap analysis, report generation; 14 tools with permissions; approvals; audit; redaction; optional LLM |
 | Definition of done | Agent evaluation suite passes (citations valid, no-source message, no prohibited claims, injection cases); sensitive actions create pending approvals |
 | Exit criteria | Demo script steps (c) and (d) succeed reliably; security tests for redaction and RBAC pass |
 
@@ -101,7 +101,7 @@ exit criteria, and it ends when its own exit criteria are met. Stories live in [
 
 | Item | Detail |
 |---|---|
-| Scope | Advisor; `aegis.policy/v1` schema, validator, evaluator; decisions; rollout modes; lifecycle; kill switch; limits; policy packs |
+| Scope | Advisor; `veritrail.policy/v1` schema, validator, evaluator; decisions; rollout modes; lifecycle; kill switch; limits; policy packs |
 | Definition of done | Policy-engine tests pass; all policy packs validate; advisor output validates; default-deny enforced; no raw logging |
 | Exit criteria | 45-minute demo Shield segment runs end-to-end; at least one reference integration example documented |
 

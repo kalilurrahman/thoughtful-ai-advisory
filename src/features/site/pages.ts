@@ -140,7 +140,7 @@ export const workspaceNav: NavSection = {
   label: "Workspace",
   items: [
     { label: "Governance overview", url: "/workspace" },
-    { label: "GOVERN assessment", url: "/assess" },
+    { label: "TILLER assessment", url: "/assess" },
     { label: "AI inventory", url: "/inventory" },
     { label: "Roadmap", url: "/roadmap" },
     { label: "Guardrails", url: "/guardrails" },

@@ -1,5 +1,5 @@
 /*
- * AEGIS admin console — browser UI for the port of platform/app/admin/aegis_admin/cli.py.
+ * VERITRAIL admin console — browser UI for the port of platform/app/admin/veritrail_admin/cli.py.
  *
  *  - Leads: assessment leads with lead tags (filter by tag) and the CLI's CSV export.
  *  - Forms: other website form submissions.
@@ -128,7 +128,7 @@ function LeadsTab() {
     setStatus("Preparing CSV…");
     try {
       const r = await exportLeadsCsv();
-      downloadText(r.csv, "aegis_leads.csv", "text/csv");
+      downloadText(r.csv, "veritrail_leads.csv", "text/csv");
       setStatus(
         `Exported ${r.count} lead(s) (contains personal data — handle per the privacy notice).`,
       );

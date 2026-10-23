@@ -5,7 +5,7 @@ export type ExportFormat = "PDF" | "DOCX" | "XLSX" | "PPTX";
 
 function reportLines(report: EvidenceReport) {
   const lines = [
-    `AEGIS AI governance preview | ${report.workspace}`,
+    `VERITRAIL AI governance preview | ${report.workspace}`,
     `Pack: ${report.pack} | Version: ${report.version} | Generated: ${report.generatedAt}`,
     `Index: ${report.index} (${report.maturity}) | Release gate: ${report.gate} | Workspace tier: ${report.tier}`,
     `Verified evidence: ${report.evidenceVerified} of ${report.assessment.length} controls | AI systems: ${report.inventoryCount} | Open actions: ${report.openActions}`,
@@ -154,15 +154,15 @@ async function makeDocx(report: EvidenceReport) {
 async function makeXlsx(report: EvidenceReport) {
   const { default: ExcelJS } = await import("exceljs");
   const workbook = new ExcelJS.Workbook();
-  workbook.creator = "AEGIS AI Governance Playbook (demo preview)";
+  workbook.creator = "VERITRAIL AI Governance Playbook (demo preview)";
   workbook.created = new Date(report.generatedAt);
   const overview = workbook.addWorksheet("Overview");
   overview.addRows([
-    ["AEGIS AI governance preview", report.workspace],
+    ["VERITRAIL AI governance preview", report.workspace],
     ["Pack", report.pack],
     ["Version", `v${report.version}`],
     ["Generated at", report.generatedAt],
-    ["AEGIS Index", report.index],
+    ["VERITRAIL Index", report.index],
     ["Maturity band", report.maturity],
     ["Release gate (workspace)", report.gate],
     ["Risk tier (workspace)", report.tier],
@@ -353,9 +353,9 @@ async function makePptx(report: EvidenceReport) {
   const { default: pptxgen } = await import("pptxgenjs");
   const pptx = new pptxgen();
   pptx.layout = "LAYOUT_WIDE";
-  pptx.author = "AEGIS AI Governance Playbook (demo preview)";
+  pptx.author = "VERITRAIL AI Governance Playbook (demo preview)";
   pptx.subject = `${report.pack} for ${report.workspace}`;
-  pptx.title = `AEGIS AI Governance | ${report.workspace}`;
+  pptx.title = `VERITRAIL AI Governance | ${report.workspace}`;
   const addSlide = (title: string, body: string[]) => {
     const slide = pptx.addSlide();
     slide.background = { color: "F5F7F5" };

@@ -1,21 +1,21 @@
 # AI Use-Case Governance Readiness Report — Robo-advice portfolio tool
 
-> **Synthetic example.** This report was generated from fictional data to illustrate AEGIS Agent output. It describes no real organization or system.
+> **Synthetic example.** This report was generated from fictional data to illustrate VERITRAIL Agent output. It describes no real organization or system.
 
 | Field | Value |
 |---|---|
-| Report ID | rpt_mvi8hvo76e6fa529 |
-| Assessment ID | asm_mvi8hvlh69a8fa31 |
-| AI system record | sys_mvi8hs84852af56f |
-| Generated (UTC) | 2026-10-21T14:55:24+00:00 |
-| Prepared by | Synthetic AEGIS Analyst via AEGIS Agent |
-| Question bank | AEGIS-UC-ASSESS v1.0.0 |
-| Control library | AEGIS Control Library v1.0.0 |
+| Report ID | rpt_mvkluftq8910cf8a |
+| Assessment ID | asm_mvklufqie59c340c |
+| AI system record | sys_mvkluc8615f92380 |
+| Generated (UTC) | 2026-10-23T06:44:38+00:00 |
+| Prepared by | Synthetic VERITRAIL Analyst via VERITRAIL Agent |
+| Question bank | VERITRAIL-UC-ASSESS v1.0.0 |
+| Control library | VERITRAIL Control Library v1.0.0 |
 | Evidence basis | Self-reported answers (User-asserted) unless evidence was reviewed by a named reviewer (Verified) |
 
 ## 1. Executive summary
 
-- **Preliminary risk tier: High** (Inferred; requires human confirmation — Confirmed by Synthetic Head of AI Risk (2026-10-21)).
+- **Preliminary risk tier: High** (Inferred; requires human confirmation — Confirmed by Synthetic Head of AI Risk (2026-10-23)).
 - **33 of 33** applicable questions answered across 7 modules.
 - **31 gaps** identified: 4 Critical, 17 High, 8 Medium, 2 Low.
 - **Evidence posture:** 2 finding(s) Verified by a named reviewer; 10 User-asserted; 17 Missing evidence; 4 Critical gap; 0 Inferred.
@@ -53,18 +53,18 @@ This report indicates governance readiness and evidence gaps for one AI system. 
 
 | Factor | Value | Points | Citation |
 |---|---|---|---|
-| decision_impact | material | 20 | AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0) |
-| affected_parties | customers | 10 | AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0) |
-| data_sensitivity | personal | 15 | AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0) |
-| autonomy | suggests | 5 | AEGIS Control IS-09: Human oversight design (Control Library v1.0.0) |
-| domain_category | financial_services | 10 | AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0) |
-| third_party_model | Yes | 5 | AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0) |
-| eu_exposure | Yes | 5 | AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0) |
+| decision_impact | material | 20 | VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0) |
+| affected_parties | customers | 10 | VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0) |
+| data_sensitivity | personal | 15 | VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0) |
+| autonomy | suggests | 5 | VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0) |
+| domain_category | financial_services | 10 | VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0) |
+| third_party_model | Yes | 5 | VERITRAIL Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0) |
+| eu_exposure | Yes | 5 | VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0) |
 
 - Approval authority for this tier: AI Governance Forum
 - Review cadence: every 6 months
 - Assessment modules applied: Core governance & lifecycle, Data & privacy, Security & resilience, Fairness, safety & transparency, Human oversight & operations, Vendor & third-party AI, Monitoring, incidents & evidence
-- Method: AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)
+- Method: VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)
 
 ## 4. Domain heat map
 
@@ -117,7 +117,7 @@ Implementation indicator = implemented (1.0) and partial (0.5) answers as a shar
 | GAP-030 · Low · due 2027-04-19 | User-asserted | UC-CORE-Q2: Are the intended purpose, context of use, users, affected parties and out-of-scope uses documented? | EI-04 | Product Owner | Document intended purpose, context of use, users, affected parties and explicitly out-of-scope or foreseeable misuse. |
 | GAP-031 · Low · due 2027-04-19 | User-asserted | UC-HUM-Q4: Were go-live deployment conditions defined, verified and signed off before production use? | GL-07 | Product Owner | Define go-live conditions (controls, monitoring, oversight) and verify them with a signed checklist before production use. |
 
-Due dates apply the AEGIS severity SLAs (Critical 30, High 60, Medium 90, Low 180 days) from 2026-10-21.
+Due dates apply the VERITRAIL severity SLAs (Critical 30, High 60, Medium 90, Low 180 days) from 2026-10-21.
 
 ## 6. Control recommendations
 
@@ -255,15 +255,15 @@ Only items marked [x] have evidence reviewed by a named reviewer.
 - **RG-KILL-SWITCH** — Provide a kill switch to disable the system, agent or individual tools (IS-15)
 - **RG-DISCLOSURE** — Display AI-interaction disclosure to end users (IS-08)
 
-AEGIS Shield advisor rating: High (see the draft runtime policy for details; activation in production requires human approval).
+VERITRAIL Shield advisor rating: High (see the draft runtime policy for details; activation in production requires human approval).
 
-Draft guardrail policies can be generated with AEGIS Shield; activating or changing a production runtime policy requires human approval (IS-12, GL-04).
+Draft guardrail policies can be generated with VERITRAIL Shield; activating or changing a production runtime policy requires human approval (IS-12, GL-04).
 
 ## 10. Human approvals
 
 | Approval | Type | Status | Resource | Requested by | Resolved by |
 |---|---|---|---|---|---|
-| apr_mvi8hs9tde228697 | confirm_risk_tier | approved | sys_mvi8hs84852af56f | u-assessor-1 | u-approver-1 |
+| apr_mvklucaw6c72245a | confirm_risk_tier | approved | sys_mvkluc8615f92380 | u-assessor-1 | u-approver-1 |
 
 ## Appendix A — Evidence status definitions
 
@@ -277,61 +277,61 @@ Draft guardrail policies can be generated with AEGIS Shield; activating or chang
 
 ## Appendix B — Audit trace
 
-Tool calls and agent turns for this assessment are recorded in the hash-chained AEGIS audit log (SE-08).
+Tool calls and agent turns for this assessment are recorded in the hash-chained VERITRAIL audit log (SE-08).
 
 | Timestamp (UTC) | Trace ID | Action | Actor | Outcome | Audit record |
 |---|---|---|---|---|---|
-| 2026-10-21T14:55:24 | trc_mvi8hvlgb42c2658 | agent.tool.start_assessment | u-assessor-1 | success | aud_mvi8hvlib3852370 |
-| 2026-10-21T14:55:24 | trc_mvi8hvljcc39d4af | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvlldf14ffb0 |
-| 2026-10-21T14:55:24 | trc_mvi8hvlmfee8194b | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvlo8f54f7ed |
-| 2026-10-21T14:55:24 | trc_mvi8hvlp4639947b | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvlq78983c4d |
-| 2026-10-21T14:55:24 | trc_mvi8hvlqddff07d5 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvlr66b33f3f |
-| 2026-10-21T14:55:24 | trc_mvi8hvlrc74f0812 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvlsa752632e |
-| 2026-10-21T14:55:24 | trc_mvi8hvlsf37922c5 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvlt1278ad14 |
-| 2026-10-21T14:55:24 | trc_mvi8hvlu0d84d97c | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvlwe016f2a8 |
-| 2026-10-21T14:55:24 | trc_mvi8hvlxc48c0bdf | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvly7755aee5 |
-| 2026-10-21T14:55:24 | trc_mvi8hvlya7f525b3 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvlz7ec48b49 |
-| 2026-10-21T14:55:24 | trc_mvi8hvlzd665c37c | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvm072c81712 |
-| 2026-10-21T14:55:24 | trc_mvi8hvm150d5b7c2 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvm288f9ec05 |
-| 2026-10-21T14:55:24 | trc_mvi8hvm284c15a0c | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvm356939b06 |
-| 2026-10-21T14:55:24 | trc_mvi8hvm30cc226ee | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvm4b21e8e9c |
-| 2026-10-21T14:55:24 | trc_mvi8hvm5e778e769 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvm5d3808997 |
-| 2026-10-21T14:55:24 | trc_mvi8hvm6211da655 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvm7bc5d79fb |
-| 2026-10-21T14:55:24 | trc_mvi8hvm7d0089908 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvma2c94ff70 |
-| 2026-10-21T14:55:24 | trc_mvi8hvmad90a0765 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvmce9dd0e6c |
-| 2026-10-21T14:55:24 | trc_mvi8hvmc0180964d | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvme86495906 |
-| 2026-10-21T14:55:24 | trc_mvi8hvme5ab6cfcf | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvmf4a6fdd7a |
-| 2026-10-21T14:55:24 | trc_mvi8hvmg8129a68d | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvmhf3bbfa55 |
-| 2026-10-21T14:55:24 | trc_mvi8hvmhfe440e06 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvmi7cb580c3 |
-| 2026-10-21T14:55:24 | trc_mvi8hvmi47333db2 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvml650d1e58 |
-| 2026-10-21T14:55:24 | trc_mvi8hvmm3753f89e | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvmn274080c1 |
-| 2026-10-21T14:55:24 | trc_mvi8hvmn4c43dfca | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvmrd08114ae |
-| 2026-10-21T14:55:24 | trc_mvi8hvmr63b08681 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvmt449e9483 |
-| 2026-10-21T14:55:24 | trc_mvi8hvmu9c2dc6bd | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvmxfb76df1c |
-| 2026-10-21T14:55:24 | trc_mvi8hvmyf66ebf27 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvmz1a811d14 |
-| 2026-10-21T14:55:24 | trc_mvi8hvn0783ca017 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvn16242a190 |
-| 2026-10-21T14:55:24 | trc_mvi8hvn1cf74e4ed | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvn2f5fc66e2 |
-| 2026-10-21T14:55:24 | trc_mvi8hvn287d20fd5 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvn3301d709f |
-| 2026-10-21T14:55:24 | trc_mvi8hvn4c3617ffe | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvn5fee96a70 |
-| 2026-10-21T14:55:24 | trc_mvi8hvn581ede49d | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvn687e9ff26 |
-| 2026-10-21T14:55:24 | trc_mvi8hvn7468c0c2f | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvi8hvn8906f13d3 |
-| 2026-10-21T14:55:24 | trc_mvi8hvncd4facb17 | evidence.reviewed | u-approver-1 | success | aud_mvi8hvncb4da73c1 |
-| 2026-10-21T14:55:24 | trc_mvi8hvnfc48b79a6 | evidence.reviewed | u-approver-1 | success | aud_mvi8hvnf0b9d336d |
-| 2026-10-21T14:55:24 | trc_mvi8hvnh06009a8c | evidence.reviewed | u-approver-1 | success | aud_mvi8hvnh605d7b9e |
-| 2026-10-21T14:55:24 | trc_mvi8hvnjc93bf76e | evidence.reviewed | u-approver-1 | success | aud_mvi8hvnj6d70b3c1 |
-| 2026-10-21T14:55:24 | trc_mvi8hvnj712c849f | agent.tool.identify_gaps | u-assessor-1 | success | aud_mvi8hvnt697749cc |
+| 2026-10-23T06:44:38 | trc_mvklufqh793e2277 | agent.tool.start_assessment | u-assessor-1 | success | aud_mvklufqj9c0b104f |
+| 2026-10-23T06:44:38 | trc_mvklufqjd8bb7bbb | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufqmaceeb584 |
+| 2026-10-23T06:44:38 | trc_mvklufqm9427a04d | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufqp8c4c4b29 |
+| 2026-10-23T06:44:38 | trc_mvklufqp27c49697 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufqq03af2ea5 |
+| 2026-10-23T06:44:38 | trc_mvklufqqc23a4cd5 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufqrb2789874 |
+| 2026-10-23T06:44:38 | trc_mvklufqsb792b99f | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufqt86daf5eb |
+| 2026-10-23T06:44:38 | trc_mvklufqt04618fe1 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufqv8dd363bf |
+| 2026-10-23T06:44:38 | trc_mvklufqv93ad7793 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufqydd650956 |
+| 2026-10-23T06:44:38 | trc_mvklufqz544f7abe | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufr02bb60b39 |
+| 2026-10-23T06:44:38 | trc_mvklufr010142991 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufr21187654a |
+| 2026-10-23T06:44:38 | trc_mvklufr2da713fb6 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufr3f228d5e9 |
+| 2026-10-23T06:44:38 | trc_mvklufr4b4e4a07d | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufr5b8f10d7b |
+| 2026-10-23T06:44:38 | trc_mvklufr5d2601a06 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufr7b66d11ed |
+| 2026-10-23T06:44:38 | trc_mvklufr799cb8eaf | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufr8b41259f0 |
+| 2026-10-23T06:44:38 | trc_mvklufr9c15e895f | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufrad7acfe0f |
+| 2026-10-23T06:44:38 | trc_mvklufrba6474ad8 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufrcc33532c2 |
+| 2026-10-23T06:44:38 | trc_mvklufrd76083d70 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufrgb648f29d |
+| 2026-10-23T06:44:38 | trc_mvklufrha15468d6 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufri8fb93b9c |
+| 2026-10-23T06:44:38 | trc_mvklufri76bbaf8d | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufrke4adfc10 |
+| 2026-10-23T06:44:38 | trc_mvklufrkff2bdcf6 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufrlbdf566f6 |
+| 2026-10-23T06:44:38 | trc_mvklufrmaa8c9c10 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufrn91316a06 |
+| 2026-10-23T06:44:38 | trc_mvklufro96c3f36b | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufrq0dd0c166 |
+| 2026-10-23T06:44:38 | trc_mvklufrq5e91d5be | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufrt0e0ccffd |
+| 2026-10-23T06:44:38 | trc_mvklufru808fba10 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufrw49d2ca16 |
+| 2026-10-23T06:44:38 | trc_mvklufrx7d642d3b | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufs0822ac2c3 |
+| 2026-10-23T06:44:38 | trc_mvklufs131628f4d | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufs26b2a36d4 |
+| 2026-10-23T06:44:38 | trc_mvklufs23af7de69 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufs6d799f2a2 |
+| 2026-10-23T06:44:38 | trc_mvklufs677c5b260 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufs7dded78ba |
+| 2026-10-23T06:44:38 | trc_mvklufs8b007d58b | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufs96be39cd5 |
+| 2026-10-23T06:44:38 | trc_mvklufs96dd4f548 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufsae37dcd2d |
+| 2026-10-23T06:44:38 | trc_mvklufsbfb9501a7 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufsc454d4ed1 |
+| 2026-10-23T06:44:38 | trc_mvklufsd1f69496f | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufseaaeeedd4 |
+| 2026-10-23T06:44:38 | trc_mvklufsg3366f3d9 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufsi41ce39e0 |
+| 2026-10-23T06:44:38 | trc_mvklufsi15cb7ee4 | agent.tool.submit_assessment_response | u-assessor-1 | success | aud_mvklufsj124a35a3 |
+| 2026-10-23T06:44:38 | trc_mvklufsq9681d9f0 | evidence.reviewed | u-approver-1 | success | aud_mvklufsqfb2f6fc7 |
+| 2026-10-23T06:44:38 | trc_mvklufst2d1b4e98 | evidence.reviewed | u-approver-1 | success | aud_mvklufst64a68351 |
+| 2026-10-23T06:44:38 | trc_mvklufsvca9d97b7 | evidence.reviewed | u-approver-1 | success | aud_mvklufsv31a3d5c5 |
+| 2026-10-23T06:44:38 | trc_mvklufsx1b1d3ff0 | evidence.reviewed | u-approver-1 | success | aud_mvklufsx88b1d52c |
+| 2026-10-23T06:44:38 | trc_mvklufsy51d85da0 | agent.tool.identify_gaps | u-assessor-1 | success | aud_mvklufta2283ad69 |
 
 ## Appendix C — Method and limitations
 
-- Answers are self-reported; AEGIS has not inspected systems or documents unless evidence is marked Verified.
+- Answers are self-reported; VERITRAIL has not inspected systems or documents unless evidence is marked Verified.
 - The risk tier is preliminary and rule-based; the EU AI Act category screen is a trigger for legal review, not a legal classification.
-- Framework mappings are indicative AEGIS interpretations from the Control Library, not official crosswalks.
+- Framework mappings are indicative VERITRAIL interpretations from the Control Library, not official crosswalks.
 - Regulatory applicability timelines must be verified against the current Official Journal text and any amendments.
 
 ## Disclaimer
 
-AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
+VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.
 
-This use-case assessment produces an indicative view of governance readiness for a single AI system. Self-reported answers are User-asserted; only evidence reviewed by a named reviewer is Verified. Risk tiers are Inferred and require human confirmation. Framework mappings are indicative. AEGIS does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.
+This use-case assessment produces an indicative view of governance readiness for a single AI system. Self-reported answers are User-asserted; only evidence reviewed by a named reviewer is Verified. Risk tiers are Inferred and require human confirmation. Framework mappings are indicative. VERITRAIL does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.
 
 *Synthetic example — fictional data.*

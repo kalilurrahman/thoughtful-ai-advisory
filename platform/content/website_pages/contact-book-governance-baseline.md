@@ -1,6 +1,6 @@
 ---
-title: "Book an AEGIS Governance Baseline — 4–6 week AI governance engagement"
-h1: "Book an AEGIS Governance Baseline"
+title: "Book an VERITRAIL Governance Baseline — 4–6 week AI governance engagement"
+h1: "Book an VERITRAIL Governance Baseline"
 slug: /contact/book-governance-baseline/
 description: "A fixed-scope 4–6 week engagement: inventory up to 25 AI systems, validate maturity with evidence, review agents, and get a gap register and roadmap."
 section: contact
@@ -15,17 +15,17 @@ faq:
   - q: "How much does the Governance Baseline cost?"
     a: "It is a fixed-scope engagement with a fixed fee, quoted after a short scoping call, because the effort depends on the number of business units, systems and stakeholders involved."
   - q: "Does the Baseline give us a compliance opinion?"
-    a: "No. It tells you, with evidence labels, where you stand against the AEGIS controls and indicative framework mappings, what the gaps are and how to close them. Compliance and certification are determinations for legal advisers, authorities and accredited bodies."
+    a: "No. It tells you, with evidence labels, where you stand against the VERITRAIL controls and indicative framework mappings, what the gaps are and how to close them. Compliance and certification are determinations for legal advisers, authorities and accredited bodies."
   - q: "What do we need to provide?"
     a: "An executive sponsor, a day-to-day lead, access to owners of in-scope AI systems for short interviews, and existing documentation such as policies, inventories, assessments, test results and logs."
-  - q: "Do we have to buy the AEGIS platform afterwards?"
-    a: "No. The deliverables are yours. Many organizations use them to run their programme with existing tools; others continue with AEGIS modules."
+  - q: "Do we have to buy the VERITRAIL platform afterwards?"
+    a: "No. The deliverables are yours. Many organizations use them to run their programme with existing tools; others continue with VERITRAIL modules."
 updated: 2026-10-21
 ---
 
 **Validate your AI governance position with evidence — and leave with a plan.**
 
-The AEGIS Governance Baseline is a fixed-scope, 4–6 week engagement. It turns a self-reported picture of AI governance into an evidenced one: what AI you run, how risky it is, which controls are working, which are not, and what to do in the next 90 days.
+The VERITRAIL Governance Baseline is a fixed-scope, 4–6 week engagement. It turns a self-reported picture of AI governance into an evidenced one: what AI you run, how risky it is, which controls are working, which are not, and what to do in the next 90 days.
 
 ## What is included
 
@@ -35,9 +35,9 @@ The AEGIS Governance Baseline is a fixed-scope, 4–6 week engagement. It turns 
 | **Maturity assessment validation** | Your 24-question self-assessment reviewed against evidence; each answer relabelled Verified, User-asserted, Inferred, Missing evidence or Critical gap |
 | **Five use-case deep-dives** | Full use-case risk and control assessment for five priority systems using the relevant [assessment modules](/framework/assessment-modules/) |
 | **Two agent reviews** | Tool manifests, least privilege, approval points, injection exposure, containment and logging for two agents |
-| **Gap register** | Every finding with AEGIS control citation, evidence status, severity, owner and SLA (30/60/90/180 days) |
+| **Gap register** | Every finding with VERITRAIL control citation, evidence status, severity, owner and SLA (30/60/90/180 days) |
 | **Remediation roadmap** | Sequenced plan across the five pillars, with dependencies and owners |
-| **Runtime policy drafts** | Draft AEGIS Shield policies for the reviewed agents, ready for Observe mode |
+| **Runtime policy drafts** | Draft VERITRAIL Shield policies for the reviewed agents, ready for Observe mode |
 | **Executive report** | Board-ready summary of position, critical gaps, indicative framework readiness and recommended decisions |
 | **90-day plan** | First 30, 60 and 90 days of actions, with named owners |
 

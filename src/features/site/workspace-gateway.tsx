@@ -12,7 +12,7 @@ export function WorkspaceGateway() {
         <div className="workspace-gateway-heading">
           <div>
             <p className="eyebrow">Practitioner workspace · NIST AI RMF mapping</p>
-            <h2 id="workspace-heading">GOVERN assessment & assurance studio</h2>
+            <h2 id="workspace-heading">TILLER assessment & assurance studio</h2>
           </div>
           <Button asChild variant="outline" className="btn btn-secondary">
             <Link to="/workspace">

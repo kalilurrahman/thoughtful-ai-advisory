@@ -1,6 +1,6 @@
 /**
  * The agent's hash-chained audit log: the shared browser AuditLog (byte-identical to
- * aegis_common/audit.py) with IDs and timestamps taken from the agent runtime, so a
+ * veritrail_common/audit.py) with IDs and timestamps taken from the agent runtime, so a
  * deterministic run produces the same chain as the Python reference.
  */
 import { AuditLog, recordHash, type AuditRecord } from "../audit";

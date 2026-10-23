@@ -1,4 +1,4 @@
-# AEGIS Backlog
+# VERITRAIL Backlog
 
 Version 3.0 · 21 October 2026 · Owner: Product Lead
 
@@ -23,7 +23,7 @@ design partners` · `Planned` · `Candidate (post-pilot)`.
 
 | ID | Story | Priority | Req | Status |
 |---|---|---|---|---|
-| E1-S01 | As a visitor, I want a clear home page explaining AEGIS with CTAs | P0 | PRD-1-01 | Done — sprint 1 (pending review) |
+| E1-S01 | As a visitor, I want a clear home page explaining VERITRAIL with CTAs | P0 | PRD-1-01 | Done — sprint 1 (pending review) |
 | E1-S02 | As an evaluator, I want framework, pillar, maturity and control-library pages | P0 | PRD-1-01, PRD-1-03 | Done — sprint 1 (pending review) |
 | E1-S03 | As a buyer, I want solutions pages for each module with limitations | P0 | PRD-1-01 | Done — sprint 1 (pending review) |
 | E1-S04 | As counsel, I want compliance pages with disclaimers and coverage gaps | P0 | PRD-1-02 | Done — sprint 1 (pending review) |
@@ -45,11 +45,11 @@ design partners` · `Planned` · `Candidate (post-pilot)`.
 | E2-S05 | As GTM, I want internal lead tags never shown to respondents | P0 | PRD-2-06 | Done — sprint 1 (pending review) |
 | E2-S06 | As product, I want completion time and drop-off measured with privacy-friendly events | P1 | PRD-2-07 | Done — sprint 1 (pending review) |
 
-## Epic E3 — AEGIS Agent MVP
+## Epic E3 — VERITRAIL Agent MVP
 
 | ID | Story | Priority | Req | Status |
 |---|---|---|---|---|
-| E3-S01 | As a user, I want to Ask AEGIS and get answers citing controls, or the exact no-source message | P0 | PRD-3-01, PRD-3-03 | Done — sprint 1 (pending review) |
+| E3-S01 | As a user, I want to Ask VERITRAIL and get answers citing controls, or the exact no-source message | P0 | PRD-3-01, PRD-3-03 | Done — sprint 1 (pending review) |
 | E3-S02 | As a user, I want a guided assessment through conversation | P0 | PRD-3-01 | Done — sprint 1 (pending review) |
 | E3-S03 | As a governance lead, I want gap analysis with evidence labels and severities | P0 | PRD-3-01 | Done — sprint 1 (pending review) |
 | E3-S04 | As a governance lead, I want draft reports generated with disclaimers | P0 | PRD-3-01, PRD-3-06 | Done — sprint 1 (pending review) |
@@ -63,7 +63,7 @@ design partners` · `Planned` · `Candidate (post-pilot)`.
 | ID | Story | Priority | Req | Status |
 |---|---|---|---|---|
 | E4-S01 | As a platform lead, I want the Shield Advisor to turn a system profile into a risk profile, tool matrix and draft policy | P0 | PRD-4-01 | Done — sprint 1 (pending review) |
-| E4-S02 | As engineering, I want an `aegis.policy/v1` schema and validator | P0 | PRD-4-02 | Done — sprint 1 (pending review) |
+| E4-S02 | As engineering, I want an `veritrail.policy/v1` schema and validator | P0 | PRD-4-02 | Done — sprint 1 (pending review) |
 | E4-S03 | As engineering, I want an evaluator returning the seven decisions with precedence | P0 | PRD-4-03 | Done — sprint 1 (pending review) |
 | E4-S04 | As a platform lead, I want rollout modes Observe → Warn → Protect → Enforce → Contain | P0 | PRD-4-04 | Done — sprint 1 (pending review) |
 | E4-S05 | As security, I want default-deny tools and approval for high-impact operations | P0 | PRD-4-05 | Done — sprint 1 (pending review) |

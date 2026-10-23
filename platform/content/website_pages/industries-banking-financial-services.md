@@ -1,8 +1,8 @@
 ---
-title: "AI governance for banking and financial services — AEGIS"
+title: "AI governance for banking and financial services — VERITRAIL"
 h1: "AI governance for banking and financial services"
 slug: /industries/banking-financial-services/
-description: "AEGIS for banks, insurers and financial institutions: extend model-risk discipline to GenAI and agents, with tiering, fairness, oversight and evidence packs."
+description: "VERITRAIL for banks, insurers and financial institutions: extend model-risk discipline to GenAI and agents with tiering, fairness and oversight."
 section: industries
 nav_label: "Banking & financial services"
 nav_order: 30
@@ -11,10 +11,10 @@ schema_type: WebPage
 primary_cta: baseline
 secondary_cta: demo
 faq:
-  - q: "We already have a model risk management framework. Why do we need AEGIS?"
-    a: "Model risk frameworks were designed largely for quantitative models. Generative AI, agents and vendor AI features raise questions — prompt changes, tool permissions, runtime behavior, AI-interaction disclosure — that many MRM inventories and validation processes do not yet cover. AEGIS is designed to complement MRM, not replace it."
-  - q: "Does AEGIS replace independent model validation?"
-    a: "No. AEGIS records validation evidence (GL-05, IS-07) and routes systems through approval gates, but independent validation remains a function of your model risk team."
+  - q: "We already have a model risk management framework. Why do we need VERITRAIL?"
+    a: "Model risk frameworks were designed largely for quantitative models. Generative AI, agents and vendor AI features raise questions — prompt changes, tool permissions, runtime behavior, AI-interaction disclosure — that many MRM inventories and validation processes do not yet cover. VERITRAIL is designed to complement MRM, not replace it."
+  - q: "Does VERITRAIL replace independent model validation?"
+    a: "No. VERITRAIL records validation evidence (GL-05, IS-07) and routes systems through approval gates, but independent validation remains a function of your model risk team."
 updated: 2026-10-21
 ---
 
@@ -38,11 +38,11 @@ Financial institutions have more governance infrastructure than most — model r
 - **Consumer protection and fair lending.** Explainability, adverse-action reasons and non-discrimination expectations apply to AI-influenced decisions in many jurisdictions.
 - **EU AI Act.** Creditworthiness evaluation of natural persons and certain life and health insurance risk assessment and pricing are listed high-risk areas, subject to the Act's conditions and exceptions.
 
-AEGIS does not interpret these regimes for you; it maintains the obligations register (AO-07) and evidence that your compliance and legal teams use.
+VERITRAIL does not interpret these regimes for you; it maintains the obligations register (AO-07) and evidence that your compliance and legal teams use.
 
-## AEGIS emphasis
+## VERITRAIL emphasis
 
-- **Align with MRM.** AEGIS tiers (EI-02) and approval gates (GL-03) are designed to map onto existing model tiering and validation workflows rather than create a parallel process.
+- **Align with MRM.** VERITRAIL tiers (EI-02) and approval gates (GL-03) are designed to map onto existing model tiering and validation workflows rather than create a parallel process.
 - **Fairness and explainability (IS-05, IS-08).** Bias testing across relevant groups and explanation approaches for AI-influenced decisions.
 - **Agent controls (IS-11, IS-13).** Least-privilege tool access and human approval thresholds for payments, account changes and external communications.
 - **Third-party AI (GL-11, AO-09).** Contract terms covering data use, model change notification, incident notice and audit rights.

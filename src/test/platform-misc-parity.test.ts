@@ -48,7 +48,7 @@ import {
 import { AuditLog, verifyChain } from "@/features/platform/audit";
 import { renderMaturityMarkdown } from "@/features/platform/reports/maturity";
 import { buildAssessmentBundle, scoreAssessment } from "@/features/site/engines/assessment-engine";
-import { findProhibitedClaims } from "@/features/site/engines/ask-aegis/safety";
+import { findProhibitedClaims } from "@/features/site/engines/ask-veritrail/safety";
 
 const trackEvent = vi.hoisted(() => vi.fn());
 vi.mock("@/features/platform/analytics.functions", () => ({ trackEvent }));
@@ -103,7 +103,7 @@ describe("ROI calculator parity with content/commercial/roi_calculator.py", () =
 });
 
 describe("analytics parity with server.py event() and cli.py funnel()", () => {
-  it("validates and normalises events exactly like AegisApp.event", () => {
+  it("validates and normalises events exactly like VeritrailApp.event", () => {
     const stored: unknown[] = [];
     fx.analytics.raw.forEach((raw: unknown, i: number) => {
       const v = validateEvent(raw);
@@ -260,17 +260,17 @@ describe("lead qualification and CRM integrations parity with integrations.py / 
 
   it("selects CRM adapters only when env vars are set", () => {
     expect(getCrm({})).toBeNull();
-    expect(getCrm({ AEGIS_CRM_BACKEND: "webhook" })).toBeNull();
-    expect(getCrm({ AEGIS_CRM_WEBHOOK_URL: "https://hooks.example/x" })?.name).toBe("webhook");
-    expect(getCrm({ AEGIS_HUBSPOT_PORTAL_ID: "1", AEGIS_HUBSPOT_FORM_GUID: "g" })?.name).toBe(
-      "hubspot",
-    );
+    expect(getCrm({ VERITRAIL_CRM_BACKEND: "webhook" })).toBeNull();
+    expect(getCrm({ VERITRAIL_CRM_WEBHOOK_URL: "https://hooks.example/x" })?.name).toBe("webhook");
+    expect(
+      getCrm({ VERITRAIL_HUBSPOT_PORTAL_ID: "1", VERITRAIL_HUBSPOT_FORM_GUID: "g" })?.name,
+    ).toBe("hubspot");
     expect(
       getCrm({
-        AEGIS_CRM_BACKEND: "hubspot",
-        AEGIS_CRM_WEBHOOK_URL: "https://hooks.example/x",
-        AEGIS_HUBSPOT_PORTAL_ID: "1",
-        AEGIS_HUBSPOT_FORM_GUID: "g",
+        VERITRAIL_CRM_BACKEND: "hubspot",
+        VERITRAIL_CRM_WEBHOOK_URL: "https://hooks.example/x",
+        VERITRAIL_HUBSPOT_PORTAL_ID: "1",
+        VERITRAIL_HUBSPOT_FORM_GUID: "g",
       })?.name,
     ).toBe("hubspot");
   });
@@ -279,7 +279,7 @@ describe("lead qualification and CRM integrations parity with integrations.py / 
     const calls: Array<{ url: string; body: unknown }> = [];
     const ok = await syncLeadToCrm(
       lead,
-      { AEGIS_CRM_WEBHOOK_URL: "https://hooks.example/x" },
+      { VERITRAIL_CRM_WEBHOOK_URL: "https://hooks.example/x" },
       async (url, init) => {
         calls.push({ url, body: JSON.parse(String(init.body)) });
         return { status: 202 };
@@ -290,7 +290,7 @@ describe("lead qualification and CRM integrations parity with integrations.py / 
     expect(crmRecord({ ...lead, form: "demo" })).toMatchObject({ source: "form:demo" });
     const down = await syncLeadToCrm(
       lead,
-      { AEGIS_CRM_WEBHOOK_URL: "https://hooks.example/x" },
+      { VERITRAIL_CRM_WEBHOOK_URL: "https://hooks.example/x" },
       () => Promise.reject(new TypeError("network")),
     );
     expect(down).toEqual({ ok: false, backend: "webhook", error: "TypeError" });
@@ -298,7 +298,7 @@ describe("lead qualification and CRM integrations parity with integrations.py / 
   });
 });
 
-describe("admin console helpers parity with aegis_admin.cli", () => {
+describe("admin console helpers parity with veritrail_admin.cli", () => {
   const cli = fx.leads.cli;
   const asRow = (l: any): SiteLeadRow => ({
     id: l.lead_id,
@@ -362,7 +362,7 @@ describe("admin console helpers parity with aegis_admin.cli", () => {
   });
 });
 
-describe("maturity report parity with aegis_reports.maturity.render_maturity_markdown", () => {
+describe("maturity report parity with veritrail_reports.maturity.render_maturity_markdown", () => {
   const bundle = buildAssessmentBundle();
   for (const c of fx.maturity) {
     it(c.id, () => {

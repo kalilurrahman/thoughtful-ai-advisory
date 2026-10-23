@@ -1,6 +1,6 @@
 /**
  * Policy versioning and lifecycle helpers — port of
- * platform/app/policy-engine/aegis_policy/versioning.py.
+ * platform/app/policy-engine/veritrail_policy/versioning.py.
  *
  * Every material change produces a new semantic version, resets the policy to `draft`, clears
  * approvals (approvals bind to a reviewed version), records the previous version for rollback

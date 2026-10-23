@@ -1,9 +1,9 @@
 /**
- * AEGIS runtime policy engine — browser port of platform/app/policy-engine/aegis_policy
+ * VERITRAIL runtime policy engine — browser port of platform/app/policy-engine/veritrail_policy
  * (engine, detectors, params, versioning, loader) plus the runtime-shield render / CLI /
  * integration helpers. Pure modules: safe for SSR and the browser; state is in memory only.
  *
- * "AI proposes. AEGIS evaluates. Approved actions execute."
+ * "AI proposes. VERITRAIL evaluates. Approved actions execute."
  */
 export * from "./engine";
 export {

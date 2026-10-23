@@ -1,8 +1,8 @@
 ---
-title: "AI governance runbook library — AEGIS implementation runbooks"
+title: "AI governance runbook library — VERITRAIL implementation runbooks"
 h1: "Runbook library"
 slug: /resources/runbooks/
-description: "Editable AEGIS runbooks for AI inventory, intake and approval, agent onboarding, kill-switch drills, incidents, evidence packs, vendor AI and reviews."
+description: "Editable VERITRAIL runbooks for AI inventory, intake and approval, agent onboarding, kill-switch drills, incidents, evidence packs, vendor AI and reviews."
 section: resources
 nav_label: "Runbook library"
 nav_order: 50
@@ -13,7 +13,7 @@ secondary_cta: blueprint
 updated: 2026-10-21
 ---
 
-The AEGIS implementation runbooks turn controls into repeatable procedures with a trigger, an owner, steps and the evidence each step produces. The method for all eight runbooks is published on the [implementation runbooks](/framework/runbooks/) page. This library tracks editable versions you can adapt to your organization.
+The VERITRAIL implementation runbooks turn controls into repeatable procedures with a trigger, an owner, steps and the evidence each step produces. The method for all eight runbooks is published on the [implementation runbooks](/framework/runbooks/) page. This library tracks editable versions you can adapt to your organization.
 
 ## Library status
 

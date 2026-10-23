@@ -1,7 +1,7 @@
 /*
  * Markdown rendering of Runtime Shield Advisor output (pure).
  *
- * Port of platform/app/runtime-shield/aegis_shield/render.py (render_advice_markdown). Operates on
+ * Port of platform/app/runtime-shield/veritrail_shield/render.py (render_advice_markdown). Operates on
  * the JSON-shaped advice returned by advise() in src/features/site/engines/shield.
  */
 import { STANDARD_DISCLAIMER } from "@/features/site/content";
@@ -29,10 +29,10 @@ export function renderAdviceMarkdown(
   const includePolicyYaml = opts.includePolicyYaml ?? true;
   const r = advice.risk_profile;
   const L: string[] = [];
-  L.push(`# AEGIS Runtime Shield Advisor — ${app.app_name}`, "");
+  L.push(`# VERITRAIL Runtime Shield Advisor — ${app.app_name}`, "");
   if (synthetic) {
     L.push(
-      "> **Synthetic example.** Fictional organization and system, generated to illustrate AEGIS output.",
+      "> **Synthetic example.** Fictional organization and system, generated to illustrate VERITRAIL output.",
       "",
     );
   }

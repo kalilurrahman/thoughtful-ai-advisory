@@ -1,8 +1,8 @@
 ---
-title: "EU AI Act readiness with AEGIS — obligations, roles and evidence"
+title: "EU AI Act readiness with VERITRAIL — obligations, roles and evidence"
 h1: "EU AI Act readiness"
 slug: /compliance/eu-ai-act/
-description: "Prepare evidence for key EU AI Act obligation areas — risk management, data, documentation, logging, transparency, oversight, incidents — with AEGIS."
+description: "Prepare evidence for key EU AI Act obligation areas — risk management, data, documentation, logging, transparency, oversight, incidents — with VERITRAIL."
 section: compliance
 nav_label: "EU AI Act readiness"
 nav_order: 40
@@ -11,10 +11,10 @@ schema_type: WebPage
 primary_cta: baseline
 secondary_cta: assessment
 faq:
-  - q: "Can AEGIS tell us whether our AI system is high-risk under the EU AI Act?"
-    a: "No. AEGIS captures the facts that matter for classification — domain, intended purpose, decision impact, affected parties — and flags regulatory relevance for legal review. Classification is a legal determination for your counsel."
+  - q: "Can VERITRAIL tell us whether our AI system is high-risk under the EU AI Act?"
+    a: "No. VERITRAIL captures the facts that matter for classification — domain, intended purpose, decision impact, affected parties — and flags regulatory relevance for legal review. Classification is a legal determination for your counsel."
   - q: "When do the EU AI Act obligations apply?"
-    a: "The Regulation applies in stages. Applicability timelines must be verified against the current Official Journal text and any amendments, including the European Commission's 2025 Digital Omnibus proposals. AEGIS content has not been verified against post-2025 changes."
+    a: "The Regulation applies in stages. Applicability timelines must be verified against the current Official Journal text and any amendments, including the European Commission's 2025 Digital Omnibus proposals. VERITRAIL content has not been verified against post-2025 changes."
   - q: "We only use AI built by vendors. Does the Act affect us?"
     a: "Possibly. Deployers of high-risk AI systems have their own obligations, and some deployers can take on provider obligations — for example by substantially modifying a system. Your legal team should assess your role for each system."
 updated: 2026-10-21
@@ -24,13 +24,13 @@ updated: 2026-10-21
 
 Regulation (EU) 2024/1689 — the EU AI Act — establishes harmonized rules for AI systems placed on the market, put into service or used in the EU. It takes a risk-based approach: certain practices are prohibited, high-risk AI systems carry extensive requirements, certain systems carry transparency obligations, general-purpose AI models have their own regime, and all providers and deployers have AI literacy obligations.
 
-This page explains how AEGIS controls and evidence relate to the main obligation areas. It is a readiness guide, not legal advice. Whether and how the Act applies to a given system depends on facts and legal analysis that AEGIS does not perform.
+This page explains how VERITRAIL controls and evidence relate to the main obligation areas. It is a readiness guide, not legal advice. Whether and how the Act applies to a given system depends on facts and legal analysis that VERITRAIL does not perform.
 
 ## Important: verify timelines and current text
 
 The Act applies in stages. As originally published in the Official Journal, the main milestones were: entry into force in August 2024; prohibited practices and AI literacy applying from February 2025; general-purpose AI model obligations from August 2025; most remaining provisions, including Annex III high-risk requirements and Article 50 transparency, from August 2026; and high-risk systems that are safety components of products covered by Annex I legislation from August 2027.
 
-**These dates may have changed.** In 2025 the European Commission published "Digital Omnibus" proposals that would amend aspects of the AI Act, including the timing of high-risk obligations. Applicability timelines must be verified against the current Official Journal text and any adopted amendments. AEGIS has not verified post-2025 changes, and this page should not be relied on for dates.
+**These dates may have changed.** In 2025 the European Commission published "Digital Omnibus" proposals that would amend aspects of the AI Act, including the timing of high-risk obligations. Applicability timelines must be verified against the current Official Journal text and any adopted amendments. VERITRAIL has not verified post-2025 changes, and this page should not be relied on for dates.
 
 ## Provider or deployer? Start with roles
 
@@ -41,15 +41,15 @@ Obligations depend heavily on your role for each AI system:
 | **Provider** | Develops an AI system (or has it developed) and places it on the market or puts it into service under its own name or trademark | Risk management, data governance, technical documentation, logging capability, transparency to deployers, human-oversight design, accuracy/robustness/cybersecurity, quality management system, conformity assessment, registration, post-market monitoring, serious incident reporting |
 | **Deployer** | Uses an AI system under its authority in a professional context | Use according to instructions, assign competent human oversight, ensure relevant input data, monitor operation, keep logs under its control, inform affected workers and individuals where required, cooperate with authorities; certain deployers must carry out a fundamental rights impact assessment (Art. 27) |
 
-A deployer, distributor or importer can **become a provider** — for example by putting its name or trademark on a high-risk system, making a substantial modification, or changing a system's intended purpose so that it becomes high-risk (Art. 25). AEGIS captures role per system and responsibility allocation with vendors (AO-09, EI-08, GL-11); the role determination itself is a legal question.
+A deployer, distributor or importer can **become a provider** — for example by putting its name or trademark on a high-risk system, making a substantial modification, or changing a system's intended purpose so that it becomes high-risk (Art. 25). VERITRAIL captures role per system and responsibility allocation with vendors (AO-09, EI-08, GL-11); the role determination itself is a legal question.
 
 {{controls:AO-07,AO-09,EI-02,GL-11}}
 
-## Obligation areas and AEGIS controls
+## Obligation areas and VERITRAIL controls
 
-The mapping below uses the article references in AEGIS Control Library v1.0.0. It is indicative: implementing the listed controls supports readiness work but does not by itself satisfy any article.
+The mapping below uses the article references in VERITRAIL Control Library v1.0.0. It is indicative: implementing the listed controls supports readiness work but does not by itself satisfy any article.
 
-| Obligation area | Article | Applies chiefly to | AEGIS controls (indicative) | Evidence AEGIS helps you hold |
+| Obligation area | Article | Applies chiefly to | VERITRAIL controls (indicative) | Evidence VERITRAIL helps you hold |
 |---|---|---|---|---|
 | AI literacy | Art. 4 | Providers and deployers | AO-05 | Role-based curriculum and completion records |
 | Prohibited practices | Art. 5 | All operators | AO-10 | Prohibited/restricted use list; intake screening records |
@@ -73,9 +73,9 @@ The mapping below uses the article references in AEGIS Control Library v1.0.0. I
 ## What is not covered
 
 - **General-purpose AI model obligations** (for GPAI model providers) are not mapped in Control Library v1.0.0. Organizations that provide GPAI models need separate analysis.
-- **Conformity assessment procedures, CE marking and registration mechanics** are referenced only where an AEGIS control supports the underlying evidence (for example GL-03 and GL-04 relate to Art. 43; EI-01 to Art. 49).
-- **Sector and product legislation** referenced by Annex I (for example medical devices or machinery) has its own requirements outside AEGIS's scope.
-- **Penalties, authority procedures and national implementation** are outside AEGIS's scope.
+- **Conformity assessment procedures, CE marking and registration mechanics** are referenced only where an VERITRAIL control supports the underlying evidence (for example GL-03 and GL-04 relate to Art. 43; EI-01 to Art. 49).
+- **Sector and product legislation** referenced by Annex I (for example medical devices or machinery) has its own requirements outside VERITRAIL's scope.
+- **Penalties, authority procedures and national implementation** are outside VERITRAIL's scope.
 
 ## A readiness workflow
 

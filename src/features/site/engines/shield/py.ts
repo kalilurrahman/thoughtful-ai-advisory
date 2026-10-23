@@ -1,5 +1,5 @@
 /**
- * Small helpers that reproduce Python semantics the AEGIS reference engines rely on
+ * Small helpers that reproduce Python semantics the VERITRAIL reference engines rely on
  * (str()/repr() formatting, truthiness, round(), str.strip(), code-point slicing).
  * Pure functions: safe for SSR and the browser.
  */

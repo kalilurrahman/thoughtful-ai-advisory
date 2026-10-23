@@ -6,8 +6,8 @@ from email import message_from_bytes, policy
 
 import pytest
 
-from aegis_api.server import AegisApp, serve
-from aegis_common.content import load_assessment_template
+from veritrail_api.server import VeritrailApp, serve
+from veritrail_common.content import load_assessment_template
 
 QIDS = [q["id"] for q in load_assessment_template()["questions"]]
 PROFILE = {"industry": "bfsi", "org_size": "1000-5000", "ai_systems": "25-99", "uses_agents": True, "eu_operations": True}
@@ -15,14 +15,14 @@ PROFILE = {"industry": "bfsi", "org_size": "1000-5000", "ai_systems": "25-99", "
 
 @pytest.fixture()
 def app(tmp_path, monkeypatch):
-    monkeypatch.delenv("AEGIS_CRM_BACKEND", raising=False)
-    monkeypatch.delenv("AEGIS_MAIL_BACKEND", raising=False)
+    monkeypatch.delenv("VERITRAIL_CRM_BACKEND", raising=False)
+    monkeypatch.delenv("VERITRAIL_MAIL_BACKEND", raising=False)
     site = tmp_path / "site"
     (site / "tools" / "x").mkdir(parents=True)
     (site / "index.html").write_text("<h1>home</h1>")
     (site / "404.html").write_text("nf")
     (site / "tools" / "x" / "index.html").write_text("tool")
-    return AegisApp(var_dir=tmp_path / "var", site_dir=site, public_base_url="https://aegis.test")
+    return VeritrailApp(var_dir=tmp_path / "var", site_dir=site, public_base_url="https://veritrail.test")
 
 
 def post(app, path, obj, ctype="application/json"):
@@ -61,10 +61,10 @@ def test_lead_full_flow(app):
     assert r["email_status"] == "sent"
     assert "Critical risk flags" in r["report_markdown"]
     # gated downloads
-    path = r["report_pdf_url"].replace("https://aegis.test", "")
+    path = r["report_pdf_url"].replace("https://veritrail.test", "")
     s2, h2, b2 = app.handle("GET", path)
     assert s2 == 200 and b2.startswith(b"%PDF") and h2["Content-Type"] == "application/pdf"
-    s3, _, b3 = app.handle("GET", r["report_md_url"].replace("https://aegis.test", ""))
+    s3, _, b3 = app.handle("GET", r["report_md_url"].replace("https://veritrail.test", ""))
     assert s3 == 200 and b"AI Governance Maturity Report" in b3
     # CRM record has qualification tags
     crm = [json.loads(x) for x in (app.var / "crm" / "contacts.jsonl").read_text().splitlines()]
@@ -74,7 +74,7 @@ def test_lead_full_flow(app):
     assert len(eml) == 1
     msg = message_from_bytes(eml[0].read_bytes(), policy=policy.default)
     assert msg["To"] == "cro@examplebank.com"
-    assert any(p.get_filename() == "AEGIS_Maturity_Report.pdf" for p in msg.iter_attachments())
+    assert any(p.get_filename() == "VERITRAIL_Maturity_Report.pdf" for p in msg.iter_attachments())
     # audit log has domain, not the full email
     audit = (app.var / "audit" / "api_audit.jsonl").read_text()
     assert "examplebank.com" in audit and "cro@examplebank.com" not in audit

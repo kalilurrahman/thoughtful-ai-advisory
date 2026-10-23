@@ -1,5 +1,5 @@
 /*
- * AEGIS privacy-friendly analytics (cookieless, no identifiers, no personal data).
+ * VERITRAIL privacy-friendly analytics (cookieless, no identifiers, no personal data).
  *  - Sends {name, path, props} to /api/events with navigator.sendBeacon (text/plain).
  *  - Does nothing when Do Not Track or Global Privacy Control is enabled.
  *  - path is location.pathname only (no query string or fragment, which can carry tokens).
@@ -10,7 +10,7 @@
   var api = factory(root);
   if (typeof module === 'object' && module.exports) { module.exports = api; }
   else {
-    root.AegisAnalytics = api;
+    root.VeritrailAnalytics = api;
     if (root.document) {
       if (root.document.readyState === 'loading') { root.document.addEventListener('DOMContentLoaded', function () { api.init(root); }); }
       else { api.init(root); }
@@ -82,7 +82,7 @@
     var doc = env.document;
     var base = '/api';
     try {
-      var cfgEl = doc.getElementById('aegis-config');
+      var cfgEl = doc.getElementById('veritrail-config');
       if (cfgEl) { base = (JSON.parse(cfgEl.textContent).api_base || '/api').replace(/\/$/, ''); }
     } catch (e) { /* default */ }
     api.track = makeTracker(env, base + '/events');

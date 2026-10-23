@@ -2,7 +2,7 @@
 title: "Case-study template"
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Commercial Lead
+owner: VERITRAIL Commercial Lead
 ---
 
 # Case-study template
@@ -17,9 +17,9 @@ owner: AEGIS Commercial Lead
 |---|---|
 | Written approval | Signed approval from an authorized customer representative for the exact final text, logo use and channels; stored with the case study |
 | Verified metrics | Every number traces to a scorecard entry with evidence label **Verified** (e.g. register export, audit log, sponsor sign-off). User-asserted figures may only be quoted as the customer's own statement, attributed, and with approval |
-| No compliance claims | The case study must not state or imply that the customer is compliant, certified or regulator-approved because of AEGIS |
+| No compliance claims | The case study must not state or imply that the customer is compliant, certified or regulator-approved because of VERITRAIL |
 | Anonymized option | If the customer does not approve naming, use a generic descriptor (e.g. "a European insurer") — still requires written approval of the text |
-| External communication approval | Sending or publishing is an external communication and requires human approval inside AEGIS processes |
+| External communication approval | Sending or publishing is an external communication and requires human approval inside VERITRAIL processes |
 | Withdrawal | The customer may withdraw approval; remove within an agreed period |
 
 Pre-publication checklist:
@@ -58,4 +58,4 @@ n agents — verified]
 ### What's next
 [Next phase, if approved for publication.]
 
-*AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.*
+*VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.*

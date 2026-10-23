@@ -2,10 +2,10 @@ import json
 
 import pytest
 
-from aegis_common.audit import AuditLog
-from aegis_common.content import control_citation, controls, controls_by_id, pillars
-from aegis_common.evidence import EvidenceStatus, find_prohibited_claims
-from aegis_common.redaction import detect_jailbreak, detect_prompt_injection, redact
+from veritrail_common.audit import AuditLog
+from veritrail_common.content import control_citation, controls, controls_by_id, pillars
+from veritrail_common.evidence import EvidenceStatus, find_prohibited_claims
+from veritrail_common.redaction import detect_jailbreak, detect_prompt_injection, redact
 
 
 def test_control_library_integrity():
@@ -35,7 +35,7 @@ def test_control_library_integrity():
 
 
 def test_control_citation_format():
-    assert control_citation("SE-08").startswith("AEGIS Control SE-08: Immutable action logging")
+    assert control_citation("SE-08").startswith("VERITRAIL Control SE-08: Immutable action logging")
     with pytest.raises(KeyError):
         control_citation("XX-99")
 
@@ -70,7 +70,7 @@ def test_evidence_labels():
 @pytest.mark.parametrize("text", [
     "Your organization is fully compliant with the EU AI Act.",
     "This system is ISO 42001 certified.",
-    "AEGIS guarantees compliance.",
+    "VERITRAIL guarantees compliance.",
     "The deployment is regulator-approved.",
     "We certify that your organization meets the standard.",
     "You are now in full compliance.",
@@ -80,10 +80,10 @@ def test_prohibited_claims_detected(text):
 
 
 @pytest.mark.parametrize("text", [
-    "AEGIS does not certify compliance or replace legal advice.",
+    "VERITRAIL does not certify compliance or replace legal advice.",
     "This report is not a determination that you are compliant.",
     "Readiness indicators are not a compliance determination.",
-    "AEGIS cannot guarantee compliance with the EU AI Act.",
+    "VERITRAIL cannot guarantee compliance with the EU AI Act.",
 ])
 def test_disclaimers_not_flagged(text):
     assert find_prohibited_claims(text) == []

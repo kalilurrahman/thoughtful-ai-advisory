@@ -1,8 +1,8 @@
 ---
-title: "Accountability & Operating Model (AO) — AEGIS Framework pillar"
+title: "Accountability & Operating Model (AO) — VERITRAIL Framework pillar"
 h1: "Pillar 1: Accountability & Operating Model"
 slug: /framework/pillars/accountability/
-description: "AEGIS AO controls define AI policy, an executive forum with authority to stop use cases, RACI, risk appetite, AI literacy, escalation and prohibited uses."
+description: "VERITRAIL AO controls define AI policy, an executive forum with authority to stop use cases, RACI, risk appetite, AI literacy, escalation and prohibited uses."
 section: framework
 nav_label: "Accountability (AO)"
 nav_order: 16
@@ -20,7 +20,7 @@ updated: 2026-10-21
 
 **Core question: who owns AI risk, who decides, and how is governance resourced?**
 
-The Accountability & Operating Model pillar establishes the decision structure every other control depends on. It is the pillar most often "done on paper": a policy exists, but nobody can show a decision the governance forum actually made, or which role approved the last high-risk deployment. AEGIS treats accountability as something you evidence through decisions, not documents.
+The Accountability & Operating Model pillar establishes the decision structure every other control depends on. It is the pillar most often "done on paper": a policy exists, but nobody can show a decision the governance forum actually made, or which role approved the last high-risk deployment. VERITRAIL treats accountability as something you evidence through decisions, not documents.
 
 ## What good looks like
 
@@ -52,16 +52,16 @@ The Accountability & Operating Model pillar establishes the decision structure e
 
 ## Common failure modes
 
-- **A forum with no teeth.** The forum reviews slide decks but has never restricted or stopped anything. AEGIS asks for a decision log, because the evidence for AO-02 is the decisions themselves.
+- **A forum with no teeth.** The forum reviews slide decks but has never restricted or stopped anything. VERITRAIL asks for a decision log, because the evidence for AO-02 is the decisions themselves.
 - **Risk appetite that never reaches intake.** The board approves an appetite statement, but tier criteria at intake are improvised. AO-04 is only effective when it feeds EI-02 tiering and GL-01 triage.
 - **Training as a one-off.** A single e-learning module is not role-based literacy. Operators who supervise AI decisions need different training from developers or executives (AO-05).
 - **Vendor AI as nobody's problem.** Embedded AI features in purchased software are often unowned. AO-09 assigns accountability and clarifies who is the provider and who is the deployer.
 
-## How AEGIS helps
+## How VERITRAIL helps
 
 - The [maturity self-assessment](/tools/maturity-assessment/) scores this area through questions STR-Q1 to STR-Q3 and HUM-Q3, and raises a critical flag when there is no policy or accountable owner.
-- [AEGIS Control](/solutions/control/) provides policy templates, a forum charter, RACI and escalation matrices, and records forum decisions as evidence.
-- The [AEGIS Agent](/solutions/agent/) can draft a RACI or obligations register from your inputs — as a draft for human review, with each line citing the relevant control.
+- [VERITRAIL Control](/solutions/control/) provides policy templates, a forum charter, RACI and escalation matrices, and records forum decisions as evidence.
+- The [VERITRAIL Agent](/solutions/agent/) can draft a RACI or obligations register from your inputs — as a draft for human review, with each line citing the relevant control.
 
 ## Indicative framework alignment
 

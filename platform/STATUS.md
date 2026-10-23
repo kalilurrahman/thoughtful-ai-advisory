@@ -1,6 +1,6 @@
-# AEGIS Launch — Status Report
+# VERITRAIL Launch — Status Report
 
-**As of:** 21 October 2026 · **Increment:** Sprint 1, launch build (Phases 1–4 built; Phases 5–6 prepared) · **Owner:** AEGIS Launch Orchestrator
+**As of:** 21 October 2026 · **Increment:** Sprint 1, launch build (Phases 1–4 built; Phases 5–6 prepared) · **Owner:** VERITRAIL Launch Orchestrator
 
 > Status discipline: "Done" means built **and** covered by passing automated tests, or (for content) passing automated content checks. Nothing here claims customer validation, and every sample uses a fictional organization.
 
@@ -11,7 +11,7 @@
 | Foundation | 64-control library, assessment template, audit chain, redaction, evidence labels, claim guard | ✅ Done | `tests/unit/test_common.py`, `scripts/check_content.py` |
 | 1 Website | 56 authored pages + generated control pages (121 pages total), SEO, JSON-LD, sitemap, a11y/link checks, forms, cookieless analytics | ✅ Built — ⏳ not deployed | `make site` (build checks pass), website tests |
 | 2 Self-assessment | 24 questions / 8 weighted domains, instant score, business-email gate, MD/PDF report, CRM + email adapters, lead qualification | ✅ Built — ⏳ awaiting real CRM/ESP credentials | `tests/unit/test_assessment_engine.py`, `tests/integration/test_api.py`, JS↔Python parity test |
-| 3 AEGIS Agent MVP | Ask AEGIS, guided assessment, gap analysis, reports (MD/PDF/CSV/JSON), 14 tools, RBAC, approvals, audit | ✅ Done | Agent eval 73/73 (safety 27/27), agent unit/security tests, `docs/AGENT_DESIGN.md` |
+| 3 VERITRAIL Agent MVP | Ask VERITRAIL, guided assessment, gap analysis, reports (MD/PDF/CSV/JSON), 14 tools, RBAC, approvals, audit | ✅ Done | Agent eval 73/73 (safety 27/27), agent unit/security tests, `docs/AGENT_DESIGN.md` |
 | 4 Runtime Shield | Advisor, policy-as-code generator (YAML/JSON, versioning), engine (7 decisions × 5 rollout modes, kill switch, limits), 6 policy packs | ✅ Done | `tests/policy-engine`, `tests/security/test_policy_*` |
 | 5 Pilots | Pilot A/B plans, metrics scorecards, onboarding, safeguards, workshop kit, templates, feedback survey, proposal; synthetic dress rehearsal run | ✅ Prepared — ⛔ execution blocked (no design partners yet) | `content/pilots/`, `output/sample_reports/pilot_dry_run/` |
 | 6 Commercial | Pricing hypotheses, 7 one-pagers, proposal template, ROI calculator (tested), demo script, objection handling, case-study template, 90-day onboarding | ✅ Prepared — ⛔ validation blocked on pilots | `content/commercial/`, `tests/unit/test_content_roi.py` |
@@ -30,7 +30,7 @@
   - 2 runtime policies drafted with activation pending approval
   - evidence pack exported only after approval, and self-approval refused
   - audit chain of 675 records verified
-- **Master document:** `output/AEGIS_Launch_and_Enhancement_Blueprint_v3.md` (+ PDF as the website's Enterprise Blueprint download).
+- **Master document:** `output/VERITRAIL_Launch_and_Enhancement_Blueprint_v3.md` (+ PDF as the website's Enterprise Blueprint download).
 
 ## 3. Validation results (final build)
 | Check | Result |
@@ -41,7 +41,7 @@
 | Python ↔ browser engine parity | 72 random and edge cases + 10 invalid inputs, identical output. Browser Markdown report identical to server |
 | Website build checks | 121 pages + 404. No missing meta/h1, broken links, unlabelled inputs, inline/external scripts or prohibited claims |
 | Content checks (`make check`) | 64 controls; every control reference resolves; 6 policy packs valid; 0 prohibited-claim hits |
-| Live smoke test (API + site) | Lead → emailed report → signed PDF download; Ask AEGIS answer per Blueprint §4.5; injection refused; Shield policy generated |
+| Live smoke test (API + site) | Lead → emailed report → signed PDF download; Ask VERITRAIL answer per Blueprint §4.5; injection refused; Shield policy generated |
 | Browser check | Desktop and mobile screenshots in `docs/screenshots/`. Header CTA spacing bug found and fixed |
 | Pilot dress rehearsal | 28 systems, 12/12 High-tier deep dives, 403 gaps, 2 policies, approval-gated export, self-approval refused, 675-record audit chain verified |
 
@@ -52,7 +52,7 @@
 | Item | Blocker | Unblock action |
 |---|---|---|
 | Public website launch | No production domain/hosting; legal review of privacy/terms templates; named email-template approver (placeholder in `content/email_templates.yaml`) | Assign domain + host; legal review; replace placeholder approver (DEC-0007) |
-| Live CRM / email | No CRM/ESP account credentials | Configure `AEGIS_CRM_*`, `AEGIS_MAIL_*` (API_SPECIFICATION §3); enable DKIM/SPF/DMARC and double opt-in |
+| Live CRM / email | No CRM/ESP account credentials | Configure `VERITRAIL_CRM_*`, `VERITRAIL_MAIL_*` (API_SPECIFICATION §3); enable DKIM/SPF/DMARC and double opt-in |
 | Pilots A and B | No signed design partners | Run outreach per `content/pilots/` recruitment plan; sign NDA/DPA; then follow PILOT_PLAYBOOK |
 | Commercial validation, case studies | Depend on pilots | Do not publish case studies without written customer approval and verified metrics |
 

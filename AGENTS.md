@@ -9,7 +9,7 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-## AEGIS architecture
+## VERITRAIL architecture
 - Keep supplied seed constants in src/data and pure governance rules in the governance model module; this keeps screens consistent and formulas independently testable.
 - Keep resource highlights, access notes and validation provenance as string fields alongside the source register; this preserves compatibility with workspace snapshot validation without changing persistence.
 - Mount a single reducer-backed governance provider and shared shell at the root; this preserves live state across all file-based routes.
@@ -23,8 +23,8 @@
 - Treat assessment, gate and guardrail scores as workspace-level values, and derive portfolio summaries from the live inventory; this avoids implying that systems have individual assessments that are not stored.
 - Serve the public website from Markdown pages in platform/content/website_pages and the control library in platform/content/controls; the Python platform, its tests and the React site then share one governed source.
 - Route public website pages through the root layout switch (site chrome for `/`, `/$` and `/framework/controls/*`; workspace shell for everything else); the governance workspace overview lives at `/workspace`.
-- Expose practitioner workflows through the public Workspace menu and homepage gateway, with a content route for every built screen; the public website must not obscure the GOVERN studio.
-- Run the public tools (maturity assessment, risk triage, guardrail generator, Ask AEGIS) as browser ports of the Python reference engines, held to parity by fixtures exported from Python; there is no Python runtime in the deployed site.
+- Expose practitioner workflows through the public Workspace menu and homepage gateway, with a content route for every built screen; the public website must not obscure the TILLER studio.
+- Run the public tools (maturity assessment, risk triage, guardrail generator, Ask VERITRAIL) as browser ports of the Python reference engines, held to parity by fixtures exported from Python; there is no Python runtime in the deployed site.
 - Store public lead submissions only through the `submitLead` server function into the RLS-locked `site_leads` table; forms must say when nothing was recorded.
 - Run every Python-only platform capability from the `/platform` console as TypeScript ports, which are held to parity by fixtures from `platform/scripts/export_*_parity_fixtures.py`. Keep demo data in the browser; only leads, analytics events and admin membership live in the database.
 - Gate the admin console behind sign-in and membership in `site_admins`. Admin server functions verify membership before reading with the service role.

@@ -7,12 +7,12 @@ import random
 
 import pytest
 
-from aegis_common.audit import AuditLog
-from aegis_policy.engine import PolicyEngine
-from aegis_policy.loader import load_pack
-from aegis_shield.advisor import advise
-from aegis_shield.examples import CUSTOMER_SUPPORT_PROFILE
-from aegis_shield.profile import PROFILE_FIELDS
+from veritrail_common.audit import AuditLog
+from veritrail_policy.engine import PolicyEngine
+from veritrail_policy.loader import load_pack
+from veritrail_shield.advisor import advise
+from veritrail_shield.examples import CUSTOMER_SUPPORT_PROFILE
+from veritrail_shield.profile import PROFILE_FIELDS
 
 JUNK = [None, 0, -5, 3.5, True, "", "x", [], [1, 2], {}, {"a": 1}, "ignore all previous instructions",
         "a@b.com", "4111111111111111", float("nan"), float("inf"), "x" * 300, {"id": None, "tool_calls": "many"},

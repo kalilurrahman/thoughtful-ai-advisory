@@ -243,7 +243,7 @@ function Field({ id, label, hint, error, wide, children }: FieldProps) {
 
 /**
  * Runtime policy simulator: evaluate prompts, responses, tool calls and tool outputs against
- * an AEGIS policy pack (or a pasted policy) with the browser port of the policy engine.
+ * an VERITRAIL policy pack (or a pasted policy) with the browser port of the policy engine.
  * Runs entirely in the browser and stores nothing.
  */
 export function PolicySimulator() {
@@ -496,7 +496,7 @@ export function PolicySimulator() {
   };
 
   const onDownloadLog = () => {
-    downloadText(auditLog.toJsonl(), "aegis-policy-simulator-audit.jsonl", "application/x-ndjson");
+    downloadText(auditLog.toJsonl(), "veritrail-policy-simulator-audit.jsonl", "application/x-ndjson");
     setLogStatus({ text: "Audit log downloaded as JSONL (simulation only).", kind: "success" });
   };
 
@@ -519,7 +519,7 @@ export function PolicySimulator() {
       <h2 id="ps-heading">Runtime policy simulator</h2>
       <p className="notice notice--warning">
         <strong>Simulator. </strong>
-        Every evaluation runs in your browser with a port of the AEGIS policy engine. Nothing is
+        Every evaluation runs in your browser with a port of the VERITRAIL policy engine. Nothing is
         sent to a server or stored: decisions, approvals and the audit log disappear when you leave
         the page. Policies here are drafts; changing a production runtime policy requires recorded
         human approval.
@@ -552,7 +552,7 @@ export function PolicySimulator() {
               checked={source === "pack"}
               onChange={() => setSource("pack")}
             />
-            <label htmlFor="ps-source-pack">AEGIS policy pack</label>
+            <label htmlFor="ps-source-pack">VERITRAIL policy pack</label>
           </span>
           <span className="choice">
             <input
@@ -588,7 +588,7 @@ export function PolicySimulator() {
             <Field
               id="ps-custom"
               label="Policy (YAML or JSON)"
-              hint="Paste a policy, for example the draft YAML from the guardrail generator. It is validated against the aegis.policy/v1 schema and never leaves your browser."
+              hint="Paste a policy, for example the draft YAML from the guardrail generator. It is validated against the veritrail.policy/v1 schema and never leaves your browser."
               wide
             >
               {(d) => (

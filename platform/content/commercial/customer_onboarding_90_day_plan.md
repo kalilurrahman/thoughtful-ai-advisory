@@ -2,7 +2,7 @@
 title: "90-day customer onboarding plan"
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Customer Success Lead
+owner: VERITRAIL Customer Success Lead
 ---
 
 # 90-day customer onboarding plan
@@ -12,7 +12,7 @@ sequenced by exit criteria; day ranges are the target cadence agreed with the cu
 
 ## Roles
 
-| AEGIS | Customer |
+| VERITRAIL | Customer |
 |---|---|
 | Customer success lead (accountable) | Executive sponsor |
 | Solutions engineer (integrations, Shield) | Governance lead (day-to-day owner) |
@@ -34,10 +34,10 @@ sequenced by exit criteria; day ranges are the target cadence agreed with the cu
 
 | Activity | Output | Controls | Exit criterion |
 |---|---|---|---|
-| Switch intake to AEGIS (EI-12) with triage routing | Live intake | EI-12, GL-01 | New use cases enter via AEGIS only |
+| Switch intake to VERITRAIL (EI-12) with triage routing | Live intake | EI-12, GL-01 | New use cases enter via VERITRAIL only |
 | Activate approval matrix and change triggers | Live gates | GL-03, GL-04 | First approvals with conditions recorded |
 | Shield: policies for priority agents in Observe → Warn | Decision logs | IS-12, IS-13 | Observe review complete; customer approver signs off Warn |
-| AEGIS Agent rollout to governance users | Agent usage | — | Assessments completed via Agent |
+| VERITRAIL Agent rollout to governance users | Agent usage | — | Assessments completed via Agent |
 | First KPI pack to forum | KPI pack | SE-03 | Forum reviews KPIs |
 
 ## Phase 3 — Days 61–90: Prove and expand

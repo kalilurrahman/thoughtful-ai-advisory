@@ -1,8 +1,8 @@
 # Executive Readiness Report — Example Regional Bank (synthetic)
 
-> **SYNTHETIC DRESS REHEARSAL.** Fictional organization, generated answers. This report demonstrates the AEGIS Pilot A workflow and outputs; it is not evidence about any real organization.
+> **SYNTHETIC DRESS REHEARSAL.** Fictional organization, generated answers. This report demonstrates the VERITRAIL Pilot A workflow and outputs; it is not evidence about any real organization.
 
-**Prepared:** 2026-10-21 · **Scope:** AEGIS Governance Baseline (Pilot A profile) · **Prepared by:** AEGIS Agent-assisted workflow, synthetic analyst
+**Prepared:** 2026-10-21 · **Scope:** VERITRAIL Governance Baseline (Pilot A profile) · **Prepared by:** VERITRAIL Agent-assisted workflow, synthetic analyst
 
 ## 1. Executive summary
 
@@ -75,8 +75,8 @@
 
 | Agent | Policy | Version | Status | Rollout mode | Risk rating | Activation |
 |---|---|---|---|---|---|---|
-| Customer support agent | pol-customer-support-agent | 0.1.0 | draft | observe | High | apr_mvi8hwkv3b5b0409 (pending) |
-| Collections outreach agent | pol-collections-outreach-agent | 0.1.0 | draft | observe | Critical | apr_mvi8hwlj3ae88ab5 (pending) |
+| Customer support agent | pol-customer-support-agent | 0.1.0 | draft | observe | High | apr_mvklugqw0b4fa65c (pending) |
+| Collections outreach agent | pol-collections-outreach-agent | 0.1.0 | draft | observe | Critical | apr_mvklugrfc48c994a (pending) |
 
 ## 8. Pilot success metrics (dry run)
 
@@ -110,4 +110,4 @@
 - `06_evidence_pack/` — approval-gated evidence pack
 - `metrics.json`, `run_log.md`
 
-*AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.*
+*VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.*

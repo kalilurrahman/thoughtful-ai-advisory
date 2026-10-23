@@ -1,5 +1,5 @@
 /*
- * Lead capture integrations (server only) — port of platform/app/api/aegis_api/integrations.py
+ * Lead capture integrations (server only) — port of platform/app/api/veritrail_api/integrations.py
  * plus the lead record / qualification built by create_lead() and contact() in server.py.
  *
  * What runs here (Cloudflare Workers via TanStack server functions):
@@ -14,13 +14,13 @@
  * What does NOT run here: SMTP email delivery (SMTPMailer / OutboxMailer). Workers cannot open raw
  * TCP SMTP sessions with smtplib semantics and there is no outbox directory, so report emails are
  * never sent from the hosted site; the UI says so. Use a transactional email HTTP API in a
- * future adapter if needed. AEGIS_MAIL_BACKEND / AEGIS_SMTP_* are therefore ignored.
+ * future adapter if needed. VERITRAIL_MAIL_BACKEND / VERITRAIL_SMTP_* are therefore ignored.
  *
  * Environment (same names as the Python API):
- *   AEGIS_CRM_BACKEND        "webhook" | "hubspot" (optional here: inferred from the vars below)
- *   AEGIS_CRM_WEBHOOK_URL    webhook adapter target (POST application/json)
- *   AEGIS_HUBSPOT_PORTAL_ID  HubSpot portal id      } HubSpot Forms submission API
- *   AEGIS_HUBSPOT_FORM_GUID  HubSpot form GUID      }
+ *   VERITRAIL_CRM_BACKEND        "webhook" | "hubspot" (optional here: inferred from the vars below)
+ *   VERITRAIL_CRM_WEBHOOK_URL    webhook adapter target (POST application/json)
+ *   VERITRAIL_HUBSPOT_PORTAL_ID  HubSpot portal id      } HubSpot Forms submission API
+ *   VERITRAIL_HUBSPOT_FORM_GUID  HubSpot form GUID      }
  *
  * CRM failures are reported in the return value and never thrown: a CRM outage must never fail
  * lead capture.
@@ -238,7 +238,7 @@ export function crmRecord(lead: StoredLead): Record<string, unknown> {
 
 /** Python str() of a scalar for HubSpot field values (scores are Python floats: "60.0"). */
 function pyScalarStr(name: string, v: unknown): string {
-  if (typeof v === "number" && name === "aegis_maturity_score") return pyFloatStr(v);
+  if (typeof v === "number" && name === "veritrail_maturity_score") return pyFloatStr(v);
   return pyStr(v);
 }
 
@@ -250,10 +250,10 @@ export function toHubspotPayload(record: Record<string, unknown>): Record<string
     ["firstname", record["name"]],
     ["company", record["company"]],
     ["jobtitle", record["role"]],
-    ["aegis_maturity_score", record["overall_score"]],
-    ["aegis_maturity_level", record["maturity_level"]],
-    ["aegis_lead_tags", tags.map(String).join(";")],
-    ["aegis_source", record["source"]],
+    ["veritrail_maturity_score", record["overall_score"]],
+    ["veritrail_maturity_level", record["maturity_level"]],
+    ["veritrail_lead_tags", tags.map(String).join(";")],
+    ["veritrail_source", record["source"]],
   ];
   return {
     fields: fields
@@ -262,7 +262,7 @@ export function toHubspotPayload(record: Record<string, unknown>): Record<string
     legalConsentOptions: {
       consent: {
         consentToProcess: Boolean(record["consent"]),
-        text: "I agree to AEGIS processing my data to deliver my report.",
+        text: "I agree to VERITRAIL processing my data to deliver my report.",
       },
     },
   };
@@ -306,7 +306,7 @@ async function postJson(
   }
 }
 
-/** WebhookCRM: POSTs the lead JSON to AEGIS_CRM_WEBHOOK_URL. */
+/** WebhookCRM: POSTs the lead JSON to VERITRAIL_CRM_WEBHOOK_URL. */
 export function webhookCrm(url: string, fetchImpl: FetchLike = fetch, timeoutMs = 5000): CrmAdapter {
   return {
     name: "webhook",
@@ -335,14 +335,14 @@ export type IntegrationEnv = Record<string, string | undefined>;
 
 /**
  * get_crm(): the configured adapter, or null when no CRM env vars are set (the site_leads row is
- * then the only store). AEGIS_CRM_BACKEND selects explicitly; when unset the backend is inferred
+ * then the only store). VERITRAIL_CRM_BACKEND selects explicitly; when unset the backend is inferred
  * from which variables are present (webhook first).
  */
 export function getCrm(env: IntegrationEnv, fetchImpl: FetchLike = fetch): CrmAdapter | null {
-  const backend = env["AEGIS_CRM_BACKEND"]?.trim();
-  const url = env["AEGIS_CRM_WEBHOOK_URL"]?.trim();
-  const portal = env["AEGIS_HUBSPOT_PORTAL_ID"]?.trim();
-  const guid = env["AEGIS_HUBSPOT_FORM_GUID"]?.trim();
+  const backend = env["VERITRAIL_CRM_BACKEND"]?.trim();
+  const url = env["VERITRAIL_CRM_WEBHOOK_URL"]?.trim();
+  const portal = env["VERITRAIL_HUBSPOT_PORTAL_ID"]?.trim();
+  const guid = env["VERITRAIL_HUBSPOT_FORM_GUID"]?.trim();
   const wantWebhook = backend === "webhook" || (!backend && Boolean(url));
   const wantHubspot = backend === "hubspot" || (!backend && !url && Boolean(portal && guid));
   if (wantWebhook && url && /^https:\/\//i.test(url)) return webhookCrm(url, fetchImpl);
@@ -352,7 +352,7 @@ export function getCrm(env: IntegrationEnv, fetchImpl: FetchLike = fetch): CrmAd
 
 /** Why email delivery is not available on the hosted site (shown in admin/status output). */
 export const MAIL_UNAVAILABLE =
-  "Email delivery is not available on the hosted site: SMTP (AEGIS_MAIL_BACKEND=smtp) needs raw TCP sockets " +
+  "Email delivery is not available on the hosted site: SMTP (VERITRAIL_MAIL_BACKEND=smtp) needs raw TCP sockets " +
   "that Cloudflare Workers do not provide, so reports are never emailed.";
 
 /**

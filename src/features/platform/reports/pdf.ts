@@ -1,15 +1,15 @@
 import { jsPDF } from "jspdf";
 
-// Markdown -> PDF, a port of platform/app/reports/aegis_reports/pdf.py using jsPDF.
+// Markdown -> PDF, a port of platform/app/reports/veritrail_reports/pdf.py using jsPDF.
 // Supports #/##/### headings, paragraphs, **bold** (rendered as plain text weight),
 // bullet and numbered lists, pipe tables, fenced code, blockquotes and rules, with the
-// AEGIS header band and footer on every page. Unsupported syntax degrades to text.
+// VERITRAIL header band and footer on every page. Unsupported syntax degrades to text.
 
 const NAVY: [number, number, number] = [11, 37, 69];
 const TEAL: [number, number, number] = [19, 99, 107];
 const GREY: [number, number, number] = [90, 100, 114];
 const LIGHT: [number, number, number] = [238, 242, 246];
-export const DEFAULT_FOOTER = "AEGIS — governance readiness & evidence. Not a certification or legal advice.";
+export const DEFAULT_FOOTER = "VERITRAIL — governance readiness & evidence. Not a certification or legal advice.";
 
 const MM = 72 / 25.4;
 const PAGE_W = 210 * MM;
@@ -178,7 +178,7 @@ export function markdownToPdf(md: string, opts: { title?: string; footer?: strin
     doc.setTextColor(255, 255, 255);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(8);
-    doc.text("AEGIS", MARGIN, 5.5 * MM);
+    doc.text("VERITRAIL", MARGIN, 5.5 * MM);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7.5);
     doc.text(plainInline(opts.title ?? "").slice(0, 110), PAGE_W - MARGIN, 5.5 * MM, { align: "right" });

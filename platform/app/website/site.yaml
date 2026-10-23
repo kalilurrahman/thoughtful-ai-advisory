@@ -1,19 +1,19 @@
-# AEGIS public website configuration (read by app/website/build.py).
+# VERITRAIL public website configuration (read by app/website/build.py).
 #
 # site_url is a PLACEHOLDER (.example is a reserved TLD). Set the real production
 # origin before deploying: canonical URLs, Open Graph URLs, JSON-LD and
 # sitemap.xml are all generated from it. Override per build with
 #   python3 app/website/build.py --site-url https://www.example.com
-site_url: https://www.aegis-governance.example
-site_name: AEGIS
+site_url: https://www.veritrail-governance.example
+site_name: VERITRAIL
 site_tagline: Enterprise AI governance, runtime guardrails and evidence
 locale: en_US
 lang: en
 organization:
-  name: AEGIS
-  logo: /static/img/aegis-logo.png
+  name: VERITRAIL
+  logo: /static/img/veritrail-logo.png
   # Placeholder contact address on the reserved .example domain.
-  email: hello@aegis-governance.example
+  email: hello@veritrail-governance.example
 
 # Browser code calls the HTTP API (CONTRIBUTING.md §3) on the same origin.
 api_base: /api
@@ -23,7 +23,7 @@ default_og_image:
   svg: /static/img/og-default.svg
   width: 1200
   height: 630
-  alt: "AEGIS — Govern every AI system, agent and decision with evidence"
+  alt: "VERITRAIL — Govern every AI system, agent and decision with evidence"
 
 # Header navigation: section id (front-matter `section`) -> label. Menu items are
 # the pages in that section ordered by nav_order; a page whose slug is
@@ -70,21 +70,21 @@ ctas:
     url: /tools/maturity-assessment/
   baseline:
     title: Validate your position with evidence
-    text: The AEGIS Governance Baseline is a fixed-scope engagement that inventories your AI systems, reviews evidence and produces a gap register and remediation roadmap.
+    text: The VERITRAIL Governance Baseline is a fixed-scope engagement that inventories your AI systems, reviews evidence and produces a gap register and remediation roadmap.
     label: Book a Governance Baseline
     url: /contact/book-governance-baseline/
   agent:
-    title: See the AEGIS Agent at work
-    text: A governance copilot that drafts assessments and gap registers, cites AEGIS controls and labels the status of every piece of evidence.
-    label: Explore AEGIS Agent
+    title: See the VERITRAIL Agent at work
+    text: A governance copilot that drafts assessments and gap registers, cites VERITRAIL controls and labels the status of every piece of evidence.
+    label: Explore VERITRAIL Agent
     url: /solutions/agent/
   blueprint:
-    title: Get the AEGIS Enterprise Blueprint
+    title: Get the VERITRAIL Enterprise Blueprint
     text: The operating model, control library and rollout plan in one document.
     label: Download the blueprint
     url: /resources/blueprint/
   demo:
-    title: See AEGIS with your own scenarios
+    title: See VERITRAIL with your own scenarios
     text: A working session with our team on your AI inventory, risk tiers and runtime guardrails.
     label: Request a demo
     url: /contact/request-demo/
@@ -105,12 +105,12 @@ control_library:
 # if none exists it warns and the form only confirms the request.
 downloads:
   blueprint:
-    path: /downloads/AEGIS_Enterprise_Blueprint.pdf
-    sources: [output/AEGIS_Enterprise_Blueprint.pdf]
-    label: Download the AEGIS Enterprise Blueprint (PDF)
+    path: /downloads/VERITRAIL_Enterprise_Blueprint.pdf
+    sources: [output/VERITRAIL_Enterprise_Blueprint.pdf]
+    label: Download the VERITRAIL Enterprise Blueprint (PDF)
 
 # Business email check (client-side convenience; the API enforces its own list in
-# aegis_api.integrations — tests keep this list equal to the server's free-mail + disposable sets).
+# veritrail_api.integrations — tests keep this list equal to the server's free-mail + disposable sets).
 free_mail_domains:
   - gmail.com
   - googlemail.com

@@ -6,7 +6,7 @@ import datetime
 
 import pytest
 
-from aegis_policy.schema import POLICY_SCHEMA, lint_policy, parse_semver, semver_key, validate_policy
+from veritrail_policy.schema import POLICY_SCHEMA, lint_policy, parse_semver, semver_key, validate_policy
 from pe_helpers import _base_policy
 
 
@@ -65,7 +65,7 @@ def test_semver_ordering():
     (("kill_switch", "scopes"), ["planet"], "kill_switch.scopes"),
     (("applies_to", "environment"), ["prod"], "applies_to.environment"),
     (("citations",), [], "citations"),
-    (("citations",), ["IS-99"], "unknown AEGIS control ID"),
+    (("citations",), ["IS-99"], "unknown VERITRAIL control ID"),
     (("citations",), ["XX-01"], "does not match"),
 ])
 def test_field_constraints(policy, path, value, fragment):
@@ -96,7 +96,7 @@ def test_unquoted_yaml_date_hint(policy):
 
 def test_rule_citation_must_exist(policy):
     policy["tools"]["rules"][0]["citations"] = ["IS-77"]
-    ok, e = has(errs(policy), "tools.rules[0].citations: unknown AEGIS control ID")
+    ok, e = has(errs(policy), "tools.rules[0].citations: unknown VERITRAIL control ID")
     assert ok, e
 
 

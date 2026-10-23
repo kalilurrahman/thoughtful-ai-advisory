@@ -1,22 +1,22 @@
 /*
- * AEGIS Maturity Self-Assessment — browser scoring engine.
+ * VERITRAIL Maturity Self-Assessment — browser scoring engine.
  *
- * Mirrors the Python reference engine app/assessment-engine/aegis_assessment/engine.py
+ * Mirrors the Python reference engine app/assessment-engine/veritrail_assessment/engine.py
  * (score_assessment / preliminary_result) field-for-field. Parity is enforced by
  * tests/integration/test_website_engine_parity.py. All score arithmetic uses integers and
  * the template's round-half-up rule: floor((20*num + den) / (2*den)) / 10.
  *
  * The scoring data (template + cited controls + standard disclaimer) is embedded in the page
- * at build time as <script type="application/json" id="aegis-assessment-data">.
+ * at build time as <script type="application/json" id="veritrail-assessment-data">.
  *
- * Usage (browser): AegisAssessment.scoreAssessment(answers, profile, bundle)
+ * Usage (browser): VeritrailAssessment.scoreAssessment(answers, profile, bundle)
  * Usage (Node):    const E = require('./assessment-engine.js'); E.scoreAssessment(...)
  */
 (function (root, factory) {
   'use strict';
   var api = factory();
   if (typeof module === 'object' && module.exports) { module.exports = api; }
-  else { root.AegisAssessment = api; }
+  else { root.VeritrailAssessment = api; }
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
@@ -322,7 +322,7 @@
 
   /** Read the bundle embedded by the site generator (browser only). */
   function loadBundle(doc) {
-    var el = (doc || document).getElementById('aegis-assessment-data');
+    var el = (doc || document).getElementById('veritrail-assessment-data');
     return el ? JSON.parse(el.textContent) : null;
   }
 

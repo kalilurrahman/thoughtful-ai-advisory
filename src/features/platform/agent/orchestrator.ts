@@ -1,12 +1,12 @@
 /**
- * AEGIS Agent orchestrator for every role — browser port of aegis_agent/orchestrator.py.
+ * VERITRAIL Agent orchestrator for every role — browser port of veritrail_agent/orchestrator.py.
  *
- *   const agent = new AegisAgent();
+ *   const agent = new VeritrailAgent();
  *   agent.handle("Which controls map to EU AI Act Art. 14?", "s1", { id: "u1", role: "assessor", name: "Asha Rao" });
  *
  * Intent routing → least-privilege tools (tools.ts) → templated, cited composition. Deterministic:
- * no LLM, no network. Viewer behaviour matches the public Ask AEGIS engine
- * (src/features/site/engines/ask-aegis); assessors run guided assessments, drafts and approval
+ * no LLM, no network. Viewer behaviour matches the public Ask VERITRAIL engine
+ * (src/features/site/engines/ask-veritrail); assessors run guided assessments, drafts and approval
  * requests; approvers/admins resolve approvals outside the chat (resolveApproval).
  */
 import {
@@ -19,7 +19,7 @@ import {
   getControl,
   maturityTemplate,
   pillars,
-  type AegisControl,
+  type VeritrailControl,
   type EvidenceStatus,
   type FrameworkKey,
 } from "@/features/site/content";
@@ -30,7 +30,7 @@ import {
   type Cta,
   type PendingApproval,
   type RequiredApproval,
-} from "@/features/site/engines/ask-aegis/compose";
+} from "@/features/site/engines/ask-veritrail/compose";
 import {
   CONTROL_ID_RE,
   FRAMEWORK_LABELS,
@@ -47,7 +47,7 @@ import {
   policyPacks,
   realControlIds,
   tokenize,
-} from "@/features/site/engines/ask-aegis/knowledge";
+} from "@/features/site/engines/ask-veritrail/knowledge";
 import {
   ANNEX_III_LIKE,
   allQuestions,
@@ -65,7 +65,7 @@ import {
   type Profile,
   type ProfileValue,
   type UseCaseQuestion,
-} from "@/features/site/engines/ask-aegis/question-bank";
+} from "@/features/site/engines/ask-veritrail/question-bank";
 import {
   asksComplianceDetermination,
   asksLegalClassification,
@@ -73,7 +73,7 @@ import {
   detectInjection,
   findProhibitedClaims,
   redact,
-} from "@/features/site/engines/ask-aegis/safety";
+} from "@/features/site/engines/ask-veritrail/safety";
 import type { AuditRecord } from "../audit";
 import * as approvalsSvc from "./approvals";
 import { AgentAuditLog } from "./audit-log";
@@ -113,7 +113,7 @@ const GUIDED_STATES = new Set(["intake", "tier_review", "questions"]);
 const VERSION = controlLibrary.version;
 const REG_NOTE =
   "Regulatory applicability timelines must be verified against the current Official Journal text and any " +
-  "amendments; AEGIS has not verified post-2025 changes.";
+  "amendments; VERITRAIL has not verified post-2025 changes.";
 const NO_RECORD = "no assessment response or reviewed evidence on record in this session";
 const MISSING: EvidenceStatus = "Missing evidence";
 const INFERRED: EvidenceStatus = "Inferred";
@@ -123,7 +123,7 @@ const DESCRIBE_PROMPT =
   "data and tools it uses, whether it can take actions, and which model/vendor it relies on.";
 /** The Python agent points to its admin CLI here; in the browser approvals are resolved in the console. */
 const BYPASS_NEXT_ACTION =
-  "A named approver with the approver role must approve or reject the pending item in the AEGIS approvals workflow; it cannot be bypassed from this chat.";
+  "A named approver with the approver role must approve or reject the pending item in the VERITRAIL approvals workflow; it cannot be bypassed from this chat.";
 
 // --------------------------------------------------------------------------- intent patterns
 const rx = (p: string) => new RegExp(p, "i");
@@ -158,8 +158,8 @@ const TIERQ_RE = rx(
 const HELP_RE = rx(String.raw`^\s*(hi|hello|hey|help|what can you do|who are you|menu|start|\?)\W*\s*$`);
 const QUESTION_RE = rx(String.raw`^\s*(how|what|why|when|which|who|where|should|is|are|does|do|did)\b`);
 const LIBRARY_RE = rx(
-  String.raw`\bhow many (aegis )?controls\b|\b(list|show|what are)\b.{0,15}\b(all\s+)?(the\s+)?(aegis\s+)?(controls|pillars)\b|` +
-    String.raw`\b(aegis\s+)?(control\s+library|pillars)\b.{0,20}\b(overview|structure)?\s*\??$`,
+  String.raw`\bhow many (veritrail )?controls\b|\b(list|show|what are)\b.{0,15}\b(all\s+)?(the\s+)?(veritrail\s+)?(controls|pillars)\b|` +
+    String.raw`\b(veritrail\s+)?(control\s+library|pillars)\b.{0,20}\b(overview|structure)?\s*\??$`,
 );
 const PACKS_RE = rx(
   String.raw`\b(which|what|list|show)\b.{0,25}\b(policy|industry|runtime)\s+packs\b|\b(policy|industry|runtime)\s+packs?\b.{0,20}\b(exist|available|are there|do you have)\b`,
@@ -169,7 +169,7 @@ const MATURITY_RE = rx(
     String.raw`\bhow mature\b|\bmaturity (self[- ])?assessment\b|\bmaturity levels?\b`,
 );
 const USECASE_CONTROLS_RE = rx(
-  String.raw`\b(what|which)\b.{0,30}\b(aegis\s+)?(controls?|guardrails?|safeguards?|governance\s+controls?)\b.{0,50}` +
+  String.raw`\b(what|which)\b.{0,30}\b(veritrail\s+)?(controls?|guardrails?|safeguards?|governance\s+controls?)\b.{0,50}` +
     String.raw`\b(apply|applies|need|needed|required|require|should|recommend\w*|for)\b.{0,80}` +
     String.raw`\b(agents?|assistants?|chatbots?|copilots?|bots?|models?|systems?|tools?|use[- ]?cases?|apps?|applications?)\b|` +
     String.raw`\b(recommend|suggest|list)\b.{0,20}\b(controls?|guardrails?)\b.{0,20}\bfor\s+(an?|our|the|my)\b`,
@@ -186,7 +186,7 @@ const REMAINING_RE = rx(
 const BULK_RE = /(UC-[A-Z]{2,4}-Q\d{1,2})\s*[:=]\s*([^\n;]+)/gi;
 const FRAMEWORK_INTENT_RE = rx(
   String.raw`\b(map|maps|mapped|mapping|mappings|crosswalk|correspond|align|alignment|relate)\b|` +
-    String.raw`\bwhich (aegis )?controls?\b.{0,40}\b(eu ai act|iso|nist|article|art\.|annex|govern|measure|manage|clause)\b`,
+    String.raw`\bwhich (veritrail )?controls?\b.{0,40}\b(eu ai act|iso|nist|article|art\.|annex|govern|measure|manage|clause)\b`,
 );
 
 const SENSITIVE_PATTERNS: Array<[string, RegExp]> = [
@@ -233,9 +233,9 @@ function wordCount(s: string): number {
   return s.split(/\s+/).filter(Boolean).length;
 }
 
-function control(cid: string): AegisControl {
+function control(cid: string): VeritrailControl {
   const c = getControl(cid);
-  if (!c) throw new Error(`Unknown AEGIS control ID: ${cid}`);
+  if (!c) throw new Error(`Unknown VERITRAIL control ID: ${cid}`);
   return c;
 }
 
@@ -263,7 +263,7 @@ export type ResponseSource =
   | Exclude<AnswerSource, { key: string }>
   | Omit<Extract<AnswerSource, { key: string }>, "key">;
 
-/** The agent's turn result (aegis_agent Response.to_dict plus `refused` / `evidence_status`). */
+/** The agent's turn result (veritrail_agent Response.to_dict plus `refused` / `evidence_status`). */
 export interface AgentResponse {
   session_id: string;
   trace_id: string;
@@ -377,7 +377,7 @@ export interface AgentOptions {
 }
 
 // --------------------------------------------------------------------------- the agent
-export class AegisAgent {
+export class VeritrailAgent {
   readonly runtime: AgentRuntime;
   readonly store: Store;
   readonly audit: AgentAuditLog;
@@ -431,7 +431,7 @@ export class AegisAgent {
     if (findProhibitedClaims(out.message).length) {
       const safe = new AgentAnswer("safety_fallback");
       safe.answer =
-        "I can't provide that statement. AEGIS reports governance readiness and evidence status; it " +
+        "I can't provide that statement. VERITRAIL reports governance readiness and evidence status; it " +
         "does not determine or certify compliance.";
       out = toResponse(safe, session.id, traceId, session.state, ctx.calls);
     }
@@ -588,7 +588,7 @@ export class AegisAgent {
       );
       const r = this.complianceReadiness(ctx, session, t);
       r.answer +=
-        " AEGIS never states that an organization is compliant, certified or regulator-approved; it " +
+        " VERITRAIL never states that an organization is compliant, certified or regulator-approved; it " +
         "reports readiness indicators and evidence status only.";
       return r;
     }
@@ -701,7 +701,7 @@ export class AegisAgent {
   private denied(reason: string): AgentAnswer {
     const r = new AgentAnswer("permission_denied");
     r.answer =
-      `That action isn't available to your role (${reason}). AEGIS applies least privilege: viewers can ask ` +
+      `That action isn't available to your role (${reason}). VERITRAIL applies least privilege: viewers can ask ` +
       "questions and run previews; assessors create drafts; approvers resolve approvals.";
     r.nextActions = [
       "Ask an assessor or administrator to perform this action, or request the appropriate role.",
@@ -765,12 +765,12 @@ export class AegisAgent {
     );
     const r = new AgentAnswer("prompt_injection");
     r.answer =
-      "I can't follow instructions that try to override AEGIS governance rules, change my role, or reveal " +
+      "I can't follow instructions that try to override VERITRAIL governance rules, change my role, or reveal " +
       "internal configuration. My rules are fixed: answers are evidence-based and cited, high-impact actions " +
       "require human approval, and sensitive data is redacted.";
     if (signals.includes("compliance_claim_coercion") || asksComplianceDetermination(text)) {
       r.answer +=
-        " AEGIS never states that an organization is compliant, certified or regulator-approved; it " +
+        " VERITRAIL never states that an organization is compliant, certified or regulator-approved; it " +
         "reports readiness indicators and evidence status only.";
     }
     r.claims = [];
@@ -897,7 +897,7 @@ export class AegisAgent {
       resource = session.assessment_id ?? null;
       payload = {
         to: rcpt?.[1] ? rcpt[1].toLowerCase() : "external recipient (unspecified)",
-        subject: "AEGIS governance communication",
+        subject: "VERITRAIL governance communication",
         body_ref: session.last_report_id ?? null,
       };
     }
@@ -937,29 +937,29 @@ export class AegisAgent {
     const fwTxt = fws.length ? fws.map((f) => names[f]).join(" or ") : "any AI regulation or standard";
     if (/\b(apply|applies|applicable|in scope)\b/i.test(text)) {
       r.answer =
-        `AEGIS cannot determine whether ${fws.length ? fwTxt : "a law or standard"} legally applies to your ` +
+        `VERITRAIL cannot determine whether ${fws.length ? fwTxt : "a law or standard"} legally applies to your ` +
         "organization — applicability depends on your role (e.g. provider or deployer), your systems and " +
-        "jurisdictions, and needs qualified legal review. AEGIS helps you prepare: record obligations by " +
+        "jurisdictions, and needs qualified legal review. VERITRAIL helps you prepare: record obligations by " +
         "system in an obligations register (AO-07), classify systems by risk (EI-02) and assess readiness " +
         "against the mapped controls.";
     } else {
       r.answer =
-        `AEGIS cannot determine, certify or guarantee whether your organization or system is compliant with ${fwTxt}. ` +
+        `VERITRAIL cannot determine, certify or guarantee whether your organization or system is compliant with ${fwTxt}. ` +
         "That is a legal determination (and, for ISO/IEC 42001 certification, a decision for an accredited " +
-        "certification body). What AEGIS can do is assess readiness: which controls mapped to the framework " +
+        "certification body). What VERITRAIL can do is assess readiness: which controls mapped to the framework " +
         "are in place, what evidence exists, and what gaps remain.";
     }
     if (fws.includes("iso_42001")) {
       r.answer +=
-        " AEGIS does not issue certificates; it can prepare an audit-ready evidence pack (SE-05) for your certification body.";
+        " VERITRAIL does not issue certificates; it can prepare an audit-ready evidence pack (SE-05) for your certification body.";
     }
     if (fws.includes("eu_ai_act")) r.answer += " " + REG_NOTE;
-    const pool: AegisControl[] = [];
+    const pool: VeritrailControl[] = [];
     for (const f of fws.length ? fws : (["eu_ai_act", "iso_42001", "nist_ai_rmf"] as FrameworkKey[])) {
       pool.push(...controlsForFramework(f));
     }
     const seen = new Set<string>();
-    const sel: AegisControl[] = [];
+    const sel: VeritrailControl[] = [];
     for (const c of [...pool].sort(
       (a, b) => PRIORITY_ORDER.indexOf(a.priority) - PRIORITY_ORDER.indexOf(b.priority) || cmpStr(a.id, b.id),
     )) {
@@ -1052,7 +1052,7 @@ export class AegisAgent {
     const mods = new Set(selectModulesFull(prof, tier, riskMods).map((m) => m.id));
     const qs = applicableQuestions(prof, tier, riskMods);
     const triggered = new Set([...mods].filter((m) => !["core", "security", "monitoring_assurance"].includes(m)));
-    const res = invoke(ctx, "search_aegis_knowledge", { query: text, k: 10 });
+    const res = invoke(ctx, "search_veritrail_knowledge", { query: text, k: 10 });
     const qTerms = new Set(tokenize(text, true));
 
     const hits = new Map<string, number>();
@@ -1202,13 +1202,13 @@ export class AegisAgent {
     r.polishable = true;
     r.disclaimer = true;
     r.answer =
-      "AEGIS does not make legal classifications under the EU AI Act (for example whether a system is " +
+      "VERITRAIL does not make legal classifications under the EU AI Act (for example whether a system is " +
       '"high-risk" under Art. 6 and Annex III, or a prohibited practice under Art. 5). That determination ' +
-      "needs qualified legal review. AEGIS supports it with an indicative screen: the risk-tier rules flag use " +
+      "needs qualified legal review. VERITRAIL supports it with an indicative screen: the risk-tier rules flag use " +
       "cases in Annex III-like areas, material or automated decisions, special-category data and autonomous " +
       "agents for legal classification review, and record the outcome in the obligations register.";
     const areas = [...new Set(Object.values(ANNEX_III_LIKE))].sort();
-    r.details.push("Areas the AEGIS screen flags for legal review: " + areas.join("; ") + ".");
+    r.details.push("Areas the VERITRAIL screen flags for legal review: " + areas.join("; ") + ".");
     r.details.push(REG_NOTE);
     for (const cid of ["EI-02", "AO-07", "AO-10", "GL-02"]) {
       r.addControl(cid);
@@ -1230,7 +1230,7 @@ export class AegisAgent {
     const r = new AgentAnswer("library_overview");
     const crit = allControls.filter((c) => c.priority === "critical").length;
     r.answer =
-      `The AEGIS Control Library v${VERSION} has ${allControls.length} controls across ${pillars.length} pillars ` +
+      `The VERITRAIL Control Library v${VERSION} has ${allControls.length} controls across ${pillars.length} pillars ` +
       `(${crit} critical-priority). Each control has an objective, expected evidence, an owner role and indicative ` +
       "NIST AI RMF, ISO/IEC 42001 and EU AI Act mappings.";
     r.details.push(
@@ -1245,7 +1245,7 @@ export class AegisAgent {
       id: "controls.yaml",
       path: "content/controls/controls.yaml",
       section: `Control Library v${VERSION}`,
-      title: "AEGIS Control Library",
+      title: "VERITRAIL Control Library",
     });
     r.nextActions = ['Ask about any control by ID (e.g. "What does IS-13 require?").'];
     return r;
@@ -1298,7 +1298,7 @@ export class AegisAgent {
     const levels = (t.scoring?.levels ?? []) as Array<{ name: string; min: number; max: number }>;
     const r = new AgentAnswer("maturity");
     r.answer =
-      `AEGIS measures governance maturity with the ${meta.name} (v${meta.version}): ` +
+      `VERITRAIL measures governance maturity with the ${meta.name} (v${meta.version}): ` +
       `${maturityQuestions.length} questions across ${(t.domains ?? []).length} weighted domains, scored 1–5 and rolled up to ` +
       "0–100. Results are User-asserted readiness indicators, not a compliance determination. I can't rate your " +
       "maturity from a chat message — take the self-assessment for an indicative baseline.";
@@ -1317,7 +1317,7 @@ export class AegisAgent {
   private help(): AgentAnswer {
     const r = new AgentAnswer("help");
     r.answer =
-      "I'm the AEGIS governance copilot. I can:\n" +
+      "I'm the VERITRAIL governance copilot. I can:\n" +
       '- answer AI governance, control and framework-mapping questions with citations (e.g. "What does IS-11 require?", ' +
       '"Which controls map to EU AI Act Art. 14?");\n' +
       '- run a guided use-case assessment ("assess a use case") with risk tiering, gap analysis and a report;\n' +
@@ -1331,7 +1331,7 @@ export class AegisAgent {
   private outOfScope(): AgentAnswer {
     const r = new AgentAnswer("out_of_scope");
     r.answer =
-      "That's outside what AEGIS covers — I answer AI governance, risk, control and evidence questions. " +
+      "That's outside what VERITRAIL covers — I answer AI governance, risk, control and evidence questions. " +
       NO_SOURCE_MESSAGE;
     r.nextActions = [
       "Ask about AI policies, controls, risk tiers, framework mappings or evidence.",
@@ -1340,7 +1340,7 @@ export class AegisAgent {
     return r;
   }
 
-  // ================================================================ Ask AEGIS (retrieval answer)
+  // ================================================================ Ask VERITRAIL (retrieval answer)
   private ask(ctx: ToolContext, session: SessionRecord, input: string): AgentAnswer {
     // Retrieval never sees raw sensitive values: redact, then drop the redaction markers.
     const red = redact(input);
@@ -1377,9 +1377,9 @@ export class AegisAgent {
         "what it does, its data and tools, and whether it can take actions.";
       return r;
     }
-    let res: KnowledgeToolResult = invoke(ctx, "search_aegis_knowledge", { query: text, k: 6 });
+    let res: KnowledgeToolResult = invoke(ctx, "search_veritrail_knowledge", { query: text, k: 6 });
     if (detectFrameworks(text).size) {
-      const docRes = invoke(ctx, "search_aegis_knowledge", {
+      const docRes = invoke(ctx, "search_veritrail_knowledge", {
         query: text,
         k: 4,
         kinds: ["compliance_mapping", "content_doc", "industry_pack", "industry_pack_section"],
@@ -1409,7 +1409,7 @@ export class AegisAgent {
       }
       r.intent = "no_source";
       r.answer =
-        NO_SOURCE_MESSAGE + " I couldn't find AEGIS content that answers this with enough confidence, so I won't guess.";
+        NO_SOURCE_MESSAGE + " I couldn't find VERITRAIL content that answers this with enough confidence, so I won't guess.";
       r.clarifyingQuestion = "Could you rephrase with the control, framework or governance activity you're asking about?";
       return r;
     }
@@ -1458,7 +1458,7 @@ export class AegisAgent {
     const invalid = ids.filter((c) => !getControl(c));
     const parts = invalid.map(
       (cid) =>
-        `${cid} is not an AEGIS control ID in Control Library v${VERSION}; I won't describe a control that doesn't exist.`,
+        `${cid} is not an VERITRAIL control ID in Control Library v${VERSION}; I won't describe a control that doesn't exist.`,
     );
     const status = this.orgStatus(ctx, session, valid);
     const fwLabels: Array<[FrameworkKey, string]> = [
@@ -1529,7 +1529,7 @@ export class AegisAgent {
           `**${qid}** (maturity self-assessment): ${mq.text} Controls: ${(mq.controls ?? []).join(", ")}. ` +
             `Recommended action: ${mq.action ?? ""}`,
         );
-      } else parts.push(`${qid} is not a question in the AEGIS assessment templates.`);
+      } else parts.push(`${qid} is not a question in the VERITRAIL assessment templates.`);
     }
     if (!r.questionIds().length) {
       parts.push(NO_SOURCE_MESSAGE);
@@ -1552,7 +1552,7 @@ export class AegisAgent {
         const cs = controlsForFrameworkRef(fw, ref);
         if (cs.length) {
           parts.push(
-            `Per AEGIS Control Library v${VERSION}, these controls carry an indicative mapping to ` +
+            `Per VERITRAIL Control Library v${VERSION}, these controls carry an indicative mapping to ` +
               `${FRAMEWORK_LABELS[fw]} ${ref}: ` +
               cs.map((c) => `${c.id} ${c.title}`).join("; ") +
               ".",
@@ -1563,7 +1563,7 @@ export class AegisAgent {
           }
         } else {
           parts.push(
-            `No AEGIS control in Control Library v${VERSION} maps to ${FRAMEWORK_LABELS[fw]} ${ref}. ${NO_SOURCE_MESSAGE}`,
+            `No VERITRAIL control in Control Library v${VERSION} maps to ${FRAMEWORK_LABELS[fw]} ${ref}. ${NO_SOURCE_MESSAGE}`,
           );
         }
       }
@@ -1572,7 +1572,7 @@ export class AegisAgent {
         const cs = controlsForFramework(fw);
         const crit = cs.filter((c) => c.priority === "critical");
         parts.push(
-          `${cs.length} of ${allControls.length} AEGIS controls carry indicative ${FRAMEWORK_LABELS[fw]} mappings. ` +
+          `${cs.length} of ${allControls.length} VERITRAIL controls carry indicative ${FRAMEWORK_LABELS[fw]} mappings. ` +
             "Critical-priority ones: " +
             crit.map((c) => `${c.id} (${(c.mappings?.[fw] ?? []).map(String).join(", ")})`).join("; ") +
             ".",
@@ -1583,7 +1583,7 @@ export class AegisAgent {
         }
       }
     }
-    const res = invoke(ctx, "search_aegis_knowledge", { query: text, k: 3, kinds: ["compliance_mapping"] });
+    const res = invoke(ctx, "search_veritrail_knowledge", { query: text, k: 3, kinds: ["compliance_mapping"] });
     const top = res.results[0];
     if (top && res.band !== "low") r.addDoc(top.source as Parameters<AnswerBuilder["addDoc"]>[0]);
     const status = this.orgStatus(ctx, session, allIds.slice(0, 6));
@@ -1595,7 +1595,7 @@ export class AegisAgent {
     r.details.push(...parts.slice(1));
     const eu = refs.some(([fw]) => fw === "eu_ai_act") || detectFrameworks(text).has("eu_ai_act");
     r.details.push(
-      "Mappings are indicative AEGIS interpretations for readiness work, not official crosswalks or a " +
+      "Mappings are indicative VERITRAIL interpretations for readiness work, not official crosswalks or a " +
         "determination of conformity. " +
         (eu ? REG_NOTE : ""),
     );
@@ -1652,7 +1652,7 @@ export class AegisAgent {
     const r = new AgentAnswer("inventory");
     if (!res.systems.length) {
       r.answer =
-        "No AI system records exist in the AEGIS inventory yet. Guided assessments create draft records (EI-01).";
+        "No AI system records exist in the VERITRAIL inventory yet. Guided assessments create draft records (EI-01).";
     } else {
       r.answer = `${res.count} AI system record(s) in the inventory:`;
       r.details.push(

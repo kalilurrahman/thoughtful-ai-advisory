@@ -4,21 +4,21 @@ applies_to: [Pilot A, Pilot B, Governance Baseline]
 week: 2
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead
+owner: VERITRAIL Delivery Lead
 related_controls: [EI-01, EI-02, EI-03, EI-04, EI-05, EI-06, EI-07, EI-08, EI-09, EI-10, EI-12]
 ---
 
 # AI inventory workshop kit
 
 **Goal:** register at least 25 AI systems (pilot success metric M1) with owners, purpose and tier factors, and surface
-shadow and vendor AI. Output feeds the AEGIS Register (EI-01) and the risk-tier engine (EI-02).
+shadow and vendor AI. Output feeds the VERITRAIL Register (EI-01) and the risk-tier engine (EI-02).
 
 **Format:** 2–4 workshops of 90 minutes, one per business unit or platform group, plus one 60-minute vendor/procurement
 session. Pre-work: partner sends existing inventories, procurement lists of AI vendors, and API-key/provider lists
 (metadata only — see `data_access_privacy_safeguards.md`).
 
 **Intake template:** [`ai_inventory_intake_template.csv`](ai_inventory_intake_template.csv). Field names match the
-AEGIS risk-tier engine (`aegis_assessment.risk_tier.INTAKE_FIELDS`) so records can be tiered directly.
+VERITRAIL risk-tier engine (`veritrail_assessment.risk_tier.INTAKE_FIELDS`) so records can be tiered directly.
 
 ## 1. Attendees
 
@@ -29,7 +29,7 @@ AEGIS risk-tier engine (`aegis_assessment.risk_tier.INTAKE_FIELDS`) so records c
 | Procurement / vendor risk (vendor session) | Vendor and embedded AI (EI-08) |
 | Security / IT asset management (optional) | Shadow-AI signals (EI-09) |
 | Partner pilot lead | Decisions on scope and follow-ups |
-| AEGIS facilitator + scribe | Run the session, capture records live |
+| VERITRAIL facilitator + scribe | Run the session, capture records live |
 
 ## 2. Agenda (90 minutes)
 
@@ -87,11 +87,11 @@ Preliminary tiers stay labelled *Inferred* until an owner and the risk lead conf
 
 | Step | Owner | When |
 |---|---|---|
-| Clean records, de-duplicate, mark incomplete fields | AEGIS scribe | +1 working day |
-| Run preliminary risk tiering (Inferred) | AEGIS analyst | +2 working days |
+| Clean records, de-duplicate, mark incomplete fields | VERITRAIL scribe | +1 working day |
+| Run preliminary risk tiering (Inferred) | VERITRAIL analyst | +2 working days |
 | Send records to owners for confirmation | Partner pilot lead | +2 working days |
 | Owners confirm records; risk lead confirms tiers (human approval) | Partner | by end of Week 2 |
-| Report M1 (systems registered) and record completeness | AEGIS delivery lead | end of Week 2 |
+| Report M1 (systems registered) and record completeness | VERITRAIL delivery lead | end of Week 2 |
 
 **Record completeness definition:** a record counts toward M1 when `name`, `purpose`, `business_owner_role`,
 `decision_impact`, `affected_parties`, `data_sensitivity`, `autonomy` and `lifecycle_stage` are populated and the

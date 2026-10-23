@@ -1,6 +1,6 @@
 /**
  * Load policies and policy packs from YAML/JSON — port of
- * platform/app/policy-engine/aegis_policy/loader.py. Packs are bundled at build time from
+ * platform/app/policy-engine/veritrail_policy/loader.py. Packs are bundled at build time from
  * platform/content/policy_packs/*.yaml (no file system access in the browser).
  */
 import { validatePolicy } from "../../site/engines/shield/schema";

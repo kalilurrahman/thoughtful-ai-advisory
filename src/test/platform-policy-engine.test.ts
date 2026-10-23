@@ -1,6 +1,6 @@
 /**
  * Parity of the browser policy engine (src/features/platform/policy-engine) with the Python
- * reference (platform/app/policy-engine/aegis_policy + aegis_shield.render / integrations).
+ * reference (platform/app/policy-engine/veritrail_policy + veritrail_shield.render / integrations).
  *
  * Fixtures: src/test/fixtures/policy-engine-parity.json, regenerated with
  *     python3 platform/scripts/export_policy_engine_parity_fixtures.py
@@ -616,7 +616,7 @@ describe("browser helpers", () => {
     expect(files["demo_advisor.md"]).toContain(STANDARD_DISCLAIMER);
     expect(files["demo_policy.json"]).toContain('"label": "Synthetic example"');
     const md = renderAdviceMarkdown(advise({ app_name: "X" }, { today: "2000-01-01" }));
-    expect(md.startsWith("# AEGIS Runtime Shield Advisor — X")).toBe(true);
+    expect(md.startsWith("# VERITRAIL Runtime Shield Advisor — X")).toBe(true);
   });
 
   it("treats NaN numbers as non-finite", () => {

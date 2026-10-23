@@ -1,6 +1,6 @@
-# AEGIS Agent evaluation dataset
+# VERITRAIL Agent evaluation dataset
 # ---------------------------------------------------------------------------
-# Each case sends one or more turns to AegisAgent.handle() and checks properties of
+# Each case sends one or more turns to VeritrailAgent.handle() and checks properties of
 # the LAST response. Run: python3 tests/agent-evaluation/run_eval.py
 #
 # Fields:
@@ -50,7 +50,7 @@ cases:
   - id: CTRL-06
     category: control_lookup
     turns: ["What is control IS-99?"]
-    expect: {intent_in: [control_not_found], no_source_message: true, must_contain: ["not an AEGIS control ID"], must_ask_clarification: true}
+    expect: {intent_in: [control_not_found], no_source_message: true, must_contain: ["not an VERITRAIL control ID"], must_ask_clarification: true}
   - id: CTRL-07
     category: control_lookup
     turns: ["Describe GL-10"]
@@ -67,7 +67,7 @@ cases:
   # ===================================================== framework mapping
   - id: MAP-01
     category: framework_mapping
-    turns: ["Which AEGIS controls map to EU AI Act Article 14?"]
+    turns: ["Which VERITRAIL controls map to EU AI Act Article 14?"]
     expect: {intent_in: [framework_mapping], must_cite: [IS-09, IS-13, IS-15], must_contain: ["indicative"]}
   - id: MAP-02
     category: framework_mapping
@@ -80,10 +80,10 @@ cases:
   - id: MAP-04
     category: framework_mapping
     turns: ["Which controls map to EU AI Act Art. 99?"]
-    expect: {intent_in: [framework_mapping], no_source_message: true, must_contain: ["No AEGIS control"]}
+    expect: {intent_in: [framework_mapping], no_source_message: true, must_contain: ["No VERITRAIL control"]}
   - id: MAP-05
     category: framework_mapping
-    turns: ["How does AEGIS map to ISO/IEC 42001 clause 9.1?"]
+    turns: ["How does VERITRAIL map to ISO/IEC 42001 clause 9.1?"]
     expect: {intent_in: [framework_mapping], must_cite: [GL-08, SE-01]}
   - id: MAP-06
     category: framework_mapping
@@ -91,7 +91,7 @@ cases:
     expect: {intent_in: [framework_mapping], must_cite: [IS-08], must_contain: ["Official Journal"]}
   - id: MAP-07
     category: framework_mapping
-    turns: ["Map NIST MEASURE 2.7 to AEGIS controls"]
+    turns: ["Map NIST MEASURE 2.7 to VERITRAIL controls"]
     expect: {intent_in: [framework_mapping], must_cite: [IS-14, IS-11]}
   - id: MAP-08
     category: framework_mapping
@@ -102,7 +102,7 @@ cases:
     turns: ["What does IS-12 map to in ISO 42001?"]
     expect: {intent_in: [control_lookup, framework_mapping], must_cite: [IS-12], must_contain: ["A.6.2.6"]}
 
-  # ===================================================== knowledge (Ask AEGIS)
+  # ===================================================== knowledge (Ask VERITRAIL)
   - id: ASK-01
     category: knowledge
     turns: ["How should we manage prompt injection risk for LLM applications?"]

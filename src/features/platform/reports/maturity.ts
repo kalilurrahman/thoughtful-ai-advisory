@@ -1,13 +1,13 @@
 /*
- * AEGIS AI Governance Maturity Report — server-side Markdown renderer (pure).
+ * VERITRAIL AI Governance Maturity Report — server-side Markdown renderer (pure).
  *
- * Port of platform/app/reports/aegis_reports/maturity.py (render_maturity_markdown), the
+ * Port of platform/app/reports/veritrail_reports/maturity.py (render_maturity_markdown), the
  * renderer behind emailed/stored reports and the synthetic samples in
  * platform/output/sample_reports/maturity. All ten sections plus the two appendices.
  *
  * It differs from the browser toMarkdown() in src/features/site/engines/assessment-report.ts
  * on purpose, so the two are kept separate:
- *  - the Generated line has no "(in your browser; not stored by AEGIS)" suffix;
+ *  - the Generated line has no "(in your browser; not stored by VERITRAIL)" suffix;
  *  - table cells are written verbatim (Python does not escape `|` or newlines).
  * Shared helpers (control citation, mapping references) are reused from that module.
  */
@@ -76,7 +76,7 @@ export function renderMaturityMarkdown(
   L.push("");
   L.push(
     "Scoring: domain score = sum of answers ÷ maximum possible × 100; overall = Σ(domain score × weight). " +
-      `Source: AEGIS self-assessment template ${result.template_id} v${result.template_version}.`,
+      `Source: VERITRAIL self-assessment template ${result.template_id} v${result.template_version}.`,
   );
   L.push("");
 
@@ -98,7 +98,7 @@ export function renderMaturityMarkdown(
   L.push("## 4. Top gaps", "");
   if (result.gaps.length) {
     L.push(
-      "| # | Domain | Question | Answer | Recommended action | AEGIS controls |",
+      "| # | Domain | Question | Answer | Recommended action | VERITRAIL controls |",
       "|---|---|---|---|---|---|",
     );
     result.gaps.forEach((g, i) => {
@@ -138,7 +138,7 @@ export function renderMaturityMarkdown(
     L.push("");
   }
 
-  L.push("## 7. Recommended AEGIS controls", "");
+  L.push("## 7. Recommended VERITRAIL controls", "");
   L.push(
     "| Control | Pillar | Priority | NIST AI RMF | ISO/IEC 42001 | EU AI Act |",
     "|---|---|---|---|---|---|",
@@ -152,7 +152,7 @@ export function renderMaturityMarkdown(
   }
   L.push("");
   L.push(
-    "Framework mappings are indicative AEGIS interpretations (Control Library v" +
+    "Framework mappings are indicative VERITRAIL interpretations (Control Library v" +
       `${bundle.control_library_version}).`,
   );
   L.push("");
@@ -173,12 +173,12 @@ export function renderMaturityMarkdown(
   );
   L.push("");
 
-  L.push("## 9. Recommended AEGIS modules", "");
-  for (const m of result.recommended_modules) L.push(`- **AEGIS ${m.module}** — ${m.reason}`);
+  L.push("## 9. Recommended VERITRAIL modules", "");
+  for (const m of result.recommended_modules) L.push(`- **VERITRAIL ${m.module}** — ${m.reason}`);
   L.push("");
 
   const cta = result.cta.primary;
-  L.push("## 10. Next step: AEGIS Governance Baseline", "");
+  L.push("## 10. Next step: VERITRAIL Governance Baseline", "");
   L.push(cta.description, "");
   L.push(`**${cta.label}:** ${cta.url}`, "");
   L.push("---", "");
@@ -201,17 +201,17 @@ export function renderMaturityMarkdown(
     const c = controlCitationFrom(bundle, cid);
     if (c) L.push(`- ${c}`);
   }
-  L.push(`- AEGIS Self-Assessment template ${ver}`);
+  L.push(`- VERITRAIL Self-Assessment template ${ver}`);
   L.push("");
   L.push(`*${result.standard_disclaimer}*`);
   L.push("");
   return L.join("\n");
 }
 
-/** Download name for the PDF variant, e.g. AEGIS_Maturity_Report_Acme_Corp.pdf */
+/** Download name for the PDF variant, e.g. VERITRAIL_Maturity_Report_Acme_Corp.pdf */
 export function pdfFilename(company: string): string {
   return (
-    "AEGIS_Maturity_Report" +
+    "VERITRAIL_Maturity_Report" +
     (company ? "_" + company.replace(/[^A-Za-z0-9]+/g, "_").slice(0, 40) : "") +
     ".pdf"
   );

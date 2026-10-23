@@ -12,7 +12,7 @@ import {
   type ToolFieldDef,
 } from "./tool-fields";
 
-/** GUARDRAIL_FIELDS from platform/app/website/aegis_website/tools.py. */
+/** GUARDRAIL_FIELDS from platform/app/website/veritrail_website/tools.py. */
 const GUARDRAIL_FIELDS: readonly ToolFieldDef[] = [
   {
     name: "app_name",
@@ -49,7 +49,7 @@ const GUARDRAIL_FIELDS: readonly ToolFieldDef[] = [
     rows: 4,
     hint:
       "One per line as name:operation, where operation is read, write, delete, external_send, payment or export. " +
-      "Example: crm_lookup:read. If you omit the operation AEGIS infers it from the name and labels it Inferred.",
+      "Example: crm_lookup:read. If you omit the operation VERITRAIL infers it from the name and labels it Inferred.",
   },
   {
     name: "data_categories",
@@ -246,9 +246,9 @@ export function GuardrailGeneratorTool() {
     ? result.policy_yaml ||
       (result.policy ? JSON.stringify(result.policy, null, 2) : "No policy returned.")
     : "";
-  const fileBase = result?.policy.policy_id || "aegis-draft-policy";
+  const fileBase = result?.policy.policy_id || "veritrail-draft-policy";
 
-  const reportTitle = `AEGIS Runtime Shield Advisor — ${String(result?.app["app_name"] ?? "")}`;
+  const reportTitle = `VERITRAIL Runtime Shield Advisor — ${String(result?.app["app_name"] ?? "")}`;
 
   const onDownloadMarkdown = () => {
     if (!result) return;
@@ -516,7 +516,7 @@ function GuardrailResult({ data }: { data: AdviseResult }) {
 
       {data.assumptions.length > 0 && (
         <>
-          <h3>Assumptions AEGIS made</h3>
+          <h3>Assumptions VERITRAIL made</h3>
           <ul>
             {data.assumptions.map((a, i) => (
               <li key={`${a.field}-${i}`}>
@@ -528,7 +528,7 @@ function GuardrailResult({ data }: { data: AdviseResult }) {
         </>
       )}
 
-      <CitedControls ids={data.citations} prefix="AEGIS controls cited: " />
+      <CitedControls ids={data.citations} prefix="VERITRAIL controls cited: " />
       {!data.policy_validation.valid && (
         <p className="notice notice--error">
           Schema validation reported issues: {data.policy_validation.errors.join("; ")}

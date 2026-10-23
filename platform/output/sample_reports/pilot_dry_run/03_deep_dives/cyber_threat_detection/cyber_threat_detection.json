@@ -1,20 +1,20 @@
 {
-  "report_id": "rpt_mvi8hwacb51b6642",
-  "report_type": "AEGIS AI Use-Case Governance Readiness Report",
+  "report_id": "rpt_mvklugh125915f58",
+  "report_type": "VERITRAIL AI Use-Case Governance Readiness Report",
   "synthetic": true,
-  "generated_at": "2026-10-21T14:55:25+00:00",
-  "prepared_by": "Synthetic AEGIS Analyst via AEGIS Agent",
+  "generated_at": "2026-10-23T06:44:39+00:00",
+  "prepared_by": "Synthetic VERITRAIL Analyst via VERITRAIL Agent",
   "template": {
-    "id": "AEGIS-UC-ASSESS",
+    "id": "VERITRAIL-UC-ASSESS",
     "version": "1.0.0"
   },
   "control_library_version": "1.0.0",
   "system": {
-    "id": "sys_mvi8hs8313cd7b41",
+    "id": "sys_mvkluc8535cfa4aa",
     "name": "Cyber threat detection",
     "status": "draft",
     "risk_tier": "High",
-    "risk_tier_status": "Confirmed by Synthetic Head of AI Risk (2026-10-21)"
+    "risk_tier_status": "Confirmed by Synthetic Head of AI Risk (2026-10-23)"
   },
   "profile": {
     "name": "Cyber threat detection",
@@ -33,7 +33,7 @@
     "business_owner": "Synthetic owner — Cyber threat detection"
   },
   "profile_provenance": {},
-  "assessment_id": "asm_mvi8hw6z5329f62c",
+  "assessment_id": "asm_mvklugdxe463aae0",
   "risk": {
     "tier": "High",
     "score": 60,
@@ -43,43 +43,43 @@
         "factor": "decision_impact",
         "value": "advisory",
         "points": 5,
-        "citation": "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
+        "citation": "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)"
       },
       {
         "factor": "affected_parties",
         "value": "internal",
         "points": 0,
-        "citation": "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
+        "citation": "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)"
       },
       {
         "factor": "data_sensitivity",
         "value": "confidential",
         "points": 10,
-        "citation": "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
+        "citation": "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)"
       },
       {
         "factor": "autonomy",
         "value": "suggests",
         "points": 5,
-        "citation": "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+        "citation": "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
       },
       {
         "factor": "domain_category",
         "value": "critical_infrastructure — Critical infrastructure (Annex III area 2)",
         "points": 30,
-        "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+        "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
       },
       {
         "factor": "third_party_model",
         "value": true,
         "points": 5,
-        "citation": "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)"
+        "citation": "VERITRAIL Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)"
       },
       {
         "factor": "eu_exposure",
         "value": true,
         "points": 5,
-        "citation": "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
+        "citation": "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)"
       }
     ],
     "triggers": [
@@ -101,15 +101,15 @@
     "requires_human_confirmation": true,
     "rationale": "Preliminary tier High (score 60). Drivers: decision_impact=advisory (+5); data_sensitivity=confidential (+10); autonomy=suggests (+5); domain_category=critical_infrastructure — Critical infrastructure (Annex III area 2) (+30); third_party_model=True (+5); eu_exposure=True (+5). Triggers: Potential EU AI Act high-risk area: Critical infrastructure (Annex III area 2) — legal classification review required (Art. 6). Inferred from user-provided intake; requires human confirmation.",
     "citations": [
-      "AEGIS Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
-      "AEGIS Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
-      "AEGIS Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
-      "AEGIS Control GL-01: Intake triage workflow (Control Library v1.0.0)",
-      "AEGIS Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
-      "AEGIS Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
-      "AEGIS Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)",
-      "AEGIS Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
-      "AEGIS Control IS-09: Human oversight design (Control Library v1.0.0)"
+      "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
+      "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
+      "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
+      "VERITRAIL Control GL-01: Intake triage workflow (Control Library v1.0.0)",
+      "VERITRAIL Control GL-02: Pre-deployment risk and impact assessment (Control Library v1.0.0)",
+      "VERITRAIL Control GL-03: Risk-tiered approval gates (Control Library v1.0.0)",
+      "VERITRAIL Control GL-11: Vendor AI due diligence and contract controls (Control Library v1.0.0)",
+      "VERITRAIL Control IS-03: Privacy assessment and data minimisation (Control Library v1.0.0)",
+      "VERITRAIL Control IS-09: Human oversight design (Control Library v1.0.0)"
     ],
     "citation_ids": [
       "AO-07",
@@ -122,8 +122,8 @@
       "IS-03",
       "IS-09"
     ],
-    "method": "AEGIS risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)",
-    "engine": "aegis_assessment.risk_tier"
+    "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)",
+    "engine": "veritrail_assessment.risk_tier"
   },
   "modules": [
     {
@@ -188,8 +188,8 @@
     }
   ],
   "gap_analysis": {
-    "assessment_id": "asm_mvi8hw6z5329f62c",
-    "system_id": "sys_mvi8hs8313cd7b41",
+    "assessment_id": "asm_mvklugdxe463aae0",
+    "system_id": "sys_mvkluc8535cfa4aa",
     "tier": "High",
     "as_of": "2026-10-21",
     "findings": [
@@ -225,7 +225,7 @@
           "EVD-1922"
         ],
         "reviewed_evidence": [
-          "evd_mvi8hw72c5354972"
+          "evd_mvkluge17a52c8ad"
         ],
         "evidence_status": "Verified",
         "is_gap": false,
@@ -1337,7 +1337,7 @@
           "EVD-8218"
         ],
         "reviewed_evidence": [
-          "evd_mvi8hw8a06c28851"
+          "evd_mvklugfnac8735e3"
         ],
         "evidence_status": "Verified",
         "is_gap": false,
@@ -4964,309 +4964,309 @@
   },
   "approvals": [
     {
-      "approval_id": "apr_mvi8hs9q253119f1",
+      "approval_id": "apr_mvklucard243b42e",
       "type": "confirm_risk_tier",
       "status": "approved",
-      "resource": "sys_mvi8hs8313cd7b41",
+      "resource": "sys_mvkluc8535cfa4aa",
       "reason": "Confirm preliminary tier High",
       "requested_by": "u-assessor-1",
       "resolved_by": "u-approver-1",
-      "created_at": "2026-10-21T14:55:20+00:00"
+      "created_at": "2026-10-23T06:44:33+00:00"
     }
   ],
   "audit_trace": [
     {
-      "id": "aud_mvi8hw70e4a8b94a",
-      "ts": "2026-10-21T14:55:25.500213+00:00",
-      "trace_id": "trc_mvi8hw6y43537714",
+      "id": "aud_mvklugdz583a430d",
+      "ts": "2026-10-23T06:44:38.903245+00:00",
+      "trace_id": "trc_mvklugdxd9eb99af",
       "action": "agent.tool.start_assessment",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw731053b45e",
-      "ts": "2026-10-21T14:55:25.503119+00:00",
-      "trace_id": "trc_mvi8hw706102584b",
+      "id": "aud_mvkluge230637fac",
+      "ts": "2026-10-23T06:44:38.906589+00:00",
+      "trace_id": "trc_mvklugdz9aafd07e",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw741181360d",
-      "ts": "2026-10-21T14:55:25.504455+00:00",
-      "trace_id": "trc_mvi8hw734036199f",
+      "id": "aud_mvkluge3db8d0250",
+      "ts": "2026-10-23T06:44:38.907931+00:00",
+      "trace_id": "trc_mvkluge3db165c8d",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7547e5e504",
-      "ts": "2026-10-21T14:55:25.505663+00:00",
-      "trace_id": "trc_mvi8hw74aa629557",
+      "id": "aud_mvkluge5a671b600",
+      "ts": "2026-10-23T06:44:38.909411+00:00",
+      "trace_id": "trc_mvkluge447a1c877",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw76341a17bd",
-      "ts": "2026-10-21T14:55:25.506841+00:00",
-      "trace_id": "trc_mvi8hw7619cdef05",
+      "id": "aud_mvkluge60b70616c",
+      "ts": "2026-10-23T06:44:38.910649+00:00",
+      "trace_id": "trc_mvkluge5dc3c5733",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw777cd8502e",
-      "ts": "2026-10-21T14:55:25.507983+00:00",
-      "trace_id": "trc_mvi8hw77d2c141b9",
+      "id": "aud_mvkluge7e05e5992",
+      "ts": "2026-10-23T06:44:38.911970+00:00",
+      "trace_id": "trc_mvkluge6679ebb35",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw79cca9f9fb",
-      "ts": "2026-10-21T14:55:25.509191+00:00",
-      "trace_id": "trc_mvi8hw78172a16f9",
+      "id": "aud_mvkluge97313d821",
+      "ts": "2026-10-23T06:44:38.913568+00:00",
+      "trace_id": "trc_mvkluge8f0d94a11",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7a0210096c",
-      "ts": "2026-10-21T14:55:25.510962+00:00",
-      "trace_id": "trc_mvi8hw7afc48586c",
+      "id": "aud_mvklugebbd9abc0a",
+      "ts": "2026-10-23T06:44:38.915607+00:00",
+      "trace_id": "trc_mvklugea1ab406e2",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7ce0384546",
-      "ts": "2026-10-21T14:55:25.512102+00:00",
-      "trace_id": "trc_mvi8hw7b2d3cd3d9",
+      "id": "aud_mvklugedadfa2143",
+      "ts": "2026-10-23T06:44:38.917201+00:00",
+      "trace_id": "trc_mvklugecd2e860fa",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7de1b1ad16",
-      "ts": "2026-10-21T14:55:25.513151+00:00",
-      "trace_id": "trc_mvi8hw7ca37611a0",
+      "id": "aud_mvklugee9d9af64f",
+      "ts": "2026-10-23T06:44:38.918727+00:00",
+      "trace_id": "trc_mvkluged5b0574a5",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7e7661b236",
-      "ts": "2026-10-21T14:55:25.514213+00:00",
-      "trace_id": "trc_mvi8hw7d3e2d11bd",
+      "id": "aud_mvklugem40a7292a",
+      "ts": "2026-10-23T06:44:38.926652+00:00",
+      "trace_id": "trc_mvklugefce64bb8a",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7f8391c11a",
-      "ts": "2026-10-21T14:55:25.515356+00:00",
-      "trace_id": "trc_mvi8hw7eeffd894d",
+      "id": "aud_mvklugeu762d74ab",
+      "ts": "2026-10-23T06:44:38.934436+00:00",
+      "trace_id": "trc_mvklugen6f1bb9fe",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7h3c3b7a8f",
-      "ts": "2026-10-21T14:55:25.517109+00:00",
-      "trace_id": "trc_mvi8hw7g4dfd7ba9",
+      "id": "aud_mvklugewab89b7f9",
+      "ts": "2026-10-23T06:44:38.936674+00:00",
+      "trace_id": "trc_mvklugev78928021",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7k378d41e6",
-      "ts": "2026-10-21T14:55:25.520883+00:00",
-      "trace_id": "trc_mvi8hw7h6826475c",
+      "id": "aud_mvklugf4b18bce74",
+      "ts": "2026-10-23T06:44:38.944548+00:00",
+      "trace_id": "trc_mvklugexad8fcc71",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7mac46a432",
-      "ts": "2026-10-21T14:55:25.522427+00:00",
-      "trace_id": "trc_mvi8hw7lb0ec0340",
+      "id": "aud_mvklugf610f9a057",
+      "ts": "2026-10-23T06:44:38.946047+00:00",
+      "trace_id": "trc_mvklugf52941c0ba",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7p7518220d",
-      "ts": "2026-10-21T14:55:25.525635+00:00",
-      "trace_id": "trc_mvi8hw7m094147d9",
+      "id": "aud_mvklugf76142ba88",
+      "ts": "2026-10-23T06:44:38.947513+00:00",
+      "trace_id": "trc_mvklugf69089bd52",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7r65f2c694",
-      "ts": "2026-10-21T14:55:25.527210+00:00",
-      "trace_id": "trc_mvi8hw7q84a48e90",
+      "id": "aud_mvklugf90dc005de",
+      "ts": "2026-10-23T06:44:38.949057+00:00",
+      "trace_id": "trc_mvklugf7d39e8673",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7sc427eeb4",
-      "ts": "2026-10-21T14:55:25.528716+00:00",
-      "trace_id": "trc_mvi8hw7r4acdac2d",
+      "id": "aud_mvklugfaecc96488",
+      "ts": "2026-10-23T06:44:38.950590+00:00",
+      "trace_id": "trc_mvklugf979751e08",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7uf228ed47",
-      "ts": "2026-10-21T14:55:25.530631+00:00",
-      "trace_id": "trc_mvi8hw7t933f192a",
+      "id": "aud_mvklugfc0c880bcf",
+      "ts": "2026-10-23T06:44:38.952250+00:00",
+      "trace_id": "trc_mvklugfa26fd8310",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7w97a1a4e1",
-      "ts": "2026-10-21T14:55:25.532456+00:00",
-      "trace_id": "trc_mvi8hw7vc75ecaad",
+      "id": "aud_mvklugfd4307581a",
+      "ts": "2026-10-23T06:44:38.953644+00:00",
+      "trace_id": "trc_mvklugfcac603e70",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7y18a51bce",
-      "ts": "2026-10-21T14:55:25.534097+00:00",
-      "trace_id": "trc_mvi8hw7w525b1669",
+      "id": "aud_mvklugff46b91977",
+      "ts": "2026-10-23T06:44:38.955359+00:00",
+      "trace_id": "trc_mvklugfe0e083467",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw7zbb1a319f",
-      "ts": "2026-10-21T14:55:25.535857+00:00",
-      "trace_id": "trc_mvi8hw7y6dec9858",
+      "id": "aud_mvklugfg22dbdf75",
+      "ts": "2026-10-23T06:44:38.956999+00:00",
+      "trace_id": "trc_mvklugfff5e97db5",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw81981fb4da",
-      "ts": "2026-10-21T14:55:25.537433+00:00",
-      "trace_id": "trc_mvi8hw80e5bb2122",
+      "id": "aud_mvklugfi7cea598b",
+      "ts": "2026-10-23T06:44:38.958559+00:00",
+      "trace_id": "trc_mvklugfh5e0bf724",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw82bc6e19db",
-      "ts": "2026-10-21T14:55:25.538979+00:00",
-      "trace_id": "trc_mvi8hw8153ee3475",
+      "id": "aud_mvklugfk5bb97d36",
+      "ts": "2026-10-23T06:44:38.960144+00:00",
+      "trace_id": "trc_mvklugfi225fa876",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw8725da7e44",
-      "ts": "2026-10-21T14:55:25.543709+00:00",
-      "trace_id": "trc_mvi8hw83f6669631",
+      "id": "aud_mvklugfl162b284e",
+      "ts": "2026-10-23T06:44:38.961692+00:00",
+      "trace_id": "trc_mvklugfk980f107b",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw8d4b2bc990",
-      "ts": "2026-10-21T14:55:25.549817+00:00",
-      "trace_id": "trc_mvi8hw882233d69f",
+      "id": "aud_mvklugfpb2302c2f",
+      "ts": "2026-10-23T06:44:38.965140+00:00",
+      "trace_id": "trc_mvklugfm71f724a4",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw8ha5f40f6a",
-      "ts": "2026-10-21T14:55:25.553610+00:00",
-      "trace_id": "trc_mvi8hw8ea981cafa",
+      "id": "aud_mvklugfq9b054711",
+      "ts": "2026-10-23T06:44:38.966551+00:00",
+      "trace_id": "trc_mvklugfpa5bf74d3",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw8k389ea323",
-      "ts": "2026-10-21T14:55:25.556060+00:00",
-      "trace_id": "trc_mvi8hw8i0a6e8461",
+      "id": "aud_mvklugfte1f5991b",
+      "ts": "2026-10-23T06:44:38.969080+00:00",
+      "trace_id": "trc_mvklugfra27f2ca5",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw8l7a760538",
-      "ts": "2026-10-21T14:55:25.557895+00:00",
-      "trace_id": "trc_mvi8hw8k3c1875f8",
+      "id": "aud_mvklugfubc96bb19",
+      "ts": "2026-10-23T06:44:38.970940+00:00",
+      "trace_id": "trc_mvklugft04cbbe0f",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw8n972c9e6a",
-      "ts": "2026-10-21T14:55:25.559489+00:00",
-      "trace_id": "trc_mvi8hw8m46591130",
+      "id": "aud_mvklugfx6236253a",
+      "ts": "2026-10-23T06:44:38.973063+00:00",
+      "trace_id": "trc_mvklugfv67476719",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw8pc3c1fb5a",
-      "ts": "2026-10-21T14:55:25.561817+00:00",
-      "trace_id": "trc_mvi8hw8o98a93845",
+      "id": "aud_mvklugfy48f927a5",
+      "ts": "2026-10-23T06:44:38.974857+00:00",
+      "trace_id": "trc_mvklugfx7a754dc4",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw8s920369b5",
-      "ts": "2026-10-21T14:55:25.564214+00:00",
-      "trace_id": "trc_mvi8hw8qfdd8f778",
+      "id": "aud_mvklugg08bf7d4b5",
+      "ts": "2026-10-23T06:44:38.976728+00:00",
+      "trace_id": "trc_mvklugfz21c2cc69",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw8uc732454c",
-      "ts": "2026-10-21T14:55:25.566181+00:00",
-      "trace_id": "trc_mvi8hw8sc4f86511",
+      "id": "aud_mvklugg2c4d7324e",
+      "ts": "2026-10-23T06:44:38.978608+00:00",
+      "trace_id": "trc_mvklugg135f79845",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw902592d408",
-      "ts": "2026-10-21T14:55:25.572453+00:00",
-      "trace_id": "trc_mvi8hw8u03ca03f1",
+      "id": "aud_mvklugg9a0270cfb",
+      "ts": "2026-10-23T06:44:38.985542+00:00",
+      "trace_id": "trc_mvklugg328ccad2a",
       "action": "agent.tool.submit_assessment_response",
       "actor": "u-assessor-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw9709cda42f",
-      "ts": "2026-10-21T14:55:25.579027+00:00",
-      "trace_id": "trc_mvi8hw97a79921cc",
+      "id": "aud_mvklugge34704145",
+      "ts": "2026-10-23T06:44:38.990313+00:00",
+      "trace_id": "trc_mvklugge2c1e02b9",
       "action": "evidence.reviewed",
       "actor": "u-approver-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw99b8762ab7",
-      "ts": "2026-10-21T14:55:25.581738+00:00",
-      "trace_id": "trc_mvi8hw99ab5fe65b",
+      "id": "aud_mvklugggba4dac5c",
+      "ts": "2026-10-23T06:44:38.992853+00:00",
+      "trace_id": "trc_mvkluggg7d45b8f1",
       "action": "evidence.reviewed",
       "actor": "u-approver-1",
       "outcome": "success"
     },
     {
-      "id": "aud_mvi8hw9ked744ef1",
-      "ts": "2026-10-21T14:55:25.592793+00:00",
-      "trace_id": "trc_mvi8hw9a618a9a77",
+      "id": "aud_mvkluggobf82e9c6",
+      "ts": "2026-10-23T06:44:39.000684+00:00",
+      "trace_id": "trc_mvkluggha1a6854e",
       "action": "agent.tool.identify_gaps",
       "actor": "u-assessor-1",
       "outcome": "success"
@@ -5279,7 +5279,7 @@
     "Missing evidence": "Required evidence has not been provided",
     "Critical gap": "Material privacy, security, safety, legal, or operational exposure"
   },
-  "disclaimer": "AEGIS supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.",
-  "template_disclaimer": "This use-case assessment produces an indicative view of governance readiness for a single AI system. Self-reported answers are User-asserted; only evidence reviewed by a named reviewer is Verified. Risk tiers are Inferred and require human confirmation. Framework mappings are indicative. AEGIS does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.",
+  "disclaimer": "VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice. Framework mappings are indicative.",
+  "template_disclaimer": "This use-case assessment produces an indicative view of governance readiness for a single AI system. Self-reported answers are User-asserted; only evidence reviewed by a named reviewer is Verified. Risk tiers are Inferred and require human confirmation. Framework mappings are indicative. VERITRAIL does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.",
   "markdown_sha_note": "Markdown rendering available in the .md export"
 }

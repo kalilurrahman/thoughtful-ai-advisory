@@ -1,8 +1,8 @@
-# AEGIS Industry Pack — Global Capability Centers (GCC) & IT Services
+# VERITRAIL Industry Pack — Global Capability Centers (GCC) & IT Services
 # ---------------------------------------------------------------------------
-# Sector overlay on the AEGIS Control Library. Control IDs reference
+# Sector overlay on the VERITRAIL Control Library. Control IDs reference
 # content/controls/controls.yaml ONLY. Risk-tier hints are DEFAULTS that the
-# AEGIS risk-tier engine and a human approver must confirm per system (EI-02).
+# VERITRAIL risk-tier engine and a human approver must confirm per system (EI-02).
 # Sector regimes are described generally to prompt legal review — they are not
 # legal advice and their applicability must be verified with counsel.
 # ---------------------------------------------------------------------------
@@ -12,11 +12,11 @@ pack:
   version: 1.0.0
   status: draft-for-pilot-validation
   effective_date: "2026-10-21"
-  owner: AEGIS Governance Content Lead
+  owner: VERITRAIL Governance Content Lead
   review_cadence: quarterly
   profile_industry: gcc_it_services
   disclaimer: >-
-    This pack highlights AEGIS controls and evidence commonly relevant to global capability centers (captive
+    This pack highlights VERITRAIL controls and evidence commonly relevant to global capability centers (captive
     technology and operations centers) and IT/BPO service providers. It does not determine which laws or client
     contractual obligations apply, does not establish conformity with any regulation or standard, and is not legal
     advice. Verify every regime with qualified counsel.
@@ -100,22 +100,22 @@ additional_evidence:
 sector_regimes:
   - name: Data-protection laws of delivery and client jurisdictions (e.g. India's Digital Personal Data Protection Act 2023 and its implementing rules; GDPR for EU personal data)
     scope_summary: Rules for processing personal data, processor/fiduciary obligations and cross-border transfers; implementing-rule status and timelines must be checked.
-    aegis_relevance: Privacy assessment, transfer assessment, redaction and logging evidence.
+    veritrail_relevance: Privacy assessment, transfer assessment, redaction and logging evidence.
     related_controls: [IS-03, IS-04, SE-08]
     verify_with_counsel: true
   - name: EU AI Act role allocation along the AI value chain
     scope_summary: Organizations that develop AI for others or substantially modify systems may take on provider-type obligations; deployers have separate obligations. Outputs used in the EU can bring non-EU entities into scope.
-    aegis_relevance: Role allocation and evidence hand-over support only; timelines must be verified against the current Official Journal text and amendments.
+    veritrail_relevance: Role allocation and evidence hand-over support only; timelines must be verified against the current Official Journal text and amendments.
     related_controls: [AO-09, AO-07, GL-06]
     verify_with_counsel: true
   - name: Client contractual and assurance requirements (e.g. information-security certifications and attestations clients require, client AI-use clauses)
     scope_summary: Contractual commitments on data use, approved tooling, audit rights and notification that often go beyond statutory requirements.
-    aegis_relevance: Obligations register, vendor controls and assurance packs.
+    veritrail_relevance: Obligations register, vendor controls and assurance packs.
     related_controls: [AO-07, GL-11, SE-05]
     verify_with_counsel: true
   - name: Employment and anti-discrimination rules for automated hiring and worker monitoring (e.g. local rules on automated employment decision tools)
     scope_summary: Some jurisdictions require bias audits, notices or consultation for automated hiring or monitoring tools.
-    aegis_relevance: Fairness testing, disclosure and human-oversight evidence.
+    veritrail_relevance: Fairness testing, disclosure and human-oversight evidence.
     related_controls: [IS-05, IS-08, IS-09]
     verify_with_counsel: true
 

@@ -1,16 +1,16 @@
 import { useCallback, useSyncExternalStore } from "react";
 
-// Light/dark preference shared by the GOVERN workspace, the public website and the
+// Light/dark preference shared by the TILLER workspace, the public website and the
 // Platform console. It is a per-viewer browser setting, not workspace data: it is stored in
 // localStorage and applied as the `dark` class on <html>, which switches the Broadsheet
 // tokens in src/styles.css. THEME_INIT_SCRIPT applies it before first paint.
 
-export const THEME_STORAGE_KEY = "aegis-theme";
+export const THEME_STORAGE_KEY = "veritrail-theme";
 
 /** Browser UI colour per theme: the Broadsheet page background (--background). */
 export const THEME_COLORS = { light: "#f6f8f9", dark: "#151719" } as const;
 
-const CHANGE_EVENT = "aegis-theme-change";
+const CHANGE_EVENT = "veritrail-theme-change";
 
 function isDark(): boolean {
   return document.documentElement.classList.contains("dark");

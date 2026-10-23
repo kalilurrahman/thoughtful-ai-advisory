@@ -4,7 +4,7 @@ applies_to: [Pilot A, Pilot B, Governance Baseline]
 week: 4
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead
+owner: VERITRAIL Delivery Lead
 source: content/assessment_templates/use_case_assessment.yaml (use-case question bank, agent workstream)
 ---
 
@@ -45,7 +45,7 @@ achievable. Record the decision.
 | 2b. Oversight & runtime | Human oversight, approval points, runtime policy, limits, kill switch, monitoring | IS-09, IS-12, IS-13, IS-15, GL-08, SE-12 |
 | 2c. Evidence & lifecycle | Approval record, documentation, logging, incident path, review cadence | GL-03, GL-06, SE-08, SE-04, GL-12 |
 
-The AEGIS Agent may pre-populate answers from inventory metadata and uploaded (redacted) documents; every
+The VERITRAIL Agent may pre-populate answers from inventory metadata and uploaded (redacted) documents; every
 pre-populated answer is labelled **Inferred** until the owner confirms it (then **User-asserted**) and a reviewer
 examines evidence (then **Verified**).
 
@@ -62,7 +62,7 @@ examines evidence (then **Verified**).
 
 ## 4. Quality checks before sign-off
 
-- Every finding cites at least one AEGIS control ID; no invented controls or clauses.
+- Every finding cites at least one VERITRAIL control ID; no invented controls or clauses.
 - Every finding carries exactly one evidence label.
 - No statement that the system meets, conforms to or complies with any law or standard.
 - Owner has reviewed the draft; disagreements are recorded, not silently resolved.

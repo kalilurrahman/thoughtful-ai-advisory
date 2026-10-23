@@ -1,4 +1,4 @@
-// The AEGIS Platform console: every Python-only capability of platform/ and the
+// The VERITRAIL Platform console: every Python-only capability of platform/ and the
 // browser or server-function port that runs it on the hosted site.
 
 export interface PlatformTool {
@@ -16,13 +16,13 @@ export interface PlatformTool {
 export const PLATFORM_TOOLS: PlatformTool[] = [
   {
     slug: "agent",
-    title: "AEGIS Agent console",
+    title: "VERITRAIL Agent console",
     summary:
       "The governance copilot with viewer, assessor, approver and admin roles: guided use-case assessments, gap registers, readiness reports, approvals with separation of duties and a tamper-evident audit log.",
     python: [
-      "app/agent/aegis_agent/*",
-      "python3 -m aegis_agent",
-      "aegis_agent.sample_run",
+      "app/agent/veritrail_agent/*",
+      "python3 -m veritrail_agent",
+      "veritrail_agent.sample_run",
     ],
     runtime: "browser",
   },
@@ -30,8 +30,8 @@ export const PLATFORM_TOOLS: PlatformTool[] = [
     slug: "policy-simulator",
     title: "Runtime policy simulator",
     summary:
-      "Evaluate prompts, responses and agent tool calls against AEGIS policy packs or your own policy-as-code, across rollout modes and the kill switch.",
-    python: ["app/policy-engine/aegis_policy/*", "python3 -m aegis_shield"],
+      "Evaluate prompts, responses and agent tool calls against VERITRAIL policy packs or your own policy-as-code, across rollout modes and the kill switch.",
+    python: ["app/policy-engine/veritrail_policy/*", "python3 -m veritrail_shield"],
     runtime: "browser",
   },
   {
@@ -54,7 +54,7 @@ export const PLATFORM_TOOLS: PlatformTool[] = [
     title: "Sample reports",
     summary:
       "Regenerate the synthetic maturity, risk-tier and Runtime Shield sample reports with the browser engines and download them as Markdown, JSON or PDF.",
-    python: ["scripts/generate_samples.py", "app/reports/aegis_reports/*"],
+    python: ["scripts/generate_samples.py", "app/reports/veritrail_reports/*"],
     runtime: "browser",
   },
   {
@@ -70,7 +70,7 @@ export const PLATFORM_TOOLS: PlatformTool[] = [
     title: "Admin console",
     summary:
       "Leads, tags and CSV export, the assessment funnel, and audit-chain verification for exported logs.",
-    python: ["app/admin/aegis_admin/cli.py", "app/api/aegis_api/*"],
+    python: ["app/admin/veritrail_admin/cli.py", "app/api/veritrail_api/*"],
     runtime: "browser + server",
     restricted: true,
   },

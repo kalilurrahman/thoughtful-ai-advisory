@@ -2,7 +2,7 @@
  * Pilot dress rehearsal — browser port of platform/scripts/pilot_dry_run.py.
  *
  * Runs the full Pilot A (regulated enterprise) workflow end-to-end on a SYNTHETIC organization
- * with the real (browser) AEGIS tooling: nothing here is customer data; all answers are generated
+ * with the real (browser) VERITRAIL tooling: nothing here is customer data; all answers are generated
  * deterministically and labelled synthetic. Pure and deterministic: with the default seed it
  * reproduces the Python run exactly (same IDs, gap register, executive report and audit chain).
  *
@@ -15,14 +15,14 @@
  *   W6  executive readiness report; approval-gated evidence pack export; audit-chain verification
  */
 import { STANDARD_DISCLAIMER, getControl } from "@/features/site/content";
-import { findProhibitedClaims } from "@/features/site/engines/ask-aegis/safety";
+import { findProhibitedClaims } from "@/features/site/engines/ask-veritrail/safety";
 import {
   buildAssessmentBundle,
   scoreAssessment,
   type AssessmentResult,
 } from "@/features/site/engines/assessment-engine";
 import { sha256Hex } from "../audit";
-import { AegisAgent } from "../agent/orchestrator";
+import { VeritrailAgent } from "../agent/orchestrator";
 import { pyFloat } from "../agent/py";
 import { deterministicRuntime } from "../agent/runtime";
 import type { Gap, GapSummary } from "../agent/gaps";
@@ -30,7 +30,7 @@ import { toCsv } from "../reports/exporters";
 import { renderMaturityMarkdown } from "../reports/maturity";
 
 export const ORG = "Example Regional Bank (synthetic)";
-export const ASSESSOR = { id: "u-assessor-1", role: "assessor", name: "Synthetic AEGIS Analyst" } as const;
+export const ASSESSOR = { id: "u-assessor-1", role: "assessor", name: "Synthetic VERITRAIL Analyst" } as const;
 export const APPROVER = { id: "u-approver-1", role: "approver", name: "Synthetic Head of AI Risk" } as const;
 export const AS_OF = "2026-10-21";
 /** Virtual output directory (the Python script writes output/sample_reports/pilot_dry_run). */
@@ -222,7 +222,7 @@ export interface Metric {
 export interface DryRunResult {
   synthetic: true;
   organization: string;
-  agent: AegisAgent;
+  agent: VeritrailAgent;
   inventory: InventoryItem[];
   maturity: AssessmentResult;
   assessments: DeepDive[];
@@ -284,7 +284,7 @@ export function* dryRunSteps(opts: DryRunOptions = {}): Generator<DryRunProgress
   const runtimeOpts: { tag?: string; at?: string } = {};
   if (opts.seed) runtimeOpts.tag = opts.seed;
   if (opts.at) runtimeOpts.at = opts.at;
-  const agent = new AegisAgent({ runtime: deterministicRuntime(runtimeOpts), root: `${OUT}/_agent_data` });
+  const agent = new VeritrailAgent({ runtime: deterministicRuntime(runtimeOpts), root: `${OUT}/_agent_data` });
   const log: string[] = [];
   const TOTAL = 8;
 
@@ -543,10 +543,10 @@ export function* dryRunSteps(opts: DryRunOptions = {}): Generator<DryRunProgress
   const L: string[] = [
     `# Executive Readiness Report — ${ORG}`,
     "",
-    "> **SYNTHETIC DRESS REHEARSAL.** Fictional organization, generated answers. This report demonstrates the AEGIS " +
+    "> **SYNTHETIC DRESS REHEARSAL.** Fictional organization, generated answers. This report demonstrates the VERITRAIL " +
       "Pilot A workflow and outputs; it is not evidence about any real organization.",
     "",
-    `**Prepared:** ${AS_OF} · **Scope:** AEGIS Governance Baseline (Pilot A profile) · **Prepared by:** AEGIS Agent-assisted workflow, synthetic analyst`,
+    `**Prepared:** ${AS_OF} · **Scope:** VERITRAIL Governance Baseline (Pilot A profile) · **Prepared by:** VERITRAIL Agent-assisted workflow, synthetic analyst`,
     "",
     "## 1. Executive summary",
     "",

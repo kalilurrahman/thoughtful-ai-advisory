@@ -114,7 +114,7 @@ export function PilotRehearsal() {
       <p className="notice notice--warning">
         <strong>Synthetic data — fictional organization.</strong> “{ORG}” does not exist; every answer
         is generated deterministically. The rehearsal runs entirely in this browser with the real
-        AEGIS tooling and stores nothing. It proves the pilot workflow end to end; it is not evidence
+        VERITRAIL tooling and stores nothing. It proves the pilot workflow end to end; it is not evidence
         about any real organization.
       </p>
       <p>

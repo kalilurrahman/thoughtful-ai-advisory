@@ -1,8 +1,8 @@
 ---
-title: "Privacy notice — AEGIS website (template, legal review required)"
+title: "Privacy notice — VERITRAIL website (template, legal review required)"
 h1: "Privacy notice"
 slug: /legal/privacy/
-description: "How the AEGIS website handles personal data: cookieless analytics, lead data collected and why, retention and your rights. Template pending legal review."
+description: "How the VERITRAIL website handles personal data: cookieless analytics, lead data collected and why, retention and your rights. Template pending legal review."
 section: legal
 nav_label: "Privacy notice"
 nav_order: 10
@@ -11,13 +11,13 @@ schema_type: WebPage
 updated: 2026-10-21
 ---
 
-> **Template — legal review required.** This notice is a working draft describing how the AEGIS website is designed to handle personal data. Items in [square brackets] must be completed, and the whole notice must be reviewed by qualified legal counsel for each jurisdiction in which AEGIS operates, before publication.
+> **Template — legal review required.** This notice is a working draft describing how the VERITRAIL website is designed to handle personal data. Items in [square brackets] must be completed, and the whole notice must be reviewed by qualified legal counsel for each jurisdiction in which VERITRAIL operates, before publication.
 
 **Last updated:** 21 October 2026
 
 ## 1. Who we are
 
-The controller responsible for personal data collected through this website is [legal entity name], [registered address] ("AEGIS", "we", "us"). Contact for privacy questions: [privacy contact email]. [Data protection officer or representative details, where required.]
+The controller responsible for personal data collected through this website is [legal entity name], [registered address] ("VERITRAIL", "we", "us"). Contact for privacy questions: [privacy contact email]. [Data protection officer or representative details, where required.]
 
 ## 2. Summary
 
@@ -31,15 +31,15 @@ The controller responsible for personal data collected through this website is [
 |---|---|---|---|
 | Website analytics | Event name, page path, limited event properties (for example "assessment started"); no cookies; no IP address stored | Understand which pages and tools are used, to improve the site | Legitimate interests |
 | Maturity self-assessment — preliminary result | Your answers and organization profile (industry, size band, number of AI systems, use of agents, EU exposure), processed to calculate the score | Show your preliminary result | Legitimate interests / your request |
-| Maturity self-assessment — full report | Business email, name, company, role, consent record, your answers and profile, source page | Generate and deliver your report; follow up about relevant AEGIS services if you agreed | Consent and/or steps at your request [confirm] |
+| Maturity self-assessment — full report | Business email, name, company, role, consent record, your answers and profile, source page | Generate and deliver your report; follow up about relevant VERITRAIL services if you agreed | Consent and/or steps at your request [confirm] |
 | Blueprint download | Business email, name, company, role, consent record | Provide the document; follow up once if you agreed | Consent [confirm] |
 | Contact, demo and Baseline forms; design-partner enquiries | Business email, name, company, role, your message, consent record | Respond to your enquiry and arrange meetings | Steps at your request / legitimate interests |
 | Newsletter | Business email, consent record | Send the newsletter | Consent |
-| Ask AEGIS demo, risk triage, guardrail generator | The text and selections you submit | Produce a response or result | Legitimate interests / your request |
+| Ask VERITRAIL demo, risk triage, guardrail generator | The text and selections you submit | Produce a response or result | Legitimate interests / your request |
 
 We ask for a **business email address** because our services are for organizations; free-mail addresses are not accepted for report and lead forms.
 
-**Please do not submit** personal data about other people, special-category data, secrets or confidential information in free-text fields or in the Ask AEGIS demo.
+**Please do not submit** personal data about other people, special-category data, secrets or confidential information in free-text fields or in the Ask VERITRAIL demo.
 
 ## 4. AI processing
 
@@ -61,7 +61,7 @@ We share personal data only with service providers who process it on our behalf 
 | Lead and enquiry records | [24 months] after last interaction, then deleted or anonymized |
 | Generated assessment reports | [24 months] after generation |
 | Newsletter subscription | Until you unsubscribe, plus a consent record kept for [the period required to demonstrate consent] |
-| Ask AEGIS demo conversations | [30 days], redacted |
+| Ask VERITRAIL demo conversations | [30 days], redacted |
 | Audit log entries relating to your request | [Period required for security and accountability] |
 
 ## 8. Your rights

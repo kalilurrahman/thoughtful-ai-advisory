@@ -13,7 +13,7 @@ import {
   type SiteLeadRow,
 } from "./admin-core";
 
-// AEGIS admin console server functions — port of platform/app/admin/aegis_admin/cli.py
+// VERITRAIL admin console server functions — port of platform/app/admin/veritrail_admin/cli.py
 // (leads list/export, forms list, analytics funnel). Every function requires a signed-in user
 // (requireSupabaseAuth) whose id is in `site_admins` (checked through the caller's own RLS
 // client: authenticated users may read only their own row). Only after that check do we read

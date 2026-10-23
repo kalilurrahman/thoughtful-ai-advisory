@@ -18,13 +18,13 @@ import {
   calculate,
   at,
 } from "@/features/governance/model";
-describe("AEGIS supplied governance rules", () => {
+describe("VERITRAIL supplied governance rules", () => {
   it("caps maturity 3 and 4 at 2 unless evidence is verified", () => {
     expect(effectiveScore({ s: 3, e: 2 })).toBe(2);
     expect(effectiveScore({ s: 4, e: 1 })).toBe(2);
     expect(effectiveScore({ s: 4, e: 3 })).toBe(4);
   });
-  it("computes the supplied pillar percentages and AEGIS index", () => {
+  it("computes the supplied pillar percentages and VERITRAIL index", () => {
     const scores = pillarScores(defaultAnswers());
     expect(scores).toEqual([63, 63, 50, 50, 50, 38]);
     expect(indexScore(scores)).toBe(52);

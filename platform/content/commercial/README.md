@@ -1,13 +1,13 @@
 ---
-title: "AEGIS commercial kit"
+title: "VERITRAIL commercial kit"
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Commercial Lead
+owner: VERITRAIL Commercial Lead
 ---
 
-# AEGIS commercial kit
+# VERITRAIL commercial kit
 
-> AEGIS is pre-pilot: there are no customers, case studies or measured results yet. All prices are hypotheses to
+> VERITRAIL is pre-pilot: there are no customers, case studies or measured results yet. All prices are hypotheses to
 > validate in pilots. Never claim or imply otherwise.
 
 | Asset | File | Use |

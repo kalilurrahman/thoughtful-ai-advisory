@@ -13,11 +13,11 @@ from html.parser import HTMLParser
 
 import pytest
 
-from aegis_website.builder import SiteBuilder
-from aegis_website.errors import BuildError
-from aegis_website.markdown_render import render_markdown, url_is_safe
-from aegis_website.paths import FIXTURE_PAGES_DIR, STATIC_DIR
-from aegis_website.seo import safe_json
+from veritrail_website.builder import SiteBuilder
+from veritrail_website.errors import BuildError
+from veritrail_website.markdown_render import render_markdown, url_is_safe
+from veritrail_website.paths import FIXTURE_PAGES_DIR, STATIC_DIR
+from veritrail_website.seo import safe_json
 
 PAYLOAD = '</title><script>alert("x")</script>"\' onmouseover="alert(1)'
 EVIL_PAGE = f"""---

@@ -9,10 +9,10 @@ import {
   generateSamples,
   generateShieldSamples,
 } from "@/features/platform/samples/generate";
-import { findProhibitedClaims } from "@/features/site/engines/ask-aegis/safety";
+import { findProhibitedClaims } from "@/features/site/engines/ask-veritrail/safety";
 
 // The committed outputs in platform/output/sample_reports were written by
-// platform/scripts/generate_samples.py and `python3 -m aegis_shield.samples`.
+// platform/scripts/generate_samples.py and `python3 -m veritrail_shield.samples`.
 const OUT = path.resolve(__dirname, "../../platform/output/sample_reports");
 const committed = (rel: string) => readFileSync(path.join(OUT, rel), "utf-8");
 
@@ -133,7 +133,9 @@ describe("SamplesGallery and RoiCalculator UI", () => {
     const { RoiCalculator } = await import("@/features/platform/roi-calculator");
     render(createElement(RoiCalculator));
     expect(screen.getAllByRole("cell", { name: "160,980" }).length).toBeGreaterThan(0);
-    expect(screen.getAllByText("AEGIS hypothesis — validate in pilot").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("VERITRAIL hypothesis — validate in pilot").length).toBeGreaterThan(
+      0,
+    );
     fireEvent.change(screen.getByLabelText(/Hourly cost|Blended hourly cost/), {
       target: { value: "-1" },
     });

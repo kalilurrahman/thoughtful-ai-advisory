@@ -3,7 +3,7 @@ title: "Pilot A onboarding checklist"
 pilot: A
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead
+owner: VERITRAIL Delivery Lead
 status: Not started
 ---
 
@@ -15,11 +15,11 @@ Complete before or during Week 1. A pilot does not proceed to Week 2 until every
 
 | # | Item | Owner | Gate | Done |
 |---|---|---|---|---|
-| 1 | Qualification scorecard ≥ threshold (`../pilot_status_tracker.md`) | AEGIS commercial lead | Gate | ☐ |
-| 2 | Mutual NDA executed | AEGIS commercial lead | Gate | ☐ |
-| 3 | Pilot agreement signed (scope, fee/no-fee, feedback, publication restriction) | AEGIS commercial lead | Gate | ☐ |
-| 4 | DPA executed if any personal data could be processed | AEGIS privacy lead | Gate (if applicable) | ☐ |
-| 5 | Partner procurement / vendor-risk onboarding complete (security questionnaire) | AEGIS security lead | Gate | ☐ |
+| 1 | Qualification scorecard ≥ threshold (`../pilot_status_tracker.md`) | VERITRAIL commercial lead | Gate | ☐ |
+| 2 | Mutual NDA executed | VERITRAIL commercial lead | Gate | ☐ |
+| 3 | Pilot agreement signed (scope, fee/no-fee, feedback, publication restriction) | VERITRAIL commercial lead | Gate | ☐ |
+| 4 | DPA executed if any personal data could be processed | VERITRAIL privacy lead | Gate (if applicable) | ☐ |
+| 5 | Partner procurement / vendor-risk onboarding complete (security questionnaire) | VERITRAIL security lead | Gate | ☐ |
 
 ## People
 
@@ -37,8 +37,8 @@ Complete before or during Week 1. A pilot does not proceed to Week 2 until every
 | # | Item | Owner | Gate | Done |
 |---|---|---|---|---|
 | 12 | `data_access_privacy_safeguards.md` §8 sign-off completed | Partner security + privacy | Gate | ☐ |
-| 13 | Named user list and roles provisioned in pilot workspace (least privilege) | AEGIS delivery lead | Gate | ☐ |
-| 14 | Hosting region confirmed | AEGIS security lead | Gate | ☐ |
+| 13 | Named user list and roles provisioned in pilot workspace (least privilege) | VERITRAIL delivery lead | Gate | ☐ |
+| 14 | Hosting region confirmed | VERITRAIL security lead | Gate | ☐ |
 | 15 | Incident contact and notification timeframe confirmed | Both | Gate | ☐ |
 
 ## Materials (metadata only)
@@ -55,8 +55,8 @@ Complete before or during Week 1. A pilot does not proceed to Week 2 until every
 
 | # | Item | Owner | Gate | Done |
 |---|---|---|---|---|
-| 21 | Scope note: BUs, target system count, deep-dive candidates, agent review (Y/N) | AEGIS delivery lead | Gate | ☐ |
-| 22 | Success metrics M1–M6 agreed with sponsor (incl. M4 applicability) | AEGIS delivery lead | Gate | ☐ |
-| 23 | Baseline interviews S1–S3 recorded (User-asserted) | AEGIS delivery lead | | ☐ |
-| 24 | Sector industry pack selected | AEGIS delivery lead | | ☐ |
+| 21 | Scope note: BUs, target system count, deep-dive candidates, agent review (Y/N) | VERITRAIL delivery lead | Gate | ☐ |
+| 22 | Success metrics M1–M6 agreed with sponsor (incl. M4 applicability) | VERITRAIL delivery lead | Gate | ☐ |
+| 23 | Baseline interviews S1–S3 recorded (User-asserted) | VERITRAIL delivery lead | | ☐ |
+| 24 | Sector industry pack selected | VERITRAIL delivery lead | | ☐ |
 | 25 | Workshop, calibration, deep-dive and readout dates booked | Partner pilot lead | Gate | ☐ |

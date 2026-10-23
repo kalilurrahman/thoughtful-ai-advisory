@@ -1,4 +1,4 @@
-%% AEGIS MVP — technical / deployment architecture (as built in this repository)
+%% VERITRAIL MVP — technical / deployment architecture (as built in this repository)
 flowchart LR
   classDef fe fill:#E8F1F8,stroke:#0B2545,color:#0B2545
   classDef svc fill:#0B2545,stroke:#0B2545,color:#fff
@@ -10,19 +10,19 @@ flowchart LR
   CDN[CDN / static host<br/>app/website/dist]:::ext
   RP[Reverse proxy<br/>TLS · WAF]:::ext
 
-  subgraph API[aegis_api — stdlib ThreadingHTTPServer]
+  subgraph API[veritrail_api — stdlib ThreadingHTTPServer]
     R[Router · validation · rate limit<br/>CSP & security headers]:::svc
     LEAD[Lead capture<br/>business-email gate · HMAC report tokens]:::svc
     EVT[Cookieless analytics]:::svc
   end
 
   subgraph CORE[Domain packages · app/*]
-    AE[aegis_assessment<br/>maturity engine · risk tiering]:::lib
-    RPT[aegis_reports<br/>Markdown · PDF · CSV · JSON]:::lib
-    AGT[aegis_agent<br/>orchestrator · 14 tools · retrieval]:::lib
-    SH[aegis_shield<br/>advisor · policy generator]:::lib
-    PE[aegis_policy<br/>schema · evaluator · rollout modes]:::lib
-    CMN[aegis_common<br/>content · audit chain · redaction · evidence labels]:::lib
+    AE[veritrail_assessment<br/>maturity engine · risk tiering]:::lib
+    RPT[veritrail_reports<br/>Markdown · PDF · CSV · JSON]:::lib
+    AGT[veritrail_agent<br/>orchestrator · 14 tools · retrieval]:::lib
+    SH[veritrail_shield<br/>advisor · policy generator]:::lib
+    PE[veritrail_policy<br/>schema · evaluator · rollout modes]:::lib
+    CMN[veritrail_common<br/>content · audit chain · redaction · evidence labels]:::lib
   end
 
   subgraph CONTENT[Governed content · content/]
@@ -40,7 +40,7 @@ flowchart LR
     AGS[(agent records<br/>inventory · assessments · tasks)]:::store
   end
 
-  ADM[aegis_admin CLI<br/>audit verify · approvals · leads · funnel]:::svc
+  ADM[veritrail_admin CLI<br/>audit verify · approvals · leads · funnel]:::svc
   CRM[CRM adapter<br/>JSONL · webhook · HubSpot]:::ext
   MAIL[Mail adapter<br/>outbox · SMTP]:::ext
   LLM[Optional LLM adapter<br/>redacted input · output validated]:::ext

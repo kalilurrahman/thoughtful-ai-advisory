@@ -9,15 +9,15 @@ from pathlib import Path
 
 import pytest
 
-from aegis_common.content import controls, pillars
-from aegis_common.evidence import STANDARD_DISCLAIMER
-from aegis_website.builder import SiteBuilder, main
-from aegis_website.checks import analyze_html, check_site
-from aegis_website.errors import BuildError
-from aegis_website.ogimage import png_size
-from aegis_website.paths import DEFAULT_PAGES_DIR, FIXTURE_PAGES_DIR
+from veritrail_common.content import controls, pillars
+from veritrail_common.evidence import STANDARD_DISCLAIMER
+from veritrail_website.builder import SiteBuilder, main
+from veritrail_website.checks import analyze_html, check_site
+from veritrail_website.errors import BuildError
+from veritrail_website.ogimage import png_size
+from veritrail_website.paths import DEFAULT_PAGES_DIR, FIXTURE_PAGES_DIR
 
-SITE_URL = "https://www.aegis-governance.example"
+SITE_URL = "https://www.veritrail-governance.example"
 
 
 @pytest.fixture(scope="module")
@@ -39,10 +39,10 @@ def jsonld(html):
 def test_build_outputs_and_checks_pass(site):
     assert site.check["errors"] == []
     out = site.out_dir
-    for rel in ["index.html", "404.html", "sitemap.xml", "robots.txt", "static/css/aegis.css", "static/css/print.css",
+    for rel in ["index.html", "404.html", "sitemap.xml", "robots.txt", "static/css/veritrail.css", "static/css/print.css",
                 "static/js/site.js", "static/js/analytics.js", "static/js/assessment-engine.js",
-                "static/img/og-default.svg", "static/img/og-default.png", "static/img/aegis-logo.png",
-                "static/img/favicon.svg", ".aegis-dist"]:
+                "static/img/og-default.svg", "static/img/og-default.png", "static/img/veritrail-logo.png",
+                "static/img/favicon.svg", ".veritrail-dist"]:
         assert (out / rel).is_file(), rel
     assert png_size((out / "static/img/og-default.png").read_bytes()) == (1200, 630)
     # every fixture page rendered
@@ -76,7 +76,7 @@ def test_every_page_has_header_nav_cta_breadcrumbs_footer(site):
         for label in ["Framework", "Solutions", "Tools", "Resources"]:
             assert f'<summary class="nav-summary">{label}</summary>' in html
         assert STANDARD_DISCLAIMER in html
-        assert 'data-aegis-form="newsletter"' in html  # footer signup
+        assert 'data-veritrail-form="newsletter"' in html  # footer signup
         assert '<a class="skip-link" href="#main">' in html
         if not p.is_home:
             assert 'aria-label="Breadcrumb"' in html, p.slug
@@ -92,7 +92,7 @@ def test_nav_sections_follow_site_config_and_skip_empty_sections(site):
 def test_seo_meta_canonical_og_twitter(site):
     html = read(site, "solutions/agent/index.html")
     assert f'<link rel="canonical" href="{SITE_URL}/solutions/agent/">' in html
-    assert '<meta property="og:title" content="Fixture AEGIS Agent service page">' in html
+    assert '<meta property="og:title" content="Fixture VERITRAIL Agent service page">' in html
     assert f'<meta property="og:image" content="{SITE_URL}/static/img/og-default.png">' in html
     assert '<meta name="twitter:card" content="summary_large_image">' in html
     types = [n["@type"] for n in jsonld(html)["@graph"]]
@@ -127,9 +127,9 @@ def test_js_only_loaded_where_needed_and_deferred(site):
 
 def test_assessment_page_embeds_template_bundle_and_structure(site):
     html = read(site, "tools/maturity-assessment/index.html")
-    m = re.search(r'<script type="application/json" id="aegis-assessment-data">(.*?)</script>', html, re.S)
+    m = re.search(r'<script type="application/json" id="veritrail-assessment-data">(.*?)</script>', html, re.S)
     bundle = json.loads(m.group(1))
-    assert bundle["template"]["template"]["id"] == "AEGIS-SA-MATURITY"
+    assert bundle["template"]["template"]["id"] == "VERITRAIL-SA-MATURITY"
     assert len(bundle["template"]["questions"]) == 24
     assert set(bundle["controls"]) >= {c for q in bundle["template"]["questions"] for c in q["controls"]}
     assert html.count('class="assessment-step"') == 9  # profile + 8 domains
@@ -145,7 +145,7 @@ def test_forms_have_labels_consent_privacy_and_honeypot(site):
                       ("contact/request-demo/index.html", "demo"), ("resources/blueprint/index.html", "blueprint"),
                       ("resources/newsletter/index.html", "newsletter"), ("tools/evidence-planner/index.html", "waitlist")]:
         html = read(site, rel)
-        assert f'data-aegis-form="{form}"' in html, rel
+        assert f'data-veritrail-form="{form}"' in html, rel
         assert 'name="website"' in html and 'tabindex="-1"' in html
         assert re.search(r'id="lf-consent"|id="wl-consent"', html)
         assert 'privacy notice</a>' in html
@@ -155,14 +155,14 @@ def test_forms_have_labels_consent_privacy_and_honeypot(site):
 
 
 def test_blueprint_download_copied_when_available(tmp_path, monkeypatch):
-    src = tmp_path / "AEGIS_Enterprise_Blueprint.pdf"
+    src = tmp_path / "VERITRAIL_Enterprise_Blueprint.pdf"
     src.write_bytes(b"%PDF-1.4 test")
     b = SiteBuilder(FIXTURE_PAGES_DIR, tmp_path / "dist", run_checks=False)
     b.site["downloads"]["blueprint"]["sources"] = [str(src)]
     b.build()
-    assert (tmp_path / "dist/downloads/AEGIS_Enterprise_Blueprint.pdf").read_bytes() == b"%PDF-1.4 test"
+    assert (tmp_path / "dist/downloads/VERITRAIL_Enterprise_Blueprint.pdf").read_bytes() == b"%PDF-1.4 test"
     html = (tmp_path / "dist/resources/blueprint/index.html").read_text()
-    assert 'data-download="/downloads/AEGIS_Enterprise_Blueprint.pdf"' in html
+    assert 'data-download="/downloads/VERITRAIL_Enterprise_Blueprint.pdf"' in html
 
 
 def test_missing_blueprint_warns_not_fails(tmp_path):
@@ -177,7 +177,7 @@ def test_site_url_override(tmp_path):
     res = SiteBuilder(FIXTURE_PAGES_DIR, tmp_path / "d", site_url="https://www.example.com/", run_checks=False).build()
     html = (res.out_dir / "index.html").read_text()
     assert '<link rel="canonical" href="https://www.example.com/">' in html
-    assert "aegis-governance.example/sitemap" not in (res.out_dir / "robots.txt").read_text()
+    assert "veritrail-governance.example/sitemap" not in (res.out_dir / "robots.txt").read_text()
 
 
 def test_broken_internal_link_fails_build(tmp_path):

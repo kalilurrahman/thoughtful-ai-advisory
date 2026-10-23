@@ -1,8 +1,8 @@
-# AEGIS Industry Pack — Public Sector
+# VERITRAIL Industry Pack — Public Sector
 # ---------------------------------------------------------------------------
-# Sector overlay on the AEGIS Control Library. Control IDs reference
+# Sector overlay on the VERITRAIL Control Library. Control IDs reference
 # content/controls/controls.yaml ONLY. Risk-tier hints are DEFAULTS that the
-# AEGIS risk-tier engine and a human approver must confirm per system (EI-02).
+# VERITRAIL risk-tier engine and a human approver must confirm per system (EI-02).
 # Sector regimes are described generally to prompt legal review — they are not
 # legal advice and their applicability must be verified with counsel.
 # ---------------------------------------------------------------------------
@@ -12,11 +12,11 @@ pack:
   version: 1.0.0
   status: draft-for-pilot-validation
   effective_date: "2026-10-21"
-  owner: AEGIS Governance Content Lead
+  owner: VERITRAIL Governance Content Lead
   review_cadence: quarterly
   profile_industry: public_sector
   disclaimer: >-
-    This pack highlights AEGIS controls and evidence commonly relevant to government departments, agencies, local
+    This pack highlights VERITRAIL controls and evidence commonly relevant to government departments, agencies, local
     authorities and public bodies. It does not determine which laws, mandates or policies apply, does not establish
     conformity with any regulation or standard, and is not legal advice. Verify every regime with qualified counsel.
 
@@ -98,27 +98,27 @@ additional_evidence:
 sector_regimes:
   - name: EU AI Act obligations for public authorities as deployers (including fundamental rights impact assessment for certain deployers, Art. 27) and Annex III public-service areas
     scope_summary: Bodies governed by public law deploying certain high-risk systems may need a fundamental rights impact assessment; several Annex III areas concern public services, law enforcement, migration and justice; some practices are prohibited.
-    aegis_relevance: Screening, impact-assessment workflow and evidence; timelines must be verified against the current Official Journal text and amendments.
+    veritrail_relevance: Screening, impact-assessment workflow and evidence; timelines must be verified against the current Official Journal text and amendments.
     related_controls: [AO-10, GL-02, AO-11, EI-02]
     verify_with_counsel: true
   - name: National government AI policies and mandates (e.g. US federal OMB memoranda on agency AI use; UK Algorithmic Transparency Recording Standard)
     scope_summary: Inventory, risk-management, transparency and governance expectations for government use of AI; these documents are revised periodically and the current version must be confirmed.
-    aegis_relevance: Inventory, impact assessment, transparency records and governance roles.
+    veritrail_relevance: Inventory, impact assessment, transparency records and governance roles.
     related_controls: [EI-01, GL-02, SE-11, AO-02]
     verify_with_counsel: true
   - name: Equality and anti-discrimination duties (e.g. public-sector equality duties)
     scope_summary: Duties to consider the impact of policies and services on protected groups.
-    aegis_relevance: Fairness testing and impact-assessment evidence.
+    veritrail_relevance: Fairness testing and impact-assessment evidence.
     related_controls: [IS-05, GL-02]
     verify_with_counsel: true
   - name: Public records, freedom-of-information and administrative-law requirements
     scope_summary: Records retention, disclosure on request, and duties to give reasons for administrative decisions.
-    aegis_relevance: Evidence retention, logging and explanation design.
+    veritrail_relevance: Evidence retention, logging and explanation design.
     related_controls: [SE-02, SE-08, IS-08]
     verify_with_counsel: true
   - name: Public procurement rules
     scope_summary: Rules on how AI products and services are sourced, evaluated and contracted.
-    aegis_relevance: Vendor due diligence and contract controls.
+    veritrail_relevance: Vendor due diligence and contract controls.
     related_controls: [GL-11, AO-09]
     verify_with_counsel: true
 

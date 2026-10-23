@@ -4,13 +4,13 @@ applies_to: [Pilot A, Pilot B, Governance Baseline]
 week: 4
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead with AEGIS Shield Lead
+owner: VERITRAIL Delivery Lead with VERITRAIL Shield Lead
 related_controls: [EI-07, IS-01, IS-04, IS-11, IS-12, IS-13, IS-14, IS-15, IS-16, SE-04, SE-08]
 ---
 
 # Agent review protocol (up to 2 agents)
 
-**Goal:** review up to two AI agents (systems that call tools or take actions) against the AEGIS agent governance
+**Goal:** review up to two AI agents (systems that call tools or take actions) against the VERITRAIL agent governance
 control set, produce a tool permission matrix and runtime policy recommendations, and draft at least one runtime
 policy per agent in Observe mode (pilot metric M4: ≥ 2 runtime policies drafted).
 
@@ -43,7 +43,7 @@ performed if separately authorized in writing by the partner's security lead, in
 ## 3. Rules
 
 - Draft policies are created with status `draft` and rollout mode `observe`. Moving any policy toward production or
-  changing a production runtime policy requires named human approval by the partner — AEGIS never activates policy.
+  changing a production runtime policy requires named human approval by the partner — VERITRAIL never activates policy.
 - Findings use evidence labels; configuration seen in the partner's environment by a named reviewer can be Verified.
 - No production prompts, responses or tool outputs are copied out of the partner environment.
 

@@ -154,7 +154,7 @@ export const PLAYBOOK_CHAPTERS: PlaybookChapter[] = [
       },
     ],
     [
-      { label: "Run the AEGIS assessment", href: "/assess" },
+      { label: "Run the VERITRAIL assessment", href: "/assess" },
       { label: "Explore checked sources", href: "/knowledge" },
     ],
   ),
@@ -419,7 +419,7 @@ export const PLAYBOOK_CHAPTERS: PlaybookChapter[] = [
     ],
     [
       { label: "Prioritise the roadmap", href: "/roadmap" },
-      { label: "Review the AEGIS index", href: "/" },
+      { label: "Review the VERITRAIL index", href: "/" },
     ],
   ),
 ];

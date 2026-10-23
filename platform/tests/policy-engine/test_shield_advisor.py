@@ -6,18 +6,18 @@ import json
 
 import pytest
 
-from aegis_common.content import get_control
-from aegis_common.evidence import EvidenceStatus, find_prohibited_claims
-from aegis_policy.engine import PolicyEngine
-from aegis_policy.schema import validate_policy
-from aegis_shield.advisor import advise
-from aegis_shield.examples import (
+from veritrail_common.content import get_control
+from veritrail_common.evidence import EvidenceStatus, find_prohibited_claims
+from veritrail_policy.engine import PolicyEngine
+from veritrail_policy.schema import validate_policy
+from veritrail_shield.advisor import advise
+from veritrail_shield.examples import (
     AUTONOMOUS_HIGH_RISK_PROFILE,
     CUSTOMER_SUPPORT_PROFILE,
     FINANCIAL_OPS_PROFILE,
     INTERNAL_RAG_PROFILE,
 )
-from aegis_shield.render import render_advice_markdown
+from veritrail_shield.render import render_advice_markdown
 
 CONTRACT_KEYS = {"risk_profile", "tool_matrix", "data_handling", "approval_rules", "limits", "monitoring",
                  "incident_response", "rollout", "citations", "policy"}
@@ -88,7 +88,7 @@ def test_tier_mismatch_flagged_but_not_changed(outputs):
     r = outputs["support"]["risk_profile"]
     assert r["user_asserted_risk_tier"] == "Medium" and r["inferred_risk_tier"] == "High" and r["tier_mismatch"]
     assert "requires human approval" in r["overall"]["rationale"]
-    # the policy keeps the registered (asserted) tier as scope; AEGIS does not change it
+    # the policy keeps the registered (asserted) tier as scope; VERITRAIL does not change it
     assert outputs["support"]["policy"]["applies_to"]["risk_tier"] == ["Medium"]
 
 
@@ -307,7 +307,7 @@ def test_website_form_tool_format_and_overall_rating_alias():
 
 
 def test_agent_shaped_profile_is_accepted():
-    """Shape produced by the AEGIS Agent's draft_runtime_policy tool (aliases and description hints)."""
+    """Shape produced by the VERITRAIL Agent's draft_runtime_policy tool (aliases and description hints)."""
     a = advise({"app_name": "Claims triage", "purpose": "Triage insurance claims",
                 "tools": [{"name": "claims_db", "description": "claims_db (read)"},
                           {"name": "payout", "description": "payout (payment)"}],

@@ -3,14 +3,14 @@ title: "Pilot data-access & privacy safeguards"
 applies_to: [Pilot A, Pilot B, Governance Baseline]
 version: 1.0.0
 effective_date: 2026-10-21
-owner: AEGIS Delivery Lead with AEGIS Security & Privacy Lead
+owner: VERITRAIL Delivery Lead with VERITRAIL Security & Privacy Lead
 status: template — to be agreed with each design partner before any data access
 ---
 
 # Pilot data-access & privacy safeguards
 
-These safeguards apply to every AEGIS pilot and Governance Baseline. They are signed off by the design partner's
-security and privacy leads in Week 1, **before** any access is granted. They mirror the controls AEGIS asks customers
+These safeguards apply to every VERITRAIL pilot and Governance Baseline. They are signed off by the design partner's
+security and privacy leads in Week 1, **before** any access is granted. They mirror the controls VERITRAIL asks customers
 to operate: privacy assessment and minimisation (IS-03), redaction (IS-04), least privilege (IS-11), evidence
 retention (SE-02) and tamper-evident logging (SE-08).
 
@@ -24,20 +24,20 @@ retention (SE-02) and tamper-evident logging (SE-08).
 | Logs and decision samples | Not by default | Small redacted samples, viewed in partner environment | Bulk log export |
 | Personal data, special-category data, customer data, production prompts/responses | **Out of scope** | Only if essential, minimised, under DPA, in partner environment | Transfer to any external LLM |
 
-**Rule:** no production data — personal, confidential or customer content — is sent to any external LLM by AEGIS,
+**Rule:** no production data — personal, confidential or customer content — is sent to any external LLM by VERITRAIL,
 under any circumstance. Agent features used during the pilot run on metadata and governance documents only, and all
-text passes through `aegis_common.redaction.redact()` before any external model call or log write.
+text passes through `veritrail_common.redaction.redact()` before any external model call or log write.
 
 ## 2. Legal and contractual prerequisites
 
 | # | Item | Owner | Gate |
 |---|---|---|---|
-| 1 | Mutual NDA executed | AEGIS commercial lead / partner legal | Before discovery calls beyond public information |
-| 2 | Pilot agreement (scope, no-fee or fee terms, IP, feedback licence, publication restrictions) | AEGIS commercial lead | Before Week 1 |
-| 3 | Data processing agreement (DPA) where any personal data could be processed, including sub-processor list and transfer mechanism | AEGIS privacy lead / partner DPO | Before any personal data access |
-| 4 | Security questionnaire answered (hosting, encryption, access control, logging, incident notice) | AEGIS security lead | Before Week 1 |
+| 1 | Mutual NDA executed | VERITRAIL commercial lead / partner legal | Before discovery calls beyond public information |
+| 2 | Pilot agreement (scope, no-fee or fee terms, IP, feedback licence, publication restrictions) | VERITRAIL commercial lead | Before Week 1 |
+| 3 | Data processing agreement (DPA) where any personal data could be processed, including sub-processor list and transfer mechanism | VERITRAIL privacy lead / partner DPO | Before any personal data access |
+| 4 | Security questionnaire answered (hosting, encryption, access control, logging, incident notice) | VERITRAIL security lead | Before Week 1 |
 | 5 | Written approval for any exception to §1 defaults, naming data, purpose, location and expiry | Partner security + privacy leads | Per exception |
-| 6 | Publication restriction: no use of partner name, logo, quotes or metrics without written approval (see case-study template) | AEGIS commercial lead | Always |
+| 6 | Publication restriction: no use of partner name, logo, quotes or metrics without written approval (see case-study template) | VERITRAIL commercial lead | Always |
 
 ## 3. Access roles (least privilege)
 
@@ -46,23 +46,23 @@ text passes through `aegis_common.redaction.redact()` before any external model 
 | Partner pilot sponsor | Partner executive | Pilot workspace (read), reports | — |
 | Partner pilot lead | Partner governance lead | Pilot workspace (read/write), approve exceptions with security/privacy | Approve own data-access exceptions alone |
 | Partner system owners | Business/technical owners | Their own system records | See other units' records unless agreed |
-| AEGIS delivery lead | Named individual | Pilot workspace (read/write), evidence index | Download unredacted evidence; access partner production |
-| AEGIS analyst | Named individuals (max 3) | Pilot workspace (read/write) | Export evidence; send external communications |
-| AEGIS Agent (tool) | Software | Read tools on pilot workspace; write tools create **drafts** only | Change risk tiers, approve exceptions, export evidence, send communications (all require human approval) |
+| VERITRAIL delivery lead | Named individual | Pilot workspace (read/write), evidence index | Download unredacted evidence; access partner production |
+| VERITRAIL analyst | Named individuals (max 3) | Pilot workspace (read/write) | Export evidence; send external communications |
+| VERITRAIL Agent (tool) | Software | Read tools on pilot workspace; write tools create **drafts** only | Change risk tiers, approve exceptions, export evidence, send communications (all require human approval) |
 
 Access is reviewed at the end of Weeks 2 and 4 and revoked at pilot close (IS-11).
 
 ## 4. Redaction
 
 - Partner-supplied documents are redacted at source where possible (names → roles, identifiers removed).
-- AEGIS applies automated redaction (`aegis_common.redaction`) to all text before external model calls and log writes;
-  redaction coverage is spot-checked by the AEGIS delivery lead on a sample each week and recorded.
+- VERITRAIL applies automated redaction (`veritrail_common.redaction`) to all text before external model calls and log writes;
+  redaction coverage is spot-checked by the VERITRAIL delivery lead on a sample each week and recorded.
 - Evidence items are referenced by ID in reports; content is quoted only where necessary and redacted.
 
 ## 5. Hosting, logging and evidence handling
 
 - Pilot workspace hosted in a single region agreed with the partner; encryption in transit and at rest.
-- All material actions (record edits, tier proposals, approvals, exports) are appended to the hash-chained AEGIS audit
+- All material actions (record edits, tier proposals, approvals, exports) are appended to the hash-chained VERITRAIL audit
   log with trace IDs (SE-08). Logs record metadata only; raw prompts are not logged.
 - Evidence index records: evidence ID, description, owner, location (partner system by default), reviewer, review date,
   evidence label (Verified / User-asserted / Inferred / Missing evidence / Critical gap).
@@ -72,7 +72,7 @@ Access is reviewed at the end of Weeks 2 and 4 and revoked at pilot close (IS-11
 | Item | Retention | Deletion |
 |---|---|---|
 | Pilot workspace data (metadata, drafts) | Pilot duration + 30 days (for readout follow-up) unless the partner converts to a contract | Deleted on day 30 after close, or earlier on request; deletion confirmed in writing |
-| Partner documents | Not retained by AEGIS beyond the pilot; prefer viewing in partner systems | Deleted with workspace |
+| Partner documents | Not retained by VERITRAIL beyond the pilot; prefer viewing in partner systems | Deleted with workspace |
 | Audit log | Retained for pilot duration + 30 days, exported to the partner on request | Deleted with workspace after export |
 | Feedback survey responses | Retained for product improvement, pseudonymised | On request |
 | Aggregated, anonymised learnings (e.g. "assessment took N minutes") | Retained | Only with partner consent if identifiable |

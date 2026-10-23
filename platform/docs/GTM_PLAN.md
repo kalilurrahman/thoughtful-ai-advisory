@@ -1,14 +1,14 @@
-# AEGIS Go-To-Market Plan
+# VERITRAIL Go-To-Market Plan
 
 Version 3.0 · 21 October 2026 · Owner: GTM Lead / Commercial Lead · Status: Active (pre-pilot)
 
-> AEGIS is pre-pilot: no customers, case studies or measured results exist. Every external message must reflect that.
+> VERITRAIL is pre-pilot: no customers, case studies or measured results exist. Every external message must reflect that.
 > Pricing is a hypothesis (`content/commercial/pricing_models.md`).
 
 ## 1. GTM thesis
 
 Enterprises are moving from AI experimentation to scaled deployment — including agents with tool access — while
-boards, auditors, customers and regulators ask for evidence of control. AEGIS lands with a **fixed-scope Governance
+boards, auditors, customers and regulators ask for evidence of control. VERITRAIL lands with a **fixed-scope Governance
 Baseline** that turns self-reported maturity into evidence, then expands into the platform:
 **Baseline → Register → Control → Shield → Assurance → Managed Governance Service.** AI-forward engineering
 organizations can enter through **Shield**.
@@ -22,7 +22,7 @@ organizations can enter through **Shield**.
 | **ICP-3 Mid-market regulated (nurture)** | 250–1,000 employees; 10–24 AI systems | First AI governance hire; customer due diligence | Self-assessment → Essentials tier | — |
 
 **Disqualifiers:** fewer than ~10 AI systems and no agents (unless strong trigger); seeking a certificate or legal
-opinion from AEGIS; unwilling to accept metadata-only data handling.
+opinion from VERITRAIL; unwilling to accept metadata-only data handling.
 
 ## 3. Buyer personas and roles in the deal
 
@@ -38,10 +38,10 @@ opinion from AEGIS; unwilling to accept metadata-only data handling.
 
 ## 4. Positioning
 
-**For** enterprises scaling AI and agents under scrutiny, **AEGIS is** the evidence-first AI governance platform that
+**For** enterprises scaling AI and agents under scrutiny, **VERITRAIL is** the evidence-first AI governance platform that
 **inventories, tiers, gates, guards and proves** every AI system — **unlike** generic GRC tools (no AI system of record
 or runtime guardrails), point guardrail libraries (no governance lifecycle or evidence) and consulting-only approaches
-(no continuously operating controls) — **because** every AEGIS recommendation cites one of 64 controls, every finding
+(no continuously operating controls) — **because** every VERITRAIL recommendation cites one of 64 controls, every finding
 carries an evidence label, and high-impact AI actions require human approval.
 
 **Category language:** "AI governance readiness and runtime assurance". Never "compliance automation that makes you
@@ -53,7 +53,7 @@ compliant".
 |---|---|---|
 | **Know every AI system.** One owned, tiered inventory — including vendor AI and agents. | Register intake + explainable tiering (EI-01, EI-02) | CAIO, CIO |
 | **Gate risk, not progress.** Risk-proportionate approvals so low-risk AI moves fast. | Triage + approval matrix (GL-01, GL-03) | CAIO, CRO |
-| **AI proposes. AEGIS evaluates. Approved actions execute.** | Policy engine decisions incl. REQUIRE_HUMAN_APPROVAL (IS-12, IS-13) | CISO, engineering |
+| **AI proposes. VERITRAIL evaluates. Approved actions execute.** | Policy engine decisions incl. REQUIRE_HUMAN_APPROVAL (IS-12, IS-13) | CISO, engineering |
 | **Evidence, not assertions.** Every finding labelled Verified, User-asserted, Inferred, Missing evidence or Critical gap. | Reports, evidence packs, audit log (SE-05, SE-08) | Audit, CRO |
 | **Readiness without over-claiming.** Indicative mappings to NIST AI RMF, ISO/IEC 42001 and the EU AI Act — with explicit coverage gaps. | `docs/COMPLIANCE_MAPPING.md` | Legal, CRO |
 | **A copilot that cites its sources.** | Agent citations; no-source message | Governance teams |
@@ -65,10 +65,10 @@ guarantee or regulator-approval claims about customers); invented customer count
 
 | Channel | Role | ICP | Notes |
 |---|---|---|---|
-| Website + free tools (assessment, guardrail generator, risk triage, Ask AEGIS) | Primary demand capture | All | No cookies/trackers; business-email gate for full report |
+| Website + free tools (assessment, guardrail generator, risk triage, Ask VERITRAIL) | Primary demand capture | All | No cookies/trackers; business-email gate for full report |
 | Founder/expert-led outbound to design-partner targets | Pilot recruitment | ICP-1, ICP-2 | Outreach sequence in `content/pilots/pilot_status_tracker.md` |
 | Content (blog, blueprint, newsletter) | Authority, nurture | All | Reviewed by Governance Content Lead |
-| Partners: advisory/audit firms, system integrators, GCC ecosystems | Delivery capacity and referrals | ICP-1 | Partners deliver Baselines on AEGIS kits; referral terms TBD |
+| Partners: advisory/audit firms, system integrators, GCC ecosystems | Delivery capacity and referrals | ICP-1 | Partners deliver Baselines on VERITRAIL kits; referral terms TBD |
 | Industry events and closed-door roundtables | Trust building | ICP-1 | Speak on readiness vs. compliance, agent guardrails |
 | Developer community (policy-as-code examples, policy packs) | Bottom-up adoption | ICP-2 | Policy packs as public examples once reviewed |
 | Cloud/AI marketplaces | Later procurement channel | All | After production hosting exists |

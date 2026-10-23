@@ -1,6 +1,6 @@
 /**
- * AEGIS runtime policy-as-code schema and validator — port of
- * platform/app/policy-engine/aegis_policy/schema.py.
+ * VERITRAIL runtime policy-as-code schema and validator — port of
+ * platform/app/policy-engine/veritrail_policy/schema.py.
  *
  * `validatePolicy` returns human-readable error strings (empty == valid);
  * `lintPolicy` returns non-blocking governance warnings; `validateParameterSpecs`
@@ -71,7 +71,7 @@ const obj = (
 
 const CITATIONS: Spec = list(str({ pattern: CONTROL_ID_RE }), {
   unique: true,
-  description: "AEGIS control IDs from content/controls/controls.yaml",
+  description: "VERITRAIL control IDs from content/controls/controls.yaml",
 });
 
 export const PARAM_SPEC: Spec = obj(
@@ -510,7 +510,7 @@ function semantic(policy: Record<string, unknown>, errors: string[]): void {
     if (!Array.isArray(cits)) return;
     for (const c of cits) {
       if (typeof c === "string" && !KNOWN_CONTROLS.has(c)) {
-        errors.push(`${path}: unknown AEGIS control ID ${pyRepr(c)}`);
+        errors.push(`${path}: unknown VERITRAIL control ID ${pyRepr(c)}`);
       }
     }
   };

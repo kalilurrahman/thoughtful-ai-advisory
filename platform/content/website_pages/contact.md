@@ -1,8 +1,8 @@
 ---
-title: "Contact AEGIS"
+title: "Contact VERITRAIL"
 h1: "Contact us"
 slug: /contact/
-description: "Contact the AEGIS team about AI governance, the Governance Baseline, runtime guardrails for agents, partnerships or the design-partner programme."
+description: "Contact the VERITRAIL team about AI governance, the Governance Baseline, runtime guardrails for agents, partnerships or the design-partner programme."
 section: contact
 nav_label: "Contact"
 nav_order: 10
@@ -21,7 +21,7 @@ Tell us what you are working on and we will route your message to the right pers
 | If you want to… | Go to |
 |---|---|
 | Validate your AI governance position with evidence in 4–6 weeks | [Book a Governance Baseline](/contact/book-governance-baseline/) |
-| See AEGIS with your own scenarios | [Request a demo](/contact/request-demo/) |
+| See VERITRAIL with your own scenarios | [Request a demo](/contact/request-demo/) |
 | Help shape the product as an early partner | [Design-partner programme](/contact/design-partner-programme/) |
 | Receive new articles and template releases | [Newsletter](/contact/newsletter/) |
 | Anything else — partnerships, consultants, press, privacy questions | Use the form on this page |
@@ -36,4 +36,4 @@ Please use a business email address. Do not send confidential information, perso
 
 ## Consultants and advisors
 
-If you advise clients on AI governance, the AEGIS control library, gap-analysis method and Agent are designed to support evidence-first engagements. Tell us about your practice and we will share how partners work with AEGIS.
+If you advise clients on AI governance, the VERITRAIL control library, gap-analysis method and Agent are designed to support evidence-first engagements. Tell us about your practice and we will share how partners work with VERITRAIL.

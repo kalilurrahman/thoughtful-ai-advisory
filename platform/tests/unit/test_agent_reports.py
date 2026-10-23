@@ -4,7 +4,7 @@ from __future__ import annotations
 import csv
 import json
 
-from aegis_common.evidence import STANDARD_DISCLAIMER, find_prohibited_claims
+from veritrail_common.evidence import STANDARD_DISCLAIMER, find_prohibited_claims
 
 from agent_test_helpers import ASSESSOR, agent, run_guided  # noqa: F401
 

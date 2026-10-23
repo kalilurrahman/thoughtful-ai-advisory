@@ -1,5 +1,5 @@
 {% set a = assessment %}
-<script type="application/json" id="aegis-assessment-data">{{ a.bundle | json_script }}</script>
+<script type="application/json" id="veritrail-assessment-data">{{ a.bundle | json_script }}</script>
 <section class="tool assessment" id="assessment" data-tool="maturity-assessment" aria-labelledby="assessment-heading" hidden>
   <h2 id="assessment-heading" class="visually-hidden">AI Governance Maturity Self-Assessment</h2>
   <div class="assessment-progress" id="assessment-progress-wrap">
@@ -74,8 +74,8 @@
     <ul class="domain-bars" id="prelim-domains"></ul>
     <div class="gate" id="assessment-gate-panel">
       <h3 id="gate-title">Get your detailed report</h3>
-      <p>Your detailed report includes strengths, gaps, critical risk flags, a 30/60/90-day plan, recommended AEGIS controls with framework mappings, and indicative readiness indicators.</p>
-      <form id="assessment-gate" class="aegis-form" novalidate aria-labelledby="gate-title">
+      <p>Your detailed report includes strengths, gaps, critical risk flags, a 30/60/90-day plan, recommended VERITRAIL controls with framework mappings, and indicative readiness indicators.</p>
+      <form id="assessment-gate" class="veritrail-form" novalidate aria-labelledby="gate-title">
         <div class="error-summary" id="gate-errors" role="alert" tabindex="-1" hidden>
           <h4 class="error-summary-title">Please correct the following</h4>
           <ul></ul>
@@ -85,8 +85,8 @@
         <div class="field"><label for="gate-company">Organization <span class="req">(required)</span></label><input id="gate-company" name="company" type="text" autocomplete="organization" maxlength="160" required><p class="field-error" id="gate-company-error" hidden></p></div>
         <div class="field"><label for="gate-role">Job title</label><input id="gate-role" name="role" type="text" autocomplete="organization-title" maxlength="120"><p class="field-error" id="gate-role-error" hidden></p></div>
         <div class="hp-field" aria-hidden="true"><label for="gate-website">Leave this field empty</label><input id="gate-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-        <div class="field field--check"><input id="gate-consent" name="consent" type="checkbox" value="true" required><label for="gate-consent">I agree that AEGIS may store my details and answers to prepare and send my report. See our <a href="{{ site.privacy_url }}">privacy notice</a>. <span class="req">(required)</span></label><p class="field-error" id="gate-consent-error" hidden></p></div>
-        <div class="field field--check"><input id="gate-marketing" name="marketing_opt_in" type="checkbox" value="true"><label for="gate-marketing">Also send me the occasional AEGIS governance briefing (optional).</label></div>
+        <div class="field field--check"><input id="gate-consent" name="consent" type="checkbox" value="true" required><label for="gate-consent">I agree that VERITRAIL may store my details and answers to prepare and send my report. See our <a href="{{ site.privacy_url }}">privacy notice</a>. <span class="req">(required)</span></label><p class="field-error" id="gate-consent-error" hidden></p></div>
+        <div class="field field--check"><input id="gate-marketing" name="marketing_opt_in" type="checkbox" value="true"><label for="gate-marketing">Also send me the occasional VERITRAIL governance briefing (optional).</label></div>
         <button class="btn btn-primary" type="submit">Get my detailed report</button>
         <div class="form-status" id="gate-status" role="status" aria-live="polite" tabindex="-1"></div>
       </form>

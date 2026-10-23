@@ -1,5 +1,5 @@
 /**
- * Port of platform/app/common/aegis_common/redaction.py: deterministic sensitive-data
+ * Port of platform/app/common/veritrail_common/redaction.py: deterministic sensitive-data
  * redaction and prompt-injection / jailbreak heuristics. Patterns are the Python ones,
  * compiled through `pyRegex` so `\b \w \d \s` keep Python's Unicode semantics.
  */
@@ -11,7 +11,7 @@ function compile(pattern: string, flags: string): RegExp {
   return rx;
 }
 
-/** Order matters: more specific patterns first (aegis_common.redaction.PII_PATTERNS). */
+/** Order matters: more specific patterns first (veritrail_common.redaction.PII_PATTERNS). */
 const PII_SOURCES: Array<[string, string, string]> = [
   ["email", "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b", ""],
   ["payment_card", "\\b(?:\\d[ -]?){13,19}\\b", ""],
@@ -86,7 +86,7 @@ export function entityCounts(r: RedactionResult): Record<string, number> {
 const cpLength = (s: string) => Array.from(s).length;
 
 /**
- * aegis_common.redaction.redact: `entities` null/undefined means all entities, `[]` means none.
+ * veritrail_common.redaction.redact: `entities` null/undefined means all entities, `[]` means none.
  * Findings never include the raw value (only entity + span length).
  */
 export function redact(

@@ -9,7 +9,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "app/common"), str(ROOT / "app/website")]
-from aegis_common.evidence import find_prohibited_claims  # noqa: E402
+from veritrail_common.evidence import find_prohibited_claims  # noqa: E402
 
 PAGES = ROOT / "content/website_pages"
 controls = {c["id"] for c in yaml.safe_load((ROOT / "content/controls/controls.yaml").read_text())["controls"]}
@@ -83,7 +83,7 @@ for name, (meta, body) in pages.items():
 
 # generator loader (if present)
 try:
-    from aegis_website.pages import load_pages
+    from veritrail_website.pages import load_pages
     import tempfile, shutil
     with tempfile.TemporaryDirectory() as td:
         for f in PAGES.glob("*.md"):

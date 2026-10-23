@@ -1,12 +1,12 @@
 /*
- * AEGIS ROI & business-case calculator (pure).
+ * VERITRAIL ROI & business-case calculator (pure).
  *
  * Port of platform/content/commercial/roi_calculator.py. Transparent, assumption-labelled
- * estimate of the annual value of AI governance automation with AEGIS: every output line carries
+ * estimate of the annual value of AI governance automation with VERITRAIL: every output line carries
  * its formula and the assumptions it depends on, and every assumption carries a source label.
  *
- * IMPORTANT: AEGIS has no measured customer results yet. The default effect sizes are planning
- * hypotheses ("AEGIS hypothesis — validate in pilot") to be replaced with pilot measurements.
+ * IMPORTANT: VERITRAIL has no measured customer results yet. The default effect sizes are planning
+ * hypotheses ("VERITRAIL hypothesis — validate in pilot") to be replaced with pilot measurements.
  * Do not present outputs as guaranteed savings.
  *
  * Number formatting follows Python: computed values are floats (`960.0`), and an input value is
@@ -17,12 +17,12 @@ import { fmtThousands, pyFloatStr, pyRound } from "@/features/site/engines/shiel
 
 export const CUSTOMER_INPUT = "Customer input";
 export const CUSTOMER_ESTIMATE = "Customer estimate";
-export const HYPOTHESIS = "AEGIS hypothesis — validate in pilot";
+export const HYPOTHESIS = "VERITRAIL hypothesis — validate in pilot";
 
 export type AssumptionSource = typeof CUSTOMER_INPUT | typeof CUSTOMER_ESTIMATE | typeof HYPOTHESIS;
 
 export const DISCLAIMER =
-  "Illustrative business case. Effect sizes labelled 'AEGIS hypothesis — validate in pilot' have not been measured " +
+  "Illustrative business case. Effect sizes labelled 'VERITRAIL hypothesis — validate in pilot' have not been measured " +
   "with customers. Results are estimates, not guaranteed savings, and are not financial advice. Risk-reduction value " +
   "is an expected-value estimate, not a prediction that incidents will or will not occur.";
 
@@ -39,9 +39,9 @@ export interface ROIInputs {
   delay_cost_per_day: number;
   annual_incident_probability: number;
   expected_incident_cost: number;
-  aegis_annual_cost: number;
+  veritrail_annual_cost: number;
   implementation_cost: number;
-  // AEGIS effect hypotheses (validate in pilot)
+  // VERITRAIL effect hypotheses (validate in pilot)
   assessment_effort_reduction: number;
   audit_prep_reduction: number;
   approval_cycle_reduction: number;
@@ -63,7 +63,7 @@ export const ROI_FIELDS: readonly ROIKey[] = [
   "delay_cost_per_day",
   "annual_incident_probability",
   "expected_incident_cost",
-  "aegis_annual_cost",
+  "veritrail_annual_cost",
   "implementation_cost",
   "assessment_effort_reduction",
   "audit_prep_reduction",
@@ -91,7 +91,7 @@ export const ROI_DEFAULTS: Omit<
   delay_cost_per_day: 0,
   annual_incident_probability: 0,
   expected_incident_cost: 0,
-  aegis_annual_cost: 0,
+  veritrail_annual_cost: 0,
   implementation_cost: 0,
   assessment_effort_reduction: 0.4,
   audit_prep_reduction: 0.5,
@@ -132,9 +132,9 @@ export const ASSUMPTION_META: Record<ROIKey, [AssumptionSource, string]> = {
     CUSTOMER_ESTIMATE,
     "Expected cost of a material AI incident (response, remediation, legal, customer impact).",
   ],
-  aegis_annual_cost: [
+  veritrail_annual_cost: [
     CUSTOMER_INPUT,
-    "Annual AEGIS subscription from the commercial proposal (pricing is itself a hypothesis).",
+    "Annual VERITRAIL subscription from the commercial proposal (pricing is itself a hypothesis).",
   ],
   implementation_cost: [
     CUSTOMER_INPUT,
@@ -184,7 +184,7 @@ export const EXAMPLE_INPUTS: ROIInputs = {
   delay_cost_per_day: 500,
   annual_incident_probability: 0.1,
   expected_incident_cost: 750_000,
-  aegis_annual_cost: 75_000,
+  veritrail_annual_cost: 75_000,
   implementation_cost: 30_000,
 };
 
@@ -390,21 +390,21 @@ export function calculate(inp: ROIInputs, opts: CalculateOptions = {}): ROIResul
   const year1Cost = add(
     "L15",
     "Year-1 cost",
-    "aegis_annual_cost + implementation_cost",
-    inp.aegis_annual_cost + inp.implementation_cost,
-    ["aegis_annual_cost", "implementation_cost"],
+    "veritrail_annual_cost + implementation_cost",
+    inp.veritrail_annual_cost + inp.implementation_cost,
+    ["veritrail_annual_cost", "implementation_cost"],
   );
   const netY1 = add("L16", "Year-1 net benefit", "L13 − L15", realized - year1Cost, []);
   const netSteady = add(
     "L17",
     "Steady-state annual net benefit",
-    "L12 − aegis_annual_cost",
-    gross - inp.aegis_annual_cost,
-    ["aegis_annual_cost"],
+    "L12 − veritrail_annual_cost",
+    gross - inp.veritrail_annual_cost,
+    ["veritrail_annual_cost"],
   );
 
   const roiY1 = year1Cost > 0 ? netY1 / year1Cost : null;
-  const roiSteady = inp.aegis_annual_cost > 0 ? netSteady / inp.aegis_annual_cost : null;
+  const roiSteady = inp.veritrail_annual_cost > 0 ? netSteady / inp.veritrail_annual_cost : null;
   const payback = realized > 0 && year1Cost > 0 ? year1Cost / (realized / 12) : null;
 
   const assumptions: Assumption[] = ROI_FIELDS.map((key) => {
@@ -502,7 +502,7 @@ export function summaryRows(s: ROISummary): Array<[string, string]> {
 /** to_markdown(result, title, currency) */
 export function toMarkdown(
   result: ROIResult,
-  title = "AEGIS ROI estimate",
+  title = "VERITRAIL ROI estimate",
   currency = "USD",
 ): string {
   const lines = [

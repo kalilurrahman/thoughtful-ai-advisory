@@ -4,8 +4,8 @@ import { pageHead } from "@/features/governance/meta";
 export const Route = createFileRoute("/assess")({
   head: () =>
     pageHead(
-      "GOVERN assessment",
-      "Score twelve GOVERN controls with evidence, guidance and framework references.",
+      "TILLER assessment",
+      "Score twelve TILLER controls with evidence, guidance and framework references.",
     ),
   component: AssessScreen,
 });

@@ -4,7 +4,7 @@ import { pageHead } from "@/features/governance/meta";
 export const Route = createFileRoute("/plans")({
   head: () =>
     pageHead(
-      "AEGIS advisory plans",
+      "VERITRAIL advisory plans",
       "Explore Assess, Govern and Assure advisory packages for enterprise AI.",
     ),
   component: PlansScreen,

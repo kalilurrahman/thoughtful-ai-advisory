@@ -1,13 +1,13 @@
 ---
-title: "One-pager — AEGIS Shield"
+title: "One-pager — VERITRAIL Shield"
 audience: CISO, Head of Platform Engineering, AI engineering leads
 version: 1.0.0
 effective_date: 2026-10-21
 ---
 
-# AEGIS Shield — runtime guardrails for LLM apps and agents
+# VERITRAIL Shield — runtime guardrails for LLM apps and agents
 
-**AI proposes. AEGIS evaluates. Approved actions execute.**
+**AI proposes. VERITRAIL evaluates. Approved actions execute.**
 
 ## The problem
 
@@ -20,7 +20,7 @@ for high-impact actions, and no tested way to switch it off.
 | Capability | Controls supported |
 |---|---|
 | Runtime Shield Advisor: describe a system, get a risk profile, tool permission matrix, data-handling rules, approval rules, limits and a draft policy | IS-01, IS-11 |
-| Policy-as-code (`aegis.policy/v1`) evaluated on prompts, responses, tool calls and tool outputs | IS-12 |
+| Policy-as-code (`veritrail.policy/v1`) evaluated on prompts, responses, tool calls and tool outputs | IS-12 |
 | Decisions: ALLOW, DENY, REDACT, TRANSFORM, REQUIRE_HUMAN_APPROVAL, ESCALATE, RATE_LIMIT | IS-12, IS-13 |
 | Default-deny tool access; high-impact operations (delete, external send, payment, export) require approval | IS-11, IS-13 |
 | Redaction before model calls and in logs (metadata or redacted logging only) | IS-04 |

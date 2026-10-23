@@ -1,8 +1,8 @@
 ---
-title: "AI governance for healthcare and pharma — AEGIS"
+title: "AI governance for healthcare and pharma — VERITRAIL"
 h1: "AI governance for healthcare and life sciences"
 slug: /industries/healthcare-pharma/
-description: "AEGIS for healthcare providers, pharma and life sciences: govern clinical, research and operational AI with evidence on purpose, data, oversight and change."
+description: "VERITRAIL for healthcare providers, pharma and life sciences: govern clinical, research and operational AI with evidence on purpose, data, oversight and change."
 section: industries
 nav_label: "Healthcare & pharma"
 nav_order: 20
@@ -11,10 +11,10 @@ schema_type: WebPage
 primary_cta: baseline
 secondary_cta: assessment
 faq:
-  - q: "Can AEGIS tell us whether our AI is a medical device?"
-    a: "No. Whether software qualifies as a medical device depends on its intended purpose and the applicable device regulations, and is a regulatory determination. AEGIS records intended purpose and flags systems for regulatory review (EI-04, AO-07)."
-  - q: "How does AEGIS work with GxP computerized system validation?"
-    a: "AEGIS does not replace validation. Its change triggers (GL-04), validation evidence (GL-05) and technical documentation (GL-06) can be aligned with your existing validation and quality processes so that AI-specific changes — such as prompt or model updates — are not missed."
+  - q: "Can VERITRAIL tell us whether our AI is a medical device?"
+    a: "No. Whether software qualifies as a medical device depends on its intended purpose and the applicable device regulations, and is a regulatory determination. VERITRAIL records intended purpose and flags systems for regulatory review (EI-04, AO-07)."
+  - q: "How does VERITRAIL work with GxP computerized system validation?"
+    a: "VERITRAIL does not replace validation. Its change triggers (GL-04), validation evidence (GL-05) and technical documentation (GL-06) can be aligned with your existing validation and quality processes so that AI-specific changes — such as prompt or model updates — are not missed."
 updated: 2026-10-21
 ---
 
@@ -37,9 +37,9 @@ Healthcare and life-sciences organizations face a concentrated version of every 
 - **Health data protection.** Health data is special-category data under the GDPR and protected health information under HIPAA in the US; other jurisdictions have equivalents.
 - **Quality and validation.** GxP environments expect computerized systems to be validated and changes controlled — AI components, prompts and models included.
 
-AEGIS does not determine how these regimes apply. It ensures the facts that drive those determinations are recorded and that systems are routed to the right reviewers.
+VERITRAIL does not determine how these regimes apply. It ensures the facts that drive those determinations are recorded and that systems are routed to the right reviewers.
 
-## AEGIS emphasis
+## VERITRAIL emphasis
 
 - **Intended purpose discipline (EI-04).** Precise intended-purpose statements, foreseeable misuse and out-of-scope uses — the foundation for both device qualification analysis and EU AI Act classification.
 - **Data and privacy (EI-06, IS-03, IS-04).** Lineage of health data, privacy impact assessment, and redaction before any external model call.

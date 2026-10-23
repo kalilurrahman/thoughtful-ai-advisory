@@ -2,7 +2,7 @@
 title: "Agentic AI risk checker (planned) — join the waitlist"
 h1: "Agentic AI risk checker — planned"
 slug: /tools/agentic-risk-checker/
-description: "Planned AEGIS tool: review an AI agent's tools, autonomy, approvals and containment against AEGIS controls. Not yet available — join the waitlist."
+description: "Planned VERITRAIL tool: review an AI agent's tools, autonomy, approvals and containment against VERITRAIL controls. Not yet available — join the waitlist."
 section: tools
 nav_label: "Agentic risk checker (planned)"
 nav_order: 60

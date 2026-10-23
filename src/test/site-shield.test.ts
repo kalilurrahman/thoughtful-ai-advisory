@@ -38,7 +38,7 @@ function headerOf(yamlText: string): string {
   return yamlText.split("\n").slice(0, 2).join("\n");
 }
 
-describe("runtime shield advisor parity with aegis_shield.advisor.advise", () => {
+describe("runtime shield advisor parity with veritrail_shield.advisor.advise", () => {
   it("has fixtures", () => {
     expect(data.cases.length).toBeGreaterThanOrEqual(8);
   });

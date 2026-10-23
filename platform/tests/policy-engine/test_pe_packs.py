@@ -3,11 +3,11 @@ from __future__ import annotations
 
 import pytest
 
-from aegis_common.content import get_control
-from aegis_common.evidence import find_prohibited_claims
-from aegis_policy.engine import PolicyEngine
-from aegis_policy.loader import list_packs, load_pack, policy_packs_dir
-from aegis_policy.schema import validate_policy
+from veritrail_common.content import get_control
+from veritrail_common.evidence import find_prohibited_claims
+from veritrail_policy.engine import PolicyEngine
+from veritrail_policy.loader import list_packs, load_pack, policy_packs_dir
+from veritrail_policy.schema import validate_policy
 
 REQUIRED_PACKS = {"baseline", "customer_support_agent", "financial_operations_agent",
                   "healthcare_clinical_documentation", "internal_rag_knowledge_assistant", "coding_devops_agent"}

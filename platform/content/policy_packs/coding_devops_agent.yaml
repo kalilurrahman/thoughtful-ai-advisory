@@ -1,4 +1,4 @@
-# AEGIS Runtime Policy Pack — Coding / DevOps Agent
+# VERITRAIL Runtime Policy Pack — Coding / DevOps Agent
 # ---------------------------------------------------------------------------
 # For agents that read code, open draft pull requests, run CI and propose
 # deployments.
@@ -10,10 +10,10 @@
 #   * Outbound HTTP fetches are limited to an allow-list of documentation and
 #     package registries (exfiltration and dependency-confusion defence).
 #   * API keys / tokens are redacted from prompts, outputs and tool parameters.
-# Template status: draft. AEGIS supports readiness and evidence; it does not
+# Template status: draft. VERITRAIL supports readiness and evidence; it does not
 # certify compliance.
 # ---------------------------------------------------------------------------
-schema_version: aegis.policy/v1
+schema_version: veritrail.policy/v1
 policy_id: pack-coding-devops-agent
 policy_name: Coding / DevOps Agent Runtime Policy
 description: >-
@@ -187,7 +187,7 @@ logging:
   prompt_logging: redacted
   response_logging: redacted
   tool_param_logging: redacted
-  sink: aegis_common.audit.AuditLog (hash-chained JSONL) forwarded to SIEM
+  sink: veritrail_common.audit.AuditLog (hash-chained JSONL) forwarded to SIEM
 kill_switch:
   enabled: true
   engaged: false
@@ -218,7 +218,7 @@ escalation:
 change_history:
   - version: 1.0.0
     date: "2026-10-21"
-    author: AEGIS Governance Content Lead
+    author: VERITRAIL Governance Content Lead
     change_type: created
     summary: Initial coding/devops agent pack.
 citations: [IS-04, IS-09, IS-10, IS-11, IS-12, IS-13, IS-14, IS-15, IS-16, SE-08, EI-07]

@@ -3,11 +3,11 @@ from __future__ import annotations
 
 from datetime import date
 
-from aegis_common.content import get_control
-from aegis_common.evidence import GAP_SEVERITY_SLA_DAYS
+from veritrail_common.content import get_control
+from veritrail_common.evidence import GAP_SEVERITY_SLA_DAYS
 
-from aegis_agent import gaps
-from aegis_agent.question_bank import get_question
+from veritrail_agent import gaps
+from veritrail_agent.question_bank import get_question
 
 AS_OF = date(2026, 10, 21)
 

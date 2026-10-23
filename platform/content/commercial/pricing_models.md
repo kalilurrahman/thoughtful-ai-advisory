@@ -1,12 +1,12 @@
 ---
-title: "AEGIS pricing models and packaging"
+title: "VERITRAIL pricing models and packaging"
 version: 0.1.0
 status: HYPOTHESIS — to validate in pilots
 effective_date: 2026-10-21
-owner: AEGIS Commercial Lead
+owner: VERITRAIL Commercial Lead
 ---
 
-# AEGIS pricing models and packaging
+# VERITRAIL pricing models and packaging
 
 > **Every price on this page is a hypothesis to validate in pilots.** Ranges are illustrative planning assumptions,
 > not market data, not quotes and not list prices. They have not been tested with buyers. Pilot feedback survey
@@ -28,7 +28,7 @@ owner: AEGIS Commercial Lead
 
 ```
 Governance Baseline ──► Register ──► Control ──► Shield ──► Assurance ──► Managed Governance Service
- (fixed fee, 4–6 wks)   (system of    (policies,   (runtime    (evidence,     (AEGIS-operated
+ (fixed fee, 4–6 wks)   (system of    (policies,   (runtime    (evidence,     (VERITRAIL-operated
                          record)       gates)       guardrails) testing)        governance ops)
 ```
 
@@ -43,15 +43,15 @@ Pilot B-type buyers may enter at Shield (+ Register for agents) instead of Regis
 | **Control** | Per governance user, or per business unit | 1,200 – 3,000 per governance user, or 10,000 – 25,000 per BU | Policy library, approval gates, exceptions, lifecycle workflow; unlimited free approvers/viewers | Validate which metric buyers prefer (survey G3) |
 | **Shield** | Per environment + per agent; optional usage tier | 12,000 – 30,000 per environment (incl. up to 5 agents); 2,000 – 6,000 per additional agent; usage tier 0.50 – 2.00 per 1,000 governed actions above included volume | Advisor, policy-as-code, approvals, limits, kill switch, decision logs | Validate environment vs. agent vs. action metric; developer-led buyers may prefer usage |
 | **Assurance** | Enterprise subscription | 40,000 – 120,000 per year | Evidence repository, control testing, incident module, evidence packs, KPI reporting | Validate whether internal audit/second line hold budget |
-| **Agent** | Premium tier uplift, or usage-based | +20% – 30% of platform subscription, or per-report / per-session usage | Ask AEGIS, guided assessments, gap analysis, report drafting with citations | Validate willingness to pay separately vs. expectation that it is bundled |
+| **Agent** | Premium tier uplift, or usage-based | +20% – 30% of platform subscription, or per-report / per-session usage | Ask VERITRAIL, guided assessments, gap analysis, report drafting with citations | Validate willingness to pay separately vs. expectation that it is bundled |
 | **Industry packs** | Add-on per pack per year | 8,000 – 20,000 per pack | Sector use-case library, emphasized controls, evidence, discovery questions, policy packs | Validate whether packs drive selection or are expected free |
-| **Managed Governance Service** | Monthly retainer | 8,000 – 25,000 per month | AEGIS-operated intake triage, assessments, evidence collection, reporting | Validate demand from teams without governance headcount |
+| **Managed Governance Service** | Monthly retainer | 8,000 – 25,000 per month | VERITRAIL-operated intake triage, assessments, evidence collection, reporting | Validate demand from teams without governance headcount |
 
 ## 4. Packaged tiers (hypotheses)
 
 | Tier | Modules | Typical buyer | Illustrative annual range (hypothesis) |
 |---|---|---|---|
-| **Essentials** | Assess + Register (+ Agent basic: Ask AEGIS) | First AI governance hire; 10–50 AI systems | 20,000 – 45,000 |
+| **Essentials** | Assess + Register (+ Agent basic: Ask VERITRAIL) | First AI governance hire; 10–50 AI systems | 20,000 – 45,000 |
 | **Professional** | Essentials + Control + Agent premium | Governance function in regulated mid-market / BU of large enterprise | 50,000 – 120,000 |
 | **Enterprise** | Professional + Shield + Assurance + 1 industry pack | Regulated enterprise with agents; 100+ AI systems | 120,000 – 350,000 |
 | **Shield-first** | Shield + Register (agents only) + Agent basic | AI-forward SaaS/GCC platform teams | 25,000 – 80,000 |
@@ -73,7 +73,7 @@ Pilot B-type buyers may enter at Shield (+ Register for agents) instead of Regis
 | Which module would they buy first? | Survey G2 | Land offer |
 | Which pricing metric feels fair? | Survey G3, sponsor interview | Value metric per module |
 | Which budget pays? | Survey G4 | Buyer persona and sales motion |
-| What is AEGIS worth vs. alternatives? | Survey G5, negotiation | Price levels |
+| What is VERITRAIL worth vs. alternatives? | Survey G5, negotiation | Price levels |
 | Did the follow-on proposal close, at what price and with what objections? | CRM, `objection_handling.md` log | Range revision |
 
 ## 7. Change log

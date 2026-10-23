@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export parity fixtures for the browser (TypeScript) port of the AEGIS Agent (all roles)
+"""Export parity fixtures for the browser (TypeScript) port of the VERITRAIL Agent (all roles)
 and the Pilot A dress rehearsal.
 
     python3 platform/scripts/export_agent_parity_fixtures.py
@@ -8,7 +8,7 @@ Writes src/test/fixtures/agent-parity.json, consumed by src/test/platform-agent.
 src/test/platform-pilot.test.ts.
 
 Determinism: IDs and clocks are normalised exactly like the browser's `deterministicRuntime`:
-  * aegis_common.ids.new_id -> per-prefix counters  (`sys_000001`, `trc_000042`, ...)
+  * veritrail_common.ids.new_id -> per-prefix counters  (`sys_000001`, `trc_000042`, ...)
   * every wall clock (store.utcnow, AuditLog timestamps, report generated_at, Shield policy
     change date, date.today()) -> 2026-10-21T09:00:00+00:00
   * the agent's temporary data directory -> "browser-storage" (the browser's virtual root)
@@ -18,7 +18,7 @@ IDs, report Markdown, approval outcomes, RBAC refusals and audit-chain hashes.
 Scenarios: every case in tests/agent-evaluation/eval_cases.yaml (as run by run_eval.py, i.e.
 assessor by default, with the with_assessment / with_policy setups), the journeys from
 tests/unit/test_agent_{orchestrator,tools,reports}.py and tests/security/test_agent_rbac.py,
-the synthetic SupportPilot sample run (aegis_agent.sample_run) and the pilot dry run summary
+the synthetic SupportPilot sample run (veritrail_agent.sample_run) and the pilot dry run summary
 (scripts/pilot_dry_run.py).
 """
 from __future__ import annotations
@@ -44,15 +44,15 @@ for d in sorted((PLATFORM / "app").iterdir()):
 
 import yaml  # noqa: E402
 
-import aegis_common.audit as audit_mod  # noqa: E402
-import aegis_common.ids as ids_mod  # noqa: E402
-from aegis_agent import approvals as approvals_mod  # noqa: E402
-from aegis_agent import gaps as gaps_mod  # noqa: E402
-from aegis_agent import llm  # noqa: E402
-from aegis_agent import orchestrator as orch_mod  # noqa: E402
-from aegis_agent import reporting as reporting_mod  # noqa: E402
-from aegis_agent import store as store_mod  # noqa: E402
-from aegis_agent.orchestrator import AegisAgent  # noqa: E402
+import veritrail_common.audit as audit_mod  # noqa: E402
+import veritrail_common.ids as ids_mod  # noqa: E402
+from veritrail_agent import approvals as approvals_mod  # noqa: E402
+from veritrail_agent import gaps as gaps_mod  # noqa: E402
+from veritrail_agent import llm  # noqa: E402
+from veritrail_agent import orchestrator as orch_mod  # noqa: E402
+from veritrail_agent import reporting as reporting_mod  # noqa: E402
+from veritrail_agent import store as store_mod  # noqa: E402
+from veritrail_agent.orchestrator import VeritrailAgent  # noqa: E402
 
 OUT = REPO / "src" / "test" / "fixtures" / "agent-parity.json"
 ROOT_TOKEN = "browser-storage"
@@ -87,7 +87,7 @@ def patch_determinism() -> None:
     reporting_mod.datetime = FixedDateTime
     gaps_mod.date = FixedDate
     approvals_mod.date = FixedDate
-    import aegis_shield.generator as gen_mod
+    import veritrail_shield.generator as gen_mod
     gen_mod.datetime = FixedDateTime
     llm.set_llm_adapter(None)  # deterministic regardless of environment
 
@@ -102,8 +102,8 @@ class Runner:
 
     def __init__(self) -> None:
         reset_counters()
-        self.tmp = Path(tempfile.mkdtemp(prefix="aegis_parity_"))
-        self.agent = AegisAgent(self.tmp)
+        self.tmp = Path(tempfile.mkdtemp(prefix="veritrail_parity_"))
+        self.agent = VeritrailAgent(self.tmp)
 
     def norm(self, obj):
         root = str(self.tmp)
@@ -185,7 +185,7 @@ def effects(a) -> dict:
 
 
 def project_tool(name: str, res: dict) -> dict:
-    if name == "search_aegis_knowledge":
+    if name == "search_veritrail_knowledge":
         return {"band": res["band"], "confidence": res["confidence"], "ids": [r["id"] for r in res["results"]],
                 "framework_matches": res["framework_matches"], "no_source_message": res["no_source_message"]}
     if name == "search_ai_inventory":
@@ -344,8 +344,8 @@ def unit_scenarios() -> list[dict]:
         tool("recommend_controls", assessment_id="asm_000001", limit=3),
         tool("recommend_controls", profile=CS_PROFILE, limit=5),
         tool("calculate_risk_tier", profile=CS_PROFILE),
-        tool("search_aegis_knowledge", query="contact jane.doe@example.com about IS-11"),
-        tool("search_aegis_knowledge", query="Which controls map to EU AI Act Art. 14?", k=3),
+        tool("search_veritrail_knowledge", query="contact jane.doe@example.com about IS-11"),
+        tool("search_veritrail_knowledge", query="Which controls map to EU AI Act Art. 14?", k=3),
         tool("identify_gaps", assessment_id="asm_nope")]})
     S.append({"id": "tools:remediation_confirmation", "steps": [
         tool("start_assessment", profile=CS_PROFILE),
@@ -381,7 +381,7 @@ def unit_scenarios() -> list[dict]:
             rbac.append(tool(name, user, profile=CS_PROFILE, assessment_id="asm_x", action="change_risk_tier"))
     for name in ("search_ai_inventory", "search_runtime_logs", "identify_gaps"):
         rbac.append(tool(name, None, assessment_id="asm_x"))
-    rbac += [tool("search_runtime_logs", VIEWER), tool("search_aegis_knowledge", None, query="IS-11"),
+    rbac += [tool("search_runtime_logs", VIEWER), tool("search_veritrail_knowledge", None, query="IS-11"),
              tool("calculate_risk_tier", None, profile=CS_PROFILE), tool("recommend_controls", None, assessment_id="asm_x")]
     S.append({"id": "rbac:low_privilege_tools", "steps": rbac + [{"op": "effects"}]})
     web = {"id": "public-demo", "role": "viewer", "channel": "website"}
@@ -446,12 +446,12 @@ SP_DESCRIPTION = ("Assess a use case: A customer-support agent called SupportPil
 
 
 def sample_run_scenario() -> dict:
-    """Mirror of aegis_agent.sample_run (SupportPilot), driven step by step."""
-    from aegis_agent.sample_run import ANSWERS, APPROVER as SA, ASSESSOR as SS, REVIEWED
+    """Mirror of veritrail_agent.sample_run (SupportPilot), driven step by step."""
+    from veritrail_agent.sample_run import ANSWERS, APPROVER as SA, ASSESSOR as SS, REVIEWED
     assert SP_DESCRIPTION.startswith("Assess a use case")
     r = Runner()
     sid = "sess_synthetic_supportpilot"
-    steps = [h("What does AEGIS expect for human approval of agent actions like refunds?", sid, SS),
+    steps = [h("What does VERITRAIL expect for human approval of agent actions like refunds?", sid, SS),
              h("Are we EU AI Act compliant?", sid, SS), h(SP_DESCRIPTION, sid, SS), h("continue", sid, SS)]
     rec = r.run(steps)
     while rec[-1]["out"]["state"] == "questions":
@@ -493,7 +493,7 @@ def pilot_summary() -> dict:
     spec = importlib.util.spec_from_file_location("pilot_dry_run", PLATFORM / "scripts" / "pilot_dry_run.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    tmp = Path(tempfile.mkdtemp(prefix="aegis_pilot_parity_"))
+    tmp = Path(tempfile.mkdtemp(prefix="veritrail_pilot_parity_"))
     # A relative OUT keeps every path the agent records (tool inputs in the audit log, report
     # paths) identical to the browser port, which uses the virtual directory "pilot_dry_run".
     cwd = os.getcwd()
@@ -501,12 +501,12 @@ def pilot_summary() -> dict:
     mod.OUT = Path("pilot_dry_run")
     captured: list = []
 
-    class CapturingAgent(AegisAgent):
+    class CapturingAgent(VeritrailAgent):
         def __init__(self, *a, **k):
             super().__init__(*a, **k)
             captured.append(self)
 
-    mod.AegisAgent = CapturingAgent
+    mod.VeritrailAgent = CapturingAgent
     mod.shutil = types.SimpleNamespace(rmtree=lambda *a, **k: None)  # keep the agent data for inspection
     buf = io.StringIO()
     real_stdout = sys.stdout
@@ -578,7 +578,7 @@ def main() -> int:
         "_comment": "Generated by platform/scripts/export_agent_parity_fixtures.py — do not edit by hand.",
         "fixed_time": FIXED.isoformat(),
         "root": ROOT_TOKEN,
-        "python_bypass_next_action": ("An approver resolves pending items with: python3 -m aegis_admin.cli approvals "
+        "python_bypass_next_action": ("An approver resolves pending items with: python3 -m veritrail_admin.cli approvals "
                                       "resolve <approval_id> --decision approve|reject --approver \"<name>\" --role approver"),
         "scenarios": scenarios,
         "pilot": pilot,

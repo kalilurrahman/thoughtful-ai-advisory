@@ -1,9 +1,9 @@
 """Unit tests: use-case question bank integrity, module selection, answer parsing."""
 from __future__ import annotations
 
-from aegis_common.content import controls_by_id
+from veritrail_common.content import controls_by_id
 
-from aegis_agent import question_bank as qb
+from veritrail_agent import question_bank as qb
 from agent_test_helpers import CS_PROFILE, LOW_PROFILE
 
 REQUIRED_MODULES = {"core", "data_privacy", "security", "genai_llm", "agentic", "fairness_safety",
@@ -36,12 +36,12 @@ def test_every_question_cites_real_controls_and_expected_evidence():
 
 def test_template_metadata_and_disclaimer():
     meta = qb.template_meta()
-    assert meta["id"] == "AEGIS-UC-ASSESS" and meta["version"]
+    assert meta["id"] == "VERITRAIL-UC-ASSESS" and meta["version"]
     assert "does not certify" in meta["disclaimer"].lower()
 
 
 def test_intake_fields_match_risk_tier_profile_keys():
-    from aegis_assessment.risk_tier import INTAKE_FIELDS
+    from veritrail_assessment.risk_tier import INTAKE_FIELDS
     for f in qb.intake_fields():
         assert f["id"] in INTAKE_FIELDS or f["id"] == "users_count_band", f["id"]
 
@@ -59,7 +59,7 @@ def test_module_selection_low_risk_internal_tool_is_smaller():
 
 
 def test_risk_engine_required_modules_are_known_module_ids():
-    from aegis_assessment.risk_tier import calculate_risk_tier
+    from veritrail_assessment.risk_tier import calculate_risk_tier
     ids = {m["id"] for m in qb.modules()}
     for prof in (CS_PROFILE, LOW_PROFILE):
         assert set(calculate_risk_tier(prof)["required_modules"]) <= ids

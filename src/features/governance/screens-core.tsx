@@ -83,7 +83,7 @@ export function HomeScreen() {
           <div className="index-summary">
             <strong className="index-number">{index}</strong>
             <div>
-              <Kicker>AEGIS Index</Kicker>
+              <Kicker>VERITRAIL Index</Kicker>
               <h2>{band}</h2>
               <p className="muted">Current workspace maturity</p>
             </div>
@@ -99,7 +99,7 @@ export function HomeScreen() {
           </Button>
         </div>
         <div className="overview-pillars">
-          <Kicker>GOVERN pillars · mapped to NIST AI RMF</Kicker>
+          <Kicker>TILLER pillars · mapped to NIST AI RMF</Kicker>
           <div className="pillar-list">
             {PILLARS.map((p, i) => (
               <Button
@@ -380,7 +380,7 @@ export function AssessScreen() {
         ))}
       </section>
       <Dialog open={drawer} onOpenChange={setDrawer}>
-        <DialogContent className="aegis-sheet">
+        <DialogContent className="veritrail-sheet">
           <Kicker>
             {c.id} · {p.name} · {c.w} · Mandatory
           </Kicker>

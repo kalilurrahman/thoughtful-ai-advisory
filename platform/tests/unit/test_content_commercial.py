@@ -45,8 +45,8 @@ def test_case_study_rule_requires_written_approval_and_verified_metrics():
 def test_demo_script_has_both_versions_and_flow():
     text = (COM / "demo_script.md").read_text(encoding="utf-8")
     assert "## 20-minute version" in text and "## 45-minute version" in text
-    assert "website → self-assessment → AEGIS Agent → Shield Advisor → report" in text
-    for slug in ("/tools/maturity-assessment/", "/tools/guardrail-generator/", "/tools/ask-aegis/"):
+    assert "website → self-assessment → VERITRAIL Agent → Shield Advisor → report" in text
+    for slug in ("/tools/maturity-assessment/", "/tools/guardrail-generator/", "/tools/ask-veritrail/"):
         assert slug in text
         page = ROOT / "content" / "website_pages" / (slug.strip("/").replace("/", "-") + ".md")
         assert page.exists(), f"demo references missing page {slug}"

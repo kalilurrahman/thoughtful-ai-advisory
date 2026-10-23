@@ -1,8 +1,8 @@
 ---
-title: "AEGIS AI Governance Maturity Model — 5 levels, 8 weighted domains"
-h1: "The AEGIS AI Governance Maturity Model"
+title: "VERITRAIL AI Governance Maturity Model — 5 levels, 8 weighted domains"
+h1: "The VERITRAIL AI Governance Maturity Model"
 slug: /framework/maturity-model/
-description: "Five maturity levels from Initial to Optimized and eight weighted domains: how the AEGIS self-assessment scores AI governance and what each level means."
+description: "Five maturity levels from Initial to Optimized and eight weighted domains: how the VERITRAIL self-assessment scores AI governance and what each level means."
 section: framework
 nav_label: "Maturity model"
 nav_order: 30
@@ -20,7 +20,7 @@ faq:
 updated: 2026-10-21
 ---
 
-The AEGIS maturity model gives leadership a consistent, comparable view of how well AI is governed — and, more usefully, where to invest next. It underpins the free [maturity self-assessment](/tools/maturity-assessment/) and is validated with evidence during a [Governance Baseline](/contact/book-governance-baseline/).
+The VERITRAIL maturity model gives leadership a consistent, comparable view of how well AI is governed — and, more usefully, where to invest next. It underpins the free [maturity self-assessment](/tools/maturity-assessment/) and is validated with evidence during a [Governance Baseline](/contact/book-governance-baseline/).
 
 ## Five maturity levels
 
@@ -91,7 +91,7 @@ These indicators are a way to prioritize evidence collection. They are not a mea
 
 ## From score to plan
 
-The result includes up to five strengths and five gaps, a 30/60/90-day action plan (answers of 1–2 go into the first 30 days, 3 into days 31–60, and 4 into days 61–90), recommended controls and recommended AEGIS modules. A typical progression:
+The result includes up to five strengths and five gaps, a 30/60/90-day action plan (answers of 1–2 go into the first 30 days, 3 into days 31–60, and 4 into days 61–90), recommended controls and recommended VERITRAIL modules. A typical progression:
 
 - **Initial → Developing:** policy and forum (AO-01, AO-02), a first inventory (EI-01), intake and pre-deployment assessment (EI-12, GL-02).
 - **Developing → Defined:** risk tiering applied to every record (EI-02), change triggers (GL-04), redaction (IS-04), adversarial testing (IS-14), kill switch (IS-15).

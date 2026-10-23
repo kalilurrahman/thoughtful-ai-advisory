@@ -1,6 +1,6 @@
 /**
  * Content detectors for the policy engine — port of
- * platform/app/policy-engine/aegis_policy/detectors.py.
+ * platform/app/policy-engine/veritrail_policy/detectors.py.
  *
  * Thin extension of the shared redaction module: Unicode NFKC folding, zero-width removal,
  * homoglyph and leetspeak folding, letter-spacing collapse and decoding of base64 (two nested

@@ -1,12 +1,12 @@
 /**
- * AEGIS Runtime Shield Advisor — port of
- * platform/app/runtime-shield/aegis_shield/advisor.py.
+ * VERITRAIL Runtime Shield Advisor — port of
+ * platform/app/runtime-shield/veritrail_shield/advisor.py.
  *
  * `advise(profile)` turns a description of an LLM application or agent into practical
  * runtime guardrails and a draft, versioned policy. Governance properties:
  * - advisor outputs are labelled Inferred; facts supplied by the user are User-asserted;
  *   nothing is labelled Verified (no named human has reviewed evidence here);
- * - every recommendation cites AEGIS control IDs from the control library;
+ * - every recommendation cites VERITRAIL control IDs from the control library;
  * - the generated policy is always `draft` in `observe` mode with no approvals —
  *   the advisor never activates a policy; activation requires recorded human approval.
  */
@@ -39,7 +39,7 @@ import {
 } from "./py";
 import { lintPolicy, validatePolicy } from "./schema";
 
-export const PRINCIPLE = "AI proposes. AEGIS evaluates. Approved actions execute.";
+export const PRINCIPLE = "AI proposes. VERITRAIL evaluates. Approved actions execute.";
 export const ADVISOR_VERSION = "1.0.0";
 export const LEVELS = ["Low", "Medium", "High", "Critical"] as const;
 export type Level = (typeof LEVELS)[number];
@@ -469,7 +469,7 @@ function riskProfile(n: NormalizedProfile): RiskProfileOut {
   if (mismatch) {
     rationale +=
       ` The user-asserted tier (${assertedTier}) is lower than the inferred tier (${inferredTier}); ` +
-      "a risk-tier change requires human approval and is not made by AEGIS.";
+      "a risk-tier change requires human approval and is not made by VERITRAIL.";
   }
   return {
     autonomy,
@@ -917,7 +917,7 @@ function limitsSection(n: NormalizedProfile, rating: Level): LimitsOut {
     alert_at_percent: 80,
     source: overrideKeys.length
       ? "User-asserted overrides: " + overrideKeys.join(", ")
-      : `AEGIS starting points for a ${rating} runtime-risk profile`,
+      : `VERITRAIL starting points for a ${rating} runtime-risk profile`,
     rationale:
       "Contain runaway loops, abuse and denial-of-wallet. Calibrate from observe-mode telemetry before " +
       "enforcement; limits are per tenant+agent (rate also per identity).",
@@ -1265,7 +1265,7 @@ function rollout(rating: Level): Rollout {
     current_stage: 1,
     promotion_rule:
       "Each promotion is a new policy version that goes draft → in_review → approved → active with " +
-      "recorded human approval. AEGIS never promotes or activates a policy on its own.",
+      "recorded human approval. VERITRAIL never promotes or activates a policy on its own.",
     stages,
     citations: ["IS-12", "GL-04", "GL-07", "IS-15"],
     evidence_status: INFERRED,
@@ -1364,7 +1364,7 @@ function missingAndQuestions(
     } else if (m.operation_evidence === INFERRED) {
       questions.push({
         question:
-          `Confirm the operation type for '${m.tool}' (AEGIS inferred ` +
+          `Confirm the operation type for '${m.tool}' (VERITRAIL inferred ` +
           `'${m.operation}' from its name).`,
         field: `tools.${m.tool}`,
         citations: ["EI-07"],
@@ -1444,7 +1444,7 @@ function evidence(
     items.push({
       item: `Tool '${t.name}' performs '${t.operation}'`,
       status: t.operation_source !== "Missing evidence" ? t.operation_source : MISSING,
-      source: t.operation_source === ASSERTED ? "profile" : "AEGIS inference",
+      source: t.operation_source === ASSERTED ? "profile" : "VERITRAIL inference",
       citations: ["EI-07"],
     });
   }
@@ -1503,7 +1503,7 @@ function evidence(
         "Autonomous agent can reach irreversible actions (payment/delete) with no confirmed human " +
         "approval path — those tools are denied in the draft policy until an approval workflow exists",
       status: CRITICAL,
-      source: "AEGIS inference",
+      source: "VERITRAIL inference",
       citations: ["IS-13", "IS-09"],
     });
   }
@@ -1518,7 +1518,7 @@ function evidence(
         `Special-category data may be sent to an external model vendor (${n.vendor}) with no ` +
         "asserted contract terms or DLP — runtime redaction is heuristic and not sufficient alone",
       status: CRITICAL,
-      source: "AEGIS inference",
+      source: "VERITRAIL inference",
       citations: ["IS-03", "IS-04", "GL-11"],
     });
   }
@@ -1536,14 +1536,14 @@ function evidence(
         `Asserted risk tier ${risk.user_asserted_risk_tier ?? "None"} is lower than inferred ` +
         `${risk.inferred_risk_tier}`,
       status: INFERRED,
-      source: "AEGIS inference",
+      source: "VERITRAIL inference",
       citations: ["EI-02"],
     });
   }
   items.push({
     item: "Risk profile, tool matrix, limits, monitoring, rollout plan and draft policy",
     status: INFERRED,
-    source: "AEGIS Runtime Shield Advisor",
+    source: "VERITRAIL Runtime Shield Advisor",
     citations: ["IS-12"],
   });
   const counts: Record<string, number> = {};
@@ -1627,7 +1627,7 @@ export function analyze(profile: unknown): Advice {
   if (n.regulatory_obligations.length || n.customer_obligations.length) {
     advice.obligations_note = {
       text:
-        "Listed obligations are User-asserted and should be recorded in the obligations register; AEGIS " +
+        "Listed obligations are User-asserted and should be recorded in the obligations register; VERITRAIL " +
         "maps runtime controls to them indicatively and does not determine legal applicability.",
       items: [...n.regulatory_obligations, ...n.customer_obligations],
       status: ASSERTED,

@@ -1,4 +1,4 @@
-%% AEGIS Agent MVP — architecture
+%% VERITRAIL Agent MVP — architecture
 flowchart TB
   classDef svc fill:#0B2545,stroke:#0B2545,color:#fff
   classDef tool fill:#E8F1F8,stroke:#0B2545,color:#0B2545
@@ -6,19 +6,19 @@ flowchart TB
   classDef store fill:#FFF7E6,stroke:#B7791F,color:#5F370E
   classDef guard fill:#13636B,stroke:#13636B,color:#fff
 
-  U[User · role: viewer / assessor / approver / admin] --> CON[AEGIS Agent Console / API]
+  U[User · role: viewer / assessor / approver / admin] --> CON[VERITRAIL Agent Console / API]
   CON --> IN[Input guard<br/>redaction · injection & jailbreak detection]:::guard
   IN --> ORC[Agent Orchestrator]:::svc
   ORC --> IR[Intent router<br/>ask · assess · gaps · report · guardrails · approval]:::svc
   ORC --> ST[Conversation state<br/>guided-assessment state machine]:::svc
-  IR --> J1[Ask AEGIS]:::svc
+  IR --> J1[Ask VERITRAIL]:::svc
   IR --> J2[Guided use-case assessment]:::svc
   IR --> J3[Gap analysis]:::svc
   IR --> J4[Report generation]:::svc
   IR --> J5[Guardrail design]:::svc
 
   subgraph TOOLS[14 least-privilege tools · grouped by permission]
-    TR[READ<br/>search_aegis_knowledge<br/>search_ai_inventory<br/>search_runtime_logs]:::tool
+    TR[READ<br/>search_veritrail_knowledge<br/>search_ai_inventory<br/>search_runtime_logs]:::tool
     TC[COMPUTE<br/>calculate_risk_tier<br/>identify_gaps<br/>recommend_controls]:::tool
     TD[CREATE / DRAFT<br/>create_ai_system_record<br/>start_assessment · submit_assessment_response<br/>generate_report · draft_runtime_policy]:::tool
     TW[WRITE + USER CONFIRMATION<br/>create_remediation_task]:::tool
@@ -26,7 +26,7 @@ flowchart TB
   end
   J1 & J2 & J3 & J4 & J5 --> TOOLS
 
-  TOOLS --> KB[(AEGIS knowledge base<br/>controls · templates · policy & industry packs · compliance mapping)]:::store
+  TOOLS --> KB[(VERITRAIL knowledge base<br/>controls · templates · policy & industry packs · compliance mapping)]:::store
   TOOLS --> REC[(Enterprise records<br/>inventory · assessments · gaps · tasks)]:::store
   TA --> AQ[(Approval queue<br/>risk-tier change · exception · prod policy · evidence export · external comms)]:::appr
   AQ --> HUM[Human approver<br/>separation of duties]:::appr

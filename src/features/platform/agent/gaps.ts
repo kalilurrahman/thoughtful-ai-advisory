@@ -1,6 +1,6 @@
 /**
  * Gap analysis: evidence classification, severity, owners, due dates, roadmap, heat map
- * (aegis_agent/gaps.py). Pure functions over an assessment record.
+ * (veritrail_agent/gaps.py). Pure functions over an assessment record.
  *
  * Evidence status rules:
  *   Verified          answer=implemented AND ≥1 referenced evidence item reviewed by a named reviewer
@@ -10,13 +10,13 @@
  *   Inferred          applicable question left unanswered — gap inferred from profile / tier
  * Severity = priority points + tier points + answer points (use_case_assessment.yaml severity_rules).
  */
-import { EVIDENCE_STATUSES, getControl, type AegisControl } from "@/features/site/content";
+import { EVIDENCE_STATUSES, getControl, type VeritrailControl } from "@/features/site/content";
 import {
   answerOptions,
   getQuestion,
   severityRules,
   type UseCaseQuestion,
-} from "@/features/site/engines/ask-aegis/question-bank";
+} from "@/features/site/engines/ask-veritrail/question-bank";
 import { pyRound1 } from "./py";
 import { addDays } from "./runtime";
 import type { EvidenceRecord } from "./store";
@@ -108,8 +108,8 @@ function sevIndex(s: string): number {
   return (GAP_SEVERITIES as readonly string[]).indexOf(s);
 }
 
-function primaryControl(controlIds: string[]): AegisControl {
-  const ctrls = controlIds.map((c) => getControl(c)).filter((c): c is AegisControl => !!c);
+function primaryControl(controlIds: string[]): VeritrailControl {
+  const ctrls = controlIds.map((c) => getControl(c)).filter((c): c is VeritrailControl => !!c);
   ctrls.sort(
     (a, b) => PRIORITY_ORDER.indexOf(a.priority || "low") - PRIORITY_ORDER.indexOf(b.priority || "low"),
   );

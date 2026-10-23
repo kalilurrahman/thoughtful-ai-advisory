@@ -1,8 +1,8 @@
 ---
-title: "AI governance policy packs and runtime guardrail policies — AEGIS"
+title: "AI governance policy packs and runtime guardrail policies — VERITRAIL"
 h1: "Policy packs"
 slug: /resources/policy-packs/
-description: "AEGIS policy packs: governance policy templates for your AI operating model and runtime guardrail policy packs for LLM apps and agents, with status."
+description: "VERITRAIL policy packs: governance policy templates for your AI operating model and runtime guardrail policy packs for LLM apps and agents, with status."
 section: resources
 nav_label: "Policy packs"
 nav_order: 40
@@ -13,7 +13,7 @@ secondary_cta: baseline
 updated: 2026-10-21
 ---
 
-AEGIS policy packs come in two kinds: **governance policies** that define your operating model, and **runtime policies** — policy-as-code — that AEGIS Shield enforces on LLM applications and agents.
+VERITRAIL policy packs come in two kinds: **governance policies** that define your operating model, and **runtime policies** — policy-as-code — that VERITRAIL Shield enforces on LLM applications and agents.
 
 ## Governance policy templates
 
@@ -31,7 +31,7 @@ Standalone downloadable editions are **coming soon**.
 
 ## Runtime guardrail policy packs
 
-Runtime packs are starting points in the AEGIS policy schema (`aegis.policy/v1`) for common system types. Each pack is versioned, cites AEGIS controls, and begins in **Observe** mode.
+Runtime packs are starting points in the VERITRAIL policy schema (`veritrail.policy/v1`) for common system types. Each pack is versioned, cites VERITRAIL controls, and begins in **Observe** mode.
 
 | Pack | Typical rules | Controls |
 |---|---|---|
@@ -50,6 +50,6 @@ Downloadable packs are **coming soon**. Today, the [guardrail generator](/tools/
 - Deploy runtime policies in Observe mode first and promote through Warn, Protect and Enforce against exit criteria.
 - Changes to production runtime policy require human approval and are recorded in the policy's change history.
 
-See [AEGIS Shield](/solutions/shield/) for how policies are evaluated and enforced.
+See [VERITRAIL Shield](/solutions/shield/) for how policies are evaluated and enforced.
 
 {{cta:guardrails}}

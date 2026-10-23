@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Pilot dress rehearsal — runs the full Pilot A (regulated enterprise) workflow end-to-end
-on a SYNTHETIC organization using the real AEGIS tooling.
+on a SYNTHETIC organization using the real VERITRAIL tooling.
 
 Purpose: prove the pilot kit and product work together before a real design partner is
 onboarded. Nothing here is customer data; all answers are generated deterministically
@@ -30,16 +30,16 @@ for d in sorted((ROOT / "app").iterdir()):
     if d.is_dir():
         sys.path.insert(0, str(d))
 
-from aegis_agent.orchestrator import AegisAgent  # noqa: E402
-from aegis_assessment.engine import score_assessment  # noqa: E402
-from aegis_common.evidence import STANDARD_DISCLAIMER, find_prohibited_claims  # noqa: E402
-from aegis_reports.exporters import write_csv, write_json, write_markdown  # noqa: E402
-from aegis_reports.maturity import render_maturity_markdown  # noqa: E402
-from aegis_reports.pdf import markdown_to_pdf  # noqa: E402
+from veritrail_agent.orchestrator import VeritrailAgent  # noqa: E402
+from veritrail_assessment.engine import score_assessment  # noqa: E402
+from veritrail_common.evidence import STANDARD_DISCLAIMER, find_prohibited_claims  # noqa: E402
+from veritrail_reports.exporters import write_csv, write_json, write_markdown  # noqa: E402
+from veritrail_reports.maturity import render_maturity_markdown  # noqa: E402
+from veritrail_reports.pdf import markdown_to_pdf  # noqa: E402
 
 OUT = ROOT / "output" / "sample_reports" / "pilot_dry_run"
 ORG = "Example Regional Bank (synthetic)"
-ASSESSOR = {"id": "u-assessor-1", "role": "assessor", "name": "Synthetic AEGIS Analyst"}
+ASSESSOR = {"id": "u-assessor-1", "role": "assessor", "name": "Synthetic VERITRAIL Analyst"}
 APPROVER = {"id": "u-approver-1", "role": "approver", "name": "Synthetic Head of AI Risk"}
 AS_OF = "2026-10-21"
 
@@ -105,7 +105,7 @@ def main() -> int:
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True)
     data_dir = OUT / "_agent_data"
-    agent = AegisAgent(data_dir)
+    agent = VeritrailAgent(data_dir)
     log: list[str] = []
 
     # ---------------- W2 inventory + preliminary tiers
@@ -192,8 +192,8 @@ def main() -> int:
         res = agent.call_tool("draft_runtime_policy", ASSESSOR, assessment_id=asm["assessment_id"]) if asm else \
             agent.call_tool("draft_runtime_policy", ASSESSOR, profile=inv["profile"])
         if res.get("status") == "draft" and res.get("advice"):
-            from aegis_shield.generator import to_json, to_yaml
-            from aegis_shield.render import render_advice_markdown
+            from veritrail_shield.generator import to_json, to_yaml
+            from veritrail_shield.render import render_advice_markdown
             slug = name.lower().replace(" ", "_")
             pol = res["advice"]["policy"]
             (pol_dir / f"{slug}_policy.yaml").write_text(to_yaml(pol), encoding="utf-8")
@@ -255,9 +255,9 @@ def main() -> int:
 
     # ---------------- executive readiness report
     L = [f"# Executive Readiness Report — {ORG}", "",
-         "> **SYNTHETIC DRESS REHEARSAL.** Fictional organization, generated answers. This report demonstrates the AEGIS "
+         "> **SYNTHETIC DRESS REHEARSAL.** Fictional organization, generated answers. This report demonstrates the VERITRAIL "
          "Pilot A workflow and outputs; it is not evidence about any real organization.", "",
-         f"**Prepared:** {AS_OF} · **Scope:** AEGIS Governance Baseline (Pilot A profile) · **Prepared by:** AEGIS Agent-assisted workflow, synthetic analyst", "",
+         f"**Prepared:** {AS_OF} · **Scope:** VERITRAIL Governance Baseline (Pilot A profile) · **Prepared by:** VERITRAIL Agent-assisted workflow, synthetic analyst", "",
          "## 1. Executive summary", "",
          f"- **{len(inventory)} AI systems** registered as draft inventory records (EI-01); preliminary tiers: "
          + ", ".join(f"{k} {v}" for k, v in sorted(tiers.items(), key=lambda kv: order[kv[0]])) + ". Tiers are Inferred and were confirmed through the approval queue (EI-02, IS-13).",
@@ -279,7 +279,7 @@ def main() -> int:
         L.append(f"| {x['system']} | {x['tier']} | {c.get('Critical', 0)} | {c.get('High', 0)} | {c.get('Medium', 0)} | {c.get('Low', 0)} |")
     ctrl_counter = Counter(c for g in all_gaps if g["severity"] in ("Critical", "High") for c in (g.get("controls") or []))
     L += ["", "## 5. Most frequent Critical/High control gaps", "", "| Control | Occurrences |", "|---|---|"]
-    from aegis_common.content import get_control
+    from veritrail_common.content import get_control
     L += [f"| {cid} {get_control(cid)['title']} | {n} |" for cid, n in ctrl_counter.most_common(10)]
     L += ["", "## 6. Remediation roadmap", "",
           "- **First 30 days:** close Critical gaps (owners and due dates in the gap register), stand up the AI system of record as authoritative (EI-01, EI-03), enable redaction and kill switch for agentic systems (IS-04, IS-15).",

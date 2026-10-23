@@ -40,7 +40,7 @@ describe("export page download flow", () => {
     expect(await screen.findByText(/Preview ready/)).toBeInTheDocument();
     expect(click).toHaveBeenCalledTimes(1);
     expect(URL.createObjectURL).toHaveBeenCalledWith(expect.any(Blob));
-    expect(screen.getByText(/AEGIS_Executive-one-pager_Acme-Health\.pdf/)).toBeInTheDocument();
+    expect(screen.getByText(/VERITRAIL_Executive-one-pager_Acme-Health\.pdf/)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Download again" }));
     expect(click).toHaveBeenCalledTimes(2);

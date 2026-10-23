@@ -14,15 +14,15 @@ secondary_cta: assessment
 updated: 2026-10-21
 ---
 
-*AEGIS editorial team · Published 21 October 2026 · About 8 minutes to read*
+*VERITRAIL editorial team · Published 21 October 2026 · About 8 minutes to read*
 
 Ask an executive team how many AI systems their organization runs and you will usually get a number. Ask how that number was produced, and the conversation changes. It might come from an AI CoE project list, a board paper from last year, or a procurement search for "AI" in contract titles. Each source captures part of the picture. None captures agents that engineering teams assembled last quarter, AI features switched on inside existing SaaS products, or the assistant a team built on a personal API key.
 
-This matters because almost every AI governance control assumes the inventory exists. You cannot risk-assess a system you have not found, approve a deployment you do not know about, apply runtime guardrails to an agent that is not routed through them, or produce an evidence pack for something that has no record. In the AEGIS maturity model, inventory is one of the three most heavily weighted domains, and a low score on the inventory question raises a **Critical gap** flag regardless of the overall result. That is not because inventories are glamorous. It is because everything else is built on them.
+This matters because almost every AI governance control assumes the inventory exists. You cannot risk-assess a system you have not found, approve a deployment you do not know about, apply runtime guardrails to an agent that is not routed through them, or produce an evidence pack for something that has no record. In the VERITRAIL maturity model, inventory is one of the three most heavily weighted domains, and a low score on the inventory question raises a **Critical gap** flag regardless of the overall result. That is not because inventories are glamorous. It is because everything else is built on them.
 
 ## Why inventories fail
 
-Organizations rarely lack the intention to build an AI inventory. They lack one that stays accurate. In our experience designing the AEGIS framework, the failures fall into four patterns.
+Organizations rarely lack the intention to build an AI inventory. They lack one that stays accurate. In our experience designing the VERITRAIL framework, the failures fall into four patterns.
 
 **1. Scope that is too narrow.** Many inventories start in the model risk or data science function and list trained models. Generative AI changed what "an AI system" looks like: a prompt and a retrieval index on top of a foundation-model API, an agent wired to a ticketing system, a "summarize" button in a CRM. If the scope definition does not explicitly include LLM applications, agents, vendor AI products and embedded AI features, they will not be counted.
 
@@ -34,7 +34,7 @@ Organizations rarely lack the intention to build an AI inventory. They lack one 
 
 ## What the inventory must enable
 
-It helps to work backwards from what the inventory is for. In the AEGIS framework, the inventory pillar (EI) exists to make four things possible:
+It helps to work backwards from what the inventory is for. In the VERITRAIL framework, the inventory pillar (EI) exists to make four things possible:
 
 - **Proportionate governance.** Every record gets a risk tier, based on decision impact, data sensitivity, autonomy, affected parties and regulatory relevance (EI-02). The tier decides how much assessment and which approvers a system needs.
 - **Accountability.** Every system has a named business owner and technical owner who have accepted the role (EI-03).
@@ -65,7 +65,7 @@ For material systems, add the model and prompt registry entries (EI-05), data so
 
 ## Getting to coverage in weeks, not quarters
 
-A practical sequence, which is also the basis of Runbook 1 in the [AEGIS implementation runbooks](/framework/runbooks/):
+A practical sequence, which is also the basis of Runbook 1 in the [VERITRAIL implementation runbooks](/framework/runbooks/):
 
 **Agree scope in writing.** Define what counts: in-house models, LLM applications, agents, vendor AI products, AI features in SaaS tools, direct use of model APIs. Record deliberate exclusions — for example, spell-checkers — so that they are decisions, not oversights.
 
@@ -75,7 +75,7 @@ A practical sequence, which is also the basis of Runbook 1 in the [AEGIS impleme
 
 **Reconcile shadow AI deliberately.** Discovery will surface AI use that bypassed intake. Treat it as information, not infraction: bring it into the inventory, assign an owner, tier it, and route it through the appropriate assessment (EI-09). Organizations that punish discovery get less of it.
 
-**Confirm owners and tiers.** Owners accept their records. A risk lead confirms or adjusts each provisional tier. Tools — including the AEGIS [risk triage](/tools/risk-triage/) — can suggest a tier, but a suggestion is Inferred until a human confirms it.
+**Confirm owners and tiers.** Owners accept their records. A risk lead confirms or adjusts each provisional tier. Tools — including the VERITRAIL [risk triage](/tools/risk-triage/) — can suggest a tier, but a suggestion is Inferred until a human confirms it.
 
 **Set the maintenance rhythm.** Owner attestation on a cadence that matches tier (EI-11), periodic discovery, and a rule that new use cases enter through intake (EI-12) so the inventory grows from the front door rather than through archaeology.
 

@@ -1,14 +1,14 @@
 /**
- * Browser persistence for the AEGIS Agent console: the whole store and audit chain are kept in
- * this browser's localStorage under `aegis.platform.agent.v1`. Call only from effects and event
+ * Browser persistence for the VERITRAIL Agent console: the whole store and audit chain are kept in
+ * this browser's localStorage under `veritrail.platform.agent.v1`. Call only from effects and event
  * handlers (never during render/SSR); every access is guarded because storage may be blocked,
  * full or unavailable (private windows, previews).
  */
 import type { AuditRecord } from "../audit";
-import type { AegisAgent } from "./orchestrator";
+import type { VeritrailAgent } from "./orchestrator";
 import type { StoreSnapshot } from "./store";
 
-export const STORAGE_KEY = "aegis.platform.agent.v1";
+export const STORAGE_KEY = "veritrail.platform.agent.v1";
 
 export interface PersistedState {
   snapshot: StoreSnapshot;
@@ -37,7 +37,7 @@ export function loadPersisted(): PersistedState | null {
 }
 
 /** Returns false when nothing could be written (storage blocked or full). */
-export function savePersisted(agent: AegisAgent, ui?: PersistedState["ui"]): boolean {
+export function savePersisted(agent: VeritrailAgent, ui?: PersistedState["ui"]): boolean {
   try {
     const s = storage();
     if (!s) return false;
@@ -59,7 +59,7 @@ export function clearPersisted(): void {
 }
 
 /** Load a snapshot into an agent (records and audit chain). */
-export function restoreInto(agent: AegisAgent, snap: StoreSnapshot): void {
+export function restoreInto(agent: VeritrailAgent, snap: StoreSnapshot): void {
   agent.store.load(snap);
   agent.audit.clear();
   for (const r of (snap.audit ?? []) as AuditRecord[]) agent.audit.records.push(r);

@@ -1,8 +1,8 @@
 ---
-title: "AEGIS assessment modules — organization and use-case assessments"
+title: "VERITRAIL assessment modules — organization and use-case assessments"
 h1: "Assessment modules"
 slug: /framework/assessment-modules/
-description: "How AEGIS assesses AI governance at two levels: an organization-wide maturity assessment and risk-triggered deep-dive modules for each AI use case."
+description: "How VERITRAIL assesses AI governance at two levels: an organization-wide maturity assessment and risk-triggered deep-dive modules for each AI use case."
 section: framework
 nav_label: "Assessment modules"
 nav_order: 40
@@ -14,16 +14,16 @@ faq:
   - q: "Do we need to run every module for every AI system?"
     a: "No. The core, security, and monitoring modules apply to every use case; the other modules are triggered by the intake profile and risk tier, so a low-risk internal tool gets a short assessment and a high-impact agent gets a deep one."
   - q: "Who decides the final risk tier?"
-    a: "A human. AEGIS calculates a suggested tier with the factors and citations behind it, labels it Inferred, and requires an accountable approver to confirm or change it."
+    a: "A human. VERITRAIL calculates a suggested tier with the factors and citations behind it, labels it Inferred, and requires an accountable approver to confirm or change it."
 updated: 2026-10-21
 ---
 
-AEGIS assesses AI governance at two levels, because they answer different questions:
+VERITRAIL assesses AI governance at two levels, because they answer different questions:
 
 - **Organization level — "how mature is our governance overall?"** The 24-question [maturity self-assessment](/tools/maturity-assessment/) scores eight weighted domains (see the [maturity model](/framework/maturity-model/)).
 - **Use-case level — "is this AI system adequately controlled for its risk?"** An intake, a risk triage and a set of deep-dive modules selected for that system.
 
-Both produce findings that cite AEGIS controls and carry evidence labels. Neither produces a compliance determination.
+Both produce findings that cite VERITRAIL controls and carry evidence labels. Neither produces a compliance determination.
 
 ## Level 1: Organization maturity assessment
 
@@ -76,10 +76,10 @@ Answers are recorded as Implemented, Partially implemented, Not implemented, Unk
 
 ## Runtime guardrail recommendations
 
-The same intake also drives runtime guardrail recommendations — for example, redaction when personal data is in scope (IS-04), tool allow-listing when the system has tools (IS-11), human approval when it can take external actions (IS-13), and action logging and a kill switch for every system (SE-08, IS-15). The [guardrail generator](/tools/guardrail-generator/) turns those recommendations into a draft policy for [AEGIS Shield](/solutions/shield/).
+The same intake also drives runtime guardrail recommendations — for example, redaction when personal data is in scope (IS-04), tool allow-listing when the system has tools (IS-11), human approval when it can take external actions (IS-13), and action logging and a kill switch for every system (SE-08, IS-15). The [guardrail generator](/tools/guardrail-generator/) turns those recommendations into a draft policy for [VERITRAIL Shield](/solutions/shield/).
 
 ## Who runs the modules
 
-The modules can be completed in a facilitated workshop, by the system owner with reviewer sign-off, or in a guided conversation with the [AEGIS Agent](/solutions/agent/), which asks the questions, records answers as User-asserted, and drafts the findings with citations for a human reviewer to accept or amend.
+The modules can be completed in a facilitated workshop, by the system owner with reviewer sign-off, or in a guided conversation with the [VERITRAIL Agent](/solutions/agent/), which asks the questions, records answers as User-asserted, and drafts the findings with citations for a human reviewer to accept or amend.
 
 {{cta:assessment}}

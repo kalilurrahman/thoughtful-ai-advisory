@@ -1,7 +1,7 @@
 ---
 title: "Fixture risk triage"
 slug: /tools/risk-triage/
-description: "Fixture tool page for preliminary AI use-case risk tiering used by the AEGIS website generator tests and accessibility checks."
+description: "Answer a short intake about one AI use case and get a suggested VERITRAIL risk tier, the factors behind it and the modules it needs. A human confirms it."
 section: tools
 nav_label: Risk triage
 nav_order: 40

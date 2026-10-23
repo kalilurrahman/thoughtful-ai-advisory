@@ -1,8 +1,8 @@
 /*
- * AEGIS content integrity checks (pure) — ports of platform/scripts/check_content.py and
+ * VERITRAIL content integrity checks (pure) — ports of platform/scripts/check_content.py and
  * platform/scripts/check_website_pages.py, using the shared prohibited-claim guard
- * (findProhibitedClaims, the port of aegis_common.evidence.find_prohibited_claims) and the
- * Runtime Shield policy validator (validatePolicy, the port of aegis_policy.schema).
+ * (findProhibitedClaims, the port of veritrail_common.evidence.find_prohibited_claims) and the
+ * Runtime Shield policy validator (validatePolicy, the port of veritrail_policy.schema).
  *
  * The functions take the content as {path, text} files (paths relative to platform/, e.g.
  * "content/controls/controls.yaml"), so they run in the browser on the bundled content, in
@@ -11,7 +11,7 @@
  * script additionally scans docs/, app/ and output/, which are not bundled into the website.
  */
 import { parse } from "yaml";
-import { findProhibitedClaims } from "@/features/site/engines/ask-aegis/safety";
+import { findProhibitedClaims } from "@/features/site/engines/ask-veritrail/safety";
 import { validatePolicy } from "@/features/site/engines/shield/schema";
 import { pyStrip } from "@/features/site/engines/shield/py";
 

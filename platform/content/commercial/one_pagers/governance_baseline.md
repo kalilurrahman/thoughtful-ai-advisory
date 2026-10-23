@@ -1,11 +1,11 @@
 ---
-title: "One-pager — AEGIS Governance Baseline"
+title: "One-pager — VERITRAIL Governance Baseline"
 audience: CRO, CIO, Chief AI Officer, Head of AI Governance
 version: 1.0.0
 effective_date: 2026-10-21
 ---
 
-# AEGIS Governance Baseline
+# VERITRAIL Governance Baseline
 
 **Know where you stand on AI governance — with evidence, in four to six weeks.**
 
@@ -18,7 +18,7 @@ we have that it is governed?* Boards, auditors, customers and regulators are ask
 
 A fixed-scope, fixed-fee engagement that produces:
 
-| Deliverable | What it contains | AEGIS controls |
+| Deliverable | What it contains | VERITRAIL controls |
 |---|---|---|
 | AI inventory | Up to 25 AI systems registered with owners, purpose, tier factors and preliminary risk tiers confirmed by your approver | EI-01, EI-02, EI-03 |
 | Maturity baseline | Self-reported and evidence-validated maturity across 8 weighted domains | SE-02, SE-03 |
@@ -33,18 +33,18 @@ A fixed-scope, fixed-fee engagement that produces:
 Week 1 kick-off and safeguards → Week 2 inventory workshops → Week 3 maturity and evidence → Week 4 deep-dives and agent
 reviews → Week 5 gap analysis and runtime recommendations → Week 6 executive readout.
 
-## Why AEGIS
+## Why VERITRAIL
 
 - **Evidence-first.** Every finding is labelled Verified, User-asserted, Inferred, Missing evidence or Critical gap.
-- **Cited.** Every recommendation cites a control from the 64-control AEGIS library, mapped indicatively to NIST AI RMF,
+- **Cited.** Every recommendation cites a control from the 64-control VERITRAIL library, mapped indicatively to NIST AI RMF,
   ISO/IEC 42001 and the EU AI Act.
 - **Safe by default.** Metadata-only ingestion; no production data sent to external LLMs; human approval for tier
   changes and exports.
-- **Built to continue.** Outputs load directly into AEGIS Register, Control and Shield.
+- **Built to continue.** Outputs load directly into VERITRAIL Register, Control and Shield.
 
 ## What it is not
 
-Not an audit, certification or legal opinion. AEGIS supports governance readiness, control implementation and evidence
+Not an audit, certification or legal opinion. VERITRAIL supports governance readiness, control implementation and evidence
 collection; it does not certify ISO/IEC 42001 conformity, guarantee EU AI Act compliance, or replace legal advice.
 
 ## Commercials
