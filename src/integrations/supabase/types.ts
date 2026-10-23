@@ -284,6 +284,93 @@ export type Database = {
           },
         ]
       }
+      site_admins: {
+        Row: {
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      site_events: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          path: string
+          props: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          name: string
+          path?: string
+          props?: Json
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          name?: string
+          path?: string
+          props?: Json
+        }
+        Relationships: []
+      }
+      site_leads: {
+        Row: {
+          ai_systems: string
+          company: string
+          consent: boolean
+          created_at: string
+          email: string
+          form: string
+          id: string
+          industry: string
+          message: string
+          name: string
+          payload: Json
+          role: string
+          tool: string
+        }
+        Insert: {
+          ai_systems?: string
+          company?: string
+          consent: boolean
+          created_at?: string
+          email: string
+          form: string
+          id?: string
+          industry?: string
+          message?: string
+          name?: string
+          payload?: Json
+          role?: string
+          tool?: string
+        }
+        Update: {
+          ai_systems?: string
+          company?: string
+          consent?: boolean
+          created_at?: string
+          email?: string
+          form?: string
+          id?: string
+          industry?: string
+          message?: string
+          name?: string
+          payload?: Json
+          role?: string
+          tool?: string
+        }
+        Relationships: []
+      }
       sources: {
         Row: {
           entries: Json
@@ -312,7 +399,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      save_veritrail_workspace: {
+      save_aegis_workspace: {
         Args: { p_name: string; p_org: string; p_sources: Json; p_state: Json }
         Returns: string
       }
