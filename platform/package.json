@@ -1,0 +1,6 @@
+{
+  "name": "aegis-platform",
+  "private": true,
+  "description": "Scopes the platform tree back to CommonJS: the repository root package.json declares \"type\": \"module\", which would make Node load the UMD website scripts (app/website/static/js) and the node:test files (tests/unit/js) as ESM and break require() in the Python test harness. Browser behaviour is unaffected; this file is not part of the built site.",
+  "type": "commonjs"
+}
