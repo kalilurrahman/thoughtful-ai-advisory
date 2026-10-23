@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
 import { Route as ActionsRouteImport } from './routes/actions'
+import { Route as AdvisorRouteImport } from './routes/advisor'
 import { Route as AssessRouteImport } from './routes/assess'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CalculatorsRouteImport } from './routes/calculators'
@@ -52,6 +53,11 @@ const SplatRoute = SplatRouteImport.update({
 const ActionsRoute = ActionsRouteImport.update({
   id: '/actions',
   path: '/actions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdvisorRoute = AdvisorRouteImport.update({
+  id: '/advisor',
+  path: '/advisor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssessRoute = AssessRouteImport.update({
@@ -190,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/actions': typeof ActionsRoute
+  '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
@@ -221,6 +228,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/actions': typeof ActionsRoute
+  '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
@@ -253,6 +261,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/actions': typeof ActionsRoute
+  '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
@@ -286,6 +295,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/actions'
+    | '/advisor'
     | '/assess'
     | '/auth'
     | '/calculators'
@@ -317,6 +327,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/actions'
+    | '/advisor'
     | '/assess'
     | '/auth'
     | '/calculators'
@@ -348,6 +359,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/actions'
+    | '/advisor'
     | '/assess'
     | '/auth'
     | '/calculators'
@@ -380,6 +392,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
   ActionsRoute: typeof ActionsRoute
+  AdvisorRoute: typeof AdvisorRoute
   AssessRoute: typeof AssessRoute
   AuthRoute: typeof AuthRoute
   CalculatorsRoute: typeof CalculatorsRoute
@@ -429,6 +442,13 @@ declare module '@tanstack/react-router' {
       path: '/actions'
       fullPath: '/actions'
       preLoaderRoute: typeof ActionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/advisor': {
+      id: '/advisor'
+      path: '/advisor'
+      fullPath: '/advisor'
+      preLoaderRoute: typeof AdvisorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assess': {
@@ -620,6 +640,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
   ActionsRoute: ActionsRoute,
+  AdvisorRoute: AdvisorRoute,
   AssessRoute: AssessRoute,
   AuthRoute: AuthRoute,
   CalculatorsRoute: CalculatorsRoute,
