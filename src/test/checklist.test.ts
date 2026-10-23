@@ -22,6 +22,42 @@ describe("workspace lifecycle checklist", () => {
     expect(tasks.some((task) => task.id.includes("system-score"))).toBe(false);
   });
 
+  it("requires a saved preliminary use-case triage for every system", () => {
+    const state = initialState();
+    expect(allTasks(state).find((task) => task.id === "use-case-risk-triage")).toMatchObject({
+      status: "action",
+      progress: "0 of 6 systems triaged",
+    });
+    state.systems = state.systems.map((system) => ({
+      ...system,
+      riskTriage: {
+        profile: { name: system.name },
+        result: {
+          tier: "Low",
+          score: 0,
+          provisional: true,
+          factors: [],
+          triggers: [],
+          missing_fields: [],
+          clarifying_questions: [],
+          required_modules: ["core"],
+          approval_authority: "Product Owner with AI CoE review",
+          review_cadence_months: 24,
+          evidence_status: "Inferred",
+          requires_human_confirmation: true,
+          rationale: "Inferred; reviewer confirmation required.",
+          citations: [],
+          citation_ids: [],
+          method: "VERITRAIL risk-tier rules v1.0",
+        },
+        assessedAt: "2026-10-23T00:00:00.000Z",
+      },
+    }));
+    expect(allTasks(state).find((task) => task.id === "use-case-risk-triage")?.status).toBe(
+      "complete",
+    );
+  });
+
   it("derives verified critical evidence, guardrail coverage and the workspace gate", () => {
     const state = initialState();
     for (const control of CONTROLS) state.answers[control.id] = { s: 4, e: 3 };

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { System } from "@/data/governance";
+import type { System } from "@/features/governance/store";
+import { calculateRiskTier } from "@/features/site/engines/risk-tier";
 import { filterInventory, inventoryCsv } from "@/features/governance/inventory-export";
 
 describe("AI inventory CSV export", () => {
@@ -13,9 +14,11 @@ describe("AI inventory CSV export", () => {
       vendor: "In-house",
       data: "Internal",
     };
-    expect(inventoryCsv([system])).toBe(
-      '"System","Risk tier","Governance status","System type","Owner","Vendor","Data classification"\r\n"Assistant, ""North""\nline 2","Limited","Under review","Assistant","Product","In-house","Internal"',
-    );
+    const csv = inventoryCsv([system]);
+    expect(csv).toContain('"Preliminary tier"');
+    expect(csv).toContain('"Triage evidence status"');
+    expect(csv).toContain('"Assistant, ""North""\nline 2"');
+    expect(csv).toContain('"Not triaged"');
   });
 
   it("neutralizes spreadsheet formula prefixes and supports an empty inventory", () => {
@@ -69,5 +72,38 @@ describe("AI inventory CSV export", () => {
     expect(
       filterInventory(systems, "All", "All statuses", "personal").map(({ index }) => index),
     ).toEqual([0, 2]);
+  });
+
+  it("filters and exports saved inferred triage details without treating them as approval", () => {
+    const result = calculateRiskTier({
+      name: "Patient prioritization",
+      purpose: "Prioritize patient referrals",
+      decision_impact: "material",
+      affected_parties: "vulnerable",
+      data_sensitivity: "special_category",
+      autonomy: "suggests",
+      domain_category: "healthcare",
+      eu_exposure: "yes",
+      vendor_model: "yes",
+      genai: "no",
+    });
+    const system: System = {
+      name: "Patient prioritization",
+      tier: "High-risk",
+      status: "Under review",
+      kind: "Decision support",
+      owner: "Clinical safety",
+      vendor: "Vendor",
+      data: "Health",
+      riskTriage: {
+        profile: { name: "Patient prioritization", purpose: "Prioritize patient referrals" },
+        result,
+        assessedAt: "2026-10-23T00:00:00.000Z",
+      },
+    };
+
+    expect(filterInventory([system], "High-risk", "Under review", "vulnerable")).toHaveLength(1);
+    expect(inventoryCsv([system])).toContain('"Inferred"');
+    expect(inventoryCsv([system])).toContain('"Patient prioritization"');
   });
 });

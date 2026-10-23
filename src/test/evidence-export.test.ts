@@ -7,6 +7,7 @@ import {
 } from "@/features/governance/evidence-report";
 import { generateEvidenceFile, type ExportFormat } from "@/features/governance/evidence-files";
 import { pillarScores } from "@/features/governance/model";
+import { calculateRiskTier } from "@/features/site/engines/risk-tier";
 
 const generatedAt = "2026-10-20T12:00:00.000Z";
 
@@ -70,6 +71,51 @@ describe("governance evidence downloads", () => {
       conditions: "Monthly performance review",
     });
     expect(reportCaveats.join(" ")).toContain("does not establish legal classification");
+  });
+
+  it("carries inferred triage rationale, drivers and evidence caveat into the export snapshot", () => {
+    const triagedState = {
+      ...state,
+      systems: state.systems.map((system, index) =>
+        index === 0
+          ? {
+              ...system,
+              riskTriage: {
+                profile: {
+                  name: system.name,
+                  purpose: "Clinical prioritization",
+                  domain_category: "healthcare",
+                },
+                result: calculateRiskTier({
+                  name: system.name,
+                  purpose: "Clinical prioritization",
+                  domain_category: "healthcare",
+                  decision_impact: "material",
+                  affected_parties: "vulnerable",
+                  data_sensitivity: "special_category",
+                }),
+                assessedAt: generatedAt,
+              },
+            }
+          : system,
+      ),
+    };
+    const snapshot = buildEvidenceReport(
+      triagedState,
+      "Acme Health",
+      "Audit evidence pack",
+      generatedAt,
+      pillarScores(state.answers),
+      "Blocked",
+    );
+
+    expect(snapshot.inventory[0]).toMatchObject({
+      triageTier: "High",
+      triageEvidenceStatus: "Inferred",
+      triageAssessedAt: generatedAt,
+    });
+    expect(snapshot.inventory[0]?.triageRationale).toContain("requires human confirmation");
+    expect(reportCaveats.join(" ")).toContain("Use-case risk triage is a rules-based inference");
   });
 
   it("includes monitoring thresholds and manual observations in evidence snapshots", () => {

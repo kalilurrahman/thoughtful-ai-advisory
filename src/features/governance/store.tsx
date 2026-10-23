@@ -9,7 +9,23 @@ import { transitionChangeReview } from "./change-review-model";
 import type { MonitoringObservation, MonitoringPlan } from "./monitoring-schema";
 import type { CorrectiveAction } from "./actions-schema";
 import { transitionCorrectiveAction } from "./actions-model";
-import { PHASES, SYSTEMS, type Control, type System, type Tier } from "@/data/governance";
+import {
+  PHASES,
+  SYSTEMS,
+  type Control,
+  type System as InventorySystem,
+  type Tier,
+} from "@/data/governance";
+import type { RiskTierResult } from "@/features/site/engines/risk-tier";
+export type System = InventorySystem & {
+  riskTriage?:
+    | {
+        profile: Record<string, string | boolean | string[]>;
+        result: RiskTierResult;
+        assessedAt: string;
+      }
+    | undefined;
+};
 import {
   answerAt,
   defaultAnswers,

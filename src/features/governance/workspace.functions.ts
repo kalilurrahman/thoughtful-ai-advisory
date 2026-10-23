@@ -21,6 +21,37 @@ const system = z.object({
   tier: z.string(),
   status: z.string(),
   vendor: z.string(),
+  riskTriage: z
+    .object({
+      profile: z.record(z.string(), z.union([z.string(), z.boolean(), z.array(z.string())])),
+      result: z.object({
+        tier: z.enum(["Low", "Medium", "High", "Prohibited-review"]),
+        score: z.number().int().min(0),
+        provisional: z.boolean(),
+        factors: z.array(
+          z.object({
+            factor: z.string(),
+            value: z.union([z.string(), z.boolean()]),
+            points: z.number(),
+            citation: z.string(),
+          }),
+        ),
+        triggers: z.array(z.string()),
+        missing_fields: z.array(z.string()),
+        clarifying_questions: z.array(z.string()),
+        required_modules: z.array(z.string()),
+        approval_authority: z.string(),
+        review_cadence_months: z.number().int().min(0),
+        evidence_status: z.literal("Inferred"),
+        requires_human_confirmation: z.literal(true),
+        rationale: z.string(),
+        citations: z.array(z.string()),
+        citation_ids: z.array(z.string()),
+        method: z.string(),
+      }),
+      assessedAt: z.string().datetime({ offset: true }),
+    })
+    .optional(),
 });
 const item = z.object({
   key: z.string(),

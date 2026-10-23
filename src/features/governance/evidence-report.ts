@@ -4,6 +4,7 @@ import type { GovernanceState } from "./store";
 import type { ChangeReview } from "./change-schema";
 import type { MonitoringPlan } from "./monitoring-schema";
 import type { GovernanceDecision } from "./decision-schema";
+import type { System } from "./store";
 
 export type EvidenceReport = {
   workspace: string;
@@ -38,6 +39,20 @@ export type EvidenceReport = {
     owner: string;
     vendor: string;
     data: string;
+    triageTier: string;
+    triageScore: string;
+    triageEvidenceStatus: string;
+    triageRationale: string;
+    triageDrivers: string;
+    triageTriggers: string;
+    triageMissingFacts: string;
+    triageProfile: string;
+    triageAssessedAt: string;
+    triageApprovalAuthority: string;
+    triageReviewCadenceMonths: string;
+    triageModules: string;
+    triageCitations: string;
+    triageMethod: string;
   }[];
   roadmap: { title: string; owner: string; phase: number; effort: string; status: string }[];
   incidents: {
@@ -95,7 +110,35 @@ export function buildEvidenceReport(
         snapshotAt: generatedAt,
       };
     }),
-    inventory: state.systems.map((system) => ({ ...system })),
+    inventory: state.systems.map((system: System) => ({
+      name: system.name,
+      tier: system.tier,
+      status: system.status,
+      kind: system.kind,
+      owner: system.owner,
+      vendor: system.vendor,
+      data: system.data,
+      triageTier: system.riskTriage?.result.tier ?? "Not triaged",
+      triageScore: system.riskTriage ? String(system.riskTriage.result.score) : "",
+      triageEvidenceStatus: system.riskTriage?.result.evidence_status ?? "Not triaged",
+      triageRationale: system.riskTriage?.result.rationale ?? "",
+      triageDrivers:
+        system.riskTriage?.result.factors
+          .filter((factor) => factor.points > 0)
+          .map((factor) => `${factor.factor}: ${factor.value} (+${factor.points})`)
+          .join("; ") ?? "",
+      triageTriggers: system.riskTriage?.result.triggers.join("; ") ?? "",
+      triageMissingFacts: system.riskTriage?.result.missing_fields.join("; ") ?? "",
+      triageProfile: system.riskTriage ? JSON.stringify(system.riskTriage.profile) : "",
+      triageAssessedAt: system.riskTriage?.assessedAt ?? "",
+      triageApprovalAuthority: system.riskTriage?.result.approval_authority ?? "",
+      triageReviewCadenceMonths: system.riskTriage
+        ? String(system.riskTriage.result.review_cadence_months)
+        : "",
+      triageModules: system.riskTriage?.result.required_modules.join("; ") ?? "",
+      triageCitations: system.riskTriage?.result.citation_ids.join("; ") ?? "",
+      triageMethod: system.riskTriage?.result.method ?? "",
+    })),
     roadmap: state.roadmap.map((item) => ({
       title: item.title,
       owner: item.owner,
@@ -126,6 +169,7 @@ export const reportCaveats = [
   "Evidence attachments shown by name are demo references only; source file bytes are not included. Verify links and evidence with their owners.",
   "No reviewer sign-off is recorded in this preview. Complete the sign-off fields through your approved governance process.",
   "A governance disposition is an internal record and does not establish legal classification, regulatory approval, or compliance.",
+  "Use-case risk triage is a rules-based inference, not a legal classification or approval. Human confirmation is required.",
   "Monitoring observations are manually entered records in this preview; no live telemetry or automated alerting is connected.",
 ];
 
