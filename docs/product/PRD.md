@@ -209,9 +209,10 @@ Each requirement is detailed as user stories with acceptance criteria in
   tools from one box (⌘K, Ctrl+K or "/"), with control IDs matched exactly.
 - **FR-63** Keep the website and workspace headers on one row from 360 px; the smoke test fails
   the build otherwise.
-- **FR-64** Let viewers choose a colour theme (Broadsheet, Midnight Gold, Financial Slate), light
-  or dark, and a font (Editorial serif, KR Tools, Modern sans) from one Appearance panel; apply
-  the choice before first paint, keep it in the browser only, and meet WCAG AA in every theme.
+- **FR-64** Let viewers choose a colour theme (Broadsheet, Midnight Gold, Financial Slate), a
+  mode (Auto, which follows the device and is the default, or always light or dark) and a font
+  (Editorial serif, KR Tools, Modern sans) from one Appearance panel; apply the choice before
+  first paint, keep it in the browser only, and meet WCAG AA in every theme.
 
 ## 9. Non-functional requirements
 

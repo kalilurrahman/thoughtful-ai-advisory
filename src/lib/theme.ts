@@ -1,8 +1,9 @@
 import { useCallback, useSyncExternalStore } from "react";
 
 // Appearance preferences shared by the TILLER workspace, the public website and the Platform
-// console: light or dark mode, a colour theme and a font. They are per-viewer browser settings,
-// not workspace data: each is stored in localStorage and applied to <html> — the `dark` class,
+// console: a mode (Auto, which follows the device, or always Light or Dark), a colour theme and
+// a font. They are per-viewer browser settings, not workspace data: each is stored in
+// localStorage and applied to <html> — the chosen `data-mode`, the effective `dark` class,
 // `data-palette` and `data-font` — which switch the tokens in src/styles.css.
 // THEME_INIT_SCRIPT applies them before first paint, so a page never flashes the default look.
 
@@ -10,6 +11,7 @@ export const THEME_STORAGE_KEY = "veritrail-theme";
 export const PALETTE_STORAGE_KEY = "veritrail-palette";
 export const FONT_STORAGE_KEY = "veritrail-font";
 
+export type Mode = "auto" | "light" | "dark";
 export type Palette = "broadsheet" | "gold" | "slate";
 export type FontChoice = "serif" | "kr" | "sans";
 
@@ -41,6 +43,8 @@ export interface FontOption {
   stylesheet: string | null;
 }
 
+/** Auto follows the device's light/dark setting, live; it applies until a viewer picks one. */
+export const DEFAULT_MODE: Mode = "auto";
 export const DEFAULT_PALETTE: Palette = "broadsheet";
 export const DEFAULT_FONT: FontChoice = "serif";
 
@@ -106,6 +110,12 @@ export const THEME_COLORS = {
 
 const CHANGE_EVENT = "veritrail-theme-change";
 
+const SYSTEM_DARK = "(prefers-color-scheme: dark)";
+
+export function isMode(v: unknown): v is Mode {
+  return v === "auto" || v === "light" || v === "dark";
+}
+
 export function isPalette(v: unknown): v is Palette {
   return PALETTES.some((p) => p.id === v);
 }
@@ -122,8 +132,18 @@ export function getFont(id: FontChoice): FontOption {
   return FONTS.find((f) => f.id === id) ?? FONTS[0]!;
 }
 
+function systemDark(): boolean {
+  return typeof window.matchMedia === "function" && window.matchMedia(SYSTEM_DARK).matches;
+}
+
+/** Whether the page is dark now (the chosen mode, or the device's setting under Auto). */
 function isDark(): boolean {
   return document.documentElement.classList.contains("dark");
+}
+
+function currentMode(): Mode {
+  const v = document.documentElement.getAttribute("data-mode");
+  return isMode(v) ? v : DEFAULT_MODE;
 }
 
 function currentPalette(): Palette {
@@ -166,6 +186,14 @@ export function ensureFontStylesheet(id: FontChoice): void {
   document.head.appendChild(link);
 }
 
+function applyMode(mode: Mode): void {
+  document.documentElement.setAttribute("data-mode", mode);
+  document.documentElement.classList.toggle(
+    "dark",
+    mode === "dark" || (mode === "auto" && systemDark()),
+  );
+}
+
 function applyPalette(id: Palette): void {
   if (id === DEFAULT_PALETTE) document.documentElement.removeAttribute("data-palette");
   else document.documentElement.setAttribute("data-palette", id);
@@ -184,10 +212,15 @@ function changed(): void {
   window.dispatchEvent(new Event(CHANGE_EVENT));
 }
 
-export function setDarkTheme(dark: boolean): void {
-  document.documentElement.classList.toggle("dark", dark);
-  store(THEME_STORAGE_KEY, dark ? "dark" : "light");
+export function setMode(mode: Mode): void {
+  applyMode(mode);
+  store(THEME_STORAGE_KEY, mode);
   changed();
+}
+
+/** Always light or always dark (the quick switches); Auto is set with setMode. */
+export function setDarkTheme(dark: boolean): void {
+  setMode(dark ? "dark" : "light");
 }
 
 export function setPalette(id: Palette): void {
@@ -202,22 +235,39 @@ export function setFont(id: FontChoice): void {
   changed();
 }
 
-/** Back to Broadsheet, light, Editorial serif. */
+/** Back to Auto, Broadsheet and Editorial serif. */
 export function resetAppearance(): void {
-  document.documentElement.classList.remove("dark");
+  applyMode(DEFAULT_MODE);
   applyPalette(DEFAULT_PALETTE);
   applyFont(DEFAULT_FONT);
-  store(THEME_STORAGE_KEY, "light");
+  store(THEME_STORAGE_KEY, DEFAULT_MODE);
   store(PALETTE_STORAGE_KEY, DEFAULT_PALETTE);
   store(FONT_STORAGE_KEY, DEFAULT_FONT);
   changed();
 }
 
+let followingSystem = false;
+
+/** Under Auto, switch light/dark live when the device setting changes (bound once). */
+export function followSystemTheme(): void {
+  if (followingSystem || typeof window.matchMedia !== "function") return;
+  followingSystem = true;
+  const query = window.matchMedia(SYSTEM_DARK);
+  const onSystemChange = () => {
+    if (currentMode() !== "auto") return;
+    applyMode("auto");
+    changed();
+  };
+  if (typeof query.addEventListener === "function")
+    query.addEventListener("change", onSystemChange);
+  else query.addListener(onSystemChange); // Safari before 14
+}
+
 function subscribe(onChange: () => void): () => void {
+  followSystemTheme();
   // Keep other tabs in step when a preference changes there.
   const onStorage = (e: StorageEvent) => {
-    if (e.key === THEME_STORAGE_KEY)
-      document.documentElement.classList.toggle("dark", e.newValue === "dark");
+    if (e.key === THEME_STORAGE_KEY) applyMode(isMode(e.newValue) ? e.newValue : DEFAULT_MODE);
     else if (e.key === PALETTE_STORAGE_KEY)
       applyPalette(isPalette(e.newValue) ? e.newValue : DEFAULT_PALETTE);
     else if (e.key === FONT_STORAGE_KEY)
@@ -234,19 +284,25 @@ function subscribe(onChange: () => void): () => void {
   };
 }
 
-/** Current mode and a toggle. Renders light on the server and during hydration. */
+/** Whether the page is dark now, and a switch to the other one (always light or always dark). */
 export function useDarkTheme(): [dark: boolean, toggle: () => void] {
   const dark = useSyncExternalStore(subscribe, isDark, () => false);
   const toggle = useCallback(() => setDarkTheme(!isDark()), []);
   return [dark, toggle];
 }
 
-/** Current mode, palette and font. Renders the defaults on the server and during hydration. */
-export function useAppearance(): { dark: boolean; palette: Palette; font: FontChoice } {
+/** Chosen mode, whether it is dark now, palette and font. Defaults on the server. */
+export function useAppearance(): {
+  mode: Mode;
+  dark: boolean;
+  palette: Palette;
+  font: FontChoice;
+} {
+  const mode = useSyncExternalStore(subscribe, currentMode, () => DEFAULT_MODE);
   const dark = useSyncExternalStore(subscribe, isDark, () => false);
   const palette = useSyncExternalStore(subscribe, currentPalette, () => DEFAULT_PALETTE);
   const font = useSyncExternalStore(subscribe, currentFont, () => DEFAULT_FONT);
-  return { dark, palette, font };
+  return { mode, dark, palette, font };
 }
 
 const INIT_COLORS = Object.fromEntries(
@@ -257,12 +313,14 @@ const INIT_FONTS = Object.fromEntries(FONTS.map((f) => [f.id, f.stylesheet ?? ""
 /** Inline <head> script: apply the stored preferences before the first paint. */
 export const THEME_INIT_SCRIPT = `(function(){var r=document.documentElement,C=${JSON.stringify(
   INIT_COLORS,
-)},F=${JSON.stringify(INIT_FONTS)};function g(k){try{return localStorage.getItem(k)}catch(e){return null}}var d=g(${JSON.stringify(
+)},F=${JSON.stringify(INIT_FONTS)};function g(k){try{return localStorage.getItem(k)}catch(e){return null}}var o=g(${JSON.stringify(
   THEME_STORAGE_KEY,
-)})==="dark",p=g(${JSON.stringify(PALETTE_STORAGE_KEY)}),f=g(${JSON.stringify(
+)}),p=g(${JSON.stringify(PALETTE_STORAGE_KEY)}),f=g(${JSON.stringify(
   FONT_STORAGE_KEY,
-)});if(!C.hasOwnProperty(p))p=${JSON.stringify(DEFAULT_PALETTE)};if(!F.hasOwnProperty(f))f=${JSON.stringify(
+)});if(o!=="light"&&o!=="dark")o="auto";var d=o==="dark"||(o==="auto"&&typeof window.matchMedia==="function"&&window.matchMedia(${JSON.stringify(
+  SYSTEM_DARK,
+)}).matches);if(!C.hasOwnProperty(p))p=${JSON.stringify(DEFAULT_PALETTE)};if(!F.hasOwnProperty(f))f=${JSON.stringify(
   DEFAULT_FONT,
-)};if(d)r.classList.add("dark");if(p!==${JSON.stringify(
+)};r.setAttribute("data-mode",o);if(d)r.classList.add("dark");if(p!==${JSON.stringify(
   DEFAULT_PALETTE,
 )})r.setAttribute("data-palette",p);if(F[f]){var l=document.createElement("link");l.rel="stylesheet";l.href=F[f];l.setAttribute("data-font-sheet",f);document.head.appendChild(l);r.setAttribute("data-font",f)}var m=document.createElement("meta");m.name="theme-color";m.content=C[p][d?1:0];document.head.appendChild(m)})();`;

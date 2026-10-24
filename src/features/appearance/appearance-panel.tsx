@@ -1,6 +1,6 @@
 import { useEffect, useSyncExternalStore } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Check, Moon, Palette, Sun, X } from "@phosphor-icons/react";
+import { Check, CircleHalf, Moon, Palette, Sun, X } from "@phosphor-icons/react";
 import {
   FONTS,
   PALETTES,
@@ -8,13 +8,14 @@ import {
   getFont,
   getPalette,
   resetAppearance,
-  setDarkTheme,
   setFont,
+  setMode,
   setPalette,
   useAppearance,
+  type Mode,
 } from "@/lib/theme";
 
-// Appearance: light or dark, a colour theme and a font, from the website header and menu, the
+// Appearance: Auto, light or dark, a colour theme and a font, from the website header and menu, the
 // workspace header and More screen. Choices apply at once and are remembered in this browser
 // (src/lib/theme.ts); nothing is sent anywhere.
 
@@ -43,16 +44,29 @@ function useAppearanceOpen(): boolean {
   );
 }
 
-/** Short summary for menus: "Midnight Gold · Dark · KR Tools". */
+const MODES: Array<{ id: Mode; label: string; title: string; icon: typeof Sun }> = [
+  {
+    id: "auto",
+    label: "Auto",
+    title: "Follow your device's light or dark setting",
+    icon: CircleHalf,
+  },
+  { id: "light", label: "Light", title: "Always light", icon: Sun },
+  { id: "dark", label: "Dark", title: "Always dark", icon: Moon },
+];
+
+/** Short summary for menus: "Midnight Gold · Auto (dark) · KR Tools". */
 export function useAppearanceSummary(): string {
-  const { dark, palette, font } = useAppearance();
-  return `${getPalette(palette).name} · ${dark ? "Dark" : "Light"} · ${getFont(font).name}`;
+  const { mode, dark, palette, font } = useAppearance();
+  const shade = dark ? "dark" : "light";
+  const modeText = mode === "auto" ? `Auto (${shade})` : dark ? "Dark" : "Light";
+  return `${getPalette(palette).name} · ${modeText} · ${getFont(font).name}`;
 }
 
 /** Mounted once at the root, beside the search and PWA layers. */
 export function AppearanceLayer() {
   const isOpen = useAppearanceOpen();
-  const { dark, palette, font } = useAppearance();
+  const { mode, dark, palette, font } = useAppearance();
 
   // Load the other fonts while the panel is open, so each preview shows its real typeface.
   useEffect(() => {
@@ -88,23 +102,25 @@ export function AppearanceLayer() {
           <fieldset className="appearance-group">
             <legend>Mode</legend>
             <div className="appearance-modes">
-              {[
-                { id: "light", label: "Light", icon: Sun, value: false },
-                { id: "dark", label: "Dark", icon: Moon, value: true },
-              ].map((m) => (
-                <label key={m.id} className="appearance-mode">
+              {MODES.map((m) => (
+                <label key={m.id} className="appearance-mode" title={m.title}>
                   <input
                     type="radio"
                     name="appearance-mode"
                     value={m.id}
-                    checked={dark === m.value}
-                    onChange={() => setDarkTheme(m.value)}
+                    checked={mode === m.id}
+                    onChange={() => setMode(m.id)}
                   />
                   <m.icon weight="duotone" aria-hidden="true" />
                   {m.label}
                 </label>
               ))}
             </div>
+            {mode === "auto" && (
+              <p className="appearance-hint">
+                Following your device: {dark ? "dark" : "light"} right now.
+              </p>
+            )}
           </fieldset>
 
           <fieldset className="appearance-group">

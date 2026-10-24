@@ -9,13 +9,16 @@ import {
   THEME_INIT_SCRIPT,
   THEME_STORAGE_KEY,
   ensureFontStylesheet,
+  followSystemTheme,
   resetAppearance,
   setDarkTheme,
   setFont,
+  setMode,
   setPalette,
 } from "@/lib/theme";
 
-// Appearance: light/dark, colour palettes and fonts (src/lib/theme.ts, src/styles.css).
+// Appearance: mode (Auto, light, dark), colour palettes and fonts (src/lib/theme.ts,
+// src/styles.css).
 
 // Read from disk: Vitest replaces CSS imports (even ?raw) with an empty string.
 const stylesCss = readFileSync(join(process.cwd(), "src", "styles.css"), "utf8");
@@ -25,9 +28,35 @@ const themeColor = () =>
   document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.content;
 const fontSheets = () => [...document.querySelectorAll("link[data-font-sheet]")];
 
+// A device whose light/dark setting the test controls, with its change listeners.
+const realMatchMedia = window.matchMedia;
+let deviceDark = false;
+const deviceListeners: Array<() => void> = [];
+function mockDevice(dark: boolean) {
+  deviceDark = dark;
+  window.matchMedia = ((query: string) => ({
+    get matches() {
+      return query === "(prefers-color-scheme: dark)" && deviceDark;
+    },
+    media: query,
+    onchange: null,
+    addEventListener: (_: string, fn: () => void) => deviceListeners.push(fn),
+    removeEventListener: () => {},
+    addListener: (fn: () => void) => deviceListeners.push(fn),
+    removeListener: () => {},
+    dispatchEvent: () => false,
+  })) as unknown as typeof window.matchMedia;
+}
+function deviceChanges(dark: boolean) {
+  deviceDark = dark;
+  for (const fn of deviceListeners) fn();
+}
+
 function clean() {
   localStorage.clear();
+  window.matchMedia = realMatchMedia;
   root().className = "";
+  root().removeAttribute("data-mode");
   root().removeAttribute("data-palette");
   root().removeAttribute("data-font");
   for (const el of document.head.querySelectorAll(
@@ -45,6 +74,7 @@ describe("appearance preferences", () => {
     localStorage.setItem(PALETTE_STORAGE_KEY, "gold");
     localStorage.setItem(FONT_STORAGE_KEY, "kr");
     new Function(THEME_INIT_SCRIPT)();
+    expect(root().getAttribute("data-mode")).toBe("dark");
     expect(root().classList.contains("dark")).toBe(true);
     expect(root().getAttribute("data-palette")).toBe("gold");
     expect(root().getAttribute("data-font")).toBe("kr");
@@ -54,15 +84,44 @@ describe("appearance preferences", () => {
     ]);
   });
 
-  it("falls back to Broadsheet, light and the serif for missing or unknown values", () => {
+  it("falls back to Auto, Broadsheet and the serif for missing or unknown values", () => {
+    localStorage.setItem(THEME_STORAGE_KEY, "sepia");
     localStorage.setItem(PALETTE_STORAGE_KEY, "neon");
     localStorage.setItem(FONT_STORAGE_KEY, "comic");
     new Function(THEME_INIT_SCRIPT)();
+    expect(root().getAttribute("data-mode")).toBe("auto");
     expect(root().classList.contains("dark")).toBe(false);
     expect(root().hasAttribute("data-palette")).toBe(false);
     expect(root().hasAttribute("data-font")).toBe(false);
     expect(fontSheets()).toHaveLength(0);
     expect(themeColor()).toBe(PALETTES[0]?.light.background);
+  });
+
+  it("follows a dark device under Auto, the default, before first paint", () => {
+    mockDevice(true);
+    localStorage.setItem(PALETTE_STORAGE_KEY, "slate");
+    new Function(THEME_INIT_SCRIPT)();
+    expect(root().getAttribute("data-mode")).toBe("auto");
+    expect(root().classList.contains("dark")).toBe(true);
+    expect(themeColor()).toBe(PALETTES.find((p) => p.id === "slate")?.dark.background);
+  });
+
+  it("switches with the device under Auto, but not once Light or Dark is chosen", () => {
+    mockDevice(false);
+    setMode("auto");
+    followSystemTheme();
+    expect(root().classList.contains("dark")).toBe(false);
+    deviceChanges(true);
+    expect(root().classList.contains("dark")).toBe(true);
+    expect(themeColor()).toBe(PALETTES[0]?.dark.background);
+    setMode("light");
+    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe("light");
+    deviceChanges(true);
+    expect(root().classList.contains("dark")).toBe(false);
+    setMode("auto");
+    expect(root().classList.contains("dark")).toBe(true);
+    deviceChanges(false);
+    expect(root().classList.contains("dark")).toBe(false);
   });
 
   it("saves each choice, updates <html> and keeps the browser colour in step", () => {
@@ -91,9 +150,11 @@ describe("appearance preferences", () => {
     setFont("kr");
     setDarkTheme(true);
     resetAppearance();
+    expect(root().getAttribute("data-mode")).toBe("auto");
     expect(root().classList.contains("dark")).toBe(false);
     expect(root().hasAttribute("data-palette")).toBe(false);
     expect(root().hasAttribute("data-font")).toBe(false);
+    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe("auto");
     expect(localStorage.getItem(PALETTE_STORAGE_KEY)).toBe("broadsheet");
     expect(themeColor()).toBe(PALETTES[0]?.light.background);
   });
