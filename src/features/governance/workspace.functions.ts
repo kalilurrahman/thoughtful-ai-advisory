@@ -87,7 +87,7 @@ export const saveWorkspace = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data, context }) => {
-    const result = await context.supabase.rpc("save_veritrail_workspace", {
+    const result = await context.supabase.rpc("save_aegis_workspace", {
       p_org: data.organizationId ?? "00000000-0000-0000-0000-000000000000",
       p_name: data.name,
       p_state: JSON.parse(JSON.stringify(data.state)),
