@@ -14,8 +14,7 @@ import {
   Books,
   BookOpen,
   Tag,
-  Moon,
-  Sun,
+  Palette,
   ClipboardText,
   ArrowsClockwise,
   Gauge,
@@ -34,7 +33,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { requestInstall, useInstallState } from "@/features/pwa/install-store";
-import { useDarkTheme } from "@/lib/theme";
+import { openAppearance } from "@/features/appearance/appearance-panel";
 import { useGovernance } from "./store";
 const tabs = [
   { to: "/workspace", name: "Home", icon: House },
@@ -85,10 +84,10 @@ const studioTabs = [
   { to: "/plans", name: "Plans", icon: Tag },
 ] as const;
 /**
- * Theme, install and export in one menu, so the header stays a single row on phones
- * (the same actions sit inline in the header from 640px up).
+ * Search, appearance, export and install in one menu, so the header stays a single row on
+ * phones (the same actions sit inline in the header from 640px up).
  */
-function HeaderOverflowMenu({ dark, toggleDark }: { dark: boolean; toggleDark: () => void }) {
+function HeaderOverflowMenu() {
   const { canInstall } = useInstallState();
   return (
     <DropdownMenu>
@@ -101,9 +100,8 @@ function HeaderOverflowMenu({ dark, toggleDark }: { dark: boolean; toggleDark: (
         <DropdownMenuItem onSelect={openSearch}>
           <MagnifyingGlass weight="duotone" /> Search
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={toggleDark}>
-          {dark ? <Sun weight="duotone" /> : <Moon weight="duotone" />}
-          {dark ? "Use light theme" : "Use dark theme"}
+        <DropdownMenuItem data-cta="appearance-menu" onSelect={openAppearance}>
+          <Palette weight="duotone" /> Appearance
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/export">
@@ -123,7 +121,6 @@ function HeaderOverflowMenu({ dark, toggleDark }: { dark: boolean; toggleDark: (
 export function GovernanceShell({ children }: { children: ReactNode }) {
   const { workspaceName, userId } = useGovernance();
   const { pathname } = useLocation();
-  const [dark, toggleDark] = useDarkTheme();
   if (pathname === "/onboarding")
     return <main className="veritrail-app onboarding-app">{children}</main>;
   const active = tabs.find((t) => t.to === pathname)?.to ?? "/more";
@@ -214,10 +211,11 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
           <Button
             variant="ghost"
             size="icon"
-            aria-label={dark ? "Use light theme" : "Use dark theme"}
-            onClick={toggleDark}
+            aria-label="Appearance: theme, mode and font"
+            data-cta="appearance-header"
+            onClick={openAppearance}
           >
-            {dark ? <Sun weight="duotone" /> : <Moon weight="duotone" />}
+            <Palette weight="duotone" />
           </Button>
           <Button asChild variant="ghost" size="icon" aria-label="Export reports">
             <Link to="/export">
@@ -225,7 +223,7 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
             </Link>
           </Button>
         </div>
-        <HeaderOverflowMenu dark={dark} toggleDark={toggleDark} />
+        <HeaderOverflowMenu />
       </header>
       <main className={"app-content page-" + (pathname.slice(1) || "home")}>
         <h1 className="screen-title">{titles[pathname] ?? "VERITRAIL"}</h1>

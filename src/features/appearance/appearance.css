@@ -1,0 +1,113 @@
+/* Appearance panel (src/features/appearance/appearance-panel.tsx). Rendered in a portal for both
+   the website and the workspace, so it uses the global tokens from src/styles.css — it restyles
+   itself live as the viewer picks a theme or font. */
+.appearance-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 82;
+  background: var(--scrim, rgba(32, 30, 29, 0.5));
+  animation: appearance-fade 0.15s ease both;
+}
+.appearance-dialog {
+  position: fixed;
+  z-index: 83;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: min(32rem, 100vw);
+  max-height: min(44rem, calc(100dvh - 12px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: grid;
+  gap: 14px;
+  padding: 18px max(18px, env(safe-area-inset-right, 0px)) calc(18px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px));
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--primary);
+  border-radius: calc(var(--radius) + 10px) calc(var(--radius) + 10px) 0 0;
+  box-shadow: var(--popover-shadow);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.45;
+  animation: appearance-rise 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@media (min-width: 640px) {
+  .appearance-dialog {
+    top: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    width: min(32rem, calc(100vw - 32px));
+    border-radius: calc(var(--radius) + 6px);
+    animation-name: appearance-pop;
+  }
+}
+.appearance-dialog:focus { outline: none; }
+.appearance-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.appearance-title { display: flex; align-items: center; gap: 10px; margin: 0; font-family: var(--font-heading); font-size: 22px; font-weight: var(--heading-weight); }
+.appearance-title svg { width: 24px; height: 24px; color: var(--primary); }
+.appearance-close { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: var(--radius); background: transparent; color: var(--muted-foreground); cursor: pointer; }
+.appearance-close:hover { background: var(--secondary); color: var(--foreground); }
+.appearance-desc { margin: -8px 0 0; color: var(--muted-foreground); font-size: 14px; }
+
+.appearance-group { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }
+.appearance-group legend { padding: 0; margin-bottom: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-foreground); }
+
+/* Visually hidden radios: the labels are the controls, and arrow keys move within each group. */
+.appearance-dialog input[type="radio"] { position: absolute; width: 1px; height: 1px; margin: 0; padding: 0; opacity: 0; pointer-events: none; }
+
+.appearance-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: calc(var(--radius) + 4px); overflow: hidden; }
+.appearance-mode { position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; margin: 0; font-size: 15px; font-weight: 600; color: var(--muted-foreground); background: var(--card); cursor: pointer; }
+.appearance-mode + .appearance-mode { border-left: 1px solid var(--border); }
+.appearance-mode svg { width: 20px; height: 20px; }
+.appearance-mode:has(input:checked) { background: var(--primary); color: var(--primary-foreground); }
+.appearance-mode:has(input:focus-visible) { outline: 3px solid var(--ring); outline-offset: -3px; }
+
+.appearance-options { display: grid; gap: 8px; }
+.appearance-option { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; min-height: 60px; margin: 0; padding: 8px 12px 8px 8px; border: 1px solid var(--border); border-radius: calc(var(--radius) + 4px); background: var(--card); cursor: pointer; font-size: 15px; }
+.appearance-option:hover { border-color: var(--input); }
+.appearance-option:has(input:checked) { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); background: var(--accent); }
+.appearance-option:has(input:focus-visible) { outline: 3px solid var(--ring); outline-offset: 2px; }
+.appearance-text { display: grid; gap: 1px; min-width: 0; }
+.appearance-name { font-weight: 600; color: var(--foreground); }
+.appearance-option:has(input:checked) .appearance-name { color: var(--accent-foreground); }
+.appearance-note { font-size: 13px; color: var(--muted-foreground); }
+.appearance-check { width: 20px; height: 20px; color: var(--primary); visibility: hidden; }
+.appearance-option:has(input:checked) .appearance-check { visibility: visible; }
+
+/* A miniature page in the palette: background, a brand bar and a card with two lines. */
+.appearance-swatch { position: relative; display: block; width: 64px; height: 44px; border-radius: 6px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(127, 127, 127, 0.35); }
+.appearance-swatch .sw-bar { position: absolute; left: 0; right: 0; top: 0; height: 6px; }
+.appearance-swatch .sw-card { position: absolute; left: 8px; right: 8px; top: 13px; bottom: 7px; display: grid; align-content: center; gap: 4px; padding: 0 6px; border-radius: 3px; }
+.appearance-swatch .sw-line { display: block; height: 3px; border-radius: 2px; opacity: 0.85; }
+.appearance-swatch .sw-line.short { width: 55%; opacity: 1; }
+.appearance-sample { display: flex; align-items: center; justify-content: center; width: 64px; height: 44px; border-radius: 6px; background: var(--secondary); color: var(--foreground); font-size: 24px; font-weight: 600; line-height: 1; }
+
+/* From 640px the options sit side by side as cards, so the whole panel fits without scrolling. */
+@media (min-width: 640px) {
+  .appearance-dialog { width: min(42rem, calc(100vw - 32px)); }
+  .appearance-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .appearance-option { grid-template-columns: minmax(0, 1fr); align-content: start; gap: 8px; padding: 8px 8px 10px; }
+  .appearance-swatch, .appearance-sample { width: 100%; height: 56px; }
+  .appearance-swatch .sw-card { left: 12px; right: 12px; top: 15px; bottom: 9px; }
+  .appearance-check { position: absolute; top: 12px; right: 12px; padding: 2px; border-radius: 999px; background: var(--card); width: 22px; height: 22px; }
+}
+.appearance-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 4px; }
+.appearance-reset { min-height: 44px; padding: 0 4px; border: 0; background: transparent; color: var(--primary); font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 0.18em; cursor: pointer; }
+.appearance-done { min-height: 44px; padding: 0 22px; border: 0; border-radius: var(--radius); background: var(--primary); color: var(--primary-foreground); font: inherit; font-weight: 600; cursor: pointer; }
+.appearance-done:hover { filter: brightness(1.08); }
+
+/* Header buttons — same footprint as the search and install buttons. */
+.appearance-btn { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: var(--radius); background: transparent; color: var(--primary); cursor: pointer; }
+.appearance-btn:hover { background: var(--accent); }
+.appearance-btn svg { width: 1.3rem; height: 1.3rem; }
+
+@keyframes appearance-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes appearance-rise { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translateX(-50%); } }
+@keyframes appearance-pop { from { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); } to { opacity: 1; transform: translate(-50%, -50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .appearance-overlay, .appearance-dialog { animation: none; }
+}
+@media print {
+  .appearance-overlay, .appearance-dialog { display: none !important; }
+}

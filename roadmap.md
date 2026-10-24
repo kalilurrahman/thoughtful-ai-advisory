@@ -38,3 +38,4 @@
 - [x] Publish the product index: PRD, capabilities index, epics and user stories, and use cases (docs/product), checked by tests.
 - [ ] Package for Google Play and the Microsoft Store once the production domain and developer accounts exist.
 - [ ] Reconcile the workspace save function before applying migration 0009 (live database and client use save_aegis_workspace).
+- [x] Add Appearance: three colour themes (Broadsheet, Midnight Gold, Financial Slate) in light and dark, and three fonts (Editorial serif, KR Tools, Modern sans), inspired by the FinPrompt and Claudiator theme switchers.

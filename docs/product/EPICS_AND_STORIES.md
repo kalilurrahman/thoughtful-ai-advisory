@@ -2,7 +2,7 @@
 
 # VERITRAIL epics and user stories
 
-16 epics and 56 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
+16 epics and 57 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
 
 | Epic | Title | Area | Status | Stories | Done | Partial | Planned |
 |---|---|---|---|---|---|---|---|
@@ -20,7 +20,7 @@
 | [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 3 | 1 | 2 | 0 |
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
 | [E14](#e14--administration-and-privacy-first-analytics) | Administration and privacy-first analytics | Administration and analytics | Live | 2 | 2 | 0 | 0 |
-| [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 5 | 5 | 0 | 0 |
+| [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 6 | 6 | 0 | 0 |
 | [E16](#e16--planned-capabilities) | Planned capabilities | Free interactive tools | Planned | 4 | 0 | 0 | 4 |
 
 ## E01 — Public website and governed content
@@ -857,7 +857,7 @@ Known gaps:
 
 **Area:** Installable app · **Status:** Live
 
-**Capabilities:** CAP-005 Glossary, CAP-070 Installable app (PWA), CAP-071 Offline reading, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-076 Workspace app shell
+**Capabilities:** CAP-005 Glossary, CAP-070 Installable app (PWA), CAP-071 Offline reading, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-077 Appearance — themes and fonts, CAP-076 Workspace app shell
 
 ### S15.1
 
@@ -926,6 +926,21 @@ Acceptance criteria:
 - Given the smoke test, when run, then a header that wraps fails the build.
 
 **Capabilities:** CAP-076 · **Tests:** none yet
+
+### S15.6
+
+**As a prospective buyer**, I want to choose a colour theme, light or dark mode and a font, so that VERITRAIL is comfortable to read and feels like my own tools.
+
+*Status: Done*
+
+Acceptance criteria:
+
+- Given the Appearance panel (website header or menu, workspace header, menu or More screen), when I pick Broadsheet, Midnight Gold or Financial Slate, light or dark, and Editorial serif, KR Tools or Modern sans, then the whole site and workspace restyle at once.
+- Given a saved choice, when any page loads, then it is applied before the first paint, with a matching browser colour, and other open tabs follow.
+- Given any palette and mode, when checked, then text, links and buttons meet WCAG AA contrast.
+- Given the KR Tools or Modern sans font, when either header is shown at 1280 px or 390 px, then it stays on one row.
+
+**Capabilities:** CAP-077 · **Tests:** `theme.test.ts`
 
 ## E16 — Planned capabilities
 

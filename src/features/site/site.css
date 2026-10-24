@@ -11,7 +11,7 @@
   --c-surface: var(--secondary);
   --c-surface-2: var(--muted);
   --c-border: var(--border);
-  --c-rule: var(--foreground);
+  --c-rule: var(--rule);
   --c-text: var(--foreground);
   --c-heading: var(--foreground);
   --c-muted: var(--muted-foreground);
@@ -31,8 +31,8 @@
   --c-info-bg: var(--accent);
   --c-input-border: var(--input);
   --maxw: 72rem;
-  --font: "Source Serif 4", Georgia, serif;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --font: var(--font-body);
+  --mono: var(--font-mono);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -40,7 +40,7 @@
 img, svg { max-width: 100%; height: auto; }
 a { color: var(--c-link); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
 a:hover { color: var(--c-primary-hover); text-decoration-thickness: 2px; }
-h1, h2, h3, h4 { line-height: 1.25; color: var(--c-heading); font-weight: 600; letter-spacing: 0; margin: 1.6em 0 0.5em; }
+h1, h2, h3, h4 { font-family: var(--font-heading); line-height: 1.25; color: var(--c-heading); font-weight: var(--heading-weight); letter-spacing: 0; margin: 1.6em 0 0.5em; }
 h1 { font-size: clamp(2rem, 1.5rem + 2vw, 2.9rem); line-height: 1.15; margin-top: 0; }
 h2 { font-size: clamp(1.45rem, 1.25rem + 0.8vw, 1.85rem); }
 h3 { font-size: 1.2rem; }
@@ -772,7 +772,9 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
   .header-theme { display: none; }
   .nav-theme-row { margin: 0 0 0.5rem; }
   .nav-theme-btn { display: inline-flex; align-items: center; gap: 0.6rem; width: 100%; min-height: 44px; padding: 0.5rem 0.25rem; border: 0; border-top: 1px solid var(--c-border); background: transparent; color: var(--c-text); font: inherit; font-weight: 600; cursor: pointer; }
-  .nav-theme-btn svg { width: 1.3rem; height: 1.3rem; color: var(--c-link); }
+  .nav-theme-text { display: grid; text-align: left; }
+  .nav-theme-summary { font-size: 0.85rem; font-weight: 400; color: var(--c-muted); }
+  .nav-theme-btn svg { width: 1.3rem; height: 1.3rem; flex: none; color: var(--c-link); }
   @media (min-width: 48em) {
     .header-theme { display: inline-flex; }
     .nav-theme-row { display: none; }

@@ -16,12 +16,14 @@ import { GovernanceShell } from "@/features/governance/shell";
 import { SiteLayout } from "@/features/site/layout";
 import { PwaLayer } from "@/features/pwa/pwa-layer";
 import { SearchLayer } from "@/features/search/search-palette";
+import { AppearanceLayer } from "@/features/appearance/appearance-panel";
 import { PWA_INIT_SCRIPT } from "@/features/pwa/pwa-core";
 import "@lovable.dev/cloud-auth-js/styles.css";
 import appCss from "../styles.css?url";
 import siteCss from "../features/site/site.css?url";
 import pwaCss from "../features/pwa/pwa.css?url";
 import searchCss from "../features/search/search.css?url";
+import appearanceCss from "../features/appearance/appearance.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { THEME_INIT_SCRIPT } from "../lib/theme";
 
@@ -112,7 +114,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    // Applies the viewer's light/dark preference (and theme-color) before first paint, and
+    // Applies the viewer's appearance (mode, theme, font and theme-color) before first paint, and
     // captures the browser's one-off install prompt before React hydrates.
     scripts: [{ children: THEME_INIT_SCRIPT }, { children: PWA_INIT_SCRIPT }],
     links: [
@@ -123,6 +125,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: siteCss },
       { rel: "stylesheet", href: pwaCss },
       { rel: "stylesheet", href: searchCss },
+      { rel: "stylesheet", href: appearanceCss },
       { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
@@ -186,6 +189,7 @@ function RootComponent() {
         )}
         <PwaLayer />
         <SearchLayer />
+        <AppearanceLayer />
       </GovernanceProvider>
     </QueryClientProvider>
   );

@@ -709,6 +709,19 @@ epics:
           - Given any width from 360 px, when the workspace loads, then the header controls stay on one row; on phones theme, export, search and install sit in a "More actions" menu.
           - Given the smoke test, when run, then a header that wraps fails the build.
 
+      - id: S15.6
+        persona: visitor
+        want: to choose a colour theme, light or dark mode and a font
+        so_that: VERITRAIL is comfortable to read and feels like my own tools
+        status: done
+        capabilities: [CAP-077]
+        acceptance:
+          - Given the Appearance panel (website header or menu, workspace header, menu or More screen), when I pick Broadsheet, Midnight Gold or Financial Slate, light or dark, and Editorial serif, KR Tools or Modern sans, then the whole site and workspace restyle at once.
+          - Given a saved choice, when any page loads, then it is applied before the first paint, with a matching browser colour, and other open tabs follow.
+          - Given any palette and mode, when checked, then text, links and buttons meet WCAG AA contrast.
+          - Given the KR Tools or Modern sans font, when either header is shown at 1280 px or 390 px, then it stays on one row.
+        tests: [theme.test.ts]
+
   - id: E16
     title: Planned capabilities
     area: tools
@@ -759,8 +772,9 @@ use_cases:
       - Read the compliance guide and its disclaimer.
     alternatives:
       - Use search (⌘K or "/") to jump straight to a topic.
+      - Open Appearance to read in another theme, mode or font.
     outcome: The visitor knows what VERITRAIL does and does not claim.
-    stories: [S01.1, S01.2, S01.3, S01.4, S15.3, S15.4]
+    stories: [S01.1, S01.2, S01.3, S01.4, S15.3, S15.4, S15.6]
   - id: UC02
     title: Run the maturity self-assessment
     actors: [gov-lead]
@@ -1079,4 +1093,5 @@ capabilities:
   - {id: CAP-073, name: Glossary definitions in text, area: app, route: "", status: live, data: none, epic: E15, personas: [visitor], source: [src/features/site/glossary-tip.tsx, src/features/site/markdown.tsx], tests: [site-reading.test.ts], summary: "First mention of each term underlined with a definition on hover, focus or tap."}
   - {id: CAP-074, name: Reading aids, area: app, route: "", status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/markdown.tsx, src/features/site/reading.tsx], tests: [site-reading.test.ts], summary: "Feature cards, step timelines, link cards, callouts, stacked tables, code copy, On this page, progress and back-to-top."}
   - {id: CAP-075, name: Section illustrations and share images, area: app, route: "", status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/illustrations.tsx, scripts/generate-social-images.mjs, public/og], tests: [site-reading.test.ts], summary: "Theme-aware SVG art for every section and 1200×630 share cards."}
+  - {id: CAP-077, name: Appearance — themes and fonts, area: app, route: "", status: live, data: browser, epic: E15, personas: [visitor, gov-lead], source: [src/lib/theme.ts, src/features/appearance/appearance-panel.tsx, src/styles.css], tests: [theme.test.ts], summary: "Three palettes (Broadsheet, Midnight Gold, Financial Slate) in light and dark, and three fonts (Editorial serif, KR Tools, Modern sans), applied before first paint."}
   - {id: CAP-076, name: Workspace app shell, area: app, route: "", status: live, data: none, epic: E15, personas: [gov-lead, owner, approver], source: [src/features/governance/shell.tsx], tests: [app-routing.test.tsx], summary: "One-row header with back, home, workspace name and actions (a More actions menu on phones), side navigation on desktop and bottom tabs on phones."}
