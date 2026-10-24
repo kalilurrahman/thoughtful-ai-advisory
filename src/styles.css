@@ -2534,6 +2534,42 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   color: var(--muted-foreground);
   font-size: 12px;
 }
+.decision-history-note {
+  display: block;
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+.decision-note {
+  padding: 8px 10px;
+  border-left: 2px solid var(--warning-ink);
+  background: var(--background);
+}
+.decision-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.decision-correction {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--row-rule);
+}
+.decision-correction textarea,
+.action-cancel textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+.decision-notice {
+  margin-bottom: 12px;
+  color: var(--success-ink);
+  font-weight: 600;
+}
+.decision-notice:empty {
+  margin: 0;
+}
 .checklist-intro {
   margin-bottom: 16px;
   padding: 18px;

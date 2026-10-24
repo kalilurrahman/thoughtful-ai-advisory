@@ -425,12 +425,14 @@ Acceptance criteria:
 
 - Given Risk accepted or Conditional approval, when saved, then a review date on or after the decision date is required.
 - Given a new decision for a system, when saved, then the previous current decision becomes Superseded.
+- Given a current record entered wrongly, when corrected with a reason and at least one changed field, then a new current record names it and the original stays in the register marked Corrected, with the reason in its history.
+- Given a current record made in error, when withdrawn with a reason, then it stays in the register marked Withdrawn and the system has no current decision.
+- Given corrected or withdrawn records, when evidence is exported, then the reasons appear in the history and the correction column.
 
-**Routes:** `/decisions` · **Capabilities:** CAP-038 · **Tests:** `decision-schema.test.ts`, `evidence-export.test.ts`
+**Routes:** `/decisions` · **Capabilities:** CAP-038 · **Tests:** `decision-schema.test.ts`, `evidence-export.test.ts`, `decision-corrections.test.tsx`
 
 Known gaps:
 
-- Decisions cannot be edited or deleted.
 - A decision does not change the system's inventory status.
 
 ### S08.3
@@ -1002,7 +1004,6 @@ Every gap recorded against a story, in one list for planning.
 | [S05.3](#s053) | E05 | not per system. |
 | [S06.1](#s061) | E06 | Systems cannot be deleted. |
 | [S07.1](#s071) | E07 | "Export guardrail bundle" links to the general export; there is no guardrail-specific file. |
-| [S08.2](#s082) | E08 | Decisions cannot be edited or deleted. |
 | [S08.2](#s082) | E08 | A decision does not change the system's inventory status. |
 | [S08.4](#s084) | E08 | Observations are manual; there is no telemetry feed. |
 | [S08.4](#s084) | E08 | Thresholds cannot be edited (pause and recreate). |

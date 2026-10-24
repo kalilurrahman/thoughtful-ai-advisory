@@ -171,7 +171,8 @@ Each requirement is detailed as user stories with acceptance criteria in
   (6 / 18 / 21 by tier).
 - **FR-33** Register AI systems with a structured triage, live tier and rationale; filter, edit
   and export the inventory to CSV with formula-injection protection.
-- **FR-34** Run incidents, decisions (with review dates and supersede history), change reviews
+- **FR-34** Run incidents, decisions (with review dates, supersede history, and corrections or
+  withdrawals that keep the original record), change reviews
   (with escalation and "not assessed" blocking approval), monitoring plans (thresholds, breaches,
   due dates) and corrective actions (evidence and verified closure).
 - **FR-35** Show a phased roadmap and a lifecycle checklist derived from the workspace.
@@ -255,9 +256,7 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 **Next (close the known gaps).**
 
 1. Autosave and a workspace switcher; reconcile the save function (see risk R1).
-2. Decide how governance decisions are corrected: today a new decision supersedes the previous
-   one and both stay in the history; editing or deleting in place would weaken the audit trail.
-3. Real-device install and offline verification; Google Play and Microsoft Store listings
+2. Real-device install and offline verification; Google Play and Microsoft Store listings
    ([release guide](../veritrail/PWA_RELEASE_GUIDE.md)).
 
 **Later (new capability).**

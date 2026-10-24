@@ -326,8 +326,9 @@
 
 1. Choose the system and disposition; enter rationale, conditions and review-by date.
 2. Save; the previous decision is superseded.
+3. If a record was entered wrongly, correct it with a reason; if it was made in error, withdraw it with a reason. The original stays in the register either way.
 
-**Outcome:** A current decision with a review date.
+**Outcome:** A current decision with a review date, and a register that keeps every earlier record.
 
 **Stories:** [S08.2](EPICS_AND_STORIES.md#s082) (E08)
 
