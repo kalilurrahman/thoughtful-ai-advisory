@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // Browser smoke test: crawl every page reachable from "/" (plus the workspace routes) in
 // Chromium and fail on runtime errors, console errors (including hydration warnings), error
-// or 404 screens behind internal links, missing linked files, and horizontal scrolling at
-// phone width.
+// or 404 screens behind internal links, missing linked files, horizontal scrolling at phone
+// width, a website or workspace header that wraps onto a second row, and installable-app files
+// (manifest, icons, service worker, offline page) that are missing or malformed.
 //
 //   npx vite dev --port 4173 &   # or any running build of the app
 //   node scripts/smoke-test.mjs http://localhost:4173
@@ -58,6 +59,20 @@ async function visit(ctx, path, { collectLinks }) {
         h1: document.querySelector("h1")?.textContent?.trim() ?? "",
         textLength: document.body?.innerText.trim().length ?? 0,
         overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        // 2 when the visible controls of the site or workspace header wrap onto a second row:
+        // on one row every control overlaps every other vertically.
+        headerRows: [".header-inner", ".app-header"].reduce((most, sel) => {
+          const bar = document.querySelector(sel);
+          if (!bar) return most;
+          const rects = [...bar.children]
+            .filter((el) => el.id !== "site-nav" && getComputedStyle(el).display !== "none")
+            .map((el) => el.getBoundingClientRect())
+            .filter((r) => r.width > 0 && r.height > 0);
+          if (!rects.length) return most;
+          const lowestTop = Math.max(...rects.map((r) => r.top));
+          const highestBottom = Math.min(...rects.map((r) => r.bottom));
+          return Math.max(most, lowestTop >= highestBottom - 1 ? 2 : 1);
+        }, 0),
         links: collect
           ? [...document.querySelectorAll("a[href]")].map((a) => a.getAttribute("href"))
           : [],
@@ -66,10 +81,45 @@ async function visit(ctx, path, { collectLinks }) {
     )
     .catch((e) => {
       errors.push(["evaluate", e.message]);
-      return { h1: "", textLength: 0, overflow: 0, links: [] };
+      return { h1: "", textLength: 0, overflow: 0, headerRows: 0, links: [] };
     });
   await page.close();
   return { status, errors, ...info };
+}
+
+/** The files the installed app depends on are served, typed and consistent. */
+async function checkInstallableApp(ctx) {
+  const get = (path) => ctx.request.get(BASE + path).catch(() => null);
+  const manifestRes = await get("/manifest.webmanifest");
+  let manifest = null;
+  try {
+    manifest = manifestRes && manifestRes.ok() ? await manifestRes.json() : null;
+  } catch {
+    manifest = null;
+  }
+  if (!manifest) return fail("/manifest.webmanifest", "pwa", "missing or not valid JSON");
+  for (const key of ["name", "short_name", "start_url", "display", "icons"])
+    if (!manifest[key]) fail("/manifest.webmanifest", "pwa", `no ${key}`);
+  const purposes = new Set((manifest.icons ?? []).map((i) => i.purpose));
+  if (!purposes.has("maskable")) fail("/manifest.webmanifest", "pwa", "no maskable icon");
+  const images = [
+    ...(manifest.icons ?? []),
+    ...(manifest.screenshots ?? []),
+    ...(manifest.shortcuts ?? []).flatMap((s) => s.icons ?? []),
+  ];
+  for (const img of images) {
+    const res = await get(img.src);
+    if (!res || !res.ok()) fail(img.src, "pwa", "manifest image missing");
+  }
+  for (const s of manifest.shortcuts ?? []) {
+    const res = await get(s.url);
+    if (!res || !res.ok()) fail(s.url, "pwa", "manifest shortcut does not load");
+  }
+  const sw = await get("/sw.js");
+  if (!sw || !sw.ok() || !/javascript/.test(sw.headers()["content-type"] ?? ""))
+    fail("/sw.js", "pwa", "service worker missing or not served as JavaScript");
+  const offline = await get("/offline.html");
+  if (!offline || !offline.ok()) fail("/offline.html", "pwa", "offline page missing");
 }
 
 async function main() {
@@ -96,6 +146,8 @@ async function main() {
       fail(path, "not-found", "an internal link leads to the 404 page");
     if (r.textLength < 40) fail(path, "blank", `only ${r.textLength} characters of text`);
     if (r.overflow > 1) fail(path, "overflow-1280", `${r.overflow}px wider than the viewport`);
+    if (r.headerRows > 1)
+      fail(path, "header-wrap-1280", `header controls use ${r.headerRows} rows`);
     for (const href of r.links) {
       if (!href) continue;
       let url;
@@ -138,6 +190,7 @@ async function main() {
     const res = await desktop.request.get(BASE + file).catch(() => null);
     if (!res || res.status() >= 400) fail(file, "missing-file", res ? res.status() : "no response");
   }
+  await checkInstallableApp(desktop);
   await desktop.close();
 
   // Phone width: nothing may scroll sideways.
@@ -150,6 +203,8 @@ async function main() {
         const r = await visit(phone, path, { collectLinks: false });
         if (r.overflow > 1)
           fail(path, `overflow-${PHONE_WIDTH}`, `${r.overflow}px wider than the viewport`);
+        if (r.headerRows > 1)
+          fail(path, `header-wrap-${PHONE_WIDTH}`, `header controls use ${r.headerRows} rows`);
       }
     }),
   );

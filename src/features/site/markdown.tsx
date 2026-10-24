@@ -2,6 +2,7 @@ import { Fragment, useMemo, type MouseEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Marked, type Token, type Tokens } from "marked";
 import { controlUrl, getControl } from "./content";
+import { GLOSSARY_PHRASE_SOURCE, termIdFor } from "./glossary";
 import { ControlCitations, CtaBlock, Disclaimer } from "./ui";
 
 // Safe Markdown for trusted, repository-authored website pages — a port of the platform's
@@ -58,9 +59,16 @@ export function safeHref(href: string): string {
   return cleaned;
 }
 
-const CONTROL_REF_RE = /\b(?:AO|EI|GL|IS|SE)-\d{2}\b/g;
-/** Headings and link text must not gain nested control links. */
+const CONTROL_ID = /^(?:AO|EI|GL|IS|SE)-\d{2}$/;
+/** Control IDs and glossary phrases as whole words (the leading group stands in for a lookbehind). */
+const TEXT_REF_RE = new RegExp(
+  `(^|[^\\w-])((?:AO|EI|GL|IS|SE)-\\d{2}|${GLOSSARY_PHRASE_SOURCE})(?![\\w-])`,
+  "gi",
+);
+/** Headings and link text must not gain nested links. */
 let suppressControlRefs = 0;
+/** Glossary terms already underlined on this page; null = do not underline (inline snippets). */
+let glossarySeen: Set<string> | null = null;
 
 function withoutControlRefs<T>(fn: () => T): T {
   suppressControlRefs++;
@@ -71,14 +79,23 @@ function withoutControlRefs<T>(fn: () => T): T {
   }
 }
 
-/** Link known control IDs (IS-11, GL-04 …) in already-escaped text to their control pages. */
-function linkControlRefs(escaped: string): string {
+/**
+ * Link known control IDs (IS-11, GL-04 …) to their control pages, and underline the first
+ * mention of each glossary term on the page, in already-escaped text.
+ */
+function linkTextRefs(escaped: string): string {
   if (suppressControlRefs > 0) return escaped;
-  return escaped.replace(CONTROL_REF_RE, (id) => {
-    const c = getControl(id);
-    return c
-      ? `<a class="control-ref" href="${controlUrl(c.id)}" title="${escapeHtml(`${c.id} ${c.title}`)}">${id}</a>`
-      : id;
+  return escaped.replace(TEXT_REF_RE, (all: string, pre: string, word: string) => {
+    if (CONTROL_ID.test(word)) {
+      const c = getControl(word);
+      return c
+        ? `${pre}<a class="control-ref" href="${controlUrl(c.id)}" title="${escapeHtml(`${c.id} ${c.title}`)}">${word}</a>`
+        : all;
+    }
+    const id = /^[a-z]{2}-\d{2}$/i.test(word) ? undefined : termIdFor(word);
+    if (!id || !glossarySeen || glossarySeen.has(id)) return all;
+    glossarySeen.add(id);
+    return `${pre}<a class="term" href="/glossary#${id}" data-term="${id}">${word}</a>`;
   });
 }
 
@@ -149,7 +166,7 @@ const md: Marked = new Marked({
     text(token: Tokens.Text | Tokens.Escape) {
       if ("tokens" in token && token.tokens) return false;
       const escaped = "escaped" in token && token.escaped ? token.text : escapeHtml(token.text);
-      return linkControlRefs(escaped);
+      return linkTextRefs(escaped);
     },
     list(token: Tokens.List) {
       const variant = listVariant(token);
@@ -215,8 +232,19 @@ const md: Marked = new Marked({
   },
 });
 
-export function renderMarkdownHtml(text: string): string {
-  const html = md.parse(text, { async: false });
+/**
+ * Render a page body (or one segment of it). Pass the same `glossary` set for every segment of a
+ * page so each glossary term is underlined only at its first mention.
+ */
+export function renderMarkdownHtml(text: string, glossary: Set<string> = new Set()): string {
+  const previous = glossarySeen;
+  glossarySeen = glossary;
+  let html: string;
+  try {
+    html = md.parse(text, { async: false });
+  } finally {
+    glossarySeen = previous;
+  }
   return (
     html
       .replace(
@@ -369,13 +397,12 @@ export function useInternalLinkHandler() {
 }
 
 export function SiteMarkdown({ body, className }: { body: string; className?: string }) {
-  const segments = useMemo(
-    () =>
-      splitShortcodes(body).map((s) =>
-        s.kind === "md" ? { ...s, html: renderMarkdownHtml(s.text) } : s,
-      ),
-    [body],
-  );
+  const segments = useMemo(() => {
+    const glossary = new Set<string>();
+    return splitShortcodes(body).map((s) =>
+      s.kind === "md" ? { ...s, html: renderMarkdownHtml(s.text, glossary) } : s,
+    );
+  }, [body]);
   const onClick = useInternalLinkHandler();
   return (
     <div className={className} onClick={onClick}>

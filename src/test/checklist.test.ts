@@ -93,6 +93,25 @@ describe("workspace lifecycle checklist", () => {
     expect(allTasks(state).find((task) => task.id === "incident-triage")?.status).toBe("complete");
   });
 
+  it("asks for owners only while some open roadmap action has none", () => {
+    const state = initialState();
+    const task = () => allTasks(state).find((t) => t.id === "roadmap-owners");
+    // The seed roadmap names an owner for every action.
+    expect(task()?.status).toBe("complete");
+    const open = state.roadmap.filter((item) => !item.done).length;
+    expect(task()?.progress).toBe(`${open} of ${open} open actions assigned`);
+
+    state.roadmap = state.roadmap.map((item, i) =>
+      i === 0 ? { ...item, done: false, owner: "" } : item,
+    );
+    const openNow = state.roadmap.filter((item) => !item.done).length;
+    expect(task()?.status).toBe("action");
+    expect(task()?.progress).toBe(`${openNow - 1} of ${openNow} open actions assigned`);
+
+    state.roadmap = state.roadmap.map((item) => ({ ...item, done: true }));
+    expect(task()?.status).toBe("not-applicable");
+  });
+
   it("calculates overall progress without counting not-applicable tasks", () => {
     const phases = buildLifecycleChecklist(initialState());
     const result = checklistProgress(phases);

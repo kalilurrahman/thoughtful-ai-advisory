@@ -192,17 +192,17 @@ calls `self.registration.unregister()` in `activate`; browsers pick it up on the
   visited page renders offline, an unvisited page shows the offline page, and
   `Page.getInstallabilityErrors` reports no manifest or icon errors.
 
-## 4. Recommended next steps
+## 4. Recommended next steps — status
 
-1. **Real-device pass** on iOS Safari and Android Chrome after publishing (the install dialog
-   depends on the published HTTPS origin).
-2. **Workspace header on phones** wraps to a second row (its grid has four columns for seven
-   controls) — consolidate the theme/export/install icons into a menu.
-3. **Site search (⌘K)** across pages, controls and FAQs, built from the same Markdown.
-4. **Glossary tooltips** for recurring terms (risk tier, evidence label, Observe/Warn/Protect).
-5. **Per-page social images** generated from the section illustrations.
-6. **Store listings** — package the PWA with PWABuilder for Google Play (TWA) and the Microsoft
-   Store (MSIX) once the published domain is final.
-7. **Governance briefing notifications** (Web Push) once a sending service and consent flow
-   exist; offline queuing of lead forms is deliberately *not* done, because forms must say when
-   nothing was recorded.
+| # | Step | Status |
+|---|---|---|
+| 1 | **Real-device pass** on iOS Safari and Android Chrome | Ready to run after publishing — checklist in [PWA_RELEASE_GUIDE.md](./PWA_RELEASE_GUIDE.md) |
+| 2 | **Workspace header on phones** wrapped to a second row | **Done** — one row from 360 px; search, theme, reports and install sit in a "More actions" menu on phones; the smoke test fails if either header wraps at 1280 px or 390 px |
+| 3 | **Site search (⌘K)** across pages, controls and FAQs | **Done** — ⌘K, Ctrl+K or "/" searches pages, sections, FAQs, 64 controls, glossary terms, workspace screens and platform tools (`src/features/search`) |
+| 4 | **Glossary tooltips** for recurring terms | **Done** — 38 governed terms in `platform/content/glossary.yaml`; first mention per page underlined with a hover/focus/tap definition; `/glossary` page |
+| 5 | **Per-page social images** from the section illustrations | **Done** — 12 section cards in `public/og/` (`scripts/generate-social-images.mjs`), absolute `og:image` and `twitter:image` on every page |
+| 6 | **Store listings** (Google Play TWA, Microsoft Store MSIX) | Ready to package — steps in [PWA_RELEASE_GUIDE.md](./PWA_RELEASE_GUIDE.md); needs developer accounts and the final domain |
+| 7 | **Governance briefing notifications** (Web Push) | Assessed, not built — needs a sending service and a consent decision; see the release guide. Offline queuing of lead forms is deliberately *not* done, because forms must say when nothing was recorded |
+
+The full product picture — PRD, capabilities index, epics and user stories, and use cases — is in
+[docs/product](../product/README.md).

@@ -1,0 +1,307 @@
+# VERITRAIL glossary — governed definitions of the terms the website, tools and workspace use.
+#
+# Each term: id (URL anchor), term, category, definition (plain language, one or two sentences),
+# optional aliases (other spellings matched in page text), controls (related control IDs) and
+# auto (false = list in the glossary but never underline in page text, for everyday words).
+# The React site underlines the first mention of each term on a page and shows this definition.
+# Framework definitions are indicative summaries, not legal interpretations.
+version: 1.0.0
+categories:
+  - {id: method, label: VERITRAIL method}
+  - {id: evidence, label: Evidence and assurance}
+  - {id: runtime, label: Runtime guardrails and AI security}
+  - {id: regulation, label: Regulation and standards}
+terms:
+  # ------------------------------------------------------------------ VERITRAIL method
+  - id: risk-tier
+    term: Risk tier
+    aliases: [risk tiers, risk tiering]
+    category: method
+    definition: >-
+      VERITRAIL's classification of an AI use case as Prohibited-review, High, Medium or Low. The
+      tier sets how much assessment, approval and monitoring the use case needs. A suggested tier
+      is labelled Inferred until an accountable approver confirms it, and it is not the EU AI
+      Act's legal classification.
+    controls: [EI-02]
+  - id: prohibited-review
+    term: Prohibited-review
+    category: method
+    definition: >-
+      The highest VERITRAIL risk tier. It means "stop and get legal review" because the use case
+      may fall into a prohibited practice; it is not a finding that the use case is prohibited.
+    controls: [EI-02]
+  - id: ai-inventory
+    term: AI inventory
+    aliases: [AI system inventory, AI system of record]
+    category: method
+    definition: >-
+      The owned, classified register of every AI system, model, agent and vendor AI feature an
+      organisation uses, with its owner, purpose, data and risk tier.
+    controls: [EI-01, EI-02, EI-03]
+  - id: maturity-level
+    term: Maturity level
+    aliases: [maturity levels]
+    category: method
+    definition: >-
+      The band a 0–100 maturity score falls in: Initial (0–39), Developing (40–59), Defined
+      (60–74), Managed (75–89) or Optimized (90–100). Self-assessment scores are indicative and
+      labelled User-asserted.
+  - id: governance-baseline
+    term: Governance Baseline
+    aliases: [VERITRAIL Governance Baseline]
+    category: method
+    definition: >-
+      A fixed-scope 4–6 week VERITRAIL engagement that validates a self-assessment with evidence
+      and produces a gap register and a remediation roadmap.
+  - id: release-gate
+    term: Release gate
+    aliases: [release gates, approval gate, approval gates]
+    category: method
+    definition: >-
+      A checkpoint an AI system passes before go-live or a material change, scaled to its risk
+      tier, with the approver and any conditions recorded.
+    controls: [GL-03, GL-04, GL-07]
+  - id: tiller
+    term: TILLER
+    aliases: [TILLER assessment]
+    category: method
+    definition: >-
+      The assessment and assurance studio in the VERITRAIL workspace. Its six pillars spell
+      TILLER — Trust, Inventory, Lifecycle, Lawfulness, Engineering and Runtime — and each maps
+      to a NIST AI RMF function.
+  - id: framework-pillar
+    term: Pillar
+    aliases: [pillars]
+    category: method
+    auto: false
+    definition: >-
+      One of the five groups that organise the VERITRAIL controls: Accountability & Operating
+      Model (AO), Enterprise AI Inventory (EI), Governance & Lifecycle Control (GL), Integrity,
+      Safety & Security (IS), and Stewardship, Evidence & Assurance (SE).
+  - id: control
+    term: Control
+    aliases: [controls]
+    category: method
+    auto: false
+    definition: >-
+      A requirement in the VERITRAIL Control Library, with an objective, an accountable owner
+      role, examples of evidence and indicative mappings to NIST AI RMF, ISO/IEC 42001 and the EU
+      AI Act.
+
+  # ------------------------------------------------------------------ evidence and assurance
+  - id: evidence-label
+    term: Evidence label
+    aliases: [evidence labels, evidence status]
+    category: evidence
+    definition: >-
+      The status on every VERITRAIL finding — Verified, User-asserted, Inferred, Missing evidence
+      or Critical gap — so readers can see what is known and what is assumed.
+  - id: verified
+    term: Verified
+    category: evidence
+    auto: false
+    definition: Evidence exists and a named reviewer has examined it.
+  - id: user-asserted
+    term: User-asserted
+    category: evidence
+    definition: >-
+      The owner says a control is in place, but no evidence has been reviewed yet. Self-assessment
+      answers carry this label.
+  - id: inferred
+    term: Inferred
+    category: evidence
+    auto: false
+    definition: >-
+      Concluded from answers or metadata rather than from evidence, such as a suggested risk tier
+      or a likely gap.
+  - id: missing-evidence
+    term: Missing evidence
+    category: evidence
+    definition: Evidence the control requires has not been provided.
+  - id: critical-gap
+    term: Critical gap
+    aliases: [critical gaps]
+    category: evidence
+    definition: >-
+      A gap with material privacy, security, safety, legal or operational exposure that needs
+      priority action.
+  - id: gap-register
+    term: Gap register
+    aliases: [gap registers]
+    category: evidence
+    definition: >-
+      A list of governance gaps in which every line records what the gap is, how sure we are (its
+      evidence label), how serious it is, who owns it and when it must be fixed.
+  - id: evidence-pack
+    term: Evidence pack
+    aliases: [evidence packs, audit pack]
+    category: evidence
+    definition: >-
+      The records that show a control operated for an AI system — approvals, test results,
+      monitoring and logs — assembled on request for an auditor, customer or regulator.
+    controls: [SE-01, SE-08]
+  - id: tamper-evident-log
+    term: Tamper-evident log
+    aliases: [tamper-evident logs, tamper-evident decision log, hash-chained log]
+    category: evidence
+    definition: >-
+      A log in which each entry includes a hash of the one before it, so any later edit or
+      deletion can be detected.
+    controls: [SE-08]
+
+  # ------------------------------------------------------------------ runtime and AI security
+  - id: ai-agent
+    term: AI agent
+    aliases: [AI agents, agentic AI, agentic workflows]
+    category: runtime
+    definition: >-
+      An AI system that plans and takes actions through tools — updating records, sending
+      messages, issuing refunds — rather than only answering questions.
+    controls: [EI-07, IS-11, IS-13]
+  - id: tool-manifest
+    term: Tool manifest
+    aliases: [tool manifests]
+    category: runtime
+    definition: >-
+      The declared list of tools, APIs and data stores an agent can reach, and the operations it
+      can perform on each.
+    controls: [EI-07]
+  - id: policy-as-code
+    term: Policy-as-code
+    aliases: [policy as code]
+    category: runtime
+    definition: >-
+      Runtime rules written as versioned configuration instead of prose, so they can be reviewed,
+      tested, compared, approved and rolled back like code.
+    controls: [IS-12, GL-04]
+  - id: default-deny
+    term: Default-deny
+    aliases: [default deny]
+    category: runtime
+    definition: >-
+      An agent may call only the tools and operations its policy lists; anything unlisted is
+      denied, escalated or sent for approval, never silently allowed.
+    controls: [IS-11]
+  - id: human-approval
+    term: Human approval
+    aliases: [REQUIRE_HUMAN_APPROVAL, human approval for high-impact actions]
+    category: runtime
+    definition: >-
+      A runtime decision that pauses a high-impact action — a deletion, external send, payment,
+      export or anything over a threshold — until a designated approver accepts it. The
+      approver's identity is recorded.
+    controls: [IS-13]
+  - id: rollout-mode
+    term: Rollout mode
+    aliases: [rollout modes, staged rollout]
+    category: runtime
+    definition: >-
+      The stage a runtime policy runs in: Observe (log only), Warn (allow and warn), Protect
+      (redact and transform), Enforce (all decisions apply), with Contain as the kill switch.
+  - id: kill-switch
+    term: Kill switch
+    aliases: [kill switches, Contain mode]
+    category: runtime
+    definition: >-
+      A tested way to disable an agent, tool, model or tenant at once. In VERITRAIL Shield,
+      Contain mode denies every request in the policy's scope.
+    controls: [IS-15]
+  - id: redaction
+    term: Redaction
+    aliases: [sensitive-data redaction]
+    category: runtime
+    definition: >-
+      Masking personal or confidential data in prompts, responses, tool parameters and tool
+      outputs before it is stored or passed on.
+    controls: [IS-04]
+  - id: prompt-injection
+    term: Prompt injection
+    aliases: [prompt-injection]
+    category: runtime
+    definition: >-
+      Instructions hidden in user input or retrieved content that try to override an AI system's
+      intended behaviour, for example telling an agent to ignore its policy or reveal data.
+    controls: [IS-12, IS-14]
+  - id: jailbreak
+    term: Jailbreak
+    aliases: [jailbreaks]
+    category: runtime
+    definition: >-
+      An attempt to make a model produce content or take actions its safeguards are meant to
+      prevent.
+    controls: [IS-14]
+  - id: adversarial-testing
+    term: Adversarial testing
+    aliases: [red teaming, red-teaming]
+    category: runtime
+    definition: >-
+      Deliberately attacking an AI system — prompt injection, jailbreaks, data leakage — before
+      and after release to find weaknesses while they can still be fixed.
+    controls: [IS-14]
+  - id: human-oversight
+    term: Human oversight
+    category: runtime
+    definition: >-
+      Measures that let people understand, monitor and intervene in an AI system's operation,
+      including overriding or stopping it.
+
+  # ------------------------------------------------------------------ regulation and standards
+  - id: nist-ai-rmf
+    term: NIST AI RMF
+    aliases: [NIST AI Risk Management Framework]
+    category: regulation
+    definition: >-
+      The US National Institute of Standards and Technology's voluntary AI Risk Management
+      Framework (AI RMF 1.0, 2023), organised into four functions: GOVERN, MAP, MEASURE and
+      MANAGE.
+  - id: eu-ai-act
+    term: EU AI Act
+    aliases: [Regulation (EU) 2024/1689]
+    category: regulation
+    definition: >-
+      The European Union's AI regulation (Regulation (EU) 2024/1689). It sets risk-based
+      obligations for providers and deployers of AI systems, including prohibited practices and
+      requirements for high-risk systems. VERITRAIL's mappings to it are indicative.
+  - id: iso-42001
+    term: ISO/IEC 42001
+    category: regulation
+    definition: >-
+      The international standard for an AI management system, published in 2023. Organisations
+      can be certified against it by accredited bodies; VERITRAIL does not certify conformity.
+  - id: ai-management-system
+    term: AI management system
+    aliases: [AIMS]
+    category: regulation
+    definition: >-
+      The policies, roles, processes and controls an organisation uses to govern AI, as specified
+      by ISO/IEC 42001.
+  - id: high-risk-ai-system
+    term: High-risk AI system
+    aliases: [high-risk AI systems]
+    category: regulation
+    definition: >-
+      An EU AI Act category (Article 6 and Annex III) covering uses such as recruitment, credit
+      scoring and access to essential services, with requirements for risk management, data
+      governance, documentation and human oversight. It is not the same as a VERITRAIL High risk
+      tier.
+  - id: general-purpose-ai-model
+    term: General-purpose AI model
+    aliases: [general-purpose AI models, GPAI]
+    category: regulation
+    definition: >-
+      An EU AI Act term for a model trained on broad data that can perform a wide range of tasks
+      and be built into many systems; its providers have their own obligations.
+  - id: provider-and-deployer
+    term: Deployer
+    aliases: [deployers]
+    category: regulation
+    definition: >-
+      Under the EU AI Act, the organisation that uses an AI system under its authority, as
+      distinct from the provider that develops it or places it on the market. Obligations differ
+      by role.
+  - id: conformity-assessment
+    term: Conformity assessment
+    category: regulation
+    definition: >-
+      The process of showing that a high-risk AI system meets EU AI Act requirements before it is
+      placed on the market. VERITRAIL helps organise evidence but does not perform one.

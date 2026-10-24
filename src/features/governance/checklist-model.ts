@@ -37,9 +37,8 @@ export function buildLifecycleChecklist(state: GovernanceState): ChecklistPhase[
   const activeIncidents = state.incidents.filter(
     (incident) => incident.status !== "Resolved" && incident.status !== "Closed",
   );
-  const assignedRoadmap = state.roadmap.filter(
-    (item) => !item.done && filled(item.owner, "Unassigned"),
-  );
+  const openRoadmap = state.roadmap.filter((item) => !item.done);
+  const unassignedRoadmap = openRoadmap.filter((item) => !filled(item.owner, "Unassigned"));
   const currentDecisions = state.decisions.filter((decision) => decision.lifecycle === "Current");
   const systemsWithCurrentDecision = systems.filter((system) =>
     currentDecisions.some((decision) => decision.system === system.name),
@@ -263,8 +262,16 @@ export function buildLifecycleChecklist(state: GovernanceState): ChecklistPhase[
           detail: "Every open roadmap item should have a named accountable owner.",
           href: "/roadmap",
           action: "Review roadmap",
-          status: assignedRoadmap.length === 0 ? "complete" : "action",
-          progress: `${state.roadmap.filter((item) => !item.done).length - assignedRoadmap.length} of ${state.roadmap.filter((item) => !item.done).length} open actions assigned`,
+          status:
+            openRoadmap.length === 0
+              ? "not-applicable"
+              : unassignedRoadmap.length === 0
+                ? "complete"
+                : "action",
+          progress:
+            openRoadmap.length === 0
+              ? "No open roadmap actions"
+              : `${openRoadmap.length - unassignedRoadmap.length} of ${openRoadmap.length} open actions assigned`,
         },
         {
           id: "incident-triage",

@@ -3,6 +3,7 @@ import { WorkspaceControls } from "./workspace-controls";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
+  Sparkle,
   ArrowSquareOut,
   ArrowRight,
   CheckCircle,
@@ -527,6 +528,12 @@ export function MoreScreen() {
       name: "Operational monitoring",
       desc: "Manual threshold checks, review cadence and breach follow-up",
       icon: Gauge,
+    },
+    {
+      to: "/advisor",
+      name: "AI governance advisor",
+      desc: "Describe a concern; get mapped controls and suggested actions",
+      icon: Sparkle,
     },
     {
       to: "/checklist",

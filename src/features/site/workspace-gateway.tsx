@@ -22,7 +22,7 @@ export function WorkspaceGateway() {
         </div>
         <div className="workspace-pillar-grid">
           {PILLARS.map((pillar, index) => (
-            <Button key={pillar.letter} asChild variant="ghost" className="workspace-pillar-link">
+            <Button key={pillar.name} asChild variant="ghost" className="workspace-pillar-link">
               <Link
                 to="/assess"
                 onClick={() => {

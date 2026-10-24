@@ -9,6 +9,8 @@ import { ArrowLeft, ArrowUp, List, Moon, Sun, X } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { useDarkTheme } from "@/lib/theme";
 import { InstallAppButton } from "@/features/pwa/pwa-layer";
+import { SearchButton } from "@/features/search/search-palette";
+import { GlossaryTip } from "./glossary-tip";
 
 // Public website chrome — header with disclosure navigation, breadcrumbs and footer —
 // ported from platform/app/website/templates/partials/{header,breadcrumbs,footer}.html.
@@ -40,12 +42,12 @@ function BrandMark() {
 }
 
 /** Light/dark switch shared with the workspace header (same preference, same icons). */
-function ThemeToggle() {
+function ThemeToggle({ className = "" }: { className?: string }) {
   const [dark, toggle] = useDarkTheme();
   return (
     <button
       type="button"
-      className="theme-toggle"
+      className={`theme-toggle ${className}`}
       aria-label={dark ? "Use light theme" : "Use dark theme"}
       onClick={toggle}
     >
@@ -55,6 +57,23 @@ function ThemeToggle() {
         <Moon weight="duotone" aria-hidden="true" />
       )}
     </button>
+  );
+}
+
+/** On phones the theme switch lives in the menu, so the header fits on one row. */
+function MenuThemeRow() {
+  const [dark, toggle] = useDarkTheme();
+  return (
+    <p className="nav-theme-row">
+      <button type="button" className="nav-theme-btn" onClick={toggle}>
+        {dark ? (
+          <Sun weight="duotone" aria-hidden="true" />
+        ) : (
+          <Moon weight="duotone" aria-hidden="true" />
+        )}
+        {dark ? "Use light theme" : "Use dark theme"}
+      </button>
+    </p>
   );
 }
 
@@ -122,7 +141,11 @@ function SiteHeader() {
           <BrandMark />
           <span className="brand-name">VERITRAIL</span>
         </Link>
-        <SiteLink className="btn btn-primary header-cta" href={siteConfig.header_cta.url}>
+        <SiteLink
+          className="btn btn-primary header-cta"
+          href={siteConfig.header_cta.url}
+          cta="header-baseline"
+        >
           {ctaEnd !== undefined ? (
             <>
               {ctaStart}
@@ -132,8 +155,9 @@ function SiteHeader() {
             siteConfig.header_cta.label
           )}
         </SiteLink>
+        <SearchButton className="header-search" />
         <InstallAppButton className="header-install" />
-        <ThemeToggle />
+        <ThemeToggle className="header-theme" />
         <Button
           variant="outline"
           className="nav-toggle"
@@ -154,10 +178,15 @@ function SiteHeader() {
         </Button>
         <nav id="site-nav" className={`site-nav${navOpen ? " is-open" : ""}`} aria-label="Primary">
           <p className="nav-mobile-cta">
-            <SiteLink className="btn btn-primary" href={siteConfig.header_cta.url}>
+            <SiteLink
+              className="btn btn-primary"
+              href={siteConfig.header_cta.url}
+              cta="menu-baseline"
+            >
               {siteConfig.header_cta.label}
             </SiteLink>
           </p>
+          <MenuThemeRow />
           <ul className="nav-list">
             {siteNav.map((sec) => (
               <li className="nav-item" key={sec.id}>
@@ -319,6 +348,9 @@ function SiteFooter() {
               <Link to="/workspace">Governance workspace</Link>
             </li>
             <li>
+              <Link to="/glossary">Glossary</Link>
+            </li>
+            <li>
               <a href="/sitemap.xml">Sitemap</a>
             </li>
             <li>
@@ -363,6 +395,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       </main>
       <SiteFooter />
       <BackToTop />
+      <GlossaryTip />
     </div>
   );
 }

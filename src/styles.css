@@ -3149,3 +3149,23 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   .advisor-hero > div { padding: 1rem; }
 }
 @media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
+
+/* Workspace header: one row at every width. The original grid declared four or five columns for
+   six to eight controls, so icons wrapped below the header onto the page title. On phones the
+   theme, export and install actions move into the "More actions" menu. */
+.app-header { display: flex; flex-wrap: nowrap; align-items: center; gap: 4px; }
+.app-header .wordmark { flex: none; }
+.app-header .client-name { flex: 1 1 auto; min-width: 0; margin: 0 0 0 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; }
+.app-header .workspace-badge { flex: none; margin-left: 8px; }
+.header-actions { display: none; flex: none; align-items: center; gap: 2px; }
+.app-header .header-overflow { flex: none; }
+.header-menu { min-width: 13rem; }
+.header-menu [role="menuitem"] { min-height: 44px; gap: 10px; font-size: 15px; cursor: pointer; }
+.header-menu svg { width: 20px; height: 20px; color: var(--success-ink); }
+@media (max-width: 639px) {
+  .app-header .wordmark { font-size: clamp(17px, 5vw, 23px); }
+}
+@media (min-width: 640px) {
+  .header-actions { display: inline-flex; }
+  .app-header .header-overflow { display: none; }
+}

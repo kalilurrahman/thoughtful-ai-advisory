@@ -23,6 +23,7 @@ for (const file of readdirSync(pagesDir)
   const path = String(meta.slug ?? "/").replace(/\/+$/, "") || "/";
   entries.push({ path, updated: meta.updated ? String(meta.updated) : undefined });
 }
+entries.push({ path: "/glossary" });
 const lib = parse(readFileSync(join(root, "platform/content/controls/controls.yaml"), "utf8"));
 const libDate = String(lib.library.effective_date);
 entries.push({ path: "/framework/controls", updated: libDate });

@@ -30,5 +30,11 @@
 - [x] Make the site an installable app: rich manifest (maskable icons, shortcuts, screenshots), production-only offline service worker, offline page, and an install prompt for Chromium plus step-by-step instructions on iPhone, iPad and Safari for Mac.
 - [x] Lift the text-heavy website: theme-aware illustrations, illustrated page headers, "On this page" navigation, feature/step/link cards, key-message callouts, stacked phone tables, code copy/expand, FAQ accordions, linked control IDs and a visual home page.
 - [ ] Verify installation and offline reading on real iOS and Android devices after publishing.
-- [ ] Fit the workspace header on phones without wrapping (consolidate theme, export and install icons).
-- [ ] Add site search and glossary tooltips across pages, controls and FAQs.
+- [x] Fit the workspace header on phones without wrapping (consolidate theme, export and install icons).
+- [x] Add site search and glossary tooltips across pages, controls and FAQs.
+- [x] Generate per-section share images and absolute Open Graph and Twitter image tags.
+- [x] Check manifest icons, screenshots, shortcuts, the service worker and header wrapping in the browser smoke test.
+- [x] Write the store packaging guide and the Web Push assessment (docs/veritrail/PWA_RELEASE_GUIDE.md).
+- [x] Publish the product index: PRD, capabilities index, epics and user stories, and use cases (docs/product), checked by tests.
+- [ ] Package for Google Play and the Microsoft Store once the production domain and developer accounts exist.
+- [ ] Reconcile the workspace save function before applying migration 0009 (live database and client use save_aegis_workspace).
