@@ -20,9 +20,20 @@ import {
   ArrowsClockwise,
   Gauge,
   Sparkle,
+  DotsThreeVertical,
+  DownloadSimple,
+  MagnifyingGlass,
 } from "@phosphor-icons/react";
+import { openSearch } from "@/features/search/search-palette";
 import { InstallButton } from "./install-button";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { requestInstall, useInstallState } from "@/features/pwa/install-store";
 import { useDarkTheme } from "@/lib/theme";
 import { useGovernance } from "./store";
 const tabs = [
@@ -73,6 +84,42 @@ const studioTabs = [
   { to: "/export", name: "Reports & audit pack", icon: Export },
   { to: "/plans", name: "Plans", icon: Tag },
 ] as const;
+/**
+ * Theme, install and export in one menu, so the header stays a single row on phones
+ * (the same actions sit inline in the header from 640px up).
+ */
+function HeaderOverflowMenu({ dark, toggleDark }: { dark: boolean; toggleDark: () => void }) {
+  const { canInstall } = useInstallState();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="header-overflow" aria-label="More actions">
+          <DotsThreeVertical weight="bold" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="header-menu">
+        <DropdownMenuItem onSelect={openSearch}>
+          <MagnifyingGlass weight="duotone" /> Search
+        </DropdownMenuItem>
+        <DropdownMenuItem onSelect={toggleDark}>
+          {dark ? <Sun weight="duotone" /> : <Moon weight="duotone" />}
+          {dark ? "Use light theme" : "Use dark theme"}
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link to="/export">
+            <Export weight="duotone" /> Reports &amp; audit pack
+          </Link>
+        </DropdownMenuItem>
+        {canInstall && (
+          <DropdownMenuItem data-cta="pwa-install-menu" onSelect={() => void requestInstall()}>
+            <DownloadSimple weight="duotone" /> Install the app
+          </DropdownMenuItem>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 export function GovernanceShell({ children }: { children: ReactNode }) {
   const { workspaceName, userId } = useGovernance();
   const { pathname } = useLocation();
@@ -150,22 +197,35 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
             <House weight="duotone" />
           </Link>
         </Button>
-        <span className="client-name">{workspaceName}</span>
+        <span className="client-name" title={workspaceName}>
+          {workspaceName}
+        </span>
         <span className="workspace-badge">{userId ? "Personal workspace" : "Demo workspace"}</span>
-        <InstallButton />
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label={dark ? "Use light theme" : "Use dark theme"}
-          onClick={toggleDark}
-        >
-          {dark ? <Sun weight="duotone" /> : <Moon weight="duotone" />}
-        </Button>
-        <Button asChild variant="ghost" size="icon" aria-label="Export reports">
-          <Link to="/export">
-            <Export weight="duotone" />
-          </Link>
-        </Button>
+        <div className="header-actions">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Search (press / or Ctrl K)"
+            onClick={openSearch}
+          >
+            <MagnifyingGlass weight="duotone" />
+          </Button>
+          <InstallButton />
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={dark ? "Use light theme" : "Use dark theme"}
+            onClick={toggleDark}
+          >
+            {dark ? <Sun weight="duotone" /> : <Moon weight="duotone" />}
+          </Button>
+          <Button asChild variant="ghost" size="icon" aria-label="Export reports">
+            <Link to="/export">
+              <Export weight="duotone" />
+            </Link>
+          </Button>
+        </div>
+        <HeaderOverflowMenu dark={dark} toggleDark={toggleDark} />
       </header>
       <main className={"app-content page-" + (pathname.slice(1) || "home")}>
         <h1 className="screen-title">{titles[pathname] ?? "VERITRAIL"}</h1>

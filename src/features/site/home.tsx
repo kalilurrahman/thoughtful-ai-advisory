@@ -102,13 +102,21 @@ function HomeHero({ page, layers }: { page: SitePage; layers: number }) {
             <p className="lead">{page.lead ?? page.description}</p>
             <p className="hero-actions">
               {primary && (
-                <SiteLink className="btn btn-primary btn-lg" href={primary.url}>
+                <SiteLink
+                  className="btn btn-primary btn-lg"
+                  href={primary.url}
+                  cta={`hero-${page.primaryCta}`}
+                >
                   {primary.label}
                   <ArrowRight weight="bold" aria-hidden="true" className="btn-icon" />
                 </SiteLink>
               )}
               {secondary && (
-                <SiteLink className="btn btn-secondary btn-lg" href={secondary.url}>
+                <SiteLink
+                  className="btn btn-secondary btn-lg"
+                  href={secondary.url}
+                  cta={`hero-${page.secondaryCta}`}
+                >
                   {secondary.label}
                 </SiteLink>
               )}

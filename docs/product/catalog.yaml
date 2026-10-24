@@ -1,0 +1,1082 @@
+# VERITRAIL product catalog — the single source for the capabilities index, epics and user
+# stories, and use cases in docs/product/. Edit this file, then run:
+#
+#   node scripts/build-product-docs.mjs
+#
+# Website content pages are added to the capabilities index automatically from
+# platform/content/website_pages, so only apps, tools and features are listed here.
+# src/test/product-catalog.test.ts fails when a route or tool has no capability here, when a
+# capability is not delivered by any story, or when the generated docs are out of date.
+#
+# Stories link to capabilities through their routes (a website page resolves to its tool or to
+# the content-page capability) and through an optional capabilities list for site-wide features.
+#
+# status:  live      works for real (data is real or computed from the user's input)
+#          demo      works end to end on synthetic or sample data, in the browser
+#          preview   produces output that is labelled a preview / not a signed export
+#          planned   designed and announced (waitlist), not built
+# data:    where state lives — none · session (sessionStorage) · browser (localStorage) ·
+#          memory (lost on reload) · cloud (Supabase, RLS) · server (server function)
+version: 1.0.0
+updated: 2026-10-24
+
+personas:
+  - id: visitor
+    name: Prospective buyer
+    summary: Evaluates VERITRAIL; reads the framework and guides, runs the free tools, may book a baseline.
+  - id: gov-lead
+    name: AI governance lead
+    summary: Runs the AI governance programme or CoE; owns the inventory, assessments, roadmap and reporting.
+  - id: owner
+    name: AI system owner
+    summary: Business or product owner of an AI use case; registers it, answers triage and fixes gaps.
+  - id: approver
+    name: Approver
+    summary: AI Risk Lead, AI Governance Forum or Legal; confirms tiers, approves releases, accepts risk.
+  - id: ciso
+    name: CISO / security architect
+    summary: Accountable for LLM and agent risk; designs runtime guardrails, kill switch and logging.
+  - id: engineer
+    name: Engineering / platform lead
+    summary: Implements policy-as-code, tool permissions and monitoring for AI applications and agents.
+  - id: cro
+    name: Chief Risk / Compliance Officer
+    summary: Needs a defensible risk position, readiness evidence and indicative framework mappings.
+  - id: auditor
+    name: Internal auditor / assessor
+    summary: Tests controls and evidence; needs tamper-evident records and evidence packs.
+  - id: consultant
+    name: Consultant / advisor
+    summary: Uses the method, templates and agent to run governance work for clients.
+  - id: admin
+    name: Site administrator
+    summary: VERITRAIL sales or marketing operations; reviews leads, form submissions and the funnel.
+
+areas:
+  - {id: site, name: Public website and content}
+  - {id: tools, name: Free interactive tools}
+  - {id: leads, name: Lead capture}
+  - {id: assess, name: Workspace — assessment and release readiness}
+  - {id: register, name: Workspace — AI inventory}
+  - {id: operate, name: Workspace — operational governance}
+  - {id: guide, name: Workspace — guidance and knowledge}
+  - {id: report, name: Workspace — reports and evidence}
+  - {id: account, name: Accounts and persistence}
+  - {id: platform, name: Platform console}
+  - {id: admin, name: Administration and analytics}
+  - {id: app, name: Installable app, search and reading}
+
+epics:
+  - id: E01
+    title: Public website and governed content
+    area: site
+    goal: >-
+      Explain VERITRAIL's framework, solutions, compliance position and industry guidance from one
+      governed Markdown source that the Python platform and the React site share.
+    status: live
+    stories:
+      - id: S01.1
+        persona: visitor
+        want: to read what VERITRAIL is, the problem it solves and how it works on the home page
+        so_that: I can decide quickly whether it fits my organisation
+        status: done
+        acceptance:
+          - Given the home page, when it loads, then it shows the headline, two primary actions and counts of controls, pillars, layers and assessment questions taken from the content.
+          - Given the home Markdown changes shape, when a section no longer matches its layout, then the section still renders as plain Markdown.
+        routes: [/]
+        tests: [site-pages.test.ts, site-reading.test.ts]
+      - id: S01.2
+        persona: visitor
+        want: to browse framework, solutions, compliance, industries, resources and legal pages from a menu
+        so_that: I can find the depth I need
+        status: done
+        acceptance:
+          - Given any page, when I open the menu, then every section and its pages are listed, on desktop and phone.
+          - Given an internal link or call to action in any page, when followed, then it resolves to a page (no 404).
+        routes: [/framework, /solutions, /compliance, /industries, /resources, /about]
+        tests: [site-pages.test.ts, app-routing.test.tsx]
+      - id: S01.3
+        persona: cro
+        want: to read the compliance guides with clear limits on what VERITRAIL claims
+        so_that: I do not mistake readiness support for certification
+        status: done
+        acceptance:
+          - Given a compliance page, when it loads, then the standard disclaimer is shown and mappings are described as indicative.
+          - Given the content checks, when run, then prohibited claims (certify, guarantee compliance) are not present.
+        routes: [/compliance/eu-ai-act, /compliance/nist-ai-rmf, /compliance/iso-42001, /compliance/gap-analysis]
+        tests: [platform-content-checks.test.ts]
+      - id: S01.4
+        persona: visitor
+        want: long pages broken into scannable parts
+        so_that: I can read 1,000-word pages without losing my place
+        status: done
+        capabilities: [CAP-074, CAP-073]
+        acceptance:
+          - Given a page with three or more sections, when it loads, then an "On this page" list highlights the current section.
+          - Given bold-led lists, numbered steps, tables, code and FAQs, when rendered, then they appear as cards, timelines, stacked tables on phones, copyable code and accordions.
+          - Given a control ID or glossary term in text, when shown, then it links to its control or shows its definition.
+        routes: [/solutions/shield]
+        tests: [site-reading.test.ts]
+      - id: S01.5
+        persona: visitor
+        want: to share a page and see a relevant preview card
+        so_that: colleagues know what I am sending them
+        status: done
+        capabilities: [CAP-075]
+        acceptance:
+          - Given a page in a section with a share image, when its head is rendered, then og:image and twitter:image are absolute URLs to that section's 1200×630 image.
+        tests: [site-reading.test.ts]
+
+  - id: E02
+    title: Control library and framework mappings
+    area: site
+    goal: Publish the 64 controls by pillar with owners, evidence and indicative NIST AI RMF, ISO/IEC 42001 and EU AI Act mappings.
+    status: live
+    stories:
+      - id: S02.1
+        persona: gov-lead
+        want: to see all controls grouped by pillar with objective, priority and scope
+        so_that: I can plan which controls matter first
+        status: done
+        acceptance:
+          - Given the control library, when it loads, then all controls appear under their pillar with counts, a priority mosaic and pillar cards.
+          - Given a phone, when the control tables render, then each row stacks into a labelled card.
+        routes: [/framework/controls]
+        tests: [site-pages.test.ts]
+      - id: S02.2
+        persona: auditor
+        want: to open one control with its evidence examples and mappings
+        so_that: I know what an assessor expects to see
+        status: done
+        acceptance:
+          - Given a control page, when it loads, then it shows owner, priority, scope, evidence examples, framework references, related questions and critical flags.
+          - Given a control page, when it loads, then the mosaic highlights where it sits in the library.
+        routes: [/framework/controls/$controlId]
+        tests: [site-pages.test.ts, app-routing.test.tsx]
+
+  - id: E03
+    title: Free assessment and triage tools
+    area: tools
+    goal: Give visitors useful, honest results in the browser — maturity, risk tier, guardrails and cited answers — that are labelled User-asserted or Inferred.
+    status: live
+    stories:
+      - id: S03.1
+        persona: gov-lead
+        want: to answer 24 questions and get an indicative maturity level by domain
+        so_that: I have a starting baseline in about 8 minutes
+        status: done
+        acceptance:
+          - Given complete answers, when I finish, then I see the overall score, level (Initial to Optimized) and eight domain scores, all labelled User-asserted.
+          - Given the same answers, when scored, then the result matches the Python reference engine (parity fixtures).
+          - Given I leave mid-way, when I return in the same tab, then my answers are restored from session storage; contact details are never stored there.
+        routes: [/tools/maturity-assessment]
+        tests: [site-assessment-engine.test.ts]
+      - id: S03.2
+        persona: gov-lead
+        want: to get the detailed report with strengths, gaps, critical flags and a 30/60/90-day plan
+        so_that: I can act on the result
+        status: done
+        capabilities: [CAP-020]
+        acceptance:
+          - Given the report gate, when I submit a business email with consent, then the lead is stored without my raw answers and the full report is shown.
+          - Given a free-mail address, when submitted, then it is refused with "Please use your business email address."
+          - Given the service is unreachable, when I submit, then the report is still shown and the page says nothing was saved or emailed.
+          - Given the report, when downloaded, then Markdown and PDF versions are available.
+        routes: [/tools/maturity-assessment]
+        tests: [site-assessment-engine.test.ts]
+      - id: S03.3
+        persona: owner
+        want: to describe one AI use case and get a suggested risk tier with the reasons
+        so_that: I know how much assessment and approval it needs
+        status: done
+        acceptance:
+          - Given the intake, when I submit, then I get Prohibited-review, High, Medium or Low with factor points, triggers, missing facts, approval authority and review cadence.
+          - Given three or more key facts are missing, when scored, then a Low result is raised to Medium.
+          - Given any result, when shown, then it is labelled Inferred and requires human confirmation.
+        routes: [/tools/risk-triage]
+        tests: [site-risk-tier.test.ts]
+        gaps: [No UI test for the triage form.]
+      - id: S03.4
+        persona: ciso
+        want: to describe an LLM app or agent and get a draft runtime policy and tool permission matrix
+        so_that: engineering has a concrete starting point
+        status: done
+        acceptance:
+          - Given the app profile, when submitted, then I get a rating across autonomy, tool risk, data exposure and blast radius, a permission matrix, approval rules and limits.
+          - Given the draft policy, when downloaded (YAML, JSON, Markdown, PDF), then it is version 0.1.0, status draft and rollout observe — never active.
+        routes: [/tools/guardrail-generator]
+        tests: [site-shield.test.ts]
+        gaps: [No UI test for the generator form.]
+      - id: S03.5
+        persona: visitor
+        want: to ask governance questions and get answers that cite controls
+        so_that: I can explore the framework conversationally
+        status: done
+        acceptance:
+          - Given a question, when answered, then the answer cites VERITRAIL controls and is produced deterministically in the browser (no AI model, no network).
+          - Given a prompt-injection, approval-bypass or compliance-determination request, when asked, then it is refused with the reason.
+        routes: [/tools/ask-veritrail]
+        tests: [site-ask-veritrail.test.ts]
+
+  - id: E04
+    title: Lead capture and qualification
+    area: leads
+    goal: Capture enquiries and assessment leads safely, qualify them, and say plainly when nothing was recorded.
+    status: live
+    stories:
+      - id: S04.1
+        persona: visitor
+        want: to book a Governance Baseline, request a demo, join the design partner programme or contact the team
+        so_that: I can start a conversation
+        status: done
+        acceptance:
+          - Given a form, when I submit valid details with consent, then the submission is stored in site_leads through the submitLead server function.
+          - Given a network failure, when I submit, then the form says nothing was recorded.
+          - Given the hidden honeypot is filled, when submitted, then nothing is stored and the visitor sees the normal confirmation.
+        routes: [/contact, /contact/book-governance-baseline, /contact/request-demo, /contact/design-partner-programme, /contact/newsletter]
+        tests: [platform-misc-parity.test.ts]
+        gaps: [No direct test of LeadForm or the submitLead handler., submitLead has no rate limiting., No confirmation e-mails are sent (no SMTP on Workers).]
+      - id: S04.2
+        persona: admin
+        want: assessment leads tagged by qualification rules
+        so_that: sales can prioritise follow-up
+        status: done
+        capabilities: [CAP-020, CAP-067]
+        acceptance:
+          - Given an assessment lead, when stored, then its payload holds the score summary, profile, critical flags and lead tags from the template's lead rules.
+          - Given CRM environment variables, when a lead is stored, then it is pushed to the webhook or HubSpot; a CRM failure never fails the lead.
+        tests: [platform-misc-parity.test.ts]
+      - id: S04.3
+        persona: visitor
+        want: to download the Enterprise Blueprint
+        so_that: I have the operating model in one document
+        status: partial
+        acceptance:
+          - Given the blueprint form, when submitted, then the download link is shown.
+        routes: [/resources/blueprint]
+        gaps: [The PDF is a public static file, so the form gate is cosmetic.]
+
+  - id: E05
+    title: TILLER assessment, scoring and release readiness
+    area: assess
+    goal: Score the six TILLER pillars against evidence, compute the VERITRAIL Index and gate releases by risk tier.
+    status: live
+    stories:
+      - id: S05.1
+        persona: gov-lead
+        want: to score each of the 12 TILLER controls from 0 to 4 and record evidence status
+        so_that: the workspace reflects what is in place and what is proven
+        status: done
+        acceptance:
+          - Given a score of 3 or more, when the evidence is not Verified, then the effective score is capped at 2 and the screen says so.
+          - Given I add an evidence URL or attachment, when saved, then the evidence status is at least Claimed.
+        routes: [/assess]
+        tests: [governance.test.ts]
+        gaps: [Evidence "Upload demo" stores a placeholder name only; no file storage., No UI test for the assessment screen.]
+      - id: S05.2
+        persona: gov-lead
+        want: to see the VERITRAIL Index, maturity band and pillar scores on the overview
+        so_that: I can report the programme's position at a glance
+        status: done
+        acceptance:
+          - Given answers, when the overview loads, then pillar scores, the index, the band and verified-evidence count are computed from the model.
+          - Given a top gap, when I choose "Add to roadmap", then it is added once to the roadmap.
+        routes: [/workspace]
+        tests: [governance.test.ts, governance-provider.test.tsx]
+      - id: S05.3
+        persona: approver
+        want: to see whether the workspace is Cleared, Conditional or Blocked for release at its risk tier
+        so_that: I approve with the right conditions
+        status: done
+        acceptance:
+          - Given the tier floor (High 70, Medium 55, Low 40), when two or more release pillars are below it, then the gate is Blocked; one is Conditional; none is Cleared.
+          - Given blocking controls, when I choose "Create remediation plan", then each becomes a roadmap item.
+        routes: [/gates]
+        tests: [governance.test.ts]
+        gaps: [The gate is workspace-wide, not per system.]
+
+  - id: E06
+    title: AI inventory and use-case triage
+    area: register
+    goal: Keep one owned, classified register of AI systems, each with a saved triage profile and rationale.
+    status: live
+    stories:
+      - id: S06.1
+        persona: owner
+        want: to register an AI system with its owner, purpose, data and a structured triage
+        so_that: it gets a suggested risk tier and the right review path
+        status: done
+        acceptance:
+          - Given the register dialog, when I answer the triage questions, then the live result shows tier, rule score, rationale, missing facts, triggers, approval authority and review cadence.
+          - Given a new record, when saved, then its status is Under review until a human changes it.
+        routes: [/inventory]
+        tests: [site-risk-tier.test.ts, checklist.test.ts]
+        gaps: [Systems cannot be deleted.]
+      - id: S06.2
+        persona: gov-lead
+        want: to search, filter and export the inventory
+        so_that: I can answer "what AI do we run" with evidence
+        status: done
+        acceptance:
+          - Given filters, when applied, then counts by tier and status update.
+          - Given "Export view", when chosen, then a CSV of the filtered view downloads with formula-injection protection.
+        routes: [/inventory]
+        tests: [inventory-export.test.ts]
+
+  - id: E07
+    title: Guardrails design in the workspace
+    area: assess
+    goal: Choose the workspace risk tier and the runtime controls in place, with coverage of the required set.
+    status: live
+    stories:
+      - id: S07.1
+        persona: ciso
+        want: to switch 21 guardrails on or off across seven groups and see required coverage for the tier
+        so_that: I know which runtime controls are missing
+        status: done
+        acceptance:
+          - Given tier Low, Medium or High, when chosen, then 6, 18 or 21 controls are required and coverage is enabled required ÷ required.
+          - Given the tier changes, when saved, then gate floors and gap priorities change with it.
+        routes: [/guardrails]
+        tests: [governance.test.ts]
+        gaps: ['"Export guardrail bundle" links to the general export; there is no guardrail-specific file.']
+
+  - id: E08
+    title: Operational governance registers
+    area: operate
+    goal: Run AI incidents, governance decisions, change reviews, monitoring and corrective actions with lifecycle rules and history.
+    status: live
+    stories:
+      - id: S08.1
+        persona: owner
+        want: to log an AI incident or near miss and move it through triage to closure
+        so_that: every incident has an owner and a history
+        status: done
+        acceptance:
+          - Given an incident, when its status changes, then a timestamped history entry is added.
+          - Given the register, when filtered, then active, resolved and closed incidents can be separated.
+        routes: [/incidents]
+        tests: [incidents.test.ts, incidents-ui.test.tsx]
+      - id: S08.2
+        persona: approver
+        want: to record approvals, conditional approvals and time-bound risk acceptances per system
+        so_that: decisions have a rationale and a review date
+        status: done
+        acceptance:
+          - Given Risk accepted or Conditional approval, when saved, then a review date on or after the decision date is required.
+          - Given a new decision for a system, when saved, then the previous current decision becomes Superseded.
+        routes: [/decisions]
+        tests: [decision-schema.test.ts, evidence-export.test.ts]
+        gaps: [Decisions cannot be edited or deleted., A decision does not change the system's inventory status.]
+      - id: S08.3
+        persona: owner
+        want: to submit a material change with impact ratings for review
+        so_that: changes are screened before they ship
+        status: done
+        acceptance:
+          - Given any impact rated High or Critical, when shown, then the review is flagged for escalation.
+          - Given any impact Not assessed, when a reviewer tries to approve, then approval is not allowed.
+        routes: [/changes]
+        tests: [change-review.test.ts, checklist.test.ts]
+        gaps: [A refused transition does nothing silently; the screen shows no error.]
+      - id: S08.4
+        persona: engineer
+        want: to define monitoring plans with thresholds and record observations
+        so_that: breaches are visible and linked to incidents
+        status: done
+        acceptance:
+          - Given an observation crossing the threshold, when recorded, then the plan shows Breach and links to the incident register.
+          - Given a cadence, when an observation is recorded, then the next due date moves on, clamped to month ends.
+        routes: [/monitoring]
+        tests: [monitoring.test.ts, checklist.test.ts]
+        gaps: [Observations are manual; there is no telemetry feed., Thresholds cannot be edited (pause and recreate).]
+      - id: S08.5
+        persona: owner
+        want: to work a corrective action from start to verified closure
+        so_that: fixes are evidenced and checked for effectiveness
+        status: partial
+        acceptance:
+          - Given In progress with completion evidence, when submitted, then the action is Pending verification.
+          - Given Pending verification and a verification note, when closed, then who verified and when are recorded.
+        routes: [/actions]
+        gaps: [No tests for the corrective-action model or screen., Actions cannot be cancelled from the UI., Separation of duties is advisory text only.]
+
+  - id: E09
+    title: Remediation roadmap and lifecycle checklist
+    area: assess
+    goal: Turn gaps into a phased roadmap and show live readiness across the lifecycle.
+    status: live
+    stories:
+      - id: S09.1
+        persona: gov-lead
+        want: to see remediation items in four phases and mark them done
+        so_that: progress is tracked against a plan
+        status: partial
+        acceptance:
+          - Given a gap added from the overview or gates, when added, then it lands in a phase by priority and effort and is not duplicated.
+        routes: [/roadmap]
+        tests: [governance.test.ts]
+        gaps: [Items cannot be created, edited, re-assigned or deleted in the UI., Nothing is placed in phase 4.]
+      - id: S09.2
+        persona: gov-lead
+        want: a lifecycle checklist derived from the workspace
+        so_that: I see what needs action without re-entering data
+        status: done
+        acceptance:
+          - Given the workspace, when the checklist loads, then each task is Complete, Action needed or not applicable, and progress excludes not-applicable tasks.
+          - Given every open roadmap action has an owner, when checked, then "Assign owners" is Complete; one unowned open action makes it Action needed.
+        routes: [/checklist]
+        tests: [checklist.test.ts]
+
+  - id: E10
+    title: Guidance, knowledge and advisor
+    area: guide
+    goal: Help practitioners learn and act — playbook, templates, knowledge hub, guided start, calculators and an AI advisor.
+    status: live
+    stories:
+      - id: S10.1
+        persona: gov-lead
+        want: to read the 12-chapter playbook, mark chapters reviewed and keep notes
+        so_that: I can follow a complete lifecycle method
+        status: done
+        acceptance:
+          - Given notes and progress, when saved, then they stay in this browser and can be downloaded as Markdown.
+        routes: [/playbook]
+        gaps: [No tests for the playbook reader.]
+      - id: S10.2
+        persona: consultant
+        want: to fill and download governance templates
+        so_that: I start client documents from a sound structure
+        status: done
+        acceptance:
+          - Given organisation, owner, system and date, when filled, then the Markdown download and copy include them and are labelled starter templates.
+        routes: [/templates]
+        gaps: [No tests for templates.]
+      - id: S10.3
+        persona: cro
+        want: to search the regulatory and standards source register
+        so_that: I can cite primary sources
+        status: done
+        acceptance:
+          - Given filters by type and jurisdiction, when applied, then matching sources are listed with links and review dates.
+        routes: [/knowledge]
+        tests: [resources.test.ts]
+      - id: S10.4
+        persona: gov-lead
+        want: a guided start by role, stage and goal
+        so_that: I know which chapters and tools to use first
+        status: done
+        acceptance:
+          - Given a role, stage and goal, when chosen, then up to five chapters, three first actions and tool links are recommended.
+        routes: [/start]
+      - id: S10.5
+        persona: cro
+        want: to model the cost of ungoverned AI, token spend, risk exposure and readiness
+        so_that: I can make the business case
+        status: done
+        acceptance:
+          - Given slider inputs, when changed, then the headline, breakdown and recommendation update from the model formulas.
+        routes: [/calculators]
+        tests: [governance.test.ts]
+      - id: S10.6
+        persona: gov-lead
+        want: to describe a concern and get mapped controls and suggested actions from an AI advisor
+        so_that: I can turn a worry into tracked work
+        status: done
+        acceptance:
+          - Given a concern of 20–4,000 characters, when submitted, then the server returns a summary, 3–6 mapped controls and 3–5 actions, dropping unknown control IDs.
+          - Given "Add to corrective actions", when chosen, then the actions are created with due dates by priority.
+        routes: [/advisor]
+        gaps: [Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in., No tests.]
+
+  - id: E11
+    title: Reports and audit evidence
+    area: report
+    goal: Produce executive, scorecard and audit-evidence packs from the live workspace, clearly labelled previews.
+    status: preview
+    stories:
+      - id: S11.1
+        persona: auditor
+        want: to generate an evidence pack in PDF, DOCX, XLSX or PPTX
+        so_that: I can review the workspace offline
+        status: done
+        acceptance:
+          - Given the workspace, when generated, then the file contains assessment, inventory with triage, roadmap, incidents, decisions, change reviews and monitoring.
+          - Given any format, when generated, then it carries DEMO PREVIEW caveats and blank sign-off fields.
+        routes: [/export]
+        tests: [evidence-export.test.ts, export-ui.test.tsx]
+        gaps: [The three packs differ only in title and subject.]
+
+  - id: E12
+    title: Accounts, workspaces and Cloud persistence
+    area: account
+    goal: Let practitioners sign in and save one private workspace, while the demo stays open to everyone.
+    status: live
+    stories:
+      - id: S12.1
+        persona: gov-lead
+        want: to sign in with email/password, Google, Apple, Microsoft or Lovable
+        so_that: my workspace is private to me
+        status: done
+        acceptance:
+          - Given sign-up, when completed, then I am asked to confirm by e-mail; password reset sends a link to /reset-password.
+          - Given sign-in, when it succeeds, then the demo state is cleared and my saved workspace loads.
+        routes: [/auth, /reset-password, /onboarding]
+        gaps: [No SSO/SAML, MFA, roles or invitations.]
+      - id: S12.2
+        persona: gov-lead
+        want: to save and restore my workspace
+        so_that: my work survives across devices
+        status: partial
+        acceptance:
+          - Given I am signed in, when I choose Save, then the whole workspace is written in one call scoped to my organisation by RLS.
+          - Given I choose Restore, when it loads, then the saved snapshot replaces the in-memory state.
+        routes: [/more]
+        gaps: [No autosave; unsaved changes are lost on reload., One workspace per user; no switcher., Migration 0009 renames the save function but the live database and client still use save_aegis_workspace — do not apply 0009 without updating the client.]
+      - id: S12.3
+        persona: visitor
+        want: to see the plans and what each includes
+        so_that: I understand the commercial options
+        status: partial
+        acceptance:
+          - Given the plans page, when loaded, then Assess, Govern and Assure packages and the free snapshot are shown.
+        routes: [/plans]
+        gaps: [No checkout, billing or entitlements.]
+
+  - id: E13
+    title: Platform console
+    area: platform
+    goal: Run every Python platform capability in the browser as parity-tested TypeScript ports.
+    status: demo
+    stories:
+      - id: S13.1
+        persona: gov-lead
+        want: to use the VERITRAIL Agent with roles, approvals and an audit log
+        so_that: I can see governed AI assistance end to end
+        status: done
+        acceptance:
+          - Given a sensitive action (tier change, exception, policy activation, evidence export, external send), when requested, then it waits for a human approval.
+          - Given an approver, when resolving their own request, then it is refused and the attempt is audited.
+          - Given the audit log, when verified, then the hash chain checks out.
+        routes: [/platform/agent]
+        tests: [platform-agent.test.ts, platform-audit.test.ts]
+        gaps: [Synthetic data only; approvals have no external effect.]
+      - id: S13.2
+        persona: engineer
+        want: to evaluate prompts, responses and tool calls against a policy pack in any rollout mode
+        so_that: I can test policy-as-code before deployment
+        status: done
+        acceptance:
+          - Given an event and policy, when evaluated, then the decision, reasons, matched rules, findings and redacted payload are shown and logged.
+          - Given REQUIRE_HUMAN_APPROVAL, when an approver approves, then the event is re-run once with that approval.
+        routes: [/platform/policy-simulator]
+        tests: [platform-policy-engine.test.ts]
+      - id: S13.3
+        persona: consultant
+        want: to rehearse a pilot end to end and download its outputs
+        so_that: I can show the full method on realistic data
+        status: done
+        acceptance:
+          - Given the rehearsal, when run, then it registers systems, tiers them with approvals, finds gaps, drafts policies and produces an approval-gated evidence pack and an audit chain.
+        routes: [/platform/pilot-rehearsal]
+        tests: [platform-pilot.test.ts]
+      - id: S13.4
+        persona: cro
+        want: to estimate ROI with clearly labelled hypotheses
+        so_that: the business case is honest about what is unmeasured
+        status: done
+        acceptance:
+          - Given inputs, when calculated, then each line item shows its formula, and effect sizes are marked hypotheses with conservative, base and optimistic scenarios.
+        routes: [/platform/roi-calculator]
+        tests: [platform-misc-parity.test.ts, platform-samples.test.ts]
+      - id: S13.5
+        persona: consultant
+        want: to browse and download the sample reports
+        so_that: buyers see real outputs
+        status: done
+        acceptance:
+          - Given the default date, when generated, then the samples match the committed Python outputs exactly.
+        routes: [/platform/samples]
+        tests: [platform-samples.test.ts]
+      - id: S13.6
+        persona: gov-lead
+        want: to run the content checks in the browser
+        so_that: governed content stays valid and free of prohibited claims
+        status: done
+        acceptance:
+          - Given the bundled content, when checked, then each of the six steps passes or lists its failures.
+        routes: [/platform/content-checks]
+        tests: [platform-content-checks.test.ts]
+      - id: S13.7
+        persona: engineer
+        want: to see every platform module, what it does, where it runs and the Python code it replaces
+        so_that: I can trust that the browser tools match the reference platform
+        status: done
+        acceptance:
+          - Given the console index, when it loads, then each module shows its summary, whether it runs in the browser or on the server, and the Python files it replaces.
+          - Given a module name that does not exist, when opened, then the not-found page is shown.
+        routes: [/platform]
+        tests: [app-routing.test.tsx]
+
+  - id: E14
+    title: Administration and privacy-first analytics
+    area: admin
+    goal: Give administrators leads, submissions and the funnel, using cookieless analytics and membership-checked access.
+    status: live
+    stories:
+      - id: S14.1
+        persona: admin
+        want: to review assessment leads and other form submissions, and download leads as CSV
+        so_that: sales can follow up
+        status: done
+        acceptance:
+          - Given I am signed in but not in site_admins, when I open the console, then I see the grant needed, not the data.
+          - Given I am an admin, when the console loads, then every server read re-checks membership before using the service role.
+        routes: [/platform/admin]
+        tests: [platform-misc-admin.test.tsx]
+        gaps: [The server-side membership check is not unit-tested.]
+      - id: S14.2
+        persona: admin
+        want: to see the funnel from page view to report download, and CTA clicks
+        so_that: I know where visitors drop off
+        status: done
+        capabilities: [CAP-068]
+        acceptance:
+          - Given Do Not Track or Global Privacy Control, when set, then no event is sent.
+          - Given an event, when sent, then only its name, path and sanitised props are stored — no cookies, IP or identifiers.
+          - Given a site call to action, when clicked, then a cta_click event names it (hero, header, menu and CTA blocks).
+        routes: [/platform/admin]
+        tests: [platform-misc-parity.test.ts]
+        gaps: [form_submit and tool_use are allow-listed but never emitted.]
+
+  - id: E15
+    title: Installable app, search and reading experience
+    area: app
+    goal: Make the site an installable, offline-capable app that is easy to search and read.
+    status: live
+    stories:
+      - id: S15.1
+        persona: visitor
+        want: to install VERITRAIL on my phone or desktop
+        so_that: I can open it in one tap
+        status: done
+        capabilities: [CAP-070]
+        acceptance:
+          - Given Chrome, Edge or Samsung Internet, when installable, then the install card (after two pages or 40 s) and header button open the browser's dialog.
+          - Given iPhone, iPad or Safari 17+ on Mac, when I choose "Show me how", then step-by-step instructions are shown.
+          - Given "Not now", when chosen, then the card stays away for 14 days.
+        tests: [pwa.test.ts]
+      - id: S15.2
+        persona: visitor
+        want: to read pages I have opened while offline
+        so_that: I can keep reading without a connection
+        status: done
+        capabilities: [CAP-071]
+        acceptance:
+          - Given a page I opened online, when offline, then it opens from the device; an unopened page shows the offline page with saved pages listed.
+          - Given sign-in pages, server functions or URLs with query strings, when requested, then they are never cached.
+          - Given a Lovable preview, iframe, development or localhost, when loaded, then no service worker registers.
+        tests: [pwa.test.ts]
+      - id: S15.3
+        persona: visitor
+        want: to search everything with one box
+        so_that: I can jump to any page, control, term, workspace screen or tool
+        status: done
+        capabilities: [CAP-072]
+        acceptance:
+          - Given ⌘K, Ctrl+K or "/", when pressed, then the search opens from any page.
+          - Given a control ID such as "is11", when searched, then that control is the first result.
+          - Given results, when shown, then they are grouped by kind in order of best match.
+        tests: [search.test.ts]
+      - id: S15.4
+        persona: visitor
+        want: plain-language definitions of governance terms
+        so_that: I can follow pages without prior knowledge
+        status: done
+        capabilities: [CAP-073]
+        acceptance:
+          - Given a glossary term in page text, when it is the first mention on the page, then it is underlined and shows its definition on hover, focus or tap.
+          - Given the glossary page, when filtered by text or topic, then matching terms are listed with related controls.
+        routes: [/glossary]
+        tests: [site-reading.test.ts, search.test.ts]
+      - id: S15.5
+        persona: gov-lead
+        want: the workspace header to fit on one row on every device
+        so_that: actions do not overlap the page title
+        status: done
+        capabilities: [CAP-076]
+        acceptance:
+          - Given any width from 360 px, when the workspace loads, then the header controls stay on one row; on phones theme, export, search and install sit in a "More actions" menu.
+          - Given the smoke test, when run, then a header that wraps fails the build.
+
+  - id: E16
+    title: Planned capabilities
+    area: tools
+    goal: Capabilities announced or designed but not yet built.
+    status: planned
+    stories:
+      - id: S16.1
+        persona: ciso
+        want: an agentic AI risk checker
+        so_that: I can assess tool inventory, least privilege, high-impact actions, injection, containment, limits and logging for an agent
+        status: planned
+        acceptance:
+          - Given the page today, when visited, then it describes the intended checks and offers a waitlist form.
+        routes: [/tools/agentic-risk-checker]
+      - id: S16.2
+        persona: cro
+        want: an EU AI Act readiness checker
+        so_that: I can screen my role and obligation areas without a legal determination
+        status: planned
+        acceptance:
+          - Given the page today, when visited, then it describes role screening and obligation areas and offers a waitlist form.
+        routes: [/tools/eu-ai-act-readiness-checker]
+      - id: S16.3
+        persona: gov-lead
+        want: real evidence upload, several workspaces and team roles
+        so_that: the workspace supports an organisation, not one person
+        status: planned
+        acceptance:
+          - Given evidence files, when uploaded, then they are stored privately and linked to controls with reviewer status.
+      - id: S16.4
+        persona: gov-lead
+        want: governance briefing notifications
+        so_that: I hear about regulatory changes without checking the site
+        status: planned
+        acceptance:
+          - Given explicit consent, when subscribed, then briefings arrive as push notifications (see docs/veritrail/PWA_RELEASE_GUIDE.md).
+
+use_cases:
+  - id: UC01
+    title: Evaluate VERITRAIL from the website
+    actors: [visitor]
+    goal: Understand the framework, solutions and position on compliance claims.
+    preconditions: [None — public pages.]
+    flow:
+      - Open the home page; read the problem, six layers and five pillars.
+      - Follow a pillar or solution card to its page; use "On this page" to jump to sections.
+      - Hover or tap underlined terms for definitions; open a cited control.
+      - Read the compliance guide and its disclaimer.
+    alternatives:
+      - Use search (⌘K or "/") to jump straight to a topic.
+    outcome: The visitor knows what VERITRAIL does and does not claim.
+    stories: [S01.1, S01.2, S01.3, S01.4, S15.3, S15.4]
+  - id: UC02
+    title: Run the maturity self-assessment
+    actors: [gov-lead]
+    goal: Get an indicative maturity baseline and a 30/60/90-day plan.
+    preconditions: [None.]
+    flow:
+      - Enter the organisation profile.
+      - Answer 24 questions over eight domains.
+      - Review the free preliminary result (score, level, domain bars).
+      - Submit name, business email and organisation with consent to unlock the detailed report.
+      - Download the report as Markdown or PDF.
+    alternatives:
+      - Free-mail address — refused with a request for a business email.
+      - Service unreachable — report shown with a notice that nothing was saved or emailed.
+    outcome: A User-asserted report; an assessment lead with qualification tags (no raw answers).
+    stories: [S03.1, S03.2, S04.2]
+  - id: UC03
+    title: Triage an AI use case
+    actors: [owner]
+    goal: Get a suggested risk tier and the review path.
+    preconditions: [None.]
+    flow:
+      - Describe the use case and answer the intake.
+      - Review tier, factor points, triggers and missing facts.
+      - Note the approval authority and review cadence.
+    alternatives:
+      - Prohibited-practice keywords — Prohibited-review, "stop and get legal review".
+    outcome: An Inferred tier that an approver must confirm.
+    stories: [S03.3]
+  - id: UC04
+    title: Draft runtime guardrails for an LLM app or agent
+    actors: [ciso, engineer]
+    goal: Produce a draft policy-as-code and permission matrix.
+    preconditions: [None.]
+    flow:
+      - Describe the application, tools, data and autonomy.
+      - Review the rating, permission matrix, approval rules and limits.
+      - Download the draft policy and advisor report.
+    outcome: A draft policy in Observe mode, ready for engineering review and testing in the simulator.
+    stories: [S03.4, S13.2]
+  - id: UC05
+    title: Ask a governance question
+    actors: [visitor, consultant]
+    goal: Get a cited answer.
+    preconditions: [None.]
+    flow:
+      - Ask a question or choose a suggestion.
+      - Read the answer and follow cited controls.
+    alternatives:
+      - Unsafe request (injection, approval bypass, compliance determination) — refused with the reason.
+    outcome: A deterministic, cited answer with no data sent anywhere.
+    stories: [S03.5]
+  - id: UC06
+    title: Book a Governance Baseline or request a demo
+    actors: [visitor, admin]
+    goal: Start a commercial conversation.
+    preconditions: [None.]
+    flow:
+      - Open the booking or demo page and complete the form with a business email and consent.
+      - The submission is stored; if configured, it is pushed to the CRM.
+      - An administrator reviews it in the admin console.
+    alternatives:
+      - Network failure — the form says nothing was recorded.
+    outcome: A stored lead visible to administrators.
+    stories: [S04.1, S04.2, S14.1]
+  - id: UC07
+    title: Look up a control or a term
+    actors: [auditor, gov-lead]
+    goal: Find a control's evidence and mappings, or a definition.
+    preconditions: [None.]
+    flow:
+      - Press ⌘K and type a control ID (IS-11) or a term (kill switch).
+      - Open the control page or glossary entry.
+    outcome: The reader has the control's evidence examples and mappings, or the definition and related controls.
+    stories: [S02.1, S02.2, S15.3, S15.4]
+  - id: UC08
+    title: Install VERITRAIL and read offline
+    actors: [visitor, gov-lead]
+    goal: Use VERITRAIL as an app, including without a connection.
+    preconditions: [The published HTTPS site.]
+    flow:
+      - Read two pages; accept the install card or use the header button.
+      - Follow the browser dialog or the step-by-step instructions.
+      - Launch from the home screen; use a shortcut.
+      - Go offline and reopen pages read earlier.
+    outcome: An installed app with offline reading of visited pages.
+    stories: [S15.1, S15.2]
+  - id: UC09
+    title: Assess the workspace with TILLER
+    actors: [gov-lead]
+    goal: Score the 12 controls with evidence.
+    preconditions: [Demo workspace, or signed in for a private one.]
+    flow:
+      - Step through each control; set the score and evidence status; add a URL or note.
+      - Read the guidance and rubric where needed.
+      - Finish and view the release gate.
+    outcome: Pillar scores and the VERITRAIL Index reflect evidenced practice.
+    stories: [S05.1, S05.2]
+  - id: UC10
+    title: Check release readiness and plan remediation
+    actors: [approver, gov-lead]
+    goal: Decide whether the workspace can release at its tier.
+    preconditions: [An assessment.]
+    flow:
+      - Open release readiness; read the gate status and pillar floors.
+      - Open blocking controls; choose "Create remediation plan".
+      - Track the items on the roadmap and the lifecycle checklist.
+    outcome: Blockers become owned roadmap items.
+    stories: [S05.3, S09.1, S09.2]
+  - id: UC11
+    title: Register an AI system
+    actors: [owner, gov-lead]
+    goal: Add a system to the inventory with a triage.
+    preconditions: [None.]
+    flow:
+      - Open "Register & triage"; enter details and the triage answers.
+      - Review the live result and save.
+      - The record stays Under review until a human confirms it.
+    outcome: An owned, classified inventory record with its rationale.
+    stories: [S06.1, S06.2]
+  - id: UC12
+    title: Configure guardrails by tier
+    actors: [ciso]
+    goal: Close runtime control gaps.
+    preconditions: [None.]
+    flow:
+      - Choose the workspace tier.
+      - Switch on required guardrails; watch coverage.
+    outcome: Coverage of required guardrails at the chosen tier.
+    stories: [S07.1]
+  - id: UC13
+    title: Handle an AI incident
+    actors: [owner, gov-lead]
+    goal: Triage, contain and close an incident with history.
+    preconditions: [None.]
+    flow:
+      - Log the incident with severity, category, system and owner.
+      - Move it through Triage, Contained, Resolved and Closed; record response notes.
+      - Raise a corrective action if needed.
+    outcome: A closed incident with a full status history.
+    stories: [S08.1, S08.5]
+  - id: UC14
+    title: Record a governance decision
+    actors: [approver]
+    goal: Approve, conditionally approve, accept risk, reject, pause or retire a system.
+    preconditions: [A registered system.]
+    flow:
+      - Choose the system and disposition; enter rationale, conditions and review-by date.
+      - Save; the previous decision is superseded.
+    outcome: A current decision with a review date.
+    stories: [S08.2]
+  - id: UC15
+    title: Review a material change
+    actors: [owner, approver]
+    goal: Screen a change before it ships.
+    preconditions: [A registered system.]
+    flow:
+      - Submit the change with categories and impact ratings.
+      - The reviewer records the outcome; High or Critical impacts escalate.
+    outcome: An approved, rejected or implemented change with the reviewer's note.
+    stories: [S08.3]
+  - id: UC16
+    title: Monitor a system and act on a breach
+    actors: [engineer, owner]
+    goal: Keep thresholds under review.
+    preconditions: [A registered system.]
+    flow:
+      - Define a plan with metric, threshold, direction and cadence.
+      - Record observations; a crossing shows Breach.
+      - Follow the link to log an incident.
+    outcome: Monitoring evidence and incident follow-up.
+    stories: [S08.4, S08.1]
+  - id: UC17
+    title: Close a corrective action with verification
+    actors: [owner, approver]
+    goal: Prove a fix works.
+    preconditions: [An action.]
+    flow:
+      - Start work; submit for verification with evidence.
+      - The verifier closes it as effective, or returns it to work.
+    outcome: A closed action with who verified and when.
+    stories: [S08.5]
+  - id: UC18
+    title: Produce an evidence pack
+    actors: [auditor, gov-lead]
+    goal: Share the workspace position in a document.
+    preconditions: [Workspace data.]
+    flow:
+      - Choose the pack and format; generate; download.
+    outcome: A labelled preview document with blank sign-off.
+    stories: [S11.1]
+  - id: UC19
+    title: Sign in and save a workspace
+    actors: [gov-lead]
+    goal: Keep a private workspace.
+    preconditions: [An account.]
+    flow:
+      - Sign in; the demo state is cleared and the saved workspace loads.
+      - Work; choose Save on the More screen.
+    alternatives:
+      - Load error — retry with Restore.
+    outcome: A saved snapshot scoped to the user's organisation.
+    stories: [S12.1, S12.2]
+  - id: UC20
+    title: Turn a concern into actions with the advisor
+    actors: [gov-lead]
+    goal: Map a concern to controls and tracked actions.
+    preconditions: [The AI gateway is configured.]
+    flow:
+      - Choose a focus and describe the concern.
+      - Review mapped controls and actions; add them as corrective actions.
+    outcome: New corrective actions with due dates.
+    stories: [S10.6, S08.5]
+  - id: UC21
+    title: Use the Agent console with approvals
+    actors: [gov-lead, approver]
+    goal: Run governed assistance with separation of duties.
+    preconditions: [None — synthetic data.]
+    flow:
+      - Choose a chat identity and an approving identity.
+      - Assess a use case; generate the gap register and report.
+      - Approve or reject requests; verify the audit chain.
+    outcome: Reports and an audit log demonstrating approvals and refusals.
+    stories: [S13.1]
+  - id: UC22
+    title: Simulate runtime policy
+    actors: [engineer, ciso]
+    goal: See how a policy decides before deployment.
+    preconditions: [None.]
+    flow:
+      - Choose a policy pack or paste a policy; set the rollout mode.
+      - Run a scenario or custom event; inspect the decision and log.
+    outcome: A verified, downloadable decision log.
+    stories: [S13.2]
+  - id: UC23
+    title: Rehearse a pilot and estimate ROI
+    actors: [consultant, cro]
+    goal: Show the method end to end and its business case.
+    preconditions: [None.]
+    flow:
+      - Run the pilot rehearsal and download its outputs.
+      - Enter ROI inputs and compare scenarios.
+    outcome: Rehearsal artefacts and an ROI estimate with labelled hypotheses.
+    stories: [S13.3, S13.4, S13.5]
+  - id: UC24
+    title: Review leads and the funnel
+    actors: [admin]
+    goal: Follow up leads and understand conversion.
+    preconditions: [Signed in and listed in site_admins.]
+    flow:
+      - Open the admin console; review leads and form submissions; download CSV.
+      - Read the funnel and CTA clicks; verify an audit file.
+    outcome: Prioritised follow-up and funnel insight.
+    stories: [S14.1, S14.2]
+
+capabilities:
+  # ---------------------------------------------------------------- website (React pages)
+  - {id: CAP-001, name: Home page, area: site, route: /, status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/home.tsx, platform/content/website_pages/index.md], tests: [site-pages.test.ts, site-reading.test.ts], summary: "Visual story of the product from index.md: hero, proof strip, start cards, layers, pillars, method, stakeholders."}
+  - {id: CAP-002, name: Website content pages, area: site, route: /$, status: live, data: none, epic: E01, personas: [visitor, cro], source: [src/routes/$.tsx, src/features/site/views.tsx, src/features/site/markdown.tsx], tests: [site-pages.test.ts, site-reading.test.ts], summary: "Every Markdown page in platform/content/website_pages (listed below) rendered with reading aids."}
+  - {id: CAP-003, name: Control library, area: site, route: /framework/controls, status: live, data: none, epic: E02, personas: [gov-lead, auditor], source: [src/routes/framework.controls.index.tsx, platform/content/controls/controls.yaml], tests: [site-pages.test.ts], summary: "All 64 controls by pillar with priority mosaic and pillar cards."}
+  - {id: CAP-004, name: Control detail, area: site, route: /framework/controls/$controlId, status: live, data: none, epic: E02, personas: [auditor, gov-lead], source: [src/routes/framework.controls.$controlId.tsx], tests: [site-pages.test.ts, app-routing.test.tsx], summary: "One control's owner, evidence, mappings, related questions and flags."}
+  - {id: CAP-005, name: Glossary, area: app, route: /glossary, status: live, data: none, epic: E15, personas: [visitor], source: [src/features/site/glossary-view.tsx, platform/content/glossary.yaml], tests: [site-reading.test.ts, search.test.ts], summary: "38 governed definitions, filterable by text and topic, with related controls."}
+
+  # ---------------------------------------------------------------- free tools
+  - {id: CAP-010, name: Maturity self-assessment, area: tools, route: /tools/maturity-assessment, status: live, data: session, epic: E03, personas: [gov-lead, visitor], source: [src/features/site/tools/maturity-assessment.tsx, src/features/site/engines/assessment-engine.ts], tests: [site-assessment-engine.test.ts], summary: "24 questions, 8 weighted domains, indicative level; gated detailed report with 30/60/90 plan; Python parity."}
+  - {id: CAP-011, name: Risk triage, area: tools, route: /tools/risk-triage, status: live, data: none, epic: E03, personas: [owner], source: [src/features/site/tools/risk-triage.tsx, src/features/site/engines/risk-tier.ts], tests: [site-risk-tier.test.ts], summary: "Suggested tier (Prohibited-review, High, Medium, Low) with factors, triggers and review path; Inferred."}
+  - {id: CAP-012, name: Guardrail generator, area: tools, route: /tools/guardrail-generator, status: live, data: none, epic: E03, personas: [ciso, engineer], source: [src/features/site/tools/guardrail-generator.tsx, src/features/site/engines/shield], tests: [site-shield.test.ts], summary: "Risk rating, tool permission matrix and draft veritrail.policy/v1 in Observe mode."}
+  - {id: CAP-013, name: Ask VERITRAIL, area: tools, route: /tools/ask-veritrail, status: live, data: memory, epic: E03, personas: [visitor, consultant], source: [src/features/site/tools/ask-veritrail.tsx, src/features/site/engines/ask-veritrail], tests: [site-ask-veritrail.test.ts], summary: "Deterministic, cited answers from the governed content with safety refusals; no AI model or network."}
+  - {id: CAP-014, name: Agentic AI risk checker, area: tools, route: /tools/agentic-risk-checker, status: planned, data: none, epic: E16, personas: [ciso], source: [platform/content/website_pages/tools-agentic-risk-checker.md], tests: [], summary: "Planned; waitlist form only."}
+  - {id: CAP-015, name: EU AI Act readiness checker, area: tools, route: /tools/eu-ai-act-readiness-checker, status: planned, data: none, epic: E16, personas: [cro], source: [platform/content/website_pages/tools-eu-ai-act-readiness-checker.md], tests: [], summary: "Planned; waitlist form only."}
+
+  # ---------------------------------------------------------------- leads
+  - {id: CAP-020, name: Lead forms, area: leads, route: /contact, status: live, data: server, epic: E04, personas: [visitor], source: [src/features/site/forms.tsx, src/features/site/leads.functions.ts], tests: [platform-misc-parity.test.ts], summary: "Baseline, demo, contact, newsletter, blueprint, design partner, waitlist and assessment forms into site_leads (RLS); business-email gate; honeypot; optional CRM push."}
+
+  # ---------------------------------------------------------------- workspace
+  - {id: CAP-030, name: Governance overview, area: assess, route: /workspace, status: live, data: cloud, epic: E05, personas: [gov-lead], source: [src/features/governance/screens-core.tsx, src/features/governance/model.ts], tests: [governance.test.ts, governance-provider.test.tsx], summary: "KPIs, VERITRAIL Index and band, pillar bars, gate card and top gaps."}
+  - {id: CAP-031, name: TILLER assessment, area: assess, route: /assess, status: live, data: cloud, epic: E05, personas: [gov-lead], source: [src/features/governance/screens-core.tsx], tests: [governance.test.ts], summary: "12 controls scored 0–4 with evidence status; score capped at 2 until Verified."}
+  - {id: CAP-032, name: Release readiness, area: assess, route: /gates, status: live, data: cloud, epic: E05, personas: [approver], source: [src/features/governance/screens-core.tsx, src/features/governance/model.ts], tests: [governance.test.ts], summary: "Cleared / Conditional / Blocked against tier floors; blockers to roadmap."}
+  - {id: CAP-033, name: Guardrails designer, area: assess, route: /guardrails, status: live, data: cloud, epic: E07, personas: [ciso], source: [src/features/governance/screens-core.tsx], tests: [governance.test.ts], summary: "Workspace tier and 21 guardrails in 7 groups with required coverage."}
+  - {id: CAP-034, name: Roadmap, area: assess, route: /roadmap, status: live, data: cloud, epic: E09, personas: [gov-lead], source: [src/features/governance/screens-operations.tsx], tests: [governance.test.ts], summary: "Four phases of remediation items; mark done."}
+  - {id: CAP-035, name: Lifecycle checklist, area: assess, route: /checklist, status: live, data: cloud, epic: E09, personas: [gov-lead], source: [src/features/governance/checklist-model.ts], tests: [checklist.test.ts], summary: "Readiness tasks derived from the live workspace with deep links."}
+  - {id: CAP-036, name: AI inventory and triage, area: register, route: /inventory, status: live, data: cloud, epic: E06, personas: [owner, gov-lead], source: [src/features/governance/screens-operations.tsx, src/features/site/engines/risk-tier.ts, src/features/governance/inventory-export.ts], tests: [inventory-export.test.ts, site-risk-tier.test.ts], summary: "Register, triage, filter, edit and CSV export of AI systems."}
+  - {id: CAP-037, name: Incidents and near misses, area: operate, route: /incidents, status: live, data: cloud, epic: E08, personas: [owner, gov-lead], source: [src/features/governance/screens-incidents.tsx], tests: [incidents.test.ts, incidents-ui.test.tsx], summary: "Log, triage and close incidents with status history."}
+  - {id: CAP-038, name: Governance decisions, area: operate, route: /decisions, status: live, data: cloud, epic: E08, personas: [approver], source: [src/features/governance/screens-decisions.tsx, src/features/governance/decision-schema.ts], tests: [decision-schema.test.ts], summary: "Approvals, risk acceptance with review dates, supersede history."}
+  - {id: CAP-039, name: Change reviews, area: operate, route: /changes, status: live, data: cloud, epic: E08, personas: [owner, approver], source: [src/features/governance/screens-changes.tsx, src/features/governance/change-review-model.ts], tests: [change-review.test.ts], summary: "Material change screening with impact ratings and reviewer outcomes."}
+  - {id: CAP-040, name: Monitoring, area: operate, route: /monitoring, status: live, data: cloud, epic: E08, personas: [engineer], source: [src/features/governance/screens-monitoring.tsx, src/features/governance/monitoring-model.ts], tests: [monitoring.test.ts], summary: "Threshold plans, manual observations, breach and overdue states."}
+  - {id: CAP-041, name: Corrective actions, area: operate, route: /actions, status: live, data: cloud, epic: E08, personas: [owner, approver], source: [src/features/governance/screens-actions.tsx, src/features/governance/actions-model.ts], tests: [], summary: "Owned remediation with evidence and verified closure."}
+  - {id: CAP-042, name: AI Governance Playbook, area: guide, route: /playbook, status: live, data: browser, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-playbook.tsx, src/data/playbook.ts], tests: [], summary: "12 chapters with progress, notes and Markdown export."}
+  - {id: CAP-043, name: Governance templates, area: guide, route: /templates, status: live, data: memory, epic: E10, personas: [consultant, gov-lead], source: [src/features/governance/screens-templates.tsx, src/data/templates.ts], tests: [], summary: "Eight starter templates filled with organisation details; Markdown download and copy."}
+  - {id: CAP-044, name: Knowledge hub, area: guide, route: /knowledge, status: live, data: none, epic: E10, personas: [cro, gov-lead], source: [src/features/governance/screens-resources.tsx, src/data/governance.ts], tests: [resources.test.ts], summary: "24 laws, standards and guidance sources by type and jurisdiction."}
+  - {id: CAP-045, name: Start here, area: guide, route: /start, status: live, data: memory, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-start.tsx], tests: [], summary: "Role, stage and goal to recommended chapters, actions and tools."}
+  - {id: CAP-046, name: Calculators, area: guide, route: /calculators, status: live, data: memory, epic: E10, personas: [cro], source: [src/features/governance/screens-resources.tsx, src/features/governance/model.ts], tests: [governance.test.ts], summary: "Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage."}
+  - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [], summary: "Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions."}
+  - {id: CAP-048, name: Reports and audit pack, area: report, route: /export, status: preview, data: none, epic: E11, personas: [auditor, gov-lead], source: [src/features/governance/evidence-report.ts, src/features/governance/evidence-files.ts], tests: [evidence-export.test.ts, export-ui.test.tsx], summary: "PDF, DOCX, XLSX and PPTX packs generated in the browser, labelled demo previews."}
+  - {id: CAP-049, name: Plans, area: account, route: /plans, status: live, data: none, epic: E12, personas: [visitor], source: [src/routes/plans.tsx], tests: [], summary: "Assess, Govern and Assure packages and the free snapshot; no billing."}
+  - {id: CAP-050, name: Workspace and account, area: account, route: /more, status: live, data: cloud, epic: E12, personas: [gov-lead], source: [src/features/governance/screens-resources.tsx, src/features/governance/workspace-controls.tsx, src/features/governance/workspace.functions.ts], tests: [], summary: "Sign-in entry, rename, Save and Restore, links to every workspace tool."}
+  - {id: CAP-051, name: Sign in and sign up, area: account, route: /auth, status: live, data: server, epic: E12, personas: [gov-lead, admin], source: [src/features/governance/auth-panel.tsx], tests: [], summary: "Email/password with confirmation, password reset, Google, Apple, Microsoft and Lovable OAuth."}
+  - {id: CAP-052, name: Password reset, area: account, route: /reset-password, status: live, data: server, epic: E12, personas: [gov-lead], source: [src/routes/reset-password.tsx], tests: [], summary: "Set a new password from the recovery link."}
+  - {id: CAP-053, name: Onboarding, area: account, route: /onboarding, status: live, data: none, epic: E12, personas: [visitor, gov-lead], source: [src/routes/onboarding.tsx], tests: [], summary: "Choose sign-in, the demo workspace or the free snapshot."}
+
+  # ---------------------------------------------------------------- platform console
+  - {id: CAP-060, name: Platform console index, area: platform, route: /platform, status: live, data: none, epic: E13, personas: [engineer, consultant], source: [src/routes/platform.index.tsx, src/features/platform/catalog.ts], tests: [app-routing.test.tsx], summary: "Every module, what it does, where it runs and the Python file it replaces."}
+  - {id: CAP-061, name: VERITRAIL Agent console, area: platform, route: /platform/agent, status: demo, data: browser, epic: E13, personas: [gov-lead, approver], source: [src/features/platform/agent-console.tsx, src/features/platform/agent], tests: [platform-agent.test.ts, platform-audit.test.ts], summary: "Roles, 14 least-privilege tools, approvals with separation of duties, hash-chained audit log."}
+  - {id: CAP-062, name: Runtime policy simulator, area: platform, route: /platform/policy-simulator, status: demo, data: memory, epic: E13, personas: [engineer, ciso], source: [src/features/platform/policy-simulator.tsx, src/features/platform/policy-engine], tests: [platform-policy-engine.test.ts], summary: "Evaluate events against policy packs across rollout modes and the kill switch."}
+  - {id: CAP-063, name: Pilot dress rehearsal, area: platform, route: /platform/pilot-rehearsal, status: demo, data: none, epic: E13, personas: [consultant], source: [src/features/platform/pilot-rehearsal.tsx, src/features/platform/pilot/dry-run.ts], tests: [platform-pilot.test.ts], summary: "Synthetic bank pilot end to end with eight downloads."}
+  - {id: CAP-064, name: ROI calculator, area: platform, route: /platform/roi-calculator, status: live, data: none, epic: E13, personas: [cro, consultant], source: [src/features/platform/roi-calculator.tsx, src/features/platform/roi/roi.ts], tests: [platform-misc-parity.test.ts, platform-samples.test.ts], summary: "Line-item ROI with formulas, hypotheses and sensitivity scenarios."}
+  - {id: CAP-065, name: Sample reports, area: platform, route: /platform/samples, status: demo, data: none, epic: E13, personas: [consultant, visitor], source: [src/features/platform/samples-gallery.tsx, src/features/platform/samples], tests: [platform-samples.test.ts], summary: "Maturity, risk-tier and Shield samples identical to the Python outputs."}
+  - {id: CAP-066, name: Content checks, area: platform, route: /platform/content-checks, status: live, data: none, epic: E13, personas: [gov-lead], source: [src/features/platform/content-checks.tsx, src/features/platform/checks], tests: [platform-content-checks.test.ts], summary: "Six content validation steps and the prohibited-claim scan."}
+  - {id: CAP-067, name: Admin console, area: admin, route: /platform/admin, status: live, data: server, epic: E14, personas: [admin], source: [src/features/platform/admin-console.tsx, src/features/platform/admin.functions.ts], tests: [platform-misc-admin.test.tsx], summary: "Leads, form submissions, funnel and local audit verification; site_admins gated."}
+  - {id: CAP-068, name: Privacy-first analytics, area: admin, route: "", status: live, data: server, epic: E14, personas: [admin], source: [src/features/platform/analytics.ts, src/features/platform/analytics-core.ts, src/features/platform/analytics.functions.ts], tests: [platform-misc-parity.test.ts], summary: "Cookieless events with DNT/GPC opt-out, sanitised props and a rate limit."}
+
+  # ---------------------------------------------------------------- installable app, search, reading
+  - {id: CAP-070, name: Installable app (PWA), area: app, route: "", status: live, data: browser, epic: E15, personas: [visitor, gov-lead], source: [public/manifest.webmanifest, src/features/pwa], tests: [pwa.test.ts], summary: "Manifest with maskable icons, shortcuts and screenshots; install card and per-browser instructions."}
+  - {id: CAP-071, name: Offline reading, area: app, route: "", status: live, data: browser, epic: E15, personas: [visitor], source: [public/sw.js, public/offline.html, src/features/pwa/register.ts], tests: [pwa.test.ts], summary: "Production-only, network-first service worker; offline page with saved pages."}
+  - {id: CAP-072, name: Site-wide search, area: app, route: "", status: live, data: none, epic: E15, personas: [visitor, gov-lead, auditor], source: [src/features/search], tests: [search.test.ts], summary: "⌘K / Ctrl+K / '/' palette across pages, sections, controls, glossary, FAQs, workspace and platform."}
+  - {id: CAP-073, name: Glossary definitions in text, area: app, route: "", status: live, data: none, epic: E15, personas: [visitor], source: [src/features/site/glossary-tip.tsx, src/features/site/markdown.tsx], tests: [site-reading.test.ts], summary: "First mention of each term underlined with a definition on hover, focus or tap."}
+  - {id: CAP-074, name: Reading aids, area: app, route: "", status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/markdown.tsx, src/features/site/reading.tsx], tests: [site-reading.test.ts], summary: "Feature cards, step timelines, link cards, callouts, stacked tables, code copy, On this page, progress and back-to-top."}
+  - {id: CAP-075, name: Section illustrations and share images, area: app, route: "", status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/illustrations.tsx, scripts/generate-social-images.mjs, public/og], tests: [site-reading.test.ts], summary: "Theme-aware SVG art for every section and 1200×630 share cards."}
+  - {id: CAP-076, name: Workspace app shell, area: app, route: "", status: live, data: none, epic: E15, personas: [gov-lead, owner, approver], source: [src/features/governance/shell.tsx], tests: [app-routing.test.tsx], summary: "One-row header with back, home, workspace name and actions (a More actions menu on phones), side navigation on desktop and bottom tabs on phones."}

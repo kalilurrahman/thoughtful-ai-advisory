@@ -98,6 +98,7 @@ export function getSitePage(path: string): SitePage | undefined {
 }
 
 export const CONTROL_LIBRARY_PATH = toPath(siteConfig.control_library.slug);
+export const GLOSSARY_PATH = "/glossary";
 
 export interface NavItem {
   label: string;
@@ -126,6 +127,8 @@ const publicNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
           ]
         : [],
     )
+    // The glossary is a React page (platform/content/glossary.yaml), listed with the resources.
+    .concat(sec.id === "resources" ? [{ label: "Glossary", url: GLOSSARY_PATH, order: 15 }] : [])
     .sort((a, b) => a.order - b.order || a.label.toLowerCase().localeCompare(b.label.toLowerCase()))
     .map(({ label, url }) => ({ label, url }));
   const entries: NavItem[] = [];
@@ -150,6 +153,7 @@ export const workspaceNav: NavSection = {
     { label: "Monitoring", url: "/monitoring" },
     { label: "Incidents & near misses", url: "/incidents" },
     { label: "Corrective actions", url: "/actions" },
+    { label: "AI governance advisor", url: "/advisor" },
     { label: "Lifecycle checklist", url: "/checklist" },
     { label: "AI Governance Playbook", url: "/playbook" },
     { label: "Templates", url: "/templates" },
@@ -208,6 +212,7 @@ export const SITE_SECTIONS = new Set([
   ...sitePages.map((p) => p.path.split("/")[1] ?? "").filter(Boolean),
   "framework",
   "platform",
+  "glossary",
 ]);
 
 export function isSitePath(pathname: string): boolean {

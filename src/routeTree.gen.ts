@@ -21,6 +21,7 @@ import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as DecisionsRouteImport } from './routes/decisions'
 import { Route as ExportRouteImport } from './routes/export'
 import { Route as GatesRouteImport } from './routes/gates'
+import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as GuardrailsRouteImport } from './routes/guardrails'
 import { Route as IncidentsRouteImport } from './routes/incidents'
 import { Route as InventoryRouteImport } from './routes/inventory'
@@ -98,6 +99,11 @@ const ExportRoute = ExportRouteImport.update({
 const GatesRoute = GatesRouteImport.update({
   id: '/gates',
   path: '/gates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossaryRoute = GlossaryRouteImport.update({
+  id: '/glossary',
+  path: '/glossary',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuardrailsRoute = GuardrailsRouteImport.update({
@@ -205,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/decisions': typeof DecisionsRoute
   '/export': typeof ExportRoute
   '/gates': typeof GatesRoute
+  '/glossary': typeof GlossaryRoute
   '/guardrails': typeof GuardrailsRoute
   '/incidents': typeof IncidentsRoute
   '/inventory': typeof InventoryRoute
@@ -237,6 +244,7 @@ export interface FileRoutesByTo {
   '/decisions': typeof DecisionsRoute
   '/export': typeof ExportRoute
   '/gates': typeof GatesRoute
+  '/glossary': typeof GlossaryRoute
   '/guardrails': typeof GuardrailsRoute
   '/incidents': typeof IncidentsRoute
   '/inventory': typeof InventoryRoute
@@ -270,6 +278,7 @@ export interface FileRoutesById {
   '/decisions': typeof DecisionsRoute
   '/export': typeof ExportRoute
   '/gates': typeof GatesRoute
+  '/glossary': typeof GlossaryRoute
   '/guardrails': typeof GuardrailsRoute
   '/incidents': typeof IncidentsRoute
   '/inventory': typeof InventoryRoute
@@ -304,6 +313,7 @@ export interface FileRouteTypes {
     | '/decisions'
     | '/export'
     | '/gates'
+    | '/glossary'
     | '/guardrails'
     | '/incidents'
     | '/inventory'
@@ -336,6 +346,7 @@ export interface FileRouteTypes {
     | '/decisions'
     | '/export'
     | '/gates'
+    | '/glossary'
     | '/guardrails'
     | '/incidents'
     | '/inventory'
@@ -368,6 +379,7 @@ export interface FileRouteTypes {
     | '/decisions'
     | '/export'
     | '/gates'
+    | '/glossary'
     | '/guardrails'
     | '/incidents'
     | '/inventory'
@@ -401,6 +413,7 @@ export interface RootRouteChildren {
   DecisionsRoute: typeof DecisionsRoute
   ExportRoute: typeof ExportRoute
   GatesRoute: typeof GatesRoute
+  GlossaryRoute: typeof GlossaryRoute
   GuardrailsRoute: typeof GuardrailsRoute
   IncidentsRoute: typeof IncidentsRoute
   InventoryRoute: typeof InventoryRoute
@@ -505,6 +518,13 @@ declare module '@tanstack/react-router' {
       path: '/gates'
       fullPath: '/gates'
       preLoaderRoute: typeof GatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossary': {
+      id: '/glossary'
+      path: '/glossary'
+      fullPath: '/glossary'
+      preLoaderRoute: typeof GlossaryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guardrails': {
@@ -649,6 +669,7 @@ const rootRouteChildren: RootRouteChildren = {
   DecisionsRoute: DecisionsRoute,
   ExportRoute: ExportRoute,
   GatesRoute: GatesRoute,
+  GlossaryRoute: GlossaryRoute,
   GuardrailsRoute: GuardrailsRoute,
   IncidentsRoute: IncidentsRoute,
   InventoryRoute: InventoryRoute,

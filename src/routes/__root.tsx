@@ -15,11 +15,13 @@ import { GovernanceProvider } from "@/features/governance/store";
 import { GovernanceShell } from "@/features/governance/shell";
 import { SiteLayout } from "@/features/site/layout";
 import { PwaLayer } from "@/features/pwa/pwa-layer";
+import { SearchLayer } from "@/features/search/search-palette";
 import { PWA_INIT_SCRIPT } from "@/features/pwa/pwa-core";
 import "@lovable.dev/cloud-auth-js/styles.css";
 import appCss from "../styles.css?url";
 import siteCss from "../features/site/site.css?url";
 import pwaCss from "../features/pwa/pwa.css?url";
+import searchCss from "../features/search/search.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { THEME_INIT_SCRIPT } from "../lib/theme";
 
@@ -120,6 +122,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "stylesheet", href: siteCss },
       { rel: "stylesheet", href: pwaCss },
+      { rel: "stylesheet", href: searchCss },
       { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
@@ -161,6 +164,7 @@ const SITE_ROUTE_IDS = new Set<string>([
   "/framework/controls/$controlId",
   "/platform/",
   "/platform/$tool",
+  "/glossary",
 ]);
 
 function RootComponent() {
@@ -181,6 +185,7 @@ function RootComponent() {
           </GovernanceShell>
         )}
         <PwaLayer />
+        <SearchLayer />
       </GovernanceProvider>
     </QueryClientProvider>
   );

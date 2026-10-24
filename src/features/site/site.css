@@ -126,13 +126,13 @@ main:focus { outline: none; }
   .brand { letter-spacing: 0.1em; }
 }
 
-@media (min-width: 72em) {
+@media (min-width: 80em) {
   .nav-toggle { display: none !important; }
   .header-inner { flex-wrap: nowrap; }
   .site-nav:not(.is-open), .site-nav { display: flex !important; align-items: center; justify-content: flex-end; gap: 0.75rem; width: auto; flex: 1; }
   .nav-list { display: flex; gap: 0.1rem; }
   .nav-item { border: 0; position: relative; }
-  .nav-summary { padding: 0.5rem 0.4rem; border-radius: var(--radius); font-size: 0.95rem; }
+  .nav-summary { padding: 0.5rem 0.3rem; border-radius: var(--radius); font-size: 0.93rem; }
   .nav-summary::after { margin: 0 0.1rem 0 0.35rem; }
   .nav-summary:hover { background: var(--c-info-bg); }
   .nav-sub { position: absolute; top: calc(100% + 0.25rem); left: 0; min-width: 16rem; background: var(--c-card); border: 1px solid var(--c-border); border-radius: var(--radius); box-shadow: var(--popover-shadow); padding: 0.4rem; margin: 0; }
@@ -142,8 +142,16 @@ main:focus { outline: none; }
   .nav-sub-workspace { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 34rem; max-height: min(70vh, 42rem); overflow-y: auto; }
   .nav-item:nth-last-child(-n+3) .nav-sub { left: auto; right: 0; }
 }
-/* The full CTA label does not fit beside the desktop menu within the 72rem column. */
-@media (min-width: 72em) { .header-cta .cta-optional { display: none; } }
+/* The full CTA label does not fit beside the desktop menu. The menu needs about 76rem, so from
+   80em the header row uses a wider column than the page content. */
+@media (min-width: 80em) {
+  .site-header .container { max-width: 80rem; }
+  .header-inner { gap: 0.3rem; }
+  .brand { letter-spacing: 0.14em; }
+  .header-cta { margin-left: 0.25rem; }
+  .header-search, .header-install, .theme-toggle { width: 40px; min-width: 40px; height: 40px; padding: 0; }
+}
+@media (min-width: 80em) { .header-cta .cta-optional { display: none; } }
 
 /* Breadcrumbs */
 .breadcrumbs { background: transparent; border-bottom: 1px solid var(--c-border); font-size: 0.85rem; }
@@ -474,7 +482,7 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
   .nav-mobile-cta { display: none; }
   .nav-toggle-label { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
 }
-@media (min-width: 72em) {
+@media (min-width: 80em) {
   .brand { margin-right: 0; }
   .header-install { order: 4; }
   .theme-toggle { order: 5; }
@@ -758,7 +766,60 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
 }
 }
 
+/* Search, glossary and the phone header (search button, theme switch in the menu). */
+.veritrail-site {
+  .header-search, .header-install, .theme-toggle, .nav-toggle, .standalone-back { flex: none; }
+  .header-theme { display: none; }
+  .nav-theme-row { margin: 0 0 0.5rem; }
+  .nav-theme-btn { display: inline-flex; align-items: center; gap: 0.6rem; width: 100%; min-height: 44px; padding: 0.5rem 0.25rem; border: 0; border-top: 1px solid var(--c-border); background: transparent; color: var(--c-text); font: inherit; font-weight: 600; cursor: pointer; }
+  .nav-theme-btn svg { width: 1.3rem; height: 1.3rem; color: var(--c-link); }
+  @media (min-width: 48em) {
+    .header-theme { display: inline-flex; }
+    .nav-theme-row { display: none; }
+  }
+  @media (max-width: 25em) {
+    .brand { font-size: 1.15rem; letter-spacing: 0.1em; gap: 0.45rem; }
+    .brand-mark { width: 24px; height: 28px; }
+  }
+  @media (min-width: 80em) {
+    .header-search { order: 4; }
+    .header-install { order: 5; }
+    .theme-toggle { order: 6; }
+  }
+
+  /* Glossary terms in page text: a quiet dotted underline; the definition opens on hover, focus or tap. */
+  a.term { color: inherit; text-decoration: underline dotted; text-decoration-color: var(--c-primary); text-decoration-thickness: 1.5px; text-underline-offset: 0.22em; cursor: help; }
+  a.term:hover, a.term:focus-visible { color: var(--c-link); text-decoration-style: solid; }
+  .glossary-tip { position: fixed; z-index: 55; width: min(340px, calc(100vw - 24px)); padding: 0.85rem 1rem 0.75rem; background: var(--c-card); border: 1px solid var(--c-border); border-top: 3px solid var(--c-primary); border-radius: 6px; box-shadow: var(--popover-shadow); font-size: 0.95rem; line-height: 1.5; animation: glossary-pop 0.14s ease-out both; }
+  .glossary-tip.is-above { transform: translateY(-100%); }
+  .glossary-tip p { margin: 0; }
+  .glossary-tip-term { font-weight: 700; color: var(--c-heading); margin-bottom: 0.25rem !important; }
+  .glossary-tip-def { color: var(--c-text); }
+  .glossary-tip-link { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 36px; margin-top: 0.35rem; font-weight: 600; font-size: 0.9rem; text-decoration: none; }
+  .glossary-tip-link svg { width: 0.95rem; height: 0.95rem; }
+
+  /* /glossary */
+  .glossary-tools { display: grid; gap: 1rem; margin-bottom: 1rem; }
+  @media (min-width: 56em) { .glossary-tools { grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); align-items: end; } }
+  .glossary-cats { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .glossary-cat { min-height: 40px; padding: 0.35rem 0.85rem; border: 1px solid var(--c-border); border-radius: 999px; background: var(--c-card); color: var(--c-text); font: inherit; font-size: 0.92rem; cursor: pointer; }
+  .glossary-cat[aria-pressed="true"] { background: var(--c-primary); border-color: var(--c-primary); color: var(--c-on-primary); }
+  .glossary-letters { display: flex; flex-wrap: wrap; gap: 0.25rem; margin: 0.5rem 0 0.75rem; }
+  .glossary-letters a { display: grid; place-items: center; min-width: 36px; min-height: 36px; border: 1px solid var(--c-border); border-radius: var(--radius); background: var(--c-card); text-decoration: none; font-weight: 600; }
+  .glossary-count { font-size: 0.85rem; color: var(--c-muted); margin: 0 0 0.5rem; }
+  .glossary-list { margin: 0; max-width: 52rem; border-top: 2px solid var(--c-rule); }
+  .glossary-entry { padding: 1rem 0; border-bottom: 1px solid var(--c-border); scroll-margin-top: 5.5rem; }
+  .glossary-entry:target { background: var(--c-info-bg); box-shadow: -1rem 0 0 var(--c-info-bg), 1rem 0 0 var(--c-info-bg); }
+  .glossary-letter { margin: 0 0 0.5rem; font-size: 1.6rem; font-weight: 700; color: var(--c-link); line-height: 1; }
+  .glossary-entry dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.75rem; font-size: 1.15rem; font-weight: 700; color: var(--c-heading); }
+  .glossary-tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); }
+  .glossary-entry dd { margin: 0.35rem 0 0; max-width: 70ch; }
+  .glossary-entry dd p { margin: 0 0 0.35rem; }
+  .glossary-aliases, .glossary-controls { font-size: 0.9rem; color: var(--c-muted); }
+}
+
 /* Illustration motion (keyframes cannot be nested inside .veritrail-site). */
+@keyframes glossary-pop { from { opacity: 0; } to { opacity: 1; } }
 @keyframes ill-trail { to { stroke-dashoffset: -200; } }
 @keyframes ill-spin { to { transform: rotate(360deg); } }
 @keyframes ill-float { from { transform: translateY(0); } to { transform: translateY(-6px); } }

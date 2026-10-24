@@ -5,9 +5,14 @@ import {
   renderMarkdownHtml,
   splitSections,
 } from "@/features/site/markdown";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { getSitePage, sitePages } from "@/features/site/pages";
 import { artFor } from "@/features/site/illustrations";
 import { formatDate } from "@/features/site/reading";
+import { GLOSSARY, getGlossaryTerm, termIdFor } from "@/features/site/glossary";
+import { controlHead, sitePageHead } from "@/features/site/views";
+import { getControl } from "@/features/site/content";
 
 describe("reading aids in rendered Markdown", () => {
   it("turns bold-led lists into feature cards and numbered steps", () => {
@@ -105,5 +110,76 @@ describe("home page sections", () => {
   it("gives every content section an illustration", () => {
     for (const page of sitePages.filter((p) => p.path !== "/"))
       expect(artFor(page.path, page.section), page.source).toBeDefined();
+  });
+});
+
+describe("glossary terms in page text", () => {
+  const terms = (html: string) => [...html.matchAll(/data-term="([^"]+)"/g)].map((m) => m[1]);
+
+  it("underlines only the first mention of a term on a page", () => {
+    const html = renderMarkdownHtml(
+      "Every risk tier needs an owner. A risk tier is reviewed yearly.",
+    );
+    expect(terms(html)).toEqual(["risk-tier"]);
+    expect(html).toContain(
+      '<a class="term" href="/glossary#risk-tier" data-term="risk-tier">risk tier</a>',
+    );
+  });
+
+  it("shares first mentions across the segments of one page", () => {
+    const seen = new Set<string>();
+    expect(terms(renderMarkdownHtml("Use a kill switch.", seen))).toEqual(["kill-switch"]);
+    expect(terms(renderMarkdownHtml("Test the kill switch.", seen))).toEqual([]);
+    expect(terms(renderMarkdownHtml("Test the kill switch."))).toEqual(["kill-switch"]);
+  });
+
+  it("does not underline inside headings, links or code", () => {
+    expect(terms(renderMarkdownHtml("## The kill switch"))).toEqual([]);
+    expect(terms(renderMarkdownHtml("[kill switch](/solutions/shield/)"))).toEqual([]);
+    expect(terms(renderMarkdownHtml("`kill switch`"))).toEqual([]);
+  });
+
+  it("keeps control links and terms apart in the same sentence", () => {
+    const html = renderMarkdownHtml("IS-11 limits each AI agent to the tools it needs.");
+    expect(html).toContain('class="control-ref"');
+    expect(terms(html)).toEqual(["ai-agent"]);
+  });
+
+  it("matches all-caps terms only in capitals", () => {
+    expect(termIdFor("TILLER")).toBe("tiller");
+    expect(termIdFor("tiller")).toBeUndefined();
+    expect(termIdFor("Risk Tier")).toBe("risk-tier");
+    expect(termIdFor("verified")).toBeUndefined(); // listed, never underlined (auto: false)
+  });
+
+  it("cites controls that exist and keeps ids unique", () => {
+    const ids = GLOSSARY.map((t) => t.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const t of GLOSSARY) {
+      expect(getGlossaryTerm(t.id)).toBe(t);
+      for (const c of t.controls ?? []) expect(getControl(c), `${t.id} → ${c}`).toBeDefined();
+    }
+  });
+});
+
+describe("share images", () => {
+  const ogImage = (head: { meta: Array<Record<string, string>> }) =>
+    head.meta.find((m) => m["property"] === "og:image")?.["content"] ?? "";
+
+  it("gives every page an absolute 1200×630 share image that exists", () => {
+    for (const page of sitePages) {
+      const head = sitePageHead(page);
+      const url = ogImage(head);
+      expect(url, page.path).toMatch(/^https:\/\/[^/]+\/og[-/]/);
+      expect(existsSync(join(process.cwd(), "public", new URL(url).pathname)), url).toBe(true);
+      expect(head.meta.find((m) => m["name"] === "twitter:image")?.["content"]).toBe(url);
+    }
+  });
+
+  it("uses the section card for sections that have one", () => {
+    expect(ogImage(sitePageHead(getSitePage("/solutions/shield")!))).toMatch(
+      /\/og\/solutions\.png$/,
+    );
+    expect(ogImage(controlHead("IS-11"))).toMatch(/\/og\/controls\.png$/);
   });
 });

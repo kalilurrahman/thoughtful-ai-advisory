@@ -37,26 +37,30 @@ export function Disclaimer({ text = STANDARD_DISCLAIMER }: { text?: string }) {
 export function SiteLink({
   href,
   className,
+  cta,
   children,
 }: {
   href: string;
   className?: string;
+  /** Counted as a `cta_click` analytics event with this name (cookieless, see analytics.ts). */
+  cta?: string | undefined;
   children: React.ReactNode;
 }) {
+  const data = cta ? { "data-cta": cta } : {};
   if (href.startsWith("/") && !href.startsWith("/downloads/")) {
     const [path = "/", hash] = normalizeHref(href).split("#");
     return hash ? (
-      <Link to={path} hash={hash} className={className}>
+      <Link to={path} hash={hash} className={className} {...data}>
         {children}
       </Link>
     ) : (
-      <Link to={path} className={className}>
+      <Link to={path} className={className} {...data}>
         {children}
       </Link>
     );
   }
   return (
-    <a href={href} className={className}>
+    <a href={href} className={className} {...data}>
       {children}
     </a>
   );
@@ -78,7 +82,11 @@ export function CtaBlock({ ctaKey, variant = "inline" }: { ctaKey: string; varia
       <h2 className="cta-title">{cta.title}</h2>
       <p className="cta-text">{cta.text}</p>
       <p className="cta-action">
-        <SiteLink href={cta.url} className={`btn ${primary ? "btn-primary" : "btn-secondary"}`}>
+        <SiteLink
+          href={cta.url}
+          className={`btn ${primary ? "btn-primary" : "btn-secondary"}`}
+          cta={ctaKey}
+        >
           {cta.label}
         </SiteLink>
       </p>

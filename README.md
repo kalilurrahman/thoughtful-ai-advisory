@@ -122,7 +122,13 @@ VERITRAIL installs as an app and reads well on any screen:
 - **Offline reading** — a production-only, network-first service worker keeps the pages you have read (and their in-browser tools) available offline, with a branded offline page for the rest. It never runs in the Lovable preview.
 - **Built for long reads** — illustrated page headers, an "On this page" navigator, feature and step cards, key-message callouts, tables that stack on phones, code copy/expand, FAQ accordions and control IDs linked to the control library.
 
-See [docs/veritrail/UX_PWA_UPLIFT.md](./docs/veritrail/UX_PWA_UPLIFT.md) for the review, before/after screenshots, caching rules and next steps.
+- **Find anything** — ⌘K, Ctrl+K or "/" searches every page, section, FAQ, control, glossary term, workspace screen and platform tool; underlined terms show plain-language definitions, collected on the [glossary](/glossary) page.
+
+See [docs/veritrail/UX_PWA_UPLIFT.md](./docs/veritrail/UX_PWA_UPLIFT.md) for the review, before/after screenshots, caching rules and next steps, and [docs/veritrail/PWA_RELEASE_GUIDE.md](./docs/veritrail/PWA_RELEASE_GUIDE.md) for real-device testing and app store packaging.
+
+### 🗂️ Product documentation
+
+[docs/product](./docs/product/README.md) describes the whole product in one place: the [PRD](./docs/product/PRD.md), a [capabilities index](./docs/product/CAPABILITIES_INDEX.md) of every app, tool and website page, [epics and user stories](./docs/product/EPICS_AND_STORIES.md) with acceptance criteria and known gaps, and [use cases](./docs/product/USE_CASES.md). They are generated from `docs/product/catalog.yaml` and checked by `npm test`.
 
 | Home (after) | Phone | Install on iPhone |
 | :---: | :---: | :---: |
@@ -193,6 +199,7 @@ See [docs/veritrail/UX_PWA_UPLIFT.md](./docs/veritrail/UX_PWA_UPLIFT.md) for the
 ```
 ai-governance-advisory/
 ├── docs/
+│   ├── product/                    # PRD, capabilities index, epics & stories, use cases
 │   ├── veritrail/                      # VERITRAIL launch status report
 │   └── assets/                     # Screenshots, media assets & demo video
 │       ├── landing-home.png        # Landing site main showcase

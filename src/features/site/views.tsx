@@ -36,7 +36,7 @@ const TOOL_META: Record<string, { anchor: string; jump: string }> = {
   "risk-triage": { anchor: "risk-triage", jump: "Go to the tool" },
 };
 
-function PageHeader({
+export function PageHeader({
   h1,
   lead,
   eyebrow,
@@ -505,7 +505,35 @@ export function SiteNotFound() {
 // ------------------------------------------------------------------ head / SEO
 
 const SITE_NAME = siteConfig.site_name;
-const OG_IMAGE = "/og-default.png";
+const OG_DEFAULT = "/og-default.png";
+/**
+ * Published origin for absolute share-image URLs (link previews ignore relative ones). Set
+ * VITE_SITE_URL for a custom domain; the default matches scripts/generate-sitemap.mjs.
+ */
+export const SITE_ORIGIN = (
+  (import.meta.env["VITE_SITE_URL"] as string | undefined) ??
+  "https://thoughtful-ai-governance.lovable.app"
+).replace(/\/+$/, "");
+/** Sections with their own link-preview image in public/og/ (scripts/generate-social-images.mjs). */
+export const OG_SECTIONS = new Set<string>([
+  "framework",
+  "solutions",
+  "compliance",
+  "industries",
+  "tools",
+  "resources",
+  "blog",
+  "contact",
+  "legal",
+  "company",
+  "controls",
+  "glossary",
+]);
+
+/** Share image for a section (an ArtKind, "controls" or "glossary"), else the default card. */
+export function ogImageFor(kind: string | undefined): string {
+  return kind && OG_SECTIONS.has(kind) ? `/og/${kind}.png` : OG_DEFAULT;
+}
 
 function faqJsonLd(faq: FaqItem[]) {
   return {
@@ -524,7 +552,10 @@ export function siteHead(opts: {
   description: string;
   faq?: FaqItem[];
   noindex?: boolean;
+  /** Site path of the share image (defaults to the VERITRAIL card). */
+  image?: string;
 }) {
+  const image = `${SITE_ORIGIN}${opts.image ?? OG_DEFAULT}`;
   const meta: Array<Record<string, string>> = [
     { title: opts.title.includes(SITE_NAME) ? opts.title : `${opts.title} | ${SITE_NAME}` },
     { name: "description", content: opts.description },
@@ -532,12 +563,15 @@ export function siteHead(opts: {
     { property: "og:site_name", content: SITE_NAME },
     { property: "og:title", content: opts.title },
     { property: "og:description", content: opts.description },
-    { property: "og:image", content: OG_IMAGE },
+    { property: "og:image", content: image },
+    { property: "og:image:width", content: "1200" },
+    { property: "og:image:height", content: "630" },
     {
       property: "og:image:alt",
       content: "VERITRAIL — Govern every AI system, agent and decision with evidence",
     },
     { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:image", content: image },
     { name: "twitter:title", content: opts.title },
     { name: "twitter:description", content: opts.description },
   ];
@@ -555,6 +589,7 @@ export function sitePageHead(page: SitePage) {
     description: page.description,
     faq: page.faq,
     noindex: page.noindex,
+    image: ogImageFor(page.path === "/" ? undefined : artFor(page.path, page.section)),
   });
 }
 
@@ -569,6 +604,7 @@ export function controlHead(id: string) {
   return siteHead({
     title: `${c.id} ${c.title} — VERITRAIL control`,
     description: `VERITRAIL control ${c.id} (${c.title}): ${c.objective}`.slice(0, 158),
+    image: ogImageFor("controls"),
   });
 }
 
@@ -576,4 +612,5 @@ export const controlLibraryHead = () =>
   siteHead({
     title: `VERITRAIL Control Library — ${controls.length} AI governance controls`,
     description: `All ${controls.length} VERITRAIL AI governance controls by pillar, with objectives, owners, evidence and indicative NIST AI RMF, ISO/IEC 42001 and EU AI Act mappings.`,
+    image: ogImageFor("controls"),
   });
