@@ -27,3 +27,8 @@
 - [x] Add an organization-scoped AI incident and near-miss register with lifecycle tracking, timestamped status history, bounded validation, backward-compatible snapshot defaults and RLS-protected atomic Cloud persistence.
 - [x] Add a live lifecycle checklist and system-profile completeness assessor derived from persisted workspace sources; preserve workspace-level assessment, guardrail and release-gate scoring.
 - [ ] Add signed-in evidence attachments and a verified export workflow after authentication is available.
+- [x] Make the site an installable app: rich manifest (maskable icons, shortcuts, screenshots), production-only offline service worker, offline page, and an install prompt for Chromium plus step-by-step instructions on iPhone, iPad and Safari for Mac.
+- [x] Lift the text-heavy website: theme-aware illustrations, illustrated page headers, "On this page" navigation, feature/step/link cards, key-message callouts, stacked phone tables, code copy/expand, FAQ accordions, linked control IDs and a visual home page.
+- [ ] Verify installation and offline reading on real iOS and Android devices after publishing.
+- [ ] Fit the workspace header on phones without wrapping (consolidate theme, export and install icons).
+- [ ] Add site search and glossary tooltips across pages, controls and FAQs.

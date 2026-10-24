@@ -5,9 +5,10 @@ import { STANDARD_DISCLAIMER, siteConfig } from "./content";
 import { LeadForm } from "./forms";
 import { footerColumns, siteNav, type Crumb } from "./pages";
 import { SiteLink } from "./ui";
-import { Moon, Sun } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowUp, List, Moon, Sun, X } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { useDarkTheme } from "@/lib/theme";
+import { InstallAppButton } from "@/features/pwa/pwa-layer";
 
 // Public website chrome — header with disclosure navigation, breadcrumbs and footer —
 // ported from platform/app/website/templates/partials/{header,breadcrumbs,footer}.html.
@@ -61,10 +62,27 @@ function sectionOf(pathname: string): string {
   return pathname.split("/")[1] ?? "";
 }
 
+/** Back button for the installed app, which has no browser toolbar (shown only when standalone). */
+function StandaloneBack() {
+  const { pathname } = useLocation();
+  if (pathname === "/") return null;
+  return (
+    <button
+      type="button"
+      className="standalone-back"
+      aria-label="Back"
+      onClick={() => window.history.back()}
+    >
+      <ArrowLeft weight="bold" aria-hidden="true" />
+    </button>
+  );
+}
+
 function SiteHeader() {
   const { pathname } = useLocation();
   const [navOpen, setNavOpen] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const current = sectionOf(pathname);
   const [ctaStart, ctaEnd] = siteConfig.header_cta.label.split(" Governance ");
@@ -79,19 +97,27 @@ function SiteHeader() {
       if (headerRef.current && !headerRef.current.contains(e.target as Node)) setOpenSection(null);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenSection(null);
+      if (e.key !== "Escape") return;
+      setOpenSection(null);
+      setNavOpen(false);
     };
+    // The sticky header gains a shadow once the page scrolls under it.
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
     document.addEventListener("click", onDoc);
     document.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       document.removeEventListener("click", onDoc);
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
   return (
-    <header className="site-header" ref={headerRef}>
+    <header className={`site-header${scrolled ? " is-scrolled" : ""}`} ref={headerRef}>
       <div className="container header-inner">
+        <StandaloneBack />
         <Link className="brand" to="/" aria-label="VERITRAIL home">
           <BrandMark />
           <span className="brand-name">VERITRAIL</span>
@@ -106,6 +132,7 @@ function SiteHeader() {
             siteConfig.header_cta.label
           )}
         </SiteLink>
+        <InstallAppButton className="header-install" />
         <ThemeToggle />
         <Button
           variant="outline"
@@ -113,12 +140,24 @@ function SiteHeader() {
           type="button"
           aria-expanded={navOpen}
           aria-controls="site-nav"
+          aria-label={navOpen ? "Close menu" : "Open menu"}
           onClick={() => setNavOpen((o) => !o)}
         >
-          <span className="nav-toggle-bars" aria-hidden="true" />
-          <span className="nav-toggle-label">Menu</span>
+          {navOpen ? (
+            <X weight="bold" aria-hidden="true" />
+          ) : (
+            <List weight="bold" aria-hidden="true" />
+          )}
+          <span className="nav-toggle-label" aria-hidden="true">
+            Menu
+          </span>
         </Button>
         <nav id="site-nav" className={`site-nav${navOpen ? " is-open" : ""}`} aria-label="Primary">
+          <p className="nav-mobile-cta">
+            <SiteLink className="btn btn-primary" href={siteConfig.header_cta.url}>
+              {siteConfig.header_cta.label}
+            </SiteLink>
+          </p>
           <ul className="nav-list">
             {siteNav.map((sec) => (
               <li className="nav-item" key={sec.id}>
@@ -150,6 +189,60 @@ function SiteHeader() {
         </nav>
       </div>
     </header>
+  );
+}
+
+/** Thin bar along the top of the window showing how far through a long page the reader is. */
+function ReadingProgress() {
+  const barRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      const ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      barRef.current?.style.setProperty("--progress", String(ratio));
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+  return <div className="reading-progress" ref={barRef} aria-hidden="true" />;
+}
+
+/** Appears after a screen and a half of scrolling on long pages. */
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 1.5);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <button
+      type="button"
+      className={`back-to-top${visible ? " is-visible" : ""}`}
+      aria-label="Back to top"
+      tabIndex={visible ? 0 : -1}
+      aria-hidden={!visible}
+      onClick={() => {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+        document.getElementById("main")?.focus({ preventScroll: true });
+      }}
+    >
+      <ArrowUp weight="bold" aria-hidden="true" />
+    </button>
   );
 }
 
@@ -228,6 +321,9 @@ function SiteFooter() {
             <li>
               <a href="/sitemap.xml">Sitemap</a>
             </li>
+            <li>
+              <InstallAppButton className="footer-install" />
+            </li>
           </ul>
         </div>
       </div>
@@ -240,6 +336,13 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   const mainRef = useRef<HTMLElement>(null);
   const first = useRef(true);
   usePageViewTracking();
+  // Printed pages (and "Save as PDF") include every FAQ answer, not just the open ones.
+  useEffect(() => {
+    const openAll = () =>
+      document.querySelectorAll<HTMLDetailsElement>(".faq-item").forEach((d) => (d.open = true));
+    window.addEventListener("beforeprint", openAll);
+    return () => window.removeEventListener("beforeprint", openAll);
+  }, []);
   // Move focus to <main> after client-side navigation so screen readers announce the new page.
   useEffect(() => {
     if (first.current) {
@@ -254,10 +357,12 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         Skip to main content
       </a>
       <SiteHeader />
+      {pathname !== "/" && <ReadingProgress key={pathname} />}
       <main id="main" tabIndex={-1} ref={mainRef}>
         {children}
       </main>
       <SiteFooter />
+      <BackToTop />
     </div>
   );
 }

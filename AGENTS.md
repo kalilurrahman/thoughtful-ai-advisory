@@ -14,7 +14,10 @@
 - Keep resource highlights, access notes and validation provenance as string fields alongside the source register; this preserves compatibility with workspace snapshot validation without changing persistence.
 - Mount a single reducer-backed governance provider and shared shell at the root; this preserves live state across all file-based routes.
 - Define the governance context in a separate non-component module; provider hot updates must not replace the context identity used by mounted consumers.
-- Provide installation through manifest and static icons only, without a service worker; the requested home-screen support must not cache preview pages.
+- Provide installation through the manifest, the shield icons and a production-only service worker (`public/sw.js`, registered by `src/features/pwa/register.ts`); it must never register in development, in an iframe, on Lovable preview hosts or on localhost (unless opted in), so preview pages are never cached. Pages are network-first; server functions, POSTs, other origins, sign-in pages and URLs with query strings are never cached.
+- Capture `beforeinstallprompt` with the inline `PWA_INIT_SCRIPT` and share it through `src/features/pwa/install-store.ts`; every install entry point (site header and footer, workspace header, install card) uses that one store. Install outcomes reuse the `cta_click` event, so the analytics allow-list stays in parity with the Python platform.
+- Keep reading aids (cards, steps, callouts, stacked tables, control links, "On this page") in the React renderer and templates, derived from the structure authors already write; do not add presentation markup to the governed Markdown, which the Python platform also renders.
+- Draw illustrations as inline SVG coloured by the Broadsheet tokens (`src/features/site/illustrations.tsx`), so they follow light/dark mode and work offline; data-driven pictures (the control mosaic, home counts) must read from the governed content.
 - Demo evidence attachments and report outputs must remain explicitly labeled previews; the handoff specifies mock file behavior, not real signed exports.
 
 - Persist workspace snapshots through authenticated server functions and an atomic security-invoker SQL function; organization ownership and RLS prevent cross-organization access.

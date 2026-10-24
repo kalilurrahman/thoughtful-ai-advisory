@@ -14,9 +14,12 @@ import { useEffect, type ReactNode } from "react";
 import { GovernanceProvider } from "@/features/governance/store";
 import { GovernanceShell } from "@/features/governance/shell";
 import { SiteLayout } from "@/features/site/layout";
+import { PwaLayer } from "@/features/pwa/pwa-layer";
+import { PWA_INIT_SCRIPT } from "@/features/pwa/pwa-core";
 import "@lovable.dev/cloud-auth-js/styles.css";
 import appCss from "../styles.css?url";
 import siteCss from "../features/site/site.css?url";
+import pwaCss from "../features/pwa/pwa.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { THEME_INIT_SCRIPT } from "../lib/theme";
 
@@ -84,7 +87,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "VERITRAIL — Enterprise AI governance, runtime guardrails and evidence" },
       {
         name: "description",
@@ -92,6 +95,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "VERITRAIL helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously.",
       },
       { name: "author", content: "VERITRAIL" },
+      // Installed-app (PWA) metadata; the manifest carries the rest.
+      { name: "application-name", content: "VERITRAIL" },
+      { name: "apple-mobile-web-app-title", content: "VERITRAIL" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+      { name: "format-detection", content: "telephone=no" },
       { property: "og:title", content: "VERITRAIL — Enterprise AI governance" },
       {
         property: "og:description",
@@ -100,16 +110,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    // Applies the viewer's light/dark preference (and theme-color) before first paint.
-    scripts: [{ children: THEME_INIT_SCRIPT }],
+    // Applies the viewer's light/dark preference (and theme-color) before first paint, and
+    // captures the browser's one-off install prompt before React hydrates.
+    scripts: [{ children: THEME_INIT_SCRIPT }, { children: PWA_INIT_SCRIPT }],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
       { rel: "stylesheet", href: siteCss },
-      { rel: "icon", href: "/veritrail-icon-192.png", type: "image/png" },
-      { rel: "apple-touch-icon", href: "/veritrail-icon-192.png" },
+      { rel: "stylesheet", href: pwaCss },
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -167,6 +180,7 @@ function RootComponent() {
             <Outlet />
           </GovernanceShell>
         )}
+        <PwaLayer />
       </GovernanceProvider>
     </QueryClientProvider>
   );
