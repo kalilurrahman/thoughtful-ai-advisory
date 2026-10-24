@@ -137,6 +137,13 @@ export type Action =
       changedAt: string;
     }
   | { type: "roadmap"; control: Control }
+  | { type: "roadmap-add"; item: RoadmapItem }
+  | {
+      type: "roadmap-edit";
+      key: string;
+      fields: Pick<RoadmapItem, "title" | "owner" | "effort" | "phase">;
+    }
+  | { type: "roadmap-delete"; key: string }
   | { type: "done"; key: string }
   | { type: "load"; state: GovernanceState };
 export function reducer(s: GovernanceState, a: Action): GovernanceState {
@@ -282,6 +289,17 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
               },
             ],
           };
+    case "roadmap-add":
+      return s.roadmap.some((i) => i.key === a.item.key)
+        ? s
+        : { ...s, roadmap: [...s.roadmap, a.item] };
+    case "roadmap-edit":
+      return {
+        ...s,
+        roadmap: s.roadmap.map((i) => (i.key === a.key ? { ...i, ...a.fields } : i)),
+      };
+    case "roadmap-delete":
+      return { ...s, roadmap: s.roadmap.filter((i) => i.key !== a.key) };
     case "done":
       return {
         ...s,

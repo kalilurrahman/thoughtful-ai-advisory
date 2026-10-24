@@ -24,7 +24,8 @@ const MAX_ROWS = 5000;
 /* eslint-disable @typescript-eslint/no-explicit-any -- tables newer than the generated types */
 type Loose = any;
 
-async function callerIsAdmin(context: { supabase: unknown; userId: string }): Promise<boolean> {
+/** Whether the signed-in caller is in site_admins, read through their own RLS client. */
+export async function callerIsAdmin(context: { supabase: unknown; userId: string }): Promise<boolean> {
   const sb = context.supabase as Loose;
   const { data, error } = await sb
     .from("site_admins")
@@ -38,7 +39,8 @@ async function callerIsAdmin(context: { supabase: unknown; userId: string }): Pr
   return Boolean(data);
 }
 
-async function adminClient(context: { supabase: unknown; userId: string }): Promise<Loose> {
+/** The service-role client, only after the membership check passes. */
+export async function adminClient(context: { supabase: unknown; userId: string }): Promise<Loose> {
   if (!(await callerIsAdmin(context))) throw new Error("Forbidden: site admin access required.");
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   return supabaseAdmin as Loose;

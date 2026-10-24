@@ -255,9 +255,9 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 **Next (close the known gaps).**
 
 1. Autosave and a workspace switcher; reconcile the save function (see risk R1).
-2. Tests for the advisor, the `submitLead` handler and the admin membership check.
-3. Roadmap editing (create, assign, delete); edit and delete decisions.
-4. Real-device install and offline verification; Google Play and Microsoft Store listings
+2. Decide how governance decisions are corrected: today a new decision supersedes the previous
+   one and both stay in the history; editing or deleting in place would weaken the audit trail.
+3. Real-device install and offline verification; Google Play and Microsoft Store listings
    ([release guide](../veritrail/PWA_RELEASE_GUIDE.md)).
 
 **Later (new capability).**

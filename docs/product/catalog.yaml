@@ -237,8 +237,8 @@ epics:
           - Given more than 60 submissions a minute from one client, when submitted, then the rest are refused with "Too many requests" (as server.py).
           - Given a stored submission, when confirmed, then a form_submit event names the form; a honeypot or refused submission sends none.
         routes: [/contact, /contact/book-governance-baseline, /contact/request-demo, /contact/design-partner-programme, /contact/newsletter]
-        tests: [platform-misc-parity.test.ts, rate-limit.test.ts, site-analytics-events.test.tsx]
-        gaps: [The submitLead handler itself is not unit-tested (its form, events and rate limit are)., No confirmation e-mails are sent (no SMTP on Workers).]
+        tests: [platform-misc-parity.test.ts, rate-limit.test.ts, site-analytics-events.test.tsx, server-logic.test.ts]
+        gaps: [No confirmation e-mails are sent (no SMTP on Workers).]
       - id: S04.2
         persona: admin
         want: assessment leads tagged by qualification rules
@@ -414,14 +414,15 @@ epics:
     stories:
       - id: S09.1
         persona: gov-lead
-        want: to see remediation items in four phases and mark them done
-        so_that: progress is tracked against a plan
-        status: partial
+        want: to see remediation items in four phases, keep them up to date and mark them done
+        so_that: progress is tracked against a plan that reflects reality
+        status: done
         acceptance:
           - Given a gap added from the overview or gates, when added, then it lands in a phase by priority and effort and is not duplicated.
+          - Given the add form, when I enter an action, effort, phase and optional owner, then the item appears in that phase, as Unassigned if no owner is given.
+          - Given an item, when I edit it, then its action, owner, effort and phase (any of the four) can change; deleting it asks me to confirm.
         routes: [/roadmap]
-        tests: [governance.test.ts]
-        gaps: [Items cannot be created, edited, re-assigned or deleted in the UI., Nothing is placed in phase 4.]
+        tests: [governance.test.ts, roadmap.test.tsx]
       - id: S09.2
         persona: gov-lead
         want: a lifecycle checklist derived from the workspace
@@ -491,8 +492,10 @@ epics:
         acceptance:
           - Given a concern of 20–4,000 characters, when submitted, then the server returns a summary, 3–6 mapped controls and 3–5 actions, dropping unknown control IDs.
           - Given "Add to corrective actions", when chosen, then the actions are created with due dates by priority.
+          - Given a busy, out-of-credit, unreadable or incomplete answer from the gateway, when received, then the advisor says so instead of failing.
         routes: [/advisor]
-        gaps: [Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in., No tests.]
+        tests: [server-logic.test.ts]
+        gaps: [Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in.]
 
   - id: E11
     title: Reports and audit evidence
@@ -637,9 +640,9 @@ epics:
         acceptance:
           - Given I am signed in but not in site_admins, when I open the console, then I see the grant needed, not the data.
           - Given I am an admin, when the console loads, then every server read re-checks membership before using the service role.
+          - Given the membership check fails or finds no row, when an admin function runs, then it refuses before using the service role.
         routes: [/platform/admin]
-        tests: [platform-misc-admin.test.tsx]
-        gaps: [The server-side membership check is not unit-tested.]
+        tests: [platform-misc-admin.test.tsx, server-logic.test.ts]
       - id: S14.2
         persona: admin
         want: to see the funnel from page view to report download, and CTA clicks
@@ -1053,14 +1056,14 @@ capabilities:
   - {id: CAP-015, name: EU AI Act readiness checker, area: tools, route: /tools/eu-ai-act-readiness-checker, status: planned, data: none, epic: E16, personas: [cro], source: [platform/content/website_pages/tools-eu-ai-act-readiness-checker.md], tests: [], summary: "Planned; waitlist form only."}
 
   # ---------------------------------------------------------------- leads
-  - {id: CAP-020, name: Lead forms, area: leads, route: /contact, status: live, data: server, epic: E04, personas: [visitor], source: [src/features/site/forms.tsx, src/features/site/leads.functions.ts], tests: [platform-misc-parity.test.ts, rate-limit.test.ts, site-analytics-events.test.tsx], summary: "Baseline, demo, contact, newsletter, blueprint, design partner, waitlist and assessment forms into site_leads (RLS); per-client rate limit; business-email gate; honeypot; optional CRM push."}
+  - {id: CAP-020, name: Lead forms, area: leads, route: /contact, status: live, data: server, epic: E04, personas: [visitor], source: [src/features/site/forms.tsx, src/features/site/leads.functions.ts, src/features/site/lead-intake.ts], tests: [platform-misc-parity.test.ts, rate-limit.test.ts, site-analytics-events.test.tsx, server-logic.test.ts], summary: "Baseline, demo, contact, newsletter, blueprint, design partner, waitlist and assessment forms into site_leads (RLS); per-client rate limit; business-email gate; honeypot; optional CRM push."}
 
   # ---------------------------------------------------------------- workspace
   - {id: CAP-030, name: Governance overview, area: assess, route: /workspace, status: live, data: cloud, epic: E05, personas: [gov-lead], source: [src/features/governance/screens-core.tsx, src/features/governance/model.ts], tests: [governance.test.ts, governance-provider.test.tsx], summary: "KPIs, VERITRAIL Index and band, pillar bars, gate card and top gaps."}
   - {id: CAP-031, name: TILLER assessment, area: assess, route: /assess, status: live, data: cloud, epic: E05, personas: [gov-lead], source: [src/features/governance/screens-core.tsx], tests: [governance.test.ts], summary: "12 controls scored 0–4 with evidence status; score capped at 2 until Verified."}
   - {id: CAP-032, name: Release readiness, area: assess, route: /gates, status: live, data: cloud, epic: E05, personas: [approver], source: [src/features/governance/screens-core.tsx, src/features/governance/model.ts], tests: [governance.test.ts], summary: "Cleared / Conditional / Blocked against tier floors; blockers to roadmap."}
   - {id: CAP-033, name: Guardrails designer, area: assess, route: /guardrails, status: live, data: cloud, epic: E07, personas: [ciso], source: [src/features/governance/screens-core.tsx], tests: [governance.test.ts], summary: "Workspace tier and 21 guardrails in 7 groups with required coverage."}
-  - {id: CAP-034, name: Roadmap, area: assess, route: /roadmap, status: live, data: cloud, epic: E09, personas: [gov-lead], source: [src/features/governance/screens-operations.tsx], tests: [governance.test.ts], summary: "Four phases of remediation items; mark done."}
+  - {id: CAP-034, name: Roadmap, area: assess, route: /roadmap, status: live, data: cloud, epic: E09, personas: [gov-lead], source: [src/features/governance/screens-operations.tsx, src/features/governance/roadmap-model.ts], tests: [governance.test.ts, roadmap.test.tsx], summary: "Four phases of remediation items; add, edit, reassign, move between phases, delete and mark done."}
   - {id: CAP-035, name: Lifecycle checklist, area: assess, route: /checklist, status: live, data: cloud, epic: E09, personas: [gov-lead], source: [src/features/governance/checklist-model.ts], tests: [checklist.test.ts], summary: "Readiness tasks derived from the live workspace with deep links."}
   - {id: CAP-036, name: AI inventory and triage, area: register, route: /inventory, status: live, data: cloud, epic: E06, personas: [owner, gov-lead], source: [src/features/governance/screens-operations.tsx, src/features/site/engines/risk-tier.ts, src/features/governance/inventory-export.ts], tests: [inventory-export.test.ts, site-risk-tier.test.ts], summary: "Register, triage, filter, edit and CSV export of AI systems."}
   - {id: CAP-037, name: Incidents and near misses, area: operate, route: /incidents, status: live, data: cloud, epic: E08, personas: [owner, gov-lead], source: [src/features/governance/screens-incidents.tsx], tests: [incidents.test.ts, incidents-ui.test.tsx], summary: "Log, triage and close incidents with status history."}
@@ -1073,7 +1076,7 @@ capabilities:
   - {id: CAP-044, name: Knowledge hub, area: guide, route: /knowledge, status: live, data: none, epic: E10, personas: [cro, gov-lead], source: [src/features/governance/screens-resources.tsx, src/data/governance.ts], tests: [resources.test.ts], summary: "24 laws, standards and guidance sources by type and jurisdiction."}
   - {id: CAP-045, name: Start here, area: guide, route: /start, status: live, data: memory, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-start.tsx], tests: [], summary: "Role, stage and goal to recommended chapters, actions and tools."}
   - {id: CAP-046, name: Calculators, area: guide, route: /calculators, status: live, data: memory, epic: E10, personas: [cro], source: [src/features/governance/screens-resources.tsx, src/features/governance/model.ts], tests: [governance.test.ts], summary: "Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage."}
-  - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [], summary: "Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions."}
+  - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [server-logic.test.ts], summary: "Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions."}
   - {id: CAP-048, name: Reports and audit pack, area: report, route: /export, status: preview, data: none, epic: E11, personas: [auditor, gov-lead], source: [src/features/governance/evidence-report.ts, src/features/governance/evidence-files.ts], tests: [evidence-export.test.ts, export-ui.test.tsx], summary: "PDF, DOCX, XLSX and PPTX packs generated in the browser, labelled demo previews."}
   - {id: CAP-049, name: Plans, area: account, route: /plans, status: live, data: none, epic: E12, personas: [visitor], source: [src/routes/plans.tsx], tests: [], summary: "Assess, Govern and Assure packages and the free snapshot; no billing."}
   - {id: CAP-050, name: Workspace and account, area: account, route: /more, status: live, data: cloud, epic: E12, personas: [gov-lead], source: [src/features/governance/screens-resources.tsx, src/features/governance/workspace-controls.tsx, src/features/governance/workspace.functions.ts], tests: [], summary: "Sign-in entry, rename, Save and Restore, links to every workspace tool."}
@@ -1089,7 +1092,7 @@ capabilities:
   - {id: CAP-064, name: ROI calculator, area: platform, route: /platform/roi-calculator, status: live, data: none, epic: E13, personas: [cro, consultant], source: [src/features/platform/roi-calculator.tsx, src/features/platform/roi/roi.ts], tests: [platform-misc-parity.test.ts, platform-samples.test.ts], summary: "Line-item ROI with formulas, hypotheses and sensitivity scenarios."}
   - {id: CAP-065, name: Sample reports, area: platform, route: /platform/samples, status: demo, data: none, epic: E13, personas: [consultant, visitor], source: [src/features/platform/samples-gallery.tsx, src/features/platform/samples], tests: [platform-samples.test.ts], summary: "Maturity, risk-tier and Shield samples identical to the Python outputs."}
   - {id: CAP-066, name: Content checks, area: platform, route: /platform/content-checks, status: live, data: none, epic: E13, personas: [gov-lead], source: [src/features/platform/content-checks.tsx, src/features/platform/checks], tests: [platform-content-checks.test.ts], summary: "Six content validation steps and the prohibited-claim scan."}
-  - {id: CAP-067, name: Admin console, area: admin, route: /platform/admin, status: live, data: server, epic: E14, personas: [admin], source: [src/features/platform/admin-console.tsx, src/features/platform/admin.functions.ts], tests: [platform-misc-admin.test.tsx], summary: "Leads, form submissions, funnel and local audit verification; site_admins gated."}
+  - {id: CAP-067, name: Admin console, area: admin, route: /platform/admin, status: live, data: server, epic: E14, personas: [admin], source: [src/features/platform/admin-console.tsx, src/features/platform/admin.functions.ts], tests: [platform-misc-admin.test.tsx, server-logic.test.ts], summary: "Leads, form submissions, funnel and local audit verification; site_admins gated."}
   - {id: CAP-068, name: Privacy-first analytics, area: admin, route: "", status: live, data: server, epic: E14, personas: [admin], source: [src/features/platform/analytics.ts, src/features/platform/analytics-core.ts, src/features/platform/analytics.functions.ts, src/features/platform/rate-limit.server.ts], tests: [platform-misc-parity.test.ts, site-analytics-events.test.tsx, rate-limit.test.ts], summary: "Cookieless page, CTA, assessment, tool and form events with DNT/GPC opt-out, sanitised props and a per-client rate limit."}
 
   # ---------------------------------------------------------------- installable app, search, reading

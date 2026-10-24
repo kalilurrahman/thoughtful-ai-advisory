@@ -1083,6 +1083,45 @@ textarea:focus {
   font-size: 12px;
   margin-top: 5px;
 }
+.roadmap-row {
+  display: flex;
+  align-items: start;
+  gap: 4px;
+  border-bottom: 1px solid var(--row-rule);
+}
+.roadmap-row .roadmap-item {
+  border-bottom: 0;
+}
+.roadmap-edit {
+  flex: none;
+  margin-top: 12px;
+  color: var(--muted-foreground);
+}
+.roadmap-edit:hover {
+  color: var(--primary);
+}
+.roadmap-form {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+}
+.roadmap-add {
+  margin-bottom: 8px;
+}
+.roadmap-add .roadmap-form {
+  margin: 0;
+  padding: 14px 0 0;
+  background: none;
+  border: 0;
+}
+.roadmap-empty {
+  padding: 12px 0;
+  font-size: 13px;
+}
 .roadmap-item {
   display: flex;
   align-items: start;

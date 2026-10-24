@@ -69,7 +69,7 @@ const schema = {
   },
 };
 
-function extractText(body: unknown): string {
+export function extractText(body: unknown): string {
   if (typeof body !== "object" || body === null) return "";
   const b = body as { output_text?: unknown; output?: unknown };
   if (typeof b.output_text === "string") return b.output_text;
@@ -85,13 +85,69 @@ function extractText(body: unknown): string {
   return "";
 }
 
+const UNREADABLE = "The advisor returned an unreadable answer. Try again.";
+
+/**
+ * The advisor's answer from the gateway's HTTP status and JSON body: busy and credit errors
+ * explained, and only areas and actions that cite a control in the catalogue kept.
+ */
+export function adviceFromResponse(status: number, body: unknown): AdvisorResult {
+  if (status === 429) return { ok: false, error: "The advisor is busy. Try again in a minute." };
+  if (status === 402)
+    return { ok: false, error: "AI usage credits are exhausted for this workspace." };
+  if (status < 200 || status >= 300)
+    return { ok: false, error: "The advisor could not respond. Try again shortly." };
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(extractText(body));
+  } catch {
+    return { ok: false, error: UNREADABLE };
+  }
+  const p = parsed as { summary?: unknown; areas?: unknown; actions?: unknown } | null;
+  if (!p || typeof p.summary !== "string" || !Array.isArray(p.areas) || !Array.isArray(p.actions))
+    return { ok: false, error: UNREADABLE };
+  const byId = new Map<string, (typeof CONTROLS)[number]>(CONTROLS.map((c) => [c.id, c]));
+  const relevance = new Set<string>(["High", "Medium", "Low"]);
+  const priorities = new Set<string>(correctiveActionPriorities);
+  const areas: AdvisorArea[] = p.areas.flatMap((raw) => {
+    const a = raw as { controlId?: unknown; relevance?: unknown; rationale?: unknown };
+    const c = typeof a.controlId === "string" ? byId.get(a.controlId) : undefined;
+    if (!c || typeof a.relevance !== "string" || !relevance.has(a.relevance)) return [];
+    return [
+      {
+        controlId: c.id,
+        code: c.code,
+        pillar: PILLARS[c.p]?.name ?? "",
+        nist: PILLARS[c.p]?.nist ?? "",
+        question: c.text,
+        relevance: a.relevance as AdvisorArea["relevance"],
+        rationale: typeof a.rationale === "string" ? a.rationale : "",
+      },
+    ];
+  });
+  const actions = p.actions.filter((raw): raw is AdvisorAction => {
+    const a = raw as Partial<Record<keyof AdvisorAction, unknown>>;
+    return (
+      typeof a.controlId === "string" &&
+      byId.has(a.controlId) &&
+      typeof a.title === "string" &&
+      typeof a.description === "string" &&
+      typeof a.owner === "string" &&
+      typeof a.priority === "string" &&
+      priorities.has(a.priority)
+    );
+  });
+  return { ok: true, summary: p.summary, areas, actions };
+}
+
 export const recommendGovernance = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => inputSchema.parse(input))
   .handler(async ({ data }): Promise<AdvisorResult> => {
     const key = process.env["LOVABLE_API_KEY"];
     if (!key) return { ok: false, error: "The AI advisor is not configured yet." };
     const catalogue = CONTROLS.map(
-      (c) => `${c.id} | ${c.code} | ${PILLARS[c.p]?.name ?? ""} (${PILLARS[c.p]?.nist ?? ""}) | ${c.text}`,
+      (c) =>
+        `${c.id} | ${c.code} | ${PILLARS[c.p]?.name ?? ""} (${PILLARS[c.p]?.nist ?? ""}) | ${c.text}`,
     ).join("\n");
     const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
       method: "POST",
@@ -108,21 +164,5 @@ export const recommendGovernance = createServerFn({ method: "POST" })
         text: { format: { type: "json_schema", name: "governance_advice", strict: true, schema } },
       }),
     });
-    if (res.status === 429) return { ok: false, error: "The advisor is busy. Try again in a minute." };
-    if (res.status === 402) return { ok: false, error: "AI usage credits are exhausted for this workspace." };
-    if (!res.ok) return { ok: false, error: "The advisor could not respond. Try again shortly." };
-    let parsed: { summary: string; areas: { controlId: string; relevance: AdvisorArea["relevance"]; rationale: string }[]; actions: AdvisorAction[] };
-    try {
-      parsed = JSON.parse(extractText(await res.json()));
-    } catch {
-      return { ok: false, error: "The advisor returned an unreadable answer. Try again." };
-    }
-    const byId = new Map<string, (typeof CONTROLS)[number]>(CONTROLS.map((c) => [c.id, c]));
-    const areas: AdvisorArea[] = parsed.areas.flatMap((a) => {
-      const c = byId.get(a.controlId);
-      if (!c) return [];
-      return [{ controlId: c.id, code: c.code, pillar: PILLARS[c.p]?.name ?? "", nist: PILLARS[c.p]?.nist ?? "", question: c.text, relevance: a.relevance, rationale: a.rationale }];
-    });
-    const actions = parsed.actions.filter((a) => byId.has(a.controlId));
-    return { ok: true, summary: parsed.summary, areas, actions };
+    return adviceFromResponse(res.status, res.ok ? await res.json().catch(() => null) : null);
   });
