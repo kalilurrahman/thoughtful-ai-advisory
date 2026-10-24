@@ -57,7 +57,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-031 | TILLER assessment | `/assess` | Live | Cloud (RLS) | AI governance lead | [E05](EPICS_AND_STORIES.md#e05--tiller-assessment-scoring-and-release-readiness) | 12 controls scored 0–4 with evidence status; score capped at 2 until Verified. |
 | CAP-032 | Release readiness | `/gates` | Live | Cloud (RLS) | Approver | [E05](EPICS_AND_STORIES.md#e05--tiller-assessment-scoring-and-release-readiness) | Cleared / Conditional / Blocked against tier floors; blockers to roadmap. |
 | CAP-033 | Guardrails designer | `/guardrails` | Live | Cloud (RLS) | CISO / security architect | [E07](EPICS_AND_STORIES.md#e07--guardrails-design-in-the-workspace) | Workspace tier and 21 guardrails in 7 groups with required coverage. |
-| CAP-034 | Roadmap | `/roadmap` | Live | Cloud (RLS) | AI governance lead | [E09](EPICS_AND_STORIES.md#e09--remediation-roadmap-and-lifecycle-checklist) | Four phases of remediation items; mark done. |
+| CAP-034 | Roadmap | `/roadmap` | Live | Cloud (RLS) | AI governance lead | [E09](EPICS_AND_STORIES.md#e09--remediation-roadmap-and-lifecycle-checklist) | Four phases of remediation items; add, edit, reassign, move between phases, delete and mark done. |
 | CAP-035 | Lifecycle checklist | `/checklist` | Live | Cloud (RLS) | AI governance lead | [E09](EPICS_AND_STORIES.md#e09--remediation-roadmap-and-lifecycle-checklist) | Readiness tasks derived from the live workspace with deep links. |
 
 ### Workspace — AI inventory
@@ -284,12 +284,12 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-013 | Ask VERITRAIL | [S03.5](EPICS_AND_STORIES.md#s035) | `src/features/site/tools/ask-veritrail.tsx`, `src/features/site/engines/ask-veritrail` | `site-ask-veritrail.test.ts` |
 | CAP-014 | Agentic AI risk checker | [S16.1](EPICS_AND_STORIES.md#s161) | `platform/content/website_pages/tools-agentic-risk-checker.md` | **None** |
 | CAP-015 | EU AI Act readiness checker | [S16.2](EPICS_AND_STORIES.md#s162) | `platform/content/website_pages/tools-eu-ai-act-readiness-checker.md` | **None** |
-| CAP-020 | Lead forms | [S03.2](EPICS_AND_STORIES.md#s032), [S04.1](EPICS_AND_STORIES.md#s041), [S04.2](EPICS_AND_STORIES.md#s042), [S04.3](EPICS_AND_STORIES.md#s043) | `src/features/site/forms.tsx`, `src/features/site/leads.functions.ts` | `platform-misc-parity.test.ts`, `rate-limit.test.ts`, `site-analytics-events.test.tsx` |
+| CAP-020 | Lead forms | [S03.2](EPICS_AND_STORIES.md#s032), [S04.1](EPICS_AND_STORIES.md#s041), [S04.2](EPICS_AND_STORIES.md#s042), [S04.3](EPICS_AND_STORIES.md#s043) | `src/features/site/forms.tsx`, `src/features/site/leads.functions.ts`, `src/features/site/lead-intake.ts` | `platform-misc-parity.test.ts`, `rate-limit.test.ts`, `site-analytics-events.test.tsx`, `server-logic.test.ts` |
 | CAP-030 | Governance overview | [S05.2](EPICS_AND_STORIES.md#s052) | `src/features/governance/screens-core.tsx`, `src/features/governance/model.ts` | `governance.test.ts`, `governance-provider.test.tsx` |
 | CAP-031 | TILLER assessment | [S05.1](EPICS_AND_STORIES.md#s051) | `src/features/governance/screens-core.tsx` | `governance.test.ts` |
 | CAP-032 | Release readiness | [S05.3](EPICS_AND_STORIES.md#s053) | `src/features/governance/screens-core.tsx`, `src/features/governance/model.ts` | `governance.test.ts` |
 | CAP-033 | Guardrails designer | [S07.1](EPICS_AND_STORIES.md#s071) | `src/features/governance/screens-core.tsx` | `governance.test.ts` |
-| CAP-034 | Roadmap | [S09.1](EPICS_AND_STORIES.md#s091) | `src/features/governance/screens-operations.tsx` | `governance.test.ts` |
+| CAP-034 | Roadmap | [S09.1](EPICS_AND_STORIES.md#s091) | `src/features/governance/screens-operations.tsx`, `src/features/governance/roadmap-model.ts` | `governance.test.ts`, `roadmap.test.tsx` |
 | CAP-035 | Lifecycle checklist | [S09.2](EPICS_AND_STORIES.md#s092) | `src/features/governance/checklist-model.ts` | `checklist.test.ts` |
 | CAP-036 | AI inventory and triage | [S06.1](EPICS_AND_STORIES.md#s061), [S06.2](EPICS_AND_STORIES.md#s062) | `src/features/governance/screens-operations.tsx`, `src/features/site/engines/risk-tier.ts`, `src/features/governance/inventory-export.ts` | `inventory-export.test.ts`, `site-risk-tier.test.ts` |
 | CAP-037 | Incidents and near misses | [S08.1](EPICS_AND_STORIES.md#s081) | `src/features/governance/screens-incidents.tsx` | `incidents.test.ts`, `incidents-ui.test.tsx` |
@@ -302,7 +302,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-044 | Knowledge hub | [S10.3](EPICS_AND_STORIES.md#s103) | `src/features/governance/screens-resources.tsx`, `src/data/governance.ts` | `resources.test.ts` |
 | CAP-045 | Start here | [S10.4](EPICS_AND_STORIES.md#s104) | `src/features/governance/screens-start.tsx` | **None** |
 | CAP-046 | Calculators | [S10.5](EPICS_AND_STORIES.md#s105) | `src/features/governance/screens-resources.tsx`, `src/features/governance/model.ts` | `governance.test.ts` |
-| CAP-047 | AI governance advisor | [S10.6](EPICS_AND_STORIES.md#s106) | `src/features/governance/screens-advisor.tsx`, `src/features/governance/advisor.functions.ts` | **None** |
+| CAP-047 | AI governance advisor | [S10.6](EPICS_AND_STORIES.md#s106) | `src/features/governance/screens-advisor.tsx`, `src/features/governance/advisor.functions.ts` | `server-logic.test.ts` |
 | CAP-048 | Reports and audit pack | [S11.1](EPICS_AND_STORIES.md#s111) | `src/features/governance/evidence-report.ts`, `src/features/governance/evidence-files.ts` | `evidence-export.test.ts`, `export-ui.test.tsx` |
 | CAP-049 | Plans | [S12.3](EPICS_AND_STORIES.md#s123) | `src/routes/plans.tsx` | **None** |
 | CAP-050 | Workspace and account | [S12.2](EPICS_AND_STORIES.md#s122) | `src/features/governance/screens-resources.tsx`, `src/features/governance/workspace-controls.tsx`, `src/features/governance/workspace.functions.ts` | **None** |
@@ -316,7 +316,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-064 | ROI calculator | [S13.4](EPICS_AND_STORIES.md#s134) | `src/features/platform/roi-calculator.tsx`, `src/features/platform/roi/roi.ts` | `platform-misc-parity.test.ts`, `platform-samples.test.ts` |
 | CAP-065 | Sample reports | [S13.5](EPICS_AND_STORIES.md#s135) | `src/features/platform/samples-gallery.tsx`, `src/features/platform/samples` | `platform-samples.test.ts` |
 | CAP-066 | Content checks | [S13.6](EPICS_AND_STORIES.md#s136) | `src/features/platform/content-checks.tsx`, `src/features/platform/checks` | `platform-content-checks.test.ts` |
-| CAP-067 | Admin console | [S04.2](EPICS_AND_STORIES.md#s042), [S14.1](EPICS_AND_STORIES.md#s141), [S14.2](EPICS_AND_STORIES.md#s142) | `src/features/platform/admin-console.tsx`, `src/features/platform/admin.functions.ts` | `platform-misc-admin.test.tsx` |
+| CAP-067 | Admin console | [S04.2](EPICS_AND_STORIES.md#s042), [S14.1](EPICS_AND_STORIES.md#s141), [S14.2](EPICS_AND_STORIES.md#s142) | `src/features/platform/admin-console.tsx`, `src/features/platform/admin.functions.ts` | `platform-misc-admin.test.tsx`, `server-logic.test.ts` |
 | CAP-068 | Privacy-first analytics | [S14.2](EPICS_AND_STORIES.md#s142) | `src/features/platform/analytics.ts`, `src/features/platform/analytics-core.ts`, `src/features/platform/analytics.functions.ts`, `src/features/platform/rate-limit.server.ts` | `platform-misc-parity.test.ts`, `site-analytics-events.test.tsx`, `rate-limit.test.ts` |
 | CAP-070 | Installable app (PWA) | [S15.1](EPICS_AND_STORIES.md#s151) | `public/manifest.webmanifest`, `src/features/pwa` | `pwa.test.ts` |
 | CAP-071 | Offline reading | [S15.2](EPICS_AND_STORIES.md#s152) | `public/sw.js`, `public/offline.html`, `src/features/pwa/register.ts` | `pwa.test.ts` |

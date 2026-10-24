@@ -14,7 +14,7 @@
 | [E06](#e06--ai-inventory-and-use-case-triage) | AI inventory and use-case triage | Workspace — AI inventory | Live | 2 | 2 | 0 | 0 |
 | [E07](#e07--guardrails-design-in-the-workspace) | Guardrails design in the workspace | Workspace — assessment and release readiness | Live | 1 | 1 | 0 | 0 |
 | [E08](#e08--operational-governance-registers) | Operational governance registers | Workspace — operational governance | Live | 5 | 5 | 0 | 0 |
-| [E09](#e09--remediation-roadmap-and-lifecycle-checklist) | Remediation roadmap and lifecycle checklist | Workspace — assessment and release readiness | Live | 2 | 1 | 1 | 0 |
+| [E09](#e09--remediation-roadmap-and-lifecycle-checklist) | Remediation roadmap and lifecycle checklist | Workspace — assessment and release readiness | Live | 2 | 2 | 0 | 0 |
 | [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 6 | 6 | 0 | 0 |
 | [E11](#e11--reports-and-audit-evidence) | Reports and audit evidence | Workspace — reports and evidence | Preview | 1 | 1 | 0 | 0 |
 | [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 3 | 1 | 2 | 0 |
@@ -238,12 +238,10 @@ Acceptance criteria:
 - Given more than 60 submissions a minute from one client, when submitted, then the rest are refused with "Too many requests" (as server.py).
 - Given a stored submission, when confirmed, then a form_submit event names the form; a honeypot or refused submission sends none.
 
-**Routes:** `/contact`, `/contact/book-governance-baseline`, `/contact/request-demo`, `/contact/design-partner-programme`, `/contact/newsletter` · **Capabilities:** CAP-020 · **Tests:** `platform-misc-parity.test.ts`, `rate-limit.test.ts`, `site-analytics-events.test.tsx`
+**Routes:** `/contact`, `/contact/book-governance-baseline`, `/contact/request-demo`, `/contact/design-partner-programme`, `/contact/newsletter` · **Capabilities:** CAP-020 · **Tests:** `platform-misc-parity.test.ts`, `rate-limit.test.ts`, `site-analytics-events.test.tsx`, `server-logic.test.ts`
 
 Known gaps:
 
-- The submitLead handler itself is not unit-tested (its form
-- events and rate limit are).
 - No confirmation e-mails are sent (no SMTP on Workers).
 
 ### S04.2
@@ -495,22 +493,17 @@ Known gaps:
 
 ### S09.1
 
-**As an AI governance lead**, I want to see remediation items in four phases and mark them done, so that progress is tracked against a plan.
+**As an AI governance lead**, I want to see remediation items in four phases, keep them up to date and mark them done, so that progress is tracked against a plan that reflects reality.
 
-*Status: Partial*
+*Status: Done*
 
 Acceptance criteria:
 
 - Given a gap added from the overview or gates, when added, then it lands in a phase by priority and effort and is not duplicated.
+- Given the add form, when I enter an action, effort, phase and optional owner, then the item appears in that phase, as Unassigned if no owner is given.
+- Given an item, when I edit it, then its action, owner, effort and phase (any of the four) can change; deleting it asks me to confirm.
 
-**Routes:** `/roadmap` · **Capabilities:** CAP-034 · **Tests:** `governance.test.ts`
-
-Known gaps:
-
-- Items cannot be created
-- edited
-- re-assigned or deleted in the UI.
-- Nothing is placed in phase 4.
+**Routes:** `/roadmap` · **Capabilities:** CAP-034 · **Tests:** `governance.test.ts`, `roadmap.test.tsx`
 
 ### S09.2
 
@@ -611,13 +604,13 @@ Acceptance criteria:
 
 - Given a concern of 20–4,000 characters, when submitted, then the server returns a summary, 3–6 mapped controls and 3–5 actions, dropping unknown control IDs.
 - Given "Add to corrective actions", when chosen, then the actions are created with due dates by priority.
+- Given a busy, out-of-credit, unreadable or incomplete answer from the gateway, when received, then the advisor says so instead of failing.
 
-**Routes:** `/advisor` · **Capabilities:** CAP-047 · **Tests:** none yet
+**Routes:** `/advisor` · **Capabilities:** CAP-047 · **Tests:** `server-logic.test.ts`
 
 Known gaps:
 
 - Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in.
-- No tests.
 
 ## E11 — Reports and audit evidence
 
@@ -825,12 +818,9 @@ Acceptance criteria:
 
 - Given I am signed in but not in site_admins, when I open the console, then I see the grant needed, not the data.
 - Given I am an admin, when the console loads, then every server read re-checks membership before using the service role.
+- Given the membership check fails or finds no row, when an admin function runs, then it refuses before using the service role.
 
-**Routes:** `/platform/admin` · **Capabilities:** CAP-067 · **Tests:** `platform-misc-admin.test.tsx`
-
-Known gaps:
-
-- The server-side membership check is not unit-tested.
+**Routes:** `/platform/admin` · **Capabilities:** CAP-067 · **Tests:** `platform-misc-admin.test.tsx`, `server-logic.test.ts`
 
 ### S14.2
 
@@ -1003,8 +993,6 @@ Every gap recorded against a story, in one list for planning.
 |---|---|---|
 | [S03.3](#s033) | E03 | No UI test for the triage form. |
 | [S03.4](#s034) | E03 | No UI test for the generator form. |
-| [S04.1](#s041) | E04 | The submitLead handler itself is not unit-tested (its form |
-| [S04.1](#s041) | E04 | events and rate limit are). |
 | [S04.1](#s041) | E04 | No confirmation e-mails are sent (no SMTP on Workers). |
 | [S04.3](#s043) | E04 | The PDF is a public static file |
 | [S04.3](#s043) | E04 | so the form gate is cosmetic. |
@@ -1019,14 +1007,9 @@ Every gap recorded against a story, in one list for planning.
 | [S08.4](#s084) | E08 | Observations are manual; there is no telemetry feed. |
 | [S08.4](#s084) | E08 | Thresholds cannot be edited (pause and recreate). |
 | [S08.5](#s085) | E08 | Separation of duties is advisory text only. |
-| [S09.1](#s091) | E09 | Items cannot be created |
-| [S09.1](#s091) | E09 | edited |
-| [S09.1](#s091) | E09 | re-assigned or deleted in the UI. |
-| [S09.1](#s091) | E09 | Nothing is placed in phase 4. |
 | [S10.1](#s101) | E10 | No tests for the playbook reader. |
 | [S10.2](#s102) | E10 | No tests for templates. |
 | [S10.6](#s106) | E10 | Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in. |
-| [S10.6](#s106) | E10 | No tests. |
 | [S11.1](#s111) | E11 | The three packs differ only in title and subject. |
 | [S12.1](#s121) | E12 | No SSO/SAML |
 | [S12.1](#s121) | E12 | MFA |
@@ -1037,4 +1020,3 @@ Every gap recorded against a story, in one list for planning.
 | [S12.3](#s123) | E12 | No checkout |
 | [S12.3](#s123) | E12 | billing or entitlements. |
 | [S13.1](#s131) | E13 | Synthetic data only; approvals have no external effect. |
-| [S14.1](#s141) | E14 | The server-side membership check is not unit-tested. |

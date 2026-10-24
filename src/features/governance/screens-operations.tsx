@@ -16,6 +16,15 @@ import { GR, PHASES, type Tier } from "@/data/governance";
 import { calculateRiskTier, type RiskProfile } from "@/features/site/engines/risk-tier";
 import { requiredGuardrail } from "./model";
 import { useGovernance } from "./store";
+import {
+  ROADMAP_EFFORTS,
+  UNASSIGNED,
+  draftFrom,
+  newRoadmapItem,
+  validateRoadmapDraft,
+  type RoadmapDraft,
+  type RoadmapFields,
+} from "./roadmap-model";
 import { filterInventory, inventoryCsv } from "./inventory-export";
 import { Chip, Dot, Kicker } from "./screens-core";
 const triageSelects: [string, string, string][] = [
@@ -547,48 +556,209 @@ export function GuardrailsScreen() {
 }
 export function RoadmapScreen() {
   const { state, dispatch } = useGovernance();
+  const [editing, setEditing] = useState<string | null>(null);
   return (
     <>
       <p className="muted">
-        Generated from assessment gaps and gate blockers.{" "}
-        {state.roadmap.filter((i) => i.done).length} of {state.roadmap.length} complete.
+        Generated from assessment gaps and gate blockers; add, reassign or move items as plans
+        change. {state.roadmap.filter((i) => i.done).length} of {state.roadmap.length} complete.
       </p>
+      <details className="decision-intake roadmap-add">
+        <summary>
+          <Plus /> Add a roadmap item
+        </summary>
+        <RoadmapItemForm
+          initial={{ title: "", owner: "", effort: "Medium", phase: 0 }}
+          submitLabel="Add to roadmap"
+          resetOnSave
+          onSave={(fields) =>
+            dispatch({ type: "roadmap-add", item: newRoadmapItem(fields, crypto.randomUUID()) })
+          }
+        />
+      </details>
       <div className="roadmap-grid">
-        {PHASES.map((p, phase) => (
-          <section className="roadmap-phase" key={p.num}>
-            <div className="phase-heading">
-              <strong>{p.num}</strong>
-              <div>
-                <h2>{p.name}</h2>
-                <p className="muted">{p.window}</p>
+        {PHASES.map((p, phase) => {
+          const items = state.roadmap.filter((i) => i.phase === phase);
+          return (
+            <section className="roadmap-phase" key={p.num}>
+              <div className="phase-heading">
+                <strong>{p.num}</strong>
+                <div>
+                  <h2>{p.name}</h2>
+                  <p className="muted">{p.window}</p>
+                </div>
               </div>
-            </div>
-            {state.roadmap
-              .filter((i) => i.phase === phase)
-              .map((i) => (
-                <Button
-                  variant="ghost"
-                  className={"roadmap-item " + (i.done ? "completed" : "")}
-                  key={i.key}
-                  aria-pressed={i.done}
-                  onClick={() => dispatch({ type: "done", key: i.key })}
-                >
-                  {i.done ? (
-                    <CheckCircle className="success" weight="duotone" />
-                  ) : (
-                    <Circle className="muted" weight="duotone" />
-                  )}
-                  <div>
-                    <span>{i.title}</span>
-                    <small className="muted">
-                      {i.owner} · {i.effort} effort · {i.tag}
-                    </small>
+              {items.map((i) =>
+                editing === i.key ? (
+                  <RoadmapItemForm
+                    key={i.key}
+                    initial={draftFrom(i)}
+                    submitLabel="Save changes"
+                    autoFocus
+                    onSave={(fields) => {
+                      dispatch({ type: "roadmap-edit", key: i.key, fields });
+                      setEditing(null);
+                    }}
+                    onCancel={() => setEditing(null)}
+                    onDelete={() => {
+                      dispatch({ type: "roadmap-delete", key: i.key });
+                      setEditing(null);
+                    }}
+                  />
+                ) : (
+                  <div className="roadmap-row" key={i.key}>
+                    <Button
+                      variant="ghost"
+                      className={"roadmap-item " + (i.done ? "completed" : "")}
+                      aria-pressed={i.done}
+                      onClick={() => dispatch({ type: "done", key: i.key })}
+                    >
+                      {i.done ? (
+                        <CheckCircle className="success" weight="duotone" />
+                      ) : (
+                        <Circle className="muted" weight="duotone" />
+                      )}
+                      <div>
+                        <span>{i.title}</span>
+                        <small className="muted">
+                          {i.owner} · {i.effort} effort · {i.tag}
+                        </small>
+                      </div>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="roadmap-edit"
+                      aria-label={`Edit "${i.title}"`}
+                      onClick={() => setEditing(i.key)}
+                    >
+                      <PencilSimple weight="duotone" />
+                    </Button>
                   </div>
-                </Button>
-              ))}
-          </section>
-        ))}
+                ),
+              )}
+              {items.length === 0 && <p className="muted roadmap-empty">No items in this phase.</p>}
+            </section>
+          );
+        })}
       </div>
     </>
+  );
+}
+
+/** Add or edit one roadmap item; rules in roadmap-model.ts. */
+function RoadmapItemForm({
+  initial,
+  submitLabel,
+  onSave,
+  onCancel,
+  onDelete,
+  resetOnSave = false,
+  autoFocus = false,
+}: {
+  initial: RoadmapDraft;
+  submitLabel: string;
+  onSave: (fields: RoadmapFields) => void;
+  onCancel?: () => void;
+  onDelete?: () => void;
+  resetOnSave?: boolean;
+  autoFocus?: boolean;
+}) {
+  const [draft, setDraft] = useState(initial);
+  const [error, setError] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  return (
+    <form
+      className="roadmap-form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const v = validateRoadmapDraft(draft);
+        if (v.error !== undefined) {
+          setError(v.error);
+          return;
+        }
+        onSave(v.fields);
+        setError("");
+        if (resetOnSave) setDraft(initial);
+      }}
+    >
+      <label>
+        Remediation action
+        <input
+          value={draft.title}
+          maxLength={200}
+          autoFocus={autoFocus}
+          onChange={(e) => setDraft({ ...draft, title: e.target.value })}
+        />
+      </label>
+      <div className="decision-form-grid">
+        <label>
+          Accountable owner
+          <input
+            value={draft.owner}
+            maxLength={120}
+            placeholder={UNASSIGNED}
+            onChange={(e) => setDraft({ ...draft, owner: e.target.value })}
+          />
+        </label>
+        <label>
+          Effort
+          <select
+            value={draft.effort}
+            onChange={(e) => setDraft({ ...draft, effort: e.target.value })}
+          >
+            {ROADMAP_EFFORTS.map((x) => (
+              <option key={x}>{x}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Phase
+          <select
+            value={draft.phase}
+            onChange={(e) => setDraft({ ...draft, phase: Number(e.target.value) })}
+          >
+            {PHASES.map((p, i) => (
+              <option key={p.num} value={i}>
+                {p.num} {p.name} · {p.window}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      {error && (
+        <p role="alert" className="danger">
+          {error}
+        </p>
+      )}
+      <div className="filters">
+        <Button type="submit">{submitLabel}</Button>
+        {onCancel && (
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+        )}
+        {onDelete &&
+          (confirmDelete ? (
+            <>
+              <Button type="button" variant="destructive" onClick={onDelete}>
+                Confirm delete
+              </Button>
+              <Button type="button" variant="ghost" onClick={() => setConfirmDelete(false)}>
+                Keep it
+              </Button>
+            </>
+          ) : (
+            <Button
+              type="button"
+              variant="ghost"
+              className="danger"
+              onClick={() => setConfirmDelete(true)}
+            >
+              Delete item…
+            </Button>
+          ))}
+      </div>
+    </form>
   );
 }
