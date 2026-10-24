@@ -5,11 +5,15 @@ import { STANDARD_DISCLAIMER, siteConfig } from "./content";
 import { LeadForm } from "./forms";
 import { footerColumns, siteNav, type Crumb } from "./pages";
 import { SiteLink } from "./ui";
-import { ArrowLeft, ArrowUp, List, Moon, Sun, X } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowUp, List, Palette, X } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
-import { useDarkTheme } from "@/lib/theme";
 import { InstallAppButton } from "@/features/pwa/pwa-layer";
 import { SearchButton } from "@/features/search/search-palette";
+import {
+  AppearanceButton,
+  openAppearance,
+  useAppearanceSummary,
+} from "@/features/appearance/appearance-panel";
 import { GlossaryTip } from "./glossary-tip";
 
 // Public website chrome — header with disclosure navigation, breadcrumbs and footer —
@@ -41,37 +45,22 @@ function BrandMark() {
   );
 }
 
-/** Light/dark switch shared with the workspace header (same preference, same icons). */
-function ThemeToggle({ className = "" }: { className?: string }) {
-  const [dark, toggle] = useDarkTheme();
-  return (
-    <button
-      type="button"
-      className={`theme-toggle ${className}`}
-      aria-label={dark ? "Use light theme" : "Use dark theme"}
-      onClick={toggle}
-    >
-      {dark ? (
-        <Sun weight="duotone" aria-hidden="true" />
-      ) : (
-        <Moon weight="duotone" aria-hidden="true" />
-      )}
-    </button>
-  );
-}
-
-/** On phones the theme switch lives in the menu, so the header fits on one row. */
-function MenuThemeRow() {
-  const [dark, toggle] = useDarkTheme();
+/** On phones the appearance settings live in the menu, so the header fits on one row. */
+function MenuAppearanceRow() {
+  const summary = useAppearanceSummary();
   return (
     <p className="nav-theme-row">
-      <button type="button" className="nav-theme-btn" onClick={toggle}>
-        {dark ? (
-          <Sun weight="duotone" aria-hidden="true" />
-        ) : (
-          <Moon weight="duotone" aria-hidden="true" />
-        )}
-        {dark ? "Use light theme" : "Use dark theme"}
+      <button
+        type="button"
+        className="nav-theme-btn"
+        data-cta="appearance-menu"
+        onClick={openAppearance}
+      >
+        <Palette weight="duotone" aria-hidden="true" />
+        <span className="nav-theme-text">
+          Appearance
+          <span className="nav-theme-summary">{summary}</span>
+        </span>
       </button>
     </p>
   );
@@ -157,7 +146,7 @@ function SiteHeader() {
         </SiteLink>
         <SearchButton className="header-search" />
         <InstallAppButton className="header-install" />
-        <ThemeToggle className="header-theme" />
+        <AppearanceButton className="theme-toggle header-theme" cta="appearance-header" />
         <Button
           variant="outline"
           className="nav-toggle"
@@ -186,7 +175,7 @@ function SiteHeader() {
               {siteConfig.header_cta.label}
             </SiteLink>
           </p>
-          <MenuThemeRow />
+          <MenuAppearanceRow />
           <ul className="nav-list">
             {siteNav.map((sec) => (
               <li className="nav-item" key={sec.id}>

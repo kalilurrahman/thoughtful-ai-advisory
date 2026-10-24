@@ -127,10 +127,17 @@ VERITRAIL functions as a full **Progressive Web App (PWA)**, providing native-li
 * **One-Click Installation**: Prompts on Chrome, Edge, Android, iOS Safari, and macOS Dock. Shortcuts point directly to Self-Assessment, Risk Triage, Control Library, Ask VERITRAIL, and the TILLER Workspace.
 * **Offline First Reading**: Production service worker (`public/sw.js`) caches visited pages, illustrations, and client-side rule engines for instant offline access.
 * **Smart Search (⌘K / Ctrl+K)**: Instant fuzzy search across every page, FAQ, governance control ID, glossary definition, and workspace tool.
+* **Appearance — themes & fonts**: Three colour themes — **Broadsheet** (VERITRAIL teal), **Midnight Gold** and **Financial Slate**, inspired by the KR Tools themes of FinPrompt and Claudiator — each in light and dark, plus three fonts (**Editorial serif**, **KR Tools** DM Sans + Cormorant Garamond, **Modern sans** Inter). Applied before first paint, remembered per browser, WCAG AA in every theme.
 
 | Mobile Home View | Workspace Install Card | iPhone Installation Guide |
 | :--------------: | :--------------------: | :-----------------------: |
 | ![Mobile Home](./docs/assets/uplift/after-home-mobile.jpg) | ![Workspace Install](./docs/assets/uplift/install-card-workspace.jpg) | ![iPhone Install](./docs/assets/uplift/install-flow-iphone.jpg) |
+
+| Broadsheet · Light · Editorial serif | Midnight Gold · Dark · KR Tools | Financial Slate · Light · Modern sans |
+| :--: | :--: | :--: |
+| ![Broadsheet theme](./docs/assets/appearance/broadsheet-light-serif.jpg) | ![Midnight Gold theme](./docs/assets/appearance/gold-dark-kr.jpg) | ![Financial Slate theme](./docs/assets/appearance/slate-light-sans.jpg) |
+| **Workspace · Midnight Gold** | **Workspace · Financial Slate dark** | **Appearance panel** |
+| ![Workspace in Midnight Gold](./docs/assets/appearance/gold-dark-kr-workspace.jpg) | ![Workspace in Financial Slate](./docs/assets/appearance/slate-dark-sans-workspace.jpg) | ![Appearance panel](./docs/assets/appearance/panel-desktop.jpg) |
 
 ---
 
@@ -192,7 +199,7 @@ VERITRAIL directly Operationalizes International AI Governance Frameworks:
 | :-------- | :------------- | :---------- |
 | **Frontend Framework** | [React 19](https://react.dev/) & [TanStack Start](https://tanstack.com/router) | Fullstack SSR + CSR framework powered by TanStack Router |
 | **Language** | [TypeScript 5.8](https://www.typescriptlang.org/) | Strict type safety across client, server, and governance engines |
-| **Styling & UI** | [Tailwind CSS v4](https://tailwindcss.com/) & [Radix UI](https://www.radix-ui.com/) | High-contrast design tokens, accessible primitives, Broadsheet theme |
+| **Styling & UI** | [Tailwind CSS v4](https://tailwindcss.com/) & [Radix UI](https://www.radix-ui.com/) | High-contrast design tokens, accessible primitives; Broadsheet, Midnight Gold and Financial Slate themes |
 | **Data Visualization** | [Recharts](https://recharts.org/) | SVG radar & bar charts for maturity scores and system risk distributions |
 | **Database & Auth** | [Supabase](https://supabase.com/) & [Drizzle ORM](https://orm.drizzle.team/) | Row-Level Security (RLS), atomic workspace saving, PostgreSQL migrations |
 | **Export Engines** | `exceljs`, `pptxgenjs`, `jspdf`, `docx` | One-click generation of client-ready XLSX, PPTX, PDF, and Word audit reports |

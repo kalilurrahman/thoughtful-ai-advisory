@@ -24,7 +24,7 @@
   border-top: 3px solid var(--primary);
   border-radius: 8px;
   box-shadow: 0 24px 60px oklch(0.2 0.02 240 / 0.3);
-  font-family: "Source Serif 4", Georgia, serif;
+  font-family: var(--font-body);
   animation: search-drop 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 @media (min-width: 640px) {
@@ -38,7 +38,7 @@
 .search-dialog .search-input:focus, .search-dialog .search-input:focus-visible { outline: 0; box-shadow: none; }
 .search-input::placeholder { color: var(--muted-foreground); }
 .search-kbd, .search-foot kbd {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   padding: 0.1rem 0.4rem;
   border: 1px solid var(--border);

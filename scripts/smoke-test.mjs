@@ -2,8 +2,9 @@
 // Browser smoke test: crawl every page reachable from "/" (plus the workspace routes) in
 // Chromium and fail on runtime errors, console errors (including hydration warnings), error
 // or 404 screens behind internal links, missing linked files, horizontal scrolling at phone
-// width, a website or workspace header that wraps onto a second row, and installable-app files
-// (manifest, icons, service worker, offline page) that are missing or malformed.
+// width, a website or workspace header that wraps onto a second row (also with each Appearance
+// theme and font), and installable-app files (manifest, icons, service worker, offline page)
+// that are missing or malformed.
 //
 //   npx vite dev --port 4173 &   # or any running build of the app
 //   node scripts/smoke-test.mjs http://localhost:4173
@@ -29,8 +30,13 @@ function normalise(pathname) {
   return pathname.replace(/\/+$/, "") || "/";
 }
 
-async function newContext(browser, width) {
+async function newContext(browser, width, appearance) {
   const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+  // Appearance preferences (src/lib/theme.ts), applied before the page's own scripts run.
+  if (appearance)
+    await ctx.addInitScript((a) => {
+      for (const [key, value] of Object.entries(a)) localStorage.setItem(key, value);
+    }, appearance);
   await ctx.route(
     (url) => url.pathname.includes("_serverFn") || /supabase\.(co|in)$/.test(url.hostname),
     (route) => route.abort("blockedbyclient"),
@@ -209,6 +215,27 @@ async function main() {
     }),
   );
   await phone.close();
+
+  // Appearance: the wider fonts and the other palettes must not wrap or widen either header.
+  const APPEARANCES = [
+    { "veritrail-palette": "gold", "veritrail-theme": "dark", "veritrail-font": "kr" },
+    { "veritrail-palette": "slate", "veritrail-theme": "light", "veritrail-font": "sans" },
+  ];
+  for (const appearance of APPEARANCES) {
+    const label = `${appearance["veritrail-palette"]}/${appearance["veritrail-font"]}`;
+    for (const width of [1280, PHONE_WIDTH]) {
+      const ctx = await newContext(browser, width, appearance);
+      for (const path of ["/", "/workspace", "/framework/controls"]) {
+        const r = await visit(ctx, path, { collectLinks: false });
+        for (const [kind, detail] of r.errors) fail(path, `${kind} (${label})`, detail);
+        if (r.overflow > 1)
+          fail(path, `overflow-${width} (${label})`, `${r.overflow}px wider than the viewport`);
+        if (r.headerRows > 1)
+          fail(path, `header-wrap-${width} (${label})`, `header controls use ${r.headerRows} rows`);
+      }
+      await ctx.close();
+    }
+  }
   await browser.close();
 
   console.log(

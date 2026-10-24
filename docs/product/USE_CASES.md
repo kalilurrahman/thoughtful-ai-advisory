@@ -6,7 +6,7 @@
 
 | Use case | Actors | Goal | Stories |
 |---|---|---|---|
-| [UC01 Evaluate VERITRAIL from the website](#uc01--evaluate-veritrail-from-the-website) | Prospective buyer | Understand the framework, solutions and position on compliance claims. | [S01.1](EPICS_AND_STORIES.md#s011), [S01.2](EPICS_AND_STORIES.md#s012), [S01.3](EPICS_AND_STORIES.md#s013), [S01.4](EPICS_AND_STORIES.md#s014), [S15.3](EPICS_AND_STORIES.md#s153), [S15.4](EPICS_AND_STORIES.md#s154) |
+| [UC01 Evaluate VERITRAIL from the website](#uc01--evaluate-veritrail-from-the-website) | Prospective buyer | Understand the framework, solutions and position on compliance claims. | [S01.1](EPICS_AND_STORIES.md#s011), [S01.2](EPICS_AND_STORIES.md#s012), [S01.3](EPICS_AND_STORIES.md#s013), [S01.4](EPICS_AND_STORIES.md#s014), [S15.3](EPICS_AND_STORIES.md#s153), [S15.4](EPICS_AND_STORIES.md#s154), [S15.6](EPICS_AND_STORIES.md#s156) |
 | [UC02 Run the maturity self-assessment](#uc02--run-the-maturity-self-assessment) | AI governance lead | Get an indicative maturity baseline and a 30/60/90-day plan. | [S03.1](EPICS_AND_STORIES.md#s031), [S03.2](EPICS_AND_STORIES.md#s032), [S04.2](EPICS_AND_STORIES.md#s042) |
 | [UC03 Triage an AI use case](#uc03--triage-an-ai-use-case) | AI system owner | Get a suggested risk tier and the review path. | [S03.3](EPICS_AND_STORIES.md#s033) |
 | [UC04 Draft runtime guardrails for an LLM app or agent](#uc04--draft-runtime-guardrails-for-an-llm-app-or-agent) | CISO / security architect, Engineering / platform lead | Produce a draft policy-as-code and permission matrix. | [S03.4](EPICS_AND_STORIES.md#s034), [S13.2](EPICS_AND_STORIES.md#s132) |
@@ -49,12 +49,13 @@
 **Alternatives:**
 
 - Use search (⌘K or "/") to jump straight to a topic.
+- Open Appearance to read in another theme, mode or font.
 
 **Outcome:** The visitor knows what VERITRAIL does and does not claim.
 
-**Stories:** [S01.1](EPICS_AND_STORIES.md#s011) (E01), [S01.2](EPICS_AND_STORIES.md#s012) (E01), [S01.3](EPICS_AND_STORIES.md#s013) (E01), [S01.4](EPICS_AND_STORIES.md#s014) (E01), [S15.3](EPICS_AND_STORIES.md#s153) (E15), [S15.4](EPICS_AND_STORIES.md#s154) (E15)
+**Stories:** [S01.1](EPICS_AND_STORIES.md#s011) (E01), [S01.2](EPICS_AND_STORIES.md#s012) (E01), [S01.3](EPICS_AND_STORIES.md#s013) (E01), [S01.4](EPICS_AND_STORIES.md#s014) (E01), [S15.3](EPICS_AND_STORIES.md#s153) (E15), [S15.4](EPICS_AND_STORIES.md#s154) (E15), [S15.6](EPICS_AND_STORIES.md#s156) (E15)
 
-**Capabilities:** CAP-001 Home page, CAP-002 Website content pages, CAP-005 Glossary, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-074 Reading aids
+**Capabilities:** CAP-001 Home page, CAP-002 Website content pages, CAP-005 Glossary, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-074 Reading aids, CAP-077 Appearance — themes and fonts
 
 ## UC02 — Run the maturity self-assessment
 
@@ -582,4 +583,5 @@
 | CAP-073 Glossary definitions in text | Live | UC01, UC07 |
 | CAP-074 Reading aids | Live | UC01 |
 | CAP-075 Section illustrations and share images | Live | — |
+| CAP-077 Appearance — themes and fonts | Live | UC01 |
 | CAP-076 Workspace app shell | Live | — |

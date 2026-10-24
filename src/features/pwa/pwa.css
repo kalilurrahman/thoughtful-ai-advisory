@@ -4,7 +4,7 @@
 .pwa-layer {
   --pwa-gap: 12px;
   --pwa-bottom: calc(var(--pwa-gap) + env(safe-area-inset-bottom));
-  font-family: "Source Serif 4", Georgia, serif;
+  font-family: var(--font-body);
   color: var(--foreground);
 }
 /* The workspace has a fixed bottom navigation on phones and tablets. */

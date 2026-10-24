@@ -13,6 +13,7 @@ import {
   Table,
   SealCheck,
   Moon,
+  Palette,
   SignOut,
   TrafficSignal,
   ShieldCheck,
@@ -31,6 +32,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { CALCS, SOURCES, PACKS } from "@/data/governance";
 import { useDarkTheme } from "@/lib/theme";
+import { openAppearance, useAppearanceSummary } from "@/features/appearance/appearance-panel";
 import { useGovernance } from "./store";
 import { at, calculate } from "./model";
 import { Chip, Dot, Kicker } from "./screens-core";
@@ -465,6 +467,7 @@ export function PlansScreen() {
 export function MoreScreen() {
   const { userId } = useGovernance();
   const [dark, toggleDark] = useDarkTheme();
+  const appearance = useAppearanceSummary();
   const items = [
     {
       to: "/",
@@ -567,6 +570,16 @@ export function MoreScreen() {
           </Button>
         ))}
       </div>
+      <button type="button" className="toggle-row appearance-row" onClick={openAppearance}>
+        <span>
+          <Palette weight="duotone" />
+          <span>
+            Appearance
+            <small>{appearance}</small>
+          </span>
+        </span>
+        <CaretRight />
+      </button>
       <label className="toggle-row dark-toggle">
         <span>
           <Moon weight="duotone" />

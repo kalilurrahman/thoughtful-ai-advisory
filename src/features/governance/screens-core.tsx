@@ -105,7 +105,7 @@ export function HomeScreen() {
               <Button
                 variant="ghost"
                 className="pillar-row"
-                key={p.letter}
+                key={p.name}
                 onClick={() => {
                   dispatch({ type: "question", qi: CONTROLS.findIndex((c) => c.p === i) });
                   nav({ to: "/assess" });

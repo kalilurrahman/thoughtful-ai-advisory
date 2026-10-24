@@ -17,9 +17,13 @@
  * (e.g. --color-primary -> bg-primary, text-primary).
  *
  * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 1. Add the variable to :root (light value) and .dark (dark value), and to both blocks of
+ *    every palette below (src/test/theme.test.ts checks the blocks match)
  * 2. Register it in @theme inline as --color-<name>: var(--<name>) if
  *    Tailwind utilities need it
+ *
+ * Viewers can also choose a colour palette (`data-palette` on <html>) and a font
+ * (`data-font`) in the Appearance panel; see the "Appearance" section after .dark.
  */
 
 @theme inline {
@@ -68,6 +72,13 @@
 :root {
   /* Shape */
   --radius: 0.125rem;
+  /* Type: switched by data-font (Appearance). Headings follow the body unless a font pairs them. */
+  --font-body: "Source Serif 4", Georgia, serif;
+  --font-heading: var(--font-body);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --heading-weight: 600;
+  /* Newspaper rules under titles; a palette may colour them. */
+  --rule: var(--foreground);
   /* Surfaces and text */
   --background: oklch(0.977 0.002 240);
   --foreground: #201e1d;
@@ -160,6 +171,142 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+/*
+ * Appearance — palettes and fonts chosen in the Appearance panel (src/lib/theme.ts).
+ * Midnight Gold and Financial Slate take their cue from the KR Tools themes of FinPrompt and
+ * Claudiator. Each palette has a light and a dark block defining the same tokens (the dark block
+ * needs the higher specificity of :root.dark). As in Broadsheet, "success" is the brand ink;
+ * Midnight Gold moves warnings to burnt orange so they never read as gold. Text colours meet
+ * WCAG AA, checked by src/test/theme.test.ts.
+ */
+:root[data-palette="gold"],
+:root[data-palette="slate"] {
+  --radius: 0.375rem;
+}
+
+:root[data-palette="gold"] {
+  --background: #f6f3eb;
+  --foreground: #1b1d24;
+  --card: #fffdf8;
+  --card-foreground: #1b1d24;
+  --popover: #f1ece0;
+  --popover-foreground: #1b1d24;
+  --secondary: #efe9dc;
+  --secondary-foreground: #1b1d24;
+  --muted: #e7e0cf;
+  --muted-foreground: #5d574a;
+  --border: #d9d0bb;
+  --input: #8c826e;
+  --row-rule: rgba(27, 29, 36, 0.09);
+  --scrim: rgba(7, 11, 18, 0.55);
+  --primary: #80600f;
+  --primary-foreground: #fffdf8;
+  --accent: #f5ebcf;
+  --accent-foreground: #5a4304;
+  --ring: #a8821f;
+  --success-ink: #80600f;
+  --success-surface: #f5ebcf;
+  --warning-ink: #a3410b;
+  --warning-surface: #fbe6d8;
+  --neutral-surface: #e7e0cf;
+  --rule: #80600f;
+}
+:root.dark[data-palette="gold"] {
+  --background: #070b12;
+  --foreground: #f4f1ea;
+  --card: #0f1622;
+  --card-foreground: #f4f1ea;
+  --popover: #0d131d;
+  --popover-foreground: #f4f1ea;
+  --secondary: #151d2b;
+  --secondary-foreground: #f4f1ea;
+  --muted: #1f2a3c;
+  --muted-foreground: #cdc3ab;
+  --border: #3b3526;
+  --input: #8a7f62;
+  --row-rule: rgba(212, 175, 87, 0.14);
+  --scrim: rgba(0, 0, 0, 0.65);
+  --primary: #d4af57;
+  --primary-foreground: #070b12;
+  --accent: #2a2313;
+  --accent-foreground: #ecd087;
+  --ring: #e0bb62;
+  --success-ink: #d4af57;
+  --success-surface: #2a2313;
+  --warning-ink: #f59e5b;
+  --warning-surface: #3a1f0e;
+  --neutral-surface: #1f2a3c;
+  --rule: #d4af57;
+}
+
+:root[data-palette="slate"] {
+  --background: #eef2f7;
+  --foreground: #0f1f33;
+  --card: #ffffff;
+  --card-foreground: #0f1f33;
+  --popover: #f4f7fb;
+  --popover-foreground: #0f1f33;
+  --secondary: #e2eaf2;
+  --secondary-foreground: #0f1f33;
+  --muted: #dae3ed;
+  --muted-foreground: #3d5470;
+  --border: #c6d3e2;
+  --input: #74889f;
+  --row-rule: rgba(15, 31, 51, 0.09);
+  --scrim: rgba(15, 31, 51, 0.55);
+  --primary: #0057b8;
+  --primary-foreground: #ffffff;
+  --accent: #e1ecfb;
+  --accent-foreground: #00428f;
+  --ring: #1f6fd1;
+  --success-ink: #0057b8;
+  --success-surface: #e1ecfb;
+  --neutral-surface: #dae3ed;
+  --rule: #0f1f33;
+}
+:root.dark[data-palette="slate"] {
+  --background: #0a1020;
+  --foreground: #e5edff;
+  --card: #111a2e;
+  --card-foreground: #e5edff;
+  --popover: #0e1628;
+  --popover-foreground: #e5edff;
+  --secondary: #162038;
+  --secondary-foreground: #e5edff;
+  --muted: #1d2840;
+  --muted-foreground: #b3c0da;
+  --border: #2b3956;
+  --input: #6c7ea5;
+  --row-rule: rgba(229, 237, 255, 0.1);
+  --scrim: rgba(0, 0, 0, 0.65);
+  --primary: #6aaefc;
+  --primary-foreground: #0a1020;
+  --accent: #13264a;
+  --accent-foreground: #acccff;
+  --ring: #6aaefc;
+  --success-ink: #6aaefc;
+  --success-surface: #13264a;
+  --neutral-surface: #1d2840;
+  --rule: #e5edff;
+}
+
+/* KR Tools pairs DM Sans text with Cormorant Garamond headings; Modern sans is Inter throughout. */
+:root[data-font="kr"] {
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Cormorant Garamond", "Source Serif 4", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --heading-weight: 700;
+}
+:root[data-font="sans"] {
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-body);
+}
+/* The wordmarks are display type: they follow the heading font. */
+.wordmark,
+.veritrail-site .brand {
+  font-family: var(--font-heading);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -173,7 +320,7 @@
 
 body {
   margin: 0;
-  font-family: "Source Serif 4", Georgia, serif;
+  font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.45;
 }
@@ -195,14 +342,19 @@ h3,
 p {
   margin: 0;
 }
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+}
 h2 {
   font-size: 23px;
-  font-weight: 600;
+  font-weight: var(--heading-weight);
   line-height: 1.2;
 }
 h3 {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: var(--heading-weight);
   line-height: 1.3;
 }
 .success {
@@ -273,7 +425,7 @@ h3 {
   line-height: 1.45;
 }
 .newspaper-rule {
-  border-top: 2px solid var(--foreground);
+  border-top: 2px solid var(--rule);
   position: relative;
   margin-top: 4px;
   padding-top: 3px;
@@ -281,7 +433,7 @@ h3 {
 .newspaper-rule:after {
   content: "";
   display: block;
-  border-top: 1px solid var(--foreground);
+  border-top: 1px solid var(--rule);
 }
 .dateline {
   display: flex;
@@ -1169,8 +1321,38 @@ input[type="range"] {
   font-weight: 400;
   margin-top: 4px;
 }
-.dark-toggle {
+.dark-toggle,
+.appearance-row {
   margin-top: 20px;
+}
+.appearance-row {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--row-rule);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+.appearance-row + .dark-toggle {
+  margin-top: 0;
+}
+.appearance-row > span {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.appearance-row svg {
+  width: 26px;
+  height: 26px;
+  color: var(--success-ink);
+}
+.appearance-row > svg {
+  width: 18px;
+  height: 18px;
+  color: var(--muted-foreground);
 }
 .dark-toggle > span {
   display: flex;
@@ -3123,7 +3305,7 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .advisor-examples { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .advisor-examples button { border: 1px dashed var(--border); border-radius: 999px; background: transparent; color: var(--muted-foreground); padding: 0.35rem 0.75rem; font-size: 0.8rem; cursor: pointer; text-align: left; }
 .advisor-examples button:hover { color: inherit; border-color: var(--accent-foreground); }
-.advisor-error { display: flex; align-items: center; gap: 0.5rem; color: #b91c1c; background: color-mix(in srgb, #b91c1c 10%, transparent); border: 1px solid color-mix(in srgb, #b91c1c 35%, transparent); border-radius: 8px; padding: 0.75rem 1rem; }
+.advisor-error { display: flex; align-items: center; gap: 0.5rem; color: var(--danger-ink); background: var(--danger-surface); border: 1px solid color-mix(in srgb, var(--danger-ink) 35%, transparent); border-radius: 8px; padding: 0.75rem 1rem; }
 .advisor-results { display: grid; gap: 1.25rem; }
 .advisor-results h3 { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
 .advisor-summary { background: var(--accent); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; }
@@ -3132,15 +3314,15 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .advisor-area, .advisor-action { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; display: grid; gap: 0.5rem; align-content: start; }
 .advisor-area header, .advisor-action header { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
 .advisor-area p, .advisor-action p { margin: 0; }
-.advisor-code { font-family: ui-monospace, monospace; font-size: 0.8rem; color: var(--muted-foreground); }
+.advisor-code { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted-foreground); }
 .advisor-badge { border-radius: 999px; padding: 0.15rem 0.6rem; font-size: 0.75rem; background: var(--muted); color: var(--muted-foreground); }
-.advisor-area.rel-high { border-left: 4px solid #4f46e5; }
-.advisor-area.rel-medium { border-left: 4px solid #0d9488; }
+.advisor-area.rel-high { border-left: 4px solid var(--primary); }
+.advisor-area.rel-medium { border-left: 4px solid var(--ring); }
 .advisor-area.rel-low { border-left: 4px solid var(--border); }
-.advisor-badge.pri-critical { background: #fee2e2; color: #991b1b; }
-.advisor-badge.pri-high { background: #ffedd5; color: #9a3412; }
-.advisor-badge.pri-moderate { background: #fef9c3; color: #854d0e; }
-.advisor-badge.pri-low { background: #dcfce7; color: #166534; }
+.advisor-badge.pri-critical { background: var(--danger-surface); color: var(--danger-ink); }
+.advisor-badge.pri-high { background: var(--warning-surface); color: var(--warning-ink); }
+.advisor-badge.pri-moderate { background: var(--neutral-surface); color: var(--foreground); }
+.advisor-badge.pri-low { background: var(--success-surface); color: var(--success-ink); }
 .advisor-note { font-size: 0.85rem; color: var(--muted-foreground); border-top: 1px solid var(--border); padding-top: 0.75rem; }
 .spin { animation: advisor-spin 1s linear infinite; }
 @keyframes advisor-spin { to { transform: rotate(360deg); } }
