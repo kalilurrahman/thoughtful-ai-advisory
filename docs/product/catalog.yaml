@@ -125,6 +125,7 @@ epics:
         capabilities: [CAP-075]
         acceptance:
           - Given a page in a section with a share image, when its head is rendered, then og:image and twitter:image are absolute URLs to that section's 1200×630 image.
+          - Given an indexable page, when its head is rendered, then a canonical link and og:url give the same absolute URL as the sitemap; noindex pages have none.
         tests: [site-reading.test.ts]
 
   - id: E02
@@ -233,9 +234,11 @@ epics:
           - Given a form, when I submit valid details with consent, then the submission is stored in site_leads through the submitLead server function.
           - Given a network failure, when I submit, then the form says nothing was recorded.
           - Given the hidden honeypot is filled, when submitted, then nothing is stored and the visitor sees the normal confirmation.
+          - Given more than 60 submissions a minute from one client, when submitted, then the rest are refused with "Too many requests" (as server.py).
+          - Given a stored submission, when confirmed, then a form_submit event names the form; a honeypot or refused submission sends none.
         routes: [/contact, /contact/book-governance-baseline, /contact/request-demo, /contact/design-partner-programme, /contact/newsletter]
-        tests: [platform-misc-parity.test.ts]
-        gaps: [No direct test of LeadForm or the submitLead handler., submitLead has no rate limiting., No confirmation e-mails are sent (no SMTP on Workers).]
+        tests: [platform-misc-parity.test.ts, rate-limit.test.ts, site-analytics-events.test.tsx]
+        gaps: [The submitLead handler itself is not unit-tested (its form, events and rate limit are)., No confirmation e-mails are sent (no SMTP on Workers).]
       - id: S04.2
         persona: admin
         want: assessment leads tagged by qualification rules
@@ -375,10 +378,9 @@ epics:
         status: done
         acceptance:
           - Given any impact rated High or Critical, when shown, then the review is flagged for escalation.
-          - Given any impact Not assessed, when a reviewer tries to approve, then approval is not allowed.
+          - Given any impact Not assessed, when a reviewer tries to approve, then approval is not allowed and the screen says why.
         routes: [/changes]
-        tests: [change-review.test.ts, checklist.test.ts]
-        gaps: [A refused transition does nothing silently; the screen shows no error.]
+        tests: [change-review.test.tsx, checklist.test.ts]
       - id: S08.4
         persona: engineer
         want: to define monitoring plans with thresholds and record observations
@@ -394,12 +396,15 @@ epics:
         persona: owner
         want: to work a corrective action from start to verified closure
         so_that: fixes are evidenced and checked for effectiveness
-        status: partial
+        status: done
         acceptance:
           - Given In progress with completion evidence, when submitted, then the action is Pending verification.
           - Given Pending verification and a verification note, when closed, then who verified and when are recorded.
+          - Given a move the rules refuse (no evidence, no finding), when attempted, then the screen says why and nothing changes.
+          - Given Cancel action, when confirmed with a reason, then the action is Cancelled with the reason in its history; without a reason it is refused.
         routes: [/actions]
-        gaps: [No tests for the corrective-action model or screen., Actions cannot be cancelled from the UI., Separation of duties is advisory text only.]
+        tests: [corrective-actions.test.tsx]
+        gaps: [Separation of duties is advisory text only.]
 
   - id: E09
     title: Remediation roadmap and lifecycle checklist
@@ -645,9 +650,9 @@ epics:
           - Given Do Not Track or Global Privacy Control, when set, then no event is sent.
           - Given an event, when sent, then only its name, path and sanitised props are stored — no cookies, IP or identifiers.
           - Given a site call to action, when clicked, then a cta_click event names it (hero, header, menu and CTA blocks).
+          - Given a risk triage, guardrail draft or Ask answer, when produced, then a tool_use event names the tool and its tier, rating or intent (as the Python site).
         routes: [/platform/admin]
-        tests: [platform-misc-parity.test.ts]
-        gaps: [form_submit and tool_use are allow-listed but never emitted.]
+        tests: [platform-misc-parity.test.ts, site-analytics-events.test.tsx]
 
   - id: E15
     title: Installable app, search and reading experience
@@ -1048,7 +1053,7 @@ capabilities:
   - {id: CAP-015, name: EU AI Act readiness checker, area: tools, route: /tools/eu-ai-act-readiness-checker, status: planned, data: none, epic: E16, personas: [cro], source: [platform/content/website_pages/tools-eu-ai-act-readiness-checker.md], tests: [], summary: "Planned; waitlist form only."}
 
   # ---------------------------------------------------------------- leads
-  - {id: CAP-020, name: Lead forms, area: leads, route: /contact, status: live, data: server, epic: E04, personas: [visitor], source: [src/features/site/forms.tsx, src/features/site/leads.functions.ts], tests: [platform-misc-parity.test.ts], summary: "Baseline, demo, contact, newsletter, blueprint, design partner, waitlist and assessment forms into site_leads (RLS); business-email gate; honeypot; optional CRM push."}
+  - {id: CAP-020, name: Lead forms, area: leads, route: /contact, status: live, data: server, epic: E04, personas: [visitor], source: [src/features/site/forms.tsx, src/features/site/leads.functions.ts], tests: [platform-misc-parity.test.ts, rate-limit.test.ts, site-analytics-events.test.tsx], summary: "Baseline, demo, contact, newsletter, blueprint, design partner, waitlist and assessment forms into site_leads (RLS); per-client rate limit; business-email gate; honeypot; optional CRM push."}
 
   # ---------------------------------------------------------------- workspace
   - {id: CAP-030, name: Governance overview, area: assess, route: /workspace, status: live, data: cloud, epic: E05, personas: [gov-lead], source: [src/features/governance/screens-core.tsx, src/features/governance/model.ts], tests: [governance.test.ts, governance-provider.test.tsx], summary: "KPIs, VERITRAIL Index and band, pillar bars, gate card and top gaps."}
@@ -1060,9 +1065,9 @@ capabilities:
   - {id: CAP-036, name: AI inventory and triage, area: register, route: /inventory, status: live, data: cloud, epic: E06, personas: [owner, gov-lead], source: [src/features/governance/screens-operations.tsx, src/features/site/engines/risk-tier.ts, src/features/governance/inventory-export.ts], tests: [inventory-export.test.ts, site-risk-tier.test.ts], summary: "Register, triage, filter, edit and CSV export of AI systems."}
   - {id: CAP-037, name: Incidents and near misses, area: operate, route: /incidents, status: live, data: cloud, epic: E08, personas: [owner, gov-lead], source: [src/features/governance/screens-incidents.tsx], tests: [incidents.test.ts, incidents-ui.test.tsx], summary: "Log, triage and close incidents with status history."}
   - {id: CAP-038, name: Governance decisions, area: operate, route: /decisions, status: live, data: cloud, epic: E08, personas: [approver], source: [src/features/governance/screens-decisions.tsx, src/features/governance/decision-schema.ts], tests: [decision-schema.test.ts], summary: "Approvals, risk acceptance with review dates, supersede history."}
-  - {id: CAP-039, name: Change reviews, area: operate, route: /changes, status: live, data: cloud, epic: E08, personas: [owner, approver], source: [src/features/governance/screens-changes.tsx, src/features/governance/change-review-model.ts], tests: [change-review.test.ts], summary: "Material change screening with impact ratings and reviewer outcomes."}
+  - {id: CAP-039, name: Change reviews, area: operate, route: /changes, status: live, data: cloud, epic: E08, personas: [owner, approver], source: [src/features/governance/screens-changes.tsx, src/features/governance/change-review-model.ts], tests: [change-review.test.tsx], summary: "Material change screening with impact ratings and reviewer outcomes."}
   - {id: CAP-040, name: Monitoring, area: operate, route: /monitoring, status: live, data: cloud, epic: E08, personas: [engineer], source: [src/features/governance/screens-monitoring.tsx, src/features/governance/monitoring-model.ts], tests: [monitoring.test.ts], summary: "Threshold plans, manual observations, breach and overdue states."}
-  - {id: CAP-041, name: Corrective actions, area: operate, route: /actions, status: live, data: cloud, epic: E08, personas: [owner, approver], source: [src/features/governance/screens-actions.tsx, src/features/governance/actions-model.ts], tests: [], summary: "Owned remediation with evidence and verified closure."}
+  - {id: CAP-041, name: Corrective actions, area: operate, route: /actions, status: live, data: cloud, epic: E08, personas: [owner, approver], source: [src/features/governance/screens-actions.tsx, src/features/governance/actions-model.ts], tests: [corrective-actions.test.tsx], summary: "Owned remediation with evidence, verified closure and cancellation with a reason; refused moves say why."}
   - {id: CAP-042, name: AI Governance Playbook, area: guide, route: /playbook, status: live, data: browser, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-playbook.tsx, src/data/playbook.ts], tests: [], summary: "12 chapters with progress, notes and Markdown export."}
   - {id: CAP-043, name: Governance templates, area: guide, route: /templates, status: live, data: memory, epic: E10, personas: [consultant, gov-lead], source: [src/features/governance/screens-templates.tsx, src/data/templates.ts], tests: [], summary: "Eight starter templates filled with organisation details; Markdown download and copy."}
   - {id: CAP-044, name: Knowledge hub, area: guide, route: /knowledge, status: live, data: none, epic: E10, personas: [cro, gov-lead], source: [src/features/governance/screens-resources.tsx, src/data/governance.ts], tests: [resources.test.ts], summary: "24 laws, standards and guidance sources by type and jurisdiction."}
@@ -1085,7 +1090,7 @@ capabilities:
   - {id: CAP-065, name: Sample reports, area: platform, route: /platform/samples, status: demo, data: none, epic: E13, personas: [consultant, visitor], source: [src/features/platform/samples-gallery.tsx, src/features/platform/samples], tests: [platform-samples.test.ts], summary: "Maturity, risk-tier and Shield samples identical to the Python outputs."}
   - {id: CAP-066, name: Content checks, area: platform, route: /platform/content-checks, status: live, data: none, epic: E13, personas: [gov-lead], source: [src/features/platform/content-checks.tsx, src/features/platform/checks], tests: [platform-content-checks.test.ts], summary: "Six content validation steps and the prohibited-claim scan."}
   - {id: CAP-067, name: Admin console, area: admin, route: /platform/admin, status: live, data: server, epic: E14, personas: [admin], source: [src/features/platform/admin-console.tsx, src/features/platform/admin.functions.ts], tests: [platform-misc-admin.test.tsx], summary: "Leads, form submissions, funnel and local audit verification; site_admins gated."}
-  - {id: CAP-068, name: Privacy-first analytics, area: admin, route: "", status: live, data: server, epic: E14, personas: [admin], source: [src/features/platform/analytics.ts, src/features/platform/analytics-core.ts, src/features/platform/analytics.functions.ts], tests: [platform-misc-parity.test.ts], summary: "Cookieless events with DNT/GPC opt-out, sanitised props and a rate limit."}
+  - {id: CAP-068, name: Privacy-first analytics, area: admin, route: "", status: live, data: server, epic: E14, personas: [admin], source: [src/features/platform/analytics.ts, src/features/platform/analytics-core.ts, src/features/platform/analytics.functions.ts, src/features/platform/rate-limit.server.ts], tests: [platform-misc-parity.test.ts, site-analytics-events.test.tsx, rate-limit.test.ts], summary: "Cookieless page, CTA, assessment, tool and form events with DNT/GPC opt-out, sanitised props and a per-client rate limit."}
 
   # ---------------------------------------------------------------- installable app, search, reading
   - {id: CAP-070, name: Installable app (PWA), area: app, route: "", status: live, data: browser, epic: E15, personas: [visitor, gov-lead], source: [public/manifest.webmanifest, src/features/pwa], tests: [pwa.test.ts], summary: "Manifest with maskable icons, shortcuts and screenshots; install card and per-browser instructions."}

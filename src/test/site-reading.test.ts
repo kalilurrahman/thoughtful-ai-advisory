@@ -5,13 +5,14 @@ import {
   renderMarkdownHtml,
   splitSections,
 } from "@/features/site/markdown";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getSitePage, sitePages } from "@/features/site/pages";
 import { artFor } from "@/features/site/illustrations";
 import { formatDate } from "@/features/site/reading";
 import { GLOSSARY, getGlossaryTerm, termIdFor } from "@/features/site/glossary";
-import { controlHead, sitePageHead } from "@/features/site/views";
+import { canonicalUrl, controlHead, controlLibraryHead, sitePageHead } from "@/features/site/views";
+import { glossaryHead } from "@/features/site/glossary-view";
 import { getControl } from "@/features/site/content";
 
 describe("reading aids in rendered Markdown", () => {
@@ -181,5 +182,43 @@ describe("share images", () => {
       /\/og\/solutions\.png$/,
     );
     expect(ogImage(controlHead("IS-11"))).toMatch(/\/og\/controls\.png$/);
+  });
+});
+
+describe("canonical links", () => {
+  const sitemap = new Set(
+    [
+      ...readFileSync(join(process.cwd(), "public", "sitemap.xml"), "utf8").matchAll(
+        /<loc>([^<]+)<\/loc>/g,
+      ),
+    ].map((m) => new URL(m[1] ?? "").pathname),
+  );
+  const canonical = (head: { links?: Array<{ rel: string; href: string }> }) =>
+    head.links?.find((l) => l.rel === "canonical")?.href;
+  const pathOf = (url: string | undefined) => (url ? new URL(url).pathname : undefined);
+
+  it("gives every indexable page the URL the sitemap lists, and noindex pages none", () => {
+    for (const page of sitePages) {
+      const href = canonical(sitePageHead(page));
+      if (page.noindex) expect(href, page.path).toBeUndefined();
+      else {
+        expect(href, page.path).toBe(canonicalUrl(page.path));
+        expect(sitemap.has(pathOf(href) ?? ""), page.path).toBe(true);
+      }
+    }
+  });
+
+  it("covers the control library, every control and the glossary", () => {
+    expect(sitemap.has(pathOf(canonical(controlLibraryHead())) ?? "")).toBe(true);
+    expect(pathOf(canonical(controlHead("IS-11")))).toBe("/framework/controls/is-11");
+    expect(sitemap.has("/framework/controls/is-11")).toBe(true);
+    expect(pathOf(canonical(glossaryHead()))).toBe("/glossary");
+    expect(canonical(controlHead("XX-99"))).toBeUndefined();
+  });
+
+  it("normalises paths the way the sitemap does", () => {
+    expect(new URL(canonicalUrl("/")).pathname).toBe("/");
+    expect(canonicalUrl("/tools/risk-triage/")).toBe(canonicalUrl("/tools/risk-triage"));
+    expect(canonicalUrl("/glossary?q=x#risk-tier")).toBe(canonicalUrl("/glossary"));
   });
 });

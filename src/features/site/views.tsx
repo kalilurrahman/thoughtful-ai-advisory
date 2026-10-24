@@ -554,8 +554,11 @@ export function siteHead(opts: {
   noindex?: boolean;
   /** Site path of the share image (defaults to the VERITRAIL card). */
   image?: string;
+  /** Router path of the page; gives indexable pages a canonical URL (as in the sitemap). */
+  path?: string;
 }) {
   const image = `${SITE_ORIGIN}${opts.image ?? OG_DEFAULT}`;
+  const canonical = opts.path && !opts.noindex ? canonicalUrl(opts.path) : undefined;
   const meta: Array<Record<string, string>> = [
     { title: opts.title.includes(SITE_NAME) ? opts.title : `${opts.title} | ${SITE_NAME}` },
     { name: "description", content: opts.description },
@@ -575,12 +578,20 @@ export function siteHead(opts: {
     { name: "twitter:title", content: opts.title },
     { name: "twitter:description", content: opts.description },
   ];
+  if (canonical) meta.push({ property: "og:url", content: canonical });
   if (opts.noindex) meta.push({ name: "robots", content: "noindex, follow" });
   const scripts =
     opts.faq && opts.faq.length
       ? [{ type: "application/ld+json", children: JSON.stringify(faqJsonLd(opts.faq)) }]
       : [];
-  return { meta, scripts };
+  const links = canonical ? [{ rel: "canonical", href: canonical }] : [];
+  return { meta, scripts, links };
+}
+
+/** Absolute URL of a page, in the sitemap's form (no trailing slash, "/" for home). */
+export function canonicalUrl(path: string): string {
+  const clean = path.replace(/[?#].*$/, "").replace(/\/+$/, "");
+  return `${SITE_ORIGIN}${clean || "/"}`;
 }
 
 export function sitePageHead(page: SitePage) {
@@ -590,6 +601,7 @@ export function sitePageHead(page: SitePage) {
     faq: page.faq,
     noindex: page.noindex,
     image: ogImageFor(page.path === "/" ? undefined : artFor(page.path, page.section)),
+    path: page.path,
   });
 }
 
@@ -605,6 +617,7 @@ export function controlHead(id: string) {
     title: `${c.id} ${c.title} — VERITRAIL control`,
     description: `VERITRAIL control ${c.id} (${c.title}): ${c.objective}`.slice(0, 158),
     image: ogImageFor("controls"),
+    path: controlUrl(c.id),
   });
 }
 
@@ -613,4 +626,5 @@ export const controlLibraryHead = () =>
     title: `VERITRAIL Control Library — ${controls.length} AI governance controls`,
     description: `All ${controls.length} VERITRAIL AI governance controls by pillar, with objectives, owners, evidence and indicative NIST AI RMF, ISO/IEC 42001 and EU AI Act mappings.`,
     image: ogImageFor("controls"),
+    path: CONTROL_LIBRARY_PATH,
   });

@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { RateLimiter, validateEvent } from "./analytics-core";
+import { validateEvent } from "./analytics-core";
 
 // Cookieless analytics endpoint — port of POST /api/events in platform/app/api/veritrail_api/server.py.
 // Events are validated against the allow-list and written with the service role into the
@@ -16,26 +16,13 @@ export const trackEventInput = z.object({
 
 export type TrackEventResult = { ok: true; stored: boolean } | { ok: false; error: string };
 
-// Created lazily inside the handler so nothing server-side runs in the client bundle.
-let limiter: RateLimiter | null = null;
-
 export const trackEvent = createServerFn({ method: "POST" })
   .inputValidator(trackEventInput)
   .handler(async ({ data }): Promise<TrackEventResult> => {
     const v = validateEvent(data);
     if (!v.ok) return v;
-    try {
-      const { getRequest } = await import("@tanstack/react-start/server");
-      const h = getRequest()?.headers;
-      const client =
-        h?.get("cf-connecting-ip") ?? h?.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
-      limiter ??= new RateLimiter(Number(process.env["VERITRAIL_RATE_LIMIT"] ?? "60") || 60);
-      if (!limiter.allow(client, "events")) {
-        return { ok: false, error: "Too many requests. Please retry shortly." };
-      }
-    } catch {
-      /* no request context (tests) — no limiting */
-    }
+    const limit = await import("./rate-limit.server");
+    if (!(await limit.allowRequest("events"))) return { ok: false, error: limit.RATE_LIMITED };
     try {
       const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
       // site_events is newer than the generated Supabase types.

@@ -13,7 +13,7 @@
 | [E05](#e05--tiller-assessment-scoring-and-release-readiness) | TILLER assessment, scoring and release readiness | Workspace — assessment and release readiness | Live | 3 | 3 | 0 | 0 |
 | [E06](#e06--ai-inventory-and-use-case-triage) | AI inventory and use-case triage | Workspace — AI inventory | Live | 2 | 2 | 0 | 0 |
 | [E07](#e07--guardrails-design-in-the-workspace) | Guardrails design in the workspace | Workspace — assessment and release readiness | Live | 1 | 1 | 0 | 0 |
-| [E08](#e08--operational-governance-registers) | Operational governance registers | Workspace — operational governance | Live | 5 | 4 | 1 | 0 |
+| [E08](#e08--operational-governance-registers) | Operational governance registers | Workspace — operational governance | Live | 5 | 5 | 0 | 0 |
 | [E09](#e09--remediation-roadmap-and-lifecycle-checklist) | Remediation roadmap and lifecycle checklist | Workspace — assessment and release readiness | Live | 2 | 1 | 1 | 0 |
 | [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 6 | 6 | 0 | 0 |
 | [E11](#e11--reports-and-audit-evidence) | Reports and audit evidence | Workspace — reports and evidence | Preview | 1 | 1 | 0 | 0 |
@@ -93,6 +93,7 @@ Acceptance criteria:
 Acceptance criteria:
 
 - Given a page in a section with a share image, when its head is rendered, then og:image and twitter:image are absolute URLs to that section's 1200×630 image.
+- Given an indexable page, when its head is rendered, then a canonical link and og:url give the same absolute URL as the sitemap; noindex pages have none.
 
 **Capabilities:** CAP-075 · **Tests:** `site-reading.test.ts`
 
@@ -234,13 +235,15 @@ Acceptance criteria:
 - Given a form, when I submit valid details with consent, then the submission is stored in site_leads through the submitLead server function.
 - Given a network failure, when I submit, then the form says nothing was recorded.
 - Given the hidden honeypot is filled, when submitted, then nothing is stored and the visitor sees the normal confirmation.
+- Given more than 60 submissions a minute from one client, when submitted, then the rest are refused with "Too many requests" (as server.py).
+- Given a stored submission, when confirmed, then a form_submit event names the form; a honeypot or refused submission sends none.
 
-**Routes:** `/contact`, `/contact/book-governance-baseline`, `/contact/request-demo`, `/contact/design-partner-programme`, `/contact/newsletter` · **Capabilities:** CAP-020 · **Tests:** `platform-misc-parity.test.ts`
+**Routes:** `/contact`, `/contact/book-governance-baseline`, `/contact/request-demo`, `/contact/design-partner-programme`, `/contact/newsletter` · **Capabilities:** CAP-020 · **Tests:** `platform-misc-parity.test.ts`, `rate-limit.test.ts`, `site-analytics-events.test.tsx`
 
 Known gaps:
 
-- No direct test of LeadForm or the submitLead handler.
-- submitLead has no rate limiting.
+- The submitLead handler itself is not unit-tested (its form
+- events and rate limit are).
 - No confirmation e-mails are sent (no SMTP on Workers).
 
 ### S04.2
@@ -441,13 +444,9 @@ Known gaps:
 Acceptance criteria:
 
 - Given any impact rated High or Critical, when shown, then the review is flagged for escalation.
-- Given any impact Not assessed, when a reviewer tries to approve, then approval is not allowed.
+- Given any impact Not assessed, when a reviewer tries to approve, then approval is not allowed and the screen says why.
 
-**Routes:** `/changes` · **Capabilities:** CAP-039 · **Tests:** `change-review.test.ts`, `checklist.test.ts`
-
-Known gaps:
-
-- A refused transition does nothing silently; the screen shows no error.
+**Routes:** `/changes` · **Capabilities:** CAP-039 · **Tests:** `change-review.test.tsx`, `checklist.test.ts`
 
 ### S08.4
 
@@ -471,19 +470,19 @@ Known gaps:
 
 **As an AI system owner**, I want to work a corrective action from start to verified closure, so that fixes are evidenced and checked for effectiveness.
 
-*Status: Partial*
+*Status: Done*
 
 Acceptance criteria:
 
 - Given In progress with completion evidence, when submitted, then the action is Pending verification.
 - Given Pending verification and a verification note, when closed, then who verified and when are recorded.
+- Given a move the rules refuse (no evidence, no finding), when attempted, then the screen says why and nothing changes.
+- Given Cancel action, when confirmed with a reason, then the action is Cancelled with the reason in its history; without a reason it is refused.
 
-**Routes:** `/actions` · **Capabilities:** CAP-041 · **Tests:** none yet
+**Routes:** `/actions` · **Capabilities:** CAP-041 · **Tests:** `corrective-actions.test.tsx`
 
 Known gaps:
 
-- No tests for the corrective-action model or screen.
-- Actions cannot be cancelled from the UI.
 - Separation of duties is advisory text only.
 
 ## E09 — Remediation roadmap and lifecycle checklist
@@ -844,12 +843,9 @@ Acceptance criteria:
 - Given Do Not Track or Global Privacy Control, when set, then no event is sent.
 - Given an event, when sent, then only its name, path and sanitised props are stored — no cookies, IP or identifiers.
 - Given a site call to action, when clicked, then a cta_click event names it (hero, header, menu and CTA blocks).
+- Given a risk triage, guardrail draft or Ask answer, when produced, then a tool_use event names the tool and its tier, rating or intent (as the Python site).
 
-**Routes:** `/platform/admin` · **Capabilities:** CAP-067, CAP-068 · **Tests:** `platform-misc-parity.test.ts`
-
-Known gaps:
-
-- form_submit and tool_use are allow-listed but never emitted.
+**Routes:** `/platform/admin` · **Capabilities:** CAP-067, CAP-068 · **Tests:** `platform-misc-parity.test.ts`, `site-analytics-events.test.tsx`
 
 ## E15 — Installable app, search and reading experience
 
@@ -1007,8 +1003,8 @@ Every gap recorded against a story, in one list for planning.
 |---|---|---|
 | [S03.3](#s033) | E03 | No UI test for the triage form. |
 | [S03.4](#s034) | E03 | No UI test for the generator form. |
-| [S04.1](#s041) | E04 | No direct test of LeadForm or the submitLead handler. |
-| [S04.1](#s041) | E04 | submitLead has no rate limiting. |
+| [S04.1](#s041) | E04 | The submitLead handler itself is not unit-tested (its form |
+| [S04.1](#s041) | E04 | events and rate limit are). |
 | [S04.1](#s041) | E04 | No confirmation e-mails are sent (no SMTP on Workers). |
 | [S04.3](#s043) | E04 | The PDF is a public static file |
 | [S04.3](#s043) | E04 | so the form gate is cosmetic. |
@@ -1020,11 +1016,8 @@ Every gap recorded against a story, in one list for planning.
 | [S07.1](#s071) | E07 | "Export guardrail bundle" links to the general export; there is no guardrail-specific file. |
 | [S08.2](#s082) | E08 | Decisions cannot be edited or deleted. |
 | [S08.2](#s082) | E08 | A decision does not change the system's inventory status. |
-| [S08.3](#s083) | E08 | A refused transition does nothing silently; the screen shows no error. |
 | [S08.4](#s084) | E08 | Observations are manual; there is no telemetry feed. |
 | [S08.4](#s084) | E08 | Thresholds cannot be edited (pause and recreate). |
-| [S08.5](#s085) | E08 | No tests for the corrective-action model or screen. |
-| [S08.5](#s085) | E08 | Actions cannot be cancelled from the UI. |
 | [S08.5](#s085) | E08 | Separation of duties is advisory text only. |
 | [S09.1](#s091) | E09 | Items cannot be created |
 | [S09.1](#s091) | E09 | edited |
@@ -1045,4 +1038,3 @@ Every gap recorded against a story, in one list for planning.
 | [S12.3](#s123) | E12 | billing or entitlements. |
 | [S13.1](#s131) | E13 | Synthetic data only; approvals have no external effect. |
 | [S14.1](#s141) | E14 | The server-side membership check is not unit-tested. |
-| [S14.2](#s142) | E14 | form_submit and tool_use are allow-listed but never emitted. |

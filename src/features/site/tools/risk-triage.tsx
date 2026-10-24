@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { EvidenceBadge } from "../ui";
+import { track } from "@/features/platform/analytics";
 import { calculateRiskTier, type RiskProfile, type RiskTierResult } from "../engines/risk-tier";
 import {
   CitedControls,
@@ -221,6 +222,7 @@ export function RiskTriageTool() {
     setErrors({});
     try {
       const r = calculateRiskTier(buildProfile(v));
+      track("tool_use", { tool: "risk-triage", tier: r.tier });
       setStatus({ text: "", kind: "" });
       setResult(r);
       setRunId((n) => n + 1);

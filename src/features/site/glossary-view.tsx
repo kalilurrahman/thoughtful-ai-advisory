@@ -5,6 +5,7 @@ import { GLOSSARY, GLOSSARY_CATEGORIES, GLOSSARY_VERSION, type GlossaryTerm } fr
 import { Breadcrumbs } from "./layout";
 import { SectionArt } from "./illustrations";
 import { normalize } from "@/features/search/search-index";
+import { GLOSSARY_PATH } from "./pages";
 import { PageHeader, ogImageFor, siteHead } from "./views";
 
 // /glossary — every term in platform/content/glossary.yaml, A–Z, filterable by text and topic.
@@ -147,4 +148,5 @@ export const glossaryHead = () =>
     title: "AI governance glossary",
     description: `${GLOSSARY.length} plain-language definitions of AI governance terms used by VERITRAIL: risk tiers, evidence labels, runtime guardrails, the EU AI Act, NIST AI RMF and ISO/IEC 42001.`,
     image: ogImageFor("glossary"),
+    path: GLOSSARY_PATH,
   });

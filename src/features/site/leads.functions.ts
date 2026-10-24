@@ -4,8 +4,8 @@ import { isFreeMailDomain } from "./content";
 
 // Public website lead capture (contact, demo, baseline, blueprint, newsletter, design
 // partner, waitlist and the maturity self-assessment gate). Mirrors the /api/contact
-// contract of the Python reference API: business-email gate, explicit consent and a
-// honeypot. Rows are written with the service role into an RLS-locked table.
+// contract of the Python reference API: a per-client rate limit, business-email gate,
+// explicit consent and a honeypot. Rows are written with the service role into an RLS-locked table.
 // After a successful insert, assessment leads are qualified (re-scored server-side and tagged
 // with the template's lead_rules, e.g. shield_candidate) and the lead is pushed to the CRM only
 // when VERITRAIL_CRM_* / VERITRAIL_HUBSPOT_* env vars are set (src/features/platform/integrations.server.ts).
@@ -60,6 +60,10 @@ export type LeadResult = { ok: true; stored: boolean } | { ok: false; error: str
 export const submitLead = createServerFn({ method: "POST" })
   .inputValidator(leadInput)
   .handler(async ({ data }): Promise<LeadResult> => {
+    // As server.py: every public POST is rate-limited per client and endpoint.
+    const limit = await import("@/features/platform/rate-limit.server");
+    if (!(await limit.allowRequest(data.form === "assessment" ? "assessment" : "contact")))
+      return { ok: false, error: limit.RATE_LIMITED };
     // Honeypot filled: report success without storing anything.
     if (data.website) return { ok: true, stored: false };
     const integ = await import("@/features/platform/integrations.server");

@@ -47,7 +47,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 | ID | Capability | Route | Status | Data | For | Epic | What it does |
 |---|---|---|---|---|---|---|---|
-| CAP-020 | Lead forms | `/contact` | Live | Server | Prospective buyer | [E04](EPICS_AND_STORIES.md#e04--lead-capture-and-qualification) | Baseline, demo, contact, newsletter, blueprint, design partner, waitlist and assessment forms into site_leads (RLS); business-email gate; honeypot; optional CRM push. |
+| CAP-020 | Lead forms | `/contact` | Live | Server | Prospective buyer | [E04](EPICS_AND_STORIES.md#e04--lead-capture-and-qualification) | Baseline, demo, contact, newsletter, blueprint, design partner, waitlist and assessment forms into site_leads (RLS); per-client rate limit; business-email gate; honeypot; optional CRM push. |
 
 ### Workspace — assessment and release readiness
 
@@ -74,7 +74,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-038 | Governance decisions | `/decisions` | Live | Cloud (RLS) | Approver | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Approvals, risk acceptance with review dates, supersede history. |
 | CAP-039 | Change reviews | `/changes` | Live | Cloud (RLS) | AI system owner, Approver | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Material change screening with impact ratings and reviewer outcomes. |
 | CAP-040 | Monitoring | `/monitoring` | Live | Cloud (RLS) | Engineering / platform lead | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Threshold plans, manual observations, breach and overdue states. |
-| CAP-041 | Corrective actions | `/actions` | Live | Cloud (RLS) | AI system owner, Approver | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Owned remediation with evidence and verified closure. |
+| CAP-041 | Corrective actions | `/actions` | Live | Cloud (RLS) | AI system owner, Approver | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Owned remediation with evidence, verified closure and cancellation with a reason; refused moves say why. |
 
 ### Workspace — guidance and knowledge
 
@@ -120,7 +120,7 @@ Every app, tool and feature, then every website content page, the control librar
 | ID | Capability | Route | Status | Data | For | Epic | What it does |
 |---|---|---|---|---|---|---|---|
 | CAP-067 | Admin console | `/platform/admin` | Live | Server | Site administrator | [E14](EPICS_AND_STORIES.md#e14--administration-and-privacy-first-analytics) | Leads, form submissions, funnel and local audit verification; site_admins gated. |
-| CAP-068 | Privacy-first analytics | Site-wide | Live | Server | Site administrator | [E14](EPICS_AND_STORIES.md#e14--administration-and-privacy-first-analytics) | Cookieless events with DNT/GPC opt-out, sanitised props and a rate limit. |
+| CAP-068 | Privacy-first analytics | Site-wide | Live | Server | Site administrator | [E14](EPICS_AND_STORIES.md#e14--administration-and-privacy-first-analytics) | Cookieless page, CTA, assessment, tool and form events with DNT/GPC opt-out, sanitised props and a per-client rate limit. |
 
 ### Installable app
 
@@ -284,7 +284,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-013 | Ask VERITRAIL | [S03.5](EPICS_AND_STORIES.md#s035) | `src/features/site/tools/ask-veritrail.tsx`, `src/features/site/engines/ask-veritrail` | `site-ask-veritrail.test.ts` |
 | CAP-014 | Agentic AI risk checker | [S16.1](EPICS_AND_STORIES.md#s161) | `platform/content/website_pages/tools-agentic-risk-checker.md` | **None** |
 | CAP-015 | EU AI Act readiness checker | [S16.2](EPICS_AND_STORIES.md#s162) | `platform/content/website_pages/tools-eu-ai-act-readiness-checker.md` | **None** |
-| CAP-020 | Lead forms | [S03.2](EPICS_AND_STORIES.md#s032), [S04.1](EPICS_AND_STORIES.md#s041), [S04.2](EPICS_AND_STORIES.md#s042), [S04.3](EPICS_AND_STORIES.md#s043) | `src/features/site/forms.tsx`, `src/features/site/leads.functions.ts` | `platform-misc-parity.test.ts` |
+| CAP-020 | Lead forms | [S03.2](EPICS_AND_STORIES.md#s032), [S04.1](EPICS_AND_STORIES.md#s041), [S04.2](EPICS_AND_STORIES.md#s042), [S04.3](EPICS_AND_STORIES.md#s043) | `src/features/site/forms.tsx`, `src/features/site/leads.functions.ts` | `platform-misc-parity.test.ts`, `rate-limit.test.ts`, `site-analytics-events.test.tsx` |
 | CAP-030 | Governance overview | [S05.2](EPICS_AND_STORIES.md#s052) | `src/features/governance/screens-core.tsx`, `src/features/governance/model.ts` | `governance.test.ts`, `governance-provider.test.tsx` |
 | CAP-031 | TILLER assessment | [S05.1](EPICS_AND_STORIES.md#s051) | `src/features/governance/screens-core.tsx` | `governance.test.ts` |
 | CAP-032 | Release readiness | [S05.3](EPICS_AND_STORIES.md#s053) | `src/features/governance/screens-core.tsx`, `src/features/governance/model.ts` | `governance.test.ts` |
@@ -294,9 +294,9 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-036 | AI inventory and triage | [S06.1](EPICS_AND_STORIES.md#s061), [S06.2](EPICS_AND_STORIES.md#s062) | `src/features/governance/screens-operations.tsx`, `src/features/site/engines/risk-tier.ts`, `src/features/governance/inventory-export.ts` | `inventory-export.test.ts`, `site-risk-tier.test.ts` |
 | CAP-037 | Incidents and near misses | [S08.1](EPICS_AND_STORIES.md#s081) | `src/features/governance/screens-incidents.tsx` | `incidents.test.ts`, `incidents-ui.test.tsx` |
 | CAP-038 | Governance decisions | [S08.2](EPICS_AND_STORIES.md#s082) | `src/features/governance/screens-decisions.tsx`, `src/features/governance/decision-schema.ts` | `decision-schema.test.ts` |
-| CAP-039 | Change reviews | [S08.3](EPICS_AND_STORIES.md#s083) | `src/features/governance/screens-changes.tsx`, `src/features/governance/change-review-model.ts` | `change-review.test.ts` |
+| CAP-039 | Change reviews | [S08.3](EPICS_AND_STORIES.md#s083) | `src/features/governance/screens-changes.tsx`, `src/features/governance/change-review-model.ts` | `change-review.test.tsx` |
 | CAP-040 | Monitoring | [S08.4](EPICS_AND_STORIES.md#s084) | `src/features/governance/screens-monitoring.tsx`, `src/features/governance/monitoring-model.ts` | `monitoring.test.ts` |
-| CAP-041 | Corrective actions | [S08.5](EPICS_AND_STORIES.md#s085) | `src/features/governance/screens-actions.tsx`, `src/features/governance/actions-model.ts` | **None** |
+| CAP-041 | Corrective actions | [S08.5](EPICS_AND_STORIES.md#s085) | `src/features/governance/screens-actions.tsx`, `src/features/governance/actions-model.ts` | `corrective-actions.test.tsx` |
 | CAP-042 | AI Governance Playbook | [S10.1](EPICS_AND_STORIES.md#s101) | `src/features/governance/screens-playbook.tsx`, `src/data/playbook.ts` | **None** |
 | CAP-043 | Governance templates | [S10.2](EPICS_AND_STORIES.md#s102) | `src/features/governance/screens-templates.tsx`, `src/data/templates.ts` | **None** |
 | CAP-044 | Knowledge hub | [S10.3](EPICS_AND_STORIES.md#s103) | `src/features/governance/screens-resources.tsx`, `src/data/governance.ts` | `resources.test.ts` |
@@ -317,7 +317,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-065 | Sample reports | [S13.5](EPICS_AND_STORIES.md#s135) | `src/features/platform/samples-gallery.tsx`, `src/features/platform/samples` | `platform-samples.test.ts` |
 | CAP-066 | Content checks | [S13.6](EPICS_AND_STORIES.md#s136) | `src/features/platform/content-checks.tsx`, `src/features/platform/checks` | `platform-content-checks.test.ts` |
 | CAP-067 | Admin console | [S04.2](EPICS_AND_STORIES.md#s042), [S14.1](EPICS_AND_STORIES.md#s141), [S14.2](EPICS_AND_STORIES.md#s142) | `src/features/platform/admin-console.tsx`, `src/features/platform/admin.functions.ts` | `platform-misc-admin.test.tsx` |
-| CAP-068 | Privacy-first analytics | [S14.2](EPICS_AND_STORIES.md#s142) | `src/features/platform/analytics.ts`, `src/features/platform/analytics-core.ts`, `src/features/platform/analytics.functions.ts` | `platform-misc-parity.test.ts` |
+| CAP-068 | Privacy-first analytics | [S14.2](EPICS_AND_STORIES.md#s142) | `src/features/platform/analytics.ts`, `src/features/platform/analytics-core.ts`, `src/features/platform/analytics.functions.ts`, `src/features/platform/rate-limit.server.ts` | `platform-misc-parity.test.ts`, `site-analytics-events.test.tsx`, `rate-limit.test.ts` |
 | CAP-070 | Installable app (PWA) | [S15.1](EPICS_AND_STORIES.md#s151) | `public/manifest.webmanifest`, `src/features/pwa` | `pwa.test.ts` |
 | CAP-071 | Offline reading | [S15.2](EPICS_AND_STORIES.md#s152) | `public/sw.js`, `public/offline.html`, `src/features/pwa/register.ts` | `pwa.test.ts` |
 | CAP-072 | Site-wide search | [S15.3](EPICS_AND_STORIES.md#s153) | `src/features/search` | `search.test.ts` |
