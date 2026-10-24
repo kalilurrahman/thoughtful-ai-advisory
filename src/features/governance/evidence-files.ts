@@ -1,4 +1,5 @@
 import { maturityLabel, reportCaveats, type EvidenceReport } from "./evidence-report";
+import { historyText } from "./decision-model";
 import { isThresholdBreach, monitoringState } from "./monitoring-model";
 
 export type ExportFormat = "PDF" | "DOCX" | "XLSX" | "PPTX";
@@ -58,7 +59,8 @@ function reportLines(report: EvidenceReport) {
           `${decision.system} | ${decision.outcome} | ${decision.lifecycle} | Decided: ${decision.decidedAt} | Review by: ${decision.reviewBy ?? "Not scheduled"} | Approver: ${decision.approver}`,
           `Rationale: ${decision.rationale}`,
           `Conditions: ${decision.conditions || "None recorded"}`,
-          `History: ${decision.history.map((event) => `${event.action} ${event.changedAt}`).join("; ") || "No changes"}`,
+          ...(decision.corrects ? [`Correction: ${decision.correctionReason ?? ""}`] : []),
+          `History: ${historyText(decision) || "No changes"}`,
           "",
         ])
       : ["No governance decisions recorded in this workspace snapshot."]),
@@ -345,11 +347,13 @@ async function makeXlsx(report: EvidenceReport) {
       { header: "Approver", key: "approver", width: 28 },
       { header: "Rationale", key: "rationale", width: 64 },
       { header: "Conditions", key: "conditions", width: 64 },
+      { header: "Correction reason", key: "correctionReason", width: 42 },
       { header: "History", key: "historyText", width: 42 },
     ],
     report.decisions.map((decision) => ({
       ...decision,
-      historyText: decision.history.map((event) => `${event.action} ${event.changedAt}`).join("; "),
+      correctionReason: decision.correctionReason ?? "",
+      historyText: historyText(decision),
     })),
   );
   addSheet(
@@ -501,7 +505,8 @@ async function makePptx(report: EvidenceReport) {
           `${decision.system} | ${decision.outcome} | ${decision.lifecycle} | Decided: ${decision.decidedAt} | Review by: ${decision.reviewBy ?? "Not scheduled"} | Approver: ${decision.approver}`,
           `Rationale: ${decision.rationale}`,
           `Conditions: ${decision.conditions || "None recorded"}`,
-          `History: ${decision.history.map((event) => `${event.action} ${event.changedAt}`).join("; ") || "No changes"}`,
+          ...(decision.corrects ? [`Correction: ${decision.correctionReason ?? ""}`] : []),
+          `History: ${historyText(decision) || "No changes"}`,
         ]),
     );
   }

@@ -368,9 +368,12 @@ epics:
         acceptance:
           - Given Risk accepted or Conditional approval, when saved, then a review date on or after the decision date is required.
           - Given a new decision for a system, when saved, then the previous current decision becomes Superseded.
+          - Given a current record entered wrongly, when corrected with a reason and at least one changed field, then a new current record names it and the original stays in the register marked Corrected, with the reason in its history.
+          - Given a current record made in error, when withdrawn with a reason, then it stays in the register marked Withdrawn and the system has no current decision.
+          - Given corrected or withdrawn records, when evidence is exported, then the reasons appear in the history and the correction column.
         routes: [/decisions]
-        tests: [decision-schema.test.ts, evidence-export.test.ts]
-        gaps: [Decisions cannot be edited or deleted., A decision does not change the system's inventory status.]
+        tests: [decision-schema.test.ts, evidence-export.test.ts, decision-corrections.test.tsx]
+        gaps: [A decision does not change the system's inventory status.]
       - id: S08.3
         persona: owner
         want: to submit a material change with impact ratings for review
@@ -933,7 +936,8 @@ use_cases:
     flow:
       - Choose the system and disposition; enter rationale, conditions and review-by date.
       - Save; the previous decision is superseded.
-    outcome: A current decision with a review date.
+      - If a record was entered wrongly, correct it with a reason; if it was made in error, withdraw it with a reason. The original stays in the register either way.
+    outcome: A current decision with a review date, and a register that keeps every earlier record.
     stories: [S08.2]
   - id: UC15
     title: Review a material change
@@ -1067,7 +1071,7 @@ capabilities:
   - {id: CAP-035, name: Lifecycle checklist, area: assess, route: /checklist, status: live, data: cloud, epic: E09, personas: [gov-lead], source: [src/features/governance/checklist-model.ts], tests: [checklist.test.ts], summary: "Readiness tasks derived from the live workspace with deep links."}
   - {id: CAP-036, name: AI inventory and triage, area: register, route: /inventory, status: live, data: cloud, epic: E06, personas: [owner, gov-lead], source: [src/features/governance/screens-operations.tsx, src/features/site/engines/risk-tier.ts, src/features/governance/inventory-export.ts], tests: [inventory-export.test.ts, site-risk-tier.test.ts], summary: "Register, triage, filter, edit and CSV export of AI systems."}
   - {id: CAP-037, name: Incidents and near misses, area: operate, route: /incidents, status: live, data: cloud, epic: E08, personas: [owner, gov-lead], source: [src/features/governance/screens-incidents.tsx], tests: [incidents.test.ts, incidents-ui.test.tsx], summary: "Log, triage and close incidents with status history."}
-  - {id: CAP-038, name: Governance decisions, area: operate, route: /decisions, status: live, data: cloud, epic: E08, personas: [approver], source: [src/features/governance/screens-decisions.tsx, src/features/governance/decision-schema.ts], tests: [decision-schema.test.ts], summary: "Approvals, risk acceptance with review dates, supersede history."}
+  - {id: CAP-038, name: Governance decisions, area: operate, route: /decisions, status: live, data: cloud, epic: E08, personas: [approver], source: [src/features/governance/screens-decisions.tsx, src/features/governance/decision-schema.ts, src/features/governance/decision-model.ts], tests: [decision-schema.test.ts, decision-corrections.test.tsx], summary: "Approvals, risk acceptance with review dates, supersede history; correct or withdraw a record with a reason, keeping the original."}
   - {id: CAP-039, name: Change reviews, area: operate, route: /changes, status: live, data: cloud, epic: E08, personas: [owner, approver], source: [src/features/governance/screens-changes.tsx, src/features/governance/change-review-model.ts], tests: [change-review.test.tsx], summary: "Material change screening with impact ratings and reviewer outcomes."}
   - {id: CAP-040, name: Monitoring, area: operate, route: /monitoring, status: live, data: cloud, epic: E08, personas: [engineer], source: [src/features/governance/screens-monitoring.tsx, src/features/governance/monitoring-model.ts], tests: [monitoring.test.ts], summary: "Threshold plans, manual observations, breach and overdue states."}
   - {id: CAP-041, name: Corrective actions, area: operate, route: /actions, status: live, data: cloud, epic: E08, personas: [owner, approver], source: [src/features/governance/screens-actions.tsx, src/features/governance/actions-model.ts], tests: [corrective-actions.test.tsx], summary: "Owned remediation with evidence, verified closure and cancellation with a reason; refused moves say why."}

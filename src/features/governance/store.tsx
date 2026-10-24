@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { loadWorkspace } from "./workspace.functions";
 import { GovernanceContext as Context } from "./context";
+import { recordDecision, withdrawDecision } from "./decision-model";
 import type { GovernanceDecision } from "./decision-schema";
 import type { ChangeReview, ChangeStatus } from "./change-schema";
 import { transitionChangeReview } from "./change-review-model";
@@ -114,6 +115,7 @@ export type Action =
   | { type: "update-incident"; incident: AIIncident; changedAt: string }
   | { type: "edit-incident"; incident: AIIncident }
   | { type: "decision"; decision: GovernanceDecision; supersededAt: string }
+  | { type: "decision-withdraw"; id: string; reason: string; at: string }
   | { type: "change-review"; review: ChangeReview }
   | {
       type: "transition-change-review";
@@ -198,23 +200,15 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
         ),
       };
     case "decision":
+      return { ...s, decisions: recordDecision(s.decisions, a.decision, a.supersededAt) };
+    case "decision-withdraw":
       return {
         ...s,
-        decisions: [
-          a.decision,
-          ...s.decisions.map((decision) =>
-            decision.system === a.decision.system && decision.lifecycle === "Current"
-              ? {
-                  ...decision,
-                  lifecycle: "Superseded" as const,
-                  history: [
-                    ...decision.history,
-                    { action: "Superseded" as const, changedAt: a.supersededAt },
-                  ],
-                }
-              : decision,
-          ),
-        ],
+        decisions: s.decisions.map(
+          (decision) =>
+            (decision.id === a.id && withdrawDecision(decision, a.reason, a.at).decision) ||
+            decision,
+        ),
       };
     case "change-review":
       return { ...s, changeReviews: [a.review, ...s.changeReviews] };

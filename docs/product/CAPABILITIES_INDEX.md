@@ -71,7 +71,7 @@ Every app, tool and feature, then every website content page, the control librar
 | ID | Capability | Route | Status | Data | For | Epic | What it does |
 |---|---|---|---|---|---|---|---|
 | CAP-037 | Incidents and near misses | `/incidents` | Live | Cloud (RLS) | AI system owner, AI governance lead | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Log, triage and close incidents with status history. |
-| CAP-038 | Governance decisions | `/decisions` | Live | Cloud (RLS) | Approver | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Approvals, risk acceptance with review dates, supersede history. |
+| CAP-038 | Governance decisions | `/decisions` | Live | Cloud (RLS) | Approver | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Approvals, risk acceptance with review dates, supersede history; correct or withdraw a record with a reason, keeping the original. |
 | CAP-039 | Change reviews | `/changes` | Live | Cloud (RLS) | AI system owner, Approver | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Material change screening with impact ratings and reviewer outcomes. |
 | CAP-040 | Monitoring | `/monitoring` | Live | Cloud (RLS) | Engineering / platform lead | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Threshold plans, manual observations, breach and overdue states. |
 | CAP-041 | Corrective actions | `/actions` | Live | Cloud (RLS) | AI system owner, Approver | [E08](EPICS_AND_STORIES.md#e08--operational-governance-registers) | Owned remediation with evidence, verified closure and cancellation with a reason; refused moves say why. |
@@ -293,7 +293,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-035 | Lifecycle checklist | [S09.2](EPICS_AND_STORIES.md#s092) | `src/features/governance/checklist-model.ts` | `checklist.test.ts` |
 | CAP-036 | AI inventory and triage | [S06.1](EPICS_AND_STORIES.md#s061), [S06.2](EPICS_AND_STORIES.md#s062) | `src/features/governance/screens-operations.tsx`, `src/features/site/engines/risk-tier.ts`, `src/features/governance/inventory-export.ts` | `inventory-export.test.ts`, `site-risk-tier.test.ts` |
 | CAP-037 | Incidents and near misses | [S08.1](EPICS_AND_STORIES.md#s081) | `src/features/governance/screens-incidents.tsx` | `incidents.test.ts`, `incidents-ui.test.tsx` |
-| CAP-038 | Governance decisions | [S08.2](EPICS_AND_STORIES.md#s082) | `src/features/governance/screens-decisions.tsx`, `src/features/governance/decision-schema.ts` | `decision-schema.test.ts` |
+| CAP-038 | Governance decisions | [S08.2](EPICS_AND_STORIES.md#s082) | `src/features/governance/screens-decisions.tsx`, `src/features/governance/decision-schema.ts`, `src/features/governance/decision-model.ts` | `decision-schema.test.ts`, `decision-corrections.test.tsx` |
 | CAP-039 | Change reviews | [S08.3](EPICS_AND_STORIES.md#s083) | `src/features/governance/screens-changes.tsx`, `src/features/governance/change-review-model.ts` | `change-review.test.tsx` |
 | CAP-040 | Monitoring | [S08.4](EPICS_AND_STORIES.md#s084) | `src/features/governance/screens-monitoring.tsx`, `src/features/governance/monitoring-model.ts` | `monitoring.test.ts` |
 | CAP-041 | Corrective actions | [S08.5](EPICS_AND_STORIES.md#s085) | `src/features/governance/screens-actions.tsx`, `src/features/governance/actions-model.ts` | `corrective-actions.test.tsx` |
