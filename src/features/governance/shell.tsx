@@ -19,7 +19,9 @@ import {
   ClipboardText,
   ArrowsClockwise,
   Gauge,
+  Sparkle,
 } from "@phosphor-icons/react";
+import { InstallButton } from "./install-button";
 import { Button } from "@/components/ui/button";
 import { useDarkTheme } from "@/lib/theme";
 import { useGovernance } from "./store";
@@ -47,6 +49,7 @@ const titles: Record<string, string> = {
   "/changes": "AI change reviews",
   "/monitoring": "AI system monitoring",
   "/actions": "Corrective actions",
+  "/advisor": "AI governance advisor",
   "/checklist": "Governance lifecycle checklist",
   "/start": "Start here",
   "/export": "Reports & audit pack",
@@ -61,6 +64,7 @@ const studioTabs = [
   { to: "/templates", name: "Templates", icon: Books },
   { to: "/incidents", name: "Incidents", icon: TrafficSignal },
   { to: "/actions", name: "Corrective actions", icon: ListChecks },
+  { to: "/advisor", name: "AI advisor", icon: Sparkle },
   { to: "/decisions", name: "Decisions", icon: ClipboardText },
   { to: "/changes", name: "Change reviews", icon: ArrowsClockwise },
   { to: "/monitoring", name: "Monitoring", icon: Gauge },
@@ -148,6 +152,7 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
         </Button>
         <span className="client-name">{workspaceName}</span>
         <span className="workspace-badge">{userId ? "Personal workspace" : "Demo workspace"}</span>
+        <InstallButton />
         <Button
           variant="ghost"
           size="icon"
