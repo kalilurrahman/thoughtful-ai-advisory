@@ -114,6 +114,22 @@ The repository ships the full **VERITRAIL public landing website** alongside the
 
 ---
 
+## 📲 Installable App (PWA) & Reading Experience
+
+VERITRAIL installs as an app and reads well on any screen:
+
+- **Install anywhere** — the browser's install dialog on Chrome, Edge and Android (with app screenshots), and step-by-step "Add to Home Screen / Add to Dock" guidance on iPhone, iPad and Safari for Mac. Shortcuts open the self-assessment, risk triage, control library, Ask VERITRAIL and the workspace.
+- **Offline reading** — a production-only, network-first service worker keeps the pages you have read (and their in-browser tools) available offline, with a branded offline page for the rest. It never runs in the Lovable preview.
+- **Built for long reads** — illustrated page headers, an "On this page" navigator, feature and step cards, key-message callouts, tables that stack on phones, code copy/expand, FAQ accordions and control IDs linked to the control library.
+
+See [docs/veritrail/UX_PWA_UPLIFT.md](./docs/veritrail/UX_PWA_UPLIFT.md) for the review, before/after screenshots, caching rules and next steps.
+
+| Home (after) | Phone | Install on iPhone |
+| :---: | :---: | :---: |
+| ![Home](./docs/assets/uplift/after-home-desktop.jpg) | ![Phone](./docs/assets/uplift/after-home-mobile.jpg) | ![Install](./docs/assets/uplift/install-flow-iphone.jpg) |
+
+---
+
 ## ⚙️ Key Features & Functional Modules
 
 ### 🏛️ 1. Public Landing Site & 64-Control Library

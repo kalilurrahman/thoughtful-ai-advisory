@@ -3144,8 +3144,6 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .advisor-note { font-size: 0.85rem; color: var(--muted-foreground); border-top: 1px solid var(--border); padding-top: 0.75rem; }
 .spin { animation: advisor-spin 1s linear infinite; }
 @keyframes advisor-spin { to { transform: rotate(360deg); } }
-.install-wrap { position: relative; display: inline-flex; }
-.install-tip { position: absolute; top: calc(100% + 0.5rem); right: 0; width: 220px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.75rem; font-size: 0.8rem; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4); z-index: 30; }
 @media (max-width: 640px) {
   .advisor-foci { grid-template-columns: 1fr; }
   .advisor-hero > div { padding: 1rem; }

@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useMemo, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   APPLIES_LABELS,
@@ -17,11 +17,14 @@ import {
 import { FORMS, LeadForm, formSubmitLabel } from "./forms";
 import type { LeadForm as LeadFormKey } from "./leads.functions";
 import { Breadcrumbs } from "./layout";
-import { InlineMarkdown, SiteMarkdown } from "./markdown";
+import { InlineMarkdown, SiteMarkdown, extractHeadings, readingMinutes } from "./markdown";
 import { CONTROL_LIBRARY_PATH, breadcrumbsFor, type FaqItem, type SitePage } from "./pages";
 import { CtaBlock, SiteLink } from "./ui";
 import { TOOL_COMPONENTS } from "./tools/registry";
-import { WorkspaceGateway } from "./workspace-gateway";
+import { ControlMosaic, SectionArt, artFor, type ArtKind } from "./illustrations";
+import { OnThisPage, formatDate } from "./reading";
+import { PageEnd } from "./page-end";
+import { HomeTemplate } from "./home";
 
 // Page templates — ported from platform/app/website/templates/{home,page,form,tool,
 // controls_index,control,404}.html.
@@ -33,42 +36,50 @@ const TOOL_META: Record<string, { anchor: string; jump: string }> = {
   "risk-triage": { anchor: "risk-triage", jump: "Go to the tool" },
 };
 
-function PageHeader({ h1, lead }: { h1: string; lead?: string | undefined }) {
+function PageHeader({
+  h1,
+  lead,
+  eyebrow,
+  meta,
+  art,
+}: {
+  h1: string;
+  lead?: string | undefined;
+  eyebrow?: ReactNode;
+  meta?: ReactNode;
+  art?: ReactNode;
+}) {
   return (
-    <div className="page-header">
-      <div className="container">
-        <h1>{h1}</h1>
-        {lead && <p className="lead">{lead}</p>}
+    <div className={`page-header${art ? " page-header--art" : ""}`}>
+      <div className="container page-header-grid">
+        <div className="page-header-text">
+          {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+          <h1>{h1}</h1>
+          {lead && <p className="lead">{lead}</p>}
+          {meta && <p className="page-meta">{meta}</p>}
+        </div>
+        {art && <div className="page-header-art">{art}</div>}
       </div>
     </div>
   );
 }
 
-function PageEnd({ faq, updated }: { faq?: FaqItem[]; updated?: string | undefined }) {
-  return (
-    <>
-      {faq && faq.length > 0 && (
-        <section className="faq" aria-labelledby="faq-heading">
-          <h2 id="faq-heading">Frequently asked questions</h2>
-          <dl className="faq-list">
-            {faq.map((item) => (
-              <div key={item.q}>
-                <dt>{item.q}</dt>
-                <dd>
-                  <InlineMarkdown text={item.a} />
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-      )}
-      {updated && (
-        <p className="page-updated">
-          Last reviewed: <time dateTime={updated}>{updated}</time>
-        </p>
-      )}
-    </>
-  );
+/** Section label, reading time and review date shown under a page title. */
+function pageHeaderProps(page: SitePage, kind?: ArtKind) {
+  const art = kind ?? artFor(page.path, page.section);
+  const minutes = readingMinutes(page.body);
+  const parts: string[] = [];
+  // Blog posts already state their reading time in the byline.
+  if (page.template === "page" && minutes >= 2 && !/minutes to read/.test(page.body))
+    parts.push(`${minutes} min read`);
+  if (page.updated) parts.push(`Reviewed ${formatDate(page.updated)}`);
+  return {
+    h1: page.h1,
+    lead: page.lead,
+    eyebrow: siteConfig.section_labels[page.section] ?? undefined,
+    meta: parts.length ? parts.join(" · ") : undefined,
+    art: art ? <SectionArt kind={art} /> : undefined,
+  };
 }
 
 function EndCtas({ page }: { page: SitePage }) {
@@ -85,53 +96,25 @@ function EndCtas({ page }: { page: SitePage }) {
   );
 }
 
-function HomeTemplate({ page }: { page: SitePage }) {
-  const primary = page.primaryCta ? siteConfig.ctas[page.primaryCta] : undefined;
-  const secondary = page.secondaryCta ? siteConfig.ctas[page.secondaryCta] : undefined;
-  return (
-    <>
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="container">
-          <p className="eyebrow">{siteConfig.site_tagline}</p>
-          <h1 id="hero-title">{page.h1}</h1>
-          <p className="lead">{page.lead ?? page.description}</p>
-          <p className="hero-actions">
-            {primary && (
-              <SiteLink className="btn btn-primary btn-lg" href={primary.url}>
-                {primary.label}
-              </SiteLink>
-            )}
-            {secondary && (
-              <SiteLink className="btn btn-secondary btn-lg" href={secondary.url}>
-                {secondary.label}
-              </SiteLink>
-            )}
-          </p>
-          <p className="hero-note">
-            VERITRAIL supports readiness and evidence. It does not certify compliance.{" "}
-            <Link to="/workspace">Open the governance workspace</Link>.
-          </p>
-        </div>
-      </section>
-      <WorkspaceGateway />
-      <div className="container page-body">
-        <SiteMarkdown className="prose prose--home" body={page.body} />
-        <PageEnd faq={page.faq} updated={page.updated} />
-      </div>
-    </>
-  );
-}
-
 function ArticleTemplate({ page }: { page: SitePage }) {
+  const toc = useMemo(() => {
+    const entries = extractHeadings(page.body);
+    if (page.faq.length) entries.push({ id: "faq-heading", text: "Frequently asked questions" });
+    return entries;
+  }, [page.body, page.faq.length]);
+  const withToc = toc.length >= 3;
   return (
     <>
-      <PageHeader h1={page.h1} lead={page.lead} />
-      <div className="container page-body">
-        <article>
-          <SiteMarkdown className="prose" body={page.body} />
-        </article>
-        <PageEnd faq={page.faq} updated={page.updated} />
-        <EndCtas page={page} />
+      <PageHeader {...pageHeaderProps(page)} />
+      <div className={`container page-body article-layout${withToc ? " has-toc" : ""}`}>
+        {withToc && <OnThisPage key={page.path} entries={toc} />}
+        <div className="article-main">
+          <article>
+            <SiteMarkdown className="prose" body={page.body} />
+          </article>
+          <PageEnd faq={page.faq} updated={page.updated} />
+          <EndCtas page={page} />
+        </div>
       </div>
     </>
   );
@@ -141,7 +124,7 @@ function FormTemplate({ page }: { page: SitePage }) {
   const form = (page.form ?? "contact") as LeadFormKey;
   return (
     <>
-      <PageHeader h1={page.h1} lead={page.lead} />
+      <PageHeader {...pageHeaderProps(page, "contact")} />
       <div className="container page-body layout-split">
         <SiteMarkdown className="prose" body={page.body} />
         <section className="form-panel" aria-labelledby="form-heading">
@@ -173,7 +156,7 @@ function ToolTemplate({ page }: { page: SitePage }) {
   const anchor = tool?.anchor ?? "form-heading";
   return (
     <>
-      <PageHeader h1={page.h1} lead={page.lead} />
+      <PageHeader {...pageHeaderProps(page, "tools")} />
       <div className="container page-body">
         {page.body.trim() && (
           <>
@@ -233,7 +216,22 @@ export function ControlLibraryView() {
       <Breadcrumbs
         crumbs={breadcrumbsFor(CONTROL_LIBRARY_PATH, siteConfig.control_library.nav_label)}
       />
-      <PageHeader h1="VERITRAIL Control Library" />
+      <PageHeader
+        h1="VERITRAIL Control Library"
+        eyebrow="Framework"
+        lead={`${controls.length} controls across ${pillars.length} pillars — each with an objective, an accountable owner, the evidence that demonstrates it, and indicative framework mappings.`}
+        meta={`Control Library v${controlLibrary.version} · Effective ${formatDate(controlLibrary.effective_date)}`}
+        art={
+          <figure className="mosaic-figure">
+            <ControlMosaic />
+            <figcaption className="mosaic-legend">
+              <span className="legend-swatch legend-critical" /> Critical
+              <span className="legend-swatch legend-high" /> High
+              <span className="legend-swatch legend-medium" /> Medium priority
+            </figcaption>
+          </figure>
+        }
+      />
       <div className="container page-body">
         <div className="prose">
           <p>
@@ -243,15 +241,22 @@ export function ControlLibraryView() {
             ISO/IEC 42001 and the EU AI Act.
           </p>
         </div>
-        <nav className="toc" aria-label="Pillars">
+        <nav className="pillar-cards" aria-label="Pillars">
           <ul>
-            {groups.map((g) => (
-              <li key={g.id}>
-                <a href={`#${g.anchor}`}>
-                  {g.id} — {g.name} ({g.controls.length})
-                </a>
-              </li>
-            ))}
+            {groups.map((g) => {
+              const critical = g.controls.filter((c) => c.priority === "critical").length;
+              return (
+                <li key={g.id}>
+                  <a href={`#${g.anchor}`} className="pillar-card">
+                    <span className="pillar-code">{g.id}</span>
+                    <span className="pillar-name">{g.name}</span>
+                    <span className="pillar-stats">
+                      {g.controls.length} controls · {critical} critical
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </nav>
         <aside className="disclaimer" aria-label="Mapping disclaimer">
@@ -271,7 +276,7 @@ export function ControlLibraryView() {
               tabIndex={0}
               aria-label={`${g.name} controls`}
             >
-              <table className="controls-table">
+              <table className="controls-table stack-table">
                 <thead>
                   <tr>
                     <th scope="col">Control</th>
@@ -288,11 +293,13 @@ export function ControlLibraryView() {
                           <span className="control-id">{c.id}</span> {c.title}
                         </Link>
                       </th>
-                      <td>{c.objective}</td>
-                      <td>
+                      <td data-label="Objective">{c.objective}</td>
+                      <td data-label="Priority">
                         <span className={`priority priority-${c.priority}`}>{c.priority}</span>
                       </td>
-                      <td>{APPLIES_LABELS[c.applies_to] ?? c.applies_to}</td>
+                      <td data-label="Applies to">
+                        {APPLIES_LABELS[c.applies_to] ?? c.applies_to}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -336,19 +343,22 @@ export function ControlView({ control }: { control: VeritrailControl }) {
   return (
     <div className="tpl-control">
       <Breadcrumbs crumbs={breadcrumbsFor(controlUrl(c.id), c.id)} />
-      <div className="page-header">
-        <div className="container">
-          <p className="eyebrow">
-            <Link to={CONTROL_LIBRARY_PATH} hash={`pillar-${c.pillar.toLowerCase()}`}>
-              {c.pillar} — {pillar?.name}
-            </Link>
-          </p>
-          <h1>
-            {c.id}: {c.title}
-          </h1>
-          <p className="lead">{c.objective}</p>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow={
+          <Link to={CONTROL_LIBRARY_PATH} hash={`pillar-${c.pillar.toLowerCase()}`}>
+            {c.pillar} — {pillar?.name}
+          </Link>
+        }
+        h1={`${c.id}: ${c.title}`}
+        lead={c.objective}
+        meta={
+          <>
+            Priority <span className={`priority priority-${c.priority}`}>{c.priority}</span> ·
+            Owner: {c.owner_role}
+          </>
+        }
+        art={<ControlMosaic compact highlight={c.id} />}
+      />
       <div className="container page-body">
         <div className="prose">
           <h2 id="at-a-glance">At a glance</h2>
@@ -458,7 +468,11 @@ export function ControlView({ control }: { control: VeritrailControl }) {
 export function SiteNotFound() {
   return (
     <div className="tpl-404">
-      <PageHeader h1="Page not found" />
+      <PageHeader
+        h1="Page not found"
+        lead="This trail goes cold — the page does not exist or has moved."
+        art={<SectionArt kind="company" />}
+      />
       <div className="container page-body">
         <div className="prose">
           <p>The page you were looking for does not exist or has moved.</p>

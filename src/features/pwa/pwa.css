@@ -1,0 +1,203 @@
+/* Installable-app layer (src/features/pwa/pwa-layer.tsx): install card, instructions sheet and
+   connection notices. Shared by the website and the workspace, so it uses the global Broadsheet
+   tokens from src/styles.css and works in light and dark mode. */
+.pwa-layer {
+  --pwa-gap: 12px;
+  --pwa-bottom: calc(var(--pwa-gap) + env(safe-area-inset-bottom));
+  font-family: "Source Serif 4", Georgia, serif;
+  color: var(--foreground);
+}
+/* The workspace has a fixed bottom navigation on phones and tablets. */
+@media (max-width: 1023px) {
+  .veritrail-app:not(.onboarding-app) ~ .pwa-layer {
+    --pwa-bottom: calc(84px + env(safe-area-inset-bottom));
+  }
+}
+
+.pwa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--primary);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.pwa-btn svg { width: 1.05rem; height: 1.05rem; }
+.pwa-btn-primary { background: var(--primary); color: var(--primary-foreground); }
+.pwa-btn-primary:hover { background: var(--accent-foreground); border-color: var(--accent-foreground); }
+.dark .pwa-btn-primary:hover { background: var(--primary); filter: brightness(1.08); }
+.pwa-btn-quiet { background: transparent; color: var(--primary); border-color: transparent; }
+.pwa-btn-quiet:hover { background: var(--accent); }
+.pwa-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+.pwa-icon-btn:hover { background: var(--accent); color: var(--foreground); }
+.pwa-icon-btn svg { width: 1.2rem; height: 1.2rem; }
+.pwa-layer :focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.pwa-app-icon { width: 48px; height: 48px; flex: none; border-radius: 11px; box-shadow: 0 2px 8px oklch(0.25 0.04 230 / 0.25); }
+.pwa-eyebrow { margin: 0; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-foreground); }
+
+/* Install card: a bottom sheet on phones, a corner card from tablet up. */
+.pwa-card {
+  position: fixed;
+  z-index: 60;
+  left: var(--pwa-gap);
+  right: var(--pwa-gap);
+  bottom: var(--pwa-bottom);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: start;
+  padding: 1rem 0.5rem 1rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--primary);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: 0 18px 48px oklch(0.2 0.02 240 / 0.22);
+  animation: pwa-rise 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.pwa-card-title { margin: 0 0 0.25rem; font-size: 1.08rem; font-weight: 600; line-height: 1.3; }
+.pwa-card-text { margin: 0; font-size: 0.93rem; line-height: 1.5; color: var(--muted-foreground); }
+.pwa-card-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.pwa-card-close { margin-top: -0.5rem; }
+@media (min-width: 640px) {
+  .pwa-card { left: auto; right: 20px; width: min(26rem, calc(100vw - 40px)); }
+}
+
+/* Instructions sheet */
+.pwa-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: var(--scrim, rgba(32, 30, 29, 0.5));
+  animation: pwa-fade 0.2s ease both;
+}
+.pwa-sheet {
+  width: 100%;
+  max-width: 34rem;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  padding: 1.25rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom));
+  background: var(--card);
+  border-top: 3px solid var(--primary);
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -12px 40px oklch(0.2 0.02 240 / 0.25);
+  animation: pwa-rise 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@media (min-width: 640px) {
+  .pwa-sheet-backdrop { align-items: center; padding: 1rem; }
+  .pwa-sheet { border-radius: 8px; padding-bottom: 1.25rem; }
+}
+.pwa-sheet-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.85rem; align-items: center; }
+.pwa-sheet-title { margin: 0.1rem 0 0; font-size: 1.3rem; line-height: 1.25; font-weight: 600; }
+.pwa-steps { counter-reset: pwa-step; list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 0.75rem; }
+.pwa-steps li {
+  counter-increment: pwa-step;
+  position: relative;
+  padding: 0.75rem 0.9rem 0.75rem 3.1rem;
+  background: var(--secondary);
+  border-radius: var(--radius);
+  line-height: 1.5;
+}
+.pwa-steps li::before {
+  content: counter(pwa-step);
+  position: absolute;
+  left: 0.8rem;
+  top: 0.7rem;
+  width: 1.65rem;
+  height: 1.65rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.pwa-inline-icon { display: inline-block; width: 1.15em; height: 1.15em; vertical-align: -0.2em; color: var(--primary); }
+.pwa-benefits { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: 0.5rem; font-size: 0.93rem; color: var(--muted-foreground); }
+.pwa-benefits li { display: flex; gap: 0.6rem; align-items: flex-start; }
+.pwa-benefits svg { width: 1.25rem; height: 1.25rem; flex: none; color: var(--primary); margin-top: 0.1rem; }
+.pwa-sheet-done { width: 100%; margin-top: 1.25rem; }
+
+/* Connection and installed notices */
+.pwa-toast-region {
+  position: fixed;
+  z-index: 65;
+  left: 50%;
+  top: calc(12px + env(safe-area-inset-top));
+  transform: translateX(-50%);
+  width: min(34rem, calc(100vw - 24px));
+  pointer-events: none;
+}
+.pwa-toast {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.35rem 0.35rem 0.35rem 0.9rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: var(--popover-shadow);
+  font-size: 0.93rem;
+  line-height: 1.45;
+  animation: pwa-drop 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.pwa-toast > svg { width: 1.3rem; height: 1.3rem; color: var(--primary); }
+.pwa-toast--offline { border-left-color: var(--warning-ink); }
+.pwa-toast--offline > svg { color: var(--warning-ink); }
+
+/* Header entry point (website) */
+.install-app-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.install-app-btn:hover { background: var(--accent); }
+.install-app-btn svg { width: 1.2rem; height: 1.2rem; }
+
+@keyframes pwa-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes pwa-drop { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@keyframes pwa-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .pwa-card, .pwa-sheet, .pwa-sheet-backdrop, .pwa-toast { animation: none; }
+}
+@media print {
+  .pwa-layer { display: none !important; }
+}
