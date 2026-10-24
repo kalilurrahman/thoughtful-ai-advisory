@@ -1,4 +1,8 @@
-import { describe, expect, it } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { GovernanceContext } from "@/features/governance/context";
+import { ChangesScreen } from "@/features/governance/screens-changes";
+import { initialState } from "@/features/governance/store";
 import { changeReviewSchema, impactAreas } from "@/features/governance/change-schema";
 import {
   evaluateChangeReview,
@@ -108,5 +112,62 @@ describe("AI material change review workflow", () => {
         "2026-10-22T13:00:00.000Z",
       ).error,
     ).toContain("closed");
+  });
+});
+
+describe("change review screen", () => {
+  afterEach(cleanup);
+
+  function renderChanges(review: ReturnType<typeof createReview>) {
+    const dispatch = vi.fn();
+    render(
+      <GovernanceContext.Provider
+        value={{
+          state: { ...initialState(), changeReviews: [review] },
+          dispatch,
+          userId: null,
+          workspaceId: null,
+          workspaceName: "Demo workspace",
+          setWorkspace: vi.fn(),
+        }}
+      >
+        <ChangesScreen />
+      </GovernanceContext.Provider>,
+    );
+    return dispatch;
+  }
+
+  function recordOutcome(actor: string, note: string) {
+    fireEvent.change(screen.getByLabelText("Reviewer / accountable role"), {
+      target: { value: actor },
+    });
+    fireEvent.change(screen.getByLabelText("Decision rationale / conditions"), {
+      target: { value: note },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Save review outcome" }));
+  }
+
+  it("says why an approval is refused instead of silently keeping the review open", () => {
+    const review = createReview();
+    review.impacts[impactAreas[0]!] = "Not assessed";
+    const dispatch = renderChanges(review);
+    recordOutcome("AI Risk Lead", "Approve the upgrade.");
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Complete all impact ratings before approval.",
+    );
+    expect(dispatch).not.toHaveBeenCalled();
+  });
+
+  it("records a permitted outcome", () => {
+    const dispatch = renderChanges(createReview());
+    recordOutcome("AI Risk Lead", "Approved with regression monitoring for 30 days.");
+    expect(screen.queryByRole("alert")).toBeNull();
+    expect(dispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: "transition-change-review",
+        status: "Approved",
+        actor: "AI Risk Lead",
+      }),
+    );
   });
 });

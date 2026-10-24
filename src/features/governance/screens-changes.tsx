@@ -10,7 +10,7 @@ import {
   type ChangeReview,
   type ChangeStatus,
 } from "./change-schema";
-import { evaluateChangeReview } from "./change-review-model";
+import { evaluateChangeReview, transitionChangeReview } from "./change-review-model";
 import { useGovernance } from "./store";
 
 type ImpactMap = ChangeReview["impacts"];
@@ -303,6 +303,7 @@ function ChangeReviewCard({
   );
   const [actor, setActor] = useState("");
   const [note, setNote] = useState("");
+  const [failure, setFailure] = useState("");
   const evaluation = evaluateChangeReview(review);
   const terminal = review.status === "Rejected" || review.status === "Implemented";
   const needsEscalation = evaluation.highImpactAreas.length > 0;
@@ -371,7 +372,16 @@ function ChangeReviewCard({
           <form
             onSubmit={(event) => {
               event.preventDefault();
+              // Same rules as the store, so a refused outcome says why instead of doing nothing.
+              const check = transitionChangeReview(review, status, actor, note, timeNow());
+              if (check.error) {
+                setFailure(check.error);
+                return;
+              }
               onTransition(status, actor, note);
+              setFailure("");
+              setNote("");
+              setStatus(status === "Approved" ? "Implemented" : "Approved");
             }}
           >
             <div className="decision-form-grid">
@@ -405,6 +415,11 @@ function ChangeReviewCard({
                 onChange={(event) => setNote(event.target.value)}
               />
             </label>
+            {failure && (
+              <p role="alert" className="danger">
+                {failure}
+              </p>
+            )}
             <Button type="submit">Save review outcome</Button>
           </form>
         </details>

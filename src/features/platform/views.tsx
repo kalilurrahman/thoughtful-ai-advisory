@@ -107,11 +107,17 @@ export const platformIndexHead = () =>
     title: "VERITRAIL Platform console",
     description:
       "Run the VERITRAIL Agent, runtime policy simulator, pilot dress rehearsal, ROI calculator, sample reports, content checks and admin tools in the browser.",
+    path: "/platform",
   });
 
 export function platformToolHead(slug: string) {
   const t = getPlatformTool(slug);
   return t
-    ? siteHead({ title: `${t.title} — VERITRAIL Platform`, description: t.summary, noindex: t.restricted ?? false })
+    ? siteHead({
+        title: `${t.title} — VERITRAIL Platform`,
+        description: t.summary,
+        noindex: t.restricted ?? false,
+        path: `/platform/${t.slug}`,
+      })
     : siteHead({ title: "Not found", description: "Unknown platform module.", noindex: true });
 }

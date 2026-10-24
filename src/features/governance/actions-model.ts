@@ -30,6 +30,8 @@ export function transitionCorrectiveAction(
     return { error: "Record the verifier's effectiveness finding before closure." };
   if (status === "Open" && action.status !== "In progress")
     return { error: "Only in-progress work can be returned to the open queue." };
+  if (status === "Cancelled" && !note.trim())
+    return { error: "Record why the action is being cancelled." };
   const verified = status === "Closed";
   return {
     action: {

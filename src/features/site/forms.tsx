@@ -2,6 +2,7 @@ import { useId, useRef, useState, type FormEvent } from "react";
 import { isFreeMailDomain, siteConfig } from "./content";
 import { submitLead, type LeadForm as LeadFormKey } from "./leads.functions";
 import { SiteLink } from "./ui";
+import { track } from "@/features/platform/analytics";
 
 // Lead forms — ported from platform/app/website/veritrail_website/forms.py and the form
 // handling in static/js/site.js (validation, error summary, business-email gate).
@@ -270,6 +271,8 @@ export function LeadForm({
         },
       });
       if (res.ok) {
+        // As site.js: count stored submissions only; the honeypot gets a confirmation, not a count.
+        if (!honeypot) track("form_submit", { form });
         setStatus({ kind: "success", text: def.success, download: offerDownload });
         setValues({});
         setConsent(false);

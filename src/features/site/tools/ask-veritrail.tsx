@@ -8,6 +8,7 @@ import {
   type AskSession,
 } from "../engines/ask-veritrail";
 import { SafeMarkdown } from "./safe-markdown";
+import { track } from "@/features/platform/analytics";
 
 type ChatMessage =
   | { id: number; role: "user"; text: string }
@@ -73,6 +74,7 @@ export function AskVeritrailTool() {
     const userMsg: ChatMessage = { id: nextId.current++, role: "user", text: q };
     try {
       const response = answerQuestion(q, session.current);
+      track("tool_use", { tool: "ask-veritrail", intent: response.intent });
       setMessages((m) => [...m, userMsg, { id: nextId.current++, role: "agent", response }]);
       setStatus("");
     } catch {

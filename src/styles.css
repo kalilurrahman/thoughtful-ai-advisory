@@ -1632,6 +1632,7 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .monitor-card { min-width: 0; padding: 18px; background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--primary); }
 .monitor-breach { border-left-color: var(--destructive); }
 .monitor-overdue { border-left-color: var(--warning-ink); }
+.action-cancel { display: grid; gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--row-rule); }
 .monitor-card-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
 .monitor-card-head h2 { margin-top: 6px; overflow-wrap: anywhere; }
 .monitor-card > p { margin-top: 12px; overflow-wrap: anywhere; }

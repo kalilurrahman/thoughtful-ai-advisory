@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { EvidenceBadge } from "../ui";
 import { advise, type AdviseResult, type RiskDimension } from "../engines/shield";
+import { track } from "@/features/platform/analytics";
 import { renderAdviceMarkdown } from "../../platform/policy-engine/shield-render";
 import { downloadBlob } from "../../platform/reports/exporters";
 import {
@@ -233,6 +234,7 @@ export function GuardrailGeneratorTool() {
     setErrors({});
     try {
       const out = advise(buildProfile(v));
+      track("tool_use", { tool: "guardrail-generator", rating: out.risk_profile.overall.rating });
       setStatus({ text: "", kind: "" });
       setCopyStatus({ text: "", kind: "" });
       setResult(out);

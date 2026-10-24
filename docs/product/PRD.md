@@ -116,7 +116,7 @@ These are requirements on every feature, enforced by tests where possible.
 |---|---|---|
 | Website, control library, glossary | Live | 56 pages, 64 controls, 38 terms |
 | Free tools (assessment, triage, guardrails, Ask) | Live | Two further tools are planned (waitlist) |
-| Lead capture and qualification | Live | No confirmation e-mails; no rate limiting |
+| Lead capture and qualification | Live | Rate-limited per client; no confirmation e-mails yet |
 | TILLER workspace | Live | Open demo; private workspace when signed in (manual save) |
 | Reports and audit pack | Preview | Labelled demo previews with blank sign-off |
 | Platform console | Demo / live | Agent, simulator, rehearsal and samples on synthetic data; ROI, content checks and admin live |
@@ -229,7 +229,7 @@ Each requirement is detailed as user stories with acceptance criteria in
 | NFR-09 | Content governance | Content checks pass; prohibited claims absent; disclaimers present on compliance pages |
 | NFR-10 | Browsers | Current Chrome, Edge, Firefox and Safari; iOS and iPadOS 16.4+ for install; no syntax that breaks Safari before 16.4 (for example regex look-behind) |
 | NFR-11 | Quality gates | CI runs typecheck, lint, unit tests (including this catalog), build and a browser smoke test of every page |
-| NFR-12 | SEO and sharing | Sitemap, robots.txt, structured data, and Open Graph and Twitter images per section; canonical links are not yet emitted |
+| NFR-12 | SEO and sharing | Sitemap, robots.txt, canonical links matching the sitemap, structured data, and Open Graph and Twitter images per section |
 
 ## 10. Success metrics
 
@@ -244,8 +244,8 @@ Each requirement is detailed as user stories with acceptance criteria in
 | Install interest | `cta_click` for `pwa-install-card`, `pwa-install-header` and `pwa-install-menu` against `pwa-install-not-now` | More installs than dismissals; the browser's own accept or cancel is not recorded |
 | Defensibility | Content checks; prohibited-claim scan | 100% pass on every release |
 
-Targets are starting hypotheses to revisit with real data; `form_submit` and `tool_use` are in the
-allow-list but not yet emitted (gap in S14.2).
+Targets are starting hypotheses to revisit with real data. `tool_use` (with the tool and its tier,
+rating or intent) and `form_submit` (with the form) count use of each free tool and lead form.
 
 ## 11. Roadmap
 
@@ -255,11 +255,9 @@ allow-list but not yet emitted (gap in S14.2).
 **Next (close the known gaps).**
 
 1. Autosave and a workspace switcher; reconcile the save function (see risk R1).
-2. Emit `form_submit` and `tool_use`; add rate limiting to lead submission; emit canonical links.
-3. Tests for corrective actions, the advisor, lead forms and the admin membership check.
-4. Roadmap editing (create, assign, delete); cancel corrective actions in the UI; show refused
-   change-review transitions; edit and delete decisions.
-5. Real-device install and offline verification; Google Play and Microsoft Store listings
+2. Tests for the advisor, the `submitLead` handler and the admin membership check.
+3. Roadmap editing (create, assign, delete); edit and delete decisions.
+4. Real-device install and offline verification; Google Play and Microsoft Store listings
    ([release guide](../veritrail/PWA_RELEASE_GUIDE.md)).
 
 **Later (new capability).**
@@ -277,7 +275,7 @@ allow-list but not yet emitted (gap in S14.2).
 |---|---|---|---|
 | R1 | Migration `0009` renames `save_aegis_workspace` to `save_veritrail_workspace`, but the live database and the client use the old name | Applying it alone breaks Save for every user | Apply only together with a client change and regenerated Supabase types; until then keep `save_aegis_workspace` |
 | R2 | The advisor calls the Lovable AI gateway without requiring sign-in | Cost and abuse exposure | Require sign-in or add per-IP limits; monitor usage |
-| R3 | No confirmation e-mails or rate limits on lead forms | Missed follow-up; spam | Add a sending provider (HTTP API) and a limit in the server function |
+| R3 | No confirmation e-mails on lead forms | Missed follow-up | Add a sending provider (HTTP API); lead forms are already rate-limited per client |
 | R4 | Placeholder legal text, contact address and `site_url` | Not ready for public launch or store listings | Legal review; set the production domain before submission |
 | R5 | No autosave; one workspace per user | Lost work; poor fit for teams | Autosave and workspace selection (Next) |
 | R6 | Blueprint PDF is public, so its form gate is cosmetic | Lower lead capture than reported | Serve the file from a signed URL after submission, or drop the gate |

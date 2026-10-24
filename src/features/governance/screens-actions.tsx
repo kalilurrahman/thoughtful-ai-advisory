@@ -7,7 +7,7 @@ import {
   correctiveActionPriorities,
   type CorrectiveAction,
 } from "./actions-schema";
-import { correctiveActionState } from "./actions-model";
+import { correctiveActionState, transitionCorrectiveAction } from "./actions-model";
 import { useGovernance } from "./store";
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -257,18 +257,41 @@ function ActionCard({
   const [actor, setActor] = useState("");
   const [note, setNote] = useState("");
   const [failure, setFailure] = useState("");
+  const [cancelling, setCancelling] = useState(false);
+  const [reason, setReason] = useState("");
   const stage = correctiveActionState(action, today());
-  const transition = (status: CorrectiveAction["status"]) => {
+  /**
+   * Check the move with the same rules the store applies, so a refused change says why instead
+   * of silently doing nothing; `evidence` is the reference about to be saved with it.
+   */
+  const transition = (
+    status: CorrectiveAction["status"],
+    opts: { note?: string; evidence?: string } = {},
+  ): boolean => {
     const stamp = now();
+    const who = actor.trim() || "Unspecified role";
+    const why = opts.note ?? note;
+    const draft =
+      opts.evidence === undefined
+        ? action
+        : { ...action, completionEvidence: opts.evidence.trim() };
+    const check = transitionCorrectiveAction(draft, status, who, why, stamp);
+    if (check.error) {
+      setFailure(check.error);
+      return false;
+    }
+    if (opts.evidence !== undefined)
+      dispatch({ type: "edit-corrective-evidence", id: action.id, evidence: opts.evidence });
     dispatch({
       type: "transition-corrective-action",
       id: action.id,
       status,
-      actor: actor.trim() || "Unspecified role",
-      note,
+      actor: who,
+      note: why,
       changedAt: stamp,
     });
     setFailure("");
+    return true;
   };
   return (
     <article className={`monitor-card monitor-${stage.toLowerCase().replaceAll(" ", "-")}`}>
@@ -354,14 +377,7 @@ function ActionCard({
             {action.status === "In progress" && (
               <Button
                 variant="outline"
-                onClick={() => {
-                  dispatch({
-                    type: "edit-corrective-evidence",
-                    id: action.id,
-                    evidence: completionEvidence,
-                  });
-                  transition("Pending verification");
-                }}
+                onClick={() => transition("Pending verification", { evidence: completionEvidence })}
               >
                 Submit for verification
               </Button>
@@ -393,8 +409,51 @@ function ActionCard({
                 </Button>
               </>
             )}
+            {!cancelling && (
+              <Button variant="ghost" className="danger" onClick={() => setCancelling(true)}>
+                Cancel action…
+              </Button>
+            )}
           </div>
+          {cancelling && (
+            <div className="action-cancel">
+              <label>
+                Reason for cancelling
+                <textarea
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  maxLength={1000}
+                  placeholder="For example: superseded by another action, or the system was retired"
+                />
+              </label>
+              <div className="filters">
+                <Button
+                  variant="destructive"
+                  onClick={() => {
+                    if (transition("Cancelled", { note: reason })) setCancelling(false);
+                  }}
+                >
+                  Confirm cancellation
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setCancelling(false);
+                    setReason("");
+                    setFailure("");
+                  }}
+                >
+                  Keep the action
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
+      )}
+      {action.status === "Cancelled" && (
+        <p className="muted">
+          Cancelled {action.history.at(-1)?.note ? `— ${action.history.at(-1)?.note}` : ""}
+        </p>
       )}
     </article>
   );
