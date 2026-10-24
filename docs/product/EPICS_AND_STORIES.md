@@ -929,13 +929,14 @@ Acceptance criteria:
 
 ### S15.6
 
-**As a prospective buyer**, I want to choose a colour theme, light or dark mode and a font, so that VERITRAIL is comfortable to read and feels like my own tools.
+**As a prospective buyer**, I want to choose a colour theme, a mode (Auto, light or dark) and a font, so that VERITRAIL is comfortable to read and feels like my own tools.
 
 *Status: Done*
 
 Acceptance criteria:
 
-- Given the Appearance panel (website header or menu, workspace header, menu or More screen), when I pick Broadsheet, Midnight Gold or Financial Slate, light or dark, and Editorial serif, KR Tools or Modern sans, then the whole site and workspace restyle at once.
+- Given the Appearance panel (website header or menu, workspace header, menu or More screen), when I pick Broadsheet, Midnight Gold or Financial Slate, Auto, light or dark, and Editorial serif, KR Tools or Modern sans, then the whole site and workspace restyle at once.
+- Given Auto, the default until I choose, when my device switches between light and dark, then the page follows it straight away; choosing Light or Dark stops following.
 - Given a saved choice, when any page loads, then it is applied before the first paint, with a matching browser colour, and other open tabs follow.
 - Given any palette and mode, when checked, then text, links and buttons meet WCAG AA contrast.
 - Given the KR Tools or Modern sans font, when either header is shown at 1280 px or 390 px, then it stays on one row.

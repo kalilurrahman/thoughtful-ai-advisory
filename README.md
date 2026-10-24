@@ -127,7 +127,7 @@ VERITRAIL functions as a full **Progressive Web App (PWA)**, providing native-li
 * **One-Click Installation**: Prompts on Chrome, Edge, Android, iOS Safari, and macOS Dock. Shortcuts point directly to Self-Assessment, Risk Triage, Control Library, Ask VERITRAIL, and the TILLER Workspace.
 * **Offline First Reading**: Production service worker (`public/sw.js`) caches visited pages, illustrations, and client-side rule engines for instant offline access.
 * **Smart Search (⌘K / Ctrl+K)**: Instant fuzzy search across every page, FAQ, governance control ID, glossary definition, and workspace tool.
-* **Appearance — themes & fonts**: Three colour themes — **Broadsheet** (VERITRAIL teal), **Midnight Gold** and **Financial Slate**, inspired by the KR Tools themes of FinPrompt and Claudiator — each in light and dark, plus three fonts (**Editorial serif**, **KR Tools** DM Sans + Cormorant Garamond, **Modern sans** Inter). Applied before first paint, remembered per browser, WCAG AA in every theme.
+* **Appearance — themes & fonts**: Three colour themes — **Broadsheet** (VERITRAIL teal), **Midnight Gold** and **Financial Slate**, inspired by the KR Tools themes of FinPrompt and Claudiator — each in light and dark with an **Auto** mode that follows the device (the default), plus three fonts (**Editorial serif**, **KR Tools** DM Sans + Cormorant Garamond, **Modern sans** Inter). Applied before first paint, remembered per browser, WCAG AA in every theme.
 
 | Mobile Home View | Workspace Install Card | iPhone Installation Guide |
 | :--------------: | :--------------------: | :-----------------------: |
