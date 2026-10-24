@@ -11,7 +11,11 @@
 
 <!-- LOVABLE:END -->
 
-# AI Governance Advisory · VERITRAIL Platform & Landing Site
+<div align="center">
+
+# 🛡️ VERITRAIL · AI Governance Advisory & Assurance Platform
+
+**Enterprise-grade AI risk management, governance capabilities, safety controls, and regulatory compliance.**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-thoughtful--ai--governance.lovable.app-0066CC?style=for-the-badge&logo=react)](https://thoughtful-ai-governance.lovable.app/)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-kalilurrahman%2Fai--governance--advisory-black?style=for-the-badge&logo=github)](https://github.com/kalilurrahman/ai-governance-advisory)
@@ -19,178 +23,180 @@
 [![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
 [![TanStack Start](https://img.shields.io/badge/TanStack%20Start-1.168-FF4154?style=for-the-badge)](https://tanstack.com/router)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Offline%20%26%20Installable-5A0FC8?style=for-the-badge&logo=pwa)](https://thoughtful-ai-governance.lovable.app/)
 
-**VERITRAIL** is an interactive, enterprise-grade AI governance platform, landing site, and assurance workspace designed for organizations establishing operational AI risk management, governance capabilities, safety controls, and regulatory compliance.
+[Live Demo](https://thoughtful-ai-governance.lovable.app/) • [Video Walkthrough](#-video-walkthrough--interactive-demo) • [Landing Showcase](#-public-landing-site-showcase) • [Workspace Showcase](#-operational-governance-workspace-showcase) • [Architecture](#-platform-architecture--route-map) • [Quick Start](#-quick-start--local-development)
 
-VERITRAIL integrates a full public marketing & content site, a 64-control governance library, in-browser interactive rule engines (Maturity Assessment, Risk Triage, Guardrail Generator, Ask VERITRAIL), and an operational governance workspace aligned with international standards (NIST AI RMF, EU AI Act, and ISO/IEC 42001).
-
-> **Naming.** The platform was previously called _AEGIS_ and its assessment studio _GOVERN_. Both names collide with established industry terms (Forrester's AEGIS framework and the NIST AI RMF GOVERN function), so the platform is now **VERITRAIL** and the assessment studio is **TILLER**. References to _GOVERN_, _MAP_, _MEASURE_ and _MANAGE_ that remain in control mappings refer to the NIST AI RMF functions. Code identifiers, routes (`/tools/ask-veritrail`), Python packages (`veritrail_*`) and environment variables (`VERITRAIL_*`, formerly `AEGIS_*`) follow the new name; already-applied database migrations keep their original file names, and migration 0009 renames the workspace save function. The six workspace pillars spell TILLER (Trust, Inventory, Lifecycle, Lawfulness, Engineering, Runtime); controls display codes T1 … R2 while the ids that saved workspace snapshots key answers on stay unchanged.
+</div>
 
 ---
 
-## 🌟 Live Demo & Resources
+## 💡 Overview
 
-- **Hosted Landing & Platform Web App**: [https://thoughtful-ai-governance.lovable.app/](https://thoughtful-ai-governance.lovable.app/)
-- **GitHub Repository**: [https://github.com/kalilurrahman/ai-governance-advisory](https://github.com/kalilurrahman/ai-governance-advisory)
-- **Interactive Video Walkthrough**: [Watch VERITRAIL Platform Video Demo](./docs/assets/landing-demo.webm)
+**VERITRAIL** is an all-in-one, enterprise-ready AI governance platform, landing site, and assurance workspace built for AI safety teams, compliance officers, risk managers, and engineering leaders establishing operational AI controls aligned with global standards (**NIST AI RMF**, **EU AI Act**, and **ISO/IEC 42001**).
+
+VERITRAIL integrates a full public marketing & content site, a 64-control governance library, in-browser interactive rule engines (Maturity Assessment, Risk Triage, Guardrail Generator, Ask VERITRAIL), and an operational governance workspace (TILLER Assessment Studio, AI System Inventory, Incident Register).
+
+> **Naming Note.** The platform was previously named _AEGIS_ and its assessment studio _GOVERN_. To avoid confusion with established industry frameworks (e.g. Forrester AEGIS and NIST AI RMF GOVERN function), the platform is **VERITRAIL** and the assessment studio is **TILLER**. The six workspace pillars spell **TILLER** (**T**rust, **I**nventory, **L**ifecycle, **L**awfulness, **E**ngineering, **R**untime).
 
 ---
 
 ## 🎬 Video Walkthrough & Interactive Demo
 
-Experience VERITRAIL in action—exploring the public landing site, framework, 64-control library, in-browser tools, and governance workspace:
+Watch VERITRAIL in action—navigating the public marketing landing site, exploring the 64-control library, testing client-side AI risk rule engines, and managing systems inside the operational workspace:
 
 https://github.com/user-attachments/assets/landing-demo.webm
 
-_(Note: Click on `./docs/assets/landing-demo.webm` to watch or download the recording locally)_
+> 📹 *Click on [`./docs/assets/landing-demo.webm`](./docs/assets/landing-demo.webm) to download or watch locally.*
 
 ---
 
-## 📸 Public Landing Site & Interactive Tools Showcase
+## 📸 Public Landing Site Showcase
 
-VERITRAIL features a comprehensive public landing site with dedicated sections for framework pillars, compliance standards, industry solutions, an interactive 64-control library, and client-side AI risk engines.
+### 🏠 Landing Page (Light & Dark Theme)
 
-### Landing Page & Governance Framework
+VERITRAIL provides a responsive, beautifully styled landing experience complete with executive metrics, interactive trust widgets, framework pillars, and real-time governance counters.
 
-|                Landing Site Home Page                |               Governance Framework Overview                |
-| :--------------------------------------------------: | :--------------------------------------------------------: |
-| ![Landing Site Home](./docs/assets/landing-home.png) | ![Framework Overview](./docs/assets/landing-framework.png) |
+| Light Mode Landing | Dark Mode Landing |
+| :----------------: | :---------------: |
+| ![Landing Light](./docs/assets/uplift/after-home-desktop.jpg) | ![Landing Dark](./docs/assets/uplift/after-home-dark.jpg) |
 
-### 64-Control Library & Interactive Tools
-
-|               64-Control Governance Library               |               In-Browser AI Maturity Assessment Engine                |
-| :-------------------------------------------------------: | :-------------------------------------------------------------------: |
-| ![64-Control Library](./docs/assets/landing-controls.png) | ![Maturity Assessment Tool](./docs/assets/landing-tools-maturity.png) |
-
-|            Ask VERITRAIL AI Assistant & Knowledge Hub            |          Operational Governance Workspace Overview           |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![Ask VERITRAIL Tool](./docs/assets/landing-tools-ask-veritrail.png) | ![Governance Workspace](./docs/assets/landing-workspace.png) |
+| Hero & Key Stats Section | Governance Framework & Pillars |
+| :----------------------: | :----------------------------: |
+| ![Landing Home](./docs/assets/landing-home.png) | ![Landing Framework](./docs/assets/landing-framework.png) |
 
 ---
 
-## 📱 Multi-Device Workspace Showcase
+### 📚 64-Control Governance Library & Article Reading Experience
 
-VERITRAIL features a responsive UI designed for desktop workstations, tablets, and mobile devices across both public content pages and the operational workspace.
+Explore granular controls mapped across NIST AI RMF (`GOVERN`, `MAP`, `MEASURE`, `MANAGE`), EU AI Act Articles, and ISO/IEC 42001 clauses. Includes cross-linked definitions, interactive cards, and inline illustrations.
 
-### Desktop Workstation View
-
-|                Overview & Maturity Index                |               Interactive Playbook Reader               |
-| :-----------------------------------------------------: | :-----------------------------------------------------: |
-| ![Desktop Overview](./docs/assets/desktop-overview.png) | ![Desktop Playbook](./docs/assets/desktop-playbook.png) |
-
-|                   AI Systems Inventory                    |               Incident & Near-Miss Register               |
-| :-------------------------------------------------------: | :-------------------------------------------------------: |
-| ![Desktop Inventory](./docs/assets/desktop-inventory.png) | ![Desktop Incidents](./docs/assets/desktop-incidents.png) |
-
-### Tablet & Mobile Responsive View
-
-|                Tablet Viewport (768px)                |          Mobile Viewport (375px - Overview)           |          Mobile Viewport (375px - Playbook)           |
-| :---------------------------------------------------: | :---------------------------------------------------: | :---------------------------------------------------: |
-| ![Tablet Overview](./docs/assets/tablet-overview.png) | ![Mobile Overview](./docs/assets/mobile-overview.png) | ![Mobile Playbook](./docs/assets/mobile-playbook.png) |
+| 64-Control Library Grid | Article & Reading Experience |
+| :---------------------: | :--------------------------: |
+| ![64-Control Library](./docs/assets/landing-controls.png) | ![Article View](./docs/assets/uplift/after-article-desktop.jpg) |
 
 ---
 
-## 🌐 Public VERITRAIL Website & Platform Architecture
+### ⚡ Client-Side Interactive AI Governance Engines
 
-The repository ships the full **VERITRAIL public landing website** alongside the governance workspace, plus the VERITRAIL launch-build platform from which it was generated.
+Zero-latency, client-side TypeScript rule engines held in 100% parity with Python reference implementations via automated exported test fixtures.
 
-| Area                         | Route(s)                                                                                                               | Source File(s) / Engine                                                           |
-| :--------------------------- | :--------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------- |
-| **Marketing Home**           | `/`                                                                                                                    | `platform/content/website_pages/index.md`                                         |
-| **Framework & Pillars**      | `/framework`, `/framework/pillars/*`, `/framework/runbooks`                                                            | `platform/content/website_pages/framework-*.md`                                   |
-| **64-Control Library**       | `/framework/controls`, `/framework/controls/:id`                                                                       | `platform/content/controls/controls.yaml`                                         |
-| **Compliance Guides**        | `/compliance`, `/compliance/eu-ai-act`, `/compliance/nist-ai-rmf`, `/compliance/iso-42001`, `/compliance/gap-analysis` | `platform/content/website_pages/compliance*.md`                                   |
-| **Industry Solutions**       | `/solutions`, `/industries/*`                                                                                          | `platform/content/website_pages/solutions.md`, `industries-*.md`                  |
-| **Interactive Tools Engine** | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/guardrail-generator`, `/tools/ask-veritrail`                   | Client-side TypeScript ports in `src/features/site/engines/`                      |
-| **Lead Submissions**         | `/contact`, `/contact/request-demo`, `/resources/blueprint`                                                            | `src/features/site/forms.tsx` → `submitLead` server function → `site_leads` table |
-| **Governance Workspace**     | `/workspace`, `/workspace/*`                                                                                           | `src/features/governance/`                                                        |
+| 📊 In-Browser Maturity Assessment Engine | 🤖 Ask VERITRAIL AI Assistant & Knowledge Hub |
+| :---------------------------------------: | :-------------------------------------------: |
+| ![Maturity Assessment](./docs/assets/landing-tools-maturity.png) | ![Ask VERITRAIL](./docs/assets/landing-tools-ask-veritrail.png) |
 
-### Key Architectural Highlights
-
-- **Single Source of Truth**: Content pages are authored in Markdown with YAML front matter (`platform/content/...`) and bundled at build time. Supports custom shortcodes like `{{cta:key}}`, `{{disclaimer}}`, and `{{controls:ID,ID}}`.
-- **Zero-Latency In-Browser Engines**: Interactive tools run entirely on the client side, parity-tested against Python reference engine exported fixtures (`platform/scripts/export_*_parity_fixtures.py`).
-- **Secure Lead Capture**: Lead forms submit via server function (`submitLead`) directly to the Supabase PostgreSQL `site_leads` table protected by strict Row Level Security (RLS).
-- **SEO & Sitemap Automation**: Dynamic sitemap generation script (`scripts/generate-sitemap.mjs`) builds valid sitemap XML for all landing and content pages.
+* **Maturity Assessment**: Multi-step evaluation generating maturity index scores and targeted improvement roadmaps.
+* **Risk Triage Engine**: Instant EU AI Act & NIST risk classification (Low, Medium, High, Prohibited) with explainable decision rationale.
+* **Guardrail Generator**: Automated policy rule synthesis based on model deployment parameters.
+* **Ask VERITRAIL**: Searchable governance assistant querying curated regulatory guidance and framework controls.
 
 ---
 
-## 📲 Installable App (PWA) & Reading Experience
+## 🛠️ Operational Governance Workspace Showcase
 
-VERITRAIL installs as an app and reads well on any screen:
+The **TILLER Governance Workspace** equips cross-functional risk teams with real-time auditing, system inventory management, and incident response tracking.
 
-- **Install anywhere** — the browser's install dialog on Chrome, Edge and Android (with app screenshots), and step-by-step "Add to Home Screen / Add to Dock" guidance on iPhone, iPad and Safari for Mac. Shortcuts open the self-assessment, risk triage, control library, Ask VERITRAIL and the workspace.
-- **Offline reading** — a production-only, network-first service worker keeps the pages you have read (and their in-browser tools) available offline, with a branded offline page for the rest. It never runs in the Lovable preview.
-- **Built for long reads** — illustrated page headers, an "On this page" navigator, feature and step cards, key-message callouts, tables that stack on phones, code copy/expand, FAQ accordions and control IDs linked to the control library.
+| 🖥️ TILLER Workspace Overview | 📊 Governance Dashboard & Maturity Radar |
+| :--------------------------: | :-------------------------------------: |
+| ![Workspace Overview](./docs/assets/landing-workspace.png) | ![Desktop Overview](./docs/assets/desktop-overview.png) |
 
-- **Find anything** — ⌘K, Ctrl+K or "/" searches every page, section, FAQ, control, glossary term, workspace screen and platform tool; underlined terms show plain-language definitions, collected on the [glossary](/glossary) page.
+| 📖 Interactive Playbook Reader | 🗂️ AI Systems Inventory & Triage |
+| :----------------------------: | :-------------------------------: |
+| ![Desktop Playbook](./docs/assets/desktop-playbook.png) | ![Desktop Inventory](./docs/assets/desktop-inventory.png) |
 
-See [docs/veritrail/UX_PWA_UPLIFT.md](./docs/veritrail/UX_PWA_UPLIFT.md) for the review, before/after screenshots, caching rules and next steps, and [docs/veritrail/PWA_RELEASE_GUIDE.md](./docs/veritrail/PWA_RELEASE_GUIDE.md) for real-device testing and app store packaging.
-
-### 🗂️ Product documentation
-
-[docs/product](./docs/product/README.md) describes the whole product in one place: the [PRD](./docs/product/PRD.md), a [capabilities index](./docs/product/CAPABILITIES_INDEX.md) of every app, tool and website page, [epics and user stories](./docs/product/EPICS_AND_STORIES.md) with acceptance criteria and known gaps, and [use cases](./docs/product/USE_CASES.md). They are generated from `docs/product/catalog.yaml` and checked by `npm test`.
-
-| Home (after) | Phone | Install on iPhone |
-| :---: | :---: | :---: |
-| ![Home](./docs/assets/uplift/after-home-desktop.jpg) | ![Phone](./docs/assets/uplift/after-home-mobile.jpg) | ![Install](./docs/assets/uplift/install-flow-iphone.jpg) |
+| 🚨 Incident & Near-Miss Register | 📋 Custom Evidence & Audit Reports |
+| :------------------------------: | :--------------------------------: |
+| ![Desktop Incidents](./docs/assets/desktop-incidents.png) | ![Desktop Dashboard](./docs/assets/desktop-dashboard.png) |
 
 ---
 
-## ⚙️ Key Features & Functional Modules
+## 📱 Multi-Device & Mobile Responsiveness
 
-### 🏛️ 1. Public Landing Site & 64-Control Library
+VERITRAIL is designed from the ground up for seamless operation across desktop workstations, tablets, and smartphones. Headers and navigation bars remain strictly on a single row at every viewport size (360px+).
 
-- **Structured Framework**: Covers Mandate, Governance Pillars, Maturity Models, and Operational Runbooks.
-- **Interactive Control Catalog**: Search, filter, and inspect 64 granular governance controls mapped across NIST AI RMF, EU AI Act, and ISO/IEC 42001.
+| Tablet Viewport (768px - Workspace) | Mobile Viewport (375px - Overview) | Mobile Viewport (375px - Playbook) |
+| :---------------------------------: | :--------------------------------: | :--------------------------------: |
+| ![Tablet Workspace](./docs/assets/tablet-overview.png) | ![Mobile Overview](./docs/assets/mobile-overview.png) | ![Mobile Playbook](./docs/assets/mobile-playbook.png) |
 
-### ⚡ 2. Client-Side Interactive AI Governance Engines
+---
 
-- **Maturity Assessment Tool**: Step-by-step evaluation generating maturity index scores and improvement roadmaps.
-- **Risk Triage Engine**: Automated classification of AI model use cases into Low, Medium, High, or Prohibited risk categories.
-- **Guardrail Generator**: Custom safety, privacy, and operational policy rules based on deployment parameters.
-- **Ask VERITRAIL Assistant**: In-browser knowledge search engine referencing curated governance frameworks and regulatory guidelines.
+## 📲 Installable App (PWA) & Offline Capabilities
 
-### 📖 3. Interactive 12-Chapter AI Governance Playbook
+VERITRAIL functions as a full **Progressive Web App (PWA)**, providing native-like app capabilities across all desktop and mobile browsers.
 
-- **Comprehensive Lifecycle Coverage**: 12 structured chapters covering Mandate, System Inventory, Risk Classification, Data Governance, Algorithmic Transparency, Human Oversight, Security & Safety, Vendor Due Diligence, Continuous Monitoring, Incident Response, Transparency Disclosures, and Continuous Improvement.
-- **Personalized Notes & Markdown Export**: Track chapter completion and export browser-persisted notes.
+* **One-Click Installation**: Prompts on Chrome, Edge, Android, iOS Safari, and macOS Dock. Shortcuts point directly to Self-Assessment, Risk Triage, Control Library, Ask VERITRAIL, and the TILLER Workspace.
+* **Offline First Reading**: Production service worker (`public/sw.js`) caches visited pages, illustrations, and client-side rule engines for instant offline access.
+* **Smart Search (⌘K / Ctrl+K)**: Instant fuzzy search across every page, FAQ, governance control ID, glossary definition, and workspace tool.
 
-### 🛡️ 4. TILLER Assessment & Maturity Index
+| Mobile Home View | Workspace Install Card | iPhone Installation Guide |
+| :--------------: | :--------------------: | :-----------------------: |
+| ![Mobile Home](./docs/assets/uplift/after-home-mobile.jpg) | ![Workspace Install](./docs/assets/uplift/install-card-workspace.jpg) | ![iPhone Install](./docs/assets/uplift/install-flow-iphone.jpg) |
 
-- **NIST AI RMF Alignment**: Evidence-aware controls mapped across `GOVERN`, `MAP`, `MEASURE`, and `MANAGE`.
-- **Maturity Scoring**: Real-time scoring (Initial, Developing, Established, Advanced) based on weightings and verified evidence attachments.
+---
 
-### 📋 5. AI System Inventory & Risk Classifier
+## 🌐 Platform Architecture & Route Map
 
-- **System Registration**: Manage internal and commercial AI models, services, and agentic pipelines.
-- **Explainable Use-Case Triage**: Capture purpose, decision impact, affected people, data, autonomy, domain, tools, external actions, EU exposure, vendor and GenAI use; save the inferred result, rationale, missing facts and review triggers with each inventory record. New entries remain Under review pending human confirmation.
-- **Risk Tiering & CSV Export**: Spreadsheet-compatible inventory export includes the structured triage profile, evidence status, rule score, drivers and review triggers.
+VERITRAIL pairs a content-driven marketing website with client-side interactive governance engines and an enterprise workspace.
 
-### 🚨 6. Incident & Near-Miss Register
+```
+                  ┌───────────────────────────────────────────────┐
+                  │          VERITRAIL Public Landing Site        │
+                  │   (Markdown + Frontmatter Content Engine)     │
+                  └───────────────────────┬───────────────────────┘
+                                          │
+            ┌─────────────────────────────┼─────────────────────────────┐
+            ▼                             ▼                             ▼
+┌───────────────────────┐   ┌───────────────────────────┐   ┌───────────────────────┐
+│  64-Control Library   │   │ Interactive Rule Engines  │   │ Compliance Standards  │
+│  (NIST / EU AI / ISO) │   │ (Maturity, Risk, Ask AI)  │   │  (EU Act, NIST RMF)   │
+└───────────────────────┘   └───────────────────────────┘   └───────────────────────┘
+                                          │
+                                          ▼
+                  ┌───────────────────────────────────────────────┐
+                  │         TILLER Governance Workspace           │
+                  │    (System Inventory, Assessment, Audits)    │
+                  └───────────────────────┬───────────────────────┘
+                                          │
+                                          ▼
+                  ┌───────────────────────────────────────────────┐
+                  │    Supabase PostgreSQL & Security RLS         │
+                  └───────────────────────────────────────────────┘
+```
 
-- **Lifecycle Tracking**: Log AI incidents and near-misses, link specific inventory systems, assign response owners, and record containment timeline.
-- **Multi-Tenant Security**: Persisted via organization-scoped Supabase Row Level Security (RLS).
+### Key Routes & Feature Mapping
+
+| Area | Route(s) | Source Path / Engine | Key Features |
+| :--- | :------- | :------------------- | :----------- |
+| **Marketing Home** | `/` | `src/routes/index.tsx` | Hero, metrics, framework pillars, ROI breakdown, trust badges |
+| **64-Control Library** | `/framework/controls`, `/framework/controls/$id` | `platform/content/controls/controls.yaml` | Searchable control matrix, NIST/EU Act/ISO crosswalks |
+| **Compliance Guides** | `/compliance`, `/compliance/*` | `platform/content/website_pages/compliance-*.md` | Deep dives into EU AI Act, NIST AI RMF, ISO 42001, and Gap Analysis |
+| **Interactive Tools** | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/ask-veritrail` | `src/features/site/engines/` | Zero-latency TypeScript ports of Python risk/governance engines |
+| **TILLER Workspace** | `/workspace`, `/workspace/*` | `src/features/governance/` | System inventory, risk triage, incident logs, XLSX/PPTX audit reports |
+| **Platform Console** | `/platform` | `src/features/platform/` | Local admin suite, policy rule validator, pilot simulation engine |
+
+---
+
+## 🛡️ Enterprise Compliance Alignment
+
+VERITRAIL directly Operationalizes International AI Governance Frameworks:
+
+1. **NIST AI RMF 1.0**: Structured implementation across the 4 core functions: `GOVERN`, `MAP`, `MEASURE`, and `MANAGE`.
+2. **EU AI Act**: Automated classification against Risk Tiers (Unacceptable, High, Specific Transparency, Minimal) and Article requirements.
+3. **ISO/IEC 42001:2023**: Management system control mapping (A.5 to A.10 clauses) for continuous AI risk assessment.
 
 ---
 
 ## 🛠️ Complete Tech Stack
 
-| Domain                  | Technology / Library                                                                  | Description                                                          |
-| :---------------------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------------- |
-| **Framework & Runtime** | [React 19](https://react.dev/)                                                        | Modern UI component rendering with Server/Client capabilities        |
-| **Language**            | [TypeScript 5.8](https://www.typescriptlang.org/)                                     | End-to-end type safety and contract definitions                      |
-| **Fullstack Framework** | [TanStack Start](https://tanstack.com/router)                                         | SSR framework powered by TanStack Router and Nitro                   |
-| **Routing**             | [TanStack Router](https://tanstack.com/router)                                        | Type-safe file-based client and server routing                       |
-| **Build & Bundler**     | [Vite 8](https://vitejs.dev/) / [Rolldown](https://rolldown.rs/)                      | Fast module bundling and HMR development server                      |
-| **Styling & Design**    | [Tailwind CSS v4](https://tailwindcss.com/)                                           | Utility-first CSS framework with custom design tokens                |
-| **UI Components**       | [Radix UI Primitives](https://www.radix-ui.com/)                                      | Accessible UI primitives (Dialog, Dropdown, Tabs, Accordion)         |
-| **Icons**               | [Lucide React](https://lucide.dev/) & [Phosphor Icons](https://phosphoricons.com/)    | Scalable icon sets for UI actions and navigation                     |
-| **Data Visualization**  | [Recharts](https://recharts.org/)                                                     | Responsive SVG charting library for governance maturity scores       |
-| **Form Management**     | [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)             | Performant form state handling with runtime schema validation        |
-| **Backend & Auth**      | [Supabase](https://supabase.com/) & [@lovable.dev/cloud-auth-js](https://lovable.dev) | Authentication and PostgreSQL database with Row Level Security (RLS) |
-| **Database & ORM**      | [PostgreSQL](https://www.postgresql.org/) & [Drizzle ORM](https://orm.drizzle.team/)  | Relational database schema migrations and query builder              |
-| **Testing**             | [Vitest](https://vitest.dev/) & [Playwright](https://playwright.dev/)                 | Unit testing runner and browser automation for E2E verification      |
-| **Code Quality**        | [ESLint 9](https://eslint.org/) & [Prettier](https://prettier.io/)                    | Linting, formatting, and code style enforcement                      |
+| Component | Tech / Library | Description |
+| :-------- | :------------- | :---------- |
+| **Frontend Framework** | [React 19](https://react.dev/) & [TanStack Start](https://tanstack.com/router) | Fullstack SSR + CSR framework powered by TanStack Router |
+| **Language** | [TypeScript 5.8](https://www.typescriptlang.org/) | Strict type safety across client, server, and governance engines |
+| **Styling & UI** | [Tailwind CSS v4](https://tailwindcss.com/) & [Radix UI](https://www.radix-ui.com/) | High-contrast design tokens, accessible primitives, Broadsheet theme |
+| **Data Visualization** | [Recharts](https://recharts.org/) | SVG radar & bar charts for maturity scores and system risk distributions |
+| **Database & Auth** | [Supabase](https://supabase.com/) & [Drizzle ORM](https://orm.drizzle.team/) | Row-Level Security (RLS), atomic workspace saving, PostgreSQL migrations |
+| **Export Engines** | `exceljs`, `pptxgenjs`, `jspdf`, `docx` | One-click generation of client-ready XLSX, PPTX, PDF, and Word audit reports |
+| **Testing** | [Vitest](https://vitest.dev/) & [Playwright](https://playwright.dev/) | 980+ unit tests, engine parity validation, and smoke tests |
 
 ---
 
@@ -199,88 +205,77 @@ See [docs/veritrail/UX_PWA_UPLIFT.md](./docs/veritrail/UX_PWA_UPLIFT.md) for the
 ```
 ai-governance-advisory/
 ├── docs/
-│   ├── product/                    # PRD, capabilities index, epics & stories, use cases
-│   ├── veritrail/                      # VERITRAIL launch status report
-│   └── assets/                     # Screenshots, media assets & demo video
-│       ├── landing-home.png        # Landing site main showcase
-│       ├── landing-framework.png   # Framework page screenshot
-│       ├── landing-controls.png    # 64-control library screenshot
-│       ├── landing-tools-*.png     # Interactive tool screenshots
-│       └── landing-demo.webm       # Video demo recording
-├── platform/                       # VERITRAIL Python platform, governed content & docs
+│   ├── product/                  # PRD, capabilities index, use cases & epics
+│   ├── veritrail/                # VERITRAIL release reports & UX uplift guides
+│   └── assets/                   # High-res screenshots, PWA images & video walkthrough
+├── platform/                     # Python platform reference engines & governed content
 │   └── content/
-│       ├── website_pages/          # Markdown content pages for public landing site
-│       └── controls/               # 64-control YAML library definition
-├── drizzle/                        # Drizzle ORM migration files
-├── public/                         # Static assets, manifests, and icons
-├── scripts/                        # Sitemap generation & build automation scripts
+│       ├── controls/             # 64-control YAML library definition
+│       └── website_pages/        # Governed Markdown marketing content
+├── public/                       # PWA manifest, service worker (sw.js), icons
+├── scripts/                      # Sitemap generator, product doc compiler, social image generator
 ├── src/
-│   ├── components/                 # Reusable UI components (Radix + Tailwind)
-│   ├── data/                       # Playbook content, seed data, and governance rules
+│   ├── components/               # Radix UI + Tailwind design system components
+│   ├── data/                     # Governance seed data, rules & playbook chapters
 │   ├── features/
-│   │   ├── site/                   # Landing site pages, Markdown parser & engines
-│   │   └── governance/             # Core workspace logic, hooks, and screens
-│   ├── routes/                     # TanStack file-based routes
-│   │   ├── index.tsx               # Public landing site home
-│   │   ├── $.tsx                   # Public website page router
-│   │   ├── workspace.tsx           # Governance workspace dashboard
-│   │   └── ...                     # Workspace module routes
-│   └── start.ts                    # TanStack Start server handler
-├── package.json                    # Project dependencies and scripts
-└── vite.config.ts                  # Vite build configuration
+│   │   ├── site/                 # Public site engines, search, reading layout & forms
+│   │   ├── governance/           # TILLER workspace state, inventory & assessment studio
+│   │   └── pwa/                  # Service worker registration & install stores
+│   └── routes/                   # File-based TanStack Router pages
+├── package.json                  # Scripts & dependencies
+└── vite.config.ts                # Vite build configuration
 ```
 
 ---
 
-## 🚀 Local Development Setup
+## 🚀 Quick Start & Local Development
 
 ### Prerequisites
 
-- **Node.js**: v20.0.0 or higher (v22 recommended)
-- **Package Manager**: `npm` (v10+) or `bun` (v1.2+)
+* **Node.js**: `v20.0.0` or higher (`v22` recommended)
+* **Package Manager**: `bun` (`v1.2+`) or `npm` (`v10+`)
 
-### Installation & Run
+### Setup Instructions
 
 1. **Clone the repository**:
-
    ```sh
    git clone https://github.com/kalilurrahman/ai-governance-advisory.git
    cd ai-governance-advisory
    ```
 
 2. **Install dependencies**:
-
    ```sh
-   bun install   # or npm install
+   bun install
    ```
 
-3. **Start the local development server**:
-
+3. **Start local development server**:
    ```sh
-   bun run dev   # or npm run dev
+   bun run dev
+   ```
+   *Open [http://localhost:8080/](http://localhost:8080/) in your browser.*
+
+4. **Run Vitest suite & smoke checks**:
+   ```sh
+   bun x vitest run
+   bun run test:smoke
    ```
 
-   The application will be accessible at `http://localhost:8080/`.
-
-4. **Run Unit & Engine Tests**:
-
-   ```sh
-   bun x vitest run   # or npm run test
-   ```
-
-5. **Build for Production**:
+5. **Build for production**:
    ```sh
    bun run build
    ```
 
 ---
 
-## 📄 License
+## 📄 License & Contributing
 
-This project is open source and available under the [MIT License](LICENSE).
+* **License**: Open-source under the [MIT License](LICENSE).
+* **Contributions**: Pull requests, issue reports, and governance control refinements are warmly welcomed! Please check existing issues before submitting a PR.
 
 ---
 
-## 🤝 Contributing
+<div align="center">
 
-Contributions, feedback, and issue reports are welcome! Please feel free to open an issue or submit a pull request on [GitHub](https://github.com/kalilurrahman/ai-governance-advisory).
+**Built with ❤️ for AI Governance, Safety, and Trust.**
+
+</div>
