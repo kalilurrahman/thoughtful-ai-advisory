@@ -1,4 +1,6 @@
 # VERITRAIL build
+- [ ] Add site-grounded chat with private saved threads and dedicated conversation URLs.
+- [ ] Polish mobile reading, assistant access and navigation; verify signed-in chat and thread restoration.
 - [ ] Restore discoverable TILLER and built governance workflows across public and workspace navigation.
 - [ ] Match the earlier bookmarked design — awaiting the bookmarked URL or screenshot.
 - [ ] Add basic profiles and Google, Apple, Microsoft, Lovable, and email/password authentication.
