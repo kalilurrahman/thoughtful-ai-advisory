@@ -1,5 +1,5 @@
 # VERITRAIL build
-- [ ] Add and verify a public content change log on the governance overview with a last-updated date and recent summaries.
+- [x] Add and verify a public content change log on the governance overview with a last-updated date and recent summaries.
 - [ ] Add site-grounded chat with private saved threads and dedicated conversation URLs.
 - [ ] Polish mobile reading, assistant access and navigation; verify signed-in chat and thread restoration.
 - [ ] Restore discoverable TILLER and built governance workflows across public and workspace navigation.
