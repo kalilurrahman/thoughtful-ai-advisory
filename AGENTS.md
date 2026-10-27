@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## VERITRAIL architecture
+- Keep public content revisions in a curated, dated register in src/data and derive overview timestamps from that register, never from page visits or private workspace saves; this keeps the public change log factual and independent of personal records.
 - Keep supplied seed constants in src/data and pure governance rules in the governance model module; this keeps screens consistent and formulas independently testable.
 - Keep resource highlights, access notes and validation provenance as string fields alongside the source register; this preserves compatibility with workspace snapshot validation without changing persistence.
 - Mount a single reducer-backed governance provider and shared shell at the root; this preserves live state across all file-based routes.
