@@ -53,7 +53,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 | ID | Capability | Route | Status | Data | For | Epic | What it does |
 |---|---|---|---|---|---|---|---|
-| CAP-030 | Governance overview | `/workspace` | Live | Cloud (RLS) | AI governance lead | [E05](EPICS_AND_STORIES.md#e05--tiller-assessment-scoring-and-release-readiness) | KPIs, VERITRAIL Index and band, pillar bars, gate card and top gaps. |
+| CAP-030 | Governance overview | `/workspace` | Live | Cloud (RLS) | AI governance lead | [E05](EPICS_AND_STORIES.md#e05--tiller-assessment-scoring-and-release-readiness) | KPIs, VERITRAIL Index and band, pillar bars, gate card and top gaps; public content change log with dated summaries and the last content update, independent of private workspace edits. |
 | CAP-031 | TILLER assessment | `/assess` | Live | Cloud (RLS) | AI governance lead | [E05](EPICS_AND_STORIES.md#e05--tiller-assessment-scoring-and-release-readiness) | 12 controls scored 0–4 with evidence status; score capped at 2 until Verified. |
 | CAP-032 | Release readiness | `/gates` | Live | Cloud (RLS) | Approver | [E05](EPICS_AND_STORIES.md#e05--tiller-assessment-scoring-and-release-readiness) | Cleared / Conditional / Blocked against tier floors; blockers to roadmap. |
 | CAP-033 | Guardrails designer | `/guardrails` | Live | Cloud (RLS) | CISO / security architect | [E07](EPICS_AND_STORIES.md#e07--guardrails-design-in-the-workspace) | Workspace tier and 21 guardrails in 7 groups with required coverage. |
@@ -285,7 +285,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-014 | Agentic AI risk checker | [S16.1](EPICS_AND_STORIES.md#s161) | `platform/content/website_pages/tools-agentic-risk-checker.md` | **None** |
 | CAP-015 | EU AI Act readiness checker | [S16.2](EPICS_AND_STORIES.md#s162) | `platform/content/website_pages/tools-eu-ai-act-readiness-checker.md` | **None** |
 | CAP-020 | Lead forms | [S03.2](EPICS_AND_STORIES.md#s032), [S04.1](EPICS_AND_STORIES.md#s041), [S04.2](EPICS_AND_STORIES.md#s042), [S04.3](EPICS_AND_STORIES.md#s043) | `src/features/site/forms.tsx`, `src/features/site/leads.functions.ts`, `src/features/site/lead-intake.ts` | `platform-misc-parity.test.ts`, `rate-limit.test.ts`, `site-analytics-events.test.tsx`, `server-logic.test.ts` |
-| CAP-030 | Governance overview | [S05.2](EPICS_AND_STORIES.md#s052) | `src/features/governance/screens-core.tsx`, `src/features/governance/model.ts` | `governance.test.ts`, `governance-provider.test.tsx` |
+| CAP-030 | Governance overview | [S05.2](EPICS_AND_STORIES.md#s052) | `src/features/governance/screens-core.tsx`, `src/features/governance/model.ts`, `src/data/content-changelog.ts`, `src/features/governance/content-changelog.tsx` | `governance.test.ts`, `governance-provider.test.tsx`, `content-changelog.test.ts` |
 | CAP-031 | TILLER assessment | [S05.1](EPICS_AND_STORIES.md#s051) | `src/features/governance/screens-core.tsx` | `governance.test.ts` |
 | CAP-032 | Release readiness | [S05.3](EPICS_AND_STORIES.md#s053) | `src/features/governance/screens-core.tsx`, `src/features/governance/model.ts` | `governance.test.ts` |
 | CAP-033 | Guardrails designer | [S07.1](EPICS_AND_STORIES.md#s071) | `src/features/governance/screens-core.tsx` | `governance.test.ts` |
