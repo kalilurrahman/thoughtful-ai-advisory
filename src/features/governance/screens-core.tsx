@@ -20,6 +20,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { CONTROLS, EV, SCORE_LABELS, PILLARS, SOURCES, type Control } from "@/data/governance";
 import { useGovernance } from "./store";
 import { at, answerAt, scoreTone, gapPriority, gapPoints, gateFloor } from "./model";
+import { ContentChangelog, ContentUpdateDate } from "./content-changelog";
 export function Kicker({ children }: { children: ReactNode }) {
   return <p className="kicker">{children}</p>;
 }
@@ -48,6 +49,7 @@ export function HomeScreen() {
         <span>{workspaceName} · Workspace assessment</span>
         <span>Assessment tier · {state.tier}</span>
       </div>
+      <ContentUpdateDate />
       <div className="overview-metrics">
         <div className="overview-metric success">
           <StackIcon />
@@ -233,6 +235,7 @@ export function HomeScreen() {
           </Button>
         ))}
       </div>
+      <ContentChangelog />
     </>
   );
 }
