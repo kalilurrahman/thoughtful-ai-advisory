@@ -8,55 +8,135 @@
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "any",
   "theme_color": "#f6f8f9",
   "background_color": "#f6f8f9",
-  "categories": ["business", "productivity", "education"],
+  "categories": [
+    "business",
+    "productivity",
+    "education"
+  ],
   "prefer_related_applications": false,
-  "launch_handler": { "client_mode": ["focus-existing", "auto"] },
+  "launch_handler": {
+    "client_mode": [
+      "focus-existing",
+      "auto"
+    ]
+  },
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
-    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
   ],
   "shortcuts": [
+    {
+      "name": "AI governance advisor",
+      "short_name": "AI advisor",
+      "description": "Describe a concern and get GOVERN areas and corrective actions.",
+      "url": "/advisor",
+      "icons": [
+        {
+          "src": "/icons/shortcut-ask.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
     {
       "name": "AI Governance Maturity Self-Assessment",
       "short_name": "Self-assessment",
       "description": "24 questions, about 8 minutes, an indicative score across 8 domains.",
       "url": "/tools/maturity-assessment",
-      "icons": [{ "src": "/icons/shortcut-assessment.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "/icons/shortcut-assessment.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "AI use-case risk triage",
       "short_name": "Risk triage",
       "description": "Classify an AI use case into an indicative risk tier.",
       "url": "/tools/risk-triage",
-      "icons": [{ "src": "/icons/shortcut-triage.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "/icons/shortcut-triage.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "VERITRAIL Control Library",
       "short_name": "Controls",
       "description": "64 AI governance controls with owners, evidence and framework mappings.",
       "url": "/framework/controls",
-      "icons": [{ "src": "/icons/shortcut-controls.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "/icons/shortcut-controls.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "Ask VERITRAIL",
       "short_name": "Ask",
       "description": "Search the governance knowledge base with cited answers.",
       "url": "/tools/ask-veritrail",
-      "icons": [{ "src": "/icons/shortcut-ask.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "/icons/shortcut-ask.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "TILLER governance workspace",
       "short_name": "Workspace",
       "description": "Inventory, assessments, guardrails, incidents and audit packs.",
       "url": "/workspace",
-      "icons": [{ "src": "/icons/shortcut-workspace.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "/icons/shortcut-workspace.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ],
   "screenshots": [
