@@ -34,6 +34,7 @@ import { PageEnd } from "./page-end";
 import type { SitePage } from "./pages";
 import { SiteLink } from "./ui";
 import { WorkspaceGateway } from "./workspace-gateway";
+import { AiDiscussionBand } from "./ai-discussion-band";
 
 // The home page: the same platform/content/website_pages/index.md as before, laid out as a
 // visual story. Each "## section" is read from the Markdown; sections with a known shape (the
@@ -478,6 +479,7 @@ export function HomeTemplate({ page }: { page: SitePage }) {
   return (
     <>
       <HomeHero page={page} layers={layers} />
+      <AiDiscussionBand />
       <WorkspaceGateway />
       <div className="home-sections">
         {sections.map((s) => (
