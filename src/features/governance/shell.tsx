@@ -19,6 +19,7 @@ import {
   ArrowsClockwise,
   Gauge,
   Sparkle,
+  ChatCircleText,
   DotsThreeVertical,
   DownloadSimple,
   MagnifyingGlass,
