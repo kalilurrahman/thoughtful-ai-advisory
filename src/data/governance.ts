@@ -1,5 +1,5 @@
 // Seed content supplied in the VERITRAIL handoff.
-// The six workspace pillars spell TILLER. `letter` is the display initial; it is not unique
+// The six workspace lenses spell TILLER. `letter` is the display initial; it is not unique
 // (two L pillars), so controls carry a display `code` (T1, I1, L1 … L4, E1, R1) alongside a
 // stable `id` that persisted workspace snapshots key answers and roadmap items on.
 export const PILLARS = [
@@ -218,7 +218,7 @@ export const CONTROLS = [
   },
 ];
 
-export const EV = ["None", "Claimed", "Partial", "Verified"];
+export const EV = ["None", "Claimed", "Partial", "Evidence attached"];
 
 export const SCORE_LABELS = ["None", "Ad hoc", "Defined", "Managed", "Optimized"];
 

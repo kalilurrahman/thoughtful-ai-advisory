@@ -71,7 +71,7 @@ export type EvidenceReport = {
 };
 
 const maturityLabels = ["None", "Ad hoc", "Defined", "Managed", "Optimized"];
-const evidenceLabels = ["None", "Claimed", "Partial", "Verified"];
+const evidenceLabels = ["None", "Claimed", "Partial", "Evidence attached"];
 
 export function buildEvidenceReport(
   state: GovernanceState,

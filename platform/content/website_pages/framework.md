@@ -31,6 +31,10 @@ NIST AI RMF, ISO/IEC 42001 and the EU AI Act each describe *what* good AI govern
 
 The VERITRAIL Framework addresses these by defining each control with an objective, a scope (`all`, `high_risk`, `genai`, `agentic` or `third_party`), an owner role, a priority, the evidence that demonstrates it, the VERITRAIL module that implements it, and indicative framework mappings.
 
+## TILLER workspace lenses
+
+The VERITRAIL workspace organizes controls and assessment questions into six lenses that spell **TILLER**: Trust & Accountability, Inventory & Oversight, Lifecycle & Use-Case Control, Lawfulness Ethics & Compliance, Engineering Reliability & Guardrails, and Runtime Operations & Monitoring. Each lens maps to one or more NIST AI RMF functions and groups the 64 controls by the team most likely to own them — governance, engineering, compliance, and operations. The lenses are a workspace navigation aid; the five-pillar structure below is the canonical framework grouping used in evidence packs and external mappings.
+
 ## Structure
 
 | Component | What it is | Where to go |
