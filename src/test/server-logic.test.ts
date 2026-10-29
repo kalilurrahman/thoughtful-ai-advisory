@@ -3,6 +3,7 @@ import { CONTROLS } from "@/data/governance";
 import { getPlan } from "@/data/plans";
 import {
   adviceFromResponse,
+  advisorInput,
   extractText,
   quotaExceededMessage,
 } from "@/features/governance/advisor.functions";
@@ -191,6 +192,19 @@ function rlsClient(result: { data: unknown; error: { message: string } | null })
   };
   return { supabase: chain, calls };
 }
+
+describe("AI advisor input", () => {
+  it("masks sensitive data before the concern reaches the model", () => {
+    const text = advisorInput(
+      "Risk",
+      "Agent emailed jane.doe@example.com and logged key sk-abcdefghijklmnop1234 in plain text.",
+    );
+    expect(text).toContain("Concern type: Risk");
+    expect(text).not.toContain("jane.doe@example.com");
+    expect(text).not.toContain("sk-abcdefghijklmnop1234");
+    expect(text).toContain("[REDACTED:email]");
+  });
+});
 
 describe("AI advisor allowance", () => {
   it("names the plan's daily allowance and points free plans at an upgrade", () => {

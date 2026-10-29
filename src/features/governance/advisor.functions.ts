@@ -3,6 +3,7 @@ import { z } from "zod";
 import { CONTROLS, PILLARS } from "@/data/governance";
 import type { Plan } from "@/data/plans";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { redact } from "@/features/site/engines/ask-veritrail/safety";
 import { correctiveActionPriorities } from "./actions-schema";
 
 const inputSchema = z.object({
@@ -151,6 +152,14 @@ export function quotaExceededMessage(plan: Plan): string {
     : `${base} It resets at midnight UTC, or upgrade on the Plans page for a larger allowance.`;
 }
 
+/**
+ * The text sent to the model: common sensitive-data patterns (e-mail addresses, phone, card and
+ * national-id numbers, keys) are masked first, as the privacy notice promises.
+ */
+export function advisorInput(focus: string, concern: string): string {
+  return `Concern type: ${focus}\n\n${redact(concern).text}`;
+}
+
 export const QUOTA_UNAVAILABLE =
   "The advisor allowance could not be checked, so nothing was sent. Try again shortly.";
 
@@ -191,7 +200,7 @@ export const recommendGovernance = createServerFn({ method: "POST" })
           "Map the user's concern to the most relevant controls from the catalogue (use only listed controlIds, 3-6 areas, most relevant first) " +
           "and propose 3-5 concrete, owned corrective actions, each tied to one listed controlId. Be precise and practical; no generic advice.\n\nCatalogue (id | code | pillar | question):\n" +
           catalogue,
-        input: `Concern type: ${data.focus}\n\n${data.concern}`,
+        input: advisorInput(data.focus, data.concern),
         text: { format: { type: "json_schema", name: "governance_advice", strict: true, schema } },
       }),
     });
