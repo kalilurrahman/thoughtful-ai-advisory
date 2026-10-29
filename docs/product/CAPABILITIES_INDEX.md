@@ -140,7 +140,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 ## Website content
 
-56 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 32,636 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
+57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,291 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
 
 ### Home
 
@@ -244,9 +244,10 @@ Every app, tool and feature, then every website content page, the control librar
 
 | Page | Route | Type | What it covers | Words | FAQs | Delivered by | Stories |
 |---|---|---|---|---|---|---|---|
-| Privacy notice | `/legal/privacy` | page | How the VERITRAIL website handles personal data: cookieless analytics, lead data collected and why, retention and your rights. Template pending legal review. | 771 | — | CAP-002 Website content pages | — |
+| Privacy notice | `/legal/privacy` | page | How the VERITRAIL website handles personal data: cookieless analytics, lead data collected and why, retention and your rights. Template pending legal review. | 893 | — | CAP-002 Website content pages | — |
 | Website terms of use | `/legal/terms` | page | Terms for using the VERITRAIL website, free tools and published content, including disclaimers about readiness indicators. Template pending legal review. | 477 | — | CAP-002 Website content pages | — |
 | Responsible AI statement | `/legal/responsible-ai` | page | How VERITRAIL uses AI in its own product: control citations, evidence labels, human approval for high-impact actions, redaction, audit logs, no overclaiming. | 582 | — | CAP-002 Website content pages | — |
+| Subscription, cancellation and refund terms | `/legal/subscription-terms` | page | How VERITRAIL self-serve plans are billed, renewed, changed, cancelled and refunded, with Dodo Payments as merchant of record. Template pending review. | 533 | — | CAP-002 Website content pages | — |
 
 ## Control library
 

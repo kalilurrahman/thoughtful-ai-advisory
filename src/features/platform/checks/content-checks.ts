@@ -259,7 +259,19 @@ const REQ = [
 ];
 const CTA = new Set(["assessment", "baseline", "agent", "blueprint", "demo", "guardrails"]);
 const GENERATED = new Set(["/framework/controls/"]);
-export const PAGES_UPDATED = "2026-10-21";
+/** Pages carry a real revision date: no earlier than the launch build, never in the future. */
+export const PAGES_LAUNCH = "2026-10-21";
+
+function validRevisionDate(value: string, today: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const d = new Date(`${value}T00:00:00Z`);
+  return (
+    !Number.isNaN(d.getTime()) &&
+    d.toISOString().slice(0, 10) === value &&
+    value >= PAGES_LAUNCH &&
+    value <= today
+  );
+}
 
 export interface PageRow {
   name: string;
@@ -308,7 +320,7 @@ export function runWebsitePageChecks(
     const body = f.text.slice(m[0].length);
     pages.set(name, [meta, body]);
     for (const k of REQ) if (!(k in meta)) errors.push(`${name}: missing ${k}`);
-    if (pyScalar(meta.updated) !== PAGES_UPDATED) {
+    if (!validRevisionDate(pyScalar(meta.updated), new Date().toISOString().slice(0, 10))) {
       errors.push(`${name}: updated=${pyScalar(meta.updated)}`);
     }
     const slug: string = String(meta.slug);
