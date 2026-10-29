@@ -71,6 +71,8 @@ for f in sorted(PAGES.glob("*.md")):
             errors.append(f"{f.name}: unknown control ID {cid}")
     for claim in find_prohibited_claims(body) + [c for faq in meta.get("faq") or [] for c in find_prohibited_claims(faq["a"] + " " + faq["q"])]:
         errors.append(f"{f.name}: prohibited claim: {claim[:140]}")
+    if re.search(r"\ban VERITRAIL\b", all_text):
+        errors.append(f"{f.name}: style: 'an VERITRAIL' should be 'a VERITRAIL'")
     words = len(re.findall(r"[A-Za-z0-9][\w'’/-]*", re.sub(r"\{\{[^}]*\}\}", "", body)))
     rows.append((f.name, slug, meta["section"], meta["template"], words, len(meta.get("faq") or [])))
 

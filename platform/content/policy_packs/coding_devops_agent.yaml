@@ -26,7 +26,7 @@ owner: VP Engineering
 applies_to:
   agent_name: ["coding-*", "devops-*", "*-swe-agent"]
   environment: [dev, test, staging, production]
-  risk_tier: [Medium, High]
+  risk_tier: [Limited, High-risk]
   tenant: ["*"]
   model: ["*"]
 rollout:

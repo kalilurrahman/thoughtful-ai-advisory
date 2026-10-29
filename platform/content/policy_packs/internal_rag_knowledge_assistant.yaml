@@ -25,7 +25,7 @@ owner: Head of Knowledge Management
 applies_to:
   agent_name: ["*-knowledge-assistant", "rag-*"]
   environment: [dev, test, staging, production]
-  risk_tier: [Low, Medium]
+  risk_tier: [Minimal, Limited]
   tenant: ["*"]
   model: ["*"]
 rollout:

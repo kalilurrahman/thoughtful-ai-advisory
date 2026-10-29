@@ -11,7 +11,7 @@ schema_type: WebPage
 primary_cta: baseline
 secondary_cta: assessment
 faq:
-  - q: "Can VERITRAIL help us publish an AI use-case inventory?"
+  - q: "Ca VERITRAIL help us publish an AI use-case inventory?"
     a: "VERITRAIL maintains the internal inventory (EI-01) with purpose, owners and risk tier. Which fields you publish, and in what format, depends on the requirements that apply to you; VERITRAIL can export records for your publication process."
   - q: "Do public bodies have specific obligations under the EU AI Act?"
     a: "Some. For example, bodies governed by public law that deploy certain high-risk AI systems must carry out a fundamental rights impact assessment (Art. 27). Applicability should be confirmed with legal advisers against the current text."

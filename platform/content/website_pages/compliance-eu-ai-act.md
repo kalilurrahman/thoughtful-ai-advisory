@@ -11,7 +11,7 @@ schema_type: WebPage
 primary_cta: baseline
 secondary_cta: assessment
 faq:
-  - q: "Can VERITRAIL tell us whether our AI system is high-risk under the EU AI Act?"
+  - q: "Ca VERITRAIL tell us whether our AI system is high-risk under the EU AI Act?"
     a: "No. VERITRAIL captures the facts that matter for classification — domain, intended purpose, decision impact, affected parties — and flags regulatory relevance for legal review. Classification is a legal determination for your counsel."
   - q: "When do the EU AI Act obligations apply?"
     a: "The Regulation applies in stages. Applicability timelines must be verified against the current Official Journal text and any amendments, including the European Commission's 2025 Digital Omnibus proposals. VERITRAIL content has not been verified against post-2025 changes."
@@ -73,7 +73,7 @@ The mapping below uses the article references in VERITRAIL Control Library v1.0.
 ## What is not covered
 
 - **General-purpose AI model obligations** (for GPAI model providers) are not mapped in Control Library v1.0.0. Organizations that provide GPAI models need separate analysis.
-- **Conformity assessment procedures, CE marking and registration mechanics** are referenced only where an VERITRAIL control supports the underlying evidence (for example GL-03 and GL-04 relate to Art. 43; EI-01 to Art. 49).
+- **Conformity assessment procedures, CE marking and registration mechanics** are referenced only where a VERITRAIL control supports the underlying evidence (for example GL-03 and GL-04 relate to Art. 43; EI-01 to Art. 49).
 - **Sector and product legislation** referenced by Annex I (for example medical devices or machinery) has its own requirements outside VERITRAIL's scope.
 - **Penalties, authority procedures and national implementation** are outside VERITRAIL's scope.
 

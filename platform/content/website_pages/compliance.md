@@ -11,7 +11,7 @@ schema_type: WebPage
 primary_cta: baseline
 secondary_cta: assessment
 faq:
-  - q: "Can VERITRAIL certify us against ISO/IEC 42001?"
+  - q: "Ca VERITRAIL certify us against ISO/IEC 42001?"
     a: "No. Certification against ISO/IEC 42001 is performed by accredited certification bodies. VERITRAIL helps you implement controls and organize the evidence an auditor would expect to see."
   - q: "Are VERITRAIL framework mappings official?"
     a: "No. They are VERITRAIL's indicative interpretation, maintained in the versioned control library. They are not published or endorsed by NIST, ISO or the European Commission, and they do not establish conformity or compliance."

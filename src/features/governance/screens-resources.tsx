@@ -417,7 +417,7 @@ export function MoreScreen() {
       desc: "Six pillars mapped to NIST AI RMF",
       icon: CheckCircle,
     },
-    { to: "/gates", name: "Release gates", desc: "Readiness by risk tier", icon: TrafficSignal },
+    { to: "/gates", name: "Release readiness", desc: "Readiness by risk tier", icon: TrafficSignal },
     {
       to: "/guardrails",
       name: "Guardrails designer",
@@ -434,7 +434,7 @@ export function MoreScreen() {
     },
     {
       to: "/templates",
-      name: "Governance templates",
+      name: "Templates",
       desc: "Eight adaptable working documents",
       icon: Files,
     },

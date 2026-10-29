@@ -13,7 +13,7 @@ secondary_cta: baseline
 faq:
   - q: "Who is accountable when a GCC builds AI for its parent organization?"
     a: "Accountability should be explicitly allocated. VERITRAIL records business and technical owners per system (EI-03) and the allocation of responsibilities between the builder, the deploying business and any vendors (AO-09). The legal role under regimes like the EU AI Act depends on the facts and needs legal review."
-  - q: "Can VERITRAIL support multiple clients or business units separately?"
+  - q: "Ca VERITRAIL support multiple clients or business units separately?"
     a: "VERITRAIL policies can be scoped by agent, environment, model and tenant, and evidence can be organized per client or business unit. Specific multi-tenant deployment arrangements are agreed during onboarding."
 updated: 2026-10-21
 ---

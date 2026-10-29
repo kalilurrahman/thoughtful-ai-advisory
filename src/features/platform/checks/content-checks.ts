@@ -359,6 +359,8 @@ export function runWebsitePageChecks(
     for (const c of claims) {
       errors.push(`${name}: prohibited claim: ${Array.from(c).slice(0, 140).join("")}`);
     }
+    if (/\ban VERITRAIL\b/.test(allText))
+      errors.push(`${name}: style: 'an VERITRAIL' should be 'a VERITRAIL'`);
     const words = (
       body.replace(/\{\{[^}]*\}\}/g, "").match(/[A-Za-z0-9][\p{L}\p{N}_'’/-]*/gu) ?? []
     ).length;

@@ -2,7 +2,7 @@
 title: "Runtime guardrail generator for LLM apps and AI agents — VERITRAIL"
 h1: "Runtime guardrail generator"
 slug: /tools/guardrail-generator/
-description: "Describe an LLM app or AI agent and get a draft risk profile, tool permission matrix, approval rules and an VERITRAIL policy-as-code starting point to review."
+description: "Describe an LLM app or AI agent and get a draft risk profile, tool permission matrix, approval rules and a VERITRAIL policy-as-code starting point to review."
 section: tools
 nav_label: "Guardrail generator"
 nav_order: 30

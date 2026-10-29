@@ -45,7 +45,7 @@ The lifecycle pillar is where governance meets delivery. It defines the path an 
 | GL-03 Risk-tiered approval gates | Approvals proportionate to tier, with recorded conditions | Critical / all AI | Approval matrix by tier; approval records with conditions |
 | GL-04 Change management and reassessment triggers | Model, prompt, data, vendor, tool and agent changes under change control | High / all AI | Change policy with AI triggers; change tickets referencing reassessment |
 | GL-05 Pre-release validation and testing | Performance, robustness and safety validated against acceptance criteria | High / all AI | Test plan and results; acceptance criteria; release sign-off |
-| GL-06 Technical documentation | Design, data, performance, limitations and controls documented | High / high-risk | Technical documentation pack; model/system card |
+| GL-06 Technical documentation | Design, data, performance, limitations and controls documented | High-tier / EU high-risk | Technical documentation pack; model/system card |
 | GL-07 Deployment conditions and go-live readiness | Approval conditions, monitoring, oversight and rollback in place before go-live | High / all AI | Go-live checklist; condition verification record |
 | GL-08 Post-deployment monitoring | Performance, drift, misuse, incidents and unexpected behavior monitored with thresholds | High / all AI | Dashboards; alert thresholds; monitoring review records |
 | GL-09 Retirement and decommissioning | Safe restriction, remediation, retirement and disposal | Medium / all AI | Decommissioning procedure; retirement records |

@@ -24,7 +24,7 @@ owner: Financial Controller
 applies_to:
   agent_name: ["finance-*", "*-ap-agent"]
   environment: [staging, production]
-  risk_tier: [High]
+  risk_tier: [High-risk]
   tenant: ["*"]
   model: ["*"]
 rollout:

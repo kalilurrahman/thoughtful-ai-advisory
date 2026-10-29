@@ -63,6 +63,6 @@ We apply the same framework to VERITRAIL itself. Our commitments: our AI feature
 
 ## Questions or concerns
 
-If you believe an VERITRAIL output is wrong, misleading or harmful, please [contact us](/contact/). We review every report.
+If you believe a VERITRAIL output is wrong, misleading or harmful, please [contact us](/contact/). We review every report.
 
 {{cta:demo}}

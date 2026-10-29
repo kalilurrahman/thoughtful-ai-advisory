@@ -26,7 +26,7 @@ owner: Chief Medical Information Officer
 applies_to:
   agent_name: ["clinical-doc-*", "*-scribe"]
   environment: [staging, production]
-  risk_tier: [High]
+  risk_tier: [High-risk]
   tenant: ["*"]
   model: ["*"]
 rollout:

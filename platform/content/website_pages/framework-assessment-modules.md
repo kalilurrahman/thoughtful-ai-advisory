@@ -11,8 +11,8 @@ schema_type: WebPage
 primary_cta: assessment
 secondary_cta: agent
 faq:
-  - q: "Do we need to run every module for every AI system?"
-    a: "No. The core, security, and monitoring modules apply to every use case; the other modules are triggered by the intake profile and risk tier, so a low-risk internal tool gets a short assessment and a high-impact agent gets a deep one."
+  - q: "Do we need to run every assessment module for every AI system?"
+    a: "No. The core, security, and monitoring assessment modules apply to every use case; the other assessment modules are triggered by the intake profile and risk tier, so a low-risk internal tool gets a short assessment and a high-impact agent gets a deep one."
   - q: "Who decides the final risk tier?"
     a: "A human. VERITRAIL calculates a suggested tier with the factors and citations behind it, labels it Inferred, and requires an accountable approver to confirm or change it."
 updated: 2026-10-21

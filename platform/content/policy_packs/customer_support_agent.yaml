@@ -23,7 +23,7 @@ owner: Head of Customer Service
 applies_to:
   agent_name: ["customer-support-*", "*-support-agent"]
   environment: [staging, production]
-  risk_tier: [Medium, High]
+  risk_tier: [Limited, High-risk]
   tenant: ["*"]
   model: ["*"]
 rollout:
