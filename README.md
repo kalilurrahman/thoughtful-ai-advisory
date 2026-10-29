@@ -18,7 +18,7 @@
 **Enterprise-grade AI risk management, governance capabilities, safety controls, and regulatory compliance.**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-thoughtful--ai--governance.lovable.app-0066CC?style=for-the-badge&logo=react)](https://thoughtful-ai-governance.lovable.app/)
-[![GitHub Repository](https://img.shields.io/badge/GitHub-kalilurrahman%2Fai--governance--advisory-black?style=for-the-badge&logo=github)](https://github.com/kalilurrahman/ai-governance-advisory)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-kalilurrahman%2Fthoughtful--ai--advisory-black?style=for-the-badge&logo=github)](https://github.com/kalilurrahman/thoughtful-ai-advisory)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
 [![TanStack Start](https://img.shields.io/badge/TanStack%20Start-1.168-FF4154?style=for-the-badge)](https://tanstack.com/router)
@@ -45,9 +45,7 @@ VERITRAIL integrates a full public marketing & content site, a 64-control govern
 
 Watch VERITRAIL in action—navigating the public marketing landing site, exploring the 64-control library, testing client-side AI risk rule engines, and managing systems inside the operational workspace:
 
-https://github.com/user-attachments/assets/landing-demo.webm
-
-> 📹 *Click on [`./docs/assets/landing-demo.webm`](./docs/assets/landing-demo.webm) to download or watch locally.*
+> 📹 *[`./docs/assets/landing-demo.webm`](./docs/assets/landing-demo.webm)*
 
 ---
 
@@ -79,14 +77,14 @@ Explore granular controls mapped across NIST AI RMF (`GOVERN`, `MAP`, `MEASURE`,
 
 ### ⚡ Client-Side Interactive AI Governance Engines
 
-Zero-latency, client-side TypeScript rule engines held in 100% parity with Python reference implementations via automated exported test fixtures.
+Zero-latency, client-side TypeScript rule engines held in fixture-tested parity with Python reference implementations via automated exported test fixtures.
 
 | 📊 In-Browser Maturity Assessment Engine | 🤖 Ask VERITRAIL AI Assistant & Knowledge Hub |
 | :---------------------------------------: | :-------------------------------------------: |
 | ![Maturity Assessment](./docs/assets/landing-tools-maturity.png) | ![Ask VERITRAIL](./docs/assets/landing-tools-ask-veritrail.png) |
 
 * **Maturity Assessment**: Multi-step evaluation generating maturity index scores and targeted improvement roadmaps.
-* **Risk Triage Engine**: Instant EU AI Act & NIST risk classification (Low, Medium, High, Prohibited) with explainable decision rationale.
+* **Risk Triage Engine**: Risk tiering against VERITRAIL tiers (Minimal, Limited, High-risk, Prohibited-review) with EU AI Act cross-references and explainable decision rationale.
 * **Guardrail Generator**: Automated policy rule synthesis based on model deployment parameters.
 * **Ask VERITRAIL**: Searchable governance assistant querying curated regulatory guidance and framework controls.
 
@@ -274,7 +272,7 @@ VERITRAIL pairs a content-driven marketing website with client-side interactive 
 ## 📁 Repository Structure
 
 ```
-ai-governance-advisory/
+thoughtful-ai-advisory/
 ├── docs/
 │   ├── product/                  # PRD, capabilities index, use cases & epics
 │   ├── veritrail/                # VERITRAIL release reports & UX uplift guides
@@ -310,8 +308,8 @@ ai-governance-advisory/
 
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/kalilurrahman/ai-governance-advisory.git
-   cd ai-governance-advisory
+   git clone https://github.com/kalilurrahman/thoughtful-ai-advisory.git
+   cd thoughtful-ai-advisory
    ```
 
 2. **Install dependencies**:
@@ -340,7 +338,6 @@ ai-governance-advisory/
 
 ## 📄 License & Contributing
 
-* **License**: Open-source under the [MIT License](LICENSE).
 * **Contributions**: Pull requests, issue reports, and governance control refinements are warmly welcomed! Please check existing issues before submitting a PR.
 
 ---

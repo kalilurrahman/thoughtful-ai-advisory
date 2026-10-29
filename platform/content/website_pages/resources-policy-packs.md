@@ -37,8 +37,9 @@ Runtime packs are starting points in the VERITRAIL policy schema (`veritrail.pol
 |---|---|---|
 | Internal knowledge assistant | Redaction, injection detection on retrieved content, no tools beyond search | IS-04, IS-12, IS-14 |
 | Customer-support agent | CRM read, approval thresholds for refunds, approval for external email, deny deletion | IS-11, IS-13, IS-04 |
-| IT operations agent | Read-only diagnostics, approval for changes, deny destructive operations in production | IS-11, IS-13, IS-15 |
-| Coding assistant | Secret redaction, approved model list, limits on tool calls | IS-04, IS-10, IS-16 |
+| Coding / DevOps agent | Secret redaction, approved model list, read-only by default, limits on tool calls | IS-04, IS-10, IS-16 |
+| Financial-operations agent | Payment approval gates, deny payment execution without human sign-off, 7-year evidence retention | IS-03, IS-04, IS-11, IS-13 |
+| Healthcare clinical-documentation assistant | PHI redaction, no external tool calls without approval, 6-year audit retention | IS-03, IS-04, IS-09, IS-11 |
 
 Downloadable packs are **coming soon**. Today, the [guardrail generator](/tools/guardrail-generator/) produces a draft policy tailored to your system in the same schema.
 

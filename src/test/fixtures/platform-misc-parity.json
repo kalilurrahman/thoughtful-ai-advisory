@@ -6657,7 +6657,7 @@
    "lines": [
     "[1] control library: 64 controls",
     "[2] self-assessment template: 24 questions",
-    "[3] control references scanned: 2036, unknown: 0",
+    "[3] control references scanned: 2041, unknown: 0",
     "[4] website pages: 57",
     "[5] policy packs validated: 6",
     "[6] prohibited-claim scan: 0 hit(s)"
@@ -6702,7 +6702,7 @@
    }
   },
   "website": {
-   "summary": "pages=57 total_words=31348 min=143 max=1335",
+   "summary": "pages=57 total_words=31357 min=143 max=1335",
    "rows": [
     {
      "name": "about.md",
@@ -6717,7 +6717,7 @@
      "slug": "/compliance/eu-ai-act/",
      "section": "compliance",
      "template": "page",
-     "words": 1010,
+     "words": 984,
      "faq": 3
     },
     {
@@ -6749,7 +6749,7 @@
      "slug": "/compliance/",
      "section": "compliance",
      "template": "page",
-     "words": 505,
+     "words": 493,
      "faq": 2
     },
     {
@@ -6837,7 +6837,7 @@
      "slug": "/framework/pillars/lifecycle/",
      "section": "framework",
      "template": "page",
-     "words": 833,
+     "words": 831,
      "faq": 2
     },
     {
@@ -6877,7 +6877,7 @@
      "slug": "/",
      "section": "home",
      "template": "home",
-     "words": 936,
+     "words": 959,
      "faq": 3
     },
     {
@@ -6973,7 +6973,7 @@
      "slug": "/resources/blog/readiness-is-not-compliance/",
      "section": "resources",
      "template": "page",
-     "words": 1131,
+     "words": 1132,
      "faq": 0
     },
     {
@@ -7021,7 +7021,7 @@
      "slug": "/resources/policy-packs/",
      "section": "resources",
      "template": "page",
-     "words": 354,
+     "words": 378,
      "faq": 0
     },
     {
@@ -7077,7 +7077,7 @@
      "slug": "/solutions/control/",
      "section": "solutions",
      "template": "page",
-     "words": 589,
+     "words": 590,
      "faq": 2
     },
     {

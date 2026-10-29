@@ -63,7 +63,7 @@ VERITRAIL risk tiers are **Prohibited-review**, **High**, **Medium** and **Low**
 |---|---|---|---|
 | Prohibited-review | Legal review before any further work | Governance forum with Legal | Case by case |
 | High | Full risk and impact assessment plus relevant deep-dive modules | Governance forum | Frequent (for example, every 6 months) |
-| Medium | Standard assessment | Accountable executive or delegated risk lead | Periodic (for example, annually) |
+| Medium | Standard assessment | Risk lead + business owner | Periodic (for example, annually) |
 | Low | Light intake record and screening | Business owner | Periodic attestation |
 
 Changing a system's risk tier or approving an exception are decisions VERITRAIL always routes to a named human approver; neither the platform nor the VERITRAIL Agent changes a tier on its own.
