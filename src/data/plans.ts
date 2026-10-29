@@ -37,7 +37,7 @@ export const PLANS: readonly Plan[] = [
     summary: "Learn the method and run a first private workspace.",
     includes: [
       "Public tools, playbook and templates",
-      "One private workspace, up to 5 AI systems",
+      "One private workspace, up to 5 AI systems (limits coming soon)",
       "Markdown and CSV exports",
     ],
     priceLabel: "Free",
@@ -58,9 +58,9 @@ export const PLANS: readonly Plan[] = [
     summary: "Run an AI governance programme with a small team.",
     includes: [
       "Everything in Free",
-      "Up to 50 AI systems and 5 operator seats",
+      "Up to 50 AI systems (coming soon) and 5 operator seats",
       "Unlimited free approvers and viewers",
-      "Reports without watermark",
+      "Reports without watermark (coming soon)",
       "AI advisor with a daily allowance",
     ],
     priceLabel: "Monthly or annual subscription · price shown at checkout",
@@ -81,9 +81,9 @@ export const PLANS: readonly Plan[] = [
     summary: "Governance across business units, with integrations and an industry pack.",
     includes: [
       "Everything in Team",
-      "Up to 250 AI systems and 15 operator seats",
+      "Up to 250 AI systems (coming soon) and 15 operator seats",
       "One industry pack",
-      "Priority support",
+      "Priority support (coming soon)",
     ],
     priceLabel: "Annual subscription · price shown at checkout",
     selfServe: true,
@@ -103,8 +103,8 @@ export const PLANS: readonly Plan[] = [
     summary: "Runtime Shield, assurance and enterprise controls, scoped with you.",
     includes: [
       "Everything in Business",
-      "Runtime Shield policies and assurance testing",
-      "All industry packs, data residency and custom retention",
+      "Runtime Shield policies and assurance testing (coming soon)",
+      "All industry packs, data residency and custom retention (coming soon)",
       "Governance Baseline engagement credited to year one",
     ],
     priceLabel: "Annual agreement · scoped with you",

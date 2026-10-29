@@ -4,6 +4,13 @@ import type { ContentChange } from "@/features/governance/content-changelog-mode
 // Historical dates are verified against repository commits 39568a0, 4f24938 and 8763950.
 export const CONTENT_CHANGES: readonly ContentChange[] = [
   {
+    id: "plan-limits-coming-soon",
+    date: "2026-10-29",
+    title: "Plan limits: unenforced features marked coming soon",
+    summary:
+      "AI-system limits, evidence storage, watermarked reports, Runtime Shield, priority support and data residency are now labelled 'coming soon' on each plan where they are not yet enforced.",
+  },
+  {
     id: "legal-ai-processing-accuracy",
     date: "2026-10-29",
     title: "Legal pages: AI-processing rows corrected",
