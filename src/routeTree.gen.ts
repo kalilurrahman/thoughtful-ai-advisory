@@ -36,6 +36,8 @@ import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as WorkspaceRouteImport } from './routes/workspace'
+import { Route as AssistantIndexRouteImport } from './routes/assistant.index'
+import { Route as AssistantThreadIdRouteImport } from './routes/assistant.$threadId'
 import { Route as PlatformIndexRouteImport } from './routes/platform.index'
 import { Route as PlatformToolRouteImport } from './routes/platform.$tool'
 import { Route as FrameworkControlsIndexRouteImport } from './routes/framework.controls.index'
@@ -176,6 +178,16 @@ const WorkspaceRoute = WorkspaceRouteImport.update({
   path: '/workspace',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssistantIndexRoute = AssistantIndexRouteImport.update({
+  id: '/assistant/',
+  path: '/assistant/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssistantThreadIdRoute = AssistantThreadIdRouteImport.update({
+  id: '/assistant/$threadId',
+  path: '/assistant/$threadId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlatformIndexRoute = PlatformIndexRouteImport.update({
   id: '/platform/',
   path: '/platform/',
@@ -226,7 +238,9 @@ export interface FileRoutesByFullPath {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
+  '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
+  '/assistant/': typeof AssistantIndexRoute
   '/platform/': typeof PlatformIndexRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
@@ -259,7 +273,9 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
+  '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
+  '/assistant': typeof AssistantIndexRoute
   '/platform': typeof PlatformIndexRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls': typeof FrameworkControlsIndexRoute
@@ -293,7 +309,9 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
+  '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
+  '/assistant/': typeof AssistantIndexRoute
   '/platform/': typeof PlatformIndexRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
@@ -328,7 +346,9 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
+    | '/assistant/$threadId'
     | '/platform/$tool'
+    | '/assistant/'
     | '/platform/'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
@@ -361,7 +381,9 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
+    | '/assistant/$threadId'
     | '/platform/$tool'
+    | '/assistant'
     | '/platform'
     | '/framework/controls/$controlId'
     | '/framework/controls'
@@ -394,7 +416,9 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
+    | '/assistant/$threadId'
     | '/platform/$tool'
+    | '/assistant/'
     | '/platform/'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
@@ -428,7 +452,9 @@ export interface RootRouteChildren {
   StartRoute: typeof StartRoute
   TemplatesRoute: typeof TemplatesRoute
   WorkspaceRoute: typeof WorkspaceRoute
+  AssistantThreadIdRoute: typeof AssistantThreadIdRoute
   PlatformToolRoute: typeof PlatformToolRoute
+  AssistantIndexRoute: typeof AssistantIndexRoute
   PlatformIndexRoute: typeof PlatformIndexRoute
   FrameworkControlsControlIdRoute: typeof FrameworkControlsControlIdRoute
   FrameworkControlsIndexRoute: typeof FrameworkControlsIndexRoute
@@ -625,6 +651,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkspaceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assistant/': {
+      id: '/assistant/'
+      path: '/assistant'
+      fullPath: '/assistant/'
+      preLoaderRoute: typeof AssistantIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assistant/$threadId': {
+      id: '/assistant/$threadId'
+      path: '/assistant/$threadId'
+      fullPath: '/assistant/$threadId'
+      preLoaderRoute: typeof AssistantThreadIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/platform/': {
       id: '/platform/'
       path: '/platform'
@@ -684,7 +724,9 @@ const rootRouteChildren: RootRouteChildren = {
   StartRoute: StartRoute,
   TemplatesRoute: TemplatesRoute,
   WorkspaceRoute: WorkspaceRoute,
+  AssistantThreadIdRoute: AssistantThreadIdRoute,
   PlatformToolRoute: PlatformToolRoute,
+  AssistantIndexRoute: AssistantIndexRoute,
   PlatformIndexRoute: PlatformIndexRoute,
   FrameworkControlsControlIdRoute: FrameworkControlsControlIdRoute,
   FrameworkControlsIndexRoute: FrameworkControlsIndexRoute,

@@ -154,6 +154,7 @@ export const workspaceNav: NavSection = {
     { label: "Incidents & near misses", url: "/incidents" },
     { label: "Corrective actions", url: "/actions" },
     { label: "AI governance advisor", url: "/advisor" },
+    { label: "Site assistant", url: "/assistant" },
     { label: "Lifecycle checklist", url: "/checklist" },
     { label: "AI Governance Playbook", url: "/playbook" },
     { label: "Templates", url: "/templates" },
