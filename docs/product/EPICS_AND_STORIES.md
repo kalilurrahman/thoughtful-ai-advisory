@@ -2,7 +2,7 @@
 
 # VERITRAIL epics and user stories
 
-16 epics and 57 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
+16 epics and 58 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
 
 | Epic | Title | Area | Status | Stories | Done | Partial | Planned |
 |---|---|---|---|---|---|---|---|
@@ -15,7 +15,7 @@
 | [E07](#e07--guardrails-design-in-the-workspace) | Guardrails design in the workspace | Workspace — assessment and release readiness | Live | 1 | 1 | 0 | 0 |
 | [E08](#e08--operational-governance-registers) | Operational governance registers | Workspace — operational governance | Live | 5 | 5 | 0 | 0 |
 | [E09](#e09--remediation-roadmap-and-lifecycle-checklist) | Remediation roadmap and lifecycle checklist | Workspace — assessment and release readiness | Live | 2 | 2 | 0 | 0 |
-| [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 6 | 6 | 0 | 0 |
+| [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 7 | 7 | 0 | 0 |
 | [E11](#e11--reports-and-audit-evidence) | Reports and audit evidence | Workspace — reports and evidence | Preview | 1 | 1 | 0 | 0 |
 | [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 3 | 1 | 2 | 0 |
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
@@ -526,7 +526,7 @@ Acceptance criteria:
 
 **Area:** Workspace — guidance and knowledge · **Status:** Live
 
-**Capabilities:** CAP-042 AI Governance Playbook, CAP-043 Governance templates, CAP-044 Knowledge hub, CAP-045 Start here, CAP-046 Calculators, CAP-047 AI governance advisor
+**Capabilities:** CAP-042 AI Governance Playbook, CAP-043 Governance templates, CAP-044 Knowledge hub, CAP-045 Start here, CAP-046 Calculators, CAP-047 AI governance advisor, CAP-078 Site assistant, CAP-079 Site assistant conversation
 
 ### S10.1
 
@@ -613,6 +613,22 @@ Acceptance criteria:
 Known gaps:
 
 - Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in.
+
+### S10.7
+
+**As an AI governance lead**, I want to ask the site where things are and what guidance says, and keep my conversations, so that I find the right page and can return to earlier answers.
+
+*Status: Done*
+
+Acceptance criteria:
+
+- Given a signed-in user, when they ask a question, then the answer cites matching site pages and the thread is saved privately at its own address.
+
+**Routes:** `/assistant` · **Capabilities:** CAP-078, CAP-079 · **Tests:** none yet
+
+Known gaps:
+
+- Signed-out visitors see a sign-in prompt instead of the chat.
 
 ## E11 — Reports and audit evidence
 
@@ -1011,6 +1027,7 @@ Every gap recorded against a story, in one list for planning.
 | [S10.1](#s101) | E10 | No tests for the playbook reader. |
 | [S10.2](#s102) | E10 | No tests for templates. |
 | [S10.6](#s106) | E10 | Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in. |
+| [S10.7](#s107) | E10 | Signed-out visitors see a sign-in prompt instead of the chat. |
 | [S11.1](#s111) | E11 | The three packs differ only in title and subject. |
 | [S12.1](#s121) | E12 | No SSO/SAML |
 | [S12.1](#s121) | E12 | MFA |
