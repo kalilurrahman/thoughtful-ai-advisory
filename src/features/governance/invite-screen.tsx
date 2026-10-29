@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { EnvelopeOpen } from "@phosphor-icons/react";
+import { InviteArt } from "@/features/site/illustrations-tools";
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
 import { acceptInvitation } from "./team.functions";
@@ -66,7 +66,7 @@ export function InviteScreen({ token: fromUrl }: { token?: string | undefined })
 
   return (
     <section className="invite-screen">
-      <EnvelopeOpen weight="duotone" aria-hidden />
+      <InviteArt />
       <h2>Join a VERITRAIL workspace</h2>
       {!token ? (
         <p>This invitation link is incomplete. Ask the person who invited you for a new link.</p>

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, CircleNotch, CreditCard } from "@phosphor-icons/react";
+import { PlansArt } from "@/features/site/illustrations-tools";
 import { Button } from "@/components/ui/button";
 import { PLANS, type Plan } from "@/data/plans";
 import { Kicker } from "@/features/governance/screens-core";
@@ -99,6 +100,9 @@ export function PlansScreen() {
 
   return (
     <>
+      <div className="plans-art" aria-hidden="true">
+        <PlansArt />
+      </div>
       <p className="muted">
         Start free, upgrade when your team needs more systems and seats. Approvers and viewers never
         need a paid seat.
