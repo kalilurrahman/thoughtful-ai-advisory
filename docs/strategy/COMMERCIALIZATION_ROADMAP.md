@@ -247,7 +247,7 @@ R0 Launch gate ──► R1 Monetise (self-serve SaaS) ──► R2 System of re
 |---|---|---|
 | Acquire | Tool starts ÷ tool page views | `assessment_start`, `tool_use`, `page_view` |
 | Capture | Leads by form, qualified share | `site_leads` |
-| Activate | Sign-up → `workspace_activated` (3 systems triaged) within 7 days | new event (add to both allow-lists) |
+| Activate | Sign-up → activation (3 systems triaged and saved) within 7 days | `tool_use` with `milestone: activated` — **built**, reusing an allow-listed event |
 | Convert | Free → paid within 30 days; Baseline → platform within 60 days | Dodo Payments + CRM |
 | Engage | Weekly active operators ÷ paid seats | server logs (no cookies) |
 | Expand | Systems per workspace, seats, add-on packs | entitlements table |

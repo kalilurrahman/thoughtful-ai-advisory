@@ -7,6 +7,8 @@ import { saveWorkspace, loadWorkspace, listWorkspaces } from "./workspace.functi
 import { ROLE_LABELS, canEdit, type MemberRole } from "./team-model";
 import { useGovernance } from "./store";
 import { SOURCES } from "@/data/governance";
+import { track } from "@/features/platform/analytics";
+import { firstActivation } from "./activation";
 export function WorkspaceControls() {
   const { state, dispatch, userId, workspaceId, workspaceName, workspaceRole, setWorkspace } =
     useGovernance();
@@ -68,6 +70,8 @@ export function WorkspaceControls() {
       });
       setWorkspace(r.id, workspaceName);
       setMessage("Workspace saved.");
+      if (r.id && firstActivation(r.id, state))
+        track("tool_use", { tool: "workspace", milestone: "activated" });
     } catch {
       setMessage("Could not save. Your current work is still on this screen.");
     } finally {

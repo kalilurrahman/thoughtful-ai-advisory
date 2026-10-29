@@ -242,6 +242,7 @@ Each requirement is detailed as user stories with acceptance criteria in
 | Baseline and demo requests | `site_leads` by form | Tracked monthly; qualified share ≥ 50% |
 | Call-to-action effectiveness | `cta_click` by `cta` (hero, header, menu, blocks) | Identify the top three CTAs by conversion |
 | Workspace adoption | Saved workspaces | Tracked monthly |
+| Activation (saved private workspace with 3 or more triaged AI systems) | `tool_use` with `tool: workspace`, `milestone: activated` (once per workspace per browser) | 40% or more of new sign-ups within 7 days |
 | Install interest | `cta_click` for `pwa-install-card`, `pwa-install-header` and `pwa-install-menu` against `pwa-install-not-now` | More installs than dismissals; the browser's own accept or cancel is not recorded |
 | Defensibility | Content checks; prohibited-claim scan | 100% pass on every release |
 
