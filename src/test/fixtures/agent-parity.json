@@ -4678,7 +4678,7 @@
       ],
       "audit_count": 56,
       "audit_ok": true,
-      "audit_head": "fe68240f0265fd38a354919734c62960f10e7778343f3a6ba4806bf7e88b5ead",
+      "audit_head": "dbe48c8f3e64ebf2defa1e3d615e4c372e8c7e2d79956ec38502cf830234290d",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -5557,7 +5557,7 @@
       ],
       "audit_count": 55,
       "audit_ok": true,
-      "audit_head": "a67e33890366dd0ab958231c116c11da4101f63e17ec883ff6ced3289578f177",
+      "audit_head": "fad58df6a8370c2b71625f517d1c80dab2bfe53bd8901d465ba58ed18add88c8",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -6523,7 +6523,7 @@
       ],
       "audit_count": 55,
       "audit_ok": true,
-      "audit_head": "9c7b722677da2a0de476960aa23c911500ff57a21d38d6a051735f2d6b9209a4",
+      "audit_head": "8880171d47819d994cff8900d70478b2d5d61bf3ba38c2f0ae3c80ca8e21d359",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -7416,7 +7416,7 @@
       ],
       "audit_count": 56,
       "audit_ok": true,
-      "audit_head": "e4705aca47212a82f02cb51d99ce2c2b1146e9985496fe219c3e124b2b67f8c3",
+      "audit_head": "5b509d90d503a92e53d0252cf09feaa38e235d58a43d2fbeee7a336029a5d87f",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -8122,7 +8122,7 @@
       ],
       "audit_count": 57,
       "audit_ok": true,
-      "audit_head": "d87d38c6991eb2529926e5cc84980302d6d85dbdd279672b5c6bef8437c24197",
+      "audit_head": "37ec1eab035b7619ff9886aecb02f4011822b5fa9f11d9734744b36197b8ca97",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -8829,7 +8829,7 @@
       ],
       "audit_count": 57,
       "audit_ok": true,
-      "audit_head": "4c9a0b8174c622be5a8f8b8ce002cfa1c4edfbdddefdf5a762d9bb072844531c",
+      "audit_head": "558a1fa3a69ca75d5cc3dd79ef896da01e3139cc80ded5688f3164b21c8b020e",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -9537,7 +9537,7 @@
       ],
       "audit_count": 57,
       "audit_ok": true,
-      "audit_head": "c1b42cdd87abd6e8958425f6c4f04152eaf3133ebb6a918afae5abcfa968901e",
+      "audit_head": "79f1825451488d0e66b0f2f97059205e8dcd2caa1ca80eb856eeaf08d6b09f1e",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -10307,7 +10307,7 @@
       ],
       "audit_count": 58,
       "audit_ok": true,
-      "audit_head": "25f68d0055b12f14c0136f7923c5a3d082a641c624539aa6771e10688838490a",
+      "audit_head": "3a41042098ac530a3f735d835bd157fccd0f1235482bb7868497a3531c1b9883",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -11017,7 +11017,7 @@
       ],
       "audit_count": 56,
       "audit_ok": true,
-      "audit_head": "27637611e2e18a2947802810fd111b1381ce6bc18e6929a5767301fa9722723e",
+      "audit_head": "ad92b1425d9b4a686dc76d565e98f6459b98d07fd8911195921d3be60db1d4b5",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -11695,7 +11695,7 @@
       ],
       "audit_count": 55,
       "audit_ok": true,
-      "audit_head": "08c74fd3405222ea89cefd7f7982afcda21973206ba0bf527d42d4126f1452df",
+      "audit_head": "f42226c2e0e96188bf1bdb397d0290005e3dfcc90e48b8ccb32afed9ec37febe",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -12369,7 +12369,7 @@
       ],
       "audit_count": 55,
       "audit_ok": true,
-      "audit_head": "93f7a6908b114390d324043fb98b2677d1f1578b9bd31a13ab051e2f49f8d969",
+      "audit_head": "550c53a562f7a440ce63e83b2a57ff04019f272ced6c76b9bfb3be1dd97eb3ae",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -13151,7 +13151,7 @@
       ],
       "audit_count": 55,
       "audit_ok": true,
-      "audit_head": "5e78b9950e92c4fa381a263a89be075ae08e1533e823a153d881288433b2feb4",
+      "audit_head": "95ebe1523151c9aa7f024fc5f2c66e98b45a28222c730354e73d536659446a18",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -15311,7 +15311,7 @@
       ],
       "audit_count": 55,
       "audit_ok": true,
-      "audit_head": "3674621af8d4f811fd0bd1f4d502174ad359f3aa69616ff74638cf4a8c926132",
+      "audit_head": "8231efd7664b5d985d163257167d0100610ffabfe03f746a8e5e25e519c61dec",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -16907,7 +16907,7 @@
       ],
       "audit_count": 80,
       "audit_ok": true,
-      "audit_head": "317626153f123c46666af2a28fac7733b2c35a3a469956583bcf452e89c31124",
+      "audit_head": "27df0e40b9b7976d11d5f3973af24210351d57cea310f8ff359ba74c65fea65d",
       "audit_actions": [
         [
           "agent.turn",
@@ -18619,7 +18619,7 @@
       ],
       "audit_count": 75,
       "audit_ok": true,
-      "audit_head": "ef5f3f92be06d340e34c85caf48c00a81eeb45c75cc4e87880e1fb58de43f7b5",
+      "audit_head": "b52c356fb5f82e582926e548b8c1be94709e3fd540ea5858718b9f3634cb72e5",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -19822,7 +19822,7 @@
       ],
       "audit_count": 56,
       "audit_ok": true,
-      "audit_head": "1c53b6c355164fb57d193ae8e2a28322b4ff30902aa68c955af265b4821d5102",
+      "audit_head": "2fc85bedfaaa1e0470b006ee6097daa683682397b3e805ed8f1ec12921e29c5c",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -22018,7 +22018,7 @@
       ],
       "audit_count": 55,
       "audit_ok": true,
-      "audit_head": "13d6c9f8990007aa4aecaeb340141bf9c4a8c98b13caafc2548461c50e3c882b",
+      "audit_head": "2a193b4ee79791da7218e53e4a0fa026a863b53d596e462b342779a877e1f421",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -24405,7 +24405,7 @@
             "tiers": [
               [
                 "sys_000001",
-                "High"
+                "High-risk"
               ]
             ],
             "systems": 1,
@@ -24423,7 +24423,7 @@
       ],
       "audit_count": 62,
       "audit_ok": true,
-      "audit_head": "998c2da19bf117f6dbec216b90e147605fbcb1a4bc1aae2508404127a796b756",
+      "audit_head": "3d9f85a77172d34fbef9c2f518f3308391a83cbd2b3797142dc1f5deded65845",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -25129,7 +25129,7 @@
       ],
       "audit_count": 57,
       "audit_ok": true,
-      "audit_head": "aa42a1236c75dd53490827c77d629380a98f8774bcf4d64e1e2a7afcd9907d7c",
+      "audit_head": "7e351e0595f6d643659c3b1dd2dd9ff1b73e27f00d22af82b84e0b9e9453e74c",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -26040,7 +26040,7 @@
       ],
       "audit_count": 68,
       "audit_ok": true,
-      "audit_head": "e6f6035409fbfd6c4178652cea225c2131dc22c7393df064811b8c9d7cd894f7",
+      "audit_head": "6fd809fee83c93d4ac34cf6f1e53664fe9e695d496ebf0c471c1498cc1ff1093",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -27052,7 +27052,7 @@
       ],
       "audit_count": 70,
       "audit_ok": true,
-      "audit_head": "74547b729da8ada785b09114ad590ecc1d82c26967b5e6085417deceee66b63d",
+      "audit_head": "0daaec6847f8afdf104f622c7124937f90437e19ef5d78fa4cd7778be0b74f7d",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -27902,7 +27902,7 @@
       ],
       "audit_count": 65,
       "audit_ok": true,
-      "audit_head": "9a1c943f782acb9396ec30f4e9039990c88007d99644a4d12147d37cad4b3aa8",
+      "audit_head": "643ac3587b05d56aef82646f5a64bddc94a5c239e3c432a58fc5e72b27276140",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -29062,7 +29062,7 @@
       ],
       "audit_count": 61,
       "audit_ok": true,
-      "audit_head": "fb0128d5c08ee89d139e1cae36e5eecc536a3ac3f50f4d11911f65e92130916f",
+      "audit_head": "cbecc5754be6c91e998f936f835c122ce29c9a534167aadbaf47f22bd3d4d171",
       "audit_actions": [
         [
           "agent.tool.calculate_risk_tier",
@@ -31719,7 +31719,7 @@
             "tiers": [
               [
                 "sys_000001",
-                "High"
+                "High-risk"
               ]
             ],
             "systems": 1,
@@ -31746,7 +31746,7 @@
       ],
       "audit_count": 119,
       "audit_ok": true,
-      "audit_head": "33cde0f5b21ce6fedb3a5d9d954cbf7cf2dbfb23e74641dd2b7f79d607582ef2",
+      "audit_head": "130ded437bf6c4b340d327ac7326a86d0a6c08ad71ed0afe7cf909d764cce52f",
       "audit_actions": [
         [
           "agent.tool.search_veritrail_knowledge",
