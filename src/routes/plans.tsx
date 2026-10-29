@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PlansScreen } from "@/features/governance/screens-resources";
+import { PlansScreen } from "@/features/billing/plans-screen";
 import { pageHead } from "@/features/governance/meta";
 export const Route = createFileRoute("/plans")({
   head: () =>
     pageHead(
-      "VERITRAIL advisory plans",
-      "Explore Assess, Govern and Assure advisory packages for enterprise AI.",
+      "VERITRAIL plans",
+      "Compare the Free, Team, Business and Enterprise plans and the Governance Baseline engagement.",
     ),
   component: PlansScreen,
 });

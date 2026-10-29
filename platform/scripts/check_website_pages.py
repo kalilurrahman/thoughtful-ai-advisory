@@ -1,6 +1,7 @@
 """Self-check for content/website_pages/*.md (web-content workstream)."""
 from __future__ import annotations
 
+import datetime
 import re
 import sys
 from pathlib import Path
@@ -17,6 +18,7 @@ FM = re.compile(r"\A---[ \t]*\n(.*?)\n---[ \t]*\n", re.S)
 REQ = ["title", "slug", "description", "section", "nav_label", "nav_order", "template", "schema_type", "updated"]
 CTA = {"assessment", "baseline", "agent", "blueprint", "demo", "guardrails"}
 GENERATED = {"/framework/controls/"}
+LAUNCH = datetime.date(2026, 10, 21)
 
 errors, warnings, rows = [], [], []
 pages = {}
@@ -32,7 +34,12 @@ for f in sorted(PAGES.glob("*.md")):
     for k in REQ:
         if k not in meta:
             errors.append(f"{f.name}: missing {k}")
-    if str(meta.get("updated")) != "2026-10-21":
+    # A real revision date: no earlier than the launch build, never in the future.
+    try:
+        updated = datetime.date.fromisoformat(str(meta.get("updated")))
+    except ValueError:
+        updated = None
+    if updated is None or not LAUNCH <= updated <= datetime.date.today():
         errors.append(f"{f.name}: updated={meta.get('updated')}")
     slug = meta["slug"]
     expected = "index.md" if slug == "/" else slug.strip("/").replace("/", "-") + ".md"

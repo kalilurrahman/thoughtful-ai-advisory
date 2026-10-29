@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 vi.mock("@tanstack/react-start", () => ({ useServerFn: (fn: unknown) => fn }));
 vi.mock("@/features/governance/workspace.functions", () => ({
   loadWorkspace: vi.fn().mockResolvedValue(null),
+  saveWorkspace: vi.fn(),
 }));
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {

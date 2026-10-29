@@ -8,12 +8,12 @@ nav_label: "Privacy notice"
 nav_order: 10
 template: page
 schema_type: WebPage
-updated: 2026-10-21
+updated: 2026-10-29
 ---
 
 > **Template — legal review required.** This notice is a working draft describing how the VERITRAIL website is designed to handle personal data. Items in [square brackets] must be completed, and the whole notice must be reviewed by qualified legal counsel for each jurisdiction in which VERITRAIL operates, before publication.
 
-**Last updated:** 21 October 2026
+**Last updated:** 29 October 2026
 
 ## 1. Who we are
 
@@ -36,6 +36,9 @@ The controller responsible for personal data collected through this website is [
 | Contact, demo and Baseline forms; design-partner enquiries | Business email, name, company, role, your message, consent record | Respond to your enquiry and arrange meetings | Steps at your request / legitimate interests |
 | Newsletter | Business email, consent record | Send the newsletter | Consent |
 | Ask VERITRAIL demo, risk triage, guardrail generator | The text and selections you submit | Produce a response or result | Legitimate interests / your request |
+| Account and workspace | E-mail address, display name, sign-in records, the workspace records you and your team save, and team membership and roles | Provide the signed-in workspace and team access | Contract |
+| AI advisor (signed in) | The concern you describe, with common sensitive-data patterns masked first; a daily usage count | Produce recommendations; apply your plan's allowance | Contract |
+| Paid plans | Your e-mail address and the subscription status, plan and renewal date received from Dodo Payments; we do not receive or store card details | Provide the plan you bought | Contract |
 
 We ask for a **business email address** because our services are for organizations; free-mail addresses are not accepted for report and lead forms.
 
@@ -47,7 +50,7 @@ Some features use AI. Before any text is sent to an external model provider, com
 
 ## 5. Sharing
 
-We share personal data only with service providers who process it on our behalf under contract — [hosting provider], [email delivery provider], [model provider(s)] — and where required by law. [List sub-processors or link to a sub-processor list.]
+We share personal data only with service providers who process it on our behalf under contract — [hosting provider], [email delivery provider], [model provider(s)] — and where required by law. When you buy a plan, Dodo Payments acts as our merchant of record and processes your payment and billing details under its own privacy policy; see our [subscription terms](/legal/subscription-terms/). [List sub-processors or link to a sub-processor list.]
 
 ## 6. International transfers
 

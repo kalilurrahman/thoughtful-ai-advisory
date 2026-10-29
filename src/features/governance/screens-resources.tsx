@@ -1,5 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { WorkspaceControls } from "./workspace-controls";
+import { TeamPanel } from "./team-panel";
+import { PendingInviteBanner } from "./invite-screen";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
@@ -396,74 +398,6 @@ export function ExportScreen() {
     </>
   );
 }
-export function PlansScreen() {
-  return (
-    <>
-      <p className="muted">From a focused diagnostic to continuous assurance.</p>
-      <div className="plans-grid">
-        {[
-          {
-            name: "Assess",
-            buyer: "Mid-market",
-            includes: "Maturity assessment, inventory, risk register, gap report and roadmap.",
-            price: "Fixed-price diagnostic · from $499 / organisation",
-            cta: "Start diagnostic",
-            tone: "neutral",
-          },
-          {
-            name: "Govern",
-            buyer: "Scaling AI",
-            includes:
-              "Full TILLER modules, policy generator, guardrails designer, calculators and evidence pack.",
-            price: "Annual subscription + implementation",
-            cta: "Explore governance",
-            tone: "success",
-          },
-          {
-            name: "Assure",
-            buyer: "Regulated",
-            includes:
-              "Continuous control testing, red-team library, audit exports, advisory workflows, multi-entity governance.",
-            price: "Enterprise subscription + retainer",
-            cta: "Explore assurance",
-            tone: "danger",
-          },
-        ].map((p) => (
-          <article className={"plan-card " + p.tone} key={p.name}>
-            <Kicker>{p.buyer}</Kicker>
-            <h2>{p.name}</h2>
-            <p>{p.includes}</p>
-            <strong className="price-line">{p.price}</strong>
-            <Button
-              asChild
-              variant={p.name === "Govern" ? "default" : "outline"}
-              className="full-button"
-            >
-              <Link
-                to={
-                  p.name === "Assess" ? "/assess" : p.name === "Govern" ? "/guardrails" : "/gates"
-                }
-              >
-                {p.cta}
-                <ArrowRight />
-              </Link>
-            </Button>
-          </article>
-        ))}
-      </div>
-      <section>
-        <h2>Governance Snapshot</h2>
-        <p className="muted">Free assessment and executive one-page brief.</p>
-        <Button variant="link" asChild>
-          <Link to="/assess">
-            Start free snapshot
-            <ArrowRight />
-          </Link>
-        </Button>
-      </section>
-    </>
-  );
-}
 export function MoreScreen() {
   const { userId } = useGovernance();
   const [dark, toggleDark] = useDarkTheme();
@@ -551,11 +485,13 @@ export function MoreScreen() {
       desc: "PDF · DOCX · XLSX · PPTX previews",
       icon: Files,
     },
-    { to: "/plans", name: "Plans", desc: "Assess · Govern · Assure", icon: Tag },
+    { to: "/plans", name: "Plans", desc: "Free · Team · Business · Enterprise", icon: Tag },
   ] as const;
   return (
     <>
+      <PendingInviteBanner />
       <WorkspaceControls />
+      <TeamPanel />
       <div className="more-grid">
         {items.map((x) => (
           <Button variant="ghost" className="more-row" asChild key={x.to}>

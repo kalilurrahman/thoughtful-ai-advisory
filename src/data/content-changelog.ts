@@ -4,6 +4,13 @@ import type { ContentChange } from "@/features/governance/content-changelog-mode
 // Historical dates are verified against repository commits 39568a0, 4f24938 and 8763950.
 export const CONTENT_CHANGES: readonly ContentChange[] = [
   {
+    id: "plans-and-subscription-terms",
+    date: "2026-10-29",
+    title: "Plans, subscription terms and privacy notice",
+    summary:
+      "Plans now list Free, Team, Business and Enterprise; new subscription, cancellation and refund terms describe online billing through Dodo Payments; the privacy notice covers accounts, team workspaces, the AI advisor and paid plans.",
+  },
+  {
     id: "public-change-log",
     date: "2026-10-27",
     title: "Public content change log",

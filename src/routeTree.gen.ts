@@ -26,6 +26,7 @@ import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as GuardrailsRouteImport } from './routes/guardrails'
 import { Route as IncidentsRouteImport } from './routes/incidents'
 import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as InviteRouteImport } from './routes/invite'
 import { Route as KnowledgeRouteImport } from './routes/knowledge'
 import { Route as MonitoringRouteImport } from './routes/monitoring'
 import { Route as MoreRouteImport } from './routes/more'
@@ -40,6 +41,7 @@ import { Route as WorkspaceRouteImport } from './routes/workspace'
 import { Route as AssistantThreadIdRouteImport } from './routes/assistant_.$threadId'
 import { Route as PlatformIndexRouteImport } from './routes/platform.index'
 import { Route as PlatformToolRouteImport } from './routes/platform.$tool'
+import { Route as ApiBillingDodoWebhookRouteImport } from './routes/api.billing.dodo-webhook'
 import { Route as FrameworkControlsIndexRouteImport } from './routes/framework.controls.index'
 import { Route as FrameworkControlsControlIdRouteImport } from './routes/framework.controls.$controlId'
 
@@ -128,6 +130,11 @@ const InventoryRoute = InventoryRouteImport.update({
   path: '/inventory',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InviteRoute = InviteRouteImport.update({
+  id: '/invite',
+  path: '/invite',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const KnowledgeRoute = KnowledgeRouteImport.update({
   id: '/knowledge',
   path: '/knowledge',
@@ -198,6 +205,11 @@ const PlatformToolRoute = PlatformToolRouteImport.update({
   path: '/platform/$tool',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiBillingDodoWebhookRoute = ApiBillingDodoWebhookRouteImport.update({
+  id: '/api/billing/dodo-webhook',
+  path: '/api/billing/dodo-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FrameworkControlsIndexRoute = FrameworkControlsIndexRouteImport.update({
   id: '/framework/controls/',
   path: '/framework/controls/',
@@ -228,6 +240,7 @@ export interface FileRoutesByFullPath {
   '/guardrails': typeof GuardrailsRoute
   '/incidents': typeof IncidentsRoute
   '/inventory': typeof InventoryRoute
+  '/invite': typeof InviteRoute
   '/knowledge': typeof KnowledgeRoute
   '/monitoring': typeof MonitoringRoute
   '/more': typeof MoreRoute
@@ -242,6 +255,7 @@ export interface FileRoutesByFullPath {
   '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
   '/platform/': typeof PlatformIndexRoute
+  '/api/billing/dodo-webhook': typeof ApiBillingDodoWebhookRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
 }
@@ -263,6 +277,7 @@ export interface FileRoutesByTo {
   '/guardrails': typeof GuardrailsRoute
   '/incidents': typeof IncidentsRoute
   '/inventory': typeof InventoryRoute
+  '/invite': typeof InviteRoute
   '/knowledge': typeof KnowledgeRoute
   '/monitoring': typeof MonitoringRoute
   '/more': typeof MoreRoute
@@ -277,6 +292,7 @@ export interface FileRoutesByTo {
   '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
   '/platform': typeof PlatformIndexRoute
+  '/api/billing/dodo-webhook': typeof ApiBillingDodoWebhookRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls': typeof FrameworkControlsIndexRoute
 }
@@ -299,6 +315,7 @@ export interface FileRoutesById {
   '/guardrails': typeof GuardrailsRoute
   '/incidents': typeof IncidentsRoute
   '/inventory': typeof InventoryRoute
+  '/invite': typeof InviteRoute
   '/knowledge': typeof KnowledgeRoute
   '/monitoring': typeof MonitoringRoute
   '/more': typeof MoreRoute
@@ -313,6 +330,7 @@ export interface FileRoutesById {
   '/assistant_/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
   '/platform/': typeof PlatformIndexRoute
+  '/api/billing/dodo-webhook': typeof ApiBillingDodoWebhookRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
 }
@@ -336,6 +354,7 @@ export interface FileRouteTypes {
     | '/guardrails'
     | '/incidents'
     | '/inventory'
+    | '/invite'
     | '/knowledge'
     | '/monitoring'
     | '/more'
@@ -350,6 +369,7 @@ export interface FileRouteTypes {
     | '/assistant/$threadId'
     | '/platform/$tool'
     | '/platform/'
+    | '/api/billing/dodo-webhook'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
   fileRoutesByTo: FileRoutesByTo
@@ -371,6 +391,7 @@ export interface FileRouteTypes {
     | '/guardrails'
     | '/incidents'
     | '/inventory'
+    | '/invite'
     | '/knowledge'
     | '/monitoring'
     | '/more'
@@ -385,6 +406,7 @@ export interface FileRouteTypes {
     | '/assistant/$threadId'
     | '/platform/$tool'
     | '/platform'
+    | '/api/billing/dodo-webhook'
     | '/framework/controls/$controlId'
     | '/framework/controls'
   id:
@@ -406,6 +428,7 @@ export interface FileRouteTypes {
     | '/guardrails'
     | '/incidents'
     | '/inventory'
+    | '/invite'
     | '/knowledge'
     | '/monitoring'
     | '/more'
@@ -420,6 +443,7 @@ export interface FileRouteTypes {
     | '/assistant_/$threadId'
     | '/platform/$tool'
     | '/platform/'
+    | '/api/billing/dodo-webhook'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
   fileRoutesById: FileRoutesById
@@ -442,6 +466,7 @@ export interface RootRouteChildren {
   GuardrailsRoute: typeof GuardrailsRoute
   IncidentsRoute: typeof IncidentsRoute
   InventoryRoute: typeof InventoryRoute
+  InviteRoute: typeof InviteRoute
   KnowledgeRoute: typeof KnowledgeRoute
   MonitoringRoute: typeof MonitoringRoute
   MoreRoute: typeof MoreRoute
@@ -456,6 +481,7 @@ export interface RootRouteChildren {
   AssistantThreadIdRoute: typeof AssistantThreadIdRoute
   PlatformToolRoute: typeof PlatformToolRoute
   PlatformIndexRoute: typeof PlatformIndexRoute
+  ApiBillingDodoWebhookRoute: typeof ApiBillingDodoWebhookRoute
   FrameworkControlsControlIdRoute: typeof FrameworkControlsControlIdRoute
   FrameworkControlsIndexRoute: typeof FrameworkControlsIndexRoute
 }
@@ -581,6 +607,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InventoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/invite': {
+      id: '/invite'
+      path: '/invite'
+      fullPath: '/invite'
+      preLoaderRoute: typeof InviteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/knowledge': {
       id: '/knowledge'
       path: '/knowledge'
@@ -679,6 +712,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlatformToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/billing/dodo-webhook': {
+      id: '/api/billing/dodo-webhook'
+      path: '/api/billing/dodo-webhook'
+      fullPath: '/api/billing/dodo-webhook'
+      preLoaderRoute: typeof ApiBillingDodoWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/framework/controls/': {
       id: '/framework/controls/'
       path: '/framework/controls'
@@ -714,6 +754,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuardrailsRoute: GuardrailsRoute,
   IncidentsRoute: IncidentsRoute,
   InventoryRoute: InventoryRoute,
+  InviteRoute: InviteRoute,
   KnowledgeRoute: KnowledgeRoute,
   MonitoringRoute: MonitoringRoute,
   MoreRoute: MoreRoute,
@@ -728,6 +769,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssistantThreadIdRoute: AssistantThreadIdRoute,
   PlatformToolRoute: PlatformToolRoute,
   PlatformIndexRoute: PlatformIndexRoute,
+  ApiBillingDodoWebhookRoute: ApiBillingDodoWebhookRoute,
   FrameworkControlsControlIdRoute: FrameworkControlsControlIdRoute,
   FrameworkControlsIndexRoute: FrameworkControlsIndexRoute,
 }

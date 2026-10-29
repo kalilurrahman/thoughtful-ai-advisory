@@ -496,21 +496,11 @@ epics:
           - Given a concern of 20–4,000 characters, when submitted, then the server returns a summary, 3–6 mapped controls and 3–5 actions, dropping unknown control IDs.
           - Given "Add to corrective actions", when chosen, then the actions are created with due dates by priority.
           - Given a busy, out-of-credit, unreadable or incomplete answer from the gateway, when received, then the advisor says so instead of failing.
+          - Given a visitor who is not signed in, when the advisor opens, then it asks them to sign in and sends nothing.
+          - Given a user who has used the plan's daily allowance, when submitted, then nothing is sent to the model and the advisor names the allowance and when it resets.
         routes: [/advisor]
         tests: [server-logic.test.ts]
         gaps: [Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in.]
-        capabilities: [CAP-047]
-      - id: S10.7
-        persona: gov-lead
-        want: to ask the site where things are and what guidance says, and keep my conversations
-        so_that: I find the right page and can return to earlier answers
-        status: done
-        capabilities: [CAP-078, CAP-079]
-        acceptance:
-          - Given a signed-in user, when they ask a question, then the answer cites matching site pages and the thread is saved privately at its own address.
-        routes: [/assistant]
-        tests: []
-        gaps: [Signed-out visitors see a sign-in prompt instead of the chat.]
 
   - id: E11
     title: Reports and audit evidence
@@ -545,26 +535,59 @@ epics:
           - Given sign-up, when completed, then I am asked to confirm by e-mail; password reset sends a link to /reset-password.
           - Given sign-in, when it succeeds, then the demo state is cleared and my saved workspace loads.
         routes: [/auth, /reset-password, /onboarding]
-        gaps: [No SSO/SAML, MFA, roles or invitations.]
+        gaps: [No SSO/SAML or MFA.]
       - id: S12.2
         persona: gov-lead
-        want: to save and restore my workspace
-        so_that: my work survives across devices
-        status: partial
+        want: to save and restore my workspace, with my team, without losing work
+        so_that: my work survives across devices and nobody overwrites a colleague
+        status: done
         acceptance:
           - Given I am signed in, when I choose Save, then the whole workspace is written in one call scoped to my organisation by RLS.
+          - Given a saved workspace and an editing role, when I stop changing it for a moment, then it saves automatically and says whether all changes are saved.
+          - Given a teammate saved a newer version, when my save arrives, then nothing is overwritten, autosave stops and I am told to restore their version.
+          - Given unsaved edits, when I try to leave the page, then the browser asks me to confirm.
           - Given I choose Restore, when it loads, then the saved snapshot replaces the in-memory state.
         routes: [/more]
-        gaps: [No autosave; unsaved changes are lost on reload., One workspace per user; no switcher., Migration 0009 renames the save function but the live database and client still use save_aegis_workspace — do not apply 0009 without updating the client.]
+        tests: [autosave.test.ts, autosave-provider.test.tsx]
+        gaps: [Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied; conflict detection needs migration 0013.]
       - id: S12.3
         persona: visitor
         want: to see the plans and what each includes
         so_that: I understand the commercial options
         status: partial
         acceptance:
-          - Given the plans page, when loaded, then Assess, Govern and Assure packages and the free snapshot are shown.
+          - Given the plans page, when loaded, then the Free, Team, Business and Enterprise plans from src/data/plans.ts and the Governance Baseline are shown, with no unapproved price figures.
         routes: [/plans]
-        gaps: [No checkout, billing or entitlements.]
+      - id: S12.4
+        persona: gov-lead
+        want: to buy, renew, change or cancel a self-serve plan
+        so_that: my team gets the limits it needs without a sales call
+        status: partial
+        acceptance:
+          - Given I am signed in on the Free plan, when I choose Team or Business, then a Dodo Payments checkout opens for the configured product and nothing is charged by VERITRAIL itself.
+          - Given a signed Dodo webhook for a subscription, when received, then the subscription is stored once, older events never overwrite newer ones, and unsigned or stale requests change nothing.
+          - Given an active or past-due subscription, when the plan is read on the server, then its limits apply (for example the advisor allowance); any other status means the Free plan.
+          - Given a paid plan, when I choose Manage billing, then the Dodo customer portal opens to update payment, change or cancel.
+        routes: [/plans]
+        capabilities: [CAP-078]
+        tests: [billing.test.ts, plans.test.ts]
+        gaps: [Needs a Dodo Payments account, products and webhook secret (DODO_* settings)., Seat, system and workspace limits are defined but not yet enforced; only the advisor allowance is.]
+      - id: S12.5
+        persona: gov-lead
+        want: to invite colleagues to my workspace with a role
+        so_that: the governance team works from one record, with approvers and viewers free
+        status: done
+        acceptance:
+          - Given I am the owner or an admin, when I invite an e-mail address with a role, then a single-use link valid for 14 days is created and I am told no e-mail was sent.
+          - Given an operator or admin invitation, when the owner's plan has no free operator seat, then nothing is created and the message says how to proceed; approver and viewer invitations are always allowed.
+          - Given an invitation link, when accepted by a signed-in user with the invited e-mail address, then they join with that role; any other address, a used, revoked or expired link adds nobody.
+          - Given a member's role, when operator, admin or owner, then they can save the workspace; approvers and viewers read it and the database refuses their writes.
+          - Given the owner or an admin, when they change a role or remove a member, then the owner can never be changed or removed and an admin cannot change another admin.
+          - Given I belong to several workspaces, when I choose one, then it opens with my role shown.
+        routes: [/invite, /more]
+        capabilities: [CAP-079]
+        tests: [team.test.ts]
+        gaps: [Invitations are not e-mailed until an e-mail provider is added., Approvers cannot yet record approvals, because the workspace saves as one snapshot.]
 
   - id: E13
     title: Platform console
@@ -1092,11 +1115,9 @@ capabilities:
   - {id: CAP-044, name: Knowledge hub, area: guide, route: /knowledge, status: live, data: none, epic: E10, personas: [cro, gov-lead], source: [src/features/governance/screens-resources.tsx, src/data/governance.ts], tests: [resources.test.ts], summary: "24 laws, standards and guidance sources by type and jurisdiction."}
   - {id: CAP-045, name: Start here, area: guide, route: /start, status: live, data: memory, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-start.tsx], tests: [], summary: "Role, stage and goal to recommended chapters, actions and tools."}
   - {id: CAP-046, name: Calculators, area: guide, route: /calculators, status: live, data: memory, epic: E10, personas: [cro], source: [src/features/governance/screens-resources.tsx, src/features/governance/model.ts], tests: [governance.test.ts], summary: "Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage."}
-  - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [server-logic.test.ts], summary: "Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions."}
-  - {id: CAP-078, name: Site assistant, area: guide, route: /assistant, status: live, data: cloud, epic: E10, personas: [gov-lead], source: [src/features/assistant/assistant-screen.tsx, src/features/assistant/assistant.functions.ts], tests: [], summary: "Chat grounded in site content with page links; private saved threads for signed-in users."}
-  - {id: CAP-079, name: Site assistant conversation, area: guide, route: "/assistant_/$threadId", status: live, data: cloud, epic: E10, personas: [gov-lead], source: [src/features/assistant/assistant-screen.tsx], tests: [], summary: "A saved assistant thread at its own address."}
+  - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [server-logic.test.ts], summary: "Concern to mapped controls and actions via the Lovable AI gateway; signed-in only, with a daily allowance per plan; adds corrective actions."}
   - {id: CAP-048, name: Reports and audit pack, area: report, route: /export, status: preview, data: none, epic: E11, personas: [auditor, gov-lead], source: [src/features/governance/evidence-report.ts, src/features/governance/evidence-files.ts], tests: [evidence-export.test.ts, export-ui.test.tsx], summary: "PDF, DOCX, XLSX and PPTX packs generated in the browser, labelled demo previews."}
-  - {id: CAP-049, name: Plans, area: account, route: /plans, status: live, data: none, epic: E12, personas: [visitor], source: [src/routes/plans.tsx], tests: [], summary: "Assess, Govern and Assure packages and the free snapshot; no billing."}
+  - {id: CAP-049, name: Plans, area: account, route: /plans, status: live, data: none, epic: E12, personas: [visitor], source: [src/routes/plans.tsx, src/data/plans.ts], tests: [plans.test.ts], summary: "Free, Team, Business and Enterprise plans from one catalogue, and the Governance Baseline; prices shown at checkout."}
   - {id: CAP-050, name: Workspace and account, area: account, route: /more, status: live, data: cloud, epic: E12, personas: [gov-lead], source: [src/features/governance/screens-resources.tsx, src/features/governance/workspace-controls.tsx, src/features/governance/workspace.functions.ts], tests: [], summary: "Sign-in entry, rename, Save and Restore, links to every workspace tool."}
   - {id: CAP-051, name: Sign in and sign up, area: account, route: /auth, status: live, data: server, epic: E12, personas: [gov-lead, admin], source: [src/features/governance/auth-panel.tsx], tests: [], summary: "Email/password with confirmation, password reset, Google, Apple, Microsoft and Lovable OAuth."}
   - {id: CAP-052, name: Password reset, area: account, route: /reset-password, status: live, data: server, epic: E12, personas: [gov-lead], source: [src/routes/reset-password.tsx], tests: [], summary: "Set a new password from the recovery link."}
@@ -1120,5 +1141,7 @@ capabilities:
   - {id: CAP-073, name: Glossary definitions in text, area: app, route: "", status: live, data: none, epic: E15, personas: [visitor], source: [src/features/site/glossary-tip.tsx, src/features/site/markdown.tsx], tests: [site-reading.test.ts], summary: "First mention of each term underlined with a definition on hover, focus or tap."}
   - {id: CAP-074, name: Reading aids, area: app, route: "", status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/markdown.tsx, src/features/site/reading.tsx], tests: [site-reading.test.ts], summary: "Feature cards, step timelines, link cards, callouts, stacked tables, code copy, On this page, progress and back-to-top."}
   - {id: CAP-075, name: Section illustrations and share images, area: app, route: "", status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/illustrations.tsx, scripts/generate-social-images.mjs, public/og], tests: [site-reading.test.ts], summary: "Theme-aware SVG art for every section and 1200×630 share cards."}
+  - {id: CAP-078, name: Billing — Dodo Payments, area: account, route: /api/billing/dodo-webhook, status: live, data: cloud, epic: E12, personas: [gov-lead], source: [src/features/billing/billing.functions.ts, src/features/billing/entitlements.ts, src/features/billing/webhook.ts, src/routes/api.billing.dodo-webhook.ts, drizzle/migrations/0011_veritrail_billing.sql], tests: [billing.test.ts], summary: "Checkout and customer portal hosted by Dodo Payments (merchant of record); signed, idempotent webhooks store subscriptions; plan limits resolved on the server."}
+  - {id: CAP-079, name: Team workspaces — members, roles and invitations, area: account, route: /invite, status: live, data: cloud, epic: E12, personas: [gov-lead, approver, auditor], source: [src/features/governance/team.functions.ts, src/features/governance/team-model.ts, src/features/governance/team-panel.tsx, src/features/governance/invite-screen.tsx, drizzle/migrations/0012_veritrail_organization_members.sql], tests: [team.test.ts], summary: "Owner, admin, operator, approver and viewer roles enforced by row-level security; single-use invitation links; operator seats limited by the owner's plan; workspace switcher."}
   - {id: CAP-077, name: Appearance — themes and fonts, area: app, route: "", status: live, data: browser, epic: E15, personas: [visitor, gov-lead], source: [src/lib/theme.ts, src/features/appearance/appearance-panel.tsx, src/styles.css], tests: [theme.test.ts], summary: "Three palettes (Broadsheet, Midnight Gold, Financial Slate); Auto (follows the device), light or dark; and three fonts (Editorial serif, KR Tools, Modern sans), applied before first paint."}
   - {id: CAP-076, name: Workspace app shell, area: app, route: "", status: live, data: none, epic: E15, personas: [gov-lead, owner, approver], source: [src/features/governance/shell.tsx], tests: [app-routing.test.tsx], summary: "One-row header with back, home, workspace name and actions (a More actions menu on phones), side navigation on desktop and bottom tabs on phones."}

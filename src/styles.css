@@ -3180,9 +3180,11 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   }
   .gap-list,
   .pack-list,
-  .roadmap-grid,
-  .plans-grid {
+  .roadmap-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .plans-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .roadmap-grid {
     gap: 28px;
@@ -3258,6 +3260,9 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   }
 }
 @media (min-width: 1400px) {
+  .plans-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
   .portfolio-grid,
   .system-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3382,6 +3387,8 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .advisor-examples button { border: 1px dashed var(--border); border-radius: 999px; background: transparent; color: var(--muted-foreground); padding: 0.35rem 0.75rem; font-size: 0.8rem; cursor: pointer; text-align: left; }
 .advisor-examples button:hover { color: inherit; border-color: var(--accent-foreground); }
 .advisor-error { display: flex; align-items: center; gap: 0.5rem; color: var(--danger-ink); background: var(--danger-surface); border: 1px solid color-mix(in srgb, var(--danger-ink) 35%, transparent); border-radius: 8px; padding: 0.75rem 1rem; }
+.advisor-signin { margin: 0.75rem 0; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card); font-size: 14px; }
+.advisor-signin a { text-decoration: underline; }
 .advisor-results { display: grid; gap: 1.25rem; }
 .advisor-results h3 { display: flex; align-items: center; gap: 0.5rem; margin: 0; }
 .advisor-summary { background: var(--accent); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; }
@@ -3426,4 +3433,165 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 @media (min-width: 640px) {
   .header-actions { display: inline-flex; }
   .app-header .header-overflow { display: none; }
+}
+.plan-includes {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  font-size: 14px;
+  list-style: disc;
+}
+.plan-includes li + li {
+  margin-top: 4px;
+}
+.billing-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  margin: 16px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+.billing-status > svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+.billing-status > div {
+  flex: 1 1 220px;
+}
+.billing-status p {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+.billing-interval {
+  display: inline-flex;
+  margin: 8px 0 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+  background: var(--card);
+}
+.billing-interval button {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.billing-interval button.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.billing-error {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--danger-ink);
+  background: var(--danger-surface);
+}
+.workspace-controls select,
+.team-panel select {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--input);
+  border-radius: 2px;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+}
+.team-panel {
+  margin-bottom: 30px;
+  max-width: 680px;
+}
+.team-panel h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.team-panel h3 {
+  font-size: 16px;
+  margin: 20px 0 8px;
+}
+.team-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+.team-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.team-list li > div {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+.team-list strong,
+.team-list small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.team-list small {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.team-list select {
+  width: auto;
+  margin-top: 0;
+}
+.team-invite label {
+  margin-bottom: 12px;
+}
+.team-link {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  margin-top: 8px;
+}
+.team-link input {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+}
+.invite-screen {
+  max-width: 560px;
+}
+.invite-screen > svg {
+  width: 40px;
+  height: 40px;
+  color: var(--primary);
+}
+.invite-screen h2 {
+  font-size: 24px;
+  margin: 8px 0 12px;
+}
+.invite-screen p {
+  margin-bottom: 16px;
+}
+.invite-banner {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  background: var(--card);
+}
+.invite-banner a {
+  text-decoration: underline;
+}
+.save-status.conflict,
+.save-status.error {
+  color: var(--danger-ink);
 }
