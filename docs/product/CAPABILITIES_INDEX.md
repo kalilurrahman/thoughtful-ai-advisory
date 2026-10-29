@@ -14,7 +14,7 @@ Every app, tool and feature, then every website content page, the control librar
 | [Workspace — assessment and release readiness](#workspace--assessment-and-release-readiness) | 6 | 6 | 0 | 0 | 0 |
 | [Workspace — AI inventory](#workspace--ai-inventory) | 1 | 1 | 0 | 0 | 0 |
 | [Workspace — operational governance](#workspace--operational-governance) | 5 | 5 | 0 | 0 | 0 |
-| [Workspace — guidance and knowledge](#workspace--guidance-and-knowledge) | 6 | 6 | 0 | 0 | 0 |
+| [Workspace — guidance and knowledge](#workspace--guidance-and-knowledge) | 8 | 8 | 0 | 0 | 0 |
 | [Workspace — reports and evidence](#workspace--reports-and-evidence) | 1 | 0 | 0 | 1 | 0 |
 | [Accounts and persistence](#accounts-and-persistence) | 7 | 7 | 0 | 0 | 0 |
 | [Platform console](#platform-console) | 7 | 3 | 4 | 0 | 0 |
@@ -86,6 +86,8 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-045 | Start here | `/start` | Live | Page memory | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Role, stage and goal to recommended chapters, actions and tools. |
 | CAP-046 | Calculators | `/calculators` | Live | Page memory | Chief Risk / Compliance Officer | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage. |
 | CAP-047 | AI governance advisor | `/advisor` | Live | Server | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Concern to mapped controls and actions via the Lovable AI gateway; signed-in only, with a daily allowance per plan; adds corrective actions. |
+| CAP-047a | Site assistant | `/assistant` | Live | Server | AI governance lead, Prospective buyer | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Chat assistant for VERITRAIL site content; retrieval over governed pages plus the Lovable AI gateway; signed-in only. |
+| CAP-047b | Site assistant thread | `/assistant_/$threadId` | Live | Server | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Individual assistant conversation thread. |
 
 ### Workspace — reports and evidence
 
@@ -140,7 +142,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 ## Website content
 
-57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,291 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
+57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,441 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
 
 ### Home
 
@@ -181,7 +183,7 @@ Every app, tool and feature, then every website content page, the control librar
 |---|---|---|---|---|---|---|---|
 | Compliance readiness, without compliance claims | `/compliance` | page | How VERITRAIL helps organize evidence against NIST AI RMF, ISO/IEC 42001 and the EU AI Act — indicative mappings, a gap-analysis method and honest limits. | 529 | 2 | CAP-002 Website content pages | [S01.2](EPICS_AND_STORIES.md#s012) |
 | NIST AI Risk Management Framework and VERITRAIL | `/compliance/nist-ai-rmf` | page | How VERITRAIL controls relate indicatively to the NIST AI RMF 1.0 functions Govern, Map, Measure and Manage, with subcategory-level mappings and known gaps. | 861 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
-| ISO/IEC 42001 and VERITRAIL | `/compliance/iso-42001` | page | How VERITRAIL controls support an ISO/IEC 42001 AI management system across clauses 4–10 and Annex A — indicative mappings for readiness, not certification. | 842 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
+| ISO/IEC 42001 and VERITRAIL | `/compliance/iso-42001` | page | How VERITRAIL controls support an ISO/IEC 42001 AI management system across clauses 4–10 and Annex A — indicative mappings for readiness, not certification. | 845 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
 | EU AI Act readiness | `/compliance/eu-ai-act` | page | Prepare evidence for key EU AI Act obligation areas — risk management, data, documentation, logging, transparency, oversight, incidents — with VERITRAIL. | 1132 | 3 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
 | Gap analysis method | `/compliance/gap-analysis` | page | The VERITRAIL gap-analysis method: five evidence statuses, four severities with 30/60/90/180-day remediation SLAs, and a human-reviewed workflow. | 755 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
 
@@ -244,9 +246,9 @@ Every app, tool and feature, then every website content page, the control librar
 
 | Page | Route | Type | What it covers | Words | FAQs | Delivered by | Stories |
 |---|---|---|---|---|---|---|---|
-| Privacy notice | `/legal/privacy` | page | How the VERITRAIL website handles personal data: cookieless analytics, lead data collected and why, retention and your rights. Template pending legal review. | 893 | — | CAP-002 Website content pages | — |
+| Privacy notice | `/legal/privacy` | page | How the VERITRAIL website handles personal data: cookieless analytics, lead data collected and why, retention and your rights. Template pending legal review. | 944 | — | CAP-002 Website content pages | — |
 | Website terms of use | `/legal/terms` | page | Terms for using the VERITRAIL website, free tools and published content, including disclaimers about readiness indicators. Template pending legal review. | 477 | — | CAP-002 Website content pages | — |
-| Responsible AI statement | `/legal/responsible-ai` | page | How VERITRAIL uses AI in its own product: control citations, evidence labels, human approval for high-impact actions, redaction, audit logs, no overclaiming. | 582 | — | CAP-002 Website content pages | — |
+| Responsible AI statement | `/legal/responsible-ai` | page | How VERITRAIL uses AI in its own product: control citations, evidence labels, human approval for high-impact actions, redaction, audit logs, no overclaiming. | 678 | — | CAP-002 Website content pages | — |
 | Subscription, cancellation and refund terms | `/legal/subscription-terms` | page | How VERITRAIL self-serve plans are billed, renewed, changed, cancelled and refunded, with Dodo Payments as merchant of record. Template pending review. | 533 | — | CAP-002 Website content pages | — |
 
 ## Control library
@@ -306,6 +308,8 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-045 | Start here | [S10.4](EPICS_AND_STORIES.md#s104) | `src/features/governance/screens-start.tsx` | **None** |
 | CAP-046 | Calculators | [S10.5](EPICS_AND_STORIES.md#s105) | `src/features/governance/screens-resources.tsx`, `src/features/governance/model.ts` | `governance.test.ts` |
 | CAP-047 | AI governance advisor | [S10.6](EPICS_AND_STORIES.md#s106) | `src/features/governance/screens-advisor.tsx`, `src/features/governance/advisor.functions.ts` | `server-logic.test.ts` |
+| CAP-047a | Site assistant | [S10.7](EPICS_AND_STORIES.md#s107) | `src/routes/assistant.tsx`, `src/features/assistant/assistant.functions.ts` | **None** |
+| CAP-047b | Site assistant thread | [S10.7](EPICS_AND_STORIES.md#s107) | `src/routes/assistant_.$threadId.tsx` | **None** |
 | CAP-048 | Reports and audit pack | [S11.1](EPICS_AND_STORIES.md#s111) | `src/features/governance/evidence-report.ts`, `src/features/governance/evidence-files.ts` | `evidence-export.test.ts`, `export-ui.test.tsx` |
 | CAP-049 | Plans | [S12.3](EPICS_AND_STORIES.md#s123), [S12.4](EPICS_AND_STORIES.md#s124) | `src/routes/plans.tsx`, `src/data/plans.ts` | `plans.test.ts` |
 | CAP-050 | Workspace and account | [S12.2](EPICS_AND_STORIES.md#s122), [S12.5](EPICS_AND_STORIES.md#s125) | `src/features/governance/screens-resources.tsx`, `src/features/governance/workspace-controls.tsx`, `src/features/governance/workspace.functions.ts` | **None** |

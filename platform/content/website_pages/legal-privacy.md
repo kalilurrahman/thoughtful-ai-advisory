@@ -46,11 +46,11 @@ We ask for a **business email address** because our services are for organizatio
 
 ## 4. AI processing
 
-Some features use AI. Before any text is sent to an external model provider, common sensitive-data patterns (for example email addresses, phone numbers, payment card and bank numbers, national identifiers and API keys) are redacted. Redaction is pattern-based and may not catch everything, which is why we ask you not to submit sensitive data. [List model providers and processing locations.] We do not use your submissions to train models [confirm contractual position with each provider]. See our [Responsible AI statement](/legal/responsible-ai/).
+Two signed-in features use an external large-language model: the **workspace AI advisor** and the **site assistant**. The Ask VERITRAIL demo, risk triage, guardrail generator and maturity self-assessment are fully deterministic and do not call any model. Before any text is sent to a model provider, common sensitive-data patterns (for example email addresses, phone numbers, payment card and bank numbers, national identifiers and API keys) are redacted. Redaction is pattern-based and may not catch everything, which is why we ask you not to submit sensitive data. [List model providers and processing locations.] We do not use your submissions to train models [confirm contractual position with each provider]. See our [Responsible AI statement](/legal/responsible-ai/).
 
 ## 5. Sharing
 
-We share personal data only with service providers who process it on our behalf under contract — [hosting provider], [email delivery provider], [model provider(s)] — and where required by law. When you buy a plan, Dodo Payments acts as our merchant of record and processes your payment and billing details under its own privacy policy; see our [subscription terms](/legal/subscription-terms/). [List sub-processors or link to a sub-processor list.]
+We share personal data only with service providers who process it on our behalf under contract — [hosting provider], [email delivery provider], [model provider(s)], [CRM provider, e.g. HubSpot] — and where required by law. When you buy a plan, Dodo Payments acts as our merchant of record and processes your payment and billing details under its own privacy policy; see our [subscription terms](/legal/subscription-terms/). [List sub-processors or link to a sub-processor list.]
 
 ## 6. International transfers
 
@@ -64,7 +64,7 @@ We share personal data only with service providers who process it on our behalf 
 | Lead and enquiry records | [24 months] after last interaction, then deleted or anonymized |
 | Generated assessment reports | [24 months] after generation |
 | Newsletter subscription | Until you unsubscribe, plus a consent record kept for [the period required to demonstrate consent] |
-| Ask VERITRAIL demo conversations | [30 days], redacted |
+| Ask VERITRAIL demo | Not stored — the demo is fully deterministic and runs in the browser; no conversation data is retained |
 | Audit log entries relating to your request | [Period required for security and accountability] |
 
 ## 8. Your rights

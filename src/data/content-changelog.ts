@@ -4,6 +4,13 @@ import type { ContentChange } from "@/features/governance/content-changelog-mode
 // Historical dates are verified against repository commits 39568a0, 4f24938 and 8763950.
 export const CONTENT_CHANGES: readonly ContentChange[] = [
   {
+    id: "legal-ai-processing-accuracy",
+    date: "2026-10-29",
+    title: "Legal pages: AI-processing rows corrected",
+    summary:
+      "The Responsible AI statement and privacy notice now accurately describe which features use an external model (workspace advisor, site assistant) and which are deterministic (Ask VERITRAIL demo, risk triage, guardrail generator, maturity assessment). The CRM processor is disclosed. The ISO 42001 scope sentence is attributed.",
+  },
+  {
     id: "plans-and-subscription-terms",
     date: "2026-10-29",
     title: "Plans, subscription terms and privacy notice",

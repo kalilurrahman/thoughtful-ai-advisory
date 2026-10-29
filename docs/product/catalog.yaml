@@ -501,6 +501,17 @@ epics:
         routes: [/advisor]
         tests: [server-logic.test.ts]
         gaps: [Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in.]
+      - id: S10.7
+        persona: gov-lead
+        want: to ask questions about VERITRAIL pages and features in a chat assistant
+        so_that: I can find relevant guidance without navigating the site
+        status: done
+        acceptance:
+          - Given a question, when submitted, then the server retrieves matching site content and the model answers with source citations.
+          - Given no API key configured, when opened, then the assistant says it is not configured.
+        routes: [/assistant, /assistant_/$threadId]
+        tests: []
+        gaps: [Uses the Lovable AI gateway (LOVABLE_API_KEY).]
 
   - id: E11
     title: Reports and audit evidence
@@ -1116,6 +1127,8 @@ capabilities:
   - {id: CAP-045, name: Start here, area: guide, route: /start, status: live, data: memory, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-start.tsx], tests: [], summary: "Role, stage and goal to recommended chapters, actions and tools."}
   - {id: CAP-046, name: Calculators, area: guide, route: /calculators, status: live, data: memory, epic: E10, personas: [cro], source: [src/features/governance/screens-resources.tsx, src/features/governance/model.ts], tests: [governance.test.ts], summary: "Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage."}
   - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [server-logic.test.ts], summary: "Concern to mapped controls and actions via the Lovable AI gateway; signed-in only, with a daily allowance per plan; adds corrective actions."}
+  - {id: CAP-047a, name: Site assistant, area: guide, route: /assistant, status: live, data: server, epic: E10, personas: [gov-lead, visitor], source: [src/routes/assistant.tsx, src/features/assistant/assistant.functions.ts], tests: [], summary: "Chat assistant for VERITRAIL site content; retrieval over governed pages plus the Lovable AI gateway; signed-in only."}
+  - {id: CAP-047b, name: Site assistant thread, area: guide, route: /assistant_/$threadId, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/routes/assistant_.$threadId.tsx], tests: [], summary: "Individual assistant conversation thread."}
   - {id: CAP-048, name: Reports and audit pack, area: report, route: /export, status: preview, data: none, epic: E11, personas: [auditor, gov-lead], source: [src/features/governance/evidence-report.ts, src/features/governance/evidence-files.ts], tests: [evidence-export.test.ts, export-ui.test.tsx], summary: "PDF, DOCX, XLSX and PPTX packs generated in the browser, labelled demo previews."}
   - {id: CAP-049, name: Plans, area: account, route: /plans, status: live, data: none, epic: E12, personas: [visitor], source: [src/routes/plans.tsx, src/data/plans.ts], tests: [plans.test.ts], summary: "Free, Team, Business and Enterprise plans from one catalogue, and the Governance Baseline; prices shown at checkout."}
   - {id: CAP-050, name: Workspace and account, area: account, route: /more, status: live, data: cloud, epic: E12, personas: [gov-lead], source: [src/features/governance/screens-resources.tsx, src/features/governance/workspace-controls.tsx, src/features/governance/workspace.functions.ts], tests: [], summary: "Sign-in entry, rename, Save and Restore, links to every workspace tool."}

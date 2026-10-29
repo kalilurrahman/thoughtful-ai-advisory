@@ -21,7 +21,9 @@ VERITRAIL helps organizations govern AI. That obliges us to govern our own use o
 
 | Feature | Role of AI | Role of deterministic logic |
 |---|---|---|
-| VERITRAIL Agent and Ask VERITRAIL demo | Interpreting questions, drafting answers, assessments, gap registers and reports | Tool permissions, approval routing, citation checks, prohibited-claim checks, audit logging |
+| VERITRAIL Agent (workspace, signed in) | An external large-language model interprets your governance concern and drafts recommended areas and actions, with each recommendation citing a VERITRAIL control | Tool permissions, approval routing, citation checks, prohibited-claim checks, redaction of common sensitive-data patterns before the call, daily usage quota, audit logging |
+| Site assistant (website, signed in) | An external large-language model answers questions about VERITRAIL pages and features, drawing on a retrieval step over the site content | The retrieval step and source citations are deterministic; the model sees only page excerpts, not your workspace data |
+| Ask VERITRAIL demo (website, no sign-in) | None — fully deterministic | Intent routing, retrieval and templated, cited composition; no model, no network call, no data stored |
 | Maturity self-assessment | None in scoring | Scoring, levels, flags and action plans are rule-based and published |
 | Risk triage | None in tiering | Tier suggestions come from published rules with citations |
 | Guardrail generator and VERITRAIL Shield | None in runtime policy evaluation | Draft policies are generated from VERITRAIL rules; runtime evaluation is rule-based, versioned and logged |
@@ -55,7 +57,7 @@ AI-generated content in VERITRAIL is identified as such (IS-08). Drafts are labe
 - AI-generated drafts can be wrong, incomplete or poorly suited to a particular organization. They are inputs to human judgement.
 - Pattern-based redaction and prompt-injection detection reduce risk but do not eliminate it.
 - Framework mappings are indicative interpretations and may lag changes in standards and law. The control library is versioned and reviewed quarterly.
-- We have not verified our content against regulatory changes after 2025; EU AI Act timelines must be checked against the current Official Journal text and amendments.
+- EU AI Act timelines were updated in October 2026 for Regulation (EU) 2026/1744 (the Digital Omnibus); they must still be checked against the current Official Journal text before reliance.
 
 ## Governing our own AI
 
@@ -63,6 +65,6 @@ We apply the same framework to VERITRAIL itself. Our commitments: our AI feature
 
 ## Questions or concerns
 
-If you believe an VERITRAIL output is wrong, misleading or harmful, please [contact us](/contact/). We review every report.
+If you believe a VERITRAIL output is wrong, misleading or harmful, please [contact us](/contact/). We review every report.
 
 {{cta:demo}}

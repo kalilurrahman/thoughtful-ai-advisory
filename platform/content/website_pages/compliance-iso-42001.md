@@ -20,7 +20,7 @@ updated: 2026-10-21
 
 {{disclaimer}}
 
-ISO/IEC 42001:2023 specifies requirements for establishing, implementing, maintaining and continually improving an **AI management system (AIMS)**. Like other ISO management-system standards, its clauses 4–10 follow the harmonized structure — context, leadership, planning, support, operation, performance evaluation and improvement — and Annex A provides a reference set of AI-specific controls that organizations consider when treating AI risks.
+ISO describes ISO/IEC 42001:2023 as specifying requirements for establishing, implementing, maintaining and continually improving an **AI management system (AIMS)**. Like other ISO management-system standards, its clauses 4–10 follow the harmonized structure — context, leadership, planning, support, operation, performance evaluation and improvement — and Annex A provides a reference set of AI-specific controls that organizations consider when treating AI risks.
 
 Organizations pursuing 42001 typically struggle less with understanding the standard than with operating it: keeping an AI inventory current, running impact assessments consistently, and retaining documented information that an auditor can sample. That is where VERITRAIL helps.
 
