@@ -499,6 +499,18 @@ epics:
         routes: [/advisor]
         tests: [server-logic.test.ts]
         gaps: [Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in.]
+        capabilities: [CAP-047]
+      - id: S10.7
+        persona: gov-lead
+        want: to ask the site where things are and what guidance says, and keep my conversations
+        so_that: I find the right page and can return to earlier answers
+        status: done
+        capabilities: [CAP-078, CAP-079]
+        acceptance:
+          - Given a signed-in user, when they ask a question, then the answer cites matching site pages and the thread is saved privately at its own address.
+        routes: [/assistant]
+        tests: []
+        gaps: [Signed-out visitors see a sign-in prompt instead of the chat.]
 
   - id: E11
     title: Reports and audit evidence
