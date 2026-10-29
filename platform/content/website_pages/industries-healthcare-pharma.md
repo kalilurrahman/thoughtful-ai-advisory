@@ -11,7 +11,7 @@ schema_type: WebPage
 primary_cta: baseline
 secondary_cta: assessment
 faq:
-  - q: "Can VERITRAIL tell us whether our AI is a medical device?"
+  - q: "Ca VERITRAIL tell us whether our AI is a medical device?"
     a: "No. Whether software qualifies as a medical device depends on its intended purpose and the applicable device regulations, and is a regulatory determination. VERITRAIL records intended purpose and flags systems for regulatory review (EI-04, AO-07)."
   - q: "How does VERITRAIL work with GxP computerized system validation?"
     a: "VERITRAIL does not replace validation. Its change triggers (GL-04), validation evidence (GL-05) and technical documentation (GL-06) can be aligned with your existing validation and quality processes so that AI-specific changes — such as prompt or model updates — are not missed."

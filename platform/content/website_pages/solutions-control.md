@@ -11,7 +11,7 @@ schema_type: Service
 primary_cta: demo
 secondary_cta: baseline
 faq:
-  - q: "Can VERITRAIL Control approve use cases automatically?"
+  - q: "Ca VERITRAIL Control approve use cases automatically?"
     a: "It can route and pre-populate decisions, but approvals are made by the human approvers defined in your approval matrix. Risk-tier changes and exception approvals always require a named human approver."
   - q: "Does Control replace our existing GRC or ticketing tools?"
     a: "Not necessarily. Control holds the AI-specific workflow and evidence; decisions and records can be exported to existing GRC or ticketing systems. Integration scope is agreed during onboarding."

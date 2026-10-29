@@ -45,7 +45,7 @@ Every governance activity depends on knowing what exists. You cannot assess, app
 | EI-07 Agent and tool registry | Every agent, the tools, APIs, plugins and data stores it can access, and its permitted actions | Critical / agentic | Agent registry entries; tool/permission manifest per agent |
 | EI-08 Third-party and vendor AI inventory | Vendor AI products, embedded AI features and foundation-model providers with contract and DPA details | High / third-party | Vendor AI register; contract/DPA references |
 | EI-09 Shadow AI discovery | Periodic discovery of unregistered AI use, reconciled into the inventory | Medium / all AI | Discovery scan reports; reconciliation records |
-| EI-10 Dependency and integration mapping | Upstream and downstream dependencies for material systems | Medium / high-risk | Dependency map; integration inventory |
+| EI-10 Dependency and integration mapping | Upstream and downstream dependencies for material systems | Medium-tier / EU high-risk | Dependency map; integration inventory |
 | EI-11 Inventory attestation and recertification | Owners periodically attest records are complete and accurate | Medium / all AI | Attestation records; exceptions for stale records |
 | EI-12 Use-case intake register | Every proposed use case captured through standard intake before build or procurement | High / all AI | Intake form; intake register with status |
 

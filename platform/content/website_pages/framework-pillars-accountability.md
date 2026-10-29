@@ -45,7 +45,7 @@ The Accountability & Operating Model pillar establishes the decision structure e
 | AO-08 Responsible AI principles and objectives | Measurable responsible-AI objectives aligned to values and appetite | Medium / all AI | Principles; objectives with metrics; leadership approval |
 | AO-09 Third-party AI accountability | Accountability for vendor AI, including provider/deployer/customer responsibility allocation | Medium / third-party | Responsibility allocation (RACI or contract schedule); vendor AI owners |
 | AO-10 Prohibited and restricted AI use policy | Prohibited, restricted and conditionally permitted uses; every use case screened | Critical / all AI | Prohibited/restricted list; intake screening records |
-| AO-11 Stakeholder engagement and feedback | Feedback from affected individuals, users and internal stakeholders acted on | Medium / high-risk | Feedback channel; feedback log; actions taken |
+| AO-11 Stakeholder engagement and feedback | Feedback from affected individuals, users and internal stakeholders acted on | Medium-tier / EU high-risk | Feedback channel; feedback log; actions taken |
 | AO-12 Governance resourcing | Budget, people and tooling sufficient for the organization's scale | Medium / all AI | Governance budget; staffing plan; tooling inventory |
 
 {{controls:AO-01,AO-02,AO-04,AO-10}}

@@ -1,6 +1,6 @@
 ---
-title: "Book an VERITRAIL Governance Baseline — 4–6 week AI governance engagement"
-h1: "Book an VERITRAIL Governance Baseline"
+title: "Book a VERITRAIL Governance Baseline — 4–6 week AI governance engagement"
+h1: "Book a VERITRAIL Governance Baseline"
 slug: /contact/book-governance-baseline/
 description: "A fixed-scope 4–6 week engagement: inventory up to 25 AI systems, validate maturity with evidence, review agents, and get a gap register and roadmap."
 section: contact

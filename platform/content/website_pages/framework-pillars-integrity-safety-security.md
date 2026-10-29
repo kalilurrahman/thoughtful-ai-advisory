@@ -36,11 +36,11 @@ This pillar contains 16 controls — the largest in the framework — because it
 
 | Control | Objective | Priority / scope | Evidence |
 |---|---|---|---|
-| IS-05 Bias and fairness testing | Bias and discriminatory outcomes tested before release and periodically | High / high-risk | Fairness test plan and results; mitigation records |
-| IS-06 Safety and harm evaluation | Safety risks and unintended harms evaluated | High / high-risk | Harm analysis; safety evaluation; residual-risk sign-off |
-| IS-07 Accuracy and robustness testing | Accuracy and robustness measured, including adversarial conditions | High / high-risk | Accuracy metrics with thresholds; robustness results |
+| IS-05 Bias and fairness testing | Bias and discriminatory outcomes tested before release and periodically | High-tier / EU high-risk | Fairness test plan and results; mitigation records |
+| IS-06 Safety and harm evaluation | Safety risks and unintended harms evaluated | High-tier / EU high-risk | Harm analysis; safety evaluation; residual-risk sign-off |
+| IS-07 Accuracy and robustness testing | Accuracy and robustness measured, including adversarial conditions | High-tier / EU high-risk | Accuracy metrics with thresholds; robustness results |
 | IS-08 Transparency and AI disclosures | Users informed when interacting with AI or when AI materially influences a decision | High / all AI | Disclosure text and placement; explanation approach |
-| IS-09 Human oversight design | Review, override, escalation and appeal proportionate to decision impact | Critical / high-risk | Oversight design; override/appeal procedures; oversight records |
+| IS-09 Human oversight design | Review, override, escalation and appeal proportionate to decision impact | Critical-priority / EU high-risk | Oversight design; override/appeal procedures; oversight records |
 
 ### Security and runtime control
 

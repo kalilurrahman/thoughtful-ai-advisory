@@ -24,7 +24,7 @@ updated: 2026-10-21
 ## Four ways to start
 
 - [Run the AI Governance Maturity Self-Assessment](/tools/maturity-assessment/) — 24 questions, about 8 minutes, an indicative score across 8 domains.
-- [Book an VERITRAIL Governance Baseline](/contact/book-governance-baseline/) — a fixed-scope 4–6 week engagement that validates your position with evidence.
+- [Book a VERITRAIL Governance Baseline](/contact/book-governance-baseline/) — a fixed-scope 4–6 week engagement that validates your position with evidence.
 - [Explore the VERITRAIL Agent](/solutions/agent/) — a governance copilot that cites controls and labels evidence.
 - [Download the VERITRAIL Enterprise Blueprint](/resources/blueprint/) — the operating model, control library and rollout plan in one document.
 

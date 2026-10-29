@@ -11,7 +11,7 @@ schema_type: WebPage
 primary_cta: guardrails
 secondary_cta: assessment
 faq:
-  - q: "Our enterprise customers send AI security questionnaires. Can VERITRAIL help?"
+  - q: "Our enterprise customers send AI security questionnaires. Ca VERITRAIL help?"
     a: "Yes, as a source of structured, labelled evidence. The VERITRAIL Agent can draft answers from your VERITRAIL records with control citations, for your team to review. Sending responses externally requires human approval."
   - q: "Will VERITRAIL slow down our release cadence?"
     a: "It should not, if tiers are calibrated. Low-risk feature changes follow a light path; material changes to models, prompts or agent tools trigger reassessment proportionate to risk (GL-04)."

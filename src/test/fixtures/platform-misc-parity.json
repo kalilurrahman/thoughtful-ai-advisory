@@ -6702,7 +6702,7 @@
    }
   },
   "website": {
-   "summary": "pages=57 total_words=31336 min=143 max=1335",
+   "summary": "pages=57 total_words=31346 min=143 max=1335",
    "rows": [
     {
      "name": "about.md",
@@ -6813,7 +6813,7 @@
      "slug": "/framework/pillars/accountability/",
      "section": "framework",
      "template": "page",
-     "words": 807,
+     "words": 808,
      "faq": 2
     },
     {
@@ -6821,7 +6821,7 @@
      "slug": "/framework/pillars/integrity-safety-security/",
      "section": "framework",
      "template": "page",
-     "words": 925,
+     "words": 929,
      "faq": 2
     },
     {
@@ -6829,7 +6829,7 @@
      "slug": "/framework/pillars/inventory/",
      "section": "framework",
      "template": "page",
-     "words": 833,
+     "words": 834,
      "faq": 2
     },
     {
@@ -6837,7 +6837,7 @@
      "slug": "/framework/pillars/lifecycle/",
      "section": "framework",
      "template": "page",
-     "words": 832,
+     "words": 833,
      "faq": 2
     },
     {
@@ -6845,7 +6845,7 @@
      "slug": "/framework/pillars/stewardship-assurance/",
      "section": "framework",
      "template": "page",
-     "words": 798,
+     "words": 801,
      "faq": 2
     },
     {

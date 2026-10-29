@@ -1,5 +1,5 @@
 ---
-title: "Request an VERITRAIL demo"
+title: "Request a VERITRAIL demo"
 h1: "Request a demo"
 slug: /contact/request-demo/
 description: "See VERITRAIL with your own scenarios: AI inventory and risk tiering, lifecycle approvals, runtime guardrails for agents and evidence packs."

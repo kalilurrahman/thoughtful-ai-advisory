@@ -40,13 +40,13 @@ The assurance pillar closes the loop. Controls that are never tested drift into 
 | SE-02 Evidence repository and retention | Controlled evidence repository with retention aligned to obligations | High / all AI | Repository; retention policy; access controls |
 | SE-03 Governance metrics and leadership reporting | KPIs reported to leadership and used for corrective action | Medium / all AI | KPI dashboard; leadership pack; actions arising |
 | SE-04 AI incident management and reporting | Detect, triage, contain, report and learn from AI incidents, including regulatory notification where required | High / all AI | Incident procedure; incident log; post-incident reviews |
-| SE-05 Audit-ready evidence packs | Evidence pack for any material system on request | High / high-risk | Sample evidence pack; time-to-produce metric |
+| SE-05 Audit-ready evidence packs | Evidence pack for any material system on request | High-tier / EU high-risk | Sample evidence pack; time-to-produce metric |
 | SE-06 Corrective action and continuous improvement | Nonconformities and corrective actions tracked to closure | Medium / all AI | Corrective action register; closure evidence |
 | SE-07 Management review | Periodic review of the governance system's suitability and effectiveness | Medium / all AI | Review minutes; decisions and actions |
 | SE-08 Immutable action logging | Decisions, tool calls, policy decisions and approvals in tamper-evident, retained logs | Critical / all AI | Log configuration; tamper-evidence mechanism; retention; sample extract |
-| SE-09 Post-market monitoring plan | Post-market / post-deployment monitoring plan for high-risk systems | High / high-risk | Monitoring plan; monitoring outputs |
+| SE-09 Post-market monitoring plan | Post-market / post-deployment monitoring plan for high-risk systems | High-tier / EU high-risk | Monitoring plan; monitoring outputs |
 | SE-10 Independent review and internal audit | Independent review or internal audit on a risk-based cycle | Medium / all AI | Audit plan; audit reports; management responses |
-| SE-11 Stakeholder transparency reporting | Information to deployers, customers and affected parties on capabilities, limits and governance | Medium / high-risk | Instructions for use; customer-facing AI documentation; transparency reports |
+| SE-11 Stakeholder transparency reporting | Information to deployers, customers and affected parties on capabilities, limits and governance | Medium-tier / EU high-risk | Instructions for use; customer-facing AI documentation; transparency reports |
 | SE-12 Model performance and drift monitoring | Performance and data/concept drift monitored against thresholds | High / all AI | Drift metrics and thresholds; alert history; review records |
 
 {{controls:SE-01,SE-04,SE-05,SE-08}}
