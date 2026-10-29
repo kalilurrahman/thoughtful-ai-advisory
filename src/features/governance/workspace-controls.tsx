@@ -3,19 +3,25 @@ import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { FloppyDisk, SignIn } from "@phosphor-icons/react";
 import { lovable } from "@/integrations/lovable/index";
-import { saveWorkspace, loadWorkspace, listWorkspaces } from "./workspace.functions";
+import { loadWorkspace, listWorkspaces } from "./workspace.functions";
 import { ROLE_LABELS, canEdit, type MemberRole } from "./team-model";
 import { useGovernance } from "./store";
-import { SOURCES } from "@/data/governance";
-import { track } from "@/features/platform/analytics";
-import { firstActivation } from "./activation";
+import { saveStatusText } from "./autosave-model";
 export function WorkspaceControls() {
-  const { state, dispatch, userId, workspaceId, workspaceName, workspaceRole, setWorkspace } =
-    useGovernance();
+  const {
+    userId,
+    workspaceId,
+    workspaceName,
+    workspaceRole,
+    setWorkspace,
+    saveStatus = "idle",
+    dirty = false,
+    saveNow,
+    adoptWorkspace,
+  } = useGovernance();
   const [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false);
-  const save = useServerFn(saveWorkspace),
-    load = useServerFn(loadWorkspace),
+  const load = useServerFn(loadWorkspace),
     list = useServerFn(listWorkspaces);
   const [workspaces, setWorkspaces] = useState<{ id: string; name: string; role: MemberRole }[]>(
     [],
@@ -37,8 +43,7 @@ export function WorkspaceControls() {
     try {
       const r = await load({ data: { organizationId: id } });
       if (r) {
-        dispatch({ type: "load", state: r.state });
-        setWorkspace(r.id, r.name, r.role);
+        adoptWorkspace?.(r);
         setMessage(`Opened ${r.name}.`);
       }
     } catch {
@@ -62,29 +67,19 @@ export function WorkspaceControls() {
     }
   }
   async function saveCurrent() {
+    if (!saveNow) return;
     setBusy(true);
     setMessage("");
-    try {
-      const r = await save({
-        data: { organizationId: workspaceId, name: workspaceName, state, sources: SOURCES },
-      });
-      setWorkspace(r.id, workspaceName);
-      setMessage("Workspace saved.");
-      if (r.id && firstActivation(r.id, state))
-        track("tool_use", { tool: "workspace", milestone: "activated" });
-    } catch {
-      setMessage("Could not save. Your current work is still on this screen.");
-    } finally {
-      setBusy(false);
-    }
+    const saved = await saveNow();
+    setMessage(saved ? "Workspace saved." : "");
+    setBusy(false);
   }
   async function reload() {
     setBusy(true);
     try {
       const r = await load({ data: workspaceId ? { organizationId: workspaceId } : undefined });
       if (r) {
-        dispatch({ type: "load", state: r.state });
-        setWorkspace(r.id, r.name, r.role);
+        adoptWorkspace?.(r);
         setMessage("Saved workspace restored.");
       } else setMessage("No saved workspace yet.");
     } catch {
@@ -140,6 +135,17 @@ export function WorkspaceControls() {
           <Button variant="outline" className="full-button" disabled={busy} onClick={reload}>
             Restore saved workspace
           </Button>
+          {workspaceId && !readOnly ? (
+            <p role="status" className={"workspace-message save-status " + saveStatus}>
+              {saveStatusText(saveStatus, dirty) || "Changes save automatically."}
+            </p>
+          ) : (
+            !workspaceId && (
+              <p className="workspace-message">
+                Save once to create your private workspace; after that, changes save automatically.
+              </p>
+            )
+          )}
         </>
       ) : (
         <>

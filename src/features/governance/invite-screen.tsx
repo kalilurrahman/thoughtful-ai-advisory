@@ -28,7 +28,7 @@ function writePending(token: string | null) {
 }
 
 export function InviteScreen({ token: fromUrl }: { token?: string | undefined }) {
-  const { userId, dispatch, setWorkspace } = useGovernance();
+  const { userId, adoptWorkspace } = useGovernance();
   const accept = useServerFn(acceptInvitation),
     load = useServerFn(loadWorkspace);
   const navigate = useNavigate();
@@ -55,10 +55,7 @@ export function InviteScreen({ token: fromUrl }: { token?: string | undefined })
       }
       writePending(null);
       const ws = await load({ data: { organizationId: res.organizationId } });
-      if (ws) {
-        dispatch({ type: "load", state: ws.state });
-        setWorkspace(ws.id, ws.name, ws.role);
-      }
+      if (ws) adoptWorkspace?.(ws);
       await navigate({ to: "/workspace" });
     } catch {
       setMessage("You were not added: the service could not be reached. Try again.");

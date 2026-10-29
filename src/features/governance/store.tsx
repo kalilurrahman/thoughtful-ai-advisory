@@ -1,8 +1,19 @@
-import { useContext, useReducer, useState, useEffect, type ReactNode } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
-import { loadWorkspace } from "./workspace.functions";
-import type { MemberRole } from "./team-model";
+import { loadWorkspace, saveWorkspace } from "./workspace.functions";
+import { canEdit, type MemberRole } from "./team-model";
+import { AUTOSAVE_DELAY_MS, shouldAutosave, snapshotKey, type SaveStatus } from "./autosave-model";
+import { SOURCES } from "@/data/governance";
+import { firstActivation } from "./activation";
 import { GovernanceContext as Context } from "./context";
 import { recordDecision, withdrawDecision } from "./decision-model";
 import type { GovernanceDecision } from "./decision-schema";
@@ -304,13 +315,73 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
       return a.state;
   }
 }
+export interface LoadedWorkspace {
+  id: string;
+  name: string;
+  role: MemberRole;
+  revision: number | null;
+  state: GovernanceState;
+}
+
 export function GovernanceProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, undefined, initialState);
   const [userId, setUserId] = useState<string | null>(null),
     [workspaceId, setId] = useState<string | null>(null),
     [workspaceName, setName] = useState("Acme Health"),
-    [workspaceRole, setRole] = useState<MemberRole | null>(null);
-  const load = useServerFn(loadWorkspace);
+    [workspaceRole, setRole] = useState<MemberRole | null>(null),
+    [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
+  const load = useServerFn(loadWorkspace),
+    save = useServerFn(saveWorkspace);
+  // The revision and content last loaded or saved, so autosave knows what is new.
+  const revision = useRef<number | null>(null);
+  const savedKey = useRef<string | null>(null);
+  const latest = useRef({ state, workspaceId, workspaceName });
+  latest.current = { state, workspaceId, workspaceName };
+
+  const adoptWorkspace = useCallback((w: LoadedWorkspace) => {
+    dispatch({ type: "load", state: w.state });
+    setId(w.id);
+    setName(w.name);
+    setRole(w.role);
+    revision.current = w.revision;
+    savedKey.current = snapshotKey(w.state, w.name);
+    setSaveStatus("idle");
+  }, []);
+
+  const saveNow = useCallback(async (): Promise<boolean> => {
+    const { state: s, workspaceId: id, workspaceName: name } = latest.current;
+    const key = snapshotKey(s, name);
+    setSaveStatus("saving");
+    try {
+      const r = await save({
+        data: {
+          organizationId: id,
+          name,
+          state: s,
+          sources: SOURCES,
+          revision: revision.current,
+        },
+      });
+      if (!r.ok) {
+        setSaveStatus("conflict");
+        return false;
+      }
+      revision.current = r.revision;
+      savedKey.current = key;
+      if (firstActivation(r.id, s))
+        void import("@/features/platform/analytics").then(({ track }) =>
+          track("tool_use", { tool: "workspace", milestone: "activated" }),
+        );
+      setId(r.id);
+      setRole((role) => role ?? "owner");
+      setSaveStatus("saved");
+      return true;
+    } catch {
+      setSaveStatus("error");
+      return false;
+    }
+  }, [save]);
+
   useEffect(() => {
     let active = true;
     let current: string | null = null;
@@ -321,17 +392,15 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
       current = id;
       setId(null);
       setRole(null);
+      revision.current = null;
+      savedKey.current = null;
+      setSaveStatus("idle");
       setName(id ? "My organization" : "Acme Health");
       dispatch({ type: "load", state: id ? blankState() : initialState() });
       if (id) {
         try {
           const result = await load();
-          if (active && current === id && result) {
-            dispatch({ type: "load", state: result.state });
-            setId(result.id);
-            setName(result.name);
-            setRole(result.role);
-          }
+          if (active && current === id && result) adoptWorkspace(result);
         } catch {
           /* Explicit restore control allows retry without losing demo access. */
         }
@@ -351,7 +420,34 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
       active = false;
       subscription.unsubscribe();
     };
-  }, [load]);
+  }, [load, adoptWorkspace]);
+
+  // Autosave a saved workspace shortly after an editor stops changing it.
+  const dirty =
+    workspaceId !== null &&
+    savedKey.current !== null &&
+    snapshotKey(state, workspaceName) !== savedKey.current;
+  const autosave = shouldAutosave({
+    userId,
+    workspaceId,
+    role: workspaceRole,
+    status: saveStatus,
+    dirty,
+  });
+  useEffect(() => {
+    if (!autosave) return;
+    const timer = window.setTimeout(() => void saveNow(), AUTOSAVE_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [autosave, state, workspaceName, saveNow]);
+
+  // Warn before leaving with edits that have not reached the database.
+  useEffect(() => {
+    if (!dirty || !canEdit(workspaceRole)) return;
+    const warn = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [dirty, workspaceRole]);
+
   return (
     <Context.Provider
       value={{
@@ -361,6 +457,10 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
         workspaceId,
         workspaceName,
         workspaceRole,
+        saveStatus,
+        dirty,
+        saveNow,
+        adoptWorkspace,
         setWorkspace: (id, name, role) => {
           setId(id);
           setName(name);

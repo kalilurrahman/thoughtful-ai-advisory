@@ -256,7 +256,7 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 
 **Next (close the known gaps).**
 
-1. Autosave and a workspace switcher; reconcile the save function (see risk R1).
+1. ~~Autosave and a workspace switcher~~ — built, with conflict detection (migration 0013); apply migrations 0010–0013.
 2. Real-device install and offline verification; Google Play and Microsoft Store listings
    ([release guide](../veritrail/PWA_RELEASE_GUIDE.md)).
 
@@ -277,7 +277,7 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 | R2 | The advisor calls the Lovable AI gateway | Cost and abuse exposure | Sign-in required and a daily allowance per plan (`consume_ai_quota`); monitor usage |
 | R3 | No confirmation e-mails on lead forms | Missed follow-up | Add a sending provider (HTTP API); lead forms are already rate-limited per client |
 | R4 | Placeholder legal text, contact address and `site_url` | Not ready for public launch or store listings | Legal review; set the production domain before submission |
-| R5 | No autosave; one workspace per user | Lost work; poor fit for teams | Autosave and workspace selection (Next) |
+| R5 | Teammates editing the same workspace | Overwritten work | Autosave saves only from the latest revision (migration 0013); a conflict stops autosave and asks the user to restore |
 | R6 | Blueprint PDF is public, so its form gate is cosmetic | Lower lead capture than reported | Serve the file from a signed URL after submission, or drop the gate |
 | R7 | Readers mistake readiness for compliance | Reputational and legal exposure | Disclaimers, indicative labels and the prohibited-claim scan (G5) |
 

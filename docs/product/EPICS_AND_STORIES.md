@@ -17,7 +17,7 @@
 | [E09](#e09--remediation-roadmap-and-lifecycle-checklist) | Remediation roadmap and lifecycle checklist | Workspace — assessment and release readiness | Live | 2 | 2 | 0 | 0 |
 | [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 6 | 6 | 0 | 0 |
 | [E11](#e11--reports-and-audit-evidence) | Reports and audit evidence | Workspace — reports and evidence | Preview | 1 | 1 | 0 | 0 |
-| [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 5 | 2 | 3 | 0 |
+| [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 5 | 3 | 2 | 0 |
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
 | [E14](#e14--administration-and-privacy-first-analytics) | Administration and privacy-first analytics | Administration and analytics | Live | 2 | 2 | 0 | 0 |
 | [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 6 | 6 | 0 | 0 |
@@ -668,21 +668,23 @@ Known gaps:
 
 ### S12.2
 
-**As an AI governance lead**, I want to save and restore my workspace, so that my work survives across devices.
+**As an AI governance lead**, I want to save and restore my workspace, with my team, without losing work, so that my work survives across devices and nobody overwrites a colleague.
 
-*Status: Partial*
+*Status: Done*
 
 Acceptance criteria:
 
 - Given I am signed in, when I choose Save, then the whole workspace is written in one call scoped to my organisation by RLS.
+- Given a saved workspace and an editing role, when I stop changing it for a moment, then it saves automatically and says whether all changes are saved.
+- Given a teammate saved a newer version, when my save arrives, then nothing is overwritten, autosave stops and I am told to restore their version.
+- Given unsaved edits, when I try to leave the page, then the browser asks me to confirm.
 - Given I choose Restore, when it loads, then the saved snapshot replaces the in-memory state.
 
-**Routes:** `/more` · **Capabilities:** CAP-050 · **Tests:** none yet
+**Routes:** `/more` · **Capabilities:** CAP-050 · **Tests:** `autosave.test.ts`, `autosave-provider.test.tsx`
 
 Known gaps:
 
-- No autosave; unsaved changes are lost on reload.
-- Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied.
+- Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied; conflict detection needs migration 0013.
 
 ### S12.3
 
@@ -1052,8 +1054,7 @@ Every gap recorded against a story, in one list for planning.
 | [S10.6](#s106) | E10 | Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in. |
 | [S11.1](#s111) | E11 | The three packs differ only in title and subject. |
 | [S12.1](#s121) | E12 | No SSO/SAML or MFA. |
-| [S12.2](#s122) | E12 | No autosave; unsaved changes are lost on reload. |
-| [S12.2](#s122) | E12 | Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied. |
+| [S12.2](#s122) | E12 | Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied; conflict detection needs migration 0013. |
 | [S12.4](#s124) | E12 | Needs a Dodo Payments account |
 | [S12.4](#s124) | E12 | products and webhook secret (DODO_* settings). |
 | [S12.4](#s124) | E12 | Seat |

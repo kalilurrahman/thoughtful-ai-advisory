@@ -81,6 +81,14 @@ export const workspaceState = z.object({
 export function isMissingFunction(error: { code?: string } | null): boolean {
   return error?.code === "PGRST202";
 }
+export type SaveResult =
+  { ok: true; id: string; revision: number | null } | { ok: false; conflict: true };
+
+/** PostgreSQL serialization_failure: save_workspace_checked found a newer revision. */
+export function isConflict(error: { code?: string } | null): boolean {
+  return error?.code === "40001";
+}
+
 export const saveWorkspace = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
@@ -89,26 +97,44 @@ export const saveWorkspace = createServerFn({ method: "POST" })
       name: z.string().trim().min(1).max(120),
       state: workspaceState,
       sources: z.array(z.record(z.string(), z.string())),
+      /** The revision this client last loaded or saved; null when unknown. */
+      revision: z.number().int().min(0).nullable().optional(),
     }),
   )
-  .handler(async ({ data, context }) => {
+  .handler(async ({ data, context }): Promise<SaveResult> => {
     const args = {
       p_org: data.organizationId ?? "00000000-0000-0000-0000-000000000000",
       p_name: data.name,
       p_state: JSON.parse(JSON.stringify(data.state)),
       p_sources: JSON.parse(JSON.stringify(data.sources)),
     };
-    // Migration 0009 renames save_aegis_workspace to save_veritrail_workspace. Call the new name
-    // and fall back to the old one while it is missing, so Save works before and after 0009.
     const rpc = context.supabase.rpc as unknown as (
       fn: string,
-      a: typeof args,
-    ) => Promise<{ data: string | null; error: { code?: string } | null }>;
+      a: object,
+    ) => Promise<{ data: unknown; error: { code?: string } | null }>;
+    // save_workspace_checked (migration 0013) refuses a save from a stale revision, so autosave
+    // never overwrites a teammate's newer work. Without a known revision, or before 0013 is
+    // applied, the plain save below is used.
+    if (data.revision != null || data.organizationId === null) {
+      const checked = await rpc.call(context.supabase, "save_workspace_checked", {
+        ...args,
+        p_revision: data.revision ?? 0,
+      });
+      if (isConflict(checked.error)) return { ok: false, conflict: true };
+      if (!checked.error) {
+        const out = checked.data as { id: string; revision: number };
+        return { ok: true, id: out.id, revision: out.revision };
+      }
+      if (!isMissingFunction(checked.error))
+        throw new Error("Unable to save workspace. Please retry.");
+    }
+    // Migration 0009 renames save_aegis_workspace to save_veritrail_workspace. Call the new name
+    // and fall back to the old one while it is missing, so Save works before and after 0009.
     let result = await rpc.call(context.supabase, "save_veritrail_workspace", args);
     if (isMissingFunction(result.error))
       result = await rpc.call(context.supabase, "save_aegis_workspace", args);
     if (result.error) throw new Error("Unable to save workspace. Please retry.");
-    return { id: result.data };
+    return { ok: true, id: result.data as string, revision: null };
   });
 export const loadWorkspace = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -123,6 +149,7 @@ export const loadWorkspace = createServerFn({ method: "POST" })
     const org = orgs.find((o) => o.owner_id === context.userId) ?? orgs[0];
     if (!org) return null;
     const role = await roleIn(context.supabase, org.id, org.owner_id === context.userId);
+    const revision = await revisionOf(context.supabase, org.id);
     const [a, g, s, r, i, d, c, m, ca] = await Promise.all([
       context.supabase.from("assessments").select("answers").eq("organization_id", org.id).single(),
       context.supabase
@@ -184,7 +211,7 @@ export const loadWorkspace = createServerFn({ method: "POST" })
       roadmap: r.data.items,
       qi: 0,
     });
-    return { id: org.id, name: org.name, role, state };
+    return { id: org.id, name: org.name, role, revision, state };
   });
 export const listWorkspaces = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -225,6 +252,30 @@ async function memberRoles(client: unknown, userId: string): Promise<Map<string,
       .filter((r) => known.has(r.role))
       .map((r) => [r.organization_id, r.role as MemberRole]),
   );
+}
+
+/** The workspace revision (migration 0013), or null before that migration is applied. */
+async function revisionOf(client: unknown, orgId: string): Promise<number | null> {
+  // organizations.revision is newer than the generated Supabase types.
+  const { data, error } = await (
+    client as {
+      from(table: "organizations"): {
+        select(columns: "revision"): {
+          eq(
+            column: "id",
+            value: string,
+          ): {
+            maybeSingle(): Promise<{ data: { revision: number } | null; error: unknown }>;
+          };
+        };
+      };
+    }
+  )
+    .from("organizations")
+    .select("revision")
+    .eq("id", orgId)
+    .maybeSingle();
+  return error || !data ? null : Number(data.revision);
 }
 
 /** The caller's role in an organization; the owner is known without a query. */

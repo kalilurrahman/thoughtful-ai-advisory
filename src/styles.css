@@ -3591,3 +3591,7 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .invite-banner a {
   text-decoration: underline;
 }
+.save-status.conflict,
+.save-status.error {
+  color: var(--danger-ink);
+}

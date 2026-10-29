@@ -538,14 +538,18 @@ epics:
         gaps: [No SSO/SAML or MFA.]
       - id: S12.2
         persona: gov-lead
-        want: to save and restore my workspace
-        so_that: my work survives across devices
-        status: partial
+        want: to save and restore my workspace, with my team, without losing work
+        so_that: my work survives across devices and nobody overwrites a colleague
+        status: done
         acceptance:
           - Given I am signed in, when I choose Save, then the whole workspace is written in one call scoped to my organisation by RLS.
+          - Given a saved workspace and an editing role, when I stop changing it for a moment, then it saves automatically and says whether all changes are saved.
+          - Given a teammate saved a newer version, when my save arrives, then nothing is overwritten, autosave stops and I am told to restore their version.
+          - Given unsaved edits, when I try to leave the page, then the browser asks me to confirm.
           - Given I choose Restore, when it loads, then the saved snapshot replaces the in-memory state.
         routes: [/more]
-        gaps: [No autosave; unsaved changes are lost on reload., Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied.]
+        tests: [autosave.test.ts, autosave-provider.test.tsx]
+        gaps: [Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied; conflict detection needs migration 0013.]
       - id: S12.3
         persona: visitor
         want: to see the plans and what each includes

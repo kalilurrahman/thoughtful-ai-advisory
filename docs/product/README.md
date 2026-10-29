@@ -20,9 +20,9 @@ the platform console and the installable app — described four ways, from one c
 | Website content pages | 57 in 10 sections, about 33k words |
 | Controls in the library | 64 across 5 pillars |
 | Glossary terms | 38 in 4 topics |
-| Epics / user stories | 16 / 59 (51 done, 4 partial, 4 planned) |
+| Epics / user stories | 16 / 59 (52 done, 3 partial, 4 planned) |
 | Use cases | 24 |
-| Known gaps recorded against stories | 30 |
+| Known gaps recorded against stories | 29 |
 
 ## Personas
 
