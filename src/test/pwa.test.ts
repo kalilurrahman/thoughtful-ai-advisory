@@ -228,7 +228,7 @@ describe("web app manifest", () => {
   });
 
   it("links every shortcut to a real page", () => {
-    const routes = new Set(["/framework/controls", "/workspace"]);
+    const routes = new Set(["/framework/controls", "/workspace", "/advisor"]);
     for (const s of manifest.shortcuts)
       expect(routes.has(s.url) || getSitePage(s.url) !== undefined, s.url).toBe(true);
   });
