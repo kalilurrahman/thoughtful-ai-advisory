@@ -1,6 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CONTROLS } from "@/data/governance";
-import { adviceFromResponse, extractText } from "@/features/governance/advisor.functions";
+import { getPlan } from "@/data/plans";
+import {
+  adviceFromResponse,
+  extractText,
+  quotaExceededMessage,
+} from "@/features/governance/advisor.functions";
+import { isMissingFunction } from "@/features/governance/workspace.functions";
 import {
   BUSINESS_EMAIL_ERROR,
   NOT_RECORDED_ERROR,
@@ -185,6 +191,23 @@ function rlsClient(result: { data: unknown; error: { message: string } | null })
   };
   return { supabase: chain, calls };
 }
+
+describe("AI advisor allowance", () => {
+  it("names the plan's daily allowance and points free plans at an upgrade", () => {
+    const free = quotaExceededMessage(getPlan("free"));
+    expect(free).toContain("5 advisor requests on the Free plan");
+    expect(free).toMatch(/upgrade/);
+    expect(quotaExceededMessage(getPlan("enterprise"))).not.toMatch(/upgrade/);
+  });
+});
+
+describe("workspace save function name", () => {
+  it("falls back to the old function only when the new one is missing", () => {
+    expect(isMissingFunction({ code: "PGRST202" })).toBe(true);
+    expect(isMissingFunction({ code: "42501" })).toBe(false);
+    expect(isMissingFunction(null)).toBe(false);
+  });
+});
 
 describe("admin membership check", () => {
   it("looks up only the caller's own row in site_admins", async () => {

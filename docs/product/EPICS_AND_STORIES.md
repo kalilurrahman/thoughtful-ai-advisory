@@ -607,6 +607,8 @@ Acceptance criteria:
 - Given a concern of 20–4,000 characters, when submitted, then the server returns a summary, 3–6 mapped controls and 3–5 actions, dropping unknown control IDs.
 - Given "Add to corrective actions", when chosen, then the actions are created with due dates by priority.
 - Given a busy, out-of-credit, unreadable or incomplete answer from the gateway, when received, then the advisor says so instead of failing.
+- Given a visitor who is not signed in, when the advisor opens, then it asks them to sign in and sends nothing.
+- Given a user who has used the plan's daily allowance, when submitted, then nothing is sent to the model and the advisor names the allowance and when it resets.
 
 **Routes:** `/advisor` · **Capabilities:** CAP-047 · **Tests:** `server-logic.test.ts`
 

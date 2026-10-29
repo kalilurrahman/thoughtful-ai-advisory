@@ -85,7 +85,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-044 | Knowledge hub | `/knowledge` | Live | None | Chief Risk / Compliance Officer, AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | 24 laws, standards and guidance sources by type and jurisdiction. |
 | CAP-045 | Start here | `/start` | Live | Page memory | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Role, stage and goal to recommended chapters, actions and tools. |
 | CAP-046 | Calculators | `/calculators` | Live | Page memory | Chief Risk / Compliance Officer | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage. |
-| CAP-047 | AI governance advisor | `/advisor` | Live | Server | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions. |
+| CAP-047 | AI governance advisor | `/advisor` | Live | Server | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Concern to mapped controls and actions via the Lovable AI gateway; signed-in only, with a daily allowance per plan; adds corrective actions. |
 
 ### Workspace — reports and evidence
 

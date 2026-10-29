@@ -71,6 +71,13 @@
       "when": 1792736982889,
       "tag": "0009_veritrail_rename_workspace_function",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1792800000000,
+      "tag": "0010_veritrail_ai_usage_quota",
+      "breakpoints": true
     }
   ]
 }

@@ -76,6 +76,10 @@ export const workspaceState = z.object({
   roadmap: z.array(item),
   qi: z.number().int().min(0).max(11),
 });
+/** PostgREST reports an RPC to a function that does not exist as PGRST202. */
+export function isMissingFunction(error: { code?: string } | null): boolean {
+  return error?.code === "PGRST202";
+}
 export const saveWorkspace = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
@@ -87,12 +91,21 @@ export const saveWorkspace = createServerFn({ method: "POST" })
     }),
   )
   .handler(async ({ data, context }) => {
-    const result = await context.supabase.rpc("save_aegis_workspace", {
+    const args = {
       p_org: data.organizationId ?? "00000000-0000-0000-0000-000000000000",
       p_name: data.name,
       p_state: JSON.parse(JSON.stringify(data.state)),
       p_sources: JSON.parse(JSON.stringify(data.sources)),
-    });
+    };
+    // Migration 0009 renames save_aegis_workspace to save_veritrail_workspace. Call the new name
+    // and fall back to the old one while it is missing, so Save works before and after 0009.
+    const rpc = context.supabase.rpc as unknown as (
+      fn: string,
+      a: typeof args,
+    ) => Promise<{ data: string | null; error: { code?: string } | null }>;
+    let result = await rpc.call(context.supabase, "save_veritrail_workspace", args);
+    if (isMissingFunction(result.error))
+      result = await rpc.call(context.supabase, "save_aegis_workspace", args);
     if (result.error) throw new Error("Unable to save workspace. Please retry.");
     return { id: result.data };
   });

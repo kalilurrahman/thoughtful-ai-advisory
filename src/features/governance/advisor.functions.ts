@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { CONTROLS, PILLARS } from "@/data/governance";
+import { getPlan, type Plan } from "@/data/plans";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { correctiveActionPriorities } from "./actions-schema";
 
 const inputSchema = z.object({
@@ -140,11 +142,38 @@ export function adviceFromResponse(status: number, body: unknown): AdvisorResult
   return { ok: true, summary: p.summary, areas, actions };
 }
 
+/** Why a request was refused when the caller has used the plan's daily advisor allowance. */
+export function quotaExceededMessage(plan: Plan): string {
+  const n = plan.limits.advisorPerDay;
+  const base = `You have used today's ${n} advisor ${n === 1 ? "request" : "requests"} on the ${plan.name} plan.`;
+  return plan.id === "enterprise"
+    ? `${base} The allowance resets at midnight UTC.`
+    : `${base} It resets at midnight UTC, or upgrade on the Plans page for a larger allowance.`;
+}
+
+export const QUOTA_UNAVAILABLE =
+  "The advisor allowance could not be checked, so nothing was sent. Try again shortly.";
+
+// Model calls cost money, so the advisor needs a signed-in user and counts each request against
+// a daily allowance (consume_ai_quota, migration 0010) before calling the gateway.
 export const recommendGovernance = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => inputSchema.parse(input))
-  .handler(async ({ data }): Promise<AdvisorResult> => {
+  .handler(async ({ data, context }): Promise<AdvisorResult> => {
     const key = process.env["LOVABLE_API_KEY"];
     if (!key) return { ok: false, error: "The AI advisor is not configured yet." };
+    const plan = getPlan("free");
+    // consume_ai_quota is newer than the generated Supabase types.
+    const rpc = context.supabase.rpc as unknown as (
+      fn: "consume_ai_quota",
+      args: { p_feature: "advisor"; p_limit: number },
+    ) => Promise<{ data: boolean | null; error: unknown }>;
+    const quota = await rpc.call(context.supabase, "consume_ai_quota", {
+      p_feature: "advisor",
+      p_limit: plan.limits.advisorPerDay,
+    });
+    if (quota.error) return { ok: false, error: QUOTA_UNAVAILABLE };
+    if (quota.data !== true) return { ok: false, error: quotaExceededMessage(plan) };
     const catalogue = CONTROLS.map(
       (c) =>
         `${c.id} | ${c.code} | ${PILLARS[c.p]?.name ?? ""} (${PILLARS[c.p]?.nist ?? ""}) | ${c.text}`,
