@@ -215,8 +215,7 @@ VERITRAIL treats agent governance as a first-class concern:
   (AO-07) must be confirmed by qualified counsel.
 - It does not verify evidence automatically: *Verified* status requires a named human reviewer.
 - It does not cover obligations specific to general-purpose AI model providers in depth.
-- Regulatory applicability dates (including EU AI Act timelines) must be verified against the current Official Journal text and any amendments, such as the Commission's 2025 "Digital Omnibus" proposals; this repository has
-  not verified post-2025 changes.
+- Regulatory applicability dates (including EU AI Act timelines) must be verified against the current EUR-Lex text. Regulation (EU) 2026/1744 (the Digital Omnibus), in force from 27 July 2026, moved stand-alone Annex III high-risk obligations to 2 December 2027 and Annex I product-embedded systems to 2 August 2028.
 
 See the coverage-gap section of [`docs/COMPLIANCE_MAPPING.md`](../docs/COMPLIANCE_MAPPING.md).
 

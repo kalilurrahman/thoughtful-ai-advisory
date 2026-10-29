@@ -4,6 +4,13 @@ import type { ContentChange } from "@/features/governance/content-changelog-mode
 // Historical dates are verified against repository commits 39568a0, 4f24938 and 8763950.
 export const CONTENT_CHANGES: readonly ContentChange[] = [
   {
+    id: "eu-ai-act-digital-omnibus",
+    date: "2026-10-29",
+    title: "EU AI Act — Digital Omnibus regulatory refresh",
+    summary:
+      "Updated seven pages and the glossary to reflect Regulation (EU) 2026/1744 (the Digital Omnibus), in force from 27 July 2026: stand-alone Annex III high-risk obligations move to 2 December 2027; Annex I product-embedded systems to 2 August 2028. Stale '2025 proposals' caveats replaced with adopted-regulation references throughout.",
+  },
+  {
     id: "plans-and-subscription-terms",
     date: "2026-10-29",
     title: "Plans, subscription terms and privacy notice",

@@ -42,14 +42,14 @@ VERITRAIL exists to turn each of those questions into a governed, evidenced answ
 
 ## Six layers, one governance system
 
-| Layer | What it does | VERITRAIL capability |
-|---|---|---|
-| 1. Baseline | Establishes where you are today, with evidence status for every finding | [VERITRAIL Assess](/solutions/assess/) and the [maturity self-assessment](/tools/maturity-assessment/) |
-| 2. System of record | One owned, classified inventory of AI systems, models, agents and vendor AI | [VERITRAIL Register](/solutions/register/) |
-| 3. Lifecycle control | Risk-proportionate intake, approval, change, monitoring and retirement gates | [VERITRAIL Control](/solutions/control/) |
-| 4. Runtime protection | Policy-as-code guardrails for prompts, responses and agent tool calls | [VERITRAIL Shield](/solutions/shield/) |
-| 5. Assurance | Control testing, tamper-evident logs, incidents and audit-ready evidence packs | [VERITRAIL Assurance](/solutions/assurance/) |
-| 6. Copilot | A governance agent that drafts assessments, gap registers and reports with citations | [VERITRAIL Agent](/solutions/agent/) |
+| # | Layer | What it does | VERITRAIL capability |
+|---|---|---|---|
+| 1 | **AI System of Record** | Single, owned, classified inventory of AI systems, models, prompts, agents, tools, data sources and vendor AI | [VERITRAIL Register](/solutions/register/) |
+| 2 | **Assessment & Risk Engine** | Maturity self-assessment, use-case intake triage, risk tiering, impact assessment, gap analysis | [VERITRAIL Assess](/solutions/assess/) and the [maturity self-assessment](/tools/maturity-assessment/) |
+| 3 | **Policy & Control Library** | 64 versioned controls with evidence expectations, owners and framework mappings; organisational policy templates | [VERITRAIL Control](/solutions/control/) |
+| 4 | **Lifecycle Governance** | Approval gates, change and reassessment triggers, exceptions, go-live readiness, periodic review, retirement | [VERITRAIL Control](/solutions/control/) |
+| 5 | **Runtime Shield** | Policy-as-code evaluation of prompts, responses and tool calls; human approval; rate limits; kill switch | [VERITRAIL Shield](/solutions/shield/) |
+| 6 | **Assurance & Evidence** | Tamper-evident logs, evidence repository, control testing, incidents, monitoring, evidence packs, leadership reporting | [VERITRAIL Assurance](/solutions/assurance/) |
 
 ## Five pillars, 64 controls
 

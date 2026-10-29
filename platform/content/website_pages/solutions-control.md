@@ -57,7 +57,7 @@ VERITRAIL Control turns your AI policy into workflows. Every use case passes int
 |---|---|---|---|
 | Prohibited-review | Legal review before further work | Governance forum with Legal | Proceed only on documented legal opinion |
 | High | Full assessment and all triggered modules | Governance forum | Human oversight design, adversarial testing, runtime policy in Enforce, monitoring thresholds, 6-month review |
-| Medium | Standard assessment | Delegated risk lead | Disclosure, redaction, monitoring, annual review |
+| Medium | Standard assessment | Risk lead + business owner | Disclosure, redaction, monitoring, annual review |
 | Low | Intake and screening | Business owner | Attestation at review cadence |
 
 This is an illustrative starting point; your forum should set and approve its own matrix in line with risk appetite (AO-04).

@@ -55,7 +55,7 @@ AI-generated content in VERITRAIL is identified as such (IS-08). Drafts are labe
 - AI-generated drafts can be wrong, incomplete or poorly suited to a particular organization. They are inputs to human judgement.
 - Pattern-based redaction and prompt-injection detection reduce risk but do not eliminate it.
 - Framework mappings are indicative interpretations and may lag changes in standards and law. The control library is versioned and reviewed quarterly.
-- We have not verified our content against regulatory changes after 2025; EU AI Act timelines must be checked against the current Official Journal text and amendments.
+- EU AI Act timelines were amended by Regulation (EU) 2026/1744 (the Digital Omnibus, in force 27 July 2026); verify all dates against the current EUR-Lex text.
 
 ## Governing our own AI
 
