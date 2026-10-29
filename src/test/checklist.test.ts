@@ -33,7 +33,7 @@ describe("workspace lifecycle checklist", () => {
       riskTriage: {
         profile: { name: system.name },
         result: {
-          tier: "Low",
+          tier: "Minimal",
           score: 0,
           provisional: true,
           factors: [],

@@ -407,7 +407,7 @@ describe("VERITRAIL Agent behaviour", () => {
     );
     expect(agent.audit.query({ action: "approval.resolve_denied" })).toHaveLength(1);
     expect(agent.resolveApproval(apr, "approve", APPROVER).status).toBe("approved");
-    expect(agent.store.list("systems")[0]?.risk_tier).toBe("High");
+    expect(agent.store.list("systems")[0]?.risk_tier).toBe("High-risk");
     expect(agent.audit.verify().ok).toBe(true);
   });
 
