@@ -1,6 +1,6 @@
 ---
 title: "VERITRAIL Assurance — AI control testing, incidents and evidence packs"
-h1: "VERITRAIL Assurance: prove AI governance works, continuously"
+h1: "VERITRAIL Assurance: demonstrate that AI governance works, continuously"
 slug: /solutions/assurance/
 description: "VERITRAIL Assurance tests AI controls, retains evidence, logs actions tamper-evidently, manages AI incidents and produces audit-ready evidence packs on request."
 section: solutions

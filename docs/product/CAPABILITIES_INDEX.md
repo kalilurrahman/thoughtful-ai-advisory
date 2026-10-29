@@ -142,13 +142,13 @@ Every app, tool and feature, then every website content page, the control librar
 
 ## Website content
 
-57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,441 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
+57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,440 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
 
 ### Home
 
 | Page | Route | Type | What it covers | Words | FAQs | Delivered by | Stories |
 |---|---|---|---|---|---|---|---|
-| Govern every AI system, agent, and decision with evidence. | `/` | home | VERITRAIL helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously. | 985 | 3 | CAP-001 Home page | [S01.1](EPICS_AND_STORIES.md#s011) |
+| Govern your AI systems, agents, and decisions with evidence. | `/` | home | VERITRAIL helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously. | 985 | 3 | CAP-001 Home page | [S01.1](EPICS_AND_STORIES.md#s011) |
 
 ### Framework
 
@@ -174,7 +174,7 @@ Every app, tool and feature, then every website content page, the control librar
 | VERITRAIL Register: one system of record for every AI system and agent | `/solutions/register` | page | VERITRAIL Register inventories AI systems, models, prompts, data sources, agents, tools and vendor AI with named owners, risk tiers and periodic attestation. | 550 | 2 | CAP-002 Website content pages | — |
 | VERITRAIL Control: risk-proportionate gates from intake to retirement | `/solutions/control` | page | VERITRAIL Control runs AI intake, triage, risk-tiered approvals, change triggers, exceptions and recertification as workflows that produce evidence by default. | 646 | 2 | CAP-002 Website content pages | — |
 | Protect LLM apps and agents at runtime | `/solutions/shield` | page | VERITRAIL Shield evaluates prompts, responses and agent tool calls against versioned policy-as-code: redaction, least privilege, limits and human approval. | 624 | 3 | CAP-002 Website content pages | [S01.4](EPICS_AND_STORIES.md#s014) |
-| VERITRAIL Assurance: prove AI governance works, continuously | `/solutions/assurance` | page | VERITRAIL Assurance tests AI controls, retains evidence, logs actions tamper-evidently, manages AI incidents and produces audit-ready evidence packs on request. | 593 | 2 | CAP-002 Website content pages | — |
+| VERITRAIL Assurance: demonstrate that AI governance works, continuously | `/solutions/assurance` | page | VERITRAIL Assurance tests AI controls, retains evidence, logs actions tamper-evidently, manages AI incidents and produces audit-ready evidence packs on request. | 593 | 2 | CAP-002 Website content pages | — |
 | VERITRAIL Agent: governance work, drafted with citations | `/solutions/agent` | page | The VERITRAIL Agent drafts AI assessments, gap registers and reports, cites VERITRAIL controls, labels evidence status and routes high-impact actions to humans. | 693 | 3 | CAP-002 Website content pages | — |
 
 ### Compliance
@@ -202,7 +202,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 | Page | Route | Type | What it covers | Words | FAQs | Delivered by | Stories |
 |---|---|---|---|---|---|---|---|
-| AI governance tools | `/tools` | page | Free VERITRAIL tools: the 8-minute AI governance maturity self-assessment, use-case risk triage, a runtime guardrail generator and the Ask VERITRAIL demo. | 342 | — | CAP-002 Website content pages | — |
+| AI governance tools | `/tools` | page | Free VERITRAIL tools: the 8-minute AI governance maturity self-assessment, use-case risk triage, a runtime guardrail generator and the Ask VERITRAIL demo. | 341 | — | CAP-002 Website content pages | — |
 | AI Governance Maturity Self-Assessment | `/tools/maturity-assessment` | tool: maturity-assessment | Score your AI governance across 8 weighted domains in about 8 minutes. Get an indicative maturity level, critical flags and a 30/60/90-day action plan. | 362 | 4 | CAP-010 Maturity self-assessment | [S03.1](EPICS_AND_STORIES.md#s031), [S03.2](EPICS_AND_STORIES.md#s032) |
 | Runtime guardrail generator | `/tools/guardrail-generator` | tool: guardrail-generator | Describe an LLM app or AI agent and get a draft risk profile, tool permission matrix, approval rules and an VERITRAIL policy-as-code starting point to review. | 382 | 2 | CAP-012 Guardrail generator | [S03.4](EPICS_AND_STORIES.md#s034) |
 | Ask VERITRAIL (limited demo) | `/tools/ask-veritrail` | tool: ask-veritrail | Try a limited public demo of the VERITRAIL Agent: ask about AI governance controls and framework mappings and get answers that cite VERITRAIL control IDs. | 229 | 2 | CAP-013 Ask VERITRAIL | [S03.5](EPICS_AND_STORIES.md#s035) |

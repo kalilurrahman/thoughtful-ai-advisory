@@ -19,7 +19,7 @@ These tools apply the VERITRAIL Framework to your situation in minutes. They are
 
 | Tool | What it does | Time | Output | Evidence status |
 |---|---|---|---|---|
-| [AI Governance Maturity Self-Assessment](/tools/maturity-assessment/) | Scores your AI governance across 8 weighted domains | About 8 minutes | Indicative score and level on screen; full report with 30/60/90-day plan by email | User-asserted |
+| [AI Governance Maturity Self-Assessment](/tools/maturity-assessment/) | Scores your AI governance across 8 weighted domains | About 8 minutes | Indicative score and level on screen; full report to download (business email required) | User-asserted |
 | [AI use-case risk triage](/tools/risk-triage/) | Suggests a risk tier for one AI use case from a short intake | About 3 minutes | Suggested tier, factors, required assessment modules | Inferred — requires human confirmation |
 | [Runtime guardrail generator](/tools/guardrail-generator/) | Drafts a runtime policy for an LLM app or agent | About 5 minutes | Risk profile, tool permission matrix, draft policy in YAML and JSON | Draft for review |
 | [Ask VERITRAIL](/tools/ask-veritrail/) (limited demo) | Answers questions about the VERITRAIL framework and controls, with citations | — | Answers citing VERITRAIL control IDs | Framework content only |

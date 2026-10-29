@@ -1,7 +1,7 @@
 ---
 title: "VERITRAIL Enterprise — AI governance, runtime guardrails and evidence"
-h1: "Govern every AI system, agent, and decision with evidence."
-lead: "VERITRAIL Enterprise helps organizations inventory AI, assess risk, govern the lifecycle, protect LLM applications and agents at runtime, and prove responsible AI continuously."
+h1: "Govern your AI systems, agents, and decisions with evidence."
+lead: "VERITRAIL Enterprise helps organizations inventory AI, assess risk, govern the lifecycle, protect LLM applications and agents at runtime, and demonstrate responsible AI continuously."
 slug: /
 description: "VERITRAIL helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously."
 section: home
