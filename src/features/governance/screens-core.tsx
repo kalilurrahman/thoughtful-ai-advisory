@@ -92,7 +92,7 @@ export function HomeScreen() {
           </div>
           <p className="muted index-caption">
             {Object.values(state.answers).filter((a) => a.e === 3).length} of {CONTROLS.length}{" "}
-            controls have verified evidence
+            controls have evidence attached
           </p>
           <Button asChild className="overview-cta">
             <Link to="/assess">
@@ -101,7 +101,7 @@ export function HomeScreen() {
           </Button>
         </div>
         <div className="overview-pillars">
-          <Kicker>TILLER pillars · mapped to NIST AI RMF</Kicker>
+          <Kicker>TILLER lenses · mapped to NIST AI RMF</Kicker>
           <div className="pillar-list">
             {PILLARS.map((p, i) => (
               <Button
@@ -325,7 +325,7 @@ export function AssessScreen() {
       </div>
       {a.s >= 3 && a.e !== 3 && (
         <p className="evidence-warning">
-          <WarningCircle weight="duotone" /> Score capped at 2 until evidence is verified.
+          <WarningCircle weight="duotone" /> Score capped at 2 until evidence is attached.
         </p>
       )}
       <Button className="guidance-row" variant="secondary" onClick={() => setDrawer(true)}>
@@ -471,7 +471,7 @@ export function GatesScreen() {
       </div>
       <p className="muted">
         {state.systems.length} registered systems · Workspace assessment · {state.tier}-risk tier ·
-        Pillar floor {gateFloor(state.tier)} on{" "}
+        Lens floor {gateFloor(state.tier)} on{" "}
         {PILLARS.slice(3)
           .map((p) => p.name)
           .join(", ")}

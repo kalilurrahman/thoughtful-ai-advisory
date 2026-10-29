@@ -28,16 +28,16 @@ export function pillarScores(answers: Answers) {
 export const indexScore = (scores: number[]) =>
   Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
 export const maturityBand = (n: number) =>
-  n < 30
-    ? "Nascent"
-    : n < 50
-      ? "Emerging"
-      : n < 70
-        ? "Established"
-        : n < 85
+  n < 40
+    ? "Initial"
+    : n < 60
+      ? "Developing"
+      : n < 75
+        ? "Defined"
+        : n < 90
           ? "Managed"
           : "Optimized";
-export const scoreTone = (n: number) => (n < 45 ? "danger" : n < 70 ? "warning" : "success");
+export const scoreTone = (n: number) => (n < 40 ? "danger" : n < 75 ? "warning" : "success");
 export const gateFloor = (tier: Tier) => ({ High: 70, Medium: 55, Low: 40 })[tier];
 export const gateStatus = (scores: number[], tier: Tier) => {
   const failures = scores.slice(3).filter((n) => n < gateFloor(tier)).length;

@@ -9,9 +9,9 @@ function reportLines(report: EvidenceReport) {
     `VERITRAIL AI governance preview | ${report.workspace}`,
     `Pack: ${report.pack} | Version: ${report.version} | Generated: ${report.generatedAt}`,
     `Index: ${report.index} (${report.maturity}) | Release gate: ${report.gate} | Workspace tier: ${report.tier}`,
-    `Verified evidence: ${report.evidenceVerified} of ${report.assessment.length} controls | AI systems: ${report.inventoryCount} | Open actions: ${report.openActions}`,
+    `Evidence attached: ${report.evidenceAttached} of ${report.assessment.length} controls | AI systems: ${report.inventoryCount} | Open actions: ${report.openActions}`,
     "",
-    "PILLAR SCORES",
+    "LENS SCORES",
     ...report.pillars.map((pillar) => `${pillar.name}: ${pillar.score}%`),
     "",
     "ASSESSMENT RESPONSES AND EVIDENCE",
@@ -139,7 +139,7 @@ async function makeDocx(report: EvidenceReport) {
     if (index === 0) return new Paragraph({ text: line, heading: HeadingLevel.TITLE });
     if (
       [
-        "PILLAR SCORES",
+        "LENS SCORES",
         "ASSESSMENT RESPONSES AND EVIDENCE",
         "AI SYSTEM INVENTORY",
         "ROADMAP AND OWNERS",
@@ -180,7 +180,7 @@ async function makeXlsx(report: EvidenceReport) {
     ["Maturity band", report.maturity],
     ["Release gate (workspace)", report.gate],
     ["Risk tier (workspace)", report.tier],
-    ["Verified evidence controls", report.evidenceVerified],
+    ["Evidence attached controls", report.evidenceAttached],
     ["AI systems", report.inventoryCount],
     ["Open roadmap actions", report.openActions],
     ["Preview limitation", reportCaveats.join(" ")],
@@ -205,7 +205,7 @@ async function makeXlsx(report: EvidenceReport) {
     "Assessment Evidence",
     [
       { header: "Control ID", key: "id", width: 12 },
-      { header: "Pillar", key: "pillar", width: 30 },
+      { header: "Lens", key: "pillar", width: 30 },
       { header: "Control", key: "control", width: 68 },
       { header: "Weight", key: "weight", width: 14 },
       { header: "Score", key: "score", width: 10 },
@@ -432,7 +432,7 @@ async function makePptx(report: EvidenceReport) {
     "Internal working preview - not signed or certified",
   ]);
   addSlide("Executive snapshot", [
-    `Verified evidence: ${report.evidenceVerified} / ${report.assessment.length} controls`,
+    `Evidence attached: ${report.evidenceAttached} / ${report.assessment.length} controls`,
     `AI systems in inventory: ${report.inventoryCount}`,
     `Open roadmap actions: ${report.openActions}`,
     ...reportCaveats,

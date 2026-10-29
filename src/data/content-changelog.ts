@@ -4,6 +4,13 @@ import type { ContentChange } from "@/features/governance/content-changelog-mode
 // Historical dates are verified against repository commits 39568a0, 4f24938 and 8763950.
 export const CONTENT_CHANGES: readonly ContentChange[] = [
   {
+    id: "reconcile-frameworks",
+    date: "2026-10-29",
+    title: "Workspace maturity levels, evidence labels and TILLER terminology aligned",
+    summary:
+      "The workspace now uses the same maturity level names and thresholds as the website (Initial <40, Developing 40-59, Defined 60-74, Managed 75-89, Optimized 90+). The self-selected evidence status formerly called 'Verified' is renamed 'Evidence attached' to distinguish it from the framework's reviewer-verified status. TILLER's six areas are now called 'lenses', not 'pillars', to avoid confusion with the VERITRAIL Framework's five pillars.",
+  },
+  {
     id: "eu-ai-act-digital-omnibus",
     date: "2026-10-29",
     title: "EU AI Act pages updated for Regulation (EU) 2026/1744",

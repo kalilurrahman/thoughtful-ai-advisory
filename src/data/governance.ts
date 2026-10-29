@@ -1,6 +1,6 @@
 // Seed content supplied in the VERITRAIL handoff.
-// The six workspace pillars spell TILLER. `letter` is the display initial; it is not unique
-// (two L pillars), so controls carry a display `code` (T1, I1, L1 … L4, E1, R1) alongside a
+// The six TILLER lenses spell TILLER. `letter` is the display initial; it is not unique
+// (two L lenses), so controls carry a display `code` (T1, I1, L1 … L4, E1, R1) alongside a
 // stable `id` that persisted workspace snapshots key answers and roadmap items on.
 export const PILLARS = [
   { letter: "T", name: "Trust & Accountability", nist: "Govern" },
@@ -218,7 +218,7 @@ export const CONTROLS = [
   },
 ];
 
-export const EV = ["None", "Claimed", "Partial", "Verified"];
+export const EV = ["None", "Claimed", "Partial", "Evidence attached"];
 
 export const SCORE_LABELS = ["None", "Ad hoc", "Defined", "Managed", "Optimized"];
 
@@ -1116,7 +1116,7 @@ export const PACKS = [
     desc: "Index, maturity band, pillar chart, top risks, gate status, recommendations.",
     contents: [
       "VERITRAIL Index & maturity band",
-      "TILLER pillar scores vs targets",
+      "TILLER lens scores vs targets",
       "Release-gate status",
       "Top 5 gaps & recommendations",
     ],

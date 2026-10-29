@@ -15,7 +15,7 @@ export type EvidenceReport = {
   maturity: string;
   gate: string;
   tier: string;
-  evidenceVerified: number;
+  evidenceAttached: number;
   inventoryCount: number;
   openActions: number;
   pillars: { name: string; score: number }[];
@@ -71,7 +71,7 @@ export type EvidenceReport = {
 };
 
 const maturityLabels = ["None", "Ad hoc", "Defined", "Managed", "Optimized"];
-const evidenceLabels = ["None", "Claimed", "Partial", "Verified"];
+const evidenceLabels = ["None", "Claimed", "Partial", "Evidence attached"];
 
 export function buildEvidenceReport(
   state: GovernanceState,
@@ -91,7 +91,7 @@ export function buildEvidenceReport(
     maturity: maturityBand(index),
     gate,
     tier: state.tier,
-    evidenceVerified: Object.values(state.answers).filter((answer) => answer.e === 3).length,
+    evidenceAttached: Object.values(state.answers).filter((answer) => answer.e === 3).length,
     inventoryCount: state.systems.length,
     openActions: state.roadmap.filter((item) => !item.done).length,
     pillars: PILLARS.map((pillar, index) => ({ name: pillar.name, score: scores[index] ?? 0 })),

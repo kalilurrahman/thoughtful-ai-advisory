@@ -412,7 +412,7 @@ export function MoreScreen() {
     {
       to: "/assess",
       name: "TILLER assessment",
-      desc: "Six pillars mapped to NIST AI RMF",
+      desc: "Six lenses mapped to NIST AI RMF",
       icon: CheckCircle,
     },
     { to: "/gates", name: "Release gates", desc: "Readiness by risk tier", icon: TrafficSignal },

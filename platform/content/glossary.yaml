@@ -66,7 +66,7 @@ terms:
     aliases: [TILLER assessment]
     category: method
     definition: >-
-      The assessment and assurance studio in the VERITRAIL workspace. Its six pillars spell
+      The assessment and assurance studio in the VERITRAIL workspace. Its six lenses spell
       TILLER — Trust, Inventory, Lifecycle, Lawfulness, Engineering and Runtime — and each maps
       to a NIST AI RMF function.
   - id: framework-pillar
