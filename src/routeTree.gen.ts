@@ -14,6 +14,7 @@ import { Route as SplatRouteImport } from './routes/$'
 import { Route as ActionsRouteImport } from './routes/actions'
 import { Route as AdvisorRouteImport } from './routes/advisor'
 import { Route as AssessRouteImport } from './routes/assess'
+import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CalculatorsRouteImport } from './routes/calculators'
 import { Route as ChangesRouteImport } from './routes/changes'
@@ -37,6 +38,7 @@ import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as WorkspaceRouteImport } from './routes/workspace'
+import { Route as AssistantThreadIdRouteImport } from './routes/assistant_.$threadId'
 import { Route as PlatformIndexRouteImport } from './routes/platform.index'
 import { Route as PlatformToolRouteImport } from './routes/platform.$tool'
 import { Route as ApiBillingDodoWebhookRouteImport } from './routes/api.billing.dodo-webhook'
@@ -66,6 +68,11 @@ const AdvisorRoute = AdvisorRouteImport.update({
 const AssessRoute = AssessRouteImport.update({
   id: '/assess',
   path: '/assess',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -183,6 +190,11 @@ const WorkspaceRoute = WorkspaceRouteImport.update({
   path: '/workspace',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssistantThreadIdRoute = AssistantThreadIdRouteImport.update({
+  id: '/assistant_/$threadId',
+  path: '/assistant/$threadId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlatformIndexRoute = PlatformIndexRouteImport.update({
   id: '/platform/',
   path: '/platform/',
@@ -216,6 +228,7 @@ export interface FileRoutesByFullPath {
   '/actions': typeof ActionsRoute
   '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
+  '/assistant': typeof AssistantRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
   '/changes': typeof ChangesRoute
@@ -239,6 +252,7 @@ export interface FileRoutesByFullPath {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
+  '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
   '/platform/': typeof PlatformIndexRoute
   '/api/billing/dodo-webhook': typeof ApiBillingDodoWebhookRoute
@@ -251,6 +265,7 @@ export interface FileRoutesByTo {
   '/actions': typeof ActionsRoute
   '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
+  '/assistant': typeof AssistantRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
   '/changes': typeof ChangesRoute
@@ -274,6 +289,7 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
+  '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
   '/platform': typeof PlatformIndexRoute
   '/api/billing/dodo-webhook': typeof ApiBillingDodoWebhookRoute
@@ -287,6 +303,7 @@ export interface FileRoutesById {
   '/actions': typeof ActionsRoute
   '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
+  '/assistant': typeof AssistantRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
   '/changes': typeof ChangesRoute
@@ -310,6 +327,7 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
+  '/assistant_/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
   '/platform/': typeof PlatformIndexRoute
   '/api/billing/dodo-webhook': typeof ApiBillingDodoWebhookRoute
@@ -324,6 +342,7 @@ export interface FileRouteTypes {
     | '/actions'
     | '/advisor'
     | '/assess'
+    | '/assistant'
     | '/auth'
     | '/calculators'
     | '/changes'
@@ -347,6 +366,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
+    | '/assistant/$threadId'
     | '/platform/$tool'
     | '/platform/'
     | '/api/billing/dodo-webhook'
@@ -359,6 +379,7 @@ export interface FileRouteTypes {
     | '/actions'
     | '/advisor'
     | '/assess'
+    | '/assistant'
     | '/auth'
     | '/calculators'
     | '/changes'
@@ -382,6 +403,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
+    | '/assistant/$threadId'
     | '/platform/$tool'
     | '/platform'
     | '/api/billing/dodo-webhook'
@@ -394,6 +416,7 @@ export interface FileRouteTypes {
     | '/actions'
     | '/advisor'
     | '/assess'
+    | '/assistant'
     | '/auth'
     | '/calculators'
     | '/changes'
@@ -417,6 +440,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
+    | '/assistant_/$threadId'
     | '/platform/$tool'
     | '/platform/'
     | '/api/billing/dodo-webhook'
@@ -430,6 +454,7 @@ export interface RootRouteChildren {
   ActionsRoute: typeof ActionsRoute
   AdvisorRoute: typeof AdvisorRoute
   AssessRoute: typeof AssessRoute
+  AssistantRoute: typeof AssistantRoute
   AuthRoute: typeof AuthRoute
   CalculatorsRoute: typeof CalculatorsRoute
   ChangesRoute: typeof ChangesRoute
@@ -453,6 +478,7 @@ export interface RootRouteChildren {
   StartRoute: typeof StartRoute
   TemplatesRoute: typeof TemplatesRoute
   WorkspaceRoute: typeof WorkspaceRoute
+  AssistantThreadIdRoute: typeof AssistantThreadIdRoute
   PlatformToolRoute: typeof PlatformToolRoute
   PlatformIndexRoute: typeof PlatformIndexRoute
   ApiBillingDodoWebhookRoute: typeof ApiBillingDodoWebhookRoute
@@ -495,6 +521,13 @@ declare module '@tanstack/react-router' {
       path: '/assess'
       fullPath: '/assess'
       preLoaderRoute: typeof AssessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -658,6 +691,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkspaceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assistant_/$threadId': {
+      id: '/assistant_/$threadId'
+      path: '/assistant/$threadId'
+      fullPath: '/assistant/$threadId'
+      preLoaderRoute: typeof AssistantThreadIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/platform/': {
       id: '/platform/'
       path: '/platform'
@@ -702,6 +742,7 @@ const rootRouteChildren: RootRouteChildren = {
   ActionsRoute: ActionsRoute,
   AdvisorRoute: AdvisorRoute,
   AssessRoute: AssessRoute,
+  AssistantRoute: AssistantRoute,
   AuthRoute: AuthRoute,
   CalculatorsRoute: CalculatorsRoute,
   ChangesRoute: ChangesRoute,
@@ -725,6 +766,7 @@ const rootRouteChildren: RootRouteChildren = {
   StartRoute: StartRoute,
   TemplatesRoute: TemplatesRoute,
   WorkspaceRoute: WorkspaceRoute,
+  AssistantThreadIdRoute: AssistantThreadIdRoute,
   PlatformToolRoute: PlatformToolRoute,
   PlatformIndexRoute: PlatformIndexRoute,
   ApiBillingDodoWebhookRoute: ApiBillingDodoWebhookRoute,

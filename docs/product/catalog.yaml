@@ -501,6 +501,18 @@ epics:
         routes: [/advisor]
         tests: [server-logic.test.ts]
         gaps: [Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in.]
+        capabilities: [CAP-047]
+      - id: S10.7
+        persona: gov-lead
+        want: to ask the site where things are and what guidance says, and keep my conversations
+        so_that: I find the right page and can return to earlier answers
+        status: done
+        capabilities: [CAP-078, CAP-079]
+        acceptance:
+          - Given a signed-in user, when they ask a question, then the answer cites matching site pages and the thread is saved privately at its own address.
+        routes: [/assistant]
+        tests: []
+        gaps: [Signed-out visitors see a sign-in prompt instead of the chat.]
 
   - id: E11
     title: Reports and audit evidence
@@ -1115,7 +1127,9 @@ capabilities:
   - {id: CAP-044, name: Knowledge hub, area: guide, route: /knowledge, status: live, data: none, epic: E10, personas: [cro, gov-lead], source: [src/features/governance/screens-resources.tsx, src/data/governance.ts], tests: [resources.test.ts], summary: "24 laws, standards and guidance sources by type and jurisdiction."}
   - {id: CAP-045, name: Start here, area: guide, route: /start, status: live, data: memory, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-start.tsx], tests: [], summary: "Role, stage and goal to recommended chapters, actions and tools."}
   - {id: CAP-046, name: Calculators, area: guide, route: /calculators, status: live, data: memory, epic: E10, personas: [cro], source: [src/features/governance/screens-resources.tsx, src/features/governance/model.ts], tests: [governance.test.ts], summary: "Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage."}
-  - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [server-logic.test.ts], summary: "Concern to mapped controls and actions via the Lovable AI gateway; signed-in only, with a daily allowance per plan; adds corrective actions."}
+  - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [server-logic.test.ts], summary: "Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions."}
+  - {id: CAP-078, name: Site assistant, area: guide, route: /assistant, status: live, data: cloud, epic: E10, personas: [gov-lead], source: [src/features/assistant/assistant-screen.tsx, src/features/assistant/assistant.functions.ts], tests: [], summary: "Chat grounded in site content with page links; private saved threads for signed-in users."}
+  - {id: CAP-079, name: Site assistant conversation, area: guide, route: "/assistant_/$threadId", status: live, data: cloud, epic: E10, personas: [gov-lead], source: [src/features/assistant/assistant-screen.tsx], tests: [], summary: "A saved assistant thread at its own address."}
   - {id: CAP-048, name: Reports and audit pack, area: report, route: /export, status: preview, data: none, epic: E11, personas: [auditor, gov-lead], source: [src/features/governance/evidence-report.ts, src/features/governance/evidence-files.ts], tests: [evidence-export.test.ts, export-ui.test.tsx], summary: "PDF, DOCX, XLSX and PPTX packs generated in the browser, labelled demo previews."}
   - {id: CAP-049, name: Plans, area: account, route: /plans, status: live, data: none, epic: E12, personas: [visitor], source: [src/routes/plans.tsx, src/data/plans.ts], tests: [plans.test.ts], summary: "Free, Team, Business and Enterprise plans from one catalogue, and the Governance Baseline; prices shown at checkout."}
   - {id: CAP-050, name: Workspace and account, area: account, route: /more, status: live, data: cloud, epic: E12, personas: [gov-lead], source: [src/features/governance/screens-resources.tsx, src/features/governance/workspace-controls.tsx, src/features/governance/workspace.functions.ts], tests: [], summary: "Sign-in entry, rename, Save and Restore, links to every workspace tool."}
