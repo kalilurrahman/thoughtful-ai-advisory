@@ -25,7 +25,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![PWA Ready](https://img.shields.io/badge/PWA-Offline%20%26%20Installable-5A0FC8?style=for-the-badge&logo=pwa)](https://thoughtful-ai-governance.lovable.app/)
 
-[Live Demo](https://thoughtful-ai-governance.lovable.app/) • [Video Walkthrough](#-video-walkthrough--interactive-demo) • [Landing Showcase](#-public-landing-site-showcase) • [Workspace Showcase](#-operational-governance-workspace-showcase) • [Architecture](#-platform-architecture--route-map) • [Quick Start](#-quick-start--local-development)
+[Live Demo](https://thoughtful-ai-governance.lovable.app/) • [Video Walkthrough](#-video-walkthrough--interactive-demo) • [Landing Showcase](#-public-landing-site-showcase) • [Workspace Showcase](#-operational-governance-workspace-showcase) • [TILLER Pillars](#-the-6-tiller-governance-pillars) • [Export Studio](#-enterprise-multi-format-audit-export-engine) • [Architecture & Routes](#-platform-architecture--full-route-map) • [Quick Start](#-quick-start--local-development)
 
 </div>
 
@@ -33,9 +33,9 @@
 
 ## 💡 Overview
 
-**VERITRAIL** is an all-in-one, enterprise-ready AI governance platform, landing site, and assurance workspace built for AI safety teams, compliance officers, risk managers, and engineering leaders establishing operational AI controls aligned with global standards (**NIST AI RMF**, **EU AI Act**, and **ISO/IEC 42001**).
+**VERITRAIL** is an all-in-one, enterprise-ready AI governance platform, landing site, and assurance workspace built for AI safety teams, compliance officers, risk managers, and engineering leaders establishing operational AI controls aligned with global standards (**NIST AI RMF 1.0**, **EU AI Act**, and **ISO/IEC 42001:2023**).
 
-VERITRAIL integrates a full public marketing & content site, a 64-control governance library, in-browser interactive rule engines (Maturity Assessment, Risk Triage, Guardrail Generator, Ask VERITRAIL), and an operational governance workspace (TILLER Assessment Studio, AI System Inventory, Incident Register).
+VERITRAIL integrates a full public marketing & content site, a 64-control governance library, in-browser interactive rule engines (Maturity Assessment, Risk Triage, Guardrail Generator, Ask VERITRAIL), and an operational governance workspace (TILLER Assessment Studio, AI System Inventory, Incident Register, Release Gate Reviews, Action Tracking, and Multi-Format Audit Deliverable Studio).
 
 > **Naming Note.** The platform was previously named _AEGIS_ and its assessment studio _GOVERN_. To avoid confusion with established industry frameworks (e.g. Forrester AEGIS and NIST AI RMF GOVERN function), the platform is **VERITRAIL** and the assessment studio is **TILLER**. The six workspace pillars spell **TILLER** (**T**rust, **I**nventory, **L**ifecycle, **L**awfulness, **E**ngineering, **R**untime).
 
@@ -94,25 +94,76 @@ Zero-latency, client-side TypeScript rule engines held in 100% parity with Pytho
 
 ## 🛠️ Operational Governance Workspace Showcase
 
-The **TILLER Governance Workspace** equips cross-functional risk teams with real-time auditing, system inventory management, and incident response tracking.
+The **TILLER Governance Workspace** equips cross-functional risk teams with real-time auditing, system inventory management, decision logging, incident response tracking, and audit report exports.
 
 | 🖥️ TILLER Workspace Overview | 📊 Governance Dashboard & Maturity Radar |
 | :--------------------------: | :-------------------------------------: |
 | ![Workspace Overview](./docs/assets/landing-workspace.png) | ![Desktop Overview](./docs/assets/desktop-overview.png) |
 
-| 📖 Interactive Playbook Reader | 🗂️ AI Systems Inventory & Triage |
-| :----------------------------: | :-------------------------------: |
-| ![Desktop Playbook](./docs/assets/desktop-playbook.png) | ![Desktop Inventory](./docs/assets/desktop-inventory.png) |
+| 🗂️ AI Systems Inventory & Triage | 🛡️ Guardrails Policy Synthesis |
+| :-------------------------------: | :-----------------------------: |
+| ![Desktop Inventory](./docs/assets/desktop-inventory.png) | ![Desktop Guardrails](./docs/assets/desktop-guardrails.png) |
 
-| 🚨 Incident & Near-Miss Register | 📋 Custom Evidence & Audit Reports |
-| :------------------------------: | :--------------------------------: |
-| ![Desktop Incidents](./docs/assets/desktop-incidents.png) | ![Desktop Dashboard](./docs/assets/desktop-dashboard.png) |
+| 🚦 Release Gate Reviews & Checkpoints | ⚖️ Decision & Governance Rationale Log |
+| :-----------------------------------: | :-------------------------------------: |
+| ![Desktop Gates](./docs/assets/desktop-gates.png) | ![Desktop Decisions](./docs/assets/desktop-decisions.png) |
+
+| 🚨 Incident & Near-Miss Register | 📋 Remediation & Action Tracking |
+| :------------------------------: | :------------------------------: |
+| ![Desktop Incidents](./docs/assets/desktop-incidents.png) | ![Desktop Actions](./docs/assets/desktop-actions.png) |
+
+| 📡 Continuous Monitoring & Telemetry | ⚙️ Platform Admin & Simulation Console |
+| :----------------------------------: | :-----------------------------------: |
+| ![Desktop Monitoring](./docs/assets/desktop-monitoring.png) | ![Desktop Platform Console](./docs/assets/desktop-platform.png) |
+
+| 📖 Interactive Playbook Reader | 📄 Audit Deliverables & Export Studio |
+| :----------------------------: | :------------------------------------: |
+| ![Desktop Playbook](./docs/assets/desktop-playbook.png) | ![Desktop Export Studio](./docs/assets/desktop-export.png) |
+
+---
+
+## 📑 Enterprise Multi-Format Audit Export Engine
+
+VERITRAIL features a client-side deliverable generation engine that converts workspace governance state into publication-ready corporate documents without exposing raw confidential data to external services.
+
+| Format | Output Type | Generated Deliverable Features |
+| :--- | :--- | :--- |
+| 📄 **PDF** | Executive One-Pager & Evidence Pack | Vector styled executive summaries, maturity band gauges, pillar radar visuals, and gap lists created via `jspdf`. |
+| 📊 **Excel (XLSX)** | Comprehensive Scorecard Workbook | Structured multi-tab workbooks containing raw calculation models, control status, evidence links, and score formulas via `exceljs`. |
+| 📽️ **PowerPoint (PPTX)** | Board Presentation Deck | Native vector slide presentations formatted for board reviews, displaying pillar visual benchmarks via `pptxgenjs`. |
+| 📝 **Word (DOCX)** | Formal Compliance Manual | Structured compliance documentation complete with table of contents, control matrices, and sign-off sections via `docx`. |
+
+---
+
+## 🏛️ The 6 TILLER Governance Pillars
+
+The workspace evaluates AI systems across six fundamental operational dimensions that spell **TILLER**:
+
+```
+                       ┌───────────────────────────────────────────────┐
+                       │          T I L L E R   P I L L A R S          │
+                       └───────────────────────┬───────────────────────┘
+                                               │
+    ┌──────────────┬──────────────┬────────────┴─┬──────────────┬──────────────┐
+    ▼              ▼              ▼              ▼              ▼              ▼
+┌────────┐    ┌────────┐    ┌──────────┐   ┌────────────┐  ┌───────────┐  ┌─────────┐
+│ Trust  │    │Inven-  │    │Lifecycle │   │ Lawfulness │  │Engineerin-│  │ Runtime │
+│        │    │ tory   │    │          │   │            │  │   ging    │  │         │
+└────────┘    └────────┘    └──────────┘   └────────────┘  └───────────┘  └─────────┘
+```
+
+1. **T — Trust**: Human agency, explainability, transparency, stakeholder communication, and oversight protocols.
+2. **I — Inventory**: Centralized AI asset tracking, system owners, risk classifications, data lineage, and third-party vendor tracking.
+3. **L — Lifecycle**: Stage-gated development workflows, evaluation checkpoints, deployment criteria, and release sign-offs.
+4. **L — Lawfulness**: Strict compliance mapping for EU AI Act obligations, NIST AI RMF functions, and ISO/IEC 42001 clauses.
+5. **E — Engineering**: Technical robustness, prompt injection defense, red-teaming validation, bias testing, and safety guardrails.
+6. **R — Runtime**: Live performance monitoring, telemetry, incident and near-miss logging, and automated feedback loops.
 
 ---
 
 ## 📱 Multi-Device & Mobile Responsiveness
 
-VERITRAIL is designed from the ground up for seamless operation across desktop workstations, tablets, and smartphones. Headers and navigation bars remain strictly on a single row at every viewport size (360px+).
+VERITRAIL is engineered from the ground up for seamless operation across desktop workstations, tablets, and smartphones. Headers and navigation bars remain strictly on a single row at every viewport size (360px+).
 
 | Tablet Viewport (768px - Workspace) | Mobile Viewport (375px - Overview) | Mobile Viewport (375px - Playbook) |
 | :---------------------------------: | :--------------------------------: | :--------------------------------: |
@@ -122,12 +173,12 @@ VERITRAIL is designed from the ground up for seamless operation across desktop w
 
 ## 📲 Installable App (PWA) & Offline Capabilities
 
-VERITRAIL functions as a full **Progressive Web App (PWA)**, providing native-like app capabilities across all desktop and mobile browsers.
+VERITRAIL functions as a full **Progressive Web App (PWA)**, providing native-like app capabilities across desktop and mobile browsers.
 
 * **One-Click Installation**: Prompts on Chrome, Edge, Android, iOS Safari, and macOS Dock. Shortcuts point directly to Self-Assessment, Risk Triage, Control Library, Ask VERITRAIL, and the TILLER Workspace.
-* **Offline First Reading**: Production service worker (`public/sw.js`) caches visited pages, illustrations, and client-side rule engines for instant offline access.
+* **Offline-First Reading**: Production service worker (`public/sw.js`) caches visited pages, illustrations, and client-side rule engines for instant offline access.
 * **Smart Search (⌘K / Ctrl+K)**: Instant fuzzy search across every page, FAQ, governance control ID, glossary definition, and workspace tool.
-* **Appearance — themes & fonts**: Three colour themes — **Broadsheet** (VERITRAIL teal), **Midnight Gold** and **Financial Slate**, inspired by the KR Tools themes of FinPrompt and Claudiator — each in light and dark with an **Auto** mode that follows the device (the default), plus three fonts (**Editorial serif**, **KR Tools** DM Sans + Cormorant Garamond, **Modern sans** Inter). Applied before first paint, remembered per browser, WCAG AA in every theme.
+* **Appearance — themes & fonts**: Three colour themes — **Broadsheet** (VERITRAIL teal), **Midnight Gold** and **Financial Slate**, inspired by financial risk interfaces — each in light and dark with an **Auto** mode that follows the device (the default), plus three fonts (**Editorial serif**, **KR Tools** DM Sans + Cormorant Garamond, **Modern sans** Inter). Applied before first paint, remembered per browser, WCAG AA in every theme.
 
 | Mobile Home View | Workspace Install Card | iPhone Installation Guide |
 | :--------------: | :--------------------: | :-----------------------: |
@@ -141,9 +192,9 @@ VERITRAIL functions as a full **Progressive Web App (PWA)**, providing native-li
 
 ---
 
-## 🌐 Platform Architecture & Route Map
+## 🌐 Platform Architecture & Full Route Map
 
-VERITRAIL pairs a content-driven marketing website with client-side interactive governance engines and an enterprise workspace.
+VERITRAIL pairs a content-driven marketing website with client-side interactive governance engines, an operational workspace, and PostgreSQL persistence with security RLS.
 
 ```
                   ┌───────────────────────────────────────────────┐
@@ -161,35 +212,48 @@ VERITRAIL pairs a content-driven marketing website with client-side interactive 
                                           ▼
                   ┌───────────────────────────────────────────────┐
                   │         TILLER Governance Workspace           │
-                  │    (System Inventory, Assessment, Audits)    │
+                  │  (System Inventory, Assessment, Audits, Gates)│
                   └───────────────────────┬───────────────────────┘
                                           │
                                           ▼
                   ┌───────────────────────────────────────────────┐
-                  │    Supabase PostgreSQL & Security RLS         │
+                  │   Supabase PostgreSQL & Security RLS Layers   │
                   └───────────────────────────────────────────────┘
 ```
 
-### Key Routes & Feature Mapping
+### Complete Route & Feature Navigation Map
 
-| Area | Route(s) | Source Path / Engine | Key Features |
-| :--- | :------- | :------------------- | :----------- |
-| **Marketing Home** | `/` | `src/routes/index.tsx` | Hero, metrics, framework pillars, ROI breakdown, trust badges |
-| **64-Control Library** | `/framework/controls`, `/framework/controls/$id` | `platform/content/controls/controls.yaml` | Searchable control matrix, NIST/EU Act/ISO crosswalks |
-| **Compliance Guides** | `/compliance`, `/compliance/*` | `platform/content/website_pages/compliance-*.md` | Deep dives into EU AI Act, NIST AI RMF, ISO 42001, and Gap Analysis |
-| **Interactive Tools** | `/tools/maturity-assessment`, `/tools/risk-triage`, `/tools/ask-veritrail` | `src/features/site/engines/` | Zero-latency TypeScript ports of Python risk/governance engines |
-| **TILLER Workspace** | `/workspace`, `/workspace/*` | `src/features/governance/` | System inventory, risk triage, incident logs, XLSX/PPTX audit reports |
-| **Platform Console** | `/platform` | `src/features/platform/` | Local admin suite, policy rule validator, pilot simulation engine |
+| Section | Route Path | Component / Source Path | Key Features & Capabilities |
+| :--- | :--- | :--- | :--- |
+| **Landing** | `/` | `src/routes/index.tsx` | Executive metrics, framework pillars, ROI breakdown, trust badges |
+| **64 Controls** | `/framework/controls` | `src/routes/framework.controls.index.tsx` | Searchable control matrix, NIST/EU Act/ISO crosswalks |
+| **Control Detail** | `/framework/controls/$controlId` | `src/routes/framework.controls.$controlId.tsx` | Deep control specs, implementation guidance, evidence requirements |
+| **Compliance Guides**| `/compliance/*` | `platform/content/website_pages/` | In-depth regulatory analyses (EU AI Act, NIST AI RMF, ISO 42001) |
+| **Maturity Tool** | `/tools/maturity-assessment` | `src/features/site/engines/` | In-browser 5-stage maturity evaluation and roadmap generator |
+| **Risk Triage Tool** | `/calculators` | `src/routes/calculators.tsx` | Zero-latency EU AI Act & NIST risk tiering calculator |
+| **Ask VERITRAIL** | `/advisor` | `src/routes/advisor.tsx` | Vectorized AI governance assistant & regulatory knowledge base |
+| **Workspace Home** | `/workspace` | `src/routes/workspace.tsx` | Workspace overview, TILLER radar chart, readiness indicators |
+| **System Inventory** | `/inventory` | `src/routes/inventory.tsx` | Comprehensive AI model catalog, owner tagging, risk tiering |
+| **TILLER Studio** | `/assess` | `src/routes/assess.tsx` | Interactive 6-pillar assessment studio & score calculator |
+| **Guardrails Studio** | `/guardrails` | `src/routes/guardrails.tsx` | Automated safety prompt and policy rule generator |
+| **Decision Log** | `/decisions` | `src/routes/decisions.tsx` | Governance decision rationale register and audit log |
+| **Incident Register**| `/incidents` | `src/routes/incidents.tsx` | AI incident & near-miss tracking, severity classification |
+| **Action Tracking** | `/actions` | `src/routes/actions.tsx` | Remediation task manager, owners, and target dates |
+| **Release Gates** | `/gates` | `src/routes/gates.tsx` | Stage-gate compliance sign-offs prior to production deployment |
+| **Monitoring** | `/monitoring` | `src/routes/monitoring.tsx` | Live telemetry, drift tracking, and continuous monitoring |
+| **Audit Exports** | `/export` | `src/routes/export.tsx` | One-click deliverable exporter (PDF, XLSX, PPTX, DOCX) |
+| **Admin Console** | `/platform` | `src/routes/platform.index.tsx` | Local admin suite, rule validator, and simulation tools |
+| **Templates** | `/templates` | `src/routes/templates.tsx` | Downloadable AI policy, model card, and agreement templates |
+| **Glossary** | `/glossary` | `src/routes/glossary.tsx` | Underlined interactive AI governance definitions and terms |
+| **Revision Register**| `/changes` | `src/routes/changes.tsx` | Curated public release notes and revision log |
 
 ---
 
-## 🛡️ Enterprise Compliance Alignment
+## 🔒 Security Architecture & Data Privacy
 
-VERITRAIL directly Operationalizes International AI Governance Frameworks:
-
-1. **NIST AI RMF 1.0**: Structured implementation across the 4 core functions: `GOVERN`, `MAP`, `MEASURE`, and `MANAGE`.
-2. **EU AI Act**: Automated classification against Risk Tiers (Unacceptable, High, Specific Transparency, Minimal) and Article requirements.
-3. **ISO/IEC 42001:2023**: Management system control mapping (A.5 to A.10 clauses) for continuous AI risk assessment.
+* **Row-Level Security (RLS)**: PostgreSQL databases isolated via RLS policies ensuring tenant workspace data and submitted leads (`site_leads`) are completely protected.
+* **Privacy by Design**: Client-side demo interactions remain local to the user's browser until explicitly saved via an authenticated Cloud session.
+* **Atomic Workspace Saving**: Server functions utilize atomic SQL functions (`save_aegis_workspace`) to prevent partial state updates and race conditions.
 
 ---
 
