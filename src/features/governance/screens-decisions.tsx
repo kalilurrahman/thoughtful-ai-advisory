@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { ClipboardText, PencilSimple, Plus, WarningCircle } from "@phosphor-icons/react";
+import { EmptyDecisions } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import {
   CORRECTION_REASON_MAX,
@@ -197,9 +198,10 @@ export function DecisionsScreen() {
           />
         ))}
         {visible.length === 0 && (
-          <p className="empty-state muted">
-            No decisions match this view. Record a system-level disposition to begin.
-          </p>
+          <div className="empty-state muted">
+            <EmptyDecisions />
+            <p>No decisions match this view. Record a system-level disposition to begin.</p>
+          </div>
         )}
       </div>
       <p className="footnote">

@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CONTROLS, PILLARS } from "@/data/governance";
 import { useGovernance } from "@/features/governance/store";
+import { GatewayArt } from "./illustrations-tools";
 
 export function WorkspaceGateway() {
   const { dispatch } = useGovernance();
@@ -19,6 +20,9 @@ export function WorkspaceGateway() {
               Open workspace <ArrowRight aria-hidden="true" />
             </Link>
           </Button>
+        </div>
+        <div className="workspace-gateway-art" aria-hidden="true">
+          <GatewayArt />
         </div>
         <div className="workspace-pillar-grid">
           {PILLARS.map((pillar, index) => (

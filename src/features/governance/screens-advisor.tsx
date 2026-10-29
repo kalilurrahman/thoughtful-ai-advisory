@@ -34,7 +34,7 @@ const inDays = (n: number) => new Date(Date.now() + n * 86400000).toISOString().
 const due = { Critical: 7, High: 14, Moderate: 30, Low: 60 } as const;
 
 export function AdvisorScreen() {
-  const { dispatch } = useGovernance();
+  const { dispatch, userId } = useGovernance();
   const recommend = useServerFn(recommendGovernance);
   const [focus, setFocus] = useState<(typeof FOCI)[number]["id"]>("Risk");
   const [concern, setConcern] = useState("");
@@ -44,6 +44,10 @@ export function AdvisorScreen() {
 
   async function submit(event: FormEvent) {
     event.preventDefault();
+    if (!userId) {
+      setResult({ ok: false, error: "Sign in to use the AI advisor." });
+      return;
+    }
     if (concern.trim().length < 20) {
       setResult({ ok: false, error: "Describe the concern in at least 20 characters." });
       return;
@@ -127,7 +131,13 @@ export function AdvisorScreen() {
             <button key={ex} type="button" onClick={() => setConcern(ex)}>{ex}</button>
           ))}
         </div>
-        <Button type="submit" disabled={busy} size="lg">
+        {!userId && (
+          <p className="advisor-signin" role="note">
+            The advisor uses an AI model, so it needs a free account.{" "}
+            <Link to="/auth">Sign in or create an account</Link> to get recommendations.
+          </p>
+        )}
+        <Button type="submit" disabled={busy || !userId} size="lg">
           {busy ? <CircleNotch className="spin" weight="bold" /> : <Compass weight="duotone" />}
           {busy ? "Analysing concern…" : "Get recommendations"}
         </Button>

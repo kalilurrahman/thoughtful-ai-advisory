@@ -16,7 +16,7 @@ Every app, tool and feature, then every website content page, the control librar
 | [Workspace — operational governance](#workspace--operational-governance) | 5 | 5 | 0 | 0 | 0 |
 | [Workspace — guidance and knowledge](#workspace--guidance-and-knowledge) | 8 | 8 | 0 | 0 | 0 |
 | [Workspace — reports and evidence](#workspace--reports-and-evidence) | 1 | 0 | 0 | 1 | 0 |
-| [Accounts and persistence](#accounts-and-persistence) | 5 | 5 | 0 | 0 | 0 |
+| [Accounts and persistence](#accounts-and-persistence) | 7 | 7 | 0 | 0 | 0 |
 | [Platform console](#platform-console) | 7 | 3 | 4 | 0 | 0 |
 | [Administration and analytics](#administration-and-analytics) | 2 | 2 | 0 | 0 | 0 |
 | [Installable app](#installable-app) | 9 | 9 | 0 | 0 | 0 |
@@ -85,6 +85,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-044 | Knowledge hub | `/knowledge` | Live | None | Chief Risk / Compliance Officer, AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | 24 laws, standards and guidance sources by type and jurisdiction. |
 | CAP-045 | Start here | `/start` | Live | Page memory | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Role, stage and goal to recommended chapters, actions and tools. |
 | CAP-046 | Calculators | `/calculators` | Live | Page memory | Chief Risk / Compliance Officer | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage. |
+| CAP-047 | AI governance advisor | `/advisor` | Live | Server | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Concern to mapped controls and actions via the Lovable AI gateway; signed-in only, with a daily allowance per plan; adds corrective actions. |
 | CAP-047 | AI governance advisor | `/advisor` | Live | Server | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions. |
 | CAP-078 | Site assistant | `/assistant` | Live | Cloud (RLS) | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Chat grounded in site content with page links; private saved threads for signed-in users. |
 | CAP-079 | Site assistant conversation | `/assistant_/$threadId` | Live | Cloud (RLS) | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | A saved assistant thread at its own address. |
@@ -99,11 +100,13 @@ Every app, tool and feature, then every website content page, the control librar
 
 | ID | Capability | Route | Status | Data | For | Epic | What it does |
 |---|---|---|---|---|---|---|---|
-| CAP-049 | Plans | `/plans` | Live | None | Prospective buyer | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Assess, Govern and Assure packages and the free snapshot; no billing. |
+| CAP-049 | Plans | `/plans` | Live | None | Prospective buyer | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Free, Team, Business and Enterprise plans from one catalogue, and the Governance Baseline; prices shown at checkout. |
 | CAP-050 | Workspace and account | `/more` | Live | Cloud (RLS) | AI governance lead | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Sign-in entry, rename, Save and Restore, links to every workspace tool. |
 | CAP-051 | Sign in and sign up | `/auth` | Live | Server | AI governance lead, Site administrator | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Email/password with confirmation, password reset, Google, Apple, Microsoft and Lovable OAuth. |
 | CAP-052 | Password reset | `/reset-password` | Live | Server | AI governance lead | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Set a new password from the recovery link. |
 | CAP-053 | Onboarding | `/onboarding` | Live | None | Prospective buyer, AI governance lead | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Choose sign-in, the demo workspace or the free snapshot. |
+| CAP-078 | Billing — Dodo Payments | `/api/billing/dodo-webhook` | Live | Cloud (RLS) | AI governance lead | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Checkout and customer portal hosted by Dodo Payments (merchant of record); signed, idempotent webhooks store subscriptions; plan limits resolved on the server. |
+| CAP-079 | Team workspaces — members | `/invite` | Live | Cloud (RLS) | AI governance lead, Approver, Internal auditor / assessor | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Owner, admin, operator, approver and viewer roles enforced by row-level security; single-use invitation links; operator seats limited by the owner's plan; workspace switcher. |
 
 ### Platform console
 
@@ -140,7 +143,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 ## Website content
 
-56 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 32,636 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
+57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,291 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
 
 ### Home
 
@@ -244,9 +247,10 @@ Every app, tool and feature, then every website content page, the control librar
 
 | Page | Route | Type | What it covers | Words | FAQs | Delivered by | Stories |
 |---|---|---|---|---|---|---|---|
-| Privacy notice | `/legal/privacy` | page | How the VERITRAIL website handles personal data: cookieless analytics, lead data collected and why, retention and your rights. Template pending legal review. | 771 | — | CAP-002 Website content pages | — |
+| Privacy notice | `/legal/privacy` | page | How the VERITRAIL website handles personal data: cookieless analytics, lead data collected and why, retention and your rights. Template pending legal review. | 893 | — | CAP-002 Website content pages | — |
 | Website terms of use | `/legal/terms` | page | Terms for using the VERITRAIL website, free tools and published content, including disclaimers about readiness indicators. Template pending legal review. | 477 | — | CAP-002 Website content pages | — |
 | Responsible AI statement | `/legal/responsible-ai` | page | How VERITRAIL uses AI in its own product: control citations, evidence labels, human approval for high-impact actions, redaction, audit logs, no overclaiming. | 582 | — | CAP-002 Website content pages | — |
+| Subscription, cancellation and refund terms | `/legal/subscription-terms` | page | How VERITRAIL self-serve plans are billed, renewed, changed, cancelled and refunded, with Dodo Payments as merchant of record. Template pending review. | 533 | — | CAP-002 Website content pages | — |
 
 ## Control library
 
@@ -308,8 +312,8 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-078 | Site assistant | [S10.7](EPICS_AND_STORIES.md#s107) | `src/features/assistant/assistant-screen.tsx`, `src/features/assistant/assistant.functions.ts` | **None** |
 | CAP-079 | Site assistant conversation | [S10.7](EPICS_AND_STORIES.md#s107) | `src/features/assistant/assistant-screen.tsx` | **None** |
 | CAP-048 | Reports and audit pack | [S11.1](EPICS_AND_STORIES.md#s111) | `src/features/governance/evidence-report.ts`, `src/features/governance/evidence-files.ts` | `evidence-export.test.ts`, `export-ui.test.tsx` |
-| CAP-049 | Plans | [S12.3](EPICS_AND_STORIES.md#s123) | `src/routes/plans.tsx` | **None** |
-| CAP-050 | Workspace and account | [S12.2](EPICS_AND_STORIES.md#s122) | `src/features/governance/screens-resources.tsx`, `src/features/governance/workspace-controls.tsx`, `src/features/governance/workspace.functions.ts` | **None** |
+| CAP-049 | Plans | [S12.3](EPICS_AND_STORIES.md#s123), [S12.4](EPICS_AND_STORIES.md#s124) | `src/routes/plans.tsx`, `src/data/plans.ts` | `plans.test.ts` |
+| CAP-050 | Workspace and account | [S12.2](EPICS_AND_STORIES.md#s122), [S12.5](EPICS_AND_STORIES.md#s125) | `src/features/governance/screens-resources.tsx`, `src/features/governance/workspace-controls.tsx`, `src/features/governance/workspace.functions.ts` | **None** |
 | CAP-051 | Sign in and sign up | [S12.1](EPICS_AND_STORIES.md#s121) | `src/features/governance/auth-panel.tsx` | **None** |
 | CAP-052 | Password reset | [S12.1](EPICS_AND_STORIES.md#s121) | `src/routes/reset-password.tsx` | **None** |
 | CAP-053 | Onboarding | [S12.1](EPICS_AND_STORIES.md#s121) | `src/routes/onboarding.tsx` | **None** |
@@ -327,6 +331,8 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-072 | Site-wide search | [S15.3](EPICS_AND_STORIES.md#s153) | `src/features/search` | `search.test.ts` |
 | CAP-073 | Glossary definitions in text | [S01.4](EPICS_AND_STORIES.md#s014), [S15.4](EPICS_AND_STORIES.md#s154) | `src/features/site/glossary-tip.tsx`, `src/features/site/markdown.tsx` | `site-reading.test.ts` |
 | CAP-074 | Reading aids | [S01.4](EPICS_AND_STORIES.md#s014) | `src/features/site/markdown.tsx`, `src/features/site/reading.tsx` | `site-reading.test.ts` |
-| CAP-075 | Section illustrations and share images | [S01.5](EPICS_AND_STORIES.md#s015) | `src/features/site/illustrations.tsx`, `scripts/generate-social-images.mjs`, `public/og` | `site-reading.test.ts` |
+| CAP-075 | Section illustrations and share images | [S01.5](EPICS_AND_STORIES.md#s015) | `src/features/site/illustrations.tsx`, `src/features/site/illustrations-tools.tsx`, `src/features/site/illustrations-empty.tsx`, `scripts/generate-social-images.mjs`, `public/og` | `site-reading.test.ts` |
+| CAP-078 | Billing — Dodo Payments | [S12.4](EPICS_AND_STORIES.md#s124) | `src/features/billing/billing.functions.ts`, `src/features/billing/entitlements.ts`, `src/features/billing/webhook.ts`, `src/routes/api.billing.dodo-webhook.ts`, `drizzle/migrations/0011_veritrail_billing.sql` | `billing.test.ts` |
+| CAP-079 | Team workspaces — members | [S12.5](EPICS_AND_STORIES.md#s125) | `src/features/governance/team.functions.ts`, `src/features/governance/team-model.ts`, `src/features/governance/team-panel.tsx`, `src/features/governance/invite-screen.tsx`, `drizzle/migrations/0012_veritrail_organization_members.sql` | `team.test.ts` |
 | CAP-077 | Appearance — themes and fonts | [S15.6](EPICS_AND_STORIES.md#s156) | `src/lib/theme.ts`, `src/features/appearance/appearance-panel.tsx`, `src/styles.css` | `theme.test.ts` |
 | CAP-076 | Workspace app shell | [S15.5](EPICS_AND_STORIES.md#s155) | `src/features/governance/shell.tsx` | `app-routing.test.tsx` |

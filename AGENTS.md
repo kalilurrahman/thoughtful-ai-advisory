@@ -24,12 +24,15 @@
 - Keep both headers (website and workspace) on one row at every width from 360 px; on phones, workspace actions go in the "More actions" menu. `npm run test:smoke` fails if a header wraps.
 - Regenerate share images with `scripts/generate-social-images.mjs` against a running build when section illustrations change; `og:image` URLs must be absolute (`VITE_SITE_URL`).
 - Describe every route, tool and feature in `docs/product/catalog.yaml` and regenerate `docs/product` with `node scripts/build-product-docs.mjs`; `src/test/product-catalog.test.ts` fails otherwise.
-- Do not apply `drizzle/migrations/0009_veritrail_rename_workspace_function.sql` on its own: the live database and the client still call `save_aegis_workspace`.
+- Workspace save calls `save_veritrail_workspace` and falls back to `save_aegis_workspace` while migration `0009` is unapplied; keep that fallback until the live database has `0009`, then regenerate the Supabase types.
 - Draw illustrations as inline SVG coloured by the Broadsheet tokens (`src/features/site/illustrations.tsx`), so they follow light/dark mode and work offline; data-driven pictures (the control mosaic, home counts) must read from the governed content.
 - Demo evidence attachments and report outputs must remain explicitly labeled previews; the handoff specifies mock file behavior, not real signed exports.
 
-- Persist workspace snapshots through authenticated server functions and an atomic security-invoker SQL function; organization ownership and RLS prevent cross-organization access.
-- Keep public demo routes available without sign-in; personal Cloud loading and explicit saving require a validated session, with identity changes clearing prior private state.
+- Persist workspace snapshots through authenticated server functions and an atomic security-invoker SQL function; organization membership (`organization_members`, migration 0012) and RLS prevent cross-organization access. Members read; owner, admin and operator write; membership changes only through the security-definer functions.
+- Save through `save_workspace_checked` with the revision last loaded or saved (migration 0013); a stale revision is a conflict, never an overwrite. The governance provider owns saving (`saveNow`, `adoptWorkspace`) so autosave and every loader share one baseline.
+- Keep public demo routes available without sign-in; personal Cloud loading and saving require a validated session, with identity changes clearing prior private state. Autosave runs only for a saved workspace and an editing role.
+- Sell self-serve plans through Dodo Payments as merchant of record (`src/features/billing`, `docs/veritrail/BILLING_SETUP.md`). Plans and limits live in `src/data/plans.ts`; the plan changes only from a signed webhook, and server functions read limits with `planForCaller` (Free whenever billing cannot be read). Publish no price figures without the commercial lead's approval.
+- Model calls (the workspace advisor) require sign-in, count against the plan's daily allowance (`consume_ai_quota`) and send text only after redaction.
 - Use a shared desktop sidebar and mobile bottom navigation with screen-specific responsive grids; this keeps all governance workflows available across device sizes.
 - Treat assessment, gate and guardrail scores as workspace-level values, and derive portfolio summaries from the live inventory; this avoids implying that systems have individual assessments that are not stored.
 - Serve the public website from Markdown pages in platform/content/website_pages and the control library in platform/content/controls; the Python platform, its tests and the React site then share one governed source.
@@ -37,5 +40,5 @@
 - Expose practitioner workflows through the public Workspace menu and homepage gateway, with a content route for every built screen; the public website must not obscure the TILLER studio.
 - Run the public tools (maturity assessment, risk triage, guardrail generator, Ask VERITRAIL) as browser ports of the Python reference engines, held to parity by fixtures exported from Python; there is no Python runtime in the deployed site.
 - Store public lead submissions only through the `submitLead` server function into the RLS-locked `site_leads` table; forms must say when nothing was recorded.
-- Run every Python-only platform capability from the `/platform` console as TypeScript ports, which are held to parity by fixtures from `platform/scripts/export_*_parity_fixtures.py`. Keep demo data in the browser; only leads, analytics events and admin membership live in the database.
+- Run every Python-only platform capability from the `/platform` console as TypeScript ports, which are held to parity by fixtures from `platform/scripts/export_*_parity_fixtures.py`. Keep demo data in the browser; only leads, analytics events, admin membership, workspaces, team membership, billing and AI usage live in the database.
 - Gate the admin console behind sign-in and membership in `site_admins`. Admin server functions verify membership before reading with the service role.

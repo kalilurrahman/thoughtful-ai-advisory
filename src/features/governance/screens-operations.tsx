@@ -9,6 +9,7 @@ import {
   PencilSimple,
   DownloadSimple,
 } from "@phosphor-icons/react";
+import { EmptyInventory } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -260,7 +261,10 @@ export function InventoryScreen() {
         ))}
       </div>
       {visibleSystems.length === 0 && (
-        <p className="empty-state muted">No systems match your search.</p>
+        <div className="empty-state muted">
+          <EmptyInventory />
+          <p>No systems match your search.</p>
+        </div>
       )}
       <Button className="full-button" onClick={openRegistration}>
         <Plus />

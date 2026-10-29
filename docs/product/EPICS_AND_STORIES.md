@@ -2,7 +2,7 @@
 
 # VERITRAIL epics and user stories
 
-16 epics and 58 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
+16 epics and 59 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
 
 | Epic | Title | Area | Status | Stories | Done | Partial | Planned |
 |---|---|---|---|---|---|---|---|
@@ -17,7 +17,7 @@
 | [E09](#e09--remediation-roadmap-and-lifecycle-checklist) | Remediation roadmap and lifecycle checklist | Workspace — assessment and release readiness | Live | 2 | 2 | 0 | 0 |
 | [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 7 | 7 | 0 | 0 |
 | [E11](#e11--reports-and-audit-evidence) | Reports and audit evidence | Workspace — reports and evidence | Preview | 1 | 1 | 0 | 0 |
-| [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 3 | 1 | 2 | 0 |
+| [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 5 | 3 | 2 | 0 |
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
 | [E14](#e14--administration-and-privacy-first-analytics) | Administration and privacy-first analytics | Administration and analytics | Live | 2 | 2 | 0 | 0 |
 | [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 6 | 6 | 0 | 0 |
@@ -607,6 +607,8 @@ Acceptance criteria:
 - Given a concern of 20–4,000 characters, when submitted, then the server returns a summary, 3–6 mapped controls and 3–5 actions, dropping unknown control IDs.
 - Given "Add to corrective actions", when chosen, then the actions are created with due dates by priority.
 - Given a busy, out-of-credit, unreadable or incomplete answer from the gateway, when received, then the advisor says so instead of failing.
+- Given a visitor who is not signed in, when the advisor opens, then it asks them to sign in and sends nothing.
+- Given a user who has used the plan's daily allowance, when submitted, then nothing is sent to the model and the advisor names the allowance and when it resets.
 
 **Routes:** `/advisor` · **Capabilities:** CAP-047 · **Tests:** `server-logic.test.ts`
 
@@ -661,7 +663,7 @@ Known gaps:
 
 **Area:** Accounts and persistence · **Status:** Live
 
-**Capabilities:** CAP-049 Plans, CAP-050 Workspace and account, CAP-051 Sign in and sign up, CAP-052 Password reset, CAP-053 Onboarding
+**Capabilities:** CAP-049 Plans, CAP-050 Workspace and account, CAP-051 Sign in and sign up, CAP-052 Password reset, CAP-053 Onboarding, CAP-078 Billing — Dodo Payments, CAP-079 Team workspaces — members
 
 ### S12.1
 
@@ -678,28 +680,27 @@ Acceptance criteria:
 
 Known gaps:
 
-- No SSO/SAML
-- MFA
-- roles or invitations.
+- No SSO/SAML or MFA.
 
 ### S12.2
 
-**As an AI governance lead**, I want to save and restore my workspace, so that my work survives across devices.
+**As an AI governance lead**, I want to save and restore my workspace, with my team, without losing work, so that my work survives across devices and nobody overwrites a colleague.
 
-*Status: Partial*
+*Status: Done*
 
 Acceptance criteria:
 
 - Given I am signed in, when I choose Save, then the whole workspace is written in one call scoped to my organisation by RLS.
+- Given a saved workspace and an editing role, when I stop changing it for a moment, then it saves automatically and says whether all changes are saved.
+- Given a teammate saved a newer version, when my save arrives, then nothing is overwritten, autosave stops and I am told to restore their version.
+- Given unsaved edits, when I try to leave the page, then the browser asks me to confirm.
 - Given I choose Restore, when it loads, then the saved snapshot replaces the in-memory state.
 
-**Routes:** `/more` · **Capabilities:** CAP-050 · **Tests:** none yet
+**Routes:** `/more` · **Capabilities:** CAP-050 · **Tests:** `autosave.test.ts`, `autosave-provider.test.tsx`
 
 Known gaps:
 
-- No autosave; unsaved changes are lost on reload.
-- One workspace per user; no switcher.
-- Migration 0009 renames the save function but the live database and client still use save_aegis_workspace — do not apply 0009 without updating the client.
+- Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied; conflict detection needs migration 0013.
 
 ### S12.3
 
@@ -709,14 +710,54 @@ Known gaps:
 
 Acceptance criteria:
 
-- Given the plans page, when loaded, then Assess, Govern and Assure packages and the free snapshot are shown.
+- Given the plans page, when loaded, then the Free, Team, Business and Enterprise plans from src/data/plans.ts and the Governance Baseline are shown, with no unapproved price figures.
 
 **Routes:** `/plans` · **Capabilities:** CAP-049 · **Tests:** none yet
 
+### S12.4
+
+**As an AI governance lead**, I want to buy, renew, change or cancel a self-serve plan, so that my team gets the limits it needs without a sales call.
+
+*Status: Partial*
+
+Acceptance criteria:
+
+- Given I am signed in on the Free plan, when I choose Team or Business, then a Dodo Payments checkout opens for the configured product and nothing is charged by VERITRAIL itself.
+- Given a signed Dodo webhook for a subscription, when received, then the subscription is stored once, older events never overwrite newer ones, and unsigned or stale requests change nothing.
+- Given an active or past-due subscription, when the plan is read on the server, then its limits apply (for example the advisor allowance); any other status means the Free plan.
+- Given a paid plan, when I choose Manage billing, then the Dodo customer portal opens to update payment, change or cancel.
+
+**Routes:** `/plans` · **Capabilities:** CAP-049, CAP-078 · **Tests:** `billing.test.ts`, `plans.test.ts`
+
 Known gaps:
 
-- No checkout
-- billing or entitlements.
+- Needs a Dodo Payments account
+- products and webhook secret (DODO_* settings).
+- Seat
+- system and workspace limits are defined but not yet enforced; only the advisor allowance is.
+
+### S12.5
+
+**As an AI governance lead**, I want to invite colleagues to my workspace with a role, so that the governance team works from one record, with approvers and viewers free.
+
+*Status: Done*
+
+Acceptance criteria:
+
+- Given I am the owner or an admin, when I invite an e-mail address with a role, then a single-use link valid for 14 days is created and I am told no e-mail was sent.
+- Given an operator or admin invitation, when the owner's plan has no free operator seat, then nothing is created and the message says how to proceed; approver and viewer invitations are always allowed.
+- Given an invitation link, when accepted by a signed-in user with the invited e-mail address, then they join with that role; any other address, a used, revoked or expired link adds nobody.
+- Given a member's role, when operator, admin or owner, then they can save the workspace; approvers and viewers read it and the database refuses their writes.
+- Given the owner or an admin, when they change a role or remove a member, then the owner can never be changed or removed and an admin cannot change another admin.
+- Given I belong to several workspaces, when I choose one, then it opens with my role shown.
+
+**Routes:** `/invite`, `/more` · **Capabilities:** CAP-050, CAP-079 · **Tests:** `team.test.ts`
+
+Known gaps:
+
+- Invitations are not e-mailed until an e-mail provider is added.
+- Approvers cannot yet record approvals
+- because the workspace saves as one snapshot.
 
 ## E13 — Platform console
 
@@ -1029,12 +1070,13 @@ Every gap recorded against a story, in one list for planning.
 | [S10.6](#s106) | E10 | Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in. |
 | [S10.7](#s107) | E10 | Signed-out visitors see a sign-in prompt instead of the chat. |
 | [S11.1](#s111) | E11 | The three packs differ only in title and subject. |
-| [S12.1](#s121) | E12 | No SSO/SAML |
-| [S12.1](#s121) | E12 | MFA |
-| [S12.1](#s121) | E12 | roles or invitations. |
-| [S12.2](#s122) | E12 | No autosave; unsaved changes are lost on reload. |
-| [S12.2](#s122) | E12 | One workspace per user; no switcher. |
-| [S12.2](#s122) | E12 | Migration 0009 renames the save function but the live database and client still use save_aegis_workspace — do not apply 0009 without updating the client. |
-| [S12.3](#s123) | E12 | No checkout |
-| [S12.3](#s123) | E12 | billing or entitlements. |
+| [S12.1](#s121) | E12 | No SSO/SAML or MFA. |
+| [S12.2](#s122) | E12 | Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied; conflict detection needs migration 0013. |
+| [S12.4](#s124) | E12 | Needs a Dodo Payments account |
+| [S12.4](#s124) | E12 | products and webhook secret (DODO_* settings). |
+| [S12.4](#s124) | E12 | Seat |
+| [S12.4](#s124) | E12 | system and workspace limits are defined but not yet enforced; only the advisor allowance is. |
+| [S12.5](#s125) | E12 | Invitations are not e-mailed until an e-mail provider is added. |
+| [S12.5](#s125) | E12 | Approvers cannot yet record approvals |
+| [S12.5](#s125) | E12 | because the workspace saves as one snapshot. |
 | [S13.1](#s131) | E13 | Synthetic data only; approvals have no external effect. |

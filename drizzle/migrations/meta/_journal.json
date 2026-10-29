@@ -75,8 +75,29 @@
     {
       "idx": 10,
       "version": "7",
-      "when": 1793271214481,
-      "tag": "0010_assistant_threads",
+      "when": 1792800000000,
+      "tag": "0010_veritrail_ai_usage_quota",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1792900000000,
+      "tag": "0011_veritrail_billing",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1793000000000,
+      "tag": "0012_veritrail_organization_members",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1793100000000,
+      "tag": "0013_veritrail_workspace_revisions",
       "breakpoints": true
     }
   ]

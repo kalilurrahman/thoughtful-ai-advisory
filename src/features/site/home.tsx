@@ -22,6 +22,7 @@ import {
 import type { Token, Tokens } from "marked";
 import { controls, maturityTemplate, pillars, siteConfig } from "./content";
 import { HeroIllustration, ControlMosaic, SectionArt } from "./illustrations";
+import { HowItWorksArt } from "./illustrations-tools";
 import {
   SiteMarkdown,
   renderInlineMarkdown,
@@ -428,7 +429,7 @@ const ASIDES: Record<string, (section: MarkdownSection) => ReactNode | null> = {
       </figure>
     );
   },
-  "how-it-works": () => <SectionArt kind="company" />,
+  "how-it-works": () => <HowItWorksArt />,
   "what-veritrail-does-and-does-not-claim": () => <SectionArt kind="compliance" />,
 };
 

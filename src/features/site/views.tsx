@@ -22,12 +22,25 @@ import { CONTROL_LIBRARY_PATH, breadcrumbsFor, type FaqItem, type SitePage } fro
 import { CtaBlock, SiteLink } from "./ui";
 import { TOOL_COMPONENTS } from "./tools/registry";
 import { ControlMosaic, SectionArt, artFor, type ArtKind } from "./illustrations";
+import {
+  MaturitySpotArt,
+  RiskTriageSpotArt,
+  GuardrailSpotArt,
+  AskVeritrailSpotArt,
+} from "./illustrations-tools";
 import { OnThisPage, formatDate } from "./reading";
 import { PageEnd } from "./page-end";
 import { HomeTemplate } from "./home";
 
 // Page templates — ported from platform/app/website/templates/{home,page,form,tool,
 // controls_index,control,404}.html.
+
+const TOOL_ART: Record<string, () => ReactNode> = {
+  "maturity-assessment": MaturitySpotArt,
+  "risk-triage": RiskTriageSpotArt,
+  "guardrail-generator": GuardrailSpotArt,
+  "ask-veritrail": AskVeritrailSpotArt,
+};
 
 const TOOL_META: Record<string, { anchor: string; jump: string }> = {
   "maturity-assessment": { anchor: "assessment", jump: "Start the assessment" },
@@ -156,7 +169,10 @@ function ToolTemplate({ page }: { page: SitePage }) {
   const anchor = tool?.anchor ?? "form-heading";
   return (
     <>
-      <PageHeader {...pageHeaderProps(page, "tools")} />
+      <PageHeader
+        {...pageHeaderProps(page, "tools")}
+        art={page.tool ? (TOOL_ART[page.tool]?.() ?? pageHeaderProps(page, "tools").art) : pageHeaderProps(page, "tools").art}
+      />
       <div className="container page-body">
         {page.body.trim() && (
           <>

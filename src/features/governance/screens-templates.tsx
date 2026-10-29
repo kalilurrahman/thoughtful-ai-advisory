@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { EmptyTemplates } from "@/features/site/illustrations-empty";
 import {
   Check,
   ClipboardText,
@@ -32,7 +33,7 @@ export function TemplatesScreen() {
   const selected =
     GOVERNANCE_TEMPLATES.find((template) => template.id === selectedId) ?? GOVERNANCE_TEMPLATES[0];
   if (!selected) {
-    return <p className="muted">No governance templates are available yet.</p>;
+    return <div className="empty-state muted"><EmptyTemplates /><p>No governance templates are available yet.</p></div>;
   }
   const activeTemplate = selected;
   const markdown = `# ${selected.title}\n\n> Starter template · Adapt to your organisation and validate with relevant owners.\n\n${selected.description}\n\n## Document details\n\n- Organisation: ${context.organisation || "[Organisation]"}\n- Accountable owner: ${context.owner || "[Name / role]"}\n- AI system or programme: ${context.system || "[System / programme]"}\n- Prepared / reviewed: ${context.date || "[Date]"}\n\n## How to use\n\n${selected.prompt}\n\n${selected.sections.map((section) => `## ${section.heading}\n\n${section.prompts.map((prompt) => `- [ ] ${prompt}\n  - Notes / evidence: \n`).join("\n")}`).join("\n")}\n## Approval and review\n\n- Decision: [Approve / approve with conditions / reject / defer]\n- Decision owner: [Name / role]\n- Conditions and actions: [Owner · due date · evidence]\n- Next review date: [Date]\n`;
@@ -99,7 +100,7 @@ export function TemplatesScreen() {
               <span>{template.description}</span>
             </button>
           ))}
-          {visible.length === 0 && <p className="muted">No templates match your search.</p>}
+          {visible.length === 0 && <div className="empty-state muted"><EmptyTemplates /><p>No templates match your search.</p></div>}
         </div>
         <section className="template-builder">
           <div className="section-heading">

@@ -1,6 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { CONTROLS, PILLARS } from "@/data/governance";
+import type { Plan } from "@/data/plans";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { redact } from "@/features/site/engines/ask-veritrail/safety";
 import { correctiveActionPriorities } from "./actions-schema";
 
 const inputSchema = z.object({
@@ -140,11 +143,48 @@ export function adviceFromResponse(status: number, body: unknown): AdvisorResult
   return { ok: true, summary: p.summary, areas, actions };
 }
 
+/** Why a request was refused when the caller has used the plan's daily advisor allowance. */
+export function quotaExceededMessage(plan: Plan): string {
+  const n = plan.limits.advisorPerDay;
+  const base = `You have used today's ${n} advisor ${n === 1 ? "request" : "requests"} on the ${plan.name} plan.`;
+  return plan.id === "enterprise"
+    ? `${base} The allowance resets at midnight UTC.`
+    : `${base} It resets at midnight UTC, or upgrade on the Plans page for a larger allowance.`;
+}
+
+/**
+ * The text sent to the model: common sensitive-data patterns (e-mail addresses, phone, card and
+ * national-id numbers, keys) are masked first, as the privacy notice promises.
+ */
+export function advisorInput(focus: string, concern: string): string {
+  return `Concern type: ${focus}\n\n${redact(concern).text}`;
+}
+
+export const QUOTA_UNAVAILABLE =
+  "The advisor allowance could not be checked, so nothing was sent. Try again shortly.";
+
+// Model calls cost money, so the advisor needs a signed-in user and counts each request against
+// a daily allowance (consume_ai_quota, migration 0010) before calling the gateway.
 export const recommendGovernance = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => inputSchema.parse(input))
-  .handler(async ({ data }): Promise<AdvisorResult> => {
+  .handler(async ({ data, context }): Promise<AdvisorResult> => {
     const key = process.env["LOVABLE_API_KEY"];
     if (!key) return { ok: false, error: "The AI advisor is not configured yet." };
+    const plan = await (
+      await import("@/features/billing/billing.server")
+    ).planForCaller(context.supabase);
+    // consume_ai_quota is newer than the generated Supabase types.
+    const rpc = context.supabase.rpc as unknown as (
+      fn: "consume_ai_quota",
+      args: { p_feature: "advisor"; p_limit: number },
+    ) => Promise<{ data: boolean | null; error: unknown }>;
+    const quota = await rpc.call(context.supabase, "consume_ai_quota", {
+      p_feature: "advisor",
+      p_limit: plan.limits.advisorPerDay,
+    });
+    if (quota.error) return { ok: false, error: QUOTA_UNAVAILABLE };
+    if (quota.data !== true) return { ok: false, error: quotaExceededMessage(plan) };
     const catalogue = CONTROLS.map(
       (c) =>
         `${c.id} | ${c.code} | ${PILLARS[c.p]?.name ?? ""} (${PILLARS[c.p]?.nist ?? ""}) | ${c.text}`,
@@ -160,7 +200,7 @@ export const recommendGovernance = createServerFn({ method: "POST" })
           "Map the user's concern to the most relevant controls from the catalogue (use only listed controlIds, 3-6 areas, most relevant first) " +
           "and propose 3-5 concrete, owned corrective actions, each tied to one listed controlId. Be precise and practical; no generic advice.\n\nCatalogue (id | code | pillar | question):\n" +
           catalogue,
-        input: `Concern type: ${data.focus}\n\n${data.concern}`,
+        input: advisorInput(data.focus, data.concern),
         text: { format: { type: "json_schema", name: "governance_advice", strict: true, schema } },
       }),
     });

@@ -1,5 +1,6 @@
 import { useMemo, useState, type FormEvent } from "react";
 import { ArrowSquareOut, BellRinging, Gauge, Pause, Play } from "@phosphor-icons/react";
+import { EmptyMonitoring } from "@/features/site/illustrations-empty";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
@@ -284,10 +285,13 @@ export function MonitoringScreen() {
           />
         ))}
         {visible.length === 0 && (
-          <p className="empty-state muted">
-            No monitoring plans match this view. Define a measurable signal and accountable review
-            cadence.
-          </p>
+          <div className="empty-state muted">
+            <EmptyMonitoring />
+            <p>
+              No monitoring plans match this view. Define a measurable signal and accountable review
+              cadence.
+            </p>
+          </div>
         )}
       </div>
       <p className="footnote">

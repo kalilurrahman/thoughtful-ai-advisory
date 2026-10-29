@@ -1,5 +1,6 @@
 import { useMemo, useState, type FormEvent } from "react";
 import { CheckCircle, ClipboardText, Plus, WarningCircle } from "@phosphor-icons/react";
+import { EmptyActions } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import {
   correctiveActionSchema,
@@ -235,7 +236,10 @@ export function ActionsScreen() {
           <ActionCard key={action.id} action={action} dispatch={dispatch} />
         ))}
         {visible.length === 0 && (
-          <p className="empty-state muted">No corrective actions match this view.</p>
+          <div className="empty-state muted">
+            <EmptyActions />
+            <p>No corrective actions match this view.</p>
+          </div>
         )}
       </div>
       <p className="footnote">
