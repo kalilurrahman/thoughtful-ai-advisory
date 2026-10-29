@@ -3,6 +3,7 @@ import { WorkspaceControls } from "./workspace-controls";
 import { TeamPanel } from "./team-panel";
 import { PendingInviteBanner } from "./invite-screen";
 import { useState } from "react";
+import { EmptyResources } from "@/features/site/illustrations-empty";
 import { Link } from "@tanstack/react-router";
 import {
   Sparkle,
@@ -228,6 +229,7 @@ export function KnowledgeScreen() {
       </div>
       {sources.length === 0 && (
         <div className="empty-state">
+          <EmptyResources />
           <h3>No matching resources</h3>
           <Button
             variant="link"

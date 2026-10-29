@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle, Circle, MinusCircle } from "@phosphor-icons/react";
+import { EmptyChecklist } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
 import { buildLifecycleChecklist, checklistProgress } from "./checklist-model";
@@ -91,7 +92,10 @@ export function ChecklistScreen() {
           individual system’s governance score or determine legal applicability.
         </p>
         {profiles.length === 0 ? (
-          <p className="empty-state muted">Register systems to assess profile completeness.</p>
+          <div className="empty-state muted">
+            <EmptyChecklist />
+            <p>Register systems to assess profile completeness.</p>
+          </div>
         ) : (
           <div className="checklist-tasks">
             {profiles.map(({ system, index, complete }) => (

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { BookOpen, CheckCircle, DownloadSimple, MagnifyingGlass } from "@phosphor-icons/react";
+import { EmptyPlaybook } from "@/features/site/illustrations-empty";
 import { Link, useLocation } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { PLAYBOOK_CHAPTERS } from "@/data/playbook";
@@ -249,6 +250,7 @@ export function PlaybookScreen() {
       </div>
       {chapters.length === 0 && (
         <div className="empty-state">
+          <EmptyPlaybook />
           <h3>No chapters match</h3>
           <Button
             variant="link"

@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Plus, WarningCircle } from "@phosphor-icons/react";
+import { EmptyIncidents } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import type { AIIncident } from "./store";
 import { useGovernance } from "./store";
@@ -341,10 +342,13 @@ export function IncidentsScreen() {
           </article>
         ))}
         {visibleIncidents.length === 0 && (
-          <p className="empty-state muted">
-            No incidents in this view. Record incidents and near misses here to support response
-            coordination and learning.
-          </p>
+          <div className="empty-state muted">
+            <EmptyIncidents />
+            <p>
+              No incidents in this view. Record incidents and near misses here to support response
+              coordination and learning.
+            </p>
+          </div>
         )}
       </div>
       <p className="footnote">

@@ -1,5 +1,6 @@
 import { useMemo, useState, type FormEvent } from "react";
 import { ArrowsClockwise, WarningCircle } from "@phosphor-icons/react";
+import { EmptyChanges } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import {
   changeCategories,
@@ -277,9 +278,10 @@ export function ChangesScreen() {
           />
         ))}
         {visible.length === 0 && (
-          <p className="empty-state muted">
-            No change reviews match this view. Submit a material change before implementation.
-          </p>
+          <div className="empty-state muted">
+            <EmptyChanges />
+            <p>No change reviews match this view. Submit a material change before implementation.</p>
+          </div>
         )}
       </div>
       <p className="footnote">
