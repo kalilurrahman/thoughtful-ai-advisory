@@ -23,7 +23,7 @@ import { askAssistant, type AssistantSource } from "./assistant.functions";
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
-  sources?: AssistantSource[];
+  sources?: AssistantSource[] | undefined;
 }
 interface ThreadRow {
   id: string;
