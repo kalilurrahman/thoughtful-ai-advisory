@@ -30,12 +30,12 @@ describe("VERITRAIL supplied governance rules", () => {
     expect(indexScore(scores)).toBe(52);
   });
   it("uses the exact maturity band boundaries", () => {
-    expect([29, 30, 49, 50, 69, 70, 84, 85].map(maturityBand)).toEqual([
-      "Nascent",
-      "Emerging",
-      "Emerging",
-      "Established",
-      "Established",
+    expect([39, 40, 59, 60, 74, 75, 89, 90].map(maturityBand)).toEqual([
+      "Initial",
+      "Developing",
+      "Developing",
+      "Defined",
+      "Defined",
       "Managed",
       "Managed",
       "Optimized",
