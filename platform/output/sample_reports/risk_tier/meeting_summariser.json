@@ -12,7 +12,7 @@
     "vendor_model": true
   },
   "result": {
-    "tier": "Low",
+    "tier": "Minimal",
     "score": 20,
     "provisional": false,
     "factors": [
@@ -71,7 +71,7 @@
     "review_cadence_months": 24,
     "evidence_status": "Inferred",
     "requires_human_confirmation": true,
-    "rationale": "Preliminary tier Low (score 20). Drivers: data_sensitivity=internal (+5); autonomy=suggests (+5); generative_ai=True (+5); third_party_model=True (+5). Inferred from user-provided intake; requires human confirmation.",
+    "rationale": "Preliminary tier Minimal (score 20). Drivers: data_sensitivity=internal (+5); autonomy=suggests (+5); generative_ai=True (+5); third_party_model=True (+5). Inferred from user-provided intake; requires human confirmation.",
     "citations": [
       "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
       "VERITRAIL Control EI-04: Intended purpose and context of use (Control Library v1.0.0)",
@@ -94,6 +94,6 @@
       "IS-09",
       "IS-14"
     ],
-    "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+    "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High-risk >= 60 or any high-risk trigger; Limited >= 30)"
   }
 }

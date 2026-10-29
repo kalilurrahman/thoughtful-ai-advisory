@@ -7,16 +7,7 @@ export function filterInventory(systems: System[], tier: string, status: string,
     .filter(
       ({ system }) =>
         tier === "All" ||
-        (system.riskTriage
-          ? (
-              {
-                Low: "Minimal",
-                Medium: "Limited",
-                High: "High-risk",
-                "Prohibited-review": "Prohibited",
-              } as const
-            )[system.riskTriage.result.tier]
-          : system.tier) === tier,
+        (system.riskTriage ? system.riskTriage.result.tier : system.tier) === tier,
     )
     .filter(({ system }) => status === "All statuses" || system.status === status)
     .filter(({ system }) =>

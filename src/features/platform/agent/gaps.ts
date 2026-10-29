@@ -30,7 +30,7 @@ export const GAP_SEVERITY_SLA_DAYS: Record<GapSeverity, number> = {
   Low: 180,
 };
 export const PRIORITY_ORDER = ["critical", "high", "medium", "low"];
-export const TIER_ORDER = ["Low", "Medium", "High", "Prohibited-review"];
+export const TIER_ORDER = ["Minimal", "Limited", "High-risk", "Prohibited"];
 export const DOMAIN_NAMES: Record<string, string> = {
   strategy: "Strategy & Accountability",
   inventory: "AI Inventory & Visibility",
@@ -265,7 +265,7 @@ export function identifyGaps(
   evidenceLookup: EvidenceLookup = () => null,
   asOf: string,
 ): GapResult {
-  const tier = assessment.risk?.tier || "Medium";
+  const tier = assessment.risk?.tier || "Limited";
   const responses = assessment.responses ?? {};
   const questions = assessment.questions ?? [];
   const findings: Finding[] = [];

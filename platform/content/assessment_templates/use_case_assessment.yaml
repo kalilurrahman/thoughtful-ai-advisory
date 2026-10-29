@@ -45,7 +45,7 @@ answer_options:
 # Severity = priority_points[control priority] + tier_points[risk tier] + answer severity_points
 severity_rules:
   priority_points: {critical: 3, high: 2, medium: 1, low: 0}
-  tier_points: {Prohibited-review: 3, High: 2, Medium: 1, Low: 0}
+  tier_points: {Prohibited: 3, High-risk: 2, Limited: 1, Minimal: 0}
   thresholds: {Critical: 8, High: 6, Medium: 4}     # score >= threshold; else Low
   # Implemented-but-unevidenced answers are evidence gaps, not implementation gaps.
   evidence_gap_max_severity: Medium
@@ -305,7 +305,7 @@ modules:
     name: Fairness, safety & transparency
     description: Bias testing, harm evaluation, AI disclosure and contestability.
     applies_when:
-      - {tier_in: [High, Prohibited-review]}
+      - {tier_in: [High-risk, Prohibited]}
       - {profile_in: {affected_parties: [customers, public, vulnerable]}}
       - {profile_in: {decision_impact: [material, automated_decision]}}
       - {required_module: fairness_safety}
@@ -317,7 +317,7 @@ modules:
         evidence_expected: [Fairness test plan and results, Mitigation records]
         remediation: Define relevant groups and fairness metrics, test against thresholds and record mitigations.
         critical_if_not_implemented: false
-        applies_when: [{tier_in: [High, Prohibited-review]}, {profile_in: {decision_impact: [material, automated_decision]}}]
+        applies_when: [{tier_in: [High-risk, Prohibited]}, {profile_in: {decision_impact: [material, automated_decision]}}]
       - id: UC-FAIR-Q2
         domain: fairness_transparency
         text: Has a safety and harm evaluation been completed (harmful, misleading or inappropriate outputs, including for vulnerable users)?
@@ -345,7 +345,7 @@ modules:
     name: Human oversight & operations
     description: Oversight design, operator training, escalation and go-live conditions.
     applies_when:
-      - {tier_in: [High, Prohibited-review]}
+      - {tier_in: [High-risk, Prohibited]}
       - {profile_in: {decision_impact: [material, automated_decision]}}
       - {profile_in: {autonomy: [acts_with_approval, acts_autonomously]}}
       - {required_module: human_oversight}
@@ -457,7 +457,7 @@ modules:
         evidence_expected: [Technical documentation pack, Model/system card]
         remediation: Produce and maintain technical documentation including a system/model card, architecture, data, testing and known limitations.
         critical_if_not_implemented: false
-        applies_when: [{tier_in: [High, Prohibited-review]}, {profile: {eu_exposure: true}}]
+        applies_when: [{tier_in: [High-risk, Prohibited]}, {profile: {eu_exposure: true}}]
 
 # Runtime guardrail recommendations surfaced in reports, keyed by the same applicability grammar.
 runtime_guardrails:

@@ -77,14 +77,7 @@ export function InventoryScreen() {
     [status, setStatus] = useState("Under review"),
     [riskProfile, setRiskProfile] = useState<RiskProfile>({});
   const triage = calculateRiskTier({ ...riskProfile, name });
-  const tier = (
-    {
-      Low: "Minimal",
-      Medium: "Limited",
-      High: "High-risk",
-      "Prohibited-review": "Prohibited",
-    } as const
-  )[triage.tier];
+  const tier = triage.tier;
   const triageEnabled = editingIndex === null || Boolean(state.systems[editingIndex]?.riskTriage);
   const visibleSystems = filterInventory(state.systems, filter, statusFilter, search);
   function openRegistration() {
@@ -208,7 +201,7 @@ export function InventoryScreen() {
                   s.tier === "High-risk" || s.tier === "Prohibited"
                     ? "danger"
                     : s.tier === "Limited"
-                      ? "success"
+                      ? "warning"
                       : "neutral"
                 }
               >
@@ -413,7 +406,15 @@ export function InventoryScreen() {
               <div className="screening-result">
                 <Kicker>Inferred screening result · human confirmation required</Kicker>
                 <h2>
-                  <Chip tone={tier === "High-risk" || tier === "Prohibited" ? "danger" : "success"}>
+                  <Chip
+                    tone={
+                      tier === "High-risk" || tier === "Prohibited"
+                        ? "danger"
+                        : tier === "Limited"
+                          ? "warning"
+                          : "neutral"
+                    }
+                  >
                     {tier}
                   </Chip>{" "}
                   <small>Rule score {triage.score} (not a percentage)</small>

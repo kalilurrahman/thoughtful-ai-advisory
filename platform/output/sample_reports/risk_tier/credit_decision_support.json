@@ -14,7 +14,7 @@
     "environment": "production"
   },
   "result": {
-    "tier": "High",
+    "tier": "High-risk",
     "score": 85,
     "provisional": false,
     "factors": [
@@ -72,7 +72,7 @@
     "review_cadence_months": 6,
     "evidence_status": "Inferred",
     "requires_human_confirmation": true,
-    "rationale": "Preliminary tier High (score 85). Drivers: decision_impact=material (+20); affected_parties=customers (+10); data_sensitivity=personal (+15); autonomy=suggests (+5); domain_category=credit — Creditworthiness / credit scoring (Annex III area 5) (+30); eu_exposure=True (+5). Triggers: Potential EU AI Act high-risk area: Creditworthiness / credit scoring (Annex III area 5) — legal classification review required (Art. 6); Material or automated decisions in a sensitive (Annex III-like) domain. Inferred from user-provided intake; requires human confirmation.",
+    "rationale": "Preliminary tier High-risk (score 85). Drivers: decision_impact=material (+20); affected_parties=customers (+10); data_sensitivity=personal (+15); autonomy=suggests (+5); domain_category=credit — Creditworthiness / credit scoring (Annex III area 5) (+30); eu_exposure=True (+5). Triggers: Potential EU AI Act high-risk area: Creditworthiness / credit scoring (Annex III area 5) — legal classification review required (Art. 6); Material or automated decisions in a sensitive (Annex III-like) domain. Inferred from user-provided intake; requires human confirmation.",
     "citations": [
       "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
       "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
@@ -93,6 +93,6 @@
       "IS-03",
       "IS-09"
     ],
-    "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+    "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High-risk >= 60 or any high-risk trigger; Limited >= 30)"
   }
 }

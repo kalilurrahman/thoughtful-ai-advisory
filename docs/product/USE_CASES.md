@@ -586,7 +586,7 @@
 | CAP-073 Glossary definitions in text | Live | UC01, UC07 |
 | CAP-074 Reading aids | Live | UC01 |
 | CAP-075 Section illustrations and share images | Live | — |
-| CAP-078 Billing — Dodo Payments | Live | — |
-| CAP-079 Team workspaces — members | Live | — |
+| CAP-080 Billing — Dodo Payments | Live | — |
+| CAP-081 Team workspaces — members | Live | — |
 | CAP-077 Appearance — themes and fonts | Live | UC01 |
 | CAP-076 Workspace app shell | Live | — |

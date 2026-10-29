@@ -453,10 +453,10 @@ function riskProfile(n: NormalizedProfile): RiskProfileOut {
   for (const [lvl] of floors) {
     if (levelIdx(lvl) > levelIdx(rating)) rating = lvl;
   }
-  let inferredTier: string = rating === "Critical" ? "High" : rating;
-  if (n.risk_tier === "Prohibited-review") inferredTier = "Prohibited-review";
+  let inferredTier: string = rating === "Critical" ? "High-risk" : rating === "High" ? "High-risk" : rating === "Medium" ? "Limited" : "Minimal";
+  if (n.risk_tier === "Prohibited") inferredTier = "Prohibited";
   const assertedTier = n.risk_tier;
-  const tierOrder = ["Low", "Medium", "High", "Prohibited-review"];
+  const tierOrder = ["Minimal", "Limited", "High-risk", "Prohibited"];
   const mismatch =
     !!assertedTier && tierOrder.indexOf(inferredTier) > tierOrder.indexOf(assertedTier);
 

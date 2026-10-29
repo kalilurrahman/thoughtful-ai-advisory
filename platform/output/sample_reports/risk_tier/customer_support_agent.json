@@ -20,7 +20,7 @@
     "environment": "production"
   },
   "result": {
-    "tier": "High",
+    "tier": "High-risk",
     "score": 85,
     "provisional": false,
     "factors": [
@@ -102,7 +102,7 @@
     "review_cadence_months": 6,
     "evidence_status": "Inferred",
     "requires_human_confirmation": true,
-    "rationale": "Preliminary tier High (score 85). Drivers: decision_impact=advisory (+5); affected_parties=customers (+10); data_sensitivity=personal (+15); autonomy=acts_with_approval (+15); tool_access=3 tool(s), 2 with write/act capability (+15); external_actions=True (+10); generative_ai=True (+5); third_party_model=True (+5); eu_exposure=True (+5). Inferred from user-provided intake; requires human confirmation.",
+    "rationale": "Preliminary tier High-risk (score 85). Drivers: decision_impact=advisory (+5); affected_parties=customers (+10); data_sensitivity=personal (+15); autonomy=acts_with_approval (+15); tool_access=3 tool(s), 2 with write/act capability (+15); external_actions=True (+10); generative_ai=True (+5); third_party_model=True (+5); eu_exposure=True (+5). Inferred from user-provided intake; requires human confirmation.",
     "citations": [
       "VERITRAIL Control AO-07: Regulatory and contractual obligations register (Control Library v1.0.0)",
       "VERITRAIL Control EI-02: AI risk classification and tiering (Control Library v1.0.0)",
@@ -131,6 +131,6 @@
       "IS-13",
       "IS-14"
     ],
-    "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)"
+    "method": "VERITRAIL risk-tier rules v1.0 (thresholds: High-risk >= 60 or any high-risk trigger; Limited >= 30)"
   }
 }
