@@ -266,14 +266,14 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 3. Per-system release gates; decisions that update inventory status.
 4. Telemetry-fed monitoring; a runtime enforcement point for Shield policies.
 5. Governance briefing notifications (Web Push) after consent and a sending service exist.
-6. Billing and entitlements for the plans.
+6. Enforce seat, system and workspace limits per plan (billing through Dodo Payments is built).
 
 ## 12. Risks and mitigations
 
 | ID | Risk | Impact | Mitigation |
 |---|---|---|---|
-| R1 | Migration `0009` renames `save_aegis_workspace` to `save_veritrail_workspace`, but the live database and the client use the old name | Applying it alone breaks Save for every user | Apply only together with a client change and regenerated Supabase types; until then keep `save_aegis_workspace` |
-| R2 | The advisor calls the Lovable AI gateway without requiring sign-in | Cost and abuse exposure | Require sign-in or add per-IP limits; monitor usage |
+| R1 | Migration `0009` renames `save_aegis_workspace` to `save_veritrail_workspace` | Save would break if the client called only one name | The client calls the new name and falls back to the old one; regenerate Supabase types once `0009` is live |
+| R2 | The advisor calls the Lovable AI gateway | Cost and abuse exposure | Sign-in required and a daily allowance per plan (`consume_ai_quota`); monitor usage |
 | R3 | No confirmation e-mails on lead forms | Missed follow-up | Add a sending provider (HTTP API); lead forms are already rate-limited per client |
 | R4 | Placeholder legal text, contact address and `site_url` | Not ready for public launch or store listings | Legal review; set the production domain before submission |
 | R5 | No autosave; one workspace per user | Lost work; poor fit for teams | Autosave and workspace selection (Next) |
@@ -283,7 +283,9 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 ## 13. Dependencies
 
 - **Lovable Cloud / Supabase** — authentication, Postgres with RLS, server functions.
-- **Lovable AI gateway** — the workspace advisor (`LOVABLE_API_KEY`).
+- **Lovable AI gateway** — the workspace advisor (`LOVABLE_API_KEY`), signed-in only with a daily allowance per plan.
+- **Dodo Payments** — merchant of record for the self-serve plans: checkout, customer portal and
+  subscription webhooks ([billing setup](../veritrail/BILLING_SETUP.md)).
 - **Cloudflare Workers** (via Nitro) — hosting; no SMTP, so e-mail must use an HTTP API.
 - **Python reference platform** in `platform/` — the source of governed content and the parity
   fixtures.

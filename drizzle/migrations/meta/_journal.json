@@ -78,6 +78,13 @@
       "when": 1792800000000,
       "tag": "0010_veritrail_ai_usage_quota",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1792900000000,
+      "tag": "0011_veritrail_billing",
+      "breakpoints": true
     }
   ]
 }

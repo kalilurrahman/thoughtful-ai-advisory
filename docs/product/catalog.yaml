@@ -545,7 +545,7 @@ epics:
           - Given I am signed in, when I choose Save, then the whole workspace is written in one call scoped to my organisation by RLS.
           - Given I choose Restore, when it loads, then the saved snapshot replaces the in-memory state.
         routes: [/more]
-        gaps: [No autosave; unsaved changes are lost on reload., One workspace per user; no switcher., Migration 0009 renames the save function but the live database and client still use save_aegis_workspace — do not apply 0009 without updating the client.]
+        gaps: [No autosave; unsaved changes are lost on reload., One workspace per user; no switcher., Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied.]
       - id: S12.3
         persona: visitor
         want: to see the plans and what each includes
@@ -554,7 +554,20 @@ epics:
         acceptance:
           - Given the plans page, when loaded, then the Free, Team, Business and Enterprise plans from src/data/plans.ts and the Governance Baseline are shown, with no unapproved price figures.
         routes: [/plans]
-        gaps: [No checkout, billing or entitlements.]
+      - id: S12.4
+        persona: gov-lead
+        want: to buy, renew, change or cancel a self-serve plan
+        so_that: my team gets the limits it needs without a sales call
+        status: partial
+        acceptance:
+          - Given I am signed in on the Free plan, when I choose Team or Business, then a Dodo Payments checkout opens for the configured product and nothing is charged by VERITRAIL itself.
+          - Given a signed Dodo webhook for a subscription, when received, then the subscription is stored once, older events never overwrite newer ones, and unsigned or stale requests change nothing.
+          - Given an active or past-due subscription, when the plan is read on the server, then its limits apply (for example the advisor allowance); any other status means the Free plan.
+          - Given a paid plan, when I choose Manage billing, then the Dodo customer portal opens to update payment, change or cancel.
+        routes: [/plans]
+        capabilities: [CAP-078]
+        tests: [billing.test.ts, plans.test.ts]
+        gaps: [Needs a Dodo Payments account, products and webhook secret (DODO_* settings)., Seat, system and workspace limits are defined but not yet enforced; only the advisor allowance is.]
 
   - id: E13
     title: Platform console
@@ -1108,5 +1121,6 @@ capabilities:
   - {id: CAP-073, name: Glossary definitions in text, area: app, route: "", status: live, data: none, epic: E15, personas: [visitor], source: [src/features/site/glossary-tip.tsx, src/features/site/markdown.tsx], tests: [site-reading.test.ts], summary: "First mention of each term underlined with a definition on hover, focus or tap."}
   - {id: CAP-074, name: Reading aids, area: app, route: "", status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/markdown.tsx, src/features/site/reading.tsx], tests: [site-reading.test.ts], summary: "Feature cards, step timelines, link cards, callouts, stacked tables, code copy, On this page, progress and back-to-top."}
   - {id: CAP-075, name: Section illustrations and share images, area: app, route: "", status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/illustrations.tsx, scripts/generate-social-images.mjs, public/og], tests: [site-reading.test.ts], summary: "Theme-aware SVG art for every section and 1200×630 share cards."}
+  - {id: CAP-078, name: Billing — Dodo Payments, area: account, route: /api/billing/dodo-webhook, status: live, data: cloud, epic: E12, personas: [gov-lead], source: [src/features/billing/billing.functions.ts, src/features/billing/entitlements.ts, src/features/billing/webhook.ts, src/routes/api.billing.dodo-webhook.ts, drizzle/migrations/0011_veritrail_billing.sql], tests: [billing.test.ts], summary: "Checkout and customer portal hosted by Dodo Payments (merchant of record); signed, idempotent webhooks store subscriptions; plan limits resolved on the server."}
   - {id: CAP-077, name: Appearance — themes and fonts, area: app, route: "", status: live, data: browser, epic: E15, personas: [visitor, gov-lead], source: [src/lib/theme.ts, src/features/appearance/appearance-panel.tsx, src/styles.css], tests: [theme.test.ts], summary: "Three palettes (Broadsheet, Midnight Gold, Financial Slate); Auto (follows the device), light or dark; and three fonts (Editorial serif, KR Tools, Modern sans), applied before first paint."}
   - {id: CAP-076, name: Workspace app shell, area: app, route: "", status: live, data: none, epic: E15, personas: [gov-lead, owner, approver], source: [src/features/governance/shell.tsx], tests: [app-routing.test.tsx], summary: "One-row header with back, home, workspace name and actions (a More actions menu on phones), side navigation on desktop and bottom tabs on phones."}

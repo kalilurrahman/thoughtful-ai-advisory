@@ -3443,3 +3443,53 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .plan-includes li + li {
   margin-top: 4px;
 }
+.billing-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  margin: 16px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+.billing-status > svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+.billing-status > div {
+  flex: 1 1 220px;
+}
+.billing-status p {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+.billing-interval {
+  display: inline-flex;
+  margin: 8px 0 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+  background: var(--card);
+}
+.billing-interval button {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.billing-interval button.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.billing-error {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--danger-ink);
+  background: var(--danger-surface);
+}

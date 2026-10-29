@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { CONTROLS, PILLARS } from "@/data/governance";
-import { getPlan, type Plan } from "@/data/plans";
+import type { Plan } from "@/data/plans";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { correctiveActionPriorities } from "./actions-schema";
 
@@ -162,7 +162,9 @@ export const recommendGovernance = createServerFn({ method: "POST" })
   .handler(async ({ data, context }): Promise<AdvisorResult> => {
     const key = process.env["LOVABLE_API_KEY"];
     if (!key) return { ok: false, error: "The AI advisor is not configured yet." };
-    const plan = getPlan("free");
+    const plan = await (
+      await import("@/features/billing/billing.server")
+    ).planForCaller(context.supabase);
     // consume_ai_quota is newer than the generated Supabase types.
     const rpc = context.supabase.rpc as unknown as (
       fn: "consume_ai_quota",

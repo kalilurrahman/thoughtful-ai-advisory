@@ -2,7 +2,7 @@
 
 # VERITRAIL epics and user stories
 
-16 epics and 57 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
+16 epics and 58 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
 
 | Epic | Title | Area | Status | Stories | Done | Partial | Planned |
 |---|---|---|---|---|---|---|---|
@@ -17,7 +17,7 @@
 | [E09](#e09--remediation-roadmap-and-lifecycle-checklist) | Remediation roadmap and lifecycle checklist | Workspace — assessment and release readiness | Live | 2 | 2 | 0 | 0 |
 | [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 6 | 6 | 0 | 0 |
 | [E11](#e11--reports-and-audit-evidence) | Reports and audit evidence | Workspace — reports and evidence | Preview | 1 | 1 | 0 | 0 |
-| [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 3 | 1 | 2 | 0 |
+| [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 4 | 1 | 3 | 0 |
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
 | [E14](#e14--administration-and-privacy-first-analytics) | Administration and privacy-first analytics | Administration and analytics | Live | 2 | 2 | 0 | 0 |
 | [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 6 | 6 | 0 | 0 |
@@ -647,7 +647,7 @@ Known gaps:
 
 **Area:** Accounts and persistence · **Status:** Live
 
-**Capabilities:** CAP-049 Plans, CAP-050 Workspace and account, CAP-051 Sign in and sign up, CAP-052 Password reset, CAP-053 Onboarding
+**Capabilities:** CAP-049 Plans, CAP-050 Workspace and account, CAP-051 Sign in and sign up, CAP-052 Password reset, CAP-053 Onboarding, CAP-078 Billing — Dodo Payments
 
 ### S12.1
 
@@ -685,7 +685,7 @@ Known gaps:
 
 - No autosave; unsaved changes are lost on reload.
 - One workspace per user; no switcher.
-- Migration 0009 renames the save function but the live database and client still use save_aegis_workspace — do not apply 0009 without updating the client.
+- Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied.
 
 ### S12.3
 
@@ -699,10 +699,27 @@ Acceptance criteria:
 
 **Routes:** `/plans` · **Capabilities:** CAP-049 · **Tests:** none yet
 
+### S12.4
+
+**As an AI governance lead**, I want to buy, renew, change or cancel a self-serve plan, so that my team gets the limits it needs without a sales call.
+
+*Status: Partial*
+
+Acceptance criteria:
+
+- Given I am signed in on the Free plan, when I choose Team or Business, then a Dodo Payments checkout opens for the configured product and nothing is charged by VERITRAIL itself.
+- Given a signed Dodo webhook for a subscription, when received, then the subscription is stored once, older events never overwrite newer ones, and unsigned or stale requests change nothing.
+- Given an active or past-due subscription, when the plan is read on the server, then its limits apply (for example the advisor allowance); any other status means the Free plan.
+- Given a paid plan, when I choose Manage billing, then the Dodo customer portal opens to update payment, change or cancel.
+
+**Routes:** `/plans` · **Capabilities:** CAP-049, CAP-078 · **Tests:** `billing.test.ts`, `plans.test.ts`
+
 Known gaps:
 
-- No checkout
-- billing or entitlements.
+- Needs a Dodo Payments account
+- products and webhook secret (DODO_* settings).
+- Seat
+- system and workspace limits are defined but not yet enforced; only the advisor allowance is.
 
 ## E13 — Platform console
 
@@ -1019,7 +1036,9 @@ Every gap recorded against a story, in one list for planning.
 | [S12.1](#s121) | E12 | roles or invitations. |
 | [S12.2](#s122) | E12 | No autosave; unsaved changes are lost on reload. |
 | [S12.2](#s122) | E12 | One workspace per user; no switcher. |
-| [S12.2](#s122) | E12 | Migration 0009 renames the save function but the live database and client still use save_aegis_workspace — do not apply 0009 without updating the client. |
-| [S12.3](#s123) | E12 | No checkout |
-| [S12.3](#s123) | E12 | billing or entitlements. |
+| [S12.2](#s122) | E12 | Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied. |
+| [S12.4](#s124) | E12 | Needs a Dodo Payments account |
+| [S12.4](#s124) | E12 | products and webhook secret (DODO_* settings). |
+| [S12.4](#s124) | E12 | Seat |
+| [S12.4](#s124) | E12 | system and workspace limits are defined but not yet enforced; only the advisor allowance is. |
 | [S13.1](#s131) | E13 | Synthetic data only; approvals have no external effect. |

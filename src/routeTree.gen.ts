@@ -38,6 +38,7 @@ import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as WorkspaceRouteImport } from './routes/workspace'
 import { Route as PlatformIndexRouteImport } from './routes/platform.index'
 import { Route as PlatformToolRouteImport } from './routes/platform.$tool'
+import { Route as ApiBillingDodoWebhookRouteImport } from './routes/api.billing.dodo-webhook'
 import { Route as FrameworkControlsIndexRouteImport } from './routes/framework.controls.index'
 import { Route as FrameworkControlsControlIdRouteImport } from './routes/framework.controls.$controlId'
 
@@ -186,6 +187,11 @@ const PlatformToolRoute = PlatformToolRouteImport.update({
   path: '/platform/$tool',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiBillingDodoWebhookRoute = ApiBillingDodoWebhookRouteImport.update({
+  id: '/api/billing/dodo-webhook',
+  path: '/api/billing/dodo-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FrameworkControlsIndexRoute = FrameworkControlsIndexRouteImport.update({
   id: '/framework/controls/',
   path: '/framework/controls/',
@@ -228,6 +234,7 @@ export interface FileRoutesByFullPath {
   '/workspace': typeof WorkspaceRoute
   '/platform/$tool': typeof PlatformToolRoute
   '/platform/': typeof PlatformIndexRoute
+  '/api/billing/dodo-webhook': typeof ApiBillingDodoWebhookRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
 }
@@ -261,6 +268,7 @@ export interface FileRoutesByTo {
   '/workspace': typeof WorkspaceRoute
   '/platform/$tool': typeof PlatformToolRoute
   '/platform': typeof PlatformIndexRoute
+  '/api/billing/dodo-webhook': typeof ApiBillingDodoWebhookRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls': typeof FrameworkControlsIndexRoute
 }
@@ -295,6 +303,7 @@ export interface FileRoutesById {
   '/workspace': typeof WorkspaceRoute
   '/platform/$tool': typeof PlatformToolRoute
   '/platform/': typeof PlatformIndexRoute
+  '/api/billing/dodo-webhook': typeof ApiBillingDodoWebhookRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
 }
@@ -330,6 +339,7 @@ export interface FileRouteTypes {
     | '/workspace'
     | '/platform/$tool'
     | '/platform/'
+    | '/api/billing/dodo-webhook'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
   fileRoutesByTo: FileRoutesByTo
@@ -363,6 +373,7 @@ export interface FileRouteTypes {
     | '/workspace'
     | '/platform/$tool'
     | '/platform'
+    | '/api/billing/dodo-webhook'
     | '/framework/controls/$controlId'
     | '/framework/controls'
   id:
@@ -396,6 +407,7 @@ export interface FileRouteTypes {
     | '/workspace'
     | '/platform/$tool'
     | '/platform/'
+    | '/api/billing/dodo-webhook'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
   fileRoutesById: FileRoutesById
@@ -430,6 +442,7 @@ export interface RootRouteChildren {
   WorkspaceRoute: typeof WorkspaceRoute
   PlatformToolRoute: typeof PlatformToolRoute
   PlatformIndexRoute: typeof PlatformIndexRoute
+  ApiBillingDodoWebhookRoute: typeof ApiBillingDodoWebhookRoute
   FrameworkControlsControlIdRoute: typeof FrameworkControlsControlIdRoute
   FrameworkControlsIndexRoute: typeof FrameworkControlsIndexRoute
 }
@@ -639,6 +652,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlatformToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/billing/dodo-webhook': {
+      id: '/api/billing/dodo-webhook'
+      path: '/api/billing/dodo-webhook'
+      fullPath: '/api/billing/dodo-webhook'
+      preLoaderRoute: typeof ApiBillingDodoWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/framework/controls/': {
       id: '/framework/controls/'
       path: '/framework/controls'
@@ -686,6 +706,7 @@ const rootRouteChildren: RootRouteChildren = {
   WorkspaceRoute: WorkspaceRoute,
   PlatformToolRoute: PlatformToolRoute,
   PlatformIndexRoute: PlatformIndexRoute,
+  ApiBillingDodoWebhookRoute: ApiBillingDodoWebhookRoute,
   FrameworkControlsControlIdRoute: FrameworkControlsControlIdRoute,
   FrameworkControlsIndexRoute: FrameworkControlsIndexRoute,
 }

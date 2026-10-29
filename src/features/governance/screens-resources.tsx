@@ -31,7 +31,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { CALCS, SOURCES, PACKS } from "@/data/governance";
-import { PLANS } from "@/data/plans";
 import { useDarkTheme } from "@/lib/theme";
 import { openAppearance, useAppearanceSummary } from "@/features/appearance/appearance-panel";
 import { useGovernance } from "./store";
@@ -393,76 +392,6 @@ export function ExportScreen() {
         Downloads contain a generated demo preview of the current workspace. Evidence attachments
         are references only; files are not embedded, and no reviewer sign-off or certification is
         created.
-      </p>
-    </>
-  );
-}
-export function PlansScreen() {
-  return (
-    <>
-      <p className="muted">
-        Start free, upgrade when your team needs more systems and seats. Approvers and viewers never
-        need a paid seat.
-      </p>
-      <div className="plans-grid">
-        {PLANS.map((p) => (
-          <article
-            className={
-              "plan-card " +
-              (p.id === "team" ? "success" : p.id === "enterprise" ? "danger" : "neutral")
-            }
-            key={p.id}
-          >
-            <Kicker>{p.buyer}</Kicker>
-            <h2>{p.name}</h2>
-            <p>{p.summary}</p>
-            <ul className="plan-includes">
-              {p.includes.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <strong className="price-line">{p.priceLabel}</strong>
-            <Button
-              asChild
-              variant={p.id === "team" ? "default" : "outline"}
-              className="full-button"
-            >
-              {p.id === "free" ? (
-                <Link to="/start">
-                  Start free
-                  <ArrowRight />
-                </Link>
-              ) : p.selfServe ? (
-                <Link to="/auth">
-                  Choose {p.name}
-                  <ArrowRight />
-                </Link>
-              ) : (
-                <Link to="/$" params={{ _splat: "contact/book-governance-baseline/" }}>
-                  Talk to us
-                  <ArrowRight />
-                </Link>
-              )}
-            </Button>
-          </article>
-        ))}
-      </div>
-      <section>
-        <h2>Governance Baseline</h2>
-        <p className="muted">
-          A fixed-scope 4–6 week engagement: inventory, evidence-backed maturity baseline, gap
-          register and roadmap. Its fee is credited to a first-year subscription.
-        </p>
-        <Button variant="link" asChild>
-          <Link to="/$" params={{ _splat: "contact/book-governance-baseline/" }}>
-            Book a Governance Baseline
-            <ArrowRight />
-          </Link>
-        </Button>
-      </section>
-      <p className="footnote">
-        Prices are shown at checkout and include applicable taxes. VERITRAIL supports readiness; it
-        does not certify compliance.
       </p>
     </>
   );

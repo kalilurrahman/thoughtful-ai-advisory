@@ -112,7 +112,7 @@ Impact: revenue or retention effect. Effort: S ≤ 1 week, M 2–4 weeks, L 1–
 | # | Opportunity | Impact | Effort | Why |
 |---|---|---|---|---|
 | O1 | **Launch gate**: domain, legal pages, e-mail provider, confirmation e-mails, real Blueprint gate | High | S–M | Nothing else can be sold until the site is live and legally safe |
-| O2 | **Billing + entitlements** (Stripe Checkout and Customer Portal, `plan` on the organization) | High | M | Turns traffic into revenue; enables self-serve |
+| O2 | **Billing + entitlements** (Dodo Payments checkout and customer portal, plan resolved on the server) | High | M | Turns traffic into revenue; enables self-serve |
 | O3 | **Teams**: organization members, roles, invitations | High | M | Governance is a team sport; owner-only RLS blocks every B2B sale |
 | O4 | **Normalized data + autosave** (row-per-record registers, history) | High | L | Fixes data-loss risk R5, enables per-system views, concurrency and audit |
 | O5 | **Per-system assessments and release gates** | High | M | Turns the workspace into a real system of record (PRD "Later" item 3) |
@@ -160,7 +160,7 @@ R0 Launch gate ──► R1 Monetise (self-serve SaaS) ──► R2 System of re
 | Feature | How it integrates | Done when |
 |---|---|---|
 | **Organization members and roles** (`owner`, `admin`, `operator`, `approver`, `viewer`) | New `organization_members` table; rewrite RLS from `owner_id = auth.uid()` to a `is_org_member(org, role)` security-definer helper; invitations table with e-mailed tokens | A second user can be invited and sees only that org; cross-org tests pass |
-| **Billing** | Stripe Checkout and Customer Portal through server functions; `billing_customers`, `subscriptions` tables updated by a webhook route; `organizations.plan` | Upgrade, downgrade, cancel and failed-payment paths are tested with Stripe test clocks |
+| **Billing** | Dodo Payments (merchant of record) checkout and customer portal through server functions; `billing_customers`, `billing_subscriptions` updated by a signed webhook route — **built**, see `docs/veritrail/BILLING_SETUP.md` | Upgrade, renewal, failed-payment and cancel paths verified in Dodo test mode |
 | **Entitlements** | Pure `src/features/billing/entitlements.ts` (plan → limits: seats, systems, storage, AI calls), checked in server functions **and** shown in the UI | Limits enforced on the server; upgrade prompts at limits; unit tests per plan |
 | **Autosave + save-status indicator** | Debounced save from the governance provider; reconcile `save_aegis_workspace` vs migration `0009` in the same change (R1 risk) | No "unsaved changes" loss on reload; save conflicts detected by `updated_at` |
 | **Several workspaces** (one per business unit or client) | `workspaces` table under an organization; workspace switcher in the workspace header ("More actions" menu on phones) | A user can create, rename and switch; the sample stays available |
@@ -227,7 +227,7 @@ R0 Launch gate ──► R1 Monetise (self-serve SaaS) ──► R2 System of re
    unchanged.
 3. **Entitlements as a pure module.** Like `model.ts`, keep plan rules pure and unit-tested; enforce them in
    server functions, not only in the UI.
-4. **Server-side jobs.** Notifications, Stripe webhooks, retention and connectors need scheduled and
+4. **Server-side jobs.** Notifications, payment webhooks, retention and connectors need scheduled and
    event-driven workers. Cloudflare cron triggers fit the current hosting; heavy work (gateway, discovery)
    should run as separate services.
 5. **Storage.** Private Supabase Storage for evidence, with signed URLs. The service worker already never caches
@@ -248,10 +248,10 @@ R0 Launch gate ──► R1 Monetise (self-serve SaaS) ──► R2 System of re
 | Acquire | Tool starts ÷ tool page views | `assessment_start`, `tool_use`, `page_view` |
 | Capture | Leads by form, qualified share | `site_leads` |
 | Activate | Sign-up → `workspace_activated` (3 systems triaged) within 7 days | new event (add to both allow-lists) |
-| Convert | Free → paid within 30 days; Baseline → platform within 60 days | Stripe + CRM |
+| Convert | Free → paid within 30 days; Baseline → platform within 60 days | Dodo Payments + CRM |
 | Engage | Weekly active operators ÷ paid seats | server logs (no cookies) |
 | Expand | Systems per workspace, seats, add-on packs | entitlements table |
-| Retain | Logo and net revenue retention | Stripe |
+| Retain | Logo and net revenue retention | Dodo Payments |
 | Trust | Prohibited-claim scan pass rate; mapping review date | content checks |
 
 ---
@@ -278,6 +278,6 @@ R0 Launch gate ──► R1 Monetise (self-serve SaaS) ──► R2 System of re
 5. Move the Blueprint PDF behind a signed URL.
 6. Draft terms, privacy notice, DPA and the security page as governed Markdown pages; book legal review.
 7. Design and migrate `organization_members` + membership-based RLS, with cross-org tests.
-8. Add Stripe Checkout, the webhook and the pure entitlements module with tests.
+8. Add Dodo Payments checkout, the webhook and the pure entitlements module with tests.
 9. Implement autosave with conflict detection, and reconcile `save_aegis_workspace` with migration `0009`.
 10. Add the `workspace_activated` event (TypeScript and Python allow-lists) and an onboarding path to it.

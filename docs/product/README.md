@@ -8,21 +8,21 @@ the platform console and the installable app — described four ways, from one c
 | Document | What it answers |
 |---|---|
 | [Product requirements (PRD)](PRD.md) | Why VERITRAIL exists, for whom, what it must do and not do, and how success is measured |
-| [Capabilities index](CAPABILITIES_INDEX.md) | Every app, tool and feature (53) and every website page (56), with route, status, data and tests |
-| [Epics and user stories](EPICS_AND_STORIES.md) | 16 epics and 57 user stories with acceptance criteria and known gaps |
+| [Capabilities index](CAPABILITIES_INDEX.md) | Every app, tool and feature (54) and every website page (56), with route, status, data and tests |
+| [Epics and user stories](EPICS_AND_STORIES.md) | 16 epics and 58 user stories with acceptance criteria and known gaps |
 | [Use cases](USE_CASES.md) | 24 end-to-end use cases with flows, alternatives and traceability |
 
 ## At a glance
 
 | Measure | Count |
 |---|---|
-| Capabilities | 53 (46 live, 4 demo, 1 preview, 2 planned) |
+| Capabilities | 54 (47 live, 4 demo, 1 preview, 2 planned) |
 | Website content pages | 56 in 10 sections, about 33k words |
 | Controls in the library | 64 across 5 pillars |
 | Glossary terms | 38 in 4 topics |
-| Epics / user stories | 16 / 57 (50 done, 3 partial, 4 planned) |
+| Epics / user stories | 16 / 58 (50 done, 4 partial, 4 planned) |
 | Use cases | 24 |
-| Known gaps recorded against stories | 28 |
+| Known gaps recorded against stories | 30 |
 
 ## Personas
 
