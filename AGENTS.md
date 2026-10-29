@@ -24,7 +24,7 @@
 - Keep both headers (website and workspace) on one row at every width from 360 px; on phones, workspace actions go in the "More actions" menu. `npm run test:smoke` fails if a header wraps.
 - Regenerate share images with `scripts/generate-social-images.mjs` against a running build when section illustrations change; `og:image` URLs must be absolute (`VITE_SITE_URL`).
 - Describe every route, tool and feature in `docs/product/catalog.yaml` and regenerate `docs/product` with `node scripts/build-product-docs.mjs`; `src/test/product-catalog.test.ts` fails otherwise.
-- Do not apply `drizzle/migrations/0009_veritrail_rename_workspace_function.sql` on its own: the live database and the client still call `save_aegis_workspace`.
+- Workspace save calls `save_veritrail_workspace` and falls back to `save_aegis_workspace` while migration `0009` is unapplied; keep that fallback until the live database has `0009`, then regenerate the Supabase types.
 - Draw illustrations as inline SVG coloured by the Broadsheet tokens (`src/features/site/illustrations.tsx`), so they follow light/dark mode and work offline; data-driven pictures (the control mosaic, home counts) must read from the governed content.
 - Demo evidence attachments and report outputs must remain explicitly labeled previews; the handoff specifies mock file behavior, not real signed exports.
 
