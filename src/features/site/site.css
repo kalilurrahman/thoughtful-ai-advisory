@@ -428,6 +428,8 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
 .ill .f-alert { fill: var(--danger-ink); }
 .ill .f-warm-soft { fill: var(--warning-surface); }
 .ill .f-alert-soft { fill: var(--danger-surface); }
+.ill .f-success { fill: var(--success-ink); }
+.ill .f-success-soft { fill: var(--success-surface); }
 .ill .f-none { fill: none; }
 .ill .s-ink { stroke: var(--foreground); }
 .ill .s-primary { stroke: var(--primary); }
@@ -437,6 +439,7 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
 .ill .s-bg { stroke: var(--background); }
 .ill .s-warm { stroke: var(--warning-ink); }
 .ill .s-alert { stroke: var(--danger-ink); }
+.ill .s-success { stroke: var(--success-ink); }
 .ill .t-cap { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--muted-foreground); }
 .ill .t-strong { fill: var(--primary); }
 .ill .t-label { font-size: 12px; font-weight: 600; fill: var(--foreground); }
@@ -457,6 +460,7 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
 .ill-mosaic--highlight .ill-tile { animation: none; }
 .ill-mosaic--highlight .ill-tile:not(.is-highlight) { opacity: 0.32; }
 .ill-mosaic .is-highlight { fill: var(--foreground); stroke: var(--primary); stroke-width: 3; }
+.ill-empty { width: 180px; height: auto; margin: 0 auto 1rem; display: block; opacity: 0.72; }
 
 /* Sticky, compact header: one row on phones, translucent over the page as it scrolls. */
 .site-header { position: sticky; top: 0; z-index: 40; transition: box-shadow 0.2s ease; }
