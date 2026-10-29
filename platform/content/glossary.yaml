@@ -280,10 +280,11 @@ terms:
     aliases: [high-risk AI systems]
     category: regulation
     definition: >-
-      An EU AI Act category (Article 6 and Annex III) covering uses such as recruitment, credit
-      scoring and access to essential services, with requirements for risk management, data
-      governance, documentation and human oversight. It is not the same as a VERITRAIL High risk
-      tier.
+      An EU AI Act category. A system is high-risk either because it is listed in Annex III
+      (stand-alone uses such as recruitment, credit scoring and access to essential services) or
+      because it is a safety component of a product covered by Annex I (product-embedded systems).
+      Both routes carry requirements for risk management, data governance, documentation and human
+      oversight. The term is not the same as a VERITRAIL High risk tier.
   - id: general-purpose-ai-model
     term: General-purpose AI model
     aliases: [general-purpose AI models, GPAI]

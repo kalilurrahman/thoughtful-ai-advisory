@@ -6448,10 +6448,10 @@
  },
  "audit": {
   "logs": {
-   "audit/api_audit.jsonl": "{\"action\":\"lead.created\",\"actor\":\"public\",\"details\":{\"lead_id\":\"lead_1\",\"score\":56.4},\"hash\":\"cf3740a55771c7256c1e1b9093e1024bfe6b90b6c76737d647879a6b2e013d13\",\"id\":\"aud_mvtn5a8h9d11df10\",\"outcome\":\"success\",\"prev_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"resource\":\"lead_1\",\"trace_id\":\"trc_mvtn5a8haf682568\",\"ts\":\"2026-10-29T14:30:59.345573+00:00\"}\n{\"action\":\"report.download\",\"actor\":\"lead\",\"details\":{\"format\":\"md\"},\"hash\":\"95fd5027e5a91104cec9855f05c70811d0a7f6af140dca82879c91c325911138\",\"id\":\"aud_mvtn5a8i7c8eda9c\",\"outcome\":\"success\",\"prev_hash\":\"cf3740a55771c7256c1e1b9093e1024bfe6b90b6c76737d647879a6b2e013d13\",\"resource\":\"lead_1\",\"trace_id\":\"trc_mvtn5a8ieb935ecf\",\"ts\":\"2026-10-29T14:30:59.346818+00:00\"}\n",
-   "agent/agent_audit.jsonl": "{\"action\":\"approval.requested\",\"actor\":\"agent\",\"details\":{\"n\":1},\"hash\":\"ac992ddec39f4a726efce81a0411d298744bf2dac8cf38ed90601fbe05753e20\",\"id\":\"aud_mvtn5a8jcdbe2c62\",\"outcome\":\"success\",\"prev_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"resource\":null,\"trace_id\":\"trc_mvtn5a8jb29f81a8\",\"ts\":\"2026-10-29T14:30:59.347326+00:00\"}\n{\"action\": \"approval.approved\", \"actor\": \"jane\", \"details\": {\"n\": 99}, \"hash\": \"cdbb2f88ce819deae6e2c6ecb1d6a193c9aed86e477dc4c998ea15fbb8f987db\", \"id\": \"aud_mvtn5a8j09a10631\", \"outcome\": \"success\", \"prev_hash\": \"ac992ddec39f4a726efce81a0411d298744bf2dac8cf38ed90601fbe05753e20\", \"resource\": null, \"trace_id\": \"trc_mvtn5a8jfd5f9477\", \"ts\": \"2026-10-29T14:30:59.347854+00:00\"}\n{\"action\":\"export.created\",\"actor\":\"jane\",\"details\":{\"n\":3},\"hash\":\"8f04b0b7a797a66fc3ba09c9fc4d0d6abfc9dcbfb9993e358ddfbcf1f5b77436\",\"id\":\"aud_mvtn5a8k0207fc79\",\"outcome\":\"success\",\"prev_hash\":\"cdbb2f88ce819deae6e2c6ecb1d6a193c9aed86e477dc4c998ea15fbb8f987db\",\"resource\":null,\"trace_id\":\"trc_mvtn5a8kb88d1ce9\",\"ts\":\"2026-10-29T14:30:59.348147+00:00\"}\n"
+   "audit/api_audit.jsonl": "{\"action\":\"lead.created\",\"actor\":\"public\",\"details\":{\"lead_id\":\"lead_1\",\"score\":56.4},\"hash\":\"ec0661d58252d3104f8ae40d6b564a616f0a5e481d3d216b63cb1114739e357a\",\"id\":\"aud_mvtndds1adcc8729\",\"outcome\":\"success\",\"prev_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"resource\":\"lead_1\",\"trace_id\":\"trc_mvtndds13529f9fa\",\"ts\":\"2026-10-29T14:37:17.185127+00:00\"}\n{\"action\":\"report.download\",\"actor\":\"lead\",\"details\":{\"format\":\"md\"},\"hash\":\"ad701fe0d88b813ccdc0934154694b3050d0d9a5f42730d62d6c5352f8cc046a\",\"id\":\"aud_mvtndds2af586623\",\"outcome\":\"success\",\"prev_hash\":\"ec0661d58252d3104f8ae40d6b564a616f0a5e481d3d216b63cb1114739e357a\",\"resource\":\"lead_1\",\"trace_id\":\"trc_mvtndds25b6f3acb\",\"ts\":\"2026-10-29T14:37:17.186134+00:00\"}\n",
+   "agent/agent_audit.jsonl": "{\"action\":\"approval.requested\",\"actor\":\"agent\",\"details\":{\"n\":1},\"hash\":\"58712dc9a02a0dca89f3b6a8dd52de50ca096077f7e202d1d2337e759372ffcd\",\"id\":\"aud_mvtndds2503c5722\",\"outcome\":\"success\",\"prev_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"resource\":null,\"trace_id\":\"trc_mvtndds28bca6da1\",\"ts\":\"2026-10-29T14:37:17.186716+00:00\"}\n{\"action\": \"approval.approved\", \"actor\": \"jane\", \"details\": {\"n\": 99}, \"hash\": \"6794144b472ebdb0f4ec3fc9fbf212bdacd4a5d6cd81d917d033075a27a38e99\", \"id\": \"aud_mvtndds3bbd1e180\", \"outcome\": \"success\", \"prev_hash\": \"58712dc9a02a0dca89f3b6a8dd52de50ca096077f7e202d1d2337e759372ffcd\", \"resource\": null, \"trace_id\": \"trc_mvtndds3a5ea604f\", \"ts\": \"2026-10-29T14:37:17.187352+00:00\"}\n{\"action\":\"export.created\",\"actor\":\"jane\",\"details\":{\"n\":3},\"hash\":\"6f4a8300bde7952cfc70bbb659a65db5dc78c8b42860dd3c276ff0b80d004a12\",\"id\":\"aud_mvtndds361885580\",\"outcome\":\"success\",\"prev_hash\":\"6794144b472ebdb0f4ec3fc9fbf212bdacd4a5d6cd81d917d033075a27a38e99\",\"resource\":null,\"trace_id\":\"trc_mvtndds37206c1d0\",\"ts\":\"2026-10-29T14:37:17.187653+00:00\"}\n"
   },
-  "output": "FAIL agent/agent_audit.jsonl  records=3  record 1 (aud_mvtn5a8j09a10631) content hash mismatch\nOK   audit/api_audit.jsonl  records=2  ok\n",
+  "output": "FAIL agent/agent_audit.jsonl  records=3  record 1 (aud_mvtndds3bbd1e180) content hash mismatch\nOK   audit/api_audit.jsonl  records=2  ok\n",
   "exit_code": 1
  },
  "maturity": [
@@ -6702,7 +6702,7 @@
    }
   },
   "website": {
-   "summary": "pages=57 total_words=31528 min=143 max=1335",
+   "summary": "pages=57 total_words=31498 min=140 max=1335",
    "rows": [
     {
      "name": "about.md",
@@ -6717,7 +6717,7 @@
      "slug": "/compliance/eu-ai-act/",
      "section": "compliance",
      "template": "page",
-     "words": 1010,
+     "words": 987,
      "faq": 3
     },
     {
@@ -6749,7 +6749,7 @@
      "slug": "/compliance/",
      "section": "compliance",
      "template": "page",
-     "words": 505,
+     "words": 506,
      "faq": 2
     },
     {
@@ -6773,7 +6773,7 @@
      "slug": "/contact/newsletter/",
      "section": "contact",
      "template": "form",
-     "words": 143,
+     "words": 140,
      "faq": 0
     },
     {
@@ -6973,7 +6973,7 @@
      "slug": "/resources/blog/readiness-is-not-compliance/",
      "section": "resources",
      "template": "page",
-     "words": 1131,
+     "words": 1126,
      "faq": 0
     },
     {

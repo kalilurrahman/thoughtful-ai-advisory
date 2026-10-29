@@ -60,7 +60,7 @@ A mapping says "this VERITRAIL control is relevant to this framework reference".
 
 ## Regulatory change
 
-Regulatory texts and their application dates change. For the EU AI Act in particular, applicability timelines must be verified against the current Official Journal text and any amendments, including the European Commission's 2025 "Digital Omnibus" proposals. VERITRAIL content has not been verified against post-2025 changes; our control library is versioned and reviewed quarterly, and every citation states the library version.
+Regulatory texts and their application dates change. For the EU AI Act in particular, applicability timelines must be verified against the current Official Journal text and any amendments, including the Digital Omnibus — Regulation (EU) 2026/1744. VERITRAIL content was last updated for the adopted Digital Omnibus text in October 2026; our control library is versioned, and every citation states the library version.
 
 ## Where to start
 

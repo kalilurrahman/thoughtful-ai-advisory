@@ -20,7 +20,7 @@ Practical AI governance, delivered one or two times a month.
 
 - **New articles** on inventories, risk tiering, agents, runtime guardrails and evidence.
 - **Release notes** when we publish editable templates, runbooks, policy packs and whitepapers — several are [coming soon](/resources/whitepapers/).
-- **Control library updates** — the VERITRAIL control library is versioned and reviewed quarterly; we summarize what changed and why.
+- **Control library updates** — the VERITRAIL control library is versioned; we summarize what changed and why.
 - **Regulatory watch notes** — short, cautious summaries of developments relevant to AI governance, always with a pointer to the primary source. They are not legal advice.
 
 ## What you will not receive

@@ -14,7 +14,7 @@ faq:
   - q: "Is the VERITRAIL Framework a standard?"
     a: "No. It is an operational control framework that helps you implement and evidence AI governance. It maps indicatively to NIST AI RMF, ISO/IEC 42001 and the EU AI Act, but it is not an official crosswalk or a certification scheme."
   - q: "How often is the control library updated?"
-    a: "The control library is versioned and reviewed quarterly. Every control citation in VERITRAIL outputs includes the library version so you can trace which version a recommendation was based on."
+    a: "The control library is versioned. Every control citation in VERITRAIL outputs includes the library version so you can trace which version a recommendation was based on."
 updated: 2026-10-21
 ---
 

@@ -142,7 +142,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 ## Website content
 
-57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,491 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
+57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,458 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
 
 ### Home
 
@@ -184,7 +184,7 @@ Every app, tool and feature, then every website content page, the control librar
 | Compliance readiness, without compliance claims | `/compliance` | page | How VERITRAIL helps organize evidence against NIST AI RMF, ISO/IEC 42001 and the EU AI Act — indicative mappings, a gap-analysis method and honest limits. | 529 | 2 | CAP-002 Website content pages | [S01.2](EPICS_AND_STORIES.md#s012) |
 | NIST AI Risk Management Framework and VERITRAIL | `/compliance/nist-ai-rmf` | page | How VERITRAIL controls relate indicatively to the NIST AI RMF 1.0 functions Govern, Map, Measure and Manage, with subcategory-level mappings and known gaps. | 861 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
 | ISO/IEC 42001 and VERITRAIL | `/compliance/iso-42001` | page | How VERITRAIL controls support an ISO/IEC 42001 AI management system across clauses 4–10 and Annex A — indicative mappings for readiness, not certification. | 845 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
-| EU AI Act readiness | `/compliance/eu-ai-act` | page | Prepare evidence for key EU AI Act obligation areas — risk management, data, documentation, logging, transparency, oversight, incidents — with VERITRAIL. | 1132 | 3 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
+| EU AI Act readiness | `/compliance/eu-ai-act` | page | Prepare evidence for key EU AI Act obligation areas — risk management, data, documentation, logging, transparency, oversight, incidents — with VERITRAIL. | 1107 | 3 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
 | Gap analysis method | `/compliance/gap-analysis` | page | The VERITRAIL gap-analysis method: five evidence statuses, four severities with 30/60/90/180-day remediation SLAs, and a human-reviewed workflow. | 755 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
 
 ### Industries
@@ -223,7 +223,7 @@ Every app, tool and feature, then every website content page, the control librar
 | Blog | `/resources/blog` | page | Practical articles from VERITRAIL on AI inventories, runtime guardrails for agents, evidence and how to read framework mappings without overclaiming. | 234 | — | CAP-002 Website content pages | — |
 | Why AI governance starts with an inventory | `/resources/blog/why-ai-governance-starts-with-an-inventory` | page | Every AI governance control depends on knowing what AI you run. Why inventories fail, what a minimum viable record contains, and how to reach coverage fast. | 1374 | — | CAP-002 Website content pages | — |
 | Runtime guardrails for AI agents: a practical rollout model | `/resources/blog/runtime-guardrails-for-ai-agents` | page | How to design least-privilege tool access and human approval for AI agents, and roll out runtime policy from Observe to Enforce, with Contain ready. | 1284 | — | CAP-002 Website content pages | — |
-| Readiness is not compliance: how to read framework mappings | `/resources/blog/readiness-is-not-compliance` | page | A control-to-clause mapping is the start of analysis, not a conclusion. How to use AI framework crosswalks for NIST, ISO/IEC 42001 and the EU AI Act. | 1155 | — | CAP-002 Website content pages | — |
+| Readiness is not compliance: how to read framework mappings | `/resources/blog/readiness-is-not-compliance` | page | A control-to-clause mapping is the start of analysis, not a conclusion. How to use AI framework crosswalks for NIST, ISO/IEC 42001 and the EU AI Act. | 1150 | — | CAP-002 Website content pages | — |
 | Case studies | `/resources/case-studies` | page | VERITRAIL pilots are in progress and no results are published yet. Learn what our case studies will report and how to join as a design partner. | 277 | — | CAP-002 Website content pages | — |
 
 ### Company
@@ -239,7 +239,7 @@ Every app, tool and feature, then every website content page, the control librar
 | Contact us | `/contact` | form | Contact the VERITRAIL team about AI governance, the Governance Baseline, runtime guardrails for agents, partnerships or the design-partner programme. | 220 | — | CAP-020 Lead forms | [S04.1](EPICS_AND_STORIES.md#s041) |
 | Book an VERITRAIL Governance Baseline | `/contact/book-governance-baseline` | form | A fixed-scope 4–6 week engagement: inventory up to 25 AI systems, validate maturity with evidence, review agents, and get a gap register and roadmap. | 466 | 4 | CAP-020 Lead forms | [S04.1](EPICS_AND_STORIES.md#s041) |
 | Request a demo | `/contact/request-demo` | form | See VERITRAIL with your own scenarios: AI inventory and risk tiering, lifecycle approvals, runtime guardrails for agents and evidence packs. | 244 | — | CAP-020 Lead forms | [S04.1](EPICS_AND_STORIES.md#s041) |
-| The VERITRAIL newsletter | `/contact/newsletter` | form | Subscribe for practical AI governance articles, template and runbook releases, and VERITRAIL control library updates. One or two emails a month. | 143 | — | CAP-020 Lead forms | [S04.1](EPICS_AND_STORIES.md#s041) |
+| The VERITRAIL newsletter | `/contact/newsletter` | form | Subscribe for practical AI governance articles, template and runbook releases, and VERITRAIL control library updates. One or two emails a month. | 140 | — | CAP-020 Lead forms | [S04.1](EPICS_AND_STORIES.md#s041) |
 | Design-partner programme | `/contact/design-partner-programme` | form | Join the VERITRAIL design-partner programme: Pilot A for regulated enterprises with 20–100 AI systems, Pilot B for AI-forward SaaS and GCCs with agents. | 378 | 3 | CAP-020 Lead forms | [S04.1](EPICS_AND_STORIES.md#s041) |
 
 ### Legal

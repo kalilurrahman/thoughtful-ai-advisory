@@ -14,7 +14,7 @@ faq:
   - q: "Can VERITRAIL tell us whether our AI system is high-risk under the EU AI Act?"
     a: "No. VERITRAIL captures the facts that matter for classification — domain, intended purpose, decision impact, affected parties — and flags regulatory relevance for legal review. Classification is a legal determination for your counsel."
   - q: "When do the EU AI Act obligations apply?"
-    a: "The Regulation applies in stages. Applicability timelines must be verified against the current Official Journal text and any amendments, including the European Commission's 2025 Digital Omnibus proposals. VERITRAIL content has not been verified against post-2025 changes."
+    a: "The Regulation applies in stages. The Digital Omnibus — Regulation (EU) 2026/1744, in force from 27 July 2026 — moved several deadlines; notably Annex III high-risk obligations now apply from 2 December 2027 and Annex I product-embedded systems from 2 August 2028. Timelines should still be verified against the current Official Journal text."
   - q: "We only use AI built by vendors. Does the Act affect us?"
     a: "Possibly. Deployers of high-risk AI systems have their own obligations, and some deployers can take on provider obligations — for example by substantially modifying a system. Your legal team should assess your role for each system."
 updated: 2026-10-21
@@ -28,9 +28,9 @@ This page explains how VERITRAIL controls and evidence relate to the main obliga
 
 ## Important: verify timelines and current text
 
-The Act applies in stages. As originally published in the Official Journal, the main milestones were: entry into force in August 2024; prohibited practices and AI literacy applying from February 2025; general-purpose AI model obligations from August 2025; most remaining provisions, including Annex III high-risk requirements and Article 50 transparency, from August 2026; and high-risk systems that are safety components of products covered by Annex I legislation from August 2027.
+The Act applies in stages. As originally published, the main milestones were: entry into force in August 2024; prohibited practices and AI literacy from February 2025; GPAI model obligations from August 2025; and most remaining provisions from August 2026. The **Digital Omnibus — Regulation (EU) 2026/1744**, published in the Official Journal on 24 July 2026 and in force from 27 July 2026, moved the stand-alone Annex III high-risk obligations to **2 December 2027** and Annex I product-embedded systems to **2 August 2028**.
 
-**These dates may have changed.** In 2025 the European Commission published "Digital Omnibus" proposals that would amend aspects of the AI Act, including the timing of high-risk obligations. Applicability timelines must be verified against the current Official Journal text and any adopted amendments. VERITRAIL has not verified post-2025 changes, and this page should not be relied on for dates.
+Applicability timelines should be verified against the current Official Journal text. This page was last updated for the adopted Digital Omnibus text in October 2026.
 
 ## Provider or deployer? Start with roles
 
@@ -73,7 +73,7 @@ The mapping below uses the article references in VERITRAIL Control Library v1.0.
 ## What is not covered
 
 - **General-purpose AI model obligations** (for GPAI model providers) are not mapped in Control Library v1.0.0. Organizations that provide GPAI models need separate analysis.
-- **Conformity assessment procedures, CE marking and registration mechanics** are referenced only where an VERITRAIL control supports the underlying evidence (for example GL-03 and GL-04 relate to Art. 43; EI-01 to Art. 49).
+- **Conformity assessment procedures, CE marking and registration mechanics** are referenced only where a VERITRAIL control supports the underlying evidence (for example GL-03 and GL-04 relate to Art. 43; EI-01 to Art. 49).
 - **Sector and product legislation** referenced by Annex I (for example medical devices or machinery) has its own requirements outside VERITRAIL's scope.
 - **Penalties, authority procedures and national implementation** are outside VERITRAIL's scope.
 

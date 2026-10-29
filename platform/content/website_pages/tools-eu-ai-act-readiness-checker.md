@@ -29,7 +29,7 @@ The checker is planned to help you organize readiness work for one AI system aga
 
 ## Honest limits
 
-The checker will not classify your system under the Act, and it does not make compliance determinations. EU AI Act timelines and requirements must be verified against the current Official Journal text and amendments, including the Commission's 2025 Digital Omnibus proposals.
+The checker will not classify your system under the Act, and it does not make compliance determinations. EU AI Act timelines and requirements must be verified against the current Official Journal text and amendments, including the Digital Omnibus — Regulation (EU) 2026/1744.
 
 ## Available today
 

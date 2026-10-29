@@ -215,8 +215,7 @@ VERITRAIL treats agent governance as a first-class concern:
   (AO-07) must be confirmed by qualified counsel.
 - It does not verify evidence automatically: *Verified* status requires a named human reviewer.
 - It does not cover obligations specific to general-purpose AI model providers in depth.
-- Regulatory applicability dates (including EU AI Act timelines) must be verified against the current Official Journal text and any amendments, such as the Commission's 2025 "Digital Omnibus" proposals; this repository has
-  not verified post-2025 changes.
+- Regulatory applicability dates (including EU AI Act timelines) must be verified against the current Official Journal text and any amendments, including the Digital Omnibus — Regulation (EU) 2026/1744. VERITRAIL content was last updated for the adopted Digital Omnibus text in October 2026.
 
 See the coverage-gap section of [`docs/COMPLIANCE_MAPPING.md`](../docs/COMPLIANCE_MAPPING.md).
 
