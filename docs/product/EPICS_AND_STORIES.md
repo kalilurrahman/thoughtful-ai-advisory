@@ -526,7 +526,7 @@ Acceptance criteria:
 
 **Area:** Workspace — guidance and knowledge · **Status:** Live
 
-**Capabilities:** CAP-042 AI Governance Playbook, CAP-043 Governance templates, CAP-044 Knowledge hub, CAP-045 Start here, CAP-046 Calculators, CAP-047 AI governance advisor
+**Capabilities:** CAP-042 AI Governance Playbook, CAP-043 Governance templates, CAP-044 Knowledge hub, CAP-045 Start here, CAP-046 Calculators, CAP-047 AI governance advisor, CAP-047a Site assistant, CAP-047b Site assistant conversation
 
 ### S10.1
 
