@@ -63,7 +63,7 @@ REQUEST_TYPES = ("prompt", "response", "tool_call", "tool_output")
 CONTENT_SURFACES = ("prompt", "response", "tool_params", "tool_output")
 
 ENVIRONMENTS = ("dev", "test", "staging", "production")
-RISK_TIERS = ("Low", "Medium", "High", "Prohibited-review")
+RISK_TIERS = ("Minimal", "Limited", "High-risk", "Prohibited-review")
 KILL_SWITCH_SCOPES = ("agent", "tool", "model", "tenant")
 LOGGING_LEVELS = ("none", "metadata", "redacted")  # raw/full logging is intentionally unsupported
 TRANSFORM_TYPES = ("append_disclosure", "strip_unapproved_urls", "truncate")

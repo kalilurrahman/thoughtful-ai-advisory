@@ -46,7 +46,7 @@ What it does not say:
 
 **2. Conditions and scope.** Legal obligations typically apply only when conditions are met: the system is high-risk, the organization is a provider, the system is placed on a particular market, a date has passed. A mapping cannot evaluate those conditions; only analysis of the facts can.
 
-**3. Texts change.** Standards are revised, guidance is issued, and laws are amended. For the EU AI Act, applicability timelines must be verified against the current Official Journal text and any amendments, including the European Commission's 2025 "Digital Omnibus" proposals. A mapping is a snapshot; VERITRAIL versions its control library and reviews it quarterly, but no mapping replaces checking the current source.
+**3. Texts change.** Standards are revised, guidance is issued, and laws are amended. For the EU AI Act, Regulation (EU) 2026/1744 (the Digital Omnibus) amended key compliance dates with effect from 27 July 2026; always verify against the current EUR-Lex text. A mapping is a snapshot; VERITRAIL versions its control library and reviews it quarterly, but no mapping replaces checking the current source.
 
 ## Readiness, alignment, evidence — and why the words matter
 

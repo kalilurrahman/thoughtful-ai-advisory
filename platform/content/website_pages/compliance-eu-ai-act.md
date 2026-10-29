@@ -14,7 +14,7 @@ faq:
   - q: "Ca VERITRAIL tell us whether our AI system is high-risk under the EU AI Act?"
     a: "No. VERITRAIL captures the facts that matter for classification — domain, intended purpose, decision impact, affected parties — and flags regulatory relevance for legal review. Classification is a legal determination for your counsel."
   - q: "When do the EU AI Act obligations apply?"
-    a: "The Regulation applies in stages. Applicability timelines must be verified against the current Official Journal text and any amendments, including the European Commission's 2025 Digital Omnibus proposals. VERITRAIL content has not been verified against post-2025 changes."
+    a: "The Regulation applies in stages. Regulation (EU) 2026/1744 (the Digital Omnibus), in force from 27 July 2026, moved stand-alone Annex III high-risk obligations to 2 December 2027 and Annex I product-embedded systems to 2 August 2028. Verify all dates against the current EUR-Lex text before relying on them."
   - q: "We only use AI built by vendors. Does the Act affect us?"
     a: "Possibly. Deployers of high-risk AI systems have their own obligations, and some deployers can take on provider obligations — for example by substantially modifying a system. Your legal team should assess your role for each system."
 updated: 2026-10-21
@@ -28,9 +28,9 @@ This page explains how VERITRAIL controls and evidence relate to the main obliga
 
 ## Important: verify timelines and current text
 
-The Act applies in stages. As originally published in the Official Journal, the main milestones were: entry into force in August 2024; prohibited practices and AI literacy applying from February 2025; general-purpose AI model obligations from August 2025; most remaining provisions, including Annex III high-risk requirements and Article 50 transparency, from August 2026; and high-risk systems that are safety components of products covered by Annex I legislation from August 2027.
+The Act applies in stages. As originally published in the Official Journal, the main milestones were: entry into force in August 2024; prohibited practices and AI literacy applying from February 2025; general-purpose AI model obligations from August 2025; and Article 50 transparency obligations from August 2026.
 
-**These dates may have changed.** In 2025 the European Commission published "Digital Omnibus" proposals that would amend aspects of the AI Act, including the timing of high-risk obligations. Applicability timelines must be verified against the current Official Journal text and any adopted amendments. VERITRAIL has not verified post-2025 changes, and this page should not be relied on for dates.
+**Regulation (EU) 2026/1744 (the Digital Omnibus)** was published in the Official Journal on 24 July 2026 and entered into force on 27 July 2026. It amended key dates: stand-alone Annex III high-risk system obligations move to **2 December 2027**; Annex I product-embedded high-risk systems move to **2 August 2028** (verify against EUR-Lex before relying on these dates).
 
 ## Provider or deployer? Start with roles
 
