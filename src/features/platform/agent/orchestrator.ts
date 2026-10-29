@@ -246,13 +246,16 @@ function pyFormat(v: unknown): string {
 }
 
 function tierFromText(text: string): string | null {
-  const m = /\b(prohibited(?:[- ]review)?|high[- ]risk|high-risk|limited|minimal)\b/i.exec(text || "");
+  const m =
+    /\b(prohibited(?:[- ]review)?|high[- ]risk|high-risk|limited|minimal|low|medium|high)\b/i.exec(
+      text || "",
+    );
   if (!m?.[1]) return null;
   const t = m[1].toLowerCase();
   if (t.startsWith("prohibited")) return "Prohibited";
-  if (t === "high-risk" || t === "high risk") return "High-risk";
-  if (t === "limited") return "Limited";
-  if (t === "minimal") return "Minimal";
+  if (t === "high-risk" || t === "high risk" || t === "high") return "High-risk";
+  if (t === "limited" || t === "medium") return "Limited";
+  if (t === "minimal" || t === "low") return "Minimal";
   return null;
 }
 
