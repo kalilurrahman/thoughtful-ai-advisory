@@ -142,7 +142,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 ## Website content
 
-57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,440 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
+57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,491 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
 
 ### Home
 
@@ -173,8 +173,8 @@ Every app, tool and feature, then every website content page, the control librar
 | VERITRAIL Assess: know where you stand, with evidence | `/solutions/assess` | page | VERITRAIL Assess baselines AI governance maturity and triages each AI use case by risk, with evidence labels and control citations on every finding. | 556 | 2 | CAP-002 Website content pages | — |
 | VERITRAIL Register: one system of record for every AI system and agent | `/solutions/register` | page | VERITRAIL Register inventories AI systems, models, prompts, data sources, agents, tools and vendor AI with named owners, risk tiers and periodic attestation. | 550 | 2 | CAP-002 Website content pages | — |
 | VERITRAIL Control: risk-proportionate gates from intake to retirement | `/solutions/control` | page | VERITRAIL Control runs AI intake, triage, risk-tiered approvals, change triggers, exceptions and recertification as workflows that produce evidence by default. | 646 | 2 | CAP-002 Website content pages | — |
-| Protect LLM apps and agents at runtime | `/solutions/shield` | page | VERITRAIL Shield evaluates prompts, responses and agent tool calls against versioned policy-as-code: redaction, least privilege, limits and human approval. | 624 | 3 | CAP-002 Website content pages | [S01.4](EPICS_AND_STORIES.md#s014) |
-| VERITRAIL Assurance: demonstrate that AI governance works, continuously | `/solutions/assurance` | page | VERITRAIL Assurance tests AI controls, retains evidence, logs actions tamper-evidently, manages AI incidents and produces audit-ready evidence packs on request. | 593 | 2 | CAP-002 Website content pages | — |
+| Protect LLM apps and agents at runtime | `/solutions/shield` | page | VERITRAIL Shield evaluates prompts, responses and agent tool calls against versioned policy-as-code: redaction, least privilege, limits and human approval. | 650 | 3 | CAP-002 Website content pages | [S01.4](EPICS_AND_STORIES.md#s014) |
+| VERITRAIL Assurance: demonstrate that AI governance works, continuously | `/solutions/assurance` | page | VERITRAIL Assurance tests AI controls, retains evidence, logs actions tamper-evidently, manages AI incidents and produces audit-ready evidence packs on request. | 618 | 2 | CAP-002 Website content pages | — |
 | VERITRAIL Agent: governance work, drafted with citations | `/solutions/agent` | page | The VERITRAIL Agent drafts AI assessments, gap registers and reports, cites VERITRAIL controls, labels evidence status and routes high-impact actions to humans. | 693 | 3 | CAP-002 Website content pages | — |
 
 ### Compliance

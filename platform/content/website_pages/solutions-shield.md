@@ -22,7 +22,9 @@ updated: 2026-10-21
 
 **Core message: AI proposes. VERITRAIL evaluates. Approved actions execute.**
 
-LLM applications and agents need controls that operate at the moment of action, not only in a policy document. VERITRAIL Shield places versioned policy-as-code between your applications and the models and tools they use. Every prompt, response and tool call is evaluated, and the decision — ALLOW, DENY, REDACT, TRANSFORM, REQUIRE_HUMAN_APPROVAL, ESCALATE or RATE_LIMIT — is logged with the policy version that produced it.
+**Availability: Design partners.** Shield is available as a rules-based policy simulator and guardrail generator. Full runtime integration is in design-partner preview.
+
+LLM applications and agents need controls that operate at the moment of action, not only in a policy document. VERITRAIL Shield places versioned policy-as-code between your applications and the models and tools they use. Every prompt, response and tool call routed through Shield is evaluated, and the decision — ALLOW, DENY, REDACT, TRANSFORM, REQUIRE_HUMAN_APPROVAL, ESCALATE or RATE_LIMIT — is logged with the policy version that produced it.
 
 ## Capabilities
 

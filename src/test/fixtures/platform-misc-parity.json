@@ -6448,10 +6448,10 @@
  },
  "audit": {
   "logs": {
-   "audit/api_audit.jsonl": "{\"action\":\"lead.created\",\"actor\":\"public\",\"details\":{\"lead_id\":\"lead_1\",\"score\":56.4},\"hash\":\"da621c4aac921cffe4c4e24b0b87b9640a63b9559dfb1cffae260c2df0fb66d8\",\"id\":\"aud_mvthfkyvcc9c6280\",\"outcome\":\"success\",\"prev_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"resource\":\"lead_1\",\"trace_id\":\"trc_mvthfkyw1ebaddb4\",\"ts\":\"2026-10-29T11:51:02.120018+00:00\"}\n{\"action\":\"report.download\",\"actor\":\"lead\",\"details\":{\"format\":\"md\"},\"hash\":\"44fed57d7f74de18d747e5a908b62b23fc7da3304d834fd06025c6ab3688e275\",\"id\":\"aud_mvthfkz10dea9d25\",\"outcome\":\"success\",\"prev_hash\":\"da621c4aac921cffe4c4e24b0b87b9640a63b9559dfb1cffae260c2df0fb66d8\",\"resource\":\"lead_1\",\"trace_id\":\"trc_mvthfkz1ab99ad89\",\"ts\":\"2026-10-29T11:51:02.125627+00:00\"}\n",
-   "agent/agent_audit.jsonl": "{\"action\":\"approval.requested\",\"actor\":\"agent\",\"details\":{\"n\":1},\"hash\":\"052f8ed4bb6ad482e69f29778c693c8366a568b0b5d31df3c1893ed7eed2ce15\",\"id\":\"aud_mvthfkz29b3ae78a\",\"outcome\":\"success\",\"prev_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"resource\":null,\"trace_id\":\"trc_mvthfkz21422f72a\",\"ts\":\"2026-10-29T11:51:02.126532+00:00\"}\n{\"action\": \"approval.approved\", \"actor\": \"jane\", \"details\": {\"n\": 99}, \"hash\": \"3abadcc890a24d6d497820db6cc88fe922ddc2721e405ab86884ea542e553c38\", \"id\": \"aud_mvthfkz379cca298\", \"outcome\": \"success\", \"prev_hash\": \"052f8ed4bb6ad482e69f29778c693c8366a568b0b5d31df3c1893ed7eed2ce15\", \"resource\": null, \"trace_id\": \"trc_mvthfkz305dcd846\", \"ts\": \"2026-10-29T11:51:02.127275+00:00\"}\n{\"action\":\"export.created\",\"actor\":\"jane\",\"details\":{\"n\":3},\"hash\":\"1ac533c63c1c682a64b83894d6f6ffb3e0cdd135ba43f7068f446ac5ca35d05c\",\"id\":\"aud_mvthfkz3068f1d0c\",\"outcome\":\"success\",\"prev_hash\":\"3abadcc890a24d6d497820db6cc88fe922ddc2721e405ab86884ea542e553c38\",\"resource\":null,\"trace_id\":\"trc_mvthfkz39af68b35\",\"ts\":\"2026-10-29T11:51:02.127638+00:00\"}\n"
+   "audit/api_audit.jsonl": "{\"action\":\"lead.created\",\"actor\":\"public\",\"details\":{\"lead_id\":\"lead_1\",\"score\":56.4},\"hash\":\"cf3740a55771c7256c1e1b9093e1024bfe6b90b6c76737d647879a6b2e013d13\",\"id\":\"aud_mvtn5a8h9d11df10\",\"outcome\":\"success\",\"prev_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"resource\":\"lead_1\",\"trace_id\":\"trc_mvtn5a8haf682568\",\"ts\":\"2026-10-29T14:30:59.345573+00:00\"}\n{\"action\":\"report.download\",\"actor\":\"lead\",\"details\":{\"format\":\"md\"},\"hash\":\"95fd5027e5a91104cec9855f05c70811d0a7f6af140dca82879c91c325911138\",\"id\":\"aud_mvtn5a8i7c8eda9c\",\"outcome\":\"success\",\"prev_hash\":\"cf3740a55771c7256c1e1b9093e1024bfe6b90b6c76737d647879a6b2e013d13\",\"resource\":\"lead_1\",\"trace_id\":\"trc_mvtn5a8ieb935ecf\",\"ts\":\"2026-10-29T14:30:59.346818+00:00\"}\n",
+   "agent/agent_audit.jsonl": "{\"action\":\"approval.requested\",\"actor\":\"agent\",\"details\":{\"n\":1},\"hash\":\"ac992ddec39f4a726efce81a0411d298744bf2dac8cf38ed90601fbe05753e20\",\"id\":\"aud_mvtn5a8jcdbe2c62\",\"outcome\":\"success\",\"prev_hash\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"resource\":null,\"trace_id\":\"trc_mvtn5a8jb29f81a8\",\"ts\":\"2026-10-29T14:30:59.347326+00:00\"}\n{\"action\": \"approval.approved\", \"actor\": \"jane\", \"details\": {\"n\": 99}, \"hash\": \"cdbb2f88ce819deae6e2c6ecb1d6a193c9aed86e477dc4c998ea15fbb8f987db\", \"id\": \"aud_mvtn5a8j09a10631\", \"outcome\": \"success\", \"prev_hash\": \"ac992ddec39f4a726efce81a0411d298744bf2dac8cf38ed90601fbe05753e20\", \"resource\": null, \"trace_id\": \"trc_mvtn5a8jfd5f9477\", \"ts\": \"2026-10-29T14:30:59.347854+00:00\"}\n{\"action\":\"export.created\",\"actor\":\"jane\",\"details\":{\"n\":3},\"hash\":\"8f04b0b7a797a66fc3ba09c9fc4d0d6abfc9dcbfb9993e358ddfbcf1f5b77436\",\"id\":\"aud_mvtn5a8k0207fc79\",\"outcome\":\"success\",\"prev_hash\":\"cdbb2f88ce819deae6e2c6ecb1d6a193c9aed86e477dc4c998ea15fbb8f987db\",\"resource\":null,\"trace_id\":\"trc_mvtn5a8kb88d1ce9\",\"ts\":\"2026-10-29T14:30:59.348147+00:00\"}\n"
   },
-  "output": "FAIL agent/agent_audit.jsonl  records=3  record 1 (aud_mvthfkz379cca298) content hash mismatch\nOK   audit/api_audit.jsonl  records=2  ok\n",
+  "output": "FAIL agent/agent_audit.jsonl  records=3  record 1 (aud_mvtn5a8j09a10631) content hash mismatch\nOK   audit/api_audit.jsonl  records=2  ok\n",
   "exit_code": 1
  },
  "maturity": [
@@ -6702,7 +6702,7 @@
    }
   },
   "website": {
-   "summary": "pages=57 total_words=31480 min=143 max=1335",
+   "summary": "pages=57 total_words=31528 min=143 max=1335",
    "rows": [
     {
      "name": "about.md",
@@ -7069,7 +7069,7 @@
      "slug": "/solutions/assurance/",
      "section": "solutions",
      "template": "page",
-     "words": 537,
+     "words": 561,
      "faq": 2
     },
     {
@@ -7093,7 +7093,7 @@
      "slug": "/solutions/shield/",
      "section": "solutions",
      "template": "page",
-     "words": 748,
+     "words": 772,
      "faq": 3
     },
     {

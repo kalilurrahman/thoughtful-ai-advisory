@@ -18,6 +18,8 @@ faq:
 updated: 2026-10-21
 ---
 
+**Availability: Preview.** Evidence labelling, incident management and evidence-pack generation are available in the workspace. Control testing programmes and the evidence repository are in preview.
+
 **Core message: governance that cannot be evidenced on request is governance you cannot rely on.**
 
 When an auditor, customer, board member or authority asks "show me", most organizations assemble evidence by hand from email threads, shared drives and screenshots. VERITRAIL Assurance makes evidence a by-product of governance: controls are tested on a schedule, decisions are logged tamper-evidently, incidents follow a defined path, and an evidence pack for any material AI system can be produced from the record.
