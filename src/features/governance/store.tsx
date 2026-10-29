@@ -2,6 +2,7 @@ import { useContext, useReducer, useState, useEffect, type ReactNode } from "rea
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { loadWorkspace } from "./workspace.functions";
+import type { MemberRole } from "./team-model";
 import { GovernanceContext as Context } from "./context";
 import { recordDecision, withdrawDecision } from "./decision-model";
 import type { GovernanceDecision } from "./decision-schema";
@@ -307,7 +308,8 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, undefined, initialState);
   const [userId, setUserId] = useState<string | null>(null),
     [workspaceId, setId] = useState<string | null>(null),
-    [workspaceName, setName] = useState("Acme Health");
+    [workspaceName, setName] = useState("Acme Health"),
+    [workspaceRole, setRole] = useState<MemberRole | null>(null);
   const load = useServerFn(loadWorkspace);
   useEffect(() => {
     let active = true;
@@ -318,6 +320,7 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
       if (current === id) return;
       current = id;
       setId(null);
+      setRole(null);
       setName(id ? "My organization" : "Acme Health");
       dispatch({ type: "load", state: id ? blankState() : initialState() });
       if (id) {
@@ -327,6 +330,7 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
             dispatch({ type: "load", state: result.state });
             setId(result.id);
             setName(result.name);
+            setRole(result.role);
           }
         } catch {
           /* Explicit restore control allows retry without losing demo access. */
@@ -356,9 +360,13 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
         userId,
         workspaceId,
         workspaceName,
-        setWorkspace: (id, name) => {
+        workspaceRole,
+        setWorkspace: (id, name, role) => {
           setId(id);
           setName(name);
+          // A new workspace is created by the caller, who becomes its owner.
+          if (role !== undefined) setRole(role);
+          else if (id) setRole((r) => r ?? "owner");
         },
       }}
     >

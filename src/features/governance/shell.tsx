@@ -64,6 +64,7 @@ const titles: Record<string, string> = {
   "/start": "Start here",
   "/export": "Reports & audit pack",
   "/plans": "Plans",
+  "/invite": "Join a workspace",
 };
 const studioTabs = [
   { to: "/gates", name: "Release readiness", icon: TrafficSignal },

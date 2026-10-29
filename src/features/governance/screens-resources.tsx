@@ -1,5 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { WorkspaceControls } from "./workspace-controls";
+import { TeamPanel } from "./team-panel";
+import { PendingInviteBanner } from "./invite-screen";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
@@ -487,7 +489,9 @@ export function MoreScreen() {
   ] as const;
   return (
     <>
+      <PendingInviteBanner />
       <WorkspaceControls />
+      <TeamPanel />
       <div className="more-grid">
         {items.map((x) => (
           <Button variant="ghost" className="more-row" asChild key={x.to}>

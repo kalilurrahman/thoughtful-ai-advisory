@@ -6,6 +6,7 @@ import { governanceDecisionListSchema } from "./decision-schema";
 import { changeReviewListSchema } from "./change-schema";
 import { monitoringPlanListSchema } from "./monitoring-schema";
 import { correctiveActionListSchema } from "./actions-schema";
+import { MEMBER_ROLES, type MemberRole } from "./team-model";
 const answer = z.object({
   s: z.number().int().min(0).max(4),
   e: z.number().int().min(0).max(3),
@@ -113,17 +114,15 @@ export const loadWorkspace = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(z.object({ organizationId: z.string().uuid().optional() }).optional())
   .handler(async ({ context, data }) => {
-    let query = context.supabase
-      .from("organizations")
-      .select("id,name")
-      .eq("owner_id", context.userId);
+    // Row-level security returns the organizations the caller belongs to (migration 0012), or
+    // only their own before it is applied. Without an id, their own workspace comes first.
+    let query = context.supabase.from("organizations").select("id,name,owner_id");
     if (data?.organizationId) query = query.eq("id", data.organizationId);
-    const { data: org, error } = await query
-      .order("created_at", { ascending: true })
-      .limit(1)
-      .maybeSingle();
+    const { data: orgs, error } = await query.order("created_at", { ascending: true });
     if (error) throw new Error("Unable to load workspace.");
+    const org = orgs.find((o) => o.owner_id === context.userId) ?? orgs[0];
     if (!org) return null;
+    const role = await roleIn(context.supabase, org.id, org.owner_id === context.userId);
     const [a, g, s, r, i, d, c, m, ca] = await Promise.all([
       context.supabase.from("assessments").select("answers").eq("organization_id", org.id).single(),
       context.supabase
@@ -185,16 +184,58 @@ export const loadWorkspace = createServerFn({ method: "POST" })
       roadmap: r.data.items,
       qi: 0,
     });
-    return { id: org.id, name: org.name, state };
+    return { id: org.id, name: org.name, role, state };
   });
 export const listWorkspaces = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
+  .handler(async ({ context }): Promise<{ id: string; name: string; role: MemberRole }[]> => {
     const { data, error } = await context.supabase
       .from("organizations")
-      .select("id,name,created_at")
-      .eq("owner_id", context.userId)
-      .order("created_at", { ascending: false });
+      .select("id,name,owner_id,created_at")
+      .order("created_at", { ascending: true });
     if (error) throw new Error("Unable to list workspaces.");
-    return data;
+    const roles = await memberRoles(context.supabase, context.userId);
+    return data.map((o) => ({
+      id: o.id,
+      name: o.name,
+      role: o.owner_id === context.userId ? "owner" : (roles.get(o.id) ?? "viewer"),
+    }));
   });
+
+// organization_members (migration 0012) is newer than the generated Supabase types.
+interface MembersReader {
+  from(table: "organization_members"): {
+    select(columns: string): {
+      eq(
+        column: string,
+        value: string,
+      ): Promise<{ data: { organization_id: string; role: string }[] | null; error: unknown }>;
+    };
+  };
+}
+
+async function memberRoles(client: unknown, userId: string): Promise<Map<string, MemberRole>> {
+  const { data } = await (client as MembersReader)
+    .from("organization_members")
+    .select("organization_id,role")
+    .eq("user_id", userId);
+  const known = new Set<string>(MEMBER_ROLES);
+  return new Map(
+    (data ?? [])
+      .filter((r) => known.has(r.role))
+      .map((r) => [r.organization_id, r.role as MemberRole]),
+  );
+}
+
+/** The caller's role in an organization; the owner is known without a query. */
+async function roleIn(client: unknown, orgId: string, isOwner: boolean): Promise<MemberRole> {
+  if (isOwner) return "owner";
+  const rpc = (client as { rpc: unknown }).rpc as (
+    fn: "org_role",
+    args: { p_org: string },
+  ) => Promise<{ data: string | null; error: unknown }>;
+  const { data } = await rpc.call(client, "org_role", { p_org: orgId });
+  return data && (MEMBER_ROLES as readonly string[]).includes(data)
+    ? (data as MemberRole)
+    : "viewer";
+}

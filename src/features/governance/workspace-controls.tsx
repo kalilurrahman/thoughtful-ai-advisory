@@ -1,17 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { FloppyDisk, SignIn } from "@phosphor-icons/react";
 import { lovable } from "@/integrations/lovable/index";
-import { saveWorkspace, loadWorkspace } from "./workspace.functions";
+import { saveWorkspace, loadWorkspace, listWorkspaces } from "./workspace.functions";
+import { ROLE_LABELS, canEdit, type MemberRole } from "./team-model";
 import { useGovernance } from "./store";
 import { SOURCES } from "@/data/governance";
 export function WorkspaceControls() {
-  const { state, dispatch, userId, workspaceId, workspaceName, setWorkspace } = useGovernance();
+  const { state, dispatch, userId, workspaceId, workspaceName, workspaceRole, setWorkspace } =
+    useGovernance();
   const [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false);
   const save = useServerFn(saveWorkspace),
-    load = useServerFn(loadWorkspace);
+    load = useServerFn(loadWorkspace),
+    list = useServerFn(listWorkspaces);
+  const [workspaces, setWorkspaces] = useState<{ id: string; name: string; role: MemberRole }[]>(
+    [],
+  );
+  const readOnly = workspaceRole != null && !canEdit(workspaceRole);
+  useEffect(() => {
+    if (!userId) return setWorkspaces([]);
+    let active = true;
+    list()
+      .then((w) => active && setWorkspaces(w))
+      .catch(() => active && setWorkspaces([]));
+    return () => {
+      active = false;
+    };
+  }, [userId, workspaceId, list]);
+  async function switchTo(id: string) {
+    setBusy(true);
+    setMessage("");
+    try {
+      const r = await load({ data: { organizationId: id } });
+      if (r) {
+        dispatch({ type: "load", state: r.state });
+        setWorkspace(r.id, r.name, r.role);
+        setMessage(`Opened ${r.name}.`);
+      }
+    } catch {
+      setMessage("Could not open that workspace.");
+    } finally {
+      setBusy(false);
+    }
+  }
   async function signIn(provider: "microsoft" | "lovable") {
     setBusy(true);
     setMessage("");
@@ -44,10 +77,10 @@ export function WorkspaceControls() {
   async function reload() {
     setBusy(true);
     try {
-      const r = await load();
+      const r = await load({ data: workspaceId ? { organizationId: workspaceId } : undefined });
       if (r) {
         dispatch({ type: "load", state: r.state });
-        setWorkspace(r.id, r.name);
+        setWorkspace(r.id, r.name, r.role);
         setMessage("Saved workspace restored.");
       } else setMessage("No saved workspace yet.");
     } catch {
@@ -61,16 +94,40 @@ export function WorkspaceControls() {
       <h2>{userId ? "Your workspace" : "Save your workspace"}</h2>
       {userId ? (
         <>
+          {workspaces.length > 1 && (
+            <label>
+              Workspace
+              <select
+                value={workspaceId ?? ""}
+                disabled={busy}
+                onChange={(e) => void switchTo(e.target.value)}
+              >
+                {!workspaceId && <option value="">Unsaved workspace</option>}
+                {workspaces.map((w) => (
+                  <option key={w.id} value={w.id}>
+                    {w.name} · {ROLE_LABELS[w.role].name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
           <label>
             Organization
             <input
               value={workspaceName}
+              readOnly={readOnly}
               onChange={(e) => setWorkspace(workspaceId, e.target.value)}
             />
           </label>
+          {readOnly && workspaceRole && (
+            <p className="workspace-message">
+              You have read-only access as {ROLE_LABELS[workspaceRole].name.toLowerCase()}. Ask the
+              owner or an admin for an editing role to save changes.
+            </p>
+          )}
           <Button
             className="full-button"
-            disabled={busy || !workspaceName.trim()}
+            disabled={busy || !workspaceName.trim() || readOnly}
             onClick={saveCurrent}
           >
             <FloppyDisk weight="duotone" />

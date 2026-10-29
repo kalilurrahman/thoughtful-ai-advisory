@@ -2,7 +2,7 @@
 
 # VERITRAIL epics and user stories
 
-16 epics and 58 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
+16 epics and 59 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
 
 | Epic | Title | Area | Status | Stories | Done | Partial | Planned |
 |---|---|---|---|---|---|---|---|
@@ -17,7 +17,7 @@
 | [E09](#e09--remediation-roadmap-and-lifecycle-checklist) | Remediation roadmap and lifecycle checklist | Workspace — assessment and release readiness | Live | 2 | 2 | 0 | 0 |
 | [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 6 | 6 | 0 | 0 |
 | [E11](#e11--reports-and-audit-evidence) | Reports and audit evidence | Workspace — reports and evidence | Preview | 1 | 1 | 0 | 0 |
-| [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 4 | 1 | 3 | 0 |
+| [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 5 | 2 | 3 | 0 |
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
 | [E14](#e14--administration-and-privacy-first-analytics) | Administration and privacy-first analytics | Administration and analytics | Live | 2 | 2 | 0 | 0 |
 | [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 6 | 6 | 0 | 0 |
@@ -647,7 +647,7 @@ Known gaps:
 
 **Area:** Accounts and persistence · **Status:** Live
 
-**Capabilities:** CAP-049 Plans, CAP-050 Workspace and account, CAP-051 Sign in and sign up, CAP-052 Password reset, CAP-053 Onboarding, CAP-078 Billing — Dodo Payments
+**Capabilities:** CAP-049 Plans, CAP-050 Workspace and account, CAP-051 Sign in and sign up, CAP-052 Password reset, CAP-053 Onboarding, CAP-078 Billing — Dodo Payments, CAP-079 Team workspaces — members
 
 ### S12.1
 
@@ -664,9 +664,7 @@ Acceptance criteria:
 
 Known gaps:
 
-- No SSO/SAML
-- MFA
-- roles or invitations.
+- No SSO/SAML or MFA.
 
 ### S12.2
 
@@ -684,7 +682,6 @@ Acceptance criteria:
 Known gaps:
 
 - No autosave; unsaved changes are lost on reload.
-- One workspace per user; no switcher.
 - Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied.
 
 ### S12.3
@@ -720,6 +717,29 @@ Known gaps:
 - products and webhook secret (DODO_* settings).
 - Seat
 - system and workspace limits are defined but not yet enforced; only the advisor allowance is.
+
+### S12.5
+
+**As an AI governance lead**, I want to invite colleagues to my workspace with a role, so that the governance team works from one record, with approvers and viewers free.
+
+*Status: Done*
+
+Acceptance criteria:
+
+- Given I am the owner or an admin, when I invite an e-mail address with a role, then a single-use link valid for 14 days is created and I am told no e-mail was sent.
+- Given an operator or admin invitation, when the owner's plan has no free operator seat, then nothing is created and the message says how to proceed; approver and viewer invitations are always allowed.
+- Given an invitation link, when accepted by a signed-in user with the invited e-mail address, then they join with that role; any other address, a used, revoked or expired link adds nobody.
+- Given a member's role, when operator, admin or owner, then they can save the workspace; approvers and viewers read it and the database refuses their writes.
+- Given the owner or an admin, when they change a role or remove a member, then the owner can never be changed or removed and an admin cannot change another admin.
+- Given I belong to several workspaces, when I choose one, then it opens with my role shown.
+
+**Routes:** `/invite`, `/more` · **Capabilities:** CAP-050, CAP-079 · **Tests:** `team.test.ts`
+
+Known gaps:
+
+- Invitations are not e-mailed until an e-mail provider is added.
+- Approvers cannot yet record approvals
+- because the workspace saves as one snapshot.
 
 ## E13 — Platform console
 
@@ -1031,14 +1051,14 @@ Every gap recorded against a story, in one list for planning.
 | [S10.2](#s102) | E10 | No tests for templates. |
 | [S10.6](#s106) | E10 | Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in. |
 | [S11.1](#s111) | E11 | The three packs differ only in title and subject. |
-| [S12.1](#s121) | E12 | No SSO/SAML |
-| [S12.1](#s121) | E12 | MFA |
-| [S12.1](#s121) | E12 | roles or invitations. |
+| [S12.1](#s121) | E12 | No SSO/SAML or MFA. |
 | [S12.2](#s122) | E12 | No autosave; unsaved changes are lost on reload. |
-| [S12.2](#s122) | E12 | One workspace per user; no switcher. |
 | [S12.2](#s122) | E12 | Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied. |
 | [S12.4](#s124) | E12 | Needs a Dodo Payments account |
 | [S12.4](#s124) | E12 | products and webhook secret (DODO_* settings). |
 | [S12.4](#s124) | E12 | Seat |
 | [S12.4](#s124) | E12 | system and workspace limits are defined but not yet enforced; only the advisor allowance is. |
+| [S12.5](#s125) | E12 | Invitations are not e-mailed until an e-mail provider is added. |
+| [S12.5](#s125) | E12 | Approvers cannot yet record approvals |
+| [S12.5](#s125) | E12 | because the workspace saves as one snapshot. |
 | [S13.1](#s131) | E13 | Synthetic data only; approvals have no external effect. |

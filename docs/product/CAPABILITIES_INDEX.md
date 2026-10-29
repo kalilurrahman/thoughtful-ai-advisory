@@ -16,7 +16,7 @@ Every app, tool and feature, then every website content page, the control librar
 | [Workspace — operational governance](#workspace--operational-governance) | 5 | 5 | 0 | 0 | 0 |
 | [Workspace — guidance and knowledge](#workspace--guidance-and-knowledge) | 6 | 6 | 0 | 0 | 0 |
 | [Workspace — reports and evidence](#workspace--reports-and-evidence) | 1 | 0 | 0 | 1 | 0 |
-| [Accounts and persistence](#accounts-and-persistence) | 6 | 6 | 0 | 0 | 0 |
+| [Accounts and persistence](#accounts-and-persistence) | 7 | 7 | 0 | 0 | 0 |
 | [Platform console](#platform-console) | 7 | 3 | 4 | 0 | 0 |
 | [Administration and analytics](#administration-and-analytics) | 2 | 2 | 0 | 0 | 0 |
 | [Installable app](#installable-app) | 9 | 9 | 0 | 0 | 0 |
@@ -103,6 +103,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-052 | Password reset | `/reset-password` | Live | Server | AI governance lead | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Set a new password from the recovery link. |
 | CAP-053 | Onboarding | `/onboarding` | Live | None | Prospective buyer, AI governance lead | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Choose sign-in, the demo workspace or the free snapshot. |
 | CAP-078 | Billing — Dodo Payments | `/api/billing/dodo-webhook` | Live | Cloud (RLS) | AI governance lead | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Checkout and customer portal hosted by Dodo Payments (merchant of record); signed, idempotent webhooks store subscriptions; plan limits resolved on the server. |
+| CAP-079 | Team workspaces — members | `/invite` | Live | Cloud (RLS) | AI governance lead, Approver, Internal auditor / assessor | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Owner, admin, operator, approver and viewer roles enforced by row-level security; single-use invitation links; operator seats limited by the owner's plan; workspace switcher. |
 
 ### Platform console
 
@@ -306,7 +307,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-047 | AI governance advisor | [S10.6](EPICS_AND_STORIES.md#s106) | `src/features/governance/screens-advisor.tsx`, `src/features/governance/advisor.functions.ts` | `server-logic.test.ts` |
 | CAP-048 | Reports and audit pack | [S11.1](EPICS_AND_STORIES.md#s111) | `src/features/governance/evidence-report.ts`, `src/features/governance/evidence-files.ts` | `evidence-export.test.ts`, `export-ui.test.tsx` |
 | CAP-049 | Plans | [S12.3](EPICS_AND_STORIES.md#s123), [S12.4](EPICS_AND_STORIES.md#s124) | `src/routes/plans.tsx`, `src/data/plans.ts` | `plans.test.ts` |
-| CAP-050 | Workspace and account | [S12.2](EPICS_AND_STORIES.md#s122) | `src/features/governance/screens-resources.tsx`, `src/features/governance/workspace-controls.tsx`, `src/features/governance/workspace.functions.ts` | **None** |
+| CAP-050 | Workspace and account | [S12.2](EPICS_AND_STORIES.md#s122), [S12.5](EPICS_AND_STORIES.md#s125) | `src/features/governance/screens-resources.tsx`, `src/features/governance/workspace-controls.tsx`, `src/features/governance/workspace.functions.ts` | **None** |
 | CAP-051 | Sign in and sign up | [S12.1](EPICS_AND_STORIES.md#s121) | `src/features/governance/auth-panel.tsx` | **None** |
 | CAP-052 | Password reset | [S12.1](EPICS_AND_STORIES.md#s121) | `src/routes/reset-password.tsx` | **None** |
 | CAP-053 | Onboarding | [S12.1](EPICS_AND_STORIES.md#s121) | `src/routes/onboarding.tsx` | **None** |
@@ -326,5 +327,6 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-074 | Reading aids | [S01.4](EPICS_AND_STORIES.md#s014) | `src/features/site/markdown.tsx`, `src/features/site/reading.tsx` | `site-reading.test.ts` |
 | CAP-075 | Section illustrations and share images | [S01.5](EPICS_AND_STORIES.md#s015) | `src/features/site/illustrations.tsx`, `scripts/generate-social-images.mjs`, `public/og` | `site-reading.test.ts` |
 | CAP-078 | Billing — Dodo Payments | [S12.4](EPICS_AND_STORIES.md#s124) | `src/features/billing/billing.functions.ts`, `src/features/billing/entitlements.ts`, `src/features/billing/webhook.ts`, `src/routes/api.billing.dodo-webhook.ts`, `drizzle/migrations/0011_veritrail_billing.sql` | `billing.test.ts` |
+| CAP-079 | Team workspaces — members | [S12.5](EPICS_AND_STORIES.md#s125) | `src/features/governance/team.functions.ts`, `src/features/governance/team-model.ts`, `src/features/governance/team-panel.tsx`, `src/features/governance/invite-screen.tsx`, `drizzle/migrations/0012_veritrail_organization_members.sql` | `team.test.ts` |
 | CAP-077 | Appearance — themes and fonts | [S15.6](EPICS_AND_STORIES.md#s156) | `src/lib/theme.ts`, `src/features/appearance/appearance-panel.tsx`, `src/styles.css` | `theme.test.ts` |
 | CAP-076 | Workspace app shell | [S15.5](EPICS_AND_STORIES.md#s155) | `src/features/governance/shell.tsx` | `app-routing.test.tsx` |

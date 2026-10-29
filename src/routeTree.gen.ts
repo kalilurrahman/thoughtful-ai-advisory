@@ -25,6 +25,7 @@ import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as GuardrailsRouteImport } from './routes/guardrails'
 import { Route as IncidentsRouteImport } from './routes/incidents'
 import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as InviteRouteImport } from './routes/invite'
 import { Route as KnowledgeRouteImport } from './routes/knowledge'
 import { Route as MonitoringRouteImport } from './routes/monitoring'
 import { Route as MoreRouteImport } from './routes/more'
@@ -120,6 +121,11 @@ const IncidentsRoute = IncidentsRouteImport.update({
 const InventoryRoute = InventoryRouteImport.update({
   id: '/inventory',
   path: '/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InviteRoute = InviteRouteImport.update({
+  id: '/invite',
+  path: '/invite',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KnowledgeRoute = KnowledgeRouteImport.update({
@@ -221,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/guardrails': typeof GuardrailsRoute
   '/incidents': typeof IncidentsRoute
   '/inventory': typeof InventoryRoute
+  '/invite': typeof InviteRoute
   '/knowledge': typeof KnowledgeRoute
   '/monitoring': typeof MonitoringRoute
   '/more': typeof MoreRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByTo {
   '/guardrails': typeof GuardrailsRoute
   '/incidents': typeof IncidentsRoute
   '/inventory': typeof InventoryRoute
+  '/invite': typeof InviteRoute
   '/knowledge': typeof KnowledgeRoute
   '/monitoring': typeof MonitoringRoute
   '/more': typeof MoreRoute
@@ -290,6 +298,7 @@ export interface FileRoutesById {
   '/guardrails': typeof GuardrailsRoute
   '/incidents': typeof IncidentsRoute
   '/inventory': typeof InventoryRoute
+  '/invite': typeof InviteRoute
   '/knowledge': typeof KnowledgeRoute
   '/monitoring': typeof MonitoringRoute
   '/more': typeof MoreRoute
@@ -326,6 +335,7 @@ export interface FileRouteTypes {
     | '/guardrails'
     | '/incidents'
     | '/inventory'
+    | '/invite'
     | '/knowledge'
     | '/monitoring'
     | '/more'
@@ -360,6 +370,7 @@ export interface FileRouteTypes {
     | '/guardrails'
     | '/incidents'
     | '/inventory'
+    | '/invite'
     | '/knowledge'
     | '/monitoring'
     | '/more'
@@ -394,6 +405,7 @@ export interface FileRouteTypes {
     | '/guardrails'
     | '/incidents'
     | '/inventory'
+    | '/invite'
     | '/knowledge'
     | '/monitoring'
     | '/more'
@@ -429,6 +441,7 @@ export interface RootRouteChildren {
   GuardrailsRoute: typeof GuardrailsRoute
   IncidentsRoute: typeof IncidentsRoute
   InventoryRoute: typeof InventoryRoute
+  InviteRoute: typeof InviteRoute
   KnowledgeRoute: typeof KnowledgeRoute
   MonitoringRoute: typeof MonitoringRoute
   MoreRoute: typeof MoreRoute
@@ -559,6 +572,13 @@ declare module '@tanstack/react-router' {
       path: '/inventory'
       fullPath: '/inventory'
       preLoaderRoute: typeof InventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invite': {
+      id: '/invite'
+      path: '/invite'
+      fullPath: '/invite'
+      preLoaderRoute: typeof InviteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/knowledge': {
@@ -693,6 +713,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuardrailsRoute: GuardrailsRoute,
   IncidentsRoute: IncidentsRoute,
   InventoryRoute: InventoryRoute,
+  InviteRoute: InviteRoute,
   KnowledgeRoute: KnowledgeRoute,
   MonitoringRoute: MonitoringRoute,
   MoreRoute: MoreRoute,
