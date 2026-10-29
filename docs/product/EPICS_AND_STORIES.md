@@ -693,7 +693,7 @@ Known gaps:
 
 Acceptance criteria:
 
-- Given the plans page, when loaded, then Assess, Govern and Assure packages and the free snapshot are shown.
+- Given the plans page, when loaded, then the Free, Team, Business and Enterprise plans from src/data/plans.ts and the Governance Baseline are shown, with no unapproved price figures.
 
 **Routes:** `/plans` · **Capabilities:** CAP-049 · **Tests:** none yet
 

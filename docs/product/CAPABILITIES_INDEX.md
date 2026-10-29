@@ -97,7 +97,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 | ID | Capability | Route | Status | Data | For | Epic | What it does |
 |---|---|---|---|---|---|---|---|
-| CAP-049 | Plans | `/plans` | Live | None | Prospective buyer | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Assess, Govern and Assure packages and the free snapshot; no billing. |
+| CAP-049 | Plans | `/plans` | Live | None | Prospective buyer | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Free, Team, Business and Enterprise plans from one catalogue, and the Governance Baseline; prices shown at checkout. |
 | CAP-050 | Workspace and account | `/more` | Live | Cloud (RLS) | AI governance lead | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Sign-in entry, rename, Save and Restore, links to every workspace tool. |
 | CAP-051 | Sign in and sign up | `/auth` | Live | Server | AI governance lead, Site administrator | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Email/password with confirmation, password reset, Google, Apple, Microsoft and Lovable OAuth. |
 | CAP-052 | Password reset | `/reset-password` | Live | Server | AI governance lead | [E12](EPICS_AND_STORIES.md#e12--accounts-workspaces-and-cloud-persistence) | Set a new password from the recovery link. |
@@ -304,7 +304,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-046 | Calculators | [S10.5](EPICS_AND_STORIES.md#s105) | `src/features/governance/screens-resources.tsx`, `src/features/governance/model.ts` | `governance.test.ts` |
 | CAP-047 | AI governance advisor | [S10.6](EPICS_AND_STORIES.md#s106) | `src/features/governance/screens-advisor.tsx`, `src/features/governance/advisor.functions.ts` | `server-logic.test.ts` |
 | CAP-048 | Reports and audit pack | [S11.1](EPICS_AND_STORIES.md#s111) | `src/features/governance/evidence-report.ts`, `src/features/governance/evidence-files.ts` | `evidence-export.test.ts`, `export-ui.test.tsx` |
-| CAP-049 | Plans | [S12.3](EPICS_AND_STORIES.md#s123) | `src/routes/plans.tsx` | **None** |
+| CAP-049 | Plans | [S12.3](EPICS_AND_STORIES.md#s123) | `src/routes/plans.tsx`, `src/data/plans.ts` | `plans.test.ts` |
 | CAP-050 | Workspace and account | [S12.2](EPICS_AND_STORIES.md#s122) | `src/features/governance/screens-resources.tsx`, `src/features/governance/workspace-controls.tsx`, `src/features/governance/workspace.functions.ts` | **None** |
 | CAP-051 | Sign in and sign up | [S12.1](EPICS_AND_STORIES.md#s121) | `src/features/governance/auth-panel.tsx` | **None** |
 | CAP-052 | Password reset | [S12.1](EPICS_AND_STORIES.md#s121) | `src/routes/reset-password.tsx` | **None** |

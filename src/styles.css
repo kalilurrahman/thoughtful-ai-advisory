@@ -3180,9 +3180,11 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   }
   .gap-list,
   .pack-list,
-  .roadmap-grid,
-  .plans-grid {
+  .roadmap-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .plans-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .roadmap-grid {
     gap: 28px;
@@ -3258,6 +3260,9 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   }
 }
 @media (min-width: 1400px) {
+  .plans-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
   .portfolio-grid,
   .system-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3426,4 +3431,13 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 @media (min-width: 640px) {
   .header-actions { display: inline-flex; }
   .app-header .header-overflow { display: none; }
+}
+.plan-includes {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  font-size: 14px;
+  list-style: disc;
+}
+.plan-includes li + li {
+  margin-top: 4px;
 }

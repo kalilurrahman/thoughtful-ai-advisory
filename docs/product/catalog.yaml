@@ -550,7 +550,7 @@ epics:
         so_that: I understand the commercial options
         status: partial
         acceptance:
-          - Given the plans page, when loaded, then Assess, Govern and Assure packages and the free snapshot are shown.
+          - Given the plans page, when loaded, then the Free, Team, Business and Enterprise plans from src/data/plans.ts and the Governance Baseline are shown, with no unapproved price figures.
         routes: [/plans]
         gaps: [No checkout, billing or entitlements.]
 
@@ -1082,7 +1082,7 @@ capabilities:
   - {id: CAP-046, name: Calculators, area: guide, route: /calculators, status: live, data: memory, epic: E10, personas: [cro], source: [src/features/governance/screens-resources.tsx, src/features/governance/model.ts], tests: [governance.test.ts], summary: "Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage."}
   - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [server-logic.test.ts], summary: "Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions."}
   - {id: CAP-048, name: Reports and audit pack, area: report, route: /export, status: preview, data: none, epic: E11, personas: [auditor, gov-lead], source: [src/features/governance/evidence-report.ts, src/features/governance/evidence-files.ts], tests: [evidence-export.test.ts, export-ui.test.tsx], summary: "PDF, DOCX, XLSX and PPTX packs generated in the browser, labelled demo previews."}
-  - {id: CAP-049, name: Plans, area: account, route: /plans, status: live, data: none, epic: E12, personas: [visitor], source: [src/routes/plans.tsx], tests: [], summary: "Assess, Govern and Assure packages and the free snapshot; no billing."}
+  - {id: CAP-049, name: Plans, area: account, route: /plans, status: live, data: none, epic: E12, personas: [visitor], source: [src/routes/plans.tsx, src/data/plans.ts], tests: [plans.test.ts], summary: "Free, Team, Business and Enterprise plans from one catalogue, and the Governance Baseline; prices shown at checkout."}
   - {id: CAP-050, name: Workspace and account, area: account, route: /more, status: live, data: cloud, epic: E12, personas: [gov-lead], source: [src/features/governance/screens-resources.tsx, src/features/governance/workspace-controls.tsx, src/features/governance/workspace.functions.ts], tests: [], summary: "Sign-in entry, rename, Save and Restore, links to every workspace tool."}
   - {id: CAP-051, name: Sign in and sign up, area: account, route: /auth, status: live, data: server, epic: E12, personas: [gov-lead, admin], source: [src/features/governance/auth-panel.tsx], tests: [], summary: "Email/password with confirmation, password reset, Google, Apple, Microsoft and Lovable OAuth."}
   - {id: CAP-052, name: Password reset, area: account, route: /reset-password, status: live, data: server, epic: E12, personas: [gov-lead], source: [src/routes/reset-password.tsx], tests: [], summary: "Set a new password from the recovery link."}
