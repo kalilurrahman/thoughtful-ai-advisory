@@ -14,6 +14,7 @@ import { Route as SplatRouteImport } from './routes/$'
 import { Route as ActionsRouteImport } from './routes/actions'
 import { Route as AdvisorRouteImport } from './routes/advisor'
 import { Route as AssessRouteImport } from './routes/assess'
+import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CalculatorsRouteImport } from './routes/calculators'
 import { Route as ChangesRouteImport } from './routes/changes'
@@ -36,8 +37,7 @@ import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as WorkspaceRouteImport } from './routes/workspace'
-import { Route as AssistantIndexRouteImport } from './routes/assistant.index'
-import { Route as AssistantThreadIdRouteImport } from './routes/assistant.$threadId'
+import { Route as AssistantThreadIdRouteImport } from './routes/assistant_.$threadId'
 import { Route as PlatformIndexRouteImport } from './routes/platform.index'
 import { Route as PlatformToolRouteImport } from './routes/platform.$tool'
 import { Route as FrameworkControlsIndexRouteImport } from './routes/framework.controls.index'
@@ -66,6 +66,11 @@ const AdvisorRoute = AdvisorRouteImport.update({
 const AssessRoute = AssessRouteImport.update({
   id: '/assess',
   path: '/assess',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -178,13 +183,8 @@ const WorkspaceRoute = WorkspaceRouteImport.update({
   path: '/workspace',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AssistantIndexRoute = AssistantIndexRouteImport.update({
-  id: '/assistant/',
-  path: '/assistant/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AssistantThreadIdRoute = AssistantThreadIdRouteImport.update({
-  id: '/assistant/$threadId',
+  id: '/assistant_/$threadId',
   path: '/assistant/$threadId',
   getParentRoute: () => rootRouteImport,
 } as any)
@@ -216,6 +216,7 @@ export interface FileRoutesByFullPath {
   '/actions': typeof ActionsRoute
   '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
+  '/assistant': typeof AssistantRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
   '/changes': typeof ChangesRoute
@@ -240,7 +241,6 @@ export interface FileRoutesByFullPath {
   '/workspace': typeof WorkspaceRoute
   '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
-  '/assistant/': typeof AssistantIndexRoute
   '/platform/': typeof PlatformIndexRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
@@ -251,6 +251,7 @@ export interface FileRoutesByTo {
   '/actions': typeof ActionsRoute
   '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
+  '/assistant': typeof AssistantRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
   '/changes': typeof ChangesRoute
@@ -275,7 +276,6 @@ export interface FileRoutesByTo {
   '/workspace': typeof WorkspaceRoute
   '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
-  '/assistant': typeof AssistantIndexRoute
   '/platform': typeof PlatformIndexRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls': typeof FrameworkControlsIndexRoute
@@ -287,6 +287,7 @@ export interface FileRoutesById {
   '/actions': typeof ActionsRoute
   '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
+  '/assistant': typeof AssistantRoute
   '/auth': typeof AuthRoute
   '/calculators': typeof CalculatorsRoute
   '/changes': typeof ChangesRoute
@@ -309,9 +310,8 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
   '/workspace': typeof WorkspaceRoute
-  '/assistant/$threadId': typeof AssistantThreadIdRoute
+  '/assistant_/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
-  '/assistant/': typeof AssistantIndexRoute
   '/platform/': typeof PlatformIndexRoute
   '/framework/controls/$controlId': typeof FrameworkControlsControlIdRoute
   '/framework/controls/': typeof FrameworkControlsIndexRoute
@@ -324,6 +324,7 @@ export interface FileRouteTypes {
     | '/actions'
     | '/advisor'
     | '/assess'
+    | '/assistant'
     | '/auth'
     | '/calculators'
     | '/changes'
@@ -348,7 +349,6 @@ export interface FileRouteTypes {
     | '/workspace'
     | '/assistant/$threadId'
     | '/platform/$tool'
-    | '/assistant/'
     | '/platform/'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
@@ -359,6 +359,7 @@ export interface FileRouteTypes {
     | '/actions'
     | '/advisor'
     | '/assess'
+    | '/assistant'
     | '/auth'
     | '/calculators'
     | '/changes'
@@ -383,7 +384,6 @@ export interface FileRouteTypes {
     | '/workspace'
     | '/assistant/$threadId'
     | '/platform/$tool'
-    | '/assistant'
     | '/platform'
     | '/framework/controls/$controlId'
     | '/framework/controls'
@@ -394,6 +394,7 @@ export interface FileRouteTypes {
     | '/actions'
     | '/advisor'
     | '/assess'
+    | '/assistant'
     | '/auth'
     | '/calculators'
     | '/changes'
@@ -416,9 +417,8 @@ export interface FileRouteTypes {
     | '/start'
     | '/templates'
     | '/workspace'
-    | '/assistant/$threadId'
+    | '/assistant_/$threadId'
     | '/platform/$tool'
-    | '/assistant/'
     | '/platform/'
     | '/framework/controls/$controlId'
     | '/framework/controls/'
@@ -430,6 +430,7 @@ export interface RootRouteChildren {
   ActionsRoute: typeof ActionsRoute
   AdvisorRoute: typeof AdvisorRoute
   AssessRoute: typeof AssessRoute
+  AssistantRoute: typeof AssistantRoute
   AuthRoute: typeof AuthRoute
   CalculatorsRoute: typeof CalculatorsRoute
   ChangesRoute: typeof ChangesRoute
@@ -454,7 +455,6 @@ export interface RootRouteChildren {
   WorkspaceRoute: typeof WorkspaceRoute
   AssistantThreadIdRoute: typeof AssistantThreadIdRoute
   PlatformToolRoute: typeof PlatformToolRoute
-  AssistantIndexRoute: typeof AssistantIndexRoute
   PlatformIndexRoute: typeof PlatformIndexRoute
   FrameworkControlsControlIdRoute: typeof FrameworkControlsControlIdRoute
   FrameworkControlsIndexRoute: typeof FrameworkControlsIndexRoute
@@ -495,6 +495,13 @@ declare module '@tanstack/react-router' {
       path: '/assess'
       fullPath: '/assess'
       preLoaderRoute: typeof AssessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -651,15 +658,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkspaceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/assistant/': {
-      id: '/assistant/'
-      path: '/assistant'
-      fullPath: '/assistant/'
-      preLoaderRoute: typeof AssistantIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/assistant/$threadId': {
-      id: '/assistant/$threadId'
+    '/assistant_/$threadId': {
+      id: '/assistant_/$threadId'
       path: '/assistant/$threadId'
       fullPath: '/assistant/$threadId'
       preLoaderRoute: typeof AssistantThreadIdRouteImport
@@ -702,6 +702,7 @@ const rootRouteChildren: RootRouteChildren = {
   ActionsRoute: ActionsRoute,
   AdvisorRoute: AdvisorRoute,
   AssessRoute: AssessRoute,
+  AssistantRoute: AssistantRoute,
   AuthRoute: AuthRoute,
   CalculatorsRoute: CalculatorsRoute,
   ChangesRoute: ChangesRoute,
@@ -726,7 +727,6 @@ const rootRouteChildren: RootRouteChildren = {
   WorkspaceRoute: WorkspaceRoute,
   AssistantThreadIdRoute: AssistantThreadIdRoute,
   PlatformToolRoute: PlatformToolRoute,
-  AssistantIndexRoute: AssistantIndexRoute,
   PlatformIndexRoute: PlatformIndexRoute,
   FrameworkControlsControlIdRoute: FrameworkControlsControlIdRoute,
   FrameworkControlsIndexRoute: FrameworkControlsIndexRoute,
