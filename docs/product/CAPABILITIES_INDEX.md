@@ -86,8 +86,8 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-045 | Start here | `/start` | Live | Page memory | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Role, stage and goal to recommended chapters, actions and tools. |
 | CAP-046 | Calculators | `/calculators` | Live | Page memory | Chief Risk / Compliance Officer | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage. |
 | CAP-047 | AI governance advisor | `/advisor` | Live | Server | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions. |
-| CAP-047a | Site assistant | `/assistant` | Live | Cloud (RLS) | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Chat grounded in site content with page links; private saved threads for signed-in users. |
-| CAP-047b | Site assistant conversation | `/assistant/$threadId` | Live | Cloud (RLS) | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | A saved assistant thread at its own address. |
+| CAP-078 | Site assistant | `/assistant` | Live | Cloud (RLS) | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | Chat grounded in site content with page links; private saved threads for signed-in users. |
+| CAP-079 | Site assistant conversation | `/assistant_/$threadId` | Live | Cloud (RLS) | AI governance lead | [E10](EPICS_AND_STORIES.md#e10--guidance-knowledge-and-advisor) | A saved assistant thread at its own address. |
 
 ### Workspace — reports and evidence
 
@@ -305,8 +305,8 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-045 | Start here | [S10.4](EPICS_AND_STORIES.md#s104) | `src/features/governance/screens-start.tsx` | **None** |
 | CAP-046 | Calculators | [S10.5](EPICS_AND_STORIES.md#s105) | `src/features/governance/screens-resources.tsx`, `src/features/governance/model.ts` | `governance.test.ts` |
 | CAP-047 | AI governance advisor | [S10.6](EPICS_AND_STORIES.md#s106) | `src/features/governance/screens-advisor.tsx`, `src/features/governance/advisor.functions.ts` | `server-logic.test.ts` |
-| CAP-047a | Site assistant | — | `src/features/assistant/assistant-screen.tsx`, `src/features/assistant/assistant.functions.ts` | **None** |
-| CAP-047b | Site assistant conversation | — | `src/features/assistant/assistant-screen.tsx` | **None** |
+| CAP-078 | Site assistant | — | `src/features/assistant/assistant-screen.tsx`, `src/features/assistant/assistant.functions.ts` | **None** |
+| CAP-079 | Site assistant conversation | — | `src/features/assistant/assistant-screen.tsx` | **None** |
 | CAP-048 | Reports and audit pack | [S11.1](EPICS_AND_STORIES.md#s111) | `src/features/governance/evidence-report.ts`, `src/features/governance/evidence-files.ts` | `evidence-export.test.ts`, `export-ui.test.tsx` |
 | CAP-049 | Plans | [S12.3](EPICS_AND_STORIES.md#s123) | `src/routes/plans.tsx` | **None** |
 | CAP-050 | Workspace and account | [S12.2](EPICS_AND_STORIES.md#s122) | `src/features/governance/screens-resources.tsx`, `src/features/governance/workspace-controls.tsx`, `src/features/governance/workspace.functions.ts` | **None** |

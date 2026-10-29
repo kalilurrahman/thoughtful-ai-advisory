@@ -563,8 +563,8 @@
 | CAP-045 Start here | Live | — |
 | CAP-046 Calculators | Live | — |
 | CAP-047 AI governance advisor | Live | UC20 |
-| CAP-047a Site assistant | Live | — |
-| CAP-047b Site assistant conversation | Live | — |
+| CAP-078 Site assistant | Live | — |
+| CAP-079 Site assistant conversation | Live | — |
 | CAP-048 Reports and audit pack | Preview | UC18 |
 | CAP-049 Plans | Live | — |
 | CAP-050 Workspace and account | Live | UC19 |
