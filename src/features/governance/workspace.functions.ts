@@ -26,7 +26,7 @@ const system = z.object({
     .object({
       profile: z.record(z.string(), z.union([z.string(), z.boolean(), z.array(z.string())])),
       result: z.object({
-        tier: z.enum(["Low", "Medium", "High", "Prohibited-review"]),
+        tier: z.enum(["Minimal", "Limited", "High-risk", "Prohibited"]),
         score: z.number().int().min(0),
         provisional: z.boolean(),
         factors: z.array(

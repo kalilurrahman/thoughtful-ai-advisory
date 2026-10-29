@@ -44,7 +44,7 @@ describe("tool_use events", () => {
     });
     fireEvent.submit(container.querySelector("#rt-form")!);
     expect(events("tool_use")).toEqual([
-      { tool: "risk-triage", tier: expect.stringMatching(/^(Prohibited-review|High|Medium|Low)$/) },
+      { tool: "risk-triage", tier: expect.stringMatching(/^(Prohibited|High-risk|Limited|Minimal)$/) },
     ]);
   });
 

@@ -97,7 +97,7 @@ export const MATURITY_PROFILE = {
   eu_operations: true,
 };
 
-const TIER_ORDER: Record<string, number> = { "Prohibited-review": 0, High: 1, Medium: 2, Low: 3 };
+const TIER_ORDER: Record<string, number> = { Prohibited: 0, "High-risk": 1, Limited: 2, Minimal: 3 };
 
 export function profileOf(row: Row): Record<string, unknown> {
   const [name, purpose, di, ap, ds, au, cat, tools, ext, genai, vendor] = row;
@@ -337,7 +337,7 @@ export function* dryRunSteps(opts: DryRunOptions = {}): Generator<DryRunProgress
   const down = agent.callTool("request_human_approval", ASSESSOR, {
     action: "change_risk_tier",
     resource_id: first.system_id,
-    payload: { system_id: first.system_id, tier: "Low" },
+    payload: { system_id: first.system_id, tier: "Minimal" },
     reason: "Attempted downgrade",
   });
   let sod: string;
@@ -365,7 +365,7 @@ export function* dryRunSteps(opts: DryRunOptions = {}): Generator<DryRunProgress
     (a, b) =>
       (TIER_ORDER[a.preliminary_tier] ?? 9) - (TIER_ORDER[b.preliminary_tier] ?? 9) || b.tier_score - a.tier_score,
   );
-  const high = ranked.filter((i) => i.preliminary_tier === "High" || i.preliminary_tier === "Prohibited-review");
+  const high = ranked.filter((i) => i.preliminary_tier === "High-risk" || i.preliminary_tier === "Prohibited");
   const deep = high.length >= 5 ? high : ranked.slice(0, 5);
   const allGaps: Array<Record<string, unknown>> = [];
   const assessments: DeepDive[] = [];
@@ -505,8 +505,8 @@ export function* dryRunSteps(opts: DryRunOptions = {}): Generator<DryRunProgress
   // ---------------- metrics
   yield { phase: "W6", label: "Executive report, metrics and audit-chain verification", done: 7, total: TOTAL };
   const tiers = new Counter(inventory.map((i) => i.preliminary_tier));
-  const nHigh = tiers.get("High") + tiers.get("Prohibited-review");
-  const assessedHigh = assessments.filter((x) => x.tier === "High" || x.tier === "Prohibited-review").length;
+  const nHigh = tiers.get("High-risk") + tiers.get("Prohibited");
+  const assessedHigh = assessments.filter((x) => x.tier === "High-risk" || x.tier === "Prohibited").length;
   const sev = new Counter(allGaps.map((g) => String(g["severity"])));
   const evs = new Counter(allGaps.map((g) => String(g["evidence_status"])));
   const metrics: Metric[] = [
@@ -557,7 +557,7 @@ export function* dryRunSteps(opts: DryRunOptions = {}): Generator<DryRunProgress
         .join(", ") +
       ". Tiers are Inferred and were confirmed through the approval queue (EI-02, IS-13).",
     `- **Enterprise maturity: ${pyFloat(mres.overall_score)} / 100 — ${mres.maturity_level}** (self-reported, User-asserted).`,
-    `- **${assessments.length} deep-dive assessments** covering every High-tier system; **${allGaps.length} gaps** identified ` +
+    `- **${assessments.length} deep-dive assessments** covering every High-risk-tier system; **${allGaps.length} gaps** identified ` +
       `(Critical ${sev.get("Critical")}, High ${sev.get("High")}, Medium ${sev.get("Medium")}, Low ${sev.get("Low")}).`,
     `- **${policies.length} runtime policies** drafted for agentic systems; both remain in draft/observe mode pending human approval to activate (IS-12, IS-13).`,
     "- Evidence position: " + evs.mostCommon().map(([k, v]) => `${k}: ${v}`).join(", ") + ".",
@@ -567,7 +567,7 @@ export function* dryRunSteps(opts: DryRunOptions = {}): Generator<DryRunProgress
     "| Tier | Systems | Examples |",
     "|---|---|---|",
   ];
-  for (const t of ["Prohibited-review", "High", "Medium", "Low"]) {
+  for (const t of ["Prohibited", "High-risk", "Limited", "Minimal"]) {
     const ex = inventory.filter((i) => i.preliminary_tier === t).slice(0, 4).map((i) => i.name);
     if (ex.length) L.push(`| ${t} | ${tiers.get(t)} | ${ex.join(", ")} |`);
   }

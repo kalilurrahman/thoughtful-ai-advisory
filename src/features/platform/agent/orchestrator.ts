@@ -246,10 +246,14 @@ function pyFormat(v: unknown): string {
 }
 
 function tierFromText(text: string): string | null {
-  const m = /\b(prohibited[- ]review|high|medium|low)\b/i.exec(text || "");
+  const m = /\b(prohibited(?:[- ]review)?|high[- ]risk|high-risk|limited|minimal)\b/i.exec(text || "");
   if (!m?.[1]) return null;
   const t = m[1].toLowerCase();
-  return t.startsWith("prohibited") ? "Prohibited-review" : t[0]!.toUpperCase() + t.slice(1);
+  if (t.startsWith("prohibited")) return "Prohibited";
+  if (t === "high-risk" || t === "high risk") return "High-risk";
+  if (t === "limited") return "Limited";
+  if (t === "minimal") return "Minimal";
+  return null;
 }
 
 // --------------------------------------------------------------------------- response
@@ -847,7 +851,7 @@ export class VeritrailAgent {
           `"${label}" requires human approval. To raise the request I need ` +
           (!resource ? "the AI system (system ID or a guided assessment in this session)" : "") +
           (!resource && !to ? " and " : "") +
-          (!to ? "the target tier (Low, Medium, High or Prohibited-review)" : "") +
+          (!to ? "the target tier (Minimal, Limited, High-risk or Prohibited)" : "") +
           ". Nothing has been changed.";
         r.clarifyingQuestion = "Which AI system and which target tier should the approval request cover?";
         return r;

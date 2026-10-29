@@ -521,10 +521,10 @@ const KEY_FIELDS = [
   "domain_category",
 ];
 const TIER_RULES: Record<string, { approval_authority: string; review_cadence_months: number }> = {
-  Low: { approval_authority: "Product Owner with AI CoE review", review_cadence_months: 24 },
-  Medium: { approval_authority: "AI Risk Lead", review_cadence_months: 12 },
-  High: { approval_authority: "AI Governance Forum", review_cadence_months: 6 },
-  "Prohibited-review": {
+  Minimal: { approval_authority: "Product Owner with AI CoE review", review_cadence_months: 24 },
+  Limited: { approval_authority: "AI Risk Lead", review_cadence_months: 12 },
+  "High-risk": { approval_authority: "AI Governance Forum", review_cadence_months: 6 },
+  Prohibited: {
     approval_authority: "Legal and AI Governance Forum (default: do not proceed)",
     review_cadence_months: 0,
   },
@@ -642,18 +642,18 @@ export function calculateRiskTier(profile: Profile): RiskResult {
 
   let tier: string;
   if (prohibited.length) {
-    tier = "Prohibited-review";
+    tier = "Prohibited";
     citations.add("AO-10");
     for (const x of prohibited)
       triggers.push(`Possible prohibited practice (EU AI Act Art. 5 screen): ${x}`);
   } else if (score >= 60 || triggers.some((t) => !t.startsWith("Potential EU AI Act")))
-    tier = "High";
-  else if (score >= 30) tier = "Medium";
-  else tier = "Low";
+    tier = "High-risk";
+  else if (score >= 30) tier = "Limited";
+  else tier = "Minimal";
 
-  if (missing.length >= 3 && tier === "Low") {
-    tier = "Medium";
-    triggers.push("Tier floored at Medium because key intake facts are missing (safest default)");
+  if (missing.length >= 3 && tier === "Minimal") {
+    tier = "Limited";
+    triggers.push("Tier floored at Limited because key intake facts are missing (safest default)");
   }
 
   const mods = ["core"];
@@ -664,21 +664,21 @@ export function calculateRiskTier(profile: Profile): RiskResult {
     missing.includes("data_sensitivity")
   )
     mods.push("data_privacy");
-  if (tier !== "Low" || tools.length) mods.push("security");
+  if (tier !== "Minimal" || tools.length) mods.push("security");
   if (asBool(p["genai"])) mods.push("genai_llm");
   if (tools.length || au === "acts_with_approval" || au === "acts_autonomously")
     mods.push("agentic");
   if (
-    tier === "High" ||
-    tier === "Prohibited-review" ||
+    tier === "High-risk" ||
+    tier === "Prohibited" ||
     material ||
     ap === "public" ||
     ap === "vulnerable"
   )
     mods.push("fairness_safety");
   if (
-    tier === "High" ||
-    tier === "Prohibited-review" ||
+    tier === "High-risk" ||
+    tier === "Prohibited" ||
     material ||
     au === "acts_with_approval" ||
     au === "acts_autonomously"

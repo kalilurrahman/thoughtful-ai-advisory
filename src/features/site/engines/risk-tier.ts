@@ -118,23 +118,23 @@ export const INTAKE_FIELDS: Record<string, string> = {
   environment: "Which environment is it in? (development / staging / production)",
 };
 
-export type RiskTier = "Low" | "Medium" | "High" | "Prohibited-review";
+export type RiskTier = "Minimal" | "Limited" | "High-risk" | "Prohibited";
 
 export const TIER_RULES: Record<
   RiskTier,
   { approval_authority: string; review_cadence_months: number }
 > = {
-  Low: { approval_authority: "Product Owner with AI CoE review", review_cadence_months: 24 },
-  Medium: { approval_authority: "AI Risk Lead", review_cadence_months: 12 },
-  High: { approval_authority: "AI Governance Forum", review_cadence_months: 6 },
-  "Prohibited-review": {
+  Minimal: { approval_authority: "Product Owner with AI CoE review", review_cadence_months: 24 },
+  Limited: { approval_authority: "AI Risk Lead", review_cadence_months: 12 },
+  "High-risk": { approval_authority: "AI Governance Forum", review_cadence_months: 6 },
+  Prohibited: {
     approval_authority: "Legal and AI Governance Forum (default: do not proceed)",
     review_cadence_months: 0,
   },
 };
 
 export const RISK_TIER_METHOD =
-  "VERITRAIL risk-tier rules v1.0 (thresholds: High >= 60 or any high-risk trigger; Medium >= 30)";
+  "VERITRAIL risk-tier rules v1.0 (thresholds: High-risk >= 60 or any high-risk trigger; Limited >= 30)";
 
 /** Profile accepted by the risk tiering engine (all fields optional; booleans may be "yes"/"no"). */
 export interface RiskProfile {
@@ -301,23 +301,23 @@ export function calculateRiskTier(
 
   let tier: RiskTier;
   if (prohibited.length) {
-    tier = "Prohibited-review";
+    tier = "Prohibited";
     citations.add("AO-10");
     for (const x of prohibited) {
       triggers.push(`Possible prohibited practice (EU AI Act Art. 5 screen): ${x}`);
     }
   } else if (score >= 60 || triggers.some((t) => !t.startsWith("Potential EU AI Act"))) {
-    tier = "High";
+    tier = "High-risk";
   } else if (score >= 30) {
-    tier = "Medium";
+    tier = "Limited";
   } else {
-    tier = "Low";
+    tier = "Minimal";
   }
 
   const provisional = missing.length > 0;
-  if (missing.length >= 3 && tier === "Low") {
-    tier = "Medium"; // safest default when key facts are unknown
-    triggers.push("Tier floored at Medium because key intake facts are missing (safest default)");
+  if (missing.length >= 3 && tier === "Minimal") {
+    tier = "Limited"; // safest default when key facts are unknown
+    triggers.push("Tier floored at Limited because key intake facts are missing (safest default)");
   }
 
   // Required assessment modules
@@ -331,8 +331,8 @@ export function calculateRiskTier(
   ) {
     mods.push("data_privacy");
   }
-  const tierHighish = tier === "High" || tier === "Prohibited-review";
-  if (tier !== "Low" || tools.length) mods.push("security");
+  const tierHighish = tier === "High-risk" || tier === "Prohibited";
+  if (tier !== "Minimal" || tools.length) mods.push("security");
   if (genai) mods.push("genai_llm");
   if (tools.length || au === "acts_with_approval" || au === "acts_autonomously")
     mods.push("agentic");

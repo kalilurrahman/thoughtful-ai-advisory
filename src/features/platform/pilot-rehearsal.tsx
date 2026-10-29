@@ -119,7 +119,7 @@ export function PilotRehearsal() {
       </p>
       <p>
         The run registers 28 AI systems, confirms preliminary risk tiers through the approval queue,
-        runs deep-dive assessments for every High-tier system, consolidates the gap register, creates
+        runs deep-dive assessments for every High-risk-tier system, consolidates the gap register, creates
         remediation tasks for Critical gaps after explicit confirmation, drafts runtime policies
         (activation stays pending human approval), exports an approval-gated evidence pack, checks
         that self-approval is refused and verifies the audit chain.
@@ -161,7 +161,7 @@ export function PilotRehearsal() {
                 .map(([k, v]) => `${k} ${v}`)
                 .join(", ")}
             </dd>
-            <dt>High-tier deep dives</dt>
+            <dt>High-risk-tier deep dives</dt>
             <dd>
               {r.assessments.length} ({r.assessments.reduce((s, a) => s + a.questions, 0)} responses)
             </dd>

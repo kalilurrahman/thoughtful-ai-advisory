@@ -42,7 +42,7 @@ export const DEFAULT_TOOL_ACTIONS = ["DENY", "ESCALATE", "REQUIRE_HUMAN_APPROVAL
 
 export const CONTENT_SURFACES = ["prompt", "response", "tool_params", "tool_output"] as const;
 export const ENVIRONMENTS = ["dev", "test", "staging", "production"] as const;
-export const RISK_TIERS = ["Low", "Medium", "High", "Prohibited-review"] as const;
+export const RISK_TIERS = ["Minimal", "Limited", "High-risk", "Prohibited"] as const;
 export const KILL_SWITCH_SCOPES = ["agent", "tool", "model", "tenant"] as const;
 export const LOGGING_LEVELS = ["none", "metadata", "redacted"] as const;
 export const TRANSFORM_TYPES = ["append_disclosure", "strip_unapproved_urls", "truncate"] as const;

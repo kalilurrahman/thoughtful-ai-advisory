@@ -348,7 +348,7 @@ export const SHIELD_SAMPLES: Record<string, Record<string, unknown>> = {
     "autonomy": "acts_with_approval",
     "human_approval_model": "threshold",
     "environment": "production",
-    "risk_tier": "Medium",
+    "risk_tier": "Limited",
     "affected_parties": "customers",
     "regulatory_obligations": [
       "GDPR",
@@ -540,7 +540,7 @@ export const SHIELD_SAMPLES: Record<string, Record<string, unknown>> = {
     "autonomy": "acts_with_approval",
     "human_approval_model": "per_action",
     "environment": "production",
-    "risk_tier": "High",
+    "risk_tier": "High-risk",
     "affected_parties": "internal",
     "regulatory_obligations": [
       "SOX internal controls over financial reporting",

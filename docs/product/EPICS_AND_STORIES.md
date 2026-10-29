@@ -2,7 +2,7 @@
 
 # VERITRAIL epics and user stories
 
-16 epics and 59 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
+16 epics and 60 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
 
 | Epic | Title | Area | Status | Stories | Done | Partial | Planned |
 |---|---|---|---|---|---|---|---|
@@ -663,7 +663,7 @@ Known gaps:
 
 **Area:** Accounts and persistence · **Status:** Live
 
-**Capabilities:** CAP-049 Plans, CAP-050 Workspace and account, CAP-051 Sign in and sign up, CAP-052 Password reset, CAP-053 Onboarding, CAP-078 Billing — Dodo Payments, CAP-079 Team workspaces — members
+**Capabilities:** CAP-049 Plans, CAP-050 Workspace and account, CAP-051 Sign in and sign up, CAP-052 Password reset, CAP-053 Onboarding, CAP-080 Billing — Dodo Payments, CAP-081 Team workspaces — members
 
 ### S12.1
 
@@ -727,7 +727,7 @@ Acceptance criteria:
 - Given an active or past-due subscription, when the plan is read on the server, then its limits apply (for example the advisor allowance); any other status means the Free plan.
 - Given a paid plan, when I choose Manage billing, then the Dodo customer portal opens to update payment, change or cancel.
 
-**Routes:** `/plans` · **Capabilities:** CAP-049, CAP-078 · **Tests:** `billing.test.ts`, `plans.test.ts`
+**Routes:** `/plans` · **Capabilities:** CAP-049, CAP-078, CAP-080 · **Tests:** `billing.test.ts`, `plans.test.ts`
 
 Known gaps:
 
@@ -751,7 +751,7 @@ Acceptance criteria:
 - Given the owner or an admin, when they change a role or remove a member, then the owner can never be changed or removed and an admin cannot change another admin.
 - Given I belong to several workspaces, when I choose one, then it opens with my role shown.
 
-**Routes:** `/invite`, `/more` · **Capabilities:** CAP-050, CAP-079 · **Tests:** `team.test.ts`
+**Routes:** `/invite`, `/more` · **Capabilities:** CAP-050, CAP-079, CAP-081 · **Tests:** `team.test.ts`
 
 Known gaps:
 

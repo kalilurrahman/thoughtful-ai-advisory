@@ -820,7 +820,7 @@ export function PolicySimulator() {
                 ["issuer", "Token issuer (iss)", "Required when the policy pins trusted issuers."],
                 ["agentName", "Agent name", "Matched against the policy's applies_to patterns."],
                 ["environment", "Environment", "dev, test, staging or production"],
-                ["riskTier", "Risk tier", "Low, Medium, High or Prohibited-review"],
+                ["riskTier", "Risk tier", "Minimal, Limited, High-risk or Prohibited"],
                 ["tenant", "Request tenant", "A different tenant from the identity is cross-tenant access."],
                 ["model", "Model", ""],
                 ["sessionId", "Session id", "Per-session tool-call limits apply."],
