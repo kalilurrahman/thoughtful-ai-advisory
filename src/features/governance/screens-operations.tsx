@@ -17,7 +17,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { GR, PHASES, type Tier } from "@/data/governance";
 import { getPlan } from "@/data/plans";
 import { calculateRiskTier, type RiskProfile } from "@/features/site/engines/risk-tier";
-import { requiredGuardrail } from "./model";
+import { gateStatus, pillarScores, requiredGuardrail } from "./model";
 import { useGovernance } from "./store";
 import {
   ROADMAP_EFFORTS,
@@ -81,6 +81,11 @@ export function InventoryScreen() {
     [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
   const systemLimit = getPlan(state.planId ?? "free").limits.aiSystems;
   const atSystemLimit = state.systems.length >= systemLimit;
+  // Workspace-wide gate — per-system gate is deferred (stub-gate-per-system).
+  const workspaceGate = gateStatus(
+    pillarScores(state.answers),
+    (state.systems[0]?.tier as Parameters<typeof gateStatus>[1] | undefined) ?? "Low",
+  );
   const triage = calculateRiskTier({ ...riskProfile, name });
   const tier = triage.tier;
   const triageEnabled = editingIndex === null || Boolean(state.systems[editingIndex]?.riskTriage);
@@ -235,6 +240,26 @@ export function InventoryScreen() {
               {s.status}
             </p>
             <p className="muted">{s.vendor}</p>
+            <p
+              className="muted"
+              title="Workspace-wide gate score — per-system gate scores are coming soon (stub-gate-per-system)"
+            >
+              Gate:{" "}
+              <span
+                className={
+                  workspaceGate === "Cleared"
+                    ? "chip success"
+                    : workspaceGate === "Conditional"
+                      ? "chip warning"
+                      : "chip danger"
+                }
+              >
+                {workspaceGate}
+              </span>{" "}
+              <span className="muted" style={{ fontSize: "0.75em" }}>
+                workspace-wide
+              </span>
+            </p>
             {s.riskTriage && (
               <details className="decision-history">
                 <summary>
