@@ -28,6 +28,19 @@ export function transitionCorrectiveAction(
     return { error: "An action must be independently verified before closure." };
   if (status === "Closed" && !note.trim())
     return { error: "Record the verifier's effectiveness finding before closure." };
+  // Separation of duties: the person who opened the action should not verify it.
+  // This is an advisory check — the action is still accepted if the same actor is
+  // the only option (e.g. solo operator). Wire a server-side identity check here
+  // once the workspace has user-identity on history entries (TODO: stub-sod).
+  const opener = action.history[0]?.actor?.trim().toLowerCase();
+  const verifier = actor.trim().toLowerCase();
+  if (status === "Closed" && opener && opener === verifier) {
+    return {
+      error:
+        "The person who raised this action should not verify it (separation of duties). " +
+        "Assign a different verifier, or record why independent verification is not available.",
+    };
+  }
   if (status === "Open" && action.status !== "In progress")
     return { error: "Only in-progress work can be returned to the open queue." };
   if (status === "Cancelled" && !note.trim())
