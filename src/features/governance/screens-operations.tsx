@@ -8,6 +8,7 @@ import {
   MagnifyingGlass,
   PencilSimple,
   DownloadSimple,
+  Trash,
 } from "@phosphor-icons/react";
 import { EmptyInventory } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
@@ -75,7 +76,8 @@ export function InventoryScreen() {
       "Minimal",
     ),
     [status, setStatus] = useState("Under review"),
-    [riskProfile, setRiskProfile] = useState<RiskProfile>({});
+    [riskProfile, setRiskProfile] = useState<RiskProfile>({}),
+    [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
   const triage = calculateRiskTier({ ...riskProfile, name });
   const tier = triage.tier;
   const triageEnabled = editingIndex === null || Boolean(state.systems[editingIndex]?.riskTriage);
@@ -246,10 +248,16 @@ export function InventoryScreen() {
                 </p>
               </details>
             )}
-            <Button variant="ghost" size="sm" onClick={() => openEditor(s, index)}>
-              <PencilSimple />
-              Edit record
-            </Button>
+            <div className="row-actions">
+              <Button variant="ghost" size="sm" onClick={() => openEditor(s, index)}>
+                <PencilSimple />
+                Edit record
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => setConfirmDeleteIndex(index)}>
+                <Trash />
+                Delete
+              </Button>
+            </div>
           </article>
         ))}
       </div>
@@ -267,6 +275,34 @@ export function InventoryScreen() {
         Screening is a preliminary inference, not a legal classification or approval. New records
         remain Under review until an accountable human confirms disposition.
       </p>
+      <Dialog
+        open={confirmDeleteIndex !== null}
+        onOpenChange={(o) => { if (!o) setConfirmDeleteIndex(null); }}
+      >
+        <DialogContent>
+          <DialogTitle>Delete system?</DialogTitle>
+          <DialogDescription>
+            {confirmDeleteIndex !== null && state.systems[confirmDeleteIndex]?.name} will be
+            permanently removed from the inventory.
+          </DialogDescription>
+          <div className="dialog-actions">
+            <Button variant="ghost" onClick={() => setConfirmDeleteIndex(null)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                if (confirmDeleteIndex !== null) {
+                  dispatch({ type: "remove-system", index: confirmDeleteIndex });
+                  setConfirmDeleteIndex(null);
+                }
+              }}
+            >
+              Delete
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="veritrail-sheet">
           <DialogTitle>

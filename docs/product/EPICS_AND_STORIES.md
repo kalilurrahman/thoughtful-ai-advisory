@@ -352,10 +352,6 @@ Acceptance criteria:
 
 **Routes:** `/inventory` · **Capabilities:** CAP-036 · **Tests:** `site-risk-tier.test.ts`, `checklist.test.ts`
 
-Known gaps:
-
-- Systems cannot be deleted.
-
 ### S06.2
 
 **As an AI governance lead**, I want to search, filter and export the inventory, so that I can answer "what AI do we run" with evidence.
@@ -1059,7 +1055,6 @@ Every gap recorded against a story, in one list for planning.
 | [S05.1](#s051) | E05 | No UI test for the assessment screen. |
 | [S05.3](#s053) | E05 | The gate is workspace-wide |
 | [S05.3](#s053) | E05 | not per system. |
-| [S06.1](#s061) | E06 | Systems cannot be deleted. |
 | [S07.1](#s071) | E07 | "Export guardrail bundle" links to the general export; there is no guardrail-specific file. |
 | [S08.2](#s082) | E08 | A decision does not change the system's inventory status. |
 | [S08.4](#s084) | E08 | Observations are manual; there is no telemetry feed. |

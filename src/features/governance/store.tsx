@@ -123,6 +123,7 @@ export type Action =
   | { type: "question"; qi: number }
   | { type: "system"; system: System }
   | { type: "update-system"; index: number; system: System }
+  | { type: "remove-system"; index: number }
   | { type: "incident"; incident: AIIncident }
   | { type: "update-incident"; incident: AIIncident; changedAt: string }
   | { type: "edit-incident"; incident: AIIncident }
@@ -180,6 +181,8 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
         ...s,
         systems: s.systems.map((system, index) => (index === a.index ? a.system : system)),
       };
+    case "remove-system":
+      return { ...s, systems: s.systems.filter((_, index) => index !== a.index) };
     case "incident":
       return { ...s, incidents: [a.incident, ...s.incidents] };
     case "update-incident":
