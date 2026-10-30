@@ -37,7 +37,7 @@ export const PROFILE_FIELDS: Record<string, string> = {
   human_approval_model:
     "Human-approval model (none|per_action|high_impact_only|threshold|batch_review or description)",
   environment: "Deployment environment (dev|test|staging|production)",
-  risk_tier: "Assigned risk tier (Minimal|Limited|High-risk|Prohibited)",
+  risk_tier: "Assigned risk tier (Minimal|Limited|High-risk|Prohibited-review)",
   affected_parties: "Who is affected (internal|customers|public|vulnerable)",
   regulatory_obligations: "Regulatory obligations (e.g. GDPR, EU AI Act, HIPAA, PCI DSS, SOX)",
   customer_obligations:
@@ -381,12 +381,12 @@ const TIER_MAP: Record<string, string> = {
   minimal: "Minimal",
   limited: "Limited",
   high_risk: "High-risk",
-  prohibited: "Prohibited",
+  prohibited: "Prohibited-review",
   // legacy aliases
   low: "Minimal",
   medium: "Limited",
   high: "High-risk",
-  prohibited_review: "Prohibited",
+  prohibited_review: "Prohibited-review",
   critical: "High-risk",
 };
 
@@ -715,7 +715,7 @@ export function normalizeProfile(profile: unknown): NormalizedProfile {
     assumptions.push({
       field: "risk_tier",
       assumed: "not assigned",
-      why: `risk tier '${rawTier}' not recognized (Minimal|Limited|High-risk|Prohibited)`,
+      why: `risk tier '${rawTier}' not recognized (Minimal|Limited|High-risk|Prohibited-review)`,
     });
   }
 

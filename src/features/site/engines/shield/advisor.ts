@@ -435,7 +435,7 @@ function riskProfile(n: NormalizedProfile): RiskProfileOut {
     composite < 1.75 ? "Low" : composite < 2.5 ? "Medium" : composite < 3.5 ? "High" : "Critical";
   const floors: Array<[Level, string]> = [];
   if (maxScore === 4) floors.push(["High", "at least one dimension is Critical"]);
-  if (n.risk_tier === "High") floors.push(["High", "user-asserted risk tier is High"]);
+  if (n.risk_tier === "High-risk") floors.push(["High", "user-asserted risk tier is High-risk"]);
   if (n.risk_tier === "Prohibited-review") {
     floors.push([
       "Critical",
@@ -454,9 +454,9 @@ function riskProfile(n: NormalizedProfile): RiskProfileOut {
     if (levelIdx(lvl) > levelIdx(rating)) rating = lvl;
   }
   let inferredTier: string = rating === "Critical" ? "High-risk" : rating === "High" ? "High-risk" : rating === "Medium" ? "Limited" : "Minimal";
-  if (n.risk_tier === "Prohibited") inferredTier = "Prohibited";
+  if (n.risk_tier === "Prohibited-review") inferredTier = "Prohibited-review";
   const assertedTier = n.risk_tier;
-  const tierOrder = ["Minimal", "Limited", "High-risk", "Prohibited"];
+  const tierOrder = ["Minimal", "Limited", "High-risk", "Prohibited-review"];
   const mismatch =
     !!assertedTier && tierOrder.indexOf(inferredTier) > tierOrder.indexOf(assertedTier);
 
