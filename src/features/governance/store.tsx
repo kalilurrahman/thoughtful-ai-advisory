@@ -214,8 +214,25 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
             : incident,
         ),
       };
-    case "decision":
-      return { ...s, decisions: recordDecision(s.decisions, a.decision, a.supersededAt) };
+    case "decision": {
+      const inventoryStatus =
+        a.decision.outcome === "Approved"
+          ? "Approved"
+          : a.decision.outcome === "Conditional approval" ||
+              a.decision.outcome === "Risk accepted"
+            ? "Approved with limits"
+            : a.decision.outcome === "Rejected" ||
+                a.decision.outcome === "Paused" ||
+                a.decision.outcome === "Retired"
+              ? "Not approved"
+              : null;
+      const systems = inventoryStatus
+        ? s.systems.map((sys) =>
+            sys.name === a.decision.system ? { ...sys, status: inventoryStatus } : sys,
+          )
+        : s.systems;
+      return { ...s, decisions: recordDecision(s.decisions, a.decision, a.supersededAt), systems };
+    }
     case "decision-withdraw":
       return {
         ...s,

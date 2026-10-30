@@ -372,7 +372,6 @@ epics:
           - Given corrected or withdrawn records, when evidence is exported, then the reasons appear in the history and the correction column.
         routes: [/decisions]
         tests: [decision-schema.test.ts, evidence-export.test.ts, decision-corrections.test.tsx]
-        gaps: [A decision does not change the system's inventory status.]
       - id: S08.3
         persona: owner
         want: to submit a material change with impact ratings for review
