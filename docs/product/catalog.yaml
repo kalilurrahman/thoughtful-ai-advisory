@@ -314,7 +314,6 @@ epics:
           - Given a new record, when saved, then its status is Under review until a human changes it.
         routes: [/inventory]
         tests: [site-risk-tier.test.ts, checklist.test.ts]
-        gaps: [Systems cannot be deleted.]
       - id: S06.2
         persona: gov-lead
         want: to search, filter and export the inventory
