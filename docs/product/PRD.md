@@ -3,10 +3,10 @@
 | | |
 |---|---|
 | **Product** | VERITRAIL Enterprise — AI governance, runtime guardrails and evidence |
-| **Document** | Product requirements (PRD), version 1.0 |
-| **Updated** | 2026-10-24 |
+| **Document** | Product requirements (PRD), version 1.1 |
+| **Updated** | 2026-10-30 |
 | **Status** | Describes the product as built, the gaps against it and what comes next |
-| **Companion documents** | [Capabilities index](CAPABILITIES_INDEX.md) · [Epics and user stories](EPICS_AND_STORIES.md) · [Use cases](USE_CASES.md) · [Product index](README.md) |
+| **Companion documents** | [Capabilities index](CAPABILITIES_INDEX.md) · [Epics and user stories](EPICS_AND_STORIES.md) · [Use cases](USE_CASES.md) · [TRD](TRD.md) · [Deferred stubs](DEFERRED_STUBS.md) · [Product index](README.md) |
 
 Requirement IDs (FR-, NFR-) trace to the epics (E01–E16) and stories in
 [EPICS_AND_STORIES.md](EPICS_AND_STORIES.md); every capability (CAP-) is listed in the
@@ -79,7 +79,7 @@ packs) and the **Agent** (a governance copilot across them).
   evidence export, external communication).
 - Hosting customer AI traffic: Shield policies are drafted, simulated and exported, not enforced
   in a VERITRAIL-run proxy (see section 10, Later).
-- Sending messages: there is no e-mail, SMS or push sending today.
+- Sending messages: there is no e-mail, SMS or push sending today. Invitation links are generated and displayed; delivery requires a transactional email provider (stub-smtp).
 
 ## 5. Personas
 
@@ -252,22 +252,34 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 ## 11. Roadmap
 
 **Now (shipped).** Everything marked Live, Demo or Preview in the
-[capabilities index](CAPABILITIES_INDEX.md).
+[capabilities index](CAPABILITIES_INDEX.md), plus:
+
+- Plan-limits UI enforcement: Register buttons disabled at system limit; seat and advisor limits
+  per plan enforced in UI and server function.
+- Monitoring plan threshold editing: inline edit form on each monitoring plan card.
+- Separation-of-duties advisory check: name-string comparison on corrective action closure;
+  opener displayed next to verifier field.
+- Stub UI interfaces for deferred features (stub-smtp, stub-dodo, stub-sod, stub-gate-per-system):
+  fully navigable previews with "not yet connected" caveats; see [DEFERRED_STUBS.md](DEFERRED_STUBS.md).
+- Practitioner playbook and governance template rendering tests.
+- TRD: see [TRD.md](TRD.md) for the technical reference.
 
 **Next (close the known gaps).**
 
 1. ~~Autosave and a workspace switcher~~ — built, with conflict detection (migration 0013); apply migrations 0010–0013.
-2. Real-device install and offline verification; Google Play and Microsoft Store listings
+2. Wire stub-smtp: choose a transactional email provider (Resend recommended); set `RESEND_API_KEY`; call `sendInviteEmail` from `create_organization_invite`.
+3. Wire stub-dodo: create Dodo Payments account; create products matching `src/data/plans.ts`; set `DODO_*` env vars; deploy webhook handler.
+4. Wire stub-sod: add `actorId?: string` to history entries (migration); populate from `userId` on dispatch; add server-function identity comparison.
+5. Real-device install and offline verification; Google Play and Microsoft Store listings
    ([release guide](../veritrail/PWA_RELEASE_GUIDE.md)).
 
 **Later (new capability).**
 
 1. Agentic AI risk checker and EU AI Act readiness checker (E16, waitlists open).
 2. Private evidence upload with reviewer status; several workspaces and team roles; SSO and MFA.
-3. Per-system release gates; decisions that update inventory status.
+3. Per-system release gates with per-system gate scores (stub-gate-per-system); decisions that update inventory status.
 4. Telemetry-fed monitoring; a runtime enforcement point for Shield policies.
-5. Governance briefing notifications (Web Push) after consent and a sending service exist.
-6. Enforce seat, system and workspace limits per plan (billing through Dodo Payments is built).
+5. Governance briefing notifications (Web Push) after consent and a sending service exist (stub-smtp).
 
 ## 12. Risks and mitigations
 
@@ -275,7 +287,7 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 |---|---|---|---|
 | R1 | Migration `0009` renames `save_aegis_workspace` to `save_veritrail_workspace` | Save would break if the client called only one name | The client calls the new name and falls back to the old one; regenerate Supabase types once `0009` is live |
 | R2 | The advisor calls the Lovable AI gateway | Cost and abuse exposure | Sign-in required and a daily allowance per plan (`consume_ai_quota`); monitor usage |
-| R3 | No confirmation e-mails on lead forms | Missed follow-up | Add a sending provider (HTTP API); lead forms are already rate-limited per client |
+| R3 | No confirmation e-mails on lead forms or invites | Missed follow-up; manual invite link sharing | Add a sending provider (HTTP API, e.g. Resend); `sendInviteEmail` hook is ready (stub-smtp). Lead forms are rate-limited per client. |
 | R4 | Placeholder legal text, contact address and `site_url` | Not ready for public launch or store listings | Legal review; set the production domain before submission |
 | R5 | Teammates editing the same workspace | Overwritten work | Autosave saves only from the latest revision (migration 0013); a conflict stops autosave and asks the user to restore |
 | R6 | Blueprint PDF is public, so its form gate is cosmetic | Lower lead capture than reported | Serve the file from a signed URL after submission, or drop the gate |
@@ -300,6 +312,8 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 4. Should the Blueprint stay gated (and be made truly gated) or be published openly?
 5. What is the production domain, and when will legal review the privacy notice and terms?
 6. Are store listings (Google Play, Microsoft Store) worth their upkeep before customer demand?
+7. Should the per-system gate use a separate answers slice per system, or a tagging approach on the existing flat map? (stub-gate-per-system; architectural decision needed before implementation.)
+8. Which email provider for invite delivery and later briefing notifications? (stub-smtp; Resend is the recommended default.)
 
 ## 15. Keeping this document current
 
