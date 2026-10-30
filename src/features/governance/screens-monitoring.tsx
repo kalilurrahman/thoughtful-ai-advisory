@@ -282,6 +282,7 @@ export function MonitoringScreen() {
               })
             }
             onStatus={(status) => dispatch({ type: "monitor-status", id: plan.id, status })}
+            onUpdate={(fields) => dispatch({ type: "monitor-update-plan", id: plan.id, fields })}
           />
         ))}
         {visible.length === 0 && (
@@ -307,10 +308,12 @@ function MonitoringPlanCard({
   plan,
   onObservation,
   onStatus,
+  onUpdate,
 }: {
   plan: MonitoringPlan;
   onObservation: (observation: MonitoringPlan["observations"][number]) => void;
   onStatus: (status: "Active" | "Paused") => void;
+  onUpdate: (fields: Pick<MonitoringPlan, "metric" | "domain" | "unit" | "threshold" | "breachDirection" | "cadence" | "nextDue" | "owner" | "notes">) => void;
 }) {
   const [value, setValue] = useState("");
   const [measuredAt, setMeasuredAt] = useState(today());
@@ -318,6 +321,12 @@ function MonitoringPlanCard({
   const [evidenceReference, setEvidenceReference] = useState("");
   const [notes, setNotes] = useState("");
   const [observationError, setObservationError] = useState("");
+  const [editForm, setEditForm] = useState<null | {
+    metric: string; domain: MonitoringPlan["domain"]; unit: string;
+    threshold: string; breachDirection: MonitoringPlan["breachDirection"];
+    cadence: MonitoringPlan["cadence"]; nextDue: string; owner: string; notes: string;
+  }>(null);
+  const [editError, setEditError] = useState("");
   const currentState = monitoringState(plan, today());
   const latest = [...plan.observations].sort((a, b) => b.measuredAt.localeCompare(a.measuredAt))[0];
   const isBreach = latest ? isThresholdBreach(plan, latest.value) : false;
@@ -407,6 +416,147 @@ function MonitoringPlanCard({
               </li>
             ))}
         </ol>
+      </details>
+      <details className="decision-intake">
+        <summary>Edit plan configuration</summary>
+        <p className="muted">
+          Update the threshold, cadence or ownership in place. To preserve a prior configuration in
+          the audit trail, pause this plan and create a replacement.
+        </p>
+        <form
+          onSubmit={(event: FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            if (!editForm) return;
+            const parsed = monitoringPlanSchema.safeParse({
+              ...plan,
+              ...editForm,
+              threshold: Number(editForm.threshold),
+            });
+            if (!parsed.success) {
+              setEditError(parsed.error.issues[0]?.message ?? "Check the plan fields.");
+              return;
+            }
+            const { metric, domain, unit, threshold, breachDirection, cadence, nextDue, owner, notes: n } = parsed.data;
+            onUpdate({ metric, domain, unit, threshold, breachDirection, cadence, nextDue, owner, notes: n });
+            setEditForm(null);
+            setEditError("");
+          }}
+        >
+          {editForm ? (
+            <>
+              <div className="decision-form-grid monitoring-form-grid">
+                <label>
+                  Signal / metric
+                  <input
+                    required
+                    maxLength={160}
+                    value={editForm.metric}
+                    onChange={(e) => setEditForm({ ...editForm, metric: e.target.value })}
+                  />
+                </label>
+                <label>
+                  Monitoring domain
+                  <select
+                    value={editForm.domain}
+                    onChange={(e) => setEditForm({ ...editForm, domain: e.target.value as typeof editForm.domain })}
+                  >
+                    {monitoringDomains.map((d) => <option key={d}>{d}</option>)}
+                  </select>
+                </label>
+                <label>
+                  Unit
+                  <input
+                    required
+                    maxLength={40}
+                    value={editForm.unit}
+                    onChange={(e) => setEditForm({ ...editForm, unit: e.target.value })}
+                  />
+                </label>
+                <label>
+                  Breach threshold
+                  <input
+                    required
+                    type="number"
+                    step="any"
+                    value={editForm.threshold}
+                    onChange={(e) => setEditForm({ ...editForm, threshold: e.target.value })}
+                  />
+                </label>
+                <label>
+                  Breach when
+                  <select
+                    value={editForm.breachDirection}
+                    onChange={(e) => setEditForm({ ...editForm, breachDirection: e.target.value as typeof editForm.breachDirection })}
+                  >
+                    {breachDirections.map((d) => <option key={d}>{d}</option>)}
+                  </select>
+                </label>
+                <label>
+                  Review cadence
+                  <select
+                    value={editForm.cadence}
+                    onChange={(e) => setEditForm({ ...editForm, cadence: e.target.value as typeof editForm.cadence })}
+                  >
+                    {monitoringCadences.map((c) => <option key={c}>{c}</option>)}
+                  </select>
+                </label>
+                <label>
+                  Next due date
+                  <input
+                    required
+                    type="date"
+                    value={editForm.nextDue}
+                    onChange={(e) => setEditForm({ ...editForm, nextDue: e.target.value })}
+                  />
+                </label>
+                <label>
+                  Accountable owner
+                  <input
+                    required
+                    maxLength={120}
+                    value={editForm.owner}
+                    onChange={(e) => setEditForm({ ...editForm, owner: e.target.value })}
+                  />
+                </label>
+              </div>
+              <label>
+                Method / escalation notes
+                <textarea
+                  maxLength={2000}
+                  value={editForm.notes}
+                  onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })}
+                />
+              </label>
+              {editError && <p role="alert" className="danger">{editError}</p>}
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <Button type="submit">Save changes</Button>
+                <Button type="button" variant="outline" onClick={() => { setEditForm(null); setEditError(""); }}>
+                  Cancel
+                </Button>
+              </div>
+            </>
+          ) : (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                setEditForm({
+                  metric: plan.metric,
+                  domain: plan.domain,
+                  unit: plan.unit,
+                  threshold: String(plan.threshold),
+                  breachDirection: plan.breachDirection,
+                  cadence: plan.cadence,
+                  nextDue: plan.nextDue,
+                  owner: plan.owner,
+                  notes: plan.notes,
+                })
+              }
+            >
+              Edit plan
+            </Button>
+          )}
+        </form>
       </details>
       {plan.status === "Active" && (
         <details className="decision-intake">

@@ -143,6 +143,14 @@ export type Action =
   | { type: "monitor-plan"; plan: MonitoringPlan }
   | { type: "monitor-observation"; id: string; observation: MonitoringObservation; nextDue: string }
   | { type: "monitor-status"; id: string; status: "Active" | "Paused" }
+  | {
+      type: "monitor-update-plan";
+      id: string;
+      fields: Pick<
+        MonitoringPlan,
+        "metric" | "domain" | "unit" | "threshold" | "breachDirection" | "cadence" | "nextDue" | "owner" | "notes"
+      >;
+    }
   | { type: "corrective-action"; action: CorrectiveAction }
   | { type: "edit-corrective-evidence"; id: string; evidence: string }
   | {
@@ -277,6 +285,13 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
         ...s,
         monitoringPlans: s.monitoringPlans.map((plan) =>
           plan.id === a.id ? { ...plan, status: a.status } : plan,
+        ),
+      };
+    case "monitor-update-plan":
+      return {
+        ...s,
+        monitoringPlans: s.monitoringPlans.map((plan) =>
+          plan.id === a.id ? { ...plan, ...a.fields } : plan,
         ),
       };
     case "corrective-action":
