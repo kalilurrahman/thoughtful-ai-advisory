@@ -470,7 +470,7 @@ Acceptance criteria:
 
 Known gaps:
 
-- Separation of duties is advisory text only.
+- Separation-of-duties check enforces actor != opener by name string; a server-side identity check (stub-sod) requires workspace user-identity on history entries.
 
 ## E09 — Remediation roadmap and lifecycle checklist
 
@@ -525,11 +525,11 @@ Acceptance criteria:
 
 - Given notes and progress, when saved, then they stay in this browser and can be downloaded as Markdown.
 
-**Routes:** `/playbook` · **Capabilities:** CAP-042 · **Tests:** none yet
+**Routes:** `/playbook` · **Capabilities:** CAP-042 · **Tests:** `playbook.test.ts`
 
 Known gaps:
 
-- No tests for the playbook reader.
+- UI rendering tests require a router test helper (stub-playbook-ui).
 
 ### S10.2
 
@@ -541,11 +541,11 @@ Acceptance criteria:
 
 - Given organisation, owner, system and date, when filled, then the Markdown download and copy include them and are labelled starter templates.
 
-**Routes:** `/templates` · **Capabilities:** CAP-043 · **Tests:** none yet
+**Routes:** `/templates` · **Capabilities:** CAP-043 · **Tests:** `templates.test.ts`
 
 Known gaps:
 
-- No tests for templates.
+- UI rendering tests require a clipboard mock helper (stub-templates-ui).
 
 ### S10.3
 
@@ -601,7 +601,7 @@ Acceptance criteria:
 
 Known gaps:
 
-- Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in.
+- The Lovable AI gateway (LOVABLE_API_KEY) is called only when the server function's requireSupabaseAuth middleware passes; the sign-in gate is enforced server-side.
 
 ### S10.7
 
@@ -1045,10 +1045,10 @@ Every gap recorded against a story, in one list for planning.
 | [S05.3](#s053) | E05 | The gate is workspace-wide |
 | [S05.3](#s053) | E05 | not per system. |
 | [S08.4](#s084) | E08 | Observations are manual; there is no telemetry feed. |
-| [S08.5](#s085) | E08 | Separation of duties is advisory text only. |
-| [S10.1](#s101) | E10 | No tests for the playbook reader. |
-| [S10.2](#s102) | E10 | No tests for templates. |
-| [S10.6](#s106) | E10 | Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in. |
+| [S08.5](#s085) | E08 | Separation-of-duties check enforces actor != opener by name string; a server-side identity check (stub-sod) requires workspace user-identity on history entries. |
+| [S10.1](#s101) | E10 | UI rendering tests require a router test helper (stub-playbook-ui). |
+| [S10.2](#s102) | E10 | UI rendering tests require a clipboard mock helper (stub-templates-ui). |
+| [S10.6](#s106) | E10 | The Lovable AI gateway (LOVABLE_API_KEY) is called only when the server function's requireSupabaseAuth middleware passes; the sign-in gate is enforced server-side. |
 | [S10.7](#s107) | E10 | Signed-out visitors see a sign-in prompt instead of the chat. |
 | [S11.1](#s111) | E11 | The three packs differ only in title and subject. |
 | [S12.1](#s121) | E12 | No SSO/SAML or MFA. |

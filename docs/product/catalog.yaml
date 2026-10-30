@@ -405,7 +405,7 @@ epics:
           - Given Cancel action, when confirmed with a reason, then the action is Cancelled with the reason in its history; without a reason it is refused.
         routes: [/actions]
         tests: [corrective-actions.test.tsx]
-        gaps: [Separation of duties is advisory text only.]
+        gaps: [Separation-of-duties check enforces actor != opener by name string; a server-side identity check (stub-sod) requires workspace user-identity on history entries.]
 
   - id: E09
     title: Remediation roadmap and lifecycle checklist
@@ -449,7 +449,8 @@ epics:
         acceptance:
           - Given notes and progress, when saved, then they stay in this browser and can be downloaded as Markdown.
         routes: [/playbook]
-        gaps: [No tests for the playbook reader.]
+        tests: [playbook.test.ts]
+        gaps: [UI rendering tests require a router test helper (stub-playbook-ui).]
       - id: S10.2
         persona: consultant
         want: to fill and download governance templates
@@ -458,7 +459,8 @@ epics:
         acceptance:
           - Given organisation, owner, system and date, when filled, then the Markdown download and copy include them and are labelled starter templates.
         routes: [/templates]
-        gaps: [No tests for templates.]
+        tests: [templates.test.ts]
+        gaps: [UI rendering tests require a clipboard mock helper (stub-templates-ui).]
       - id: S10.3
         persona: cro
         want: to search the regulatory and standards source register
@@ -498,7 +500,7 @@ epics:
           - Given a user who has used the plan's daily allowance, when submitted, then nothing is sent to the model and the advisor names the allowance and when it resets.
         routes: [/advisor]
         tests: [server-logic.test.ts]
-        gaps: [Uses the Lovable AI gateway (LOVABLE_API_KEY) without requiring sign-in.]
+        gaps: [The Lovable AI gateway (LOVABLE_API_KEY) is called only when the server function's requireSupabaseAuth middleware passes; the sign-in gate is enforced server-side.]
         capabilities: [CAP-047]
       - id: S10.7
         persona: gov-lead
