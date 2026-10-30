@@ -45,52 +45,48 @@ different capitalisation or spelling. A proper identity check requires:
 
 ## stub-playbook-ui — Full UI tests for PlaybookScreen
 
-**Status:** data-layer tests in place; UI rendering tests deferred  
+**Status:** ✅ Implemented — rendering tests complete  
 **Files:** `src/test/playbook.test.ts`, `src/features/governance/screens-playbook.tsx`
 
 ### What is done
-`playbook.test.ts` verifies:
+`playbook.test.ts` verifies (3 data-layer + 5 rendering tests):
 - At least one chapter exists
 - Every chapter has unique ids, non-empty title/part/standfirst
 - Every chapter has at least one outcome and one section with a non-empty heading
+- Part filter shows only chapters matching the selected part
+- Search input filters chapters by title/content
+- "Mark chapter reviewed" persists chapter id in `localStorage` under `veritrail-playbook-progress-v1`
+- Chapter notes persist in `localStorage` under the same key
+- Deep-link hash opens the matching chapter (via `useLocation` mock)
 
-### What is missing
-Rendering tests for:
-- Part filter — only matching chapters shown
-- Search input — filters by title and standfirst
-- "Mark complete" — chapter id persisted in `localStorage` under `progressKey`
-- Chapter notes — persisted across re-renders via `localStorage`
-- Deep-link hash — page scrolls to the matching chapter `id`
-
-### Connection steps
-Add a `createMemoryHistory` + `createRouter` test wrapper from `@tanstack/react-router/testing`
-(or a lightweight stub) so `useLocation` resolves. Wrap renders in that router
-and mock `localStorage` with `vitest`'s `vi.stubGlobal`.
+### How it was connected
+`@tanstack/react-router` is mocked at the module level using `vi.mock` so `useLocation`
+returns a controllable `{ hash, pathname }` without a full router setup.
+`localStorage` is cleared in `beforeEach` and read directly in assertions.
 
 ---
 
 ## stub-templates-ui — Full UI tests for TemplatesScreen
 
-**Status:** data-layer tests in place; rendering tests deferred  
+**Status:** ✅ Implemented — rendering tests complete  
 **Files:** `src/test/templates.test.ts`, `src/features/governance/screens-templates.tsx`
 
 ### What is done
-`templates.test.ts` verifies:
+`templates.test.ts` verifies (3 data-layer + 5 rendering tests):
 - At least one template exists
 - Every template has a unique id, non-empty title/description, and a known category
 - Every template has at least one section with a non-empty heading
+- Category filter button hides templates outside the selected category
+- Search input filters templates by title/description
+- Context fields (organisation, owner, system) interpolate into the generated Markdown
+- "Copy draft" calls `navigator.clipboard.writeText` with the full Markdown string
+- "Download Markdown" calls `URL.createObjectURL` and triggers an anchor click
 
-### What is missing
-Rendering tests for:
-- Category filter and search
-- Context field interpolation into the generated Markdown output
-- "Copy" button calls `navigator.clipboard.writeText` with the rendered Markdown
-- "Download" button triggers a `.md` file download
-
-### Connection steps
-Mock `navigator.clipboard` with `vi.stubGlobal('navigator', { clipboard: { writeText: vi.fn() } })`.
-Mock `URL.createObjectURL` and `URL.revokeObjectURL` to intercept the download.
-No router wrapper needed for this screen.
+### How it was connected
+`navigator.clipboard.writeText` mocked with `vi.stubGlobal`.
+`URL.createObjectURL` / `URL.revokeObjectURL` spied on via `vi.spyOn`.
+`HTMLAnchorElement.prototype.click` spied on to confirm the download anchor fires.
+No router wrapper needed — this screen does not use `useLocation`.
 
 ---
 
