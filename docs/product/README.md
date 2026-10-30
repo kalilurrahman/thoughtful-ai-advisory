@@ -22,7 +22,7 @@ the platform console and the installable app — described four ways, from one c
 | Glossary terms | 38 in 4 topics |
 | Epics / user stories | 16 / 60 (53 done, 3 partial, 4 planned) |
 | Use cases | 24 |
-| Known gaps recorded against stories | 25 |
+| Known gaps recorded against stories | 24 |
 
 ## Personas
 
