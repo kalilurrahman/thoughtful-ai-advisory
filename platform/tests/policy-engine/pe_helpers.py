@@ -6,7 +6,7 @@ import copy
 from veritrail_common.audit import AuditLog
 from veritrail_policy.engine import PolicyEngine
 
-CTX = {"agent_name": "test-agent", "environment": "production", "risk_tier": "Medium", "model": "test-model",
+CTX = {"agent_name": "test-agent", "environment": "production", "risk_tier": "Limited", "model": "test-model",
        "tenant": "acme"}
 IDENTITY = {"sub": "user-1", "tenant_id": "acme", "roles": ["support_agent"], "iss": "https://idp.example.com/"}
 APPROVER = {"name": "Dana Lead", "role": "Team Lead"}
@@ -21,7 +21,7 @@ def _base_policy() -> dict:
         "status": "draft",
         "owner": "AI System Owner",
         "applies_to": {"agent_name": ["test-*"], "environment": ["staging", "production"],
-                       "risk_tier": ["Medium", "High"], "tenant": ["*"], "model": ["*"]},
+                       "risk_tier": ["Limited", "High-risk"], "tenant": ["*"], "model": ["*"]},
         "rollout": {"mode": "enforce"},
         "identity": {"required": True, "required_claims": ["sub", "tenant_id", "roles"],
                      "allowed_roles": ["support_agent", "admin"], "tenant_binding": True},
