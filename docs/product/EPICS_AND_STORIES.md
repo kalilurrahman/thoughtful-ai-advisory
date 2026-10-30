@@ -386,10 +386,6 @@ Acceptance criteria:
 
 **Routes:** `/guardrails` · **Capabilities:** CAP-033 · **Tests:** `governance.test.ts`
 
-Known gaps:
-
-- "Export guardrail bundle" links to the general export; there is no guardrail-specific file.
-
 ## E08 — Operational governance registers
 
 **Goal:** Run AI incidents, governance decisions, change reviews, monitoring and corrective actions with lifecycle rules and history.
@@ -725,8 +721,6 @@ Known gaps:
 
 - Needs a Dodo Payments account
 - products and webhook secret (DODO_* settings).
-- Seat
-- system and workspace limits are defined but not yet enforced; only the advisor allowance is.
 
 ### S12.5
 
@@ -1051,7 +1045,6 @@ Every gap recorded against a story, in one list for planning.
 | [S05.1](#s051) | E05 | No UI test for the assessment screen. |
 | [S05.3](#s053) | E05 | The gate is workspace-wide |
 | [S05.3](#s053) | E05 | not per system. |
-| [S07.1](#s071) | E07 | "Export guardrail bundle" links to the general export; there is no guardrail-specific file. |
 | [S08.4](#s084) | E08 | Observations are manual; there is no telemetry feed. |
 | [S08.4](#s084) | E08 | Thresholds cannot be edited (pause and recreate). |
 | [S08.5](#s085) | E08 | Separation of duties is advisory text only. |
@@ -1064,8 +1057,6 @@ Every gap recorded against a story, in one list for planning.
 | [S12.2](#s122) | E12 | Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied; conflict detection needs migration 0013. |
 | [S12.4](#s124) | E12 | Needs a Dodo Payments account |
 | [S12.4](#s124) | E12 | products and webhook secret (DODO_* settings). |
-| [S12.4](#s124) | E12 | Seat |
-| [S12.4](#s124) | E12 | system and workspace limits are defined but not yet enforced; only the advisor allowance is. |
 | [S12.5](#s125) | E12 | Invitations are not e-mailed until an e-mail provider is added. |
 | [S12.5](#s125) | E12 | Approvers cannot yet record approvals |
 | [S12.5](#s125) | E12 | because the workspace saves as one snapshot. |

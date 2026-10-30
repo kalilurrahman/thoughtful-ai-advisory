@@ -341,7 +341,7 @@ epics:
           - Given the tier changes, when saved, then gate floors and gap priorities change with it.
         routes: [/guardrails]
         tests: [governance.test.ts]
-        gaps: ['"Export guardrail bundle" links to the general export; there is no guardrail-specific file.']
+        gaps: []
 
   - id: E08
     title: Operational governance registers
@@ -581,7 +581,7 @@ epics:
         routes: [/plans]
         capabilities: [CAP-078, CAP-080]
         tests: [billing.test.ts, plans.test.ts]
-        gaps: [Needs a Dodo Payments account, products and webhook secret (DODO_* settings)., Seat, system and workspace limits are defined but not yet enforced; only the advisor allowance is.]
+        gaps: [Needs a Dodo Payments account, products and webhook secret (DODO_* settings).]
       - id: S12.5
         persona: gov-lead
         want: to invite colleagues to my workspace with a role
