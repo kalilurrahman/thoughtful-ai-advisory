@@ -253,6 +253,44 @@ export function TeamPanel() {
           </Button>
         </div>
       )}
+      {link && (
+        <details className="email-preview-stub">
+          <summary>
+            Email preview{" "}
+            <span className="chip stub-badge" title="SMTP delivery is not yet configured (stub-smtp)">
+              Not sent — not connected
+            </span>
+          </summary>
+          <div className="email-preview-card" role="note" aria-label="Preview of invitation email">
+            <p className="email-preview-meta">
+              <strong>To:</strong> {email || "invitee@example.com"}
+            </p>
+            <p className="email-preview-meta">
+              <strong>Subject:</strong> You've been invited to a VERITRAIL workspace
+            </p>
+            <hr />
+            <p>Hi,</p>
+            <p>
+              You have been invited to join a VERITRAIL AI governance workspace. Click the link
+              below to accept — it works once and expires in 14 days.
+            </p>
+            <p>
+              <strong>
+                <a href={link}>{link}</a>
+              </strong>
+            </p>
+            <p className="muted">
+              If you weren't expecting this invitation, you can safely ignore this message.
+            </p>
+            <p className="muted">— The VERITRAIL team</p>
+          </div>
+          <p className="stub-notice">
+            <strong>Not connected (stub-smtp):</strong> No transactional email provider is
+            configured. This preview shows what recipients would see once SMTP delivery is wired.
+            Until then, copy the link above and share it directly.
+          </p>
+        </details>
+      )}
     </section>
   );
 }

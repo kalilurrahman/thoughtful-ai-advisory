@@ -27,6 +27,10 @@ export function PlansScreen() {
   const [interval, setBillingInterval] = useState<BillingInterval>("annual");
   const [busy, setBusy] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [checkoutPreview, setCheckoutPreview] = useState<{
+    plan: Plan;
+    interval: BillingInterval;
+  } | null>(null);
   const returned =
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("checkout") === "returned";
@@ -55,6 +59,7 @@ export function PlansScreen() {
   async function redirect(
     key: string,
     run: () => Promise<{ ok: boolean; url?: string; error?: string }>,
+    previewPlan?: Plan,
   ) {
     setBusy(key);
     setMessage(null);
@@ -62,6 +67,12 @@ export function PlansScreen() {
       const res = await run();
       if (res.ok && res.url) {
         window.location.assign(res.url);
+        return;
+      }
+      // Billing not yet configured — show the checkout preview stub instead of an error.
+      if (previewPlan && res.error?.includes("not configured")) {
+        setCheckoutPreview({ plan: previewPlan, interval });
+        setBusy(null);
         return;
       }
       setMessage(res.error ?? "Something went wrong, so nothing was charged.");
@@ -191,10 +202,12 @@ export function PlansScreen() {
                 <Button
                   variant={p.id === "team" ? "default" : "outline"}
                   className="full-button"
-                  disabled={busy !== null || isCurrent || Boolean(paid) || !available}
+                  disabled={busy !== null || isCurrent || Boolean(paid)}
                   onClick={() =>
-                    void redirect(p.id, () =>
-                      checkout({ data: { plan: p.id as "team" | "business", interval } }),
+                    void redirect(
+                      p.id,
+                      () => checkout({ data: { plan: p.id as "team" | "business", interval } }),
+                      p,
                     )
                   }
                 >
@@ -203,10 +216,8 @@ export function PlansScreen() {
                     ? "Current plan"
                     : paid
                       ? "Change in Manage billing"
-                      : available === false
-                        ? `${interval === "monthly" ? "Monthly" : "Annual"} not available`
-                        : `Choose ${p.name}`}
-                  {!isCurrent && !paid && available ? <ArrowRight /> : null}
+                      : `Choose ${p.name}`}
+                  {!isCurrent && !paid ? <ArrowRight /> : null}
                 </Button>
               )}
             </article>
@@ -232,6 +243,38 @@ export function PlansScreen() {
         applicable taxes at checkout and issues the invoice. VERITRAIL supports readiness; it does
         not certify compliance.
       </p>
+
+      {checkoutPreview && (
+        <div className="checkout-preview-stub" role="dialog" aria-modal="true" aria-label="Checkout preview">
+          <div className="checkout-preview-card">
+            <h2>{checkoutPreview.plan.name} — Checkout Preview</h2>
+            <p className="stub-badge-inline">
+              <span className="chip stub-badge">Billing not yet connected (stub-dodo)</span>
+            </p>
+            <p>{checkoutPreview.plan.summary}</p>
+            <ul className="plan-includes">
+              {checkoutPreview.plan.includes.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <p>
+              <strong>Billing interval:</strong>{" "}
+              {checkoutPreview.interval === "annual" ? "Annual" : "Monthly"}
+            </p>
+            <p>
+              <strong>Price:</strong> {checkoutPreview.plan.priceLabel}
+            </p>
+            <p className="stub-notice">
+              <strong>Not connected (stub-dodo):</strong> Dodo Payments is not yet configured for
+              this environment. To enable checkout, set the{" "}
+              <code>DODO_PRODUCT_*</code> and <code>DODO_WEBHOOK_SECRET</code> environment
+              variables. See <code>docs/veritrail/BILLING_SETUP.md</code> for the full setup
+              checklist. No payment has been taken.
+            </p>
+            <Button onClick={() => setCheckoutPreview(null)}>Close preview</Button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

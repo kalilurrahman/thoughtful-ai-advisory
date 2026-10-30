@@ -345,6 +345,13 @@ function ActionCard({
             {action.status === "Pending verification" ? "Verifier name / role" : "Your name / role"}
             <input value={actor} onChange={(e) => setActor(e.target.value)} maxLength={120} />
           </label>
+          {action.status === "Pending verification" && action.history[0]?.actor && (
+            <p className="notice stub-notice">
+              This action was opened by <strong>{action.history[0].actor}</strong>. Separation of
+              duties requires a different person to verify it. Name-string check only — server-side
+              identity verification not yet connected (stub-sod).
+            </p>
+          )}
           {action.status === "In progress" && (
             <label>
               Completion evidence reference
