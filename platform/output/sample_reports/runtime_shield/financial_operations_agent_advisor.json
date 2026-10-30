@@ -269,9 +269,10 @@
       "overall": {
         "rating": "High",
         "composite_score": 3.12,
-        "rationale": "Overall runtime risk High (composite 3.12 on a 1–4 scale; 70% mean, 30% maximum of autonomy Medium, tool risk Critical, data exposure High, blast radius Medium). Floor rules triggered: at least one dimension is Critical (minimum High).",
+        "rationale": "Overall runtime risk High (composite 3.12 on a 1–4 scale; 70% mean, 30% maximum of autonomy Medium, tool risk Critical, data exposure High, blast radius Medium). Floor rules triggered: at least one dimension is Critical (minimum High); user-asserted risk tier is High-risk (minimum High).",
         "floors_applied": [
-          "at least one dimension is Critical (minimum High)"
+          "at least one dimension is Critical (minimum High)",
+          "user-asserted risk tier is High-risk (minimum High)"
         ]
       },
       "overall_rating": "High",

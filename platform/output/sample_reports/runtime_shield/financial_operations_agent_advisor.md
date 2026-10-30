@@ -31,7 +31,7 @@ Contoso AP Automation Agent: overall runtime risk High (Inferred). Tool matrix: 
 | Blast radius | Medium | affected parties: internal; state-changing tools in production |
 | Data exposure | High | highest data sensitivity 'personal'; prompts containing sensitive data may reach an external model vendor (Anthropic (via AWS Bedrock)) |
 | Tool risk | Critical | highest-impact operation: payment |
-| **Overall** | **High** | Overall runtime risk High (composite 3.12 on a 1–4 scale; 70% mean, 30% maximum of autonomy Medium, tool risk Critical, data exposure High, blast radius Medium). Floor rules triggered: at least one dimension is Critical (minimum High). |
+| **Overall** | **High** | Overall runtime risk High (composite 3.12 on a 1–4 scale; 70% mean, 30% maximum of autonomy Medium, tool risk Critical, data exposure High, blast radius Medium). Floor rules triggered: at least one dimension is Critical (minimum High); user-asserted risk tier is High-risk (minimum High). |
 
 Citations: EI-02, IS-01, IS-11. Evidence status: Inferred.
 
