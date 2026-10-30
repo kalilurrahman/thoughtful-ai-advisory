@@ -456,7 +456,6 @@ Acceptance criteria:
 Known gaps:
 
 - Observations are manual; there is no telemetry feed.
-- Thresholds cannot be edited (pause and recreate).
 
 ### S08.5
 
@@ -1053,7 +1052,6 @@ Every gap recorded against a story, in one list for planning.
 | [S05.3](#s053) | E05 | not per system. |
 | [S07.1](#s071) | E07 | "Export guardrail bundle" links to the general export; there is no guardrail-specific file. |
 | [S08.4](#s084) | E08 | Observations are manual; there is no telemetry feed. |
-| [S08.4](#s084) | E08 | Thresholds cannot be edited (pause and recreate). |
 | [S08.5](#s085) | E08 | Separation of duties is advisory text only. |
 | [S10.1](#s101) | E10 | No tests for the playbook reader. |
 | [S10.2](#s102) | E10 | No tests for templates. |

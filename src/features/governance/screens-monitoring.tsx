@@ -1,5 +1,5 @@
 import { useMemo, useState, type FormEvent } from "react";
-import { ArrowSquareOut, BellRinging, Gauge, Pause, Play } from "@phosphor-icons/react";
+import { ArrowSquareOut, BellRinging, Gauge, Pause, PencilSimple, Play } from "@phosphor-icons/react";
 import { EmptyMonitoring } from "@/features/site/illustrations-empty";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
@@ -282,6 +282,7 @@ export function MonitoringScreen() {
               })
             }
             onStatus={(status) => dispatch({ type: "monitor-status", id: plan.id, status })}
+            onEdit={(updates) => dispatch({ type: "update-monitor-plan", id: plan.id, updates })}
           />
         ))}
         {visible.length === 0 && (
@@ -307,10 +308,12 @@ function MonitoringPlanCard({
   plan,
   onObservation,
   onStatus,
+  onEdit,
 }: {
   plan: MonitoringPlan;
   onObservation: (observation: MonitoringPlan["observations"][number]) => void;
   onStatus: (status: "Active" | "Paused") => void;
+  onEdit: (updates: Partial<MonitoringPlan>) => void;
 }) {
   const [value, setValue] = useState("");
   const [measuredAt, setMeasuredAt] = useState(today());
@@ -318,6 +321,13 @@ function MonitoringPlanCard({
   const [evidenceReference, setEvidenceReference] = useState("");
   const [notes, setNotes] = useState("");
   const [observationError, setObservationError] = useState("");
+  const [editThreshold, setEditThreshold] = useState(String(plan.threshold));
+  const [editBreachDirection, setEditBreachDirection] = useState(plan.breachDirection);
+  const [editCadence, setEditCadence] = useState(plan.cadence);
+  const [editNextDue, setEditNextDue] = useState(plan.nextDue);
+  const [editOwner, setEditOwner] = useState(plan.owner);
+  const [editNotes, setEditNotes] = useState(plan.notes ?? "");
+  const [editError, setEditError] = useState("");
   const currentState = monitoringState(plan, today());
   const latest = [...plan.observations].sort((a, b) => b.measuredAt.localeCompare(a.measuredAt))[0];
   const isBreach = latest ? isThresholdBreach(plan, latest.value) : false;
@@ -333,20 +343,39 @@ function MonitoringPlanCard({
             {plan.metric} · {plan.system}
           </h2>
         </div>
-        <Button
-          variant="outline"
-          onClick={() => onStatus(plan.status === "Active" ? "Paused" : "Active")}
-        >
-          {plan.status === "Active" ? (
-            <>
-              <Pause /> Pause
-            </>
-          ) : (
-            <>
-              <Play /> Resume
-            </>
-          )}
-        </Button>
+        <div className="row-actions">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setEditThreshold(String(plan.threshold));
+              setEditBreachDirection(plan.breachDirection);
+              setEditCadence(plan.cadence);
+              setEditNextDue(plan.nextDue);
+              setEditOwner(plan.owner);
+              setEditNotes(plan.notes ?? "");
+              setEditError("");
+              const el = document.getElementById(`edit-${plan.id}`);
+              if (el) (el as HTMLDetailsElement).open = true;
+            }}
+          >
+            <PencilSimple /> Edit
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => onStatus(plan.status === "Active" ? "Paused" : "Active")}
+          >
+            {plan.status === "Active" ? (
+              <>
+                <Pause /> Pause
+              </>
+            ) : (
+              <>
+                <Play /> Resume
+              </>
+            )}
+          </Button>
+        </div>
       </div>
       <p className="muted">
         {plan.domain} · Owner: {plan.owner} · {plan.cadence.toLowerCase()} · Next due {plan.nextDue}
@@ -494,6 +523,103 @@ function MonitoringPlanCard({
           </form>
         </details>
       )}
+      <details className="decision-intake" id={`edit-${plan.id}`}>
+        <summary>
+          <PencilSimple /> Edit plan
+        </summary>
+        <form
+          onSubmit={(event: FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            const threshold = Number(editThreshold);
+            if (isNaN(threshold)) {
+              setEditError("Threshold must be a number.");
+              return;
+            }
+            onEdit({
+              threshold,
+              breachDirection: editBreachDirection,
+              cadence: editCadence,
+              nextDue: editNextDue,
+              owner: editOwner.trim(),
+              notes: editNotes,
+            });
+            const el = document.getElementById(`edit-${plan.id}`);
+            if (el) (el as HTMLDetailsElement).open = false;
+            setEditError("");
+          }}
+        >
+          <div className="decision-form-grid monitoring-form-grid">
+            <label>
+              Breach threshold
+              <input
+                required
+                type="number"
+                step="any"
+                value={editThreshold}
+                onChange={(e) => setEditThreshold(e.target.value)}
+              />
+            </label>
+            <label>
+              Breach when
+              <select
+                value={editBreachDirection}
+                onChange={(e) =>
+                  setEditBreachDirection(e.target.value as typeof editBreachDirection)
+                }
+              >
+                {breachDirections.map((d) => (
+                  <option key={d}>{d}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Review cadence
+              <select
+                value={editCadence}
+                onChange={(e) => setEditCadence(e.target.value as typeof editCadence)}
+              >
+                {monitoringCadences.map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Next due date
+              <input
+                required
+                type="date"
+                value={editNextDue}
+                onChange={(e) => setEditNextDue(e.target.value)}
+              />
+            </label>
+            <label>
+              Accountable monitoring owner
+              <input
+                required
+                maxLength={120}
+                value={editOwner}
+                onChange={(e) => setEditOwner(e.target.value)}
+              />
+            </label>
+          </div>
+          <label>
+            Method, source, or escalation notes
+            <textarea
+              maxLength={2000}
+              value={editNotes}
+              onChange={(e) => setEditNotes(e.target.value)}
+            />
+          </label>
+          {editError && (
+            <p role="alert" className="danger">
+              {editError}
+            </p>
+          )}
+          <Button type="submit">
+            <Gauge /> Save changes
+          </Button>
+        </form>
+      </details>
     </article>
   );
 }

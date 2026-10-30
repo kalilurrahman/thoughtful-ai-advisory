@@ -141,6 +141,7 @@ export type Action =
   | { type: "monitor-plan"; plan: MonitoringPlan }
   | { type: "monitor-observation"; id: string; observation: MonitoringObservation; nextDue: string }
   | { type: "monitor-status"; id: string; status: "Active" | "Paused" }
+  | { type: "update-monitor-plan"; id: string; updates: Partial<MonitoringPlan> }
   | { type: "corrective-action"; action: CorrectiveAction }
   | { type: "edit-corrective-evidence"; id: string; evidence: string }
   | {
@@ -272,6 +273,13 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
         ...s,
         monitoringPlans: s.monitoringPlans.map((plan) =>
           plan.id === a.id ? { ...plan, status: a.status } : plan,
+        ),
+      };
+    case "update-monitor-plan":
+      return {
+        ...s,
+        monitoringPlans: s.monitoringPlans.map((plan) =>
+          plan.id === a.id ? { ...plan, ...a.updates } : plan,
         ),
       };
     case "corrective-action":

@@ -392,7 +392,7 @@ epics:
           - Given a cadence, when an observation is recorded, then the next due date moves on, clamped to month ends.
         routes: [/monitoring]
         tests: [monitoring.test.ts, checklist.test.ts]
-        gaps: [Observations are manual; there is no telemetry feed., Thresholds cannot be edited (pause and recreate).]
+        gaps: [Observations are manual; there is no telemetry feed.]
       - id: S08.5
         persona: owner
         want: to work a corrective action from start to verified closure
