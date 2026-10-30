@@ -543,7 +543,7 @@ describe("browser helpers", () => {
   const ctx = {
     agent_name: "test-agent",
     environment: "production",
-    risk_tier: "Medium",
+    risk_tier: "Limited",
     model: "m",
     tenant: "acme",
   };

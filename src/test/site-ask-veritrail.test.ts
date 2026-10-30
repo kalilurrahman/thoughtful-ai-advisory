@@ -269,7 +269,7 @@ describe("Ask VERITRAIL guided preview (viewer)", () => {
     );
     expect(res.intent).toBe("risk_tier");
     expect(res.state).toBe("preview_complete");
-    expect(res.message).toContain("**Preliminary risk tier: High** (score 85;");
+    expect(res.message).toContain("**Preliminary risk tier: High-risk** (score 85;");
     expect(res.message).toContain("| name | HelpBot | Inferred |");
     expect(res.citations).toEqual(expect.arrayContaining(["IS-13", "IS-11", "EI-02"]));
     expectSafe(res);
