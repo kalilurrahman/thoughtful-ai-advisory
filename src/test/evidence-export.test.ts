@@ -110,7 +110,7 @@ describe("governance evidence downloads", () => {
     );
 
     expect(snapshot.inventory[0]).toMatchObject({
-      triageTier: "High",
+      triageTier: "High-risk",
       triageEvidenceStatus: "Inferred",
       triageAssessedAt: generatedAt,
     });
