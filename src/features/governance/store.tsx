@@ -29,6 +29,7 @@ import {
   type System as InventorySystem,
   type Tier,
 } from "@/data/governance";
+import { getPlan, type PlanId } from "@/data/plans";
 import type { RiskTierResult } from "@/features/site/engines/risk-tier";
 export type System = InventorySystem & {
   riskTriage?:
@@ -77,6 +78,7 @@ export type AIIncident = {
 };
 export type GovernanceState = {
   workspaceMode?: "sample" | "personal";
+  planId?: PlanId;
   answers: Answers;
   gr: Record<string, boolean>;
   tier: Tier;
@@ -174,8 +176,11 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
       return { ...s, tier: a.tier };
     case "question":
       return { ...s, qi: Math.max(0, Math.min(11, a.qi)) };
-    case "system":
+    case "system": {
+      const limit = getPlan(s.planId ?? "free").limits.aiSystems;
+      if (s.systems.length >= limit) return s;
       return { ...s, systems: [...s.systems, a.system] };
+    }
     case "update-system":
       return {
         ...s,

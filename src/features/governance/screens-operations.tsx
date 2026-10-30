@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { GR, PHASES, type Tier } from "@/data/governance";
+import { getPlan } from "@/data/plans";
 import { calculateRiskTier, type RiskProfile } from "@/features/site/engines/risk-tier";
 import { requiredGuardrail } from "./model";
 import { useGovernance } from "./store";
@@ -78,6 +79,8 @@ export function InventoryScreen() {
     [status, setStatus] = useState("Under review"),
     [riskProfile, setRiskProfile] = useState<RiskProfile>({}),
     [confirmDeleteIndex, setConfirmDeleteIndex] = useState<number | null>(null);
+  const systemLimit = getPlan(state.planId ?? "free").limits.aiSystems;
+  const atSystemLimit = state.systems.length >= systemLimit;
   const triage = calculateRiskTier({ ...riskProfile, name });
   const tier = triage.tier;
   const triageEnabled = editingIndex === null || Boolean(state.systems[editingIndex]?.riskTriage);
@@ -149,11 +152,17 @@ export function InventoryScreen() {
           <DownloadSimple />
           Export view ({visibleSystems.length})
         </Button>
-        <Button onClick={openRegistration}>
+        <Button onClick={openRegistration} disabled={atSystemLimit}>
           <Plus />
           Register & triage
         </Button>
       </div>
+      {atSystemLimit && (
+        <p role="alert" className="danger">
+          System limit reached ({state.systems.length}/{systemLimit} on{" "}
+          {getPlan(state.planId ?? "free").name} plan). Upgrade to register more systems.
+        </p>
+      )}
       <div className="inventory-summary" aria-label="Inventory status summary">
         <span>
           <strong>{state.systems.length}</strong> registered
@@ -267,7 +276,7 @@ export function InventoryScreen() {
           <p>No systems match your search.</p>
         </div>
       )}
-      <Button className="full-button" onClick={openRegistration}>
+      <Button className="full-button" onClick={openRegistration} disabled={atSystemLimit}>
         <Plus />
         Register and run structured risk triage
       </Button>
@@ -586,11 +595,36 @@ export function GuardrailsScreen() {
           );
         })}
       </div>
-      <Button asChild className="full-button">
-        <Link to="/export">
-          Export guardrail bundle
-          <ArrowRight />
-        </Link>
+      <Button
+        className="full-button"
+        onClick={() => {
+          const bundle = {
+            exportedAt: new Date().toISOString(),
+            tier: state.tier,
+            coverage: coverage,
+            guardrails: GR.flatMap((g) =>
+              g.c.map(([name, rank]) => ({
+                category: g.name,
+                name: String(name),
+                rank: Number(rank),
+                required: requiredGuardrail(Number(rank), state.tier),
+                enabled: Boolean(state.gr[String(name)]),
+              })),
+            ),
+          };
+          const blob = new Blob([JSON.stringify(bundle, null, 2)], {
+            type: "application/json",
+          });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "guardrail-bundle.json";
+          link.click();
+          window.setTimeout(() => URL.revokeObjectURL(url), 0);
+        }}
+      >
+        <DownloadSimple />
+        Export guardrail bundle
       </Button>
     </>
   );
