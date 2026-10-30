@@ -427,10 +427,6 @@ Acceptance criteria:
 
 **Routes:** `/decisions` · **Capabilities:** CAP-038 · **Tests:** `decision-schema.test.ts`, `evidence-export.test.ts`, `decision-corrections.test.tsx`
 
-Known gaps:
-
-- A decision does not change the system's inventory status.
-
 ### S08.3
 
 **As an AI system owner**, I want to submit a material change with impact ratings for review, so that changes are screened before they ship.
@@ -1056,7 +1052,6 @@ Every gap recorded against a story, in one list for planning.
 | [S05.3](#s053) | E05 | The gate is workspace-wide |
 | [S05.3](#s053) | E05 | not per system. |
 | [S07.1](#s071) | E07 | "Export guardrail bundle" links to the general export; there is no guardrail-specific file. |
-| [S08.2](#s082) | E08 | A decision does not change the system's inventory status. |
 | [S08.4](#s084) | E08 | Observations are manual; there is no telemetry feed. |
 | [S08.4](#s084) | E08 | Thresholds cannot be edited (pause and recreate). |
 | [S08.5](#s085) | E08 | Separation of duties is advisory text only. |
