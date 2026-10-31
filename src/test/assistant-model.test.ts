@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { assistantInputSchema, modelMessages, parseMessages } from "./assistant-model";
-import { retrieve } from "./assistant.functions";
+import {
+  assistantInputSchema,
+  modelMessages,
+  parseMessages,
+} from "@/features/assistant/assistant-model";
+import { retrieve } from "@/features/assistant/assistant.functions";
 import { buildSearchEntries } from "@/features/search/search-index";
 
 describe("private assistant conversations", () => {
