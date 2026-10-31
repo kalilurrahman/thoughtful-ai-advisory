@@ -49,7 +49,7 @@ export const askAssistant = createServerFn({ method: "POST" })
     const key = process.env["LOVABLE_API_KEY"];
     if (!key) return { ok: false, error: "The assistant is not configured yet." };
     const { data: thread, error: loadError } = await context.supabase.from("assistant_threads")
-      .select("messages,updated_at").eq("id", data.threadId).eq("user_id", context.userId).maybeSingle();
+      .select("messages,updated_at,title").eq("id", data.threadId).eq("user_id", context.userId).maybeSingle();
     if (loadError || !thread) return { ok: false, error: "This conversation could not be found." };
     const history = parseMessages(thread.messages);
     if (!history) return { ok: false, error: "This conversation could not be read." };
@@ -61,7 +61,7 @@ export const askAssistant = createServerFn({ method: "POST" })
     const next: ChatMessage[] = [...history, { role: "user", content: data.content }];
     const revision = new Date().toISOString();
     const { data: saved, error: saveError } = await context.supabase.from("assistant_threads")
-      .update({ messages: JSON.parse(JSON.stringify(next)), updated_at: revision })
+      .update({ messages: JSON.parse(JSON.stringify(next)), updated_at: revision, title: history.length === 0 ? data.content.slice(0, 80) : thread.title })
       .eq("id", data.threadId).eq("user_id", context.userId).eq("updated_at", thread.updated_at).select("id").maybeSingle();
     if (saveError || !saved) return { ok: false, error: "The conversation changed or could not be saved. Reload before sending again." };
     const safeMessages = modelMessages(next);

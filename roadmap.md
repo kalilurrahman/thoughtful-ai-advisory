@@ -1,7 +1,9 @@
 # VERITRAIL build
 - [x] Add and verify a public content change log on the governance overview with a last-updated date and recent summaries.
-- [ ] Add site-grounded chat with private saved threads and dedicated conversation URLs.
-- [ ] Polish mobile reading, assistant access and navigation; verify signed-in chat and thread restoration.
+- [x] Add site-grounded chat with private saved threads and dedicated conversation URLs.
+- [x] Add mobile conversation history and deletion, guarded loading, server-owned saving and model privacy checks.
+- [ ] Verify two private assistant conversations and reload restoration — requires the requesting user to sign in; their account does not exist yet.
+- [x] Refresh the basic security scan for the assistant changes.
 - [ ] Restore discoverable TILLER and built governance workflows across public and workspace navigation.
 - [ ] Match the earlier bookmarked design — awaiting the bookmarked URL or screenshot.
 - [ ] Add basic profiles and Google, Apple, Microsoft, Lovable, and email/password authentication.

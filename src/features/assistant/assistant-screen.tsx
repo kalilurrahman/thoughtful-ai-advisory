@@ -223,8 +223,8 @@ export function AssistantScreen({ threadId }: { threadId?: string }) {
                 description="Answers come from the site's governance content, with links to the right page."
               >
                 <div className="mt-4 flex flex-wrap justify-center gap-2">
-                  {EXAMPLES.map((q) => (
-                    <Button key={q} size="sm" variant="outline" disabled={busy} className="h-auto min-h-11 whitespace-normal text-left" onClick={() => threadId ? void send(q) : void startConversation(q)}>
+                  {!threadId ? <Button disabled={busy} onClick={() => void startConversation()}><MessageSquarePlus aria-hidden /> Start conversation</Button> : EXAMPLES.map((q) => (
+                    <Button key={q} size="sm" variant="outline" disabled={busy} className="h-auto min-h-11 whitespace-normal text-left" onClick={() => void send(q)}>
                       {q}
                     </Button>
                   ))}
