@@ -25,12 +25,21 @@ export function AiDiscussionBand() {
           </h2>
           <p className="text-muted-foreground">
             Describe a policy, risk or control concern and get the relevant GOVERN areas and
-            corrective actions, or ask the knowledge base for cited answers and directions to
-            the right page.
+            corrective actions, or ask the knowledge base for cited answers and directions to the
+            right page.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button asChild className="min-h-11"><Link to="/assistant"><MessageCircle size={20} aria-hidden /> Site assistant <ArrowRight size={16} aria-hidden /></Link></Button>
-            <Button asChild variant="outline" className="min-h-11"><Link to="/advisor"><Compass size={20} aria-hidden /> AI advisor</Link></Button>
+            <Button asChild className="min-h-11">
+              <Link to="/assistant">
+                <MessageCircle size={20} aria-hidden /> Site assistant{" "}
+                <ArrowRight size={16} aria-hidden />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="min-h-11">
+              <Link to="/advisor">
+                <Compass size={20} aria-hidden /> AI advisor
+              </Link>
+            </Button>
           </div>
           <p className="text-xs text-muted-foreground">
             AI suggestions must be reviewed by qualified professionals before use.
