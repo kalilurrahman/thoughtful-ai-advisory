@@ -612,12 +612,14 @@ Known gaps:
 Acceptance criteria:
 
 - Given a signed-in user, when they ask a question, then the answer cites matching site pages and the thread is saved privately at its own address.
+- Given a phone user, when they open Saved conversations, then they can reopen and delete their private threads.
+- Given a question, when it is sent to the model, then the caller is validated and common sensitive details in history are masked.
 
-**Routes:** `/assistant` · **Capabilities:** CAP-078, CAP-079 · **Tests:** none yet
+**Routes:** `/assistant` · **Capabilities:** CAP-078, CAP-079 · **Tests:** `assistant-model.test.ts`, `app-routing.test.tsx`
 
 Known gaps:
 
-- Signed-out visitors see a sign-in prompt instead of the chat.
+- Signed-out visitors see a sign-in prompt instead of the chat; live two-thread restoration awaits a signed-in requesting-user account.
 
 ## E11 — Reports and audit evidence
 
@@ -1049,7 +1051,7 @@ Every gap recorded against a story, in one list for planning.
 | [S10.1](#s101) | E10 | UI rendering tests require a router test helper (stub-playbook-ui). |
 | [S10.2](#s102) | E10 | UI rendering tests require a clipboard mock helper (stub-templates-ui). |
 | [S10.6](#s106) | E10 | The Lovable AI gateway (LOVABLE_API_KEY) is called only when the server function's requireSupabaseAuth middleware passes; the sign-in gate is enforced server-side. |
-| [S10.7](#s107) | E10 | Signed-out visitors see a sign-in prompt instead of the chat. |
+| [S10.7](#s107) | E10 | Signed-out visitors see a sign-in prompt instead of the chat; live two-thread restoration awaits a signed-in requesting-user account. |
 | [S11.1](#s111) | E11 | The three packs differ only in title and subject. |
 | [S12.1](#s121) | E12 | No SSO/SAML or MFA. |
 | [S12.2](#s122) | E12 | Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied; conflict detection needs migration 0013. |
