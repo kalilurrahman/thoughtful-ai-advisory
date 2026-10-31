@@ -105,7 +105,7 @@ export const askAssistant = createServerFn({ method: "POST" })
       .map((message) => message.content)
       .join(" ");
     const hits = retrieve(buildSearchEntries(), retrievalQuestion);
-    const context = hits
+    const siteContext = hits
       .map((e) => `- [${e.title}](${e.url}) — ${e.subtitle}. ${e.text.slice(0, 400)}`)
       .join("\n");
     try {
@@ -120,7 +120,7 @@ export const askAssistant = createServerFn({ method: "POST" })
             "and for navigation questions point to the exact page with a markdown link using its relative URL. " +
             "If the content does not cover the question, say so briefly and suggest the closest page. Be concise, use sentence case, " +
             "and never invent controls, pages or regulatory facts.\n\nSite content:\n" +
-            (context || "(no matching pages)"),
+            (siteContext || "(no matching pages)"),
           input: safeMessages,
         }),
       });
