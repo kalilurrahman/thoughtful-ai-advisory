@@ -26,7 +26,7 @@ export interface AssistantReply {
 }
 
 const STOP = new Set(
-  "a an and are can do does for from how i in is it me my of on or the to what where which who why with you your about find show page".split(
+  "a ai an and are can do does for from how i in is it me my of on or the to what where which who why with you your about find show page".split(
     " ",
   ),
 );
@@ -42,7 +42,8 @@ export function retrieve(entries: SearchEntry[], question: string, limit = 12): 
       const title = normalize(e.title);
       const body = normalize(`${e.subtitle} ${e.text}`);
       let s = 0;
-      for (const t of tokens) s += (title.includes(t) ? 3 : 0) + (body.includes(t) ? 1 : 0);
+      for (const t of tokens) s += (title.includes(t) ? 6 : 0) + (body.includes(t) ? 1 : 0);
+      if (e.kind === "workspace" && tokens.some((t) => title.includes(t))) s += 6;
       return [s, e] as const;
     })
     .filter(([s]) => s > 0)

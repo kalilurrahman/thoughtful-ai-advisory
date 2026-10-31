@@ -510,9 +510,11 @@ epics:
         capabilities: [CAP-078, CAP-079]
         acceptance:
           - Given a signed-in user, when they ask a question, then the answer cites matching site pages and the thread is saved privately at its own address.
+          - Given a phone user, when they open Saved conversations, then they can reopen and delete their private threads.
+          - Given a question, when it is sent to the model, then the caller is validated and common sensitive details in history are masked.
         routes: [/assistant]
-        tests: []
-        gaps: [Signed-out visitors see a sign-in prompt instead of the chat.]
+        tests: [assistant-model.test.ts, app-routing.test.tsx]
+        gaps: [Signed-out visitors see a sign-in prompt instead of the chat; live two-thread restoration awaits a signed-in requesting-user account.]
 
   - id: E11
     title: Reports and audit evidence
@@ -1128,7 +1130,7 @@ capabilities:
   - {id: CAP-045, name: Start here, area: guide, route: /start, status: live, data: memory, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-start.tsx], tests: [], summary: "Role, stage and goal to recommended chapters, actions and tools."}
   - {id: CAP-046, name: Calculators, area: guide, route: /calculators, status: live, data: memory, epic: E10, personas: [cro], source: [src/features/governance/screens-resources.tsx, src/features/governance/model.ts], tests: [governance.test.ts], summary: "Six models: ungoverned-AI cost, token spend, risk exposure, compliance readiness, maturity, guardrail coverage."}
   - {id: CAP-047, name: AI governance advisor, area: guide, route: /advisor, status: live, data: server, epic: E10, personas: [gov-lead], source: [src/features/governance/screens-advisor.tsx, src/features/governance/advisor.functions.ts], tests: [server-logic.test.ts], summary: "Concern to mapped controls and actions via the Lovable AI gateway; adds corrective actions."}
-  - {id: CAP-078, name: Site assistant, area: guide, route: /assistant, status: live, data: cloud, epic: E10, personas: [gov-lead], source: [src/features/assistant/assistant-screen.tsx, src/features/assistant/assistant.functions.ts], tests: [], summary: "Chat grounded in site content with page links; private saved threads for signed-in users."}
+  - {id: CAP-078, name: Site assistant, area: guide, route: /assistant, status: live, data: cloud, epic: E10, personas: [gov-lead], source: [src/features/assistant/assistant-screen.tsx, src/features/assistant/assistant.functions.ts, src/features/assistant/assistant-model.ts, src/features/assistant/thread-list.tsx], tests: [assistant-model.test.ts, app-routing.test.tsx], summary: "Site-grounded chat with phone-accessible private history, authenticated saving, stale-write checks and redacted model input; shares the advisor allowance."}
   - {id: CAP-079, name: Site assistant conversation, area: guide, route: "/assistant_/$threadId", status: live, data: cloud, epic: E10, personas: [gov-lead], source: [src/features/assistant/assistant-screen.tsx], tests: [], summary: "A saved assistant thread at its own address."}
   - {id: CAP-048, name: Reports and audit pack, area: report, route: /export, status: preview, data: none, epic: E11, personas: [auditor, gov-lead], source: [src/features/governance/evidence-report.ts, src/features/governance/evidence-files.ts], tests: [evidence-export.test.ts, export-ui.test.tsx], summary: "PDF, DOCX, XLSX and PPTX packs generated in the browser, labelled demo previews."}
   - {id: CAP-049, name: Plans, area: account, route: /plans, status: live, data: none, epic: E12, personas: [visitor], source: [src/routes/plans.tsx, src/data/plans.ts], tests: [plans.test.ts], summary: "Free, Team, Business and Enterprise plans from one catalogue, and the Governance Baseline; prices shown at checkout."}
