@@ -19,7 +19,9 @@ describe("App routing", () => {
   });
   it("reopens saved conversations through their own route", () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
-    expect(router.matchRoutes("/assistant/79455f81-8295-4372-8c91-fb2495662c15").at(-1)?.routeId).toBe("/assistant_/$threadId");
+    expect(
+      router.matchRoutes("/assistant/79455f81-8295-4372-8c91-fb2495662c15").at(-1)?.routeId,
+    ).toBe("/assistant_/$threadId");
   });
   it("matches a page for / instead of falling back to not found", () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });

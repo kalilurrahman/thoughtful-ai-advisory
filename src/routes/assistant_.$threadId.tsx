@@ -4,7 +4,10 @@ import { pageHead } from "@/features/governance/meta";
 
 export const Route = createFileRoute("/assistant_/$threadId")({
   head: () => {
-    const head = pageHead("Assistant conversation", "A private saved conversation with the VERITRAIL site assistant.");
+    const head = pageHead(
+      "Assistant conversation",
+      "A private saved conversation with the VERITRAIL site assistant.",
+    );
     return { ...head, meta: [...head.meta, { name: "robots", content: "noindex, nofollow" }] };
   },
   component: ThreadPage,
