@@ -167,6 +167,27 @@ export type Database = {
           },
         ]
       }
+      ai_usage: {
+        Row: {
+          count: number
+          day: string
+          feature: string
+          user_id: string
+        }
+        Insert: {
+          count?: number
+          day?: string
+          feature: string
+          user_id: string
+        }
+        Update: {
+          count?: number
+          day?: string
+          feature?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       assessments: {
         Row: {
           answers: Json
@@ -426,6 +447,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      consume_ai_quota: {
+        Args: { p_feature: string; p_limit: number }
+        Returns: boolean
+      }
       save_aegis_workspace: {
         Args: { p_name: string; p_org: string; p_sources: Json; p_state: Json }
         Returns: string
