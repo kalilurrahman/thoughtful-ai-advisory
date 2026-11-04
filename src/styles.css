@@ -346,6 +346,35 @@ h1,
 h2,
 h3 {
   font-family: var(--font-heading);
+  text-wrap: balance;
+  letter-spacing: -0.01em;
+}
+p {
+  text-wrap: pretty;
+}
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+::selection {
+  background: color-mix(in oklab, var(--primary) 25%, transparent);
+}
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+img {
+  max-width: 100%;
+  height: auto;
 }
 h2 {
   font-size: 23px;
