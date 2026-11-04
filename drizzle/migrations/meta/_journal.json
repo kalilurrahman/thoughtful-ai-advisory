@@ -99,6 +99,13 @@
       "when": 1793100000000,
       "tag": "0013_veritrail_workspace_revisions",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1793801235265,
+      "tag": "0014_ai_usage_quota",
+      "breakpoints": true
     }
   ]
 }
