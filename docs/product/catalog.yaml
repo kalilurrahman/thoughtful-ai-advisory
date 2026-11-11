@@ -783,6 +783,19 @@ epics:
           - Given the KR Tools or Modern sans font, when either header is shown at 1280 px or 390 px, then it stays on one row.
         tests: [theme.test.ts]
 
+      - id: S15.7
+        persona: visitor
+        want: to take a short interactive course on AI launch decisions
+        so_that: I can practise the method before applying it to my own use case
+        status: done
+        capabilities: [CAP-082]
+        acceptance:
+          - Given the Training page, when it loads, then each course shows its outcome, practice, deliverable, duration and a badge of Generating, Draft · in review or Reviewed.
+          - Given an unreviewed export, when drafts are not enabled for the deployment, then the course is listed as in review and does not play.
+          - Given a reviewed export, when opened, then it plays in a frame with sandbox="allow-scripts" only and offers an offline download of the same file.
+        routes: [/training]
+        tests: [course-forge.test.ts, app-routing.test.tsx]
+
   - id: E16
     title: Planned capabilities
     area: tools
@@ -1160,4 +1173,5 @@ capabilities:
   - {id: CAP-080, name: Billing — Dodo Payments, area: account, route: /api/billing/dodo-webhook, status: live, data: cloud, epic: E12, personas: [gov-lead], source: [src/features/billing/billing.functions.ts, src/features/billing/entitlements.ts, src/features/billing/webhook.ts, src/routes/api.billing.dodo-webhook.ts, drizzle/migrations/0011_veritrail_billing.sql], tests: [billing.test.ts], summary: "Checkout and customer portal hosted by Dodo Payments (merchant of record); signed, idempotent webhooks store subscriptions; plan limits resolved on the server."}
   - {id: CAP-081, name: Team workspaces — members, roles and invitations, area: account, route: /invite, status: live, data: cloud, epic: E12, personas: [gov-lead, approver, auditor], source: [src/features/governance/team.functions.ts, src/features/governance/team-model.ts, src/features/governance/team-panel.tsx, src/features/governance/invite-screen.tsx, drizzle/migrations/0012_veritrail_organization_members.sql], tests: [team.test.ts], summary: "Owner, admin, operator, approver and viewer roles enforced by row-level security; single-use invitation links; operator seats limited by the owner's plan; workspace switcher."}
   - {id: CAP-077, name: Appearance — themes and fonts, area: app, route: "", status: live, data: browser, epic: E15, personas: [visitor, gov-lead], source: [src/lib/theme.ts, src/features/appearance/appearance-panel.tsx, src/styles.css], tests: [theme.test.ts], summary: "Three palettes (Broadsheet, Midnight Gold, Financial Slate); Auto (follows the device), light or dark; and three fonts (Editorial serif, KR Tools, Modern sans), applied before first paint."}
+  - {id: CAP-082, name: Training — interactive courses, area: app, route: /training, status: live, data: none, epic: E15, personas: [visitor, gov-lead, approver], source: [src/routes/training.tsx, src/features/site/training-view.tsx, src/lib/courseForge.ts], tests: [course-forge.test.ts, app-routing.test.tsx], summary: "Lists the courses the course-forge service generated for VERITRAIL (OpenMAIC studio) and plays a reviewed lesson in a sandboxed frame with an offline download; unreviewed drafts are listed but not played."}
   - {id: CAP-076, name: Workspace app shell, area: app, route: "", status: live, data: none, epic: E15, personas: [gov-lead, owner, approver], source: [src/features/governance/shell.tsx], tests: [app-routing.test.tsx], summary: "One-row header with back, home, workspace name and actions (a More actions menu on phones), side navigation on desktop and bottom tabs on phones."}

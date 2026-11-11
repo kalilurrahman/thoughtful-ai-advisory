@@ -99,6 +99,7 @@ export function getSitePage(path: string): SitePage | undefined {
 
 export const CONTROL_LIBRARY_PATH = toPath(siteConfig.control_library.slug);
 export const GLOSSARY_PATH = "/glossary";
+export const TRAINING_PATH = "/training";
 
 export interface NavItem {
   label: string;
@@ -128,7 +129,15 @@ const publicNav: NavSection[] = siteConfig.nav_sections.flatMap((sec) => {
         : [],
     )
     // The glossary is a React page (platform/content/glossary.yaml), listed with the resources.
-    .concat(sec.id === "resources" ? [{ label: "Glossary", url: GLOSSARY_PATH, order: 15 }] : [])
+    .concat(
+      sec.id === "resources"
+        ? [
+            { label: "Glossary", url: GLOSSARY_PATH, order: 15 },
+            // Interactive courses are a React page too (the course-forge API), listed after the glossary.
+            { label: "Training", url: TRAINING_PATH, order: 16 },
+          ]
+        : [],
+    )
     .sort((a, b) => a.order - b.order || a.label.toLowerCase().localeCompare(b.label.toLowerCase()))
     .map(({ label, url }) => ({ label, url }));
   const entries: NavItem[] = [];

@@ -37,6 +37,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as TemplatesRouteImport } from './routes/templates'
+import { Route as TrainingRouteImport } from './routes/training'
 import { Route as WorkspaceRouteImport } from './routes/workspace'
 import { Route as AssistantThreadIdRouteImport } from './routes/assistant_.$threadId'
 import { Route as PlatformIndexRouteImport } from './routes/platform.index'
@@ -185,6 +186,11 @@ const TemplatesRoute = TemplatesRouteImport.update({
   path: '/templates',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrainingRoute = TrainingRouteImport.update({
+  id: '/training',
+  path: '/training',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorkspaceRoute = WorkspaceRouteImport.update({
   id: '/workspace',
   path: '/workspace',
@@ -251,6 +257,7 @@ export interface FileRoutesByFullPath {
   '/roadmap': typeof RoadmapRoute
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
+  '/training': typeof TrainingRoute
   '/workspace': typeof WorkspaceRoute
   '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
@@ -288,6 +295,7 @@ export interface FileRoutesByTo {
   '/roadmap': typeof RoadmapRoute
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
+  '/training': typeof TrainingRoute
   '/workspace': typeof WorkspaceRoute
   '/assistant/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
@@ -326,6 +334,7 @@ export interface FileRoutesById {
   '/roadmap': typeof RoadmapRoute
   '/start': typeof StartRoute
   '/templates': typeof TemplatesRoute
+  '/training': typeof TrainingRoute
   '/workspace': typeof WorkspaceRoute
   '/assistant_/$threadId': typeof AssistantThreadIdRoute
   '/platform/$tool': typeof PlatformToolRoute
@@ -365,6 +374,7 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/start'
     | '/templates'
+    | '/training'
     | '/workspace'
     | '/assistant/$threadId'
     | '/platform/$tool'
@@ -402,6 +412,7 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/start'
     | '/templates'
+    | '/training'
     | '/workspace'
     | '/assistant/$threadId'
     | '/platform/$tool'
@@ -439,6 +450,7 @@ export interface FileRouteTypes {
     | '/roadmap'
     | '/start'
     | '/templates'
+    | '/training'
     | '/workspace'
     | '/assistant_/$threadId'
     | '/platform/$tool'
@@ -477,6 +489,7 @@ export interface RootRouteChildren {
   RoadmapRoute: typeof RoadmapRoute
   StartRoute: typeof StartRoute
   TemplatesRoute: typeof TemplatesRoute
+  TrainingRoute: typeof TrainingRoute
   WorkspaceRoute: typeof WorkspaceRoute
   AssistantThreadIdRoute: typeof AssistantThreadIdRoute
   PlatformToolRoute: typeof PlatformToolRoute
@@ -684,6 +697,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TemplatesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/training': {
+      id: '/training'
+      path: '/training'
+      fullPath: '/training'
+      preLoaderRoute: typeof TrainingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/workspace': {
       id: '/workspace'
       path: '/workspace'
@@ -765,6 +785,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoadmapRoute: RoadmapRoute,
   StartRoute: StartRoute,
   TemplatesRoute: TemplatesRoute,
+  TrainingRoute: TrainingRoute,
   WorkspaceRoute: WorkspaceRoute,
   AssistantThreadIdRoute: AssistantThreadIdRoute,
   PlatformToolRoute: PlatformToolRoute,

@@ -110,6 +110,14 @@ export function buildSearchEntries(glossary: GlossarySearchTerm[] = []): SearchE
     url: "/glossary",
     text: "glossary definitions terms",
   });
+  entries.push({
+    id: "page:/training",
+    kind: "page",
+    title: "Training",
+    subtitle: "Resources · Interactive courses: launch decision simulation, quiz, risk register",
+    url: "/training",
+    text: "training course courses lesson interactive simulation quiz learn",
+  });
   for (const c of controls) {
     entries.push({
       id: `control:${c.id}`,

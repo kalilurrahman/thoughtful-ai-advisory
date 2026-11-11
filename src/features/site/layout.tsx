@@ -340,6 +340,11 @@ function SiteFooter() {
               <Link to="/glossary">Glossary</Link>
             </li>
             <li>
+              <Link to="/training" search={{}}>
+                Training
+              </Link>
+            </li>
+            <li>
               <a href="/sitemap.xml">Sitemap</a>
             </li>
             <li>

@@ -589,4 +589,5 @@
 | CAP-080 Billing — Dodo Payments | Live | — |
 | CAP-081 Team workspaces — members | Live | — |
 | CAP-077 Appearance — themes and fonts | Live | UC01 |
+| CAP-082 Training — interactive courses | Live | — |
 | CAP-076 Workspace app shell | Live | — |

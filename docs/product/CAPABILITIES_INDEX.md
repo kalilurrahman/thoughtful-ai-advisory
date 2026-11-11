@@ -19,7 +19,7 @@ Every app, tool and feature, then every website content page, the control librar
 | [Accounts and persistence](#accounts-and-persistence) | 7 | 7 | 0 | 0 | 0 |
 | [Platform console](#platform-console) | 7 | 3 | 4 | 0 | 0 |
 | [Administration and analytics](#administration-and-analytics) | 2 | 2 | 0 | 0 | 0 |
-| [Installable app](#installable-app) | 9 | 9 | 0 | 0 | 0 |
+| [Installable app](#installable-app) | 10 | 10 | 0 | 0 | 0 |
 
 ## Apps, tools and features
 
@@ -138,6 +138,7 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-074 | Reading aids | Site-wide | Live | None | Prospective buyer | [E01](EPICS_AND_STORIES.md#e01--public-website-and-governed-content) | Feature cards, step timelines, link cards, callouts, stacked tables, code copy, On this page, progress and back-to-top. |
 | CAP-075 | Section illustrations and share images | Site-wide | Live | None | Prospective buyer | [E01](EPICS_AND_STORIES.md#e01--public-website-and-governed-content) | Theme-aware SVG art for every section and 1200×630 share cards. |
 | CAP-077 | Appearance — themes and fonts | Site-wide | Live | This browser | Prospective buyer, AI governance lead | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | Three palettes (Broadsheet, Midnight Gold, Financial Slate); Auto (follows the device), light or dark; and three fonts (Editorial serif, KR Tools, Modern sans), applied before first paint. |
+| CAP-082 | Training — interactive courses | `/training` | Live | None | Prospective buyer, AI governance lead, Approver | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | Lists the courses the course-forge service generated for VERITRAIL (OpenMAIC studio) and plays a reviewed lesson in a sandboxed frame with an offline download; unreviewed drafts are listed but not played. |
 | CAP-076 | Workspace app shell | Site-wide | Live | None | AI governance lead, AI system owner, Approver | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | One-row header with back, home, workspace name and actions (a More actions menu on phones), side navigation on desktop and bottom tabs on phones. |
 
 ## Website content
@@ -334,4 +335,5 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-080 | Billing — Dodo Payments | [S12.4](EPICS_AND_STORIES.md#s124) | `src/features/billing/billing.functions.ts`, `src/features/billing/entitlements.ts`, `src/features/billing/webhook.ts`, `src/routes/api.billing.dodo-webhook.ts`, `drizzle/migrations/0011_veritrail_billing.sql` | `billing.test.ts` |
 | CAP-081 | Team workspaces — members | [S12.5](EPICS_AND_STORIES.md#s125) | `src/features/governance/team.functions.ts`, `src/features/governance/team-model.ts`, `src/features/governance/team-panel.tsx`, `src/features/governance/invite-screen.tsx`, `drizzle/migrations/0012_veritrail_organization_members.sql` | `team.test.ts` |
 | CAP-077 | Appearance — themes and fonts | [S15.6](EPICS_AND_STORIES.md#s156) | `src/lib/theme.ts`, `src/features/appearance/appearance-panel.tsx`, `src/styles.css` | `theme.test.ts` |
+| CAP-082 | Training — interactive courses | [S15.7](EPICS_AND_STORIES.md#s157) | `src/routes/training.tsx`, `src/features/site/training-view.tsx`, `src/lib/courseForge.ts` | `course-forge.test.ts`, `app-routing.test.tsx` |
 | CAP-076 | Workspace app shell | [S15.5](EPICS_AND_STORIES.md#s155) | `src/features/governance/shell.tsx` | `app-routing.test.tsx` |
