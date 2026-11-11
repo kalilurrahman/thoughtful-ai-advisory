@@ -2,7 +2,7 @@
 
 # VERITRAIL epics and user stories
 
-16 epics and 60 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
+16 epics and 61 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
 
 | Epic | Title | Area | Status | Stories | Done | Partial | Planned |
 |---|---|---|---|---|---|---|---|
@@ -20,7 +20,7 @@
 | [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 5 | 3 | 2 | 0 |
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
 | [E14](#e14--administration-and-privacy-first-analytics) | Administration and privacy-first analytics | Administration and analytics | Live | 2 | 2 | 0 | 0 |
-| [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 6 | 6 | 0 | 0 |
+| [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 7 | 7 | 0 | 0 |
 | [E16](#e16--planned-capabilities) | Planned capabilities | Free interactive tools | Planned | 4 | 0 | 0 | 4 |
 
 ## E01 — Public website and governed content
@@ -889,7 +889,7 @@ Acceptance criteria:
 
 **Area:** Installable app · **Status:** Live
 
-**Capabilities:** CAP-005 Glossary, CAP-070 Installable app (PWA), CAP-071 Offline reading, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-077 Appearance — themes and fonts, CAP-076 Workspace app shell
+**Capabilities:** CAP-005 Glossary, CAP-070 Installable app (PWA), CAP-071 Offline reading, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-077 Appearance — themes and fonts, CAP-082 Training — interactive courses, CAP-076 Workspace app shell
 
 ### S15.1
 
@@ -974,6 +974,20 @@ Acceptance criteria:
 - Given the KR Tools or Modern sans font, when either header is shown at 1280 px or 390 px, then it stays on one row.
 
 **Capabilities:** CAP-077 · **Tests:** `theme.test.ts`
+
+### S15.7
+
+**As a prospective buyer**, I want to take a short interactive course on AI launch decisions, so that I can practise the method before applying it to my own use case.
+
+*Status: Done*
+
+Acceptance criteria:
+
+- Given the Training page, when it loads, then each course shows its outcome, practice, deliverable, duration and a badge of Generating, Draft · in review or Reviewed.
+- Given an unreviewed export, when drafts are not enabled for the deployment, then the course is listed as in review and does not play.
+- Given a reviewed export, when opened, then it plays in a frame with sandbox="allow-scripts" only and offers an offline download of the same file.
+
+**Routes:** `/training` · **Capabilities:** CAP-082 · **Tests:** `course-forge.test.ts`, `app-routing.test.tsx`
 
 ## E16 — Planned capabilities
 

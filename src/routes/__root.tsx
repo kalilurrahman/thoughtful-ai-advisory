@@ -168,6 +168,7 @@ const SITE_ROUTE_IDS = new Set<string>([
   "/platform/",
   "/platform/$tool",
   "/glossary",
+  "/training",
 ]);
 
 function RootComponent() {
