@@ -6,6 +6,7 @@ import { controls, getControl, siteConfig } from "@/features/site/content";
 import { renderMarkdownHtml, safeHref, splitShortcodes } from "@/features/site/markdown";
 import {
   GLOSSARY_PATH,
+  TRAINING_PATH,
   breadcrumbsFor,
   getSitePage,
   isSitePath,
@@ -19,6 +20,7 @@ const knownPaths = new Set<string>([
   "/framework/controls",
   ...controls.map((c) => `/framework/controls/${c.id.toLowerCase()}`),
   GLOSSARY_PATH,
+  TRAINING_PATH,
   "/workspace",
   "/platform",
   ...PLATFORM_TOOLS.map((t) => `/platform/${t.slug}`),
