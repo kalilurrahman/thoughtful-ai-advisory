@@ -340,7 +340,7 @@ function SiteFooter() {
               <Link to="/glossary">Glossary</Link>
             </li>
             <li>
-              <Link to="/training" search={{}}>
+              <Link to="/training" search={{ course: undefined, module: undefined }}>
                 Training
               </Link>
             </li>
