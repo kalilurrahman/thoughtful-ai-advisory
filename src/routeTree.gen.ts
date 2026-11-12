@@ -21,6 +21,7 @@ import { Route as ChangesRouteImport } from './routes/changes'
 import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as DecisionsRouteImport } from './routes/decisions'
 import { Route as ExportRouteImport } from './routes/export'
+import { Route as GamesRouteImport } from './routes/games'
 import { Route as GatesRouteImport } from './routes/gates'
 import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as GuardrailsRouteImport } from './routes/guardrails'
@@ -104,6 +105,11 @@ const DecisionsRoute = DecisionsRouteImport.update({
 const ExportRoute = ExportRouteImport.update({
   id: '/export',
   path: '/export',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GamesRoute = GamesRouteImport.update({
+  id: '/games',
+  path: '/games',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GatesRoute = GatesRouteImport.update({
@@ -241,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/checklist': typeof ChecklistRoute
   '/decisions': typeof DecisionsRoute
   '/export': typeof ExportRoute
+  '/games': typeof GamesRoute
   '/gates': typeof GatesRoute
   '/glossary': typeof GlossaryRoute
   '/guardrails': typeof GuardrailsRoute
@@ -279,6 +286,7 @@ export interface FileRoutesByTo {
   '/checklist': typeof ChecklistRoute
   '/decisions': typeof DecisionsRoute
   '/export': typeof ExportRoute
+  '/games': typeof GamesRoute
   '/gates': typeof GatesRoute
   '/glossary': typeof GlossaryRoute
   '/guardrails': typeof GuardrailsRoute
@@ -318,6 +326,7 @@ export interface FileRoutesById {
   '/checklist': typeof ChecklistRoute
   '/decisions': typeof DecisionsRoute
   '/export': typeof ExportRoute
+  '/games': typeof GamesRoute
   '/gates': typeof GatesRoute
   '/glossary': typeof GlossaryRoute
   '/guardrails': typeof GuardrailsRoute
@@ -358,6 +367,7 @@ export interface FileRouteTypes {
     | '/checklist'
     | '/decisions'
     | '/export'
+    | '/games'
     | '/gates'
     | '/glossary'
     | '/guardrails'
@@ -396,6 +406,7 @@ export interface FileRouteTypes {
     | '/checklist'
     | '/decisions'
     | '/export'
+    | '/games'
     | '/gates'
     | '/glossary'
     | '/guardrails'
@@ -434,6 +445,7 @@ export interface FileRouteTypes {
     | '/checklist'
     | '/decisions'
     | '/export'
+    | '/games'
     | '/gates'
     | '/glossary'
     | '/guardrails'
@@ -473,6 +485,7 @@ export interface RootRouteChildren {
   ChecklistRoute: typeof ChecklistRoute
   DecisionsRoute: typeof DecisionsRoute
   ExportRoute: typeof ExportRoute
+  GamesRoute: typeof GamesRoute
   GatesRoute: typeof GatesRoute
   GlossaryRoute: typeof GlossaryRoute
   GuardrailsRoute: typeof GuardrailsRoute
@@ -583,6 +596,13 @@ declare module '@tanstack/react-router' {
       path: '/export'
       fullPath: '/export'
       preLoaderRoute: typeof ExportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/games': {
+      id: '/games'
+      path: '/games'
+      fullPath: '/games'
+      preLoaderRoute: typeof GamesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gates': {
@@ -769,6 +789,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChecklistRoute: ChecklistRoute,
   DecisionsRoute: DecisionsRoute,
   ExportRoute: ExportRoute,
+  GamesRoute: GamesRoute,
   GatesRoute: GatesRoute,
   GlossaryRoute: GlossaryRoute,
   GuardrailsRoute: GuardrailsRoute,

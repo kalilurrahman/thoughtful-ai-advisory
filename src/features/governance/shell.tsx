@@ -23,6 +23,7 @@ import {
   DotsThreeVertical,
   DownloadSimple,
   MagnifyingGlass,
+  GameController,
 } from "@phosphor-icons/react";
 import { openSearch } from "@/features/search/search-palette";
 import { InstallButton } from "./install-button";
@@ -63,6 +64,7 @@ const titles: Record<string, string> = {
   "/advisor": "AI governance advisor",
   "/assistant": "Site assistant",
   "/checklist": "Governance lifecycle checklist",
+  "/games": "AI Governance Games",
   "/start": "Start here",
   "/export": "Reports & audit pack",
   "/plans": "Plans",
@@ -83,6 +85,8 @@ const studioTabs = [
   { to: "/changes", name: "Change reviews", icon: ArrowsClockwise },
   { to: "/monitoring", name: "Monitoring", icon: Gauge },
   { to: "/checklist", name: "Lifecycle checklist", icon: ListChecks },
+  { to: "/games", name: "Games & practice", icon: GameController },
+  { to: "/games", name: "Games & practice", icon: GameController },
   { to: "/start", name: "Start here", icon: Path },
   { to: "/export", name: "Reports & audit pack", icon: Export },
   { to: "/plans", name: "Plans", icon: Tag },
