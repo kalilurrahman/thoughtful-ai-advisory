@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle, Circle, MinusCircle } from "@phosphor-icons/react";
 import { EmptyChecklist } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
 import { buildLifecycleChecklist, checklistProgress, governanceMilestones } from "./checklist-model";
+import { INCIDENT_TABLETOP, tabletopResult } from "./tabletop-model";
 
 const statusText = {
   complete: "Complete",
@@ -12,10 +14,12 @@ const statusText = {
 };
 
 export function ChecklistScreen() {
+  const [tabletopAnswers, setTabletopAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
   const milestones = governanceMilestones(phases);
+  const tabletop = tabletopResult(tabletopAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -64,6 +68,7 @@ export function ChecklistScreen() {
           ))}
         </div>
       </section>
+      <section className="checklist-phase" aria-label="AI incident tabletop exercise"><h2>Incident tabletop · Contain, coordinate, recover</h2><p>Practice a response sequence for a fictional AI incident. Your answers stay in this browser session; this exercise does not replace your incident plan or legal review.</p><p><strong>{tabletop.bestChoices}/{tabletop.answered}</strong> sound response choices · {tabletop.finished && <Button variant="outline" onClick={() => setTabletopAnswers({})}>Run exercise again</Button>}</p><div className="checklist-tasks">{INCIDENT_TABLETOP.map((step) => { const selected = tabletopAnswers[step.id]; return <article className="checklist-task" key={step.id}><div><h3>{step.prompt}</h3>{step.choices.map((choice, index) => <Button key={choice} size="sm" variant={selected === index ? "default" : "outline"} disabled={selected !== undefined} onClick={() => setTabletopAnswers((answers) => ({ ...answers, [step.id]: index }))}>{choice}</Button>)}{selected !== undefined && <p role="status"><strong>{selected === step.best ? "Strong response." : "Review the response plan."}</strong> {step.feedback}</p>}</div></article>; })}</div><p><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noreferrer">Reference: NIST AI Risk Management Framework</a></p></section>
       <div className="checklist-phases">
         {phases.map((phase) => (
           <section className="checklist-phase" key={phase.id}>
