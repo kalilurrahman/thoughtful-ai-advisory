@@ -209,6 +209,36 @@ export function ChecklistScreen() {
                 <div>
                   <h3>{round.activity}</h3>
                   {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCrosswalkAnswers((previous) => ({ ...previous, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.correct ? "Correct." : "Try the next round."}
+                      </strong>{" "}
+                      {round.explanation}{" "}
+                      <a href={round.url} target="_blank" rel="noreferrer">
+                        Source: {round.source}
+                      </a>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
       <section className="checklist-phase" aria-label="AI supplier assurance challenge">
         <h2>Supplier assurance challenge</h2>
         <p>
@@ -239,9 +269,6 @@ export function ChecklistScreen() {
                       size="sm"
                       variant={selected === index ? "default" : "outline"}
                       disabled={selected !== undefined}
-                      onClick={() =>
-                        setCrosswalkAnswers((previous) => ({ ...previous, [round.id]: index }))
-                      }
                       onClick={() => setVendorAnswers((answers) => ({ ...answers, [q.id]: index }))}
                     >
                       {choice}
@@ -250,12 +277,11 @@ export function ChecklistScreen() {
                   {selected !== undefined && (
                     <p role="status">
                       <strong>
-                        {selected === round.correct ? "Correct." : "Try the next round."}
+                        {selected === q.preferred
+                          ? "Good evidence-first choice."
+                          : "Consider the evidence gap."}
                       </strong>{" "}
-                      {round.explanation}{" "}
-                      <a href={round.url} target="_blank" rel="noreferrer">
-                        Source: {round.source}
-                      </a>
+                      {q.rationale}
                     </p>
                   )}
                 </div>
@@ -264,6 +290,7 @@ export function ChecklistScreen() {
           })}
         </div>
       </section>
+
       <section className="checklist-phase" aria-label="Inclusive AI design game">
         <h2>Inclusive design challenge</h2>
         <p>
