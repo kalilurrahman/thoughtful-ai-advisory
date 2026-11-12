@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle, Circle, MinusCircle } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
 import { buildLifecycleChecklist, checklistProgress, governanceMilestones } from "./checklist-model";
+import { GOVERNANCE_GAME_QUESTIONS, scoreGovernanceRound } from "./governance-games";
 
 const statusText = {
   complete: "Complete",
@@ -11,10 +13,12 @@ const statusText = {
 };
 
 export function ChecklistScreen() {
+  const [gameAnswers, setGameAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
   const milestones = governanceMilestones(phases);
+  const gameScore = scoreGovernanceRound(gameAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -62,6 +66,22 @@ export function ChecklistScreen() {
             </article>
           ))}
         </div>
+      </section>
+      <section className="checklist-phase" aria-label="Governance scenario game">
+        <h2>Governance scenario arcade</h2>
+        <p>Choose the strongest next governance action. Learn the reasoning and revisit missed scenarios. Practice only—this is not legal advice, a certification, or a compliance determination.</p>
+        <p><strong>{gameScore.correct}/{gameScore.attempted}</strong> correct · {gameScore.complete ? "Round complete" : `${GOVERNANCE_GAME_QUESTIONS.length - gameScore.attempted} scenarios left`}</p>
+        <div className="checklist-tasks">
+          {GOVERNANCE_GAME_QUESTIONS.map((question) => {
+            const selected = gameAnswers[question.id];
+            return <article className="checklist-task" key={question.id}><div>
+              <h3>{question.topic}</h3><p>{question.prompt}</p>
+              {question.options.map((option, index) => <Button key={option} variant={selected === index ? "default" : "outline"} size="sm" disabled={selected !== undefined} onClick={() => setGameAnswers((current) => ({ ...current, [question.id]: index }))}>{option}</Button>)}
+              {selected !== undefined && <p role="status"><strong>{selected === question.answer ? "Correct." : "Not quite."}</strong> {question.why} <a href={question.url} target="_blank" rel="noreferrer">Source: {question.source}</a></p>}
+            </div></article>;
+          })}
+        </div>
+        {gameScore.complete && <Button variant="outline" onClick={() => setGameAnswers({})}>Play again</Button>}
       </section>
       <div className="checklist-phases">
         {phases.map((phase) => (
