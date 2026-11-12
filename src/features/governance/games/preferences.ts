@@ -8,11 +8,11 @@ export function parseGamePreferences(value: string | null): GamePreferences {
     if (!data || typeof data !== "object") return emptyGamePreferences();
     const record = data as Record<string, unknown>;
     return {
-      favorites: Array.isArray(record.favorites)
-        ? record.favorites.filter((item): item is string => typeof item === "string")
+      favorites: Array.isArray(record["favorites"])
+        ? record["favorites"].filter((item): item is string => typeof item === "string")
         : [],
-      recentlyPlayed: Array.isArray(record.recentlyPlayed)
-        ? record.recentlyPlayed
+      recentlyPlayed: Array.isArray(record["recentlyPlayed"])
+        ? record["recentlyPlayed"]
             .filter((item): item is string => typeof item === "string")
             .slice(0, 5)
         : [],

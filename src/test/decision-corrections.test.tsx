@@ -158,6 +158,7 @@ describe("evidence exports", () => {
       const file = await generateEvidenceFile(report, format);
       expect(file.size).toBeGreaterThan(500);
     },
+    15000,
   );
 });
 

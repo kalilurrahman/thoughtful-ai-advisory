@@ -1735,6 +1735,7 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .checklist-tasks { display: grid; gap: 10px; }
 .checklist-task { display: grid; grid-template-columns: 26px minmax(0,1fr) auto auto; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--border); }
 .checklist-task > svg { width: 22px; height: 22px; }
+.checklist-task > div:only-child { grid-column: 1 / -1; }
 .checklist-complete > svg { color: var(--success-ink); }
 .checklist-action > svg { color: var(--warning-ink); }
 .checklist-not-applicable > svg { color: var(--muted-foreground); }

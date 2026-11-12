@@ -2,7 +2,7 @@
 
 # VERITRAIL epics and user stories
 
-16 epics and 61 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
+16 epics and 63 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
 
 | Epic | Title | Area | Status | Stories | Done | Partial | Planned |
 |---|---|---|---|---|---|---|---|
@@ -20,7 +20,7 @@
 | [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 5 | 3 | 2 | 0 |
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
 | [E14](#e14--administration-and-privacy-first-analytics) | Administration and privacy-first analytics | Administration and analytics | Live | 2 | 2 | 0 | 0 |
-| [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 7 | 7 | 0 | 0 |
+| [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 9 | 9 | 0 | 0 |
 | [E16](#e16--planned-capabilities) | Planned capabilities | Free interactive tools | Planned | 4 | 0 | 0 | 4 |
 
 ## E01 — Public website and governed content
@@ -889,7 +889,7 @@ Acceptance criteria:
 
 **Area:** Installable app · **Status:** Live
 
-**Capabilities:** CAP-005 Glossary, CAP-070 Installable app (PWA), CAP-071 Offline reading, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-077 Appearance — themes and fonts, CAP-082 Training — interactive courses, CAP-076 Workspace app shell
+**Capabilities:** CAP-005 Glossary, CAP-070 Installable app (PWA), CAP-071 Offline reading, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-077 Appearance — themes and fonts, CAP-082 Training — interactive courses, CAP-083 Governance games hub, CAP-084 Governance learning arcade, CAP-076 Workspace app shell
 
 ### S15.1
 
@@ -988,6 +988,31 @@ Acceptance criteria:
 - Given a reviewed export, when opened, then it plays in a frame with sandbox="allow-scripts" only and offers an offline download of the same file.
 
 **Routes:** `/training` · **Capabilities:** CAP-082 · **Tests:** `course-forge.test.ts`, `app-routing.test.tsx`
+
+### S15.8
+
+**As an AI governance lead**, I want short scenario-based governance games in one place, so that my team can practise decisions without touching live records.
+
+*Status: Done*
+
+Acceptance criteria:
+
+- Given the Games page, when it loads, then every governance game is listed with its skill and a link to play.
+- Given a favourite or recently played game, when chosen, then it is remembered on that device only.
+
+**Routes:** `/games` · **Capabilities:** CAP-083 · **Tests:** `game-preferences.test.ts`, `app-routing.test.tsx`
+
+### S15.9
+
+**As an AI governance lead**, I want a learning arcade that groups the games into skill tracks, so that teams can follow a path from framework fluency to incident readiness.
+
+*Status: Done*
+
+Acceptance criteria:
+
+- Given the Academy page, when it loads, then learning tracks group the games by skill with links to play each one.
+
+**Routes:** `/academy` · **Capabilities:** CAP-084 · **Tests:** `app-routing.test.tsx`
 
 ## E16 — Planned capabilities
 

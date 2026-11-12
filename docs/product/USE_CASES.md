@@ -590,4 +590,6 @@
 | CAP-081 Team workspaces — members | Live | — |
 | CAP-077 Appearance — themes and fonts | Live | UC01 |
 | CAP-082 Training — interactive courses | Live | — |
+| CAP-083 Governance games hub | Live | — |
+| CAP-084 Governance learning arcade | Live | — |
 | CAP-076 Workspace app shell | Live | — |
