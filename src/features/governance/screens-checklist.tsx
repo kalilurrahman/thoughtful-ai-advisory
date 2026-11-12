@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle, Circle, MinusCircle } from "@phosphor-icons/re
 import { EmptyChecklist } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
+import { INCIDENT_TABLETOP, tabletopResult } from "./tabletop-model";
 import { crosswalkScore, FRAMEWORK_CROSSWALK } from "./framework-crosswalk";
 import { buildLifecycleChecklist, checklistProgress, governanceMilestones, nextGovernanceChallenge } from "./checklist-model";
 
@@ -14,11 +15,13 @@ const statusText = {
 };
 
 export function ChecklistScreen() {
+  const [tabletopAnswers, setTabletopAnswers] = useState<Record<string, number>>({});
   const [crosswalkAnswers, setCrosswalkAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
   const milestones = governanceMilestones(phases);
+  const tabletop = tabletopResult(tabletopAnswers);
   const crosswalk = crosswalkScore(crosswalkAnswers);
   const challenge = nextGovernanceChallenge(phases);
   const profiles = state.systems.map((system, index) => {
@@ -70,6 +73,7 @@ export function ChecklistScreen() {
           ))}
         </div>
       </section>
+      <section className="checklist-phase" aria-label="AI incident tabletop exercise"><h2>Incident tabletop · Contain, coordinate, recover</h2><p>Practice a response sequence for a fictional AI incident. Your answers stay in this browser session; this exercise does not replace your incident plan or legal review.</p><p><strong>{tabletop.bestChoices}/{tabletop.answered}</strong> sound response choices · {tabletop.finished && <Button variant="outline" onClick={() => setTabletopAnswers({})}>Run exercise again</Button>}</p><div className="checklist-tasks">{INCIDENT_TABLETOP.map((step) => { const selected = tabletopAnswers[step.id]; return <article className="checklist-task" key={step.id}><div><h3>{step.prompt}</h3>{step.choices.map((choice, index) => <Button key={choice} size="sm" variant={selected === index ? "default" : "outline"} disabled={selected !== undefined} onClick={() => setTabletopAnswers((answers) => ({ ...answers, [step.id]: index }))}>{choice}</Button>)}{selected !== undefined && <p role="status"><strong>{selected === step.best ? "Strong response." : "Review the response plan."}</strong> {step.feedback}</p>}</div></article>; })}</div><p><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noreferrer">Reference: NIST AI Risk Management Framework</a></p></section>
       <section className="checklist-phase" aria-label="Framework crosswalk game"><h2>Framework crosswalk · Match the governance move</h2><p>Practice recognizing how related activities appear across leading frameworks. This is a learning aid, not a compliance determination.</p><p><strong>{crosswalk.correct}/{crosswalk.attempted}</strong> correct · {crosswalk.complete ? <Button variant="outline" onClick={() => setCrosswalkAnswers({})}>Play again</Button> : `${FRAMEWORK_CROSSWALK.length - crosswalk.attempted} rounds remaining`}</p><div className="checklist-tasks">{FRAMEWORK_CROSSWALK.map((round) => { const selected = crosswalkAnswers[round.id]; return <article className="checklist-task" key={round.id}><div><h3>{round.activity}</h3>{round.choices.map((choice, index) => <Button key={choice} size="sm" variant={selected === index ? "default" : "outline"} disabled={selected !== undefined} onClick={() => setCrosswalkAnswers((previous) => ({ ...previous, [round.id]: index }))}>{choice}</Button>)}{selected !== undefined && <p role="status"><strong>{selected === round.correct ? "Correct." : "Try the next round."}</strong> {round.explanation} <a href={round.url} target="_blank" rel="noreferrer">Source: {round.source}</a></p>}</div></article>; })}</div></section>
       <div className="checklist-phases">
         {phases.map((phase) => (
