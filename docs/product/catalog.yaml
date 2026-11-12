@@ -796,6 +796,29 @@ epics:
         routes: [/training]
         tests: [course-forge.test.ts, app-routing.test.tsx]
 
+      - id: S15.8
+        persona: gov-lead
+        want: short scenario-based governance games in one place
+        so_that: my team can practise decisions without touching live records
+        status: done
+        capabilities: [CAP-083]
+        acceptance:
+          - Given the Games page, when it loads, then every governance game is listed with its skill and a link to play.
+          - Given a favourite or recently played game, when chosen, then it is remembered on that device only.
+        routes: [/games]
+        tests: [game-preferences.test.ts, app-routing.test.tsx]
+
+      - id: S15.9
+        persona: gov-lead
+        want: a learning arcade that groups the games into skill tracks
+        so_that: teams can follow a path from framework fluency to incident readiness
+        status: done
+        capabilities: [CAP-084]
+        acceptance:
+          - Given the Academy page, when it loads, then learning tracks group the games by skill with links to play each one.
+        routes: [/academy]
+        tests: [app-routing.test.tsx]
+
   - id: E16
     title: Planned capabilities
     area: tools
@@ -1174,4 +1197,6 @@ capabilities:
   - {id: CAP-081, name: Team workspaces — members, roles and invitations, area: account, route: /invite, status: live, data: cloud, epic: E12, personas: [gov-lead, approver, auditor], source: [src/features/governance/team.functions.ts, src/features/governance/team-model.ts, src/features/governance/team-panel.tsx, src/features/governance/invite-screen.tsx, drizzle/migrations/0012_veritrail_organization_members.sql], tests: [team.test.ts], summary: "Owner, admin, operator, approver and viewer roles enforced by row-level security; single-use invitation links; operator seats limited by the owner's plan; workspace switcher."}
   - {id: CAP-077, name: Appearance — themes and fonts, area: app, route: "", status: live, data: browser, epic: E15, personas: [visitor, gov-lead], source: [src/lib/theme.ts, src/features/appearance/appearance-panel.tsx, src/styles.css], tests: [theme.test.ts], summary: "Three palettes (Broadsheet, Midnight Gold, Financial Slate); Auto (follows the device), light or dark; and three fonts (Editorial serif, KR Tools, Modern sans), applied before first paint."}
   - {id: CAP-082, name: Training — interactive courses, area: app, route: /training, status: live, data: none, epic: E15, personas: [visitor, gov-lead, approver], source: [src/routes/training.tsx, src/features/site/training-view.tsx, src/lib/courseForge.ts], tests: [course-forge.test.ts, app-routing.test.tsx], summary: "Lists the courses the course-forge service generated for VERITRAIL (OpenMAIC studio) and plays a reviewed lesson in a sandboxed frame with an offline download; unreviewed drafts are listed but not played."}
+  - {id: CAP-083, name: Governance games hub, area: app, route: /games, status: live, data: none, epic: E15, personas: [visitor, gov-lead], source: [src/routes/games.tsx, src/features/governance/screens-games.tsx, src/features/governance/games/catalog.ts, src/features/governance/games/preferences.ts], tests: [game-preferences.test.ts, app-routing.test.tsx], summary: "Lists every scenario-based governance game with its skill; favourites and recently played are remembered on the device only."}
+  - {id: CAP-084, name: Governance learning arcade, area: app, route: /academy, status: live, data: none, epic: E15, personas: [visitor, gov-lead], source: [src/routes/academy.tsx, src/features/governance/screens-academy.tsx], tests: [app-routing.test.tsx], summary: "Groups the governance games into skill tracks from framework fluency to incident readiness."}
   - {id: CAP-076, name: Workspace app shell, area: app, route: "", status: live, data: none, epic: E15, personas: [gov-lead, owner, approver], source: [src/features/governance/shell.tsx], tests: [app-routing.test.tsx], summary: "One-row header with back, home, workspace name and actions (a More actions menu on phones), side navigation on desktop and bottom tabs on phones."}
