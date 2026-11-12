@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
+import { Route as AcademyRouteImport } from './routes/academy'
 import { Route as ActionsRouteImport } from './routes/actions'
 import { Route as AdvisorRouteImport } from './routes/advisor'
 import { Route as AssessRouteImport } from './routes/assess'
@@ -54,6 +55,11 @@ const IndexRoute = IndexRouteImport.update({
 const SplatRoute = SplatRouteImport.update({
   id: '/$',
   path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademyRoute = AcademyRouteImport.update({
+  id: '/academy',
+  path: '/academy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActionsRoute = ActionsRouteImport.update({
@@ -231,6 +237,7 @@ const FrameworkControlsControlIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/academy': typeof AcademyRoute
   '/actions': typeof ActionsRoute
   '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
@@ -269,6 +276,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/academy': typeof AcademyRoute
   '/actions': typeof ActionsRoute
   '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
@@ -308,6 +316,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
+  '/academy': typeof AcademyRoute
   '/actions': typeof ActionsRoute
   '/advisor': typeof AdvisorRoute
   '/assess': typeof AssessRoute
@@ -348,6 +357,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$'
+    | '/academy'
     | '/actions'
     | '/advisor'
     | '/assess'
@@ -386,6 +396,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$'
+    | '/academy'
     | '/actions'
     | '/advisor'
     | '/assess'
@@ -424,6 +435,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$'
+    | '/academy'
     | '/actions'
     | '/advisor'
     | '/assess'
@@ -463,6 +475,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
+  AcademyRoute: typeof AcademyRoute
   ActionsRoute: typeof ActionsRoute
   AdvisorRoute: typeof AdvisorRoute
   AssessRoute: typeof AssessRoute
@@ -513,6 +526,13 @@ declare module '@tanstack/react-router' {
       path: '/$'
       fullPath: '/$'
       preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academy': {
+      id: '/academy'
+      path: '/academy'
+      fullPath: '/academy'
+      preLoaderRoute: typeof AcademyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/actions': {
@@ -759,6 +779,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
+  AcademyRoute: AcademyRoute,
   ActionsRoute: ActionsRoute,
   AdvisorRoute: AdvisorRoute,
   AssessRoute: AssessRoute,
