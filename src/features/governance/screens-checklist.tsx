@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle, Circle, MinusCircle } from "@phosphor-icons/re
 import { EmptyChecklist } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
-import { buildLifecycleChecklist, checklistProgress } from "./checklist-model";
+import { buildLifecycleChecklist, checklistProgress, governanceMilestones } from "./checklist-model";
 
 const statusText = {
   complete: "Complete",
@@ -15,6 +15,7 @@ export function ChecklistScreen() {
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
+  const milestones = governanceMilestones(phases);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -50,6 +51,18 @@ export function ChecklistScreen() {
           value={progress.complete}
           aria-label="Applicable checklist completion"
         />
+      </section>
+      <section className="checklist-phase" aria-label="Governance milestones">
+        <h2>Governance milestones · {milestones.level}</h2>
+        <p>{milestones.points} progress points · Earned by completing applicable actions, with extra credit for evidence and verification—not by raising self-assessment scores.</p>
+        <div className="checklist-tasks">
+          {milestones.badges.map((badge) => (
+            <article className={`checklist-task ${badge.earned ? "checklist-complete" : "checklist-action"}`} key={badge.id}>
+              {badge.earned ? <CheckCircle weight="duotone" /> : <Circle weight="duotone" />}
+              <div><h3>{badge.title} {badge.earned ? "· Earned" : "· In progress"}</h3><p>{badge.detail}</p></div>
+            </article>
+          ))}
+        </div>
       </section>
       <div className="checklist-phases">
         {phases.map((phase) => (

@@ -308,3 +308,18 @@ export function checklistProgress(phases: ChecklistPhase[]) {
     percent: tasks.length ? Math.round((complete / tasks.length) * 100) : 0,
   };
 }
+
+/** Positive reinforcement is based on completed governance actions, never self-reported scores. */
+export function governanceMilestones(phases: ChecklistPhase[]) {
+  const tasks = phases.flatMap((phase) => phase.tasks).filter((task) => task.status !== "not-applicable");
+  const complete = tasks.filter((task) => task.status === "complete").length;
+  const verified = tasks.filter((task) => task.status === "complete" && /evidence|verified/i.test(`${task.title} ${task.detail}`)).length;
+  const percent = tasks.length ? Math.round((complete / tasks.length) * 100) : 0;
+  const badges = [
+    { id: "first-step", title: "First step", detail: "Complete your first applicable governance action", earned: complete > 0 },
+    { id: "evidence-builder", title: "Evidence builder", detail: "Complete an action tied to evidence or verification", earned: verified > 0 },
+    { id: "halfway", title: "Momentum", detail: "Reach 50% of applicable lifecycle checks", earned: percent >= 50 },
+    { id: "lifecycle", title: "Lifecycle steward", detail: "Complete all applicable lifecycle checks", earned: tasks.length > 0 && complete === tasks.length },
+  ];
+  return { points: complete * 10 + verified * 5, level: percent >= 80 ? "Steward" : percent >= 50 ? "Builder" : "Explorer", earned: badges.filter((badge) => badge.earned), next: badges.find((badge) => !badge.earned) ?? null, badges };
+}

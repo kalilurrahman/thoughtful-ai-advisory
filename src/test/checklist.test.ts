@@ -1,12 +1,24 @@
 import { describe, expect, it } from "vitest";
 import { CONTROLS } from "@/data/governance";
-import { buildLifecycleChecklist, checklistProgress } from "@/features/governance/checklist-model";
+import { buildLifecycleChecklist, checklistProgress, governanceMilestones } from "@/features/governance/checklist-model";
 import { initialState, type AIIncident } from "@/features/governance/store";
 
 const allTasks = (state: ReturnType<typeof initialState>) =>
   buildLifecycleChecklist(state).flatMap((phase) => phase.tasks);
 
 describe("workspace lifecycle checklist", () => {
+  it("awards milestones from completed governance work, not higher scores", () => {
+    const state = initialState();
+    const phases = buildLifecycleChecklist(state);
+    const before = governanceMilestones(phases);
+    const task = phases.flatMap((phase) => phase.tasks).find((item) => item.status === "action");
+    if (!task) throw new Error("Actionable checklist task missing");
+    task.status = "complete";
+    const after = governanceMilestones(phases);
+    expect(after.points).toBeGreaterThan(before.points);
+    expect(after.earned.some((badge) => badge.id === "first-step")).toBe(true);
+    expect(after.level).toBe("Explorer");
+  });
   it("checks inventory profile completeness without creating per-system scores", () => {
     const state = initialState();
     const system = state.systems[0];
