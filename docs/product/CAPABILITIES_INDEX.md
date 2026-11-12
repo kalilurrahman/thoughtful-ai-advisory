@@ -19,7 +19,7 @@ Every app, tool and feature, then every website content page, the control librar
 | [Accounts and persistence](#accounts-and-persistence) | 7 | 7 | 0 | 0 | 0 |
 | [Platform console](#platform-console) | 7 | 3 | 4 | 0 | 0 |
 | [Administration and analytics](#administration-and-analytics) | 2 | 2 | 0 | 0 | 0 |
-| [Installable app](#installable-app) | 10 | 10 | 0 | 0 | 0 |
+| [Installable app](#installable-app) | 12 | 12 | 0 | 0 | 0 |
 
 ## Apps, tools and features
 
@@ -139,6 +139,8 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-075 | Section illustrations and share images | Site-wide | Live | None | Prospective buyer | [E01](EPICS_AND_STORIES.md#e01--public-website-and-governed-content) | Theme-aware SVG art for every section and 1200×630 share cards. |
 | CAP-077 | Appearance — themes and fonts | Site-wide | Live | This browser | Prospective buyer, AI governance lead | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | Three palettes (Broadsheet, Midnight Gold, Financial Slate); Auto (follows the device), light or dark; and three fonts (Editorial serif, KR Tools, Modern sans), applied before first paint. |
 | CAP-082 | Training — interactive courses | `/training` | Live | None | Prospective buyer, AI governance lead, Approver | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | Lists the courses the course-forge service generated for VERITRAIL (OpenMAIC studio) and plays a reviewed lesson in a sandboxed frame with an offline download; unreviewed drafts are listed but not played. |
+| CAP-083 | Governance games hub | `/games` | Live | None | Prospective buyer, AI governance lead | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | Lists every scenario-based governance game with its skill; favourites and recently played are remembered on the device only. |
+| CAP-084 | Governance learning arcade | `/academy` | Live | None | Prospective buyer, AI governance lead | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | Groups the governance games into skill tracks from framework fluency to incident readiness. |
 | CAP-076 | Workspace app shell | Site-wide | Live | None | AI governance lead, AI system owner, Approver | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | One-row header with back, home, workspace name and actions (a More actions menu on phones), side navigation on desktop and bottom tabs on phones. |
 
 ## Website content
@@ -336,4 +338,6 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-081 | Team workspaces — members | [S12.5](EPICS_AND_STORIES.md#s125) | `src/features/governance/team.functions.ts`, `src/features/governance/team-model.ts`, `src/features/governance/team-panel.tsx`, `src/features/governance/invite-screen.tsx`, `drizzle/migrations/0012_veritrail_organization_members.sql` | `team.test.ts` |
 | CAP-077 | Appearance — themes and fonts | [S15.6](EPICS_AND_STORIES.md#s156) | `src/lib/theme.ts`, `src/features/appearance/appearance-panel.tsx`, `src/styles.css` | `theme.test.ts` |
 | CAP-082 | Training — interactive courses | [S15.7](EPICS_AND_STORIES.md#s157) | `src/routes/training.tsx`, `src/features/site/training-view.tsx`, `src/lib/courseForge.ts` | `course-forge.test.ts`, `app-routing.test.tsx` |
+| CAP-083 | Governance games hub | [S15.8](EPICS_AND_STORIES.md#s158) | `src/routes/games.tsx`, `src/features/governance/screens-games.tsx`, `src/features/governance/games/catalog.ts`, `src/features/governance/games/preferences.ts` | `game-preferences.test.ts`, `app-routing.test.tsx` |
+| CAP-084 | Governance learning arcade | [S15.9](EPICS_AND_STORIES.md#s159) | `src/routes/academy.tsx`, `src/features/governance/screens-academy.tsx` | `app-routing.test.tsx` |
 | CAP-076 | Workspace app shell | [S15.5](EPICS_AND_STORIES.md#s155) | `src/features/governance/shell.tsx` | `app-routing.test.tsx` |
