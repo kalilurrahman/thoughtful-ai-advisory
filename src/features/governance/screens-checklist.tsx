@@ -4,6 +4,12 @@ import { ArrowRight, CheckCircle, Circle, MinusCircle } from "@phosphor-icons/re
 import { EmptyChecklist } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
+import {
+  buildLifecycleChecklist,
+  checklistProgress,
+  governanceMilestones,
+} from "./checklist-model";
+import { VENDOR_CHALLENGES, vendorChallengeScore } from "./vendor-challenge";
 import { INCIDENT_TABLETOP, tabletopResult } from "./tabletop-model";
 import { crosswalkScore, FRAMEWORK_CROSSWALK } from "./framework-crosswalk";
 import { buildLifecycleChecklist, checklistProgress, governanceMilestones, nextGovernanceChallenge } from "./checklist-model";
@@ -15,12 +21,14 @@ const statusText = {
 };
 
 export function ChecklistScreen() {
+  const [vendorAnswers, setVendorAnswers] = useState<Record<string, number>>({});
   const [tabletopAnswers, setTabletopAnswers] = useState<Record<string, number>>({});
   const [crosswalkAnswers, setCrosswalkAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
   const milestones = governanceMilestones(phases);
+  const vendorScore = vendorChallengeScore(vendorAnswers);
   const tabletop = tabletopResult(tabletopAnswers);
   const crosswalk = crosswalkScore(crosswalkAnswers);
   const challenge = nextGovernanceChallenge(phases);
@@ -63,14 +71,76 @@ export function ChecklistScreen() {
       {challenge && <section className="checklist-phase" aria-label="Recommended next challenge"><h2>Your next governance challenge · {challenge.phase}</h2><div className="checklist-task checklist-action"><Circle weight="duotone" /><div><h3>{challenge.title}</h3><p>{challenge.detail}</p><small>{challenge.progress}</small></div><Button variant="default" asChild size="sm"><Link to={challenge.href}>{challenge.action}<ArrowRight /></Link></Button></div></section>}
       <section className="checklist-phase" aria-label="Governance milestones">
         <h2>Governance milestones · {milestones.level}</h2>
-        <p>{milestones.points} progress points · Earned by completing applicable actions, with extra credit for evidence and verification—not by raising self-assessment scores.</p>
+        <p>
+          {milestones.points} progress points · Earned by completing applicable actions, with extra
+          credit for evidence and verification—not by raising self-assessment scores.
+        </p>
         <div className="checklist-tasks">
           {milestones.badges.map((badge) => (
-            <article className={`checklist-task ${badge.earned ? "checklist-complete" : "checklist-action"}`} key={badge.id}>
+            <article
+              className={`checklist-task ${badge.earned ? "checklist-complete" : "checklist-action"}`}
+              key={badge.id}
+            >
               {badge.earned ? <CheckCircle weight="duotone" /> : <Circle weight="duotone" />}
-              <div><h3>{badge.title} {badge.earned ? "· Earned" : "· In progress"}</h3><p>{badge.detail}</p></div>
+              <div>
+                <h3>
+                  {badge.title} {badge.earned ? "· Earned" : "· In progress"}
+                </h3>
+                <p>{badge.detail}</p>
+              </div>
             </article>
           ))}
+        </div>
+      </section>
+      <section className="checklist-phase" aria-label="AI supplier assurance challenge">
+        <h2>Supplier assurance challenge</h2>
+        <p>
+          Practice evidence-led AI vendor due diligence. Scenarios are illustrative and do not
+          replace procurement, security, privacy, or legal review.
+        </p>
+        <p>
+          <strong>
+            {vendorScore.preferred}/{vendorScore.answered}
+          </strong>{" "}
+          preferred decisions ·{" "}
+          {vendorScore.complete && (
+            <Button variant="outline" onClick={() => setVendorAnswers({})}>
+              Play again
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {VENDOR_CHALLENGES.map((q) => {
+            const selected = vendorAnswers[q.id];
+            return (
+              <article className="checklist-task" key={q.id}>
+                <div>
+                  <h3>{q.scenario}</h3>
+                  {q.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() => setVendorAnswers((answers) => ({ ...answers, [q.id]: index }))}
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === q.preferred
+                          ? "Good evidence-first choice."
+                          : "Consider the evidence gap."}
+                      </strong>{" "}
+                      {q.rationale}
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
       <section className="checklist-phase" aria-label="AI incident tabletop exercise"><h2>Incident tabletop · Contain, coordinate, recover</h2><p>Practice a response sequence for a fictional AI incident. Your answers stay in this browser session; this exercise does not replace your incident plan or legal review.</p><p><strong>{tabletop.bestChoices}/{tabletop.answered}</strong> sound response choices · {tabletop.finished && <Button variant="outline" onClick={() => setTabletopAnswers({})}>Run exercise again</Button>}</p><div className="checklist-tasks">{INCIDENT_TABLETOP.map((step) => { const selected = tabletopAnswers[step.id]; return <article className="checklist-task" key={step.id}><div><h3>{step.prompt}</h3>{step.choices.map((choice, index) => <Button key={choice} size="sm" variant={selected === index ? "default" : "outline"} disabled={selected !== undefined} onClick={() => setTabletopAnswers((answers) => ({ ...answers, [step.id]: index }))}>{choice}</Button>)}{selected !== undefined && <p role="status"><strong>{selected === step.best ? "Strong response." : "Review the response plan."}</strong> {step.feedback}</p>}</div></article>; })}</div><p><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noreferrer">Reference: NIST AI Risk Management Framework</a></p></section>
