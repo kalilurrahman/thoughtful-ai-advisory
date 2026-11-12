@@ -1,9 +1,15 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle, Circle, MinusCircle } from "@phosphor-icons/react";
 import { EmptyChecklist } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
-import { buildLifecycleChecklist, checklistProgress, governanceMilestones } from "./checklist-model";
+import {
+  buildLifecycleChecklist,
+  checklistProgress,
+  governanceMilestones,
+} from "./checklist-model";
+import { VENDOR_CHALLENGES, vendorChallengeScore } from "./vendor-challenge";
 
 const statusText = {
   complete: "Complete",
@@ -12,10 +18,12 @@ const statusText = {
 };
 
 export function ChecklistScreen() {
+  const [vendorAnswers, setVendorAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
   const milestones = governanceMilestones(phases);
+  const vendorScore = vendorChallengeScore(vendorAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -54,14 +62,76 @@ export function ChecklistScreen() {
       </section>
       <section className="checklist-phase" aria-label="Governance milestones">
         <h2>Governance milestones · {milestones.level}</h2>
-        <p>{milestones.points} progress points · Earned by completing applicable actions, with extra credit for evidence and verification—not by raising self-assessment scores.</p>
+        <p>
+          {milestones.points} progress points · Earned by completing applicable actions, with extra
+          credit for evidence and verification—not by raising self-assessment scores.
+        </p>
         <div className="checklist-tasks">
           {milestones.badges.map((badge) => (
-            <article className={`checklist-task ${badge.earned ? "checklist-complete" : "checklist-action"}`} key={badge.id}>
+            <article
+              className={`checklist-task ${badge.earned ? "checklist-complete" : "checklist-action"}`}
+              key={badge.id}
+            >
               {badge.earned ? <CheckCircle weight="duotone" /> : <Circle weight="duotone" />}
-              <div><h3>{badge.title} {badge.earned ? "· Earned" : "· In progress"}</h3><p>{badge.detail}</p></div>
+              <div>
+                <h3>
+                  {badge.title} {badge.earned ? "· Earned" : "· In progress"}
+                </h3>
+                <p>{badge.detail}</p>
+              </div>
             </article>
           ))}
+        </div>
+      </section>
+      <section className="checklist-phase" aria-label="AI supplier assurance challenge">
+        <h2>Supplier assurance challenge</h2>
+        <p>
+          Practice evidence-led AI vendor due diligence. Scenarios are illustrative and do not
+          replace procurement, security, privacy, or legal review.
+        </p>
+        <p>
+          <strong>
+            {vendorScore.preferred}/{vendorScore.answered}
+          </strong>{" "}
+          preferred decisions ·{" "}
+          {vendorScore.complete && (
+            <Button variant="outline" onClick={() => setVendorAnswers({})}>
+              Play again
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {VENDOR_CHALLENGES.map((q) => {
+            const selected = vendorAnswers[q.id];
+            return (
+              <article className="checklist-task" key={q.id}>
+                <div>
+                  <h3>{q.scenario}</h3>
+                  {q.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() => setVendorAnswers((answers) => ({ ...answers, [q.id]: index }))}
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === q.preferred
+                          ? "Good evidence-first choice."
+                          : "Consider the evidence gap."}
+                      </strong>{" "}
+                      {q.rationale}
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
       <div className="checklist-phases">
