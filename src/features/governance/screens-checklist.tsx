@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle, Circle, MinusCircle } from "@phosphor-icons/re
 import { EmptyChecklist } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import { useGovernance } from "./store";
-import { buildLifecycleChecklist, checklistProgress, governanceMilestones } from "./checklist-model";
+import { buildLifecycleChecklist, checklistProgress, governanceMilestones, nextGovernanceChallenge } from "./checklist-model";
 
 const statusText = {
   complete: "Complete",
@@ -16,6 +16,7 @@ export function ChecklistScreen() {
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
   const milestones = governanceMilestones(phases);
+  const challenge = nextGovernanceChallenge(phases);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -52,6 +53,7 @@ export function ChecklistScreen() {
           aria-label="Applicable checklist completion"
         />
       </section>
+      {challenge && <section className="checklist-phase" aria-label="Recommended next challenge"><h2>Your next governance challenge · {challenge.phase}</h2><div className="checklist-task checklist-action"><Circle weight="duotone" /><div><h3>{challenge.title}</h3><p>{challenge.detail}</p><small>{challenge.progress}</small></div><Button variant="default" asChild size="sm"><Link to={challenge.href}>{challenge.action}<ArrowRight /></Link></Button></div></section>}
       <section className="checklist-phase" aria-label="Governance milestones">
         <h2>Governance milestones · {milestones.level}</h2>
         <p>{milestones.points} progress points · Earned by completing applicable actions, with extra credit for evidence and verification—not by raising self-assessment scores.</p>
