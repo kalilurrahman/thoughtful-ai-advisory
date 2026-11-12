@@ -1,0 +1,15 @@
+export type CrosswalkRound = { id: string; activity: string; choices: [string, string, string]; correct: number; explanation: string; source: string; url: string };
+
+export const FRAMEWORK_CROSSWALK: CrosswalkRound[] = [
+  { id: "context", activity: "Define intended use, context, affected people, and potential impacts before testing.", choices: ["NIST AI RMF · MAP", "ISO/IEC 42001 · continual improvement", "EU AI Act · transparency"], correct: 0, explanation: "MAP establishes context and identifies risks related to the system’s intended use and context.", source: "NIST AI RMF", url: "https://www.nist.gov/itl/ai-risk-management-framework" },
+  { id: "management-system", activity: "Establish organizational policies, objectives, roles, and processes to manage AI responsibly.", choices: ["ISO/IEC 42001 · AI management system", "NIST AI RMF · MEASURE only", "DPDP Act · data principal rights only"], correct: 0, explanation: "ISO/IEC 42001 specifies requirements for establishing, implementing, maintaining, and continually improving an AI management system.", source: "ISO/IEC 42001", url: "https://www.iso.org/standard/42001" },
+  { id: "literacy", activity: "Ensure relevant staff have AI literacy appropriate to their role and use context.", choices: ["EU AI Act · AI literacy", "NIST AI RMF · MAP only", "ISO/IEC 42001 · audit only"], correct: 0, explanation: "The AI Act includes AI literacy obligations for providers and deployers, taking account of knowledge, experience, education, training, and context of use.", source: "European Commission · AI Act", url: "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" },
+  { id: "data-purpose", activity: "Review the purpose and basis for processing digital personal data, and apply safeguards before changing how it is used.", choices: ["India · DPDP Act considerations", "NIST AI RMF · GOVERN only", "ISO/IEC 42001 · certification"], correct: 0, explanation: "The DPDP Act addresses processing of digital personal data. Applicability and commencement can depend on government notifications; seek current legal review.", source: "MeitY · DPDP Act 2023", url: "https://www.meity.gov.in/static/uploads/2024/02/Digital-Personal-Data-Protection-Act-2023.pdf" },
+  { id: "measure", activity: "Evaluate, analyze, or track identified AI risks using documented methods and evidence.", choices: ["NIST AI RMF · MEASURE", "EU AI Act · AI literacy", "ISO/IEC 42001 · context of organization"], correct: 0, explanation: "MEASURE covers assessment, analysis, and tracking of identified AI risks; the approach should fit the use context.", source: "NIST AI RMF", url: "https://www.nist.gov/itl/ai-risk-management-framework" },
+];
+
+export function crosswalkScore(answers: Record<string, number>) {
+  const done = FRAMEWORK_CROSSWALK.filter(({ id }) => answers[id] !== undefined);
+  const correct = done.filter(({ id, correct }) => answers[id] === correct).length;
+  return { attempted: done.length, correct, complete: done.length === FRAMEWORK_CROSSWALK.length };
+}

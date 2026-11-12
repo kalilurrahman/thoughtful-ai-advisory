@@ -1,12 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { CONTROLS } from "@/data/governance";
-import { buildLifecycleChecklist, checklistProgress, governanceMilestones } from "@/features/governance/checklist-model";
+import { buildLifecycleChecklist, checklistProgress, governanceMilestones, nextGovernanceChallenge } from "@/features/governance/checklist-model";
 import { initialState, type AIIncident } from "@/features/governance/store";
 
 const allTasks = (state: ReturnType<typeof initialState>) =>
   buildLifecycleChecklist(state).flatMap((phase) => phase.tasks);
 
 describe("workspace lifecycle checklist", () => {
+  it("recommends the first open lifecycle action as a focused challenge", () => {
+    const phases = buildLifecycleChecklist(initialState());
+    const challenge = nextGovernanceChallenge(phases);
+    expect(challenge).toMatchObject({ phase: "Map and register", status: "action", href: "/inventory" });
+  });
   it("awards milestones from completed governance work, not higher scores", () => {
     const state = initialState();
     const phases = buildLifecycleChecklist(state);

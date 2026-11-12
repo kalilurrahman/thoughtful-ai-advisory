@@ -323,3 +323,15 @@ export function governanceMilestones(phases: ChecklistPhase[]) {
   ];
   return { points: complete * 10 + verified * 5, level: percent >= 80 ? "Steward" : percent >= 50 ? "Builder" : "Explorer", earned: badges.filter((badge) => badge.earned), next: badges.find((badge) => !badge.earned) ?? null, badges };
 }
+
+/** Picks one actionable learning target to avoid overwhelming a learner with the full checklist. */
+export function nextGovernanceChallenge(phases: ChecklistPhase[]) {
+  const order = ["map", "assess", "decide", "operate"];
+  for (const phaseId of order) {
+    const phase = phases.find((item) => item.id === phaseId);
+    const task = phase?.tasks.find((item) => item.status === "action");
+    if (task) return { phase: phase.title, ...task };
+  }
+  const task = phases.flatMap((phase) => phase.tasks).find((item) => item.status === "action");
+  return task ? { phase: "Next governance action", ...task } : null;
+}
