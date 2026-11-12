@@ -13,6 +13,7 @@ import {
 import { VENDOR_CHALLENGES, vendorChallengeScore } from "./vendor-challenge";
 import { INCIDENT_TABLETOP, tabletopResult } from "./tabletop-model";
 import { crosswalkScore, FRAMEWORK_CROSSWALK } from "./framework-crosswalk";
+import { EVIDENCE_DETECTIVE_ROUNDS, evidenceDetectiveScore } from "./evidence-detective";
 import { RED_TEAM_ROUNDS, redTeamScore } from "./red-team-game";
 import {
   buildLifecycleChecklist,
@@ -28,6 +29,7 @@ const statusText = {
 };
 
 export function ChecklistScreen() {
+  const [evidenceAnswers, setEvidenceAnswers] = useState<Record<string, string>>({});
   const [redTeamAnswers, setRedTeamAnswers] = useState<Record<string, number>>({});
   const [changeSelections, setChangeSelections] = useState<Record<string, string[]>>({});
   const [changeSubmitted, setChangeSubmitted] = useState<Record<string, boolean>>({});
@@ -41,6 +43,7 @@ export function ChecklistScreen() {
   const vendorScore = vendorChallengeScore(vendorAnswers);
   const tabletop = tabletopResult(tabletopAnswers);
   const crosswalk = crosswalkScore(crosswalkAnswers);
+  const evidenceGame = evidenceDetectiveScore(evidenceAnswers);
   const redTeam = redTeamScore(redTeamAnswers);
   const challenge = nextGovernanceChallenge(phases);
   const profiles = state.systems.map((system, index) => {
@@ -263,6 +266,16 @@ export function ChecklistScreen() {
           })}
         </div>
       </section>
+      <section className="checklist-phase" aria-label="Evidence detective game">
+        <h2>Evidence detective · Is it decision-grade?</h2>
+        <p>
+          Classify the strength of a governance evidence sample. Quality judgments are illustrative;
+          adapt evidence criteria to your organization and applicable obligations.
+        </p>
+        <p>
+          {evidenceGame.correct}/{evidenceGame.answered} identified ·{" "}
+          {evidenceGame.complete && (
+            <Button variant="outline" onClick={() => setEvidenceAnswers({})}>
       <section className="checklist-phase" aria-label="AI security defender game">
         <h2>AI red-team / defender challenge</h2>
         <p>
@@ -281,6 +294,23 @@ export function ChecklistScreen() {
           )}
         </p>
         <div className="checklist-tasks">
+          {EVIDENCE_DETECTIVE_ROUNDS.map((round) => {
+            const selected = evidenceAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.evidence}</h3>
+                  {["Weak", "Partial", "Strong"].map((grade) => (
+                    <Button
+                      key={grade}
+                      size="sm"
+                      variant={selected === grade ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setEvidenceAnswers((previous) => ({ ...previous, [round.id]: grade }))
+                      }
+                    >
+                      {grade}
           {RED_TEAM_ROUNDS.map((round) => {
             const selected = redTeamAnswers[round.id];
             return (
@@ -302,6 +332,12 @@ export function ChecklistScreen() {
                   ))}
                   {selected !== undefined && (
                     <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good assessment."
+                          : `Better classification: ${round.best}.`}
+                      </strong>{" "}
+                      {round.lesson}
                       <strong>{selected === round.best ? "Defended." : "Control gap."}</strong>{" "}
                       {round.feedback}
       <section className="checklist-phase" aria-label="AI change impact challenge">
@@ -371,6 +407,7 @@ export function ChecklistScreen() {
             );
           })}
         </div>
+      </section>
         <a
           href="https://www.nist.gov/itl/ai-risk-management-framework"
           target="_blank"
