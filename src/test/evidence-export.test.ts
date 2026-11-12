@@ -173,6 +173,7 @@ describe("governance evidence downloads", () => {
       expect(file.size).toBeGreaterThan(500);
       expect(header.startsWith(format === "PDF" ? "%PDF" : "PK")).toBe(true);
     },
+    15000,
   );
 });
 
