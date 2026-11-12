@@ -21,6 +21,7 @@ import {
   governanceMilestones,
   nextGovernanceChallenge,
 } from "./checklist-model";
+import { INCLUSIVE_DESIGN_ROUNDS, inclusiveDesignScore } from "./inclusive-design-game";
 
 const statusText = {
   complete: "Complete",
@@ -29,6 +30,7 @@ const statusText = {
 };
 
 export function ChecklistScreen() {
+  const [inclusionAnswers, setInclusionAnswers] = useState<Record<string, number>>({});
   const [evidenceAnswers, setEvidenceAnswers] = useState<Record<string, string>>({});
   const [redTeamAnswers, setRedTeamAnswers] = useState<Record<string, number>>({});
   const [changeSelections, setChangeSelections] = useState<Record<string, string[]>>({});
@@ -46,6 +48,7 @@ export function ChecklistScreen() {
   const evidenceGame = evidenceDetectiveScore(evidenceAnswers);
   const redTeam = redTeamScore(redTeamAnswers);
   const challenge = nextGovernanceChallenge(phases);
+  const inclusionScore = inclusiveDesignScore(inclusionAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -266,6 +269,16 @@ export function ChecklistScreen() {
           })}
         </div>
       </section>
+      <section className="checklist-phase" aria-label="Inclusive AI design game">
+        <h2>Inclusive design challenge</h2>
+        <p>
+          Practice identifying evaluation, accessibility, and recourse gaps. Scenarios are learning
+          prompts, not a substitute for impact assessment or consultation with affected communities.
+        </p>
+        <p>
+          {inclusionScore.sound}/{inclusionScore.attempted} thoughtful decisions ·{" "}
+          {inclusionScore.complete && (
+            <Button variant="outline" onClick={() => setInclusionAnswers({})}>
       <section className="checklist-phase" aria-label="Evidence detective game">
         <h2>Evidence detective · Is it decision-grade?</h2>
         <p>
@@ -294,6 +307,8 @@ export function ChecklistScreen() {
           )}
         </p>
         <div className="checklist-tasks">
+          {INCLUSIVE_DESIGN_ROUNDS.map((round) => {
+            const selected = inclusionAnswers[round.id];
           {EVIDENCE_DETECTIVE_ROUNDS.map((round) => {
             const selected = evidenceAnswers[round.id];
             return (
@@ -324,6 +339,7 @@ export function ChecklistScreen() {
                       variant={selected === index ? "default" : "outline"}
                       disabled={selected !== undefined}
                       onClick={() =>
+                        setInclusionAnswers((answers) => ({ ...answers, [round.id]: index }))
                         setRedTeamAnswers((current) => ({ ...current, [round.id]: index }))
                       }
                     >
@@ -334,6 +350,10 @@ export function ChecklistScreen() {
                     <p role="status">
                       <strong>
                         {selected === round.best
+                          ? "Strong inclusive-design choice."
+                          : "Consider the missing safeguard."}
+                      </strong>{" "}
+                      {round.lesson}
                           ? "Good assessment."
                           : `Better classification: ${round.best}.`}
                       </strong>{" "}
