@@ -72,6 +72,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "human-oversight-assurance",
   },
   {
+    id: "data-governance-assurance",
+    title: "Data governance & privacy assurance",
+    category: "Data & privacy assurance",
+    description:
+      "Practice data provenance/permissions, minimization and retention, sensitive-data guardrails, and evidence-backed response to data issues.",
+    anchor: "data-governance-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
