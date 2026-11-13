@@ -29,7 +29,17 @@ import {
   type RoadmapFields,
 } from "./roadmap-model";
 import { filterInventory, inventoryCsv } from "./inventory-export";
-import { Chip, Dot, Kicker } from "./screens-core";
+import { Chip, Dot, Kicker, dispositionTone } from "./screens-core";
+import {
+  FilterTabs,
+  PageHeader,
+  ResponsiveDrawer,
+  RiskTierTag,
+  StatusBadge,
+  gateState,
+} from "@/components/assurance";
+import { recordTrail, trailActor } from "./trail-store";
+const DISPOSITIONS = ["Approved", "Approved with limits", "Under review", "Not approved"] as const;
 const triageSelects: [string, string, string][] = [
   [
     "decision_impact",
@@ -62,7 +72,8 @@ const triageSelects: [string, string, string][] = [
   ["genai", "Generative AI / LLM?", "yes|Yes;no|No"],
 ];
 export function InventoryScreen() {
-  const { state, dispatch } = useGovernance();
+  const { state, dispatch, userId, workspaceName } = useGovernance();
+  const [drawerIndex, setDrawerIndex] = useState<number | null>(null);
   const [filter, setFilter] = useState("All"),
     [statusFilter, setStatusFilter] = useState("All statuses"),
     [open, setOpen] = useState(false),
@@ -98,7 +109,9 @@ export function InventoryScreen() {
   const visibleSystems = baseSystems.filter(({ system }) => {
     if (statusFilter === "Untriaged") return !system.riskTriage;
     if (statusFilter === "Needs attention")
-      return !system.riskTriage || system.status === "Not approved" || system.status === "Under review";
+      return (
+        !system.riskTriage || system.status === "Not approved" || system.status === "Under review"
+      );
     return true;
   });
   function openRegistration() {
@@ -123,8 +136,34 @@ export function InventoryScreen() {
     setStatus(system.status);
     setOpen(true);
   }
+  const drawerSystem = drawerIndex === null ? undefined : state.systems[drawerIndex];
+  function setDisposition(index: number, status: (typeof DISPOSITIONS)[number]) {
+    const system = state.systems[index];
+    if (!system || system.status === status) return;
+    dispatch({ type: "update-system", index, system: { ...system, status } });
+    recordTrail({
+      title: `${system.name} · disposition ${status}`,
+      who: trailActor(userId),
+      ref: system.name,
+      outcome: dispositionTone(status),
+    });
+  }
   return (
     <>
+      <PageHeader
+        eyebrow={`${workspaceName} · AI inventory`}
+        title="AI inventory"
+        meta={[
+          `${state.systems.length} registered`,
+          `${state.systems.filter((system) => !system.riskTriage).length} untriaged · gate ${workspaceGate}`,
+        ]}
+        actions={
+          <Button onClick={openRegistration} disabled={atSystemLimit}>
+            <Plus />
+            Register &amp; triage
+          </Button>
+        }
+      />
       <div className="inventory-toolbar">
         <label className="inventory-search">
           <MagnifyingGlass />
@@ -170,10 +209,6 @@ export function InventoryScreen() {
           <DownloadSimple />
           Export view ({visibleSystems.length})
         </Button>
-        <Button onClick={openRegistration} disabled={atSystemLimit}>
-          <Plus />
-          Register & triage
-        </Button>
       </div>
       {atSystemLimit && (
         <p role="alert" className="danger">
@@ -212,54 +247,44 @@ export function InventoryScreen() {
           <strong>{state.systems.filter((system) => !system.riskTriage).length}</strong> untriaged
         </span>
       </div>
-      <div className="filters">
-        {["All", "High-risk", "Limited", "Minimal", "Prohibited"].map((x) => (
-          <Button
-            key={x}
-            variant={filter === x ? "default" : "outline"}
-            onClick={() => setFilter(x)}
-          >
-            {x} <span>{state.systems.filter((s) => x === "All" || s.tier === x).length}</span>
-          </Button>
-        ))}
-      </div>
-      <div className="system-list">
+      <FilterTabs
+        label="Filter by risk tier"
+        value={filter}
+        onChange={setFilter}
+        className="inventory-tier-tabs"
+        items={["All", "High-risk", "Limited", "Minimal", "Prohibited"].map((x) => ({
+          id: x,
+          label: x,
+          count: state.systems.filter((s) => x === "All" || s.tier === x).length,
+        }))}
+      />
+      <div className="system-list system-cards">
         {visibleSystems.map(({ system: s, index }) => (
-          <article className="system-row" key={s.name + index}>
+          <article className="system-row system-card" key={s.name + index}>
             <div className="split">
-              <h3>{s.name}</h3>
-              <Chip
-                tone={
-                  s.tier === "High-risk" || s.tier === "Prohibited"
-                    ? "danger"
-                    : s.tier === "Limited"
-                      ? "warning"
-                      : "neutral"
-                }
-              >
-                {s.tier}
-              </Chip>
+              <h3>
+                <button
+                  type="button"
+                  className="system-open"
+                  onClick={() => setDrawerIndex(index)}
+                  aria-haspopup="dialog"
+                >
+                  {s.name}
+                </button>
+              </h3>
+              <RiskTierTag tier={s.tier} />
             </div>
             <p className="muted">
               {s.kind} · {s.owner} · {s.data}
             </p>
-            <p>
-              <Dot
-                tone={
-                  s.status === "Approved"
-                    ? "success"
-                    : s.status === "Not approved"
-                      ? "danger"
-                      : "warning"
-                }
-              />
-              {s.status}
-              {" · "}
+            <hr className="hairline" />
+            <p className="system-status">
+              <StatusBadge tone={dispositionTone(s.status)}>{s.status}</StatusBadge>
               <Chip tone={s.riskTriage ? "success" : "warning"}>
                 {s.riskTriage ? "Triaged" : "Not triaged"}
               </Chip>
             </p>
-            <p className="muted">{s.vendor}</p>
+            <p className="muted mono">{s.vendor}</p>
             {(!s.owner || !s.vendor) && (
               <p className="danger inventory-gap">Missing ownership/vendor details</p>
             )}
@@ -306,6 +331,10 @@ export function InventoryScreen() {
               </details>
             )}
             <div className="row-actions">
+              <Button variant="ghost" size="sm" onClick={() => setDrawerIndex(index)}>
+                <ArrowRight />
+                Details &amp; disposition
+              </Button>
               <Button variant="ghost" size="sm" onClick={() => openEditor(s, index)}>
                 <PencilSimple />
                 Edit record
@@ -332,9 +361,99 @@ export function InventoryScreen() {
         Screening is a preliminary inference, not a legal classification or approval. New records
         remain Under review until an accountable human confirms disposition.
       </p>
+      <ResponsiveDrawer
+        open={drawerSystem !== undefined}
+        onOpenChange={(o) => {
+          if (!o) setDrawerIndex(null);
+        }}
+        title={drawerSystem?.name ?? "System"}
+        description={drawerSystem ? `${drawerSystem.kind} · ${drawerSystem.owner}` : undefined}
+      >
+        {drawerSystem && drawerIndex !== null && (
+          <>
+            <div className="drawer-tags">
+              <RiskTierTag tier={drawerSystem.tier} />
+              <StatusBadge tone={dispositionTone(drawerSystem.status)}>
+                {drawerSystem.status}
+              </StatusBadge>
+              <Chip tone={drawerSystem.riskTriage ? "success" : "warning"}>
+                {drawerSystem.riskTriage ? "Triaged" : "Not triaged"}
+              </Chip>
+            </div>
+            <dl className="facts">
+              <dt>Owner</dt>
+              <dd>{drawerSystem.owner || "Unassigned"}</dd>
+              <dt>System type</dt>
+              <dd>{drawerSystem.kind}</dd>
+              <dt>Vendor</dt>
+              <dd>{drawerSystem.vendor || "Not specified"}</dd>
+              <dt>Data classification</dt>
+              <dd>{drawerSystem.data}</dd>
+              <dt>Risk tier</dt>
+              <dd>
+                {drawerSystem.tier}
+                {drawerSystem.riskTriage
+                  ? ` · inferred ${new Date(drawerSystem.riskTriage.assessedAt).toISOString().slice(0, 10)}`
+                  : " · legacy display tier"}
+              </dd>
+              <dt>Release gate</dt>
+              <dd>
+                <StatusBadge
+                  tone={
+                    gateState(workspaceGate) === "ready"
+                      ? "effective"
+                      : gateState(workspaceGate) === "conditional"
+                        ? "partial"
+                        : "gap"
+                  }
+                >
+                  {workspaceGate}
+                </StatusBadge>{" "}
+                <span className="muted">workspace-wide</span>
+              </dd>
+            </dl>
+            {drawerSystem.riskTriage && (
+              <p className="muted small">{drawerSystem.riskTriage.result.rationale}</p>
+            )}
+            <Kicker>Disposition · accountable human confirms</Kicker>
+            <div className="disposition-grid" role="group" aria-label="Disposition">
+              {DISPOSITIONS.map((d) => (
+                <Button
+                  key={d}
+                  variant={drawerSystem.status === d ? "default" : "outline"}
+                  aria-pressed={drawerSystem.status === d}
+                  onClick={() => setDisposition(drawerIndex, d)}
+                >
+                  {d}
+                </Button>
+              ))}
+            </div>
+            <p className="footnote">
+              Screening is a preliminary inference, not a legal classification or approval. A
+              disposition set here is recorded in the evidence trail (preview) and in the workspace
+              record.
+            </p>
+            <div className="row-actions">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setDrawerIndex(null);
+                  openEditor(drawerSystem, drawerIndex);
+                }}
+              >
+                <PencilSimple />
+                Edit record
+              </Button>
+            </div>
+          </>
+        )}
+      </ResponsiveDrawer>
       <Dialog
         open={confirmDeleteIndex !== null}
-        onOpenChange={(o) => { if (!o) setConfirmDeleteIndex(null); }}
+        onOpenChange={(o) => {
+          if (!o) setConfirmDeleteIndex(null);
+        }}
       >
         <DialogContent>
           <DialogTitle>Delete system?</DialogTitle>
@@ -602,7 +721,8 @@ export function GuardrailsScreen() {
         <div>
           <Kicker>Guardrail coverage</Kicker>
           <p>
-            {coverage.enabled} of {coverage.required} required controls for <strong>{state.tier}</strong> tier
+            {coverage.enabled} of {coverage.required} required controls for{" "}
+            <strong>{state.tier}</strong> tier
           </p>
           <p className={missingRequired.length ? "danger" : "muted"}>
             {missingRequired.length
@@ -659,7 +779,11 @@ export function GuardrailsScreen() {
                     <div>
                       <span className={!isRequired ? "muted" : ""}>{name}</span>
                       <small className={isRequired && !enabled ? "danger" : "muted"}>
-                        {isRequired ? (enabled ? "Required · enabled" : "Required · missing") : "Optional"}
+                        {isRequired
+                          ? enabled
+                            ? "Required · enabled"
+                            : "Required · missing"
+                          : "Optional"}
                       </small>
                     </div>
                     <Switch
@@ -729,15 +853,13 @@ export function RoadmapScreen() {
             onClick={() => setFilter(x)}
           >
             {x}{" "}
-            <span>
-              {x === "All" ? state.roadmap.length : x === "Open" ? openCount : doneCount}
-            </span>
+            <span>{x === "All" ? state.roadmap.length : x === "Open" ? openCount : doneCount}</span>
           </Button>
         ))}
       </div>
       <p className="muted" aria-live="polite">
-        <strong>{doneCount}</strong> of {state.roadmap.length} complete · <strong>{openCount}</strong>{" "}
-        open
+        <strong>{doneCount}</strong> of {state.roadmap.length} complete ·{" "}
+        <strong>{openCount}</strong> open
       </p>
       <details className="decision-intake roadmap-add">
         <summary>
@@ -821,7 +943,9 @@ export function RoadmapScreen() {
               )}
               {items.length === 0 && (
                 <p className="muted roadmap-empty">
-                  {phaseItems.length === 0 ? "No items in this phase." : "No items match this filter."}
+                  {phaseItems.length === 0
+                    ? "No items in this phase."
+                    : "No items match this filter."}
                 </p>
               )}
             </section>

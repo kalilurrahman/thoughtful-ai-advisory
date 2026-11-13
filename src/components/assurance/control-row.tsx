@@ -5,15 +5,15 @@ import { StatusBadge, type StatusTone } from "./status-badge";
 export interface ControlRowProps {
   code: string;
   text: string;
-  weight?: string;
-  owner?: string;
-  status?: StatusTone;
+  weight?: string | undefined;
+  owner?: string | undefined;
+  status?: StatusTone | undefined;
   statusLabel?: ReactNode;
-  evidence?: string;
-  refs?: string[];
-  onClick?: () => void;
-  selected?: boolean;
-  className?: string;
+  evidence?: string | undefined;
+  refs?: string[] | undefined;
+  onClick?: (() => void) | undefined;
+  selected?: boolean | undefined;
+  className?: string | undefined;
 }
 
 /**

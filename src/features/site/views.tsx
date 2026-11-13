@@ -55,15 +55,20 @@ export function PageHeader({
   eyebrow,
   meta,
   art,
+  navy = false,
 }: {
   h1: string;
   lead?: string | undefined;
   eyebrow?: ReactNode;
   meta?: ReactNode;
   art?: ReactNode;
+  /** Section landing pages: the navy hero band, with the dark tokens scoped to it. */
+  navy?: boolean | undefined;
 }) {
   return (
-    <div className={`page-header${art ? " page-header--art" : ""}`}>
+    <div
+      className={`page-header${art ? " page-header--art" : ""}${navy ? " page-header--navy dark" : ""}`}
+    >
       <div className="container page-header-grid">
         <div className="page-header-text">
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
@@ -92,6 +97,8 @@ function pageHeaderProps(page: SitePage, kind?: ArtKind) {
     eyebrow: siteConfig.section_labels[page.section] ?? undefined,
     meta: parts.length ? parts.join(" · ") : undefined,
     art: art ? <SectionArt kind={art} /> : undefined,
+    // A section's landing page (/framework, /solutions, …) opens on the navy band.
+    navy: page.path.split("/").filter(Boolean).length === 1 && page.template === "page",
   };
 }
 

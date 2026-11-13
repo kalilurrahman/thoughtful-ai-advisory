@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { RouteLink } from "./route-link";
 
 export type GateState = "blocked" | "conditional" | "ready";
 
@@ -81,7 +81,7 @@ export function GateBanner({
   );
   if (to)
     return (
-      <Link
+      <RouteLink
         to={to}
         data-gate={state}
         className={cn(
@@ -90,7 +90,7 @@ export function GateBanner({
         )}
       >
         {inner}
-      </Link>
+      </RouteLink>
     );
   return (
     <div role="status" data-gate={state} className={box}>

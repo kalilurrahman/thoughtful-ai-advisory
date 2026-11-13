@@ -890,3 +890,129 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
     .code-figure.is-collapsed pre { max-height: none; -webkit-mask-image: none; mask-image: none; }
   }
 }
+
+/* ==========================================================================================
+ * Assurance uplift (docs/design/assurance/README.md §3.6): the sticky translucent header, the
+ * signature double rule, the navy hero and section landing bands (the dark tokens scoped with
+ * `.dark`), the evidence card, the how-it-works step tabs, the stakeholder selector and the navy
+ * closing band. Tokens only; the site names (--c-*) are re-mapped inside each navy band so they
+ * pick up the scoped dark values.
+ * ========================================================================================== */
+.veritrail-site {
+.site-header { background: color-mix(in oklab, var(--c-bg) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.site-header.is-scrolled { box-shadow: 0 1px 2px rgba(11, 22, 32, 0.05), 0 4px 12px rgba(11, 22, 32, 0.06); }
+.brand { font-family: var(--font-heading); letter-spacing: 0.12em; font-size: 1.2rem; }
+.page-header .container::after, .hero .container::after { height: 0; border-top: 0; border-bottom: 4px double var(--c-rule); }
+.eyebrow { font-family: var(--mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; line-height: 1.3; }
+.page-meta { font-family: var(--mono); font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.1em; }
+.lead { color: var(--c-text); font-size: 1.1875rem; line-height: 1.55; }
+.btn { border-radius: var(--shape-control); font-weight: 500; }
+.control-id, .question-id, .control-ref, .pillar-code { font-weight: 500; }
+
+/* Navy bands: the hero, section landing headers and the closing call to action. */
+.hero--navy, .page-header--navy, .home-band--navy {
+  --c-bg: var(--sidebar); --c-card: var(--card); --c-surface: var(--secondary); --c-surface-2: var(--muted);
+  --c-border: var(--border); --c-rule: var(--rule); --c-text: var(--foreground); --c-heading: var(--foreground);
+  --c-muted: var(--muted-foreground); --c-accent: var(--primary); --c-primary: var(--primary);
+  --c-primary-hover: var(--accent-foreground); --c-on-primary: var(--primary-foreground); --c-link: var(--primary);
+  --c-focus: var(--ring); --c-info-bg: var(--accent); --c-input-border: var(--input);
+  background: var(--sidebar); color: var(--c-text);
+}
+.hero--navy a:not(.btn), .page-header--navy a:not(.btn), .home-band--navy a:not(.btn) { color: var(--c-link); }
+.hero--navy .eyebrow, .page-header--navy .eyebrow, .page-header--navy .page-meta { color: var(--nav-muted); }
+.hero--navy .container::after, .page-header--navy .container::after { border-bottom-color: var(--nav-muted); opacity: 0.6; }
+.hero--navy .hero-em { color: var(--sidebar-primary); background: none; }
+.hero--navy .btn-primary { background: var(--sidebar-primary); color: var(--sidebar-primary-foreground); }
+.hero--navy .btn-primary:hover { background: var(--accent-foreground); color: var(--sidebar-primary-foreground); }
+.hero--navy .btn-secondary, .home-band--navy .btn-secondary { background: transparent; color: var(--c-text); border-color: var(--nav-muted); }
+.hero--navy .btn-secondary:hover, .home-band--navy .btn-secondary:hover { background: color-mix(in oklab, var(--sidebar-accent) 70%, transparent); color: var(--c-text); }
+.hero--navy .hero-note { color: var(--nav-muted); }
+.hero--navy .hero-note > svg { color: var(--sidebar-primary); }
+.hero--home { padding: 3rem 0 0; background: var(--sidebar); }
+.hero--home .hero-grid { gap: 2rem; }
+.hero--home h1 { max-width: 16ch; font-size: clamp(2.5rem, 1.6rem + 3vw, 4.25rem); letter-spacing: -0.02em; }
+.hero--home .lead { max-width: 40rem; }
+.page-header--navy { padding-top: 2.5rem; }
+.page-header--navy h1 { letter-spacing: -0.01em; }
+
+/* The evidence card beside the hero copy. */
+.evidence-card { align-self: center; width: 100%; max-width: 30rem; padding: 1.1rem 1.25rem 1rem; background: var(--card); color: var(--foreground); border: 1px solid var(--border); border-radius: var(--shape-card); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), 0 16px 40px rgba(0, 0, 0, 0.35); }
+.evidence-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-bottom: 0.75rem; border-bottom: 4px double var(--rule); }
+.evidence-card-title { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 600; }
+.evidence-card-meta { font-family: var(--mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-foreground); white-space: nowrap; }
+.evidence-rows { list-style: none; margin: 0; padding: 0; }
+.evidence-row { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr) auto; grid-template-areas: "code name count" "code bar bar"; align-items: center; gap: 0.35rem 0.6rem; padding: 0.7rem 0; border-bottom: 1px solid var(--row-rule); }
+.evidence-row:last-child { border-bottom: 0; }
+.evidence-code { grid-area: code; font-family: var(--mono); font-size: 0.8125rem; font-weight: 500; color: var(--primary); }
+.evidence-name { grid-area: name; font-size: 0.875rem; font-weight: 500; line-height: 1.3; }
+.evidence-count { grid-area: count; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.evidence-count small { font-family: var(--mono); font-size: 0.6875rem; font-weight: 500; color: var(--muted-foreground); }
+.evidence-bar { grid-area: bar; display: flex; gap: 2px; height: 6px; border-radius: 1px; overflow: hidden; background: var(--viz-track); }
+.evidence-bar .seg { display: block; min-width: 0; }
+.evidence-bar .seg-critical { background: var(--danger-ink); }
+.evidence-bar .seg-high { background: var(--warning-ink); }
+.evidence-bar .seg-medium { background: var(--primary); }
+.evidence-card-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; margin: 0.75rem 0 0; font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground); }
+.evidence-card-foot .legend-swatch { width: 10px; height: 10px; border-radius: 1px; }
+.evidence-card-foot .legend-critical { background: var(--danger-ink); }
+.evidence-card-foot .legend-high { background: var(--warning-ink); }
+.evidence-card-foot .legend-medium { background: var(--primary); }
+
+/* How it works: five-step tabs with label chips. */
+.step-tabs { margin-top: 1rem; }
+.step-tablist { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 0.4rem; height: auto; padding: 0.25rem; background: var(--c-surface); border-radius: var(--shape-control); }
+.step-tab { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 40px; padding: 0.4rem 0.85rem; border-radius: var(--shape-badge); font-weight: 500; color: var(--c-muted); background: transparent; cursor: pointer; }
+.step-tab .step-num { font-family: var(--mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; color: var(--c-link); }
+.step-tab[data-state="active"] { background: var(--c-card); color: var(--c-heading); box-shadow: var(--workspace-shadow); }
+.step-panel { margin-top: 1rem; padding: 1.25rem 1.4rem; background: var(--c-card); border: 1px solid var(--c-border); border-left: 3px solid var(--c-primary); border-radius: var(--shape-card); }
+.step-panel[data-state="inactive"] { display: none; }
+.step-eyebrow { margin: 0 0 0.25rem; font-family: var(--mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-muted); }
+.step-panel h3 { margin: 0 0 0.5rem; font-family: var(--font-heading); font-size: 1.4rem; }
+.step-panel p:last-child { margin: 0; }
+
+/* Value by stakeholder: chip selector and the need / provides split. */
+.stakeholder-tabs { margin-top: 1rem; }
+.stakeholder-chips { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 0.5rem; height: auto; padding: 0; background: transparent; }
+.stakeholder-chip { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; padding: 0.45rem 0.95rem; border: 1px solid var(--c-border); border-radius: 999px; background: var(--c-card); color: var(--c-text); font-weight: 500; cursor: pointer; }
+.stakeholder-chip svg { width: 1.1rem; height: 1.1rem; color: var(--c-primary); }
+.stakeholder-chip:hover { border-color: var(--c-primary); }
+.stakeholder-chip[data-state="active"] { background: var(--c-primary); color: var(--c-on-primary); border-color: var(--c-primary); box-shadow: none; }
+.stakeholder-chip[data-state="active"] svg { color: currentColor; }
+.stakeholder-panel { margin-top: 1rem; }
+.stakeholder-panel[data-state="inactive"] { display: none; }
+.stakeholder-panel dl { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin: 0; }
+.stakeholder-panel dl > div { padding: 1.1rem 1.25rem; background: var(--c-card); border: 1px solid var(--c-border); border-radius: var(--shape-card); }
+.stakeholder-panel dt { margin-bottom: 0.4rem; font-family: var(--mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-muted); }
+.stakeholder-panel dd { margin: 0; font-size: 1rem; line-height: 1.55; }
+.home-band .stakeholder-chip, .home-band .stakeholder-panel dl > div { background: var(--c-bg); }
+.home-band .stakeholder-chip[data-state="active"] { background: var(--c-primary); }
+
+/* The closing call to action on navy. */
+.home-band--navy { padding: 4rem 0; border: 0; }
+.home-band--navy .home-section-head h2, .home-band--navy .prose { color: var(--c-text); }
+.home-band--navy .eyebrow { color: var(--nav-muted); }
+.home-band--navy .cta-block { background: color-mix(in oklab, var(--sidebar-accent) 55%, transparent); border-color: var(--sidebar-border); }
+
+@media (min-width: 640px) {
+  .evidence-row { grid-template-columns: 2.4rem minmax(0, 1fr) 7rem auto; grid-template-areas: "code name bar count"; }
+  .stakeholder-panel dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 900px) {
+  .hero--home .hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: center; }
+  .hero--home .hero-grid::after { grid-column: 1 / -1; }
+}
+}
+/* The navy hero replaces the photographic cover: no overlay, a real two-column grid. */
+.veritrail-site {
+  .hero--home { overflow: visible; padding: 3rem 0 0; background: var(--sidebar); }
+  .hero--home::before { display: none; }
+  .hero--home .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .hero--home .hero-grid::after { display: block; grid-column: 1 / -1; }
+  .hero--home .hero-copy { max-width: 46rem; }
+  .hero--home h1 { max-width: 16ch; font-size: clamp(2.5rem, 1.6rem + 3vw, 4.25rem); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1rem; }
+  .hero--navy .hero-em { color: var(--sidebar-primary); }
+  .hero--navy .eyebrow { letter-spacing: 0.1em; }
+  @media (min-width: 900px) {
+    .hero--home .hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: center; }
+  }
+}

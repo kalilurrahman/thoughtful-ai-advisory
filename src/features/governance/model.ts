@@ -197,3 +197,20 @@ export function calculate(
         : "All required controls enabled for this tier.",
   };
 }
+/**
+ * Audit status of a control for the Assurance screens, from the real scoring rules above: the
+ * effective score counts in full only with evidence attached (effectiveScore), so a 3 or 4
+ * without evidence is "Partial · capped". "Attested" is a 3 or 4 with evidence attached; a 2 is
+ * Partial; 0 or 1 is a Gap; an untouched control (0, no evidence) is Not tested.
+ */
+export type ControlStatus = "attested" | "partial" | "gap" | "untested";
+export const controlStatus = (a: Answer): ControlStatus =>
+  a.s === 0 && a.e === 0
+    ? "untested"
+    : effectiveScore(a) >= 3
+      ? "attested"
+      : effectiveScore(a) === 2
+        ? "partial"
+        : "gap";
+/** True when the self-score is 3 or 4 but counts as 2 for want of attached evidence. */
+export const isCapped = (a: Answer) => a.s >= 3 && a.e !== 3;

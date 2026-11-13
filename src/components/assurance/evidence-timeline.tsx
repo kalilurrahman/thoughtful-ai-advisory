@@ -8,10 +8,10 @@ export interface TrailEntry {
   /** Who recorded it. */
   who: string;
   /** What it refers to (a control code, a system name, a pack hash). */
-  ref?: string;
+  ref?: string | undefined;
   /** ISO 8601 instant. */
   at: string;
-  outcome?: StatusTone;
+  outcome?: StatusTone | undefined;
 }
 
 const DOT: Record<StatusTone, string> = {
@@ -34,8 +34,8 @@ export function formatUtc(iso: string): string {
 export interface EvidenceTimelineProps {
   entries: TrailEntry[];
   /** Shown when there are no entries. */
-  empty?: string;
-  className?: string;
+  empty?: string | undefined;
+  className?: string | undefined;
 }
 
 /** Append-only trail: newest first, dot coloured by outcome, mono UTC timestamp, "who · ref". */

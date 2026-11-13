@@ -17,9 +17,40 @@ import {
 } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { CONTROLS, EV, SCORE_LABELS, PILLARS, SOURCES, type Control } from "@/data/governance";
+import {
+  CONTROLS,
+  EV,
+  PHASES,
+  SCORE_LABELS,
+  PILLARS,
+  SOURCES,
+  type Control,
+} from "@/data/governance";
+import {
+  ControlRow,
+  FilterTabs,
+  GateBanner,
+  KpiTile,
+  PageHeader,
+  PillarScore,
+  RiskTierTag,
+  STATUS_WORDS,
+  StatusBadge,
+  gateState,
+  type StatusTone,
+} from "@/components/assurance";
 import { useGovernance } from "./store";
-import { at, answerAt, scoreTone, gapPriority, gapPoints, gateFloor } from "./model";
+import {
+  at,
+  answerAt,
+  controlStatus,
+  isCapped,
+  scoreTone,
+  gapPriority,
+  gapPoints,
+  gateFloor,
+} from "./model";
+import { recordTrail, trailActor } from "./trail-store";
 import { ContentChangelog, ContentUpdateDate } from "./content-changelog";
 export function Kicker({ children }: { children: ReactNode }) {
   return <p className="kicker">{children}</p>;
@@ -30,8 +61,18 @@ export function Chip({ children, tone = "neutral" }: { children: ReactNode; tone
 export function Dot({ tone }: { tone: string }) {
   return <span className={"status-dot " + tone} />;
 }
+/** Status tone of an inventory disposition (Approved, Approved with limits, Under review, Not approved). */
+export function dispositionTone(status: string): StatusTone {
+  return status === "Approved"
+    ? "effective"
+    : status === "Not approved"
+      ? "gap"
+      : status === "Approved with limits"
+        ? "partial"
+        : "info";
+}
 export function HomeScreen() {
-  const { state, dispatch, scores, index, band, gate, blocking, coverage, workspaceName } =
+  const { state, dispatch, scores, index, band, gate, blocking, coverage, workspaceName, userId } =
     useGovernance();
   const nav = useNavigate();
   const gaps = CONTROLS.map((c) => ({
@@ -49,113 +90,169 @@ export function HomeScreen() {
       return (w[x.c.w] ?? 3) - (w[y.c.w] ?? 3) || y.a.s - x.a.s;
     });
   const evidenceQueue = unverified.slice(0, 3);
+  const attached = Object.values(state.answers).filter((a) => a.e === 3).length;
+  const elevated = state.systems.filter(
+    (s) => s.tier === "High-risk" || s.tier === "Prohibited",
+  ).length;
+  const done = state.roadmap.filter((i) => i.done).length;
+  const floor = gateFloor(state.tier);
+  // Pillar targets: the gate floor for the gated pillars (E · R · N), the standing targets for the rest.
+  const targets = [80, 75, 75, floor, floor, floor];
+  const openPillar = (i: number) => {
+    dispatch({ type: "question", qi: CONTROLS.findIndex((c) => c.p === i) });
+    nav({ to: "/assess" });
+  };
   return (
     <>
-      <div className="newspaper-rule" />
-      <div className="dateline">
-        <span>{workspaceName} · Workspace assessment</span>
-        <span>Assessment tier · {state.tier}</span>
-      </div>
+      <PageHeader
+        eyebrow={`${workspaceName} · Workspace assessment`}
+        title="Governance overview"
+        meta={[
+          userId ? "Personal workspace" : "Demo workspace",
+          `Assessment tier · ${state.tier}`,
+          `${attached} of ${CONTROLS.length} controls evidenced`,
+        ]}
+      />
       <ContentUpdateDate />
-      <div className="overview-metrics">
-        <div className="overview-metric success">
-          <StackIcon />
-          <strong>{state.systems.length}</strong>
-          <span>AI systems registered</span>
-        </div>
-        <div className="overview-metric danger">
-          <WarningCircle weight="duotone" />
-          <strong>
-            {state.systems.filter((s) => s.tier === "High-risk" || s.tier === "Prohibited").length}
-          </strong>
-          <span>Elevated-risk systems</span>
-        </div>
-        <div className="overview-metric success">
-          <ShieldCheck weight="duotone" />
-          <strong>
-            {coverage.percent}
-            <small>%</small>
-          </strong>
-          <span>Guardrail coverage</span>
-        </div>
-        <div className="overview-metric warning">
-          <CheckCircle weight="duotone" />
-          <strong>
-            {state.roadmap.filter((i) => i.done).length}
-            <small>/{state.roadmap.length}</small>
-          </strong>
-          <span>Remediation complete</span>
-        </div>
+      <GateBanner
+        to="/gates"
+        state={gateState(gate)}
+        context={`Workspace release gate · ${state.tier} tier`}
+        title={`${gate} · ${blocking.length} blocking control${blocking.length === 1 ? "" : "s"}`}
+        detail={
+          blocking.length
+            ? `Blocking: ${blocking.map((c) => c.code).join(", ")} · pillar floor ${floor} on ${PILLARS.slice(
+                3,
+              )
+                .map((p) => p.letter)
+                .join(" · ")}`
+            : `Every critical control is scored 2 or more with evidence where claimed · pillar floor ${floor}`
+        }
+        action={<CaretRight weight="bold" aria-hidden="true" className="size-4 shrink-0" />}
+      />
+      <div className="kpi-grid">
+        <KpiTile
+          value={state.systems.length}
+          label="AI systems registered"
+          tone="brand"
+          icon={<StackIcon weight="duotone" />}
+          delta={`${state.systems.filter((s) => !s.riskTriage).length} untriaged`}
+        />
+        <KpiTile
+          value={elevated}
+          label="Elevated-risk systems"
+          tone={elevated ? "danger" : "success"}
+          icon={<WarningCircle weight="duotone" />}
+          delta="High-risk or prohibited tier"
+        />
+        <KpiTile
+          value={coverage.percent}
+          unit="%"
+          label="Guardrail coverage"
+          tone={coverage.percent >= 100 ? "success" : coverage.percent >= 70 ? "warning" : "danger"}
+          icon={<ShieldCheck weight="duotone" />}
+          delta={`${coverage.enabled} of ${coverage.required} required controls`}
+        />
+        <KpiTile
+          value={done}
+          unit={`/${state.roadmap.length}`}
+          label="Remediation complete"
+          tone={state.roadmap.length && done === state.roadmap.length ? "success" : "warning"}
+          icon={<CheckCircle weight="duotone" />}
+          delta={`${state.roadmap.length - done} open roadmap items`}
+        />
       </div>
-      <div className="overview-assessment">
-        <div className="overview-index">
+      <div className="overview-panels">
+        <section className="assurance-panel overview-index-panel">
+          <Kicker>VERITRAIL Index</Kicker>
           <div className="index-summary">
-            <strong className="index-number">{index}</strong>
+            <strong className={"index-number " + scoreTone(index)}>{index}</strong>
             <div>
-              <Kicker>VERITRAIL Index</Kicker>
               <h2>{band}</h2>
               <p className="muted">Current workspace maturity</p>
             </div>
           </div>
+          <ol className="band-meter" aria-label={`Maturity band ${band}`}>
+            {["Initial", "Developing", "Defined", "Managed", "Optimized"].map((b, i) => {
+              const reached =
+                ["Initial", "Developing", "Defined", "Managed", "Optimized"].indexOf(band) >= i;
+              return (
+                <li key={b} className={reached ? "reached" : ""} aria-current={b === band}>
+                  <span>{b}</span>
+                </li>
+              );
+            })}
+          </ol>
           <p className="muted index-caption">
-            {Object.values(state.answers).filter((a) => a.e === 3).length} of {CONTROLS.length}{" "}
-            controls have evidence attached
+            {attached} of {CONTROLS.length} controls have evidence attached
           </p>
           <Button asChild className="overview-cta">
             <Link to="/assess">
               Continue assessment <ArrowRight />
             </Link>
           </Button>
-        </div>
-        <div className="overview-pillars">
+        </section>
+        <section className="assurance-panel overview-pillars">
           <Kicker>TILLER lenses · mapped to NIST AI RMF</Kicker>
           <div className="pillar-list">
             {PILLARS.map((p, i) => (
-              <Button
-                variant="ghost"
-                className="pillar-row"
+              <PillarScore
                 key={p.name}
-                onClick={() => {
-                  dispatch({ type: "question", qi: CONTROLS.findIndex((c) => c.p === i) });
-                  nav({ to: "/assess" });
-                }}
-              >
-                <strong className="pillar-letter">{p.letter}</strong>
-                <div className="pillar-body">
-                  <div className="pillar-label">
-                    <span>{p.name}</span>
-                    <span className="nist">{p.nist}</span>
-                  </div>
-                  <div className="pillar-track">
-                    <span
-                      className={"pillar-fill " + scoreTone(scores[i] ?? 0)}
-                      style={{ width: (scores[i] ?? 0) + "%" }}
-                    />
-                    <i style={{ left: [80, 75, 75, 85, 80, 80][i] + "%" }} />
-                  </div>
-                </div>
-                <strong className={"pillar-score " + scoreTone(scores[i] ?? 0)}>
-                  {scores[i] ?? 0}
-                </strong>
-              </Button>
+                letter={p.letter}
+                name={p.name}
+                fn={p.nist}
+                score={scores[i] ?? 0}
+                target={targets[i] ?? 75}
+                onClick={() => openPillar(i)}
+              />
             ))}
           </div>
-        </div>
+        </section>
       </div>
-      <Button variant="secondary" className="gate-card" asChild>
-        <Link to="/gates">
-          <Dot
-            tone={gate === "Cleared" ? "success" : gate === "Conditional" ? "warning" : "danger"}
-          />
-          <div>
-            <Kicker>Workspace release gate · {state.tier} tier</Kicker>
-            <strong>
-              {gate} · {blocking.length} blocking controls
-            </strong>
-          </div>
-          <CaretRight weight="duotone" />
-        </Link>
-      </Button>
+      <section>
+        <div className="section-heading">
+          <h2>Remediation roadmap</h2>
+          <Button asChild variant="link">
+            <Link to="/roadmap">
+              Open roadmap <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+        <div className="phase-grid">
+          {PHASES.map((phase, i) => {
+            const items = state.roadmap.filter((it) => it.phase === i);
+            const complete = items.filter((it) => it.done).length;
+            return (
+              <article className="phase-card" key={phase.num}>
+                <header>
+                  <span className="phase-num">{phase.num}</span>
+                  <h3>{phase.name}</h3>
+                  <span className="muted phase-count">
+                    {complete}/{items.length}
+                  </span>
+                </header>
+                <ul>
+                  {items.slice(0, 4).map((it) => (
+                    <li key={it.key} className={it.done ? "done" : ""}>
+                      {it.done ? (
+                        <CheckCircle weight="fill" aria-hidden="true" />
+                      ) : (
+                        <Circle aria-hidden="true" />
+                      )}
+                      <span>
+                        {it.title}
+                        {it.done && <span className="sr-only"> (done)</span>}
+                      </span>
+                    </li>
+                  ))}
+                  {items.length > 4 && <li className="muted more">+{items.length - 4} more</li>}
+                  {items.length === 0 && <li className="muted more">Nothing planned yet</li>}
+                </ul>
+              </article>
+            );
+          })}
+        </div>
+      </section>
       <section className="portfolio-section">
         <div className="section-heading">
           <h2>AI portfolio</h2>
@@ -171,28 +268,13 @@ export function HomeScreen() {
               <Link to="/inventory">
                 <div className="split">
                   <ShieldCheck weight="duotone" />
-                  <Chip
-                    tone={s.tier === "High-risk" || s.tier === "Prohibited" ? "danger" : "success"}
-                  >
-                    {s.tier}
-                  </Chip>
+                  <RiskTierTag tier={s.tier} />
                 </div>
                 <h3>{s.name}</h3>
                 <p className="muted">
                   {s.owner} · {s.kind}
                 </p>
-                <span>
-                  <Dot
-                    tone={
-                      s.status === "Approved"
-                        ? "success"
-                        : s.status === "Not approved"
-                          ? "danger"
-                          : "warning"
-                    }
-                  />
-                  {s.status}
-                </span>
+                <StatusBadge tone={dispositionTone(s.status)}>{s.status}</StatusBadge>
               </Link>
             </Button>
           ))}
@@ -209,8 +291,8 @@ export function HomeScreen() {
         </div>
         <p className="muted evidence-readiness-summary">
           <strong>{unverified.length}</strong> of {CONTROLS.length} controls do not yet have
-          evidence attached. Scores of 3–4 are capped until evidence is attached; treat
-          unattached claims as provisional for release and assurance decisions.
+          evidence attached. Scores of 3–4 are capped until evidence is attached; treat unattached
+          claims as provisional for release and assurance decisions.
         </p>
         <div className="gap-list">
           {evidenceQueue.map(({ c, a }) => (
@@ -238,9 +320,7 @@ export function HomeScreen() {
             </article>
           ))}
         </div>
-        {unverified.length === 0 && (
-          <p className="success">All controls have evidence attached.</p>
-        )}
+        {unverified.length === 0 && <p className="success">All controls have evidence attached.</p>}
       </section>
       <section>
         <div className="section-heading">
@@ -319,128 +399,213 @@ function GapCard({ c, points }: { c: Control; points: number }) {
     </article>
   );
 }
+/** Status tone and label of a control row from the real scoring rules (model.ts). */
+function controlRowStatus(a: ReturnType<typeof answerAt>): {
+  status: StatusTone;
+  label: string;
+} {
+  const status = controlStatus(a);
+  if (isCapped(a)) return { status, label: "Capped · " + (EV[a.e] ?? "") };
+  if (status === "attested") return { status, label: "Attested" };
+  if (status === "untested") return { status, label: "Not tested" };
+  return { status, label: a.e === 3 ? STATUS_WORDS[status] + " · evidenced" : (EV[a.e] ?? "") };
+}
 export function AssessScreen() {
-  const { state, dispatch } = useGovernance();
+  const { state, dispatch, userId, workspaceName } = useGovernance();
   const [drawer, setDrawer] = useState(false);
   const [urlOpen, setUrlOpen] = useState(false);
+  const [pillar, setPillar] = useState("all");
+  // Phones show the list or the detail, never both; a row opens the detail, the link returns.
+  const [detailOpen, setDetailOpen] = useState(false);
   const c = at(CONTROLS, state.qi),
     a = answerAt(state.answers, c.id),
     p = at(PILLARS, c.p);
-  const patch = (patch: Partial<typeof a>) => dispatch({ type: "answer", id: c.id, patch });
+  const who = trailActor(userId);
+  const patch = (patch: Partial<typeof a>) => {
+    dispatch({ type: "answer", id: c.id, patch });
+    const next = { ...a, ...patch };
+    const { status } = controlRowStatus(next);
+    if (patch.s !== undefined && patch.s !== a.s)
+      recordTrail({
+        title: `${c.code} scored ${patch.s} · ${SCORE_LABELS[patch.s] ?? ""}`,
+        who,
+        ref: c.code,
+        outcome: status,
+      });
+    if (patch.e !== undefined && patch.e !== a.e)
+      recordTrail({
+        title: `${c.code} evidence · ${EV[patch.e] ?? ""}`,
+        who,
+        ref: c.code,
+        outcome: status,
+      });
+    if (patch.attachment && patch.attachment !== a.attachment)
+      recordTrail({
+        title: `${c.code} reference added · ${patch.attachment}`,
+        who,
+        ref: c.code,
+        outcome: "info",
+      });
+  };
   const nav = useNavigate();
+  const answered = Object.values(state.answers).filter((x) => x.s > 0).length;
+  const attached = Object.values(state.answers).filter((x) => x.e === 3).length;
+  const need = Object.values(state.answers).filter((x) => x.e !== 3).length;
+  const visible = CONTROLS.filter((x) => pillar === "all" || String(x.p) === pillar);
+  const current = controlRowStatus(a);
+  const goTo = (qi: number) => {
+    dispatch({ type: "question", qi });
+    setDetailOpen(true);
+  };
   return (
     <>
-      <div className="split muted assessment-progress">
-        <span>Control {state.qi + 1} of 12</span>
-        <span>
-          {Object.values(state.answers).filter((a) => a.s > 0).length} answered ·{" "}
-          {Object.values(state.answers).filter((a) => a.e === 3).length} evidence attached ·{" "}
-          {Object.values(state.answers).filter((a) => a.e !== 3).length} need evidence
-        </span>
-      </div>
-      <progress max="12" value={state.qi + 1} />
-      <div className="control-header">
-        <strong className="pillar-letter">{p.letter}</strong>
-        <Kicker>{p.name}</Kicker>
-        <span className="nist">{p.nist}</span>
-        <span className={c.w === "Critical" ? "danger" : "warning"}>{c.w}</span>
-      </div>
-      <h2 className="question">{c.text}</h2>
-      <p className="muted question-hint">{c.hint}</p>
-      <Kicker>Maturity score</Kicker>
-      <div className="score-options">
-        {SCORE_LABELS.map((label, n) => (
-          <Button
-            key={n}
-            variant={a.s === n ? "default" : "secondary"}
-            aria-pressed={a.s === n}
-            aria-label={"Score " + n + " " + label}
-            onClick={() => patch({ s: n })}
-          >
-            <strong>{n}</strong>
-            <small>{label}</small>
+      <PageHeader
+        eyebrow={`${workspaceName} · TILLER assessment`}
+        title="TILLER assessment"
+        meta={[
+          `Control ${state.qi + 1} of ${CONTROLS.length}`,
+          `${answered} answered · ${attached} evidence attached · ${need} need evidence`,
+        ]}
+      />
+      <progress max="12" value={state.qi + 1} aria-label="Assessment progress" />
+      <FilterTabs
+        label="Filter controls by pillar"
+        value={pillar}
+        onChange={setPillar}
+        className="assess-filter"
+        items={[
+          { id: "all", label: "All", count: CONTROLS.length },
+          ...PILLARS.map((x, i) => ({
+            id: String(i),
+            label: `${x.letter} · ${x.name}`,
+            count: CONTROLS.filter((y) => y.p === i).length,
+          })),
+        ]}
+      />
+      <div className="assess-layout" data-detail={detailOpen ? "true" : "false"}>
+        <section className="assess-list" aria-label="All controls">
+          <Kicker>All controls</Kicker>
+          <div className="assurance-list">
+            {visible.map((x) => {
+              const xa = answerAt(state.answers, x.id);
+              const i = CONTROLS.indexOf(x);
+              const row = controlRowStatus(xa);
+              return (
+                <ControlRow
+                  key={x.id}
+                  code={x.code}
+                  text={x.text}
+                  weight={x.w}
+                  owner={x.owner}
+                  evidence={EV[xa.e] ?? ""}
+                  status={row.status}
+                  statusLabel={row.label}
+                  selected={state.qi === i}
+                  onClick={() => goTo(i)}
+                />
+              );
+            })}
+          </div>
+        </section>
+        <section className="assess-detail" aria-label="Selected control">
+          <Button variant="link" className="assess-back" onClick={() => setDetailOpen(false)}>
+            <ArrowLeft /> All controls
           </Button>
-        ))}
-      </div>
-      <Kicker>Evidence status</Kicker>
-      <div className="segments">
-        {EV.map((label, n) => (
-          <Button
-            key={label}
-            variant={a.e === n ? "default" : "outline"}
-            aria-pressed={a.e === n}
-            onClick={() => patch({ e: n })}
-          >
-            {label}
+          <div className="control-header">
+            <span className="code-chip">{c.code}</span>
+            <strong className="pillar-letter">{p.letter}</strong>
+            <Kicker>{p.name}</Kicker>
+            <span className="nist">{p.nist}</span>
+            <span className={c.w === "Critical" ? "danger" : "warning"}>{c.w}</span>
+            <StatusBadge tone={current.status}>{current.label}</StatusBadge>
+          </div>
+          <h2 className="question">{c.text}</h2>
+          <p className="muted question-hint">{c.hint}</p>
+          <Kicker>Maturity score</Kicker>
+          <div className="score-options" role="group" aria-label="Maturity score">
+            {SCORE_LABELS.map((label, n) => (
+              <Button
+                key={n}
+                variant={a.s === n ? "default" : "secondary"}
+                aria-pressed={a.s === n}
+                aria-label={"Score " + n + " " + label}
+                onClick={() => patch({ s: n })}
+              >
+                <strong>{n}</strong>
+                <small>{label}</small>
+              </Button>
+            ))}
+          </div>
+          <Kicker>Evidence status</Kicker>
+          <div className="segments" role="group" aria-label="Evidence status">
+            {EV.map((label, n) => (
+              <Button
+                key={label}
+                variant={a.e === n ? "default" : "outline"}
+                aria-pressed={a.e === n}
+                onClick={() => patch({ e: n })}
+              >
+                {label}
+              </Button>
+            ))}
+          </div>
+          {a.s >= 3 && a.e !== 3 && (
+            <div className="evidence-warning evidence-warning-action">
+              <WarningCircle weight="duotone" />
+              <span>Score capped at 2 until evidence is attached.</span>
+              <Button variant="link" onClick={() => setDrawer(true)}>
+                Attach evidence
+              </Button>
+            </div>
+          )}
+          <Kicker>What good looks like</Kicker>
+          <ul className="good-list">
+            {c.good.map((x) => (
+              <li key={x}>
+                <CheckCircle weight="duotone" aria-hidden="true" />
+                <span>{x}</span>
+              </li>
+            ))}
+          </ul>
+          <Kicker>Framework references</Kicker>
+          <div className="ref-chips">
+            {c.refs.map((r) => (
+              <span key={r} className="ref-chip">
+                {r}
+              </span>
+            ))}
+          </div>
+          <Button className="guidance-row" variant="secondary" onClick={() => setDrawer(true)}>
+            <Paperclip weight="duotone" />
+            <span>Guidance, rubric &amp; evidence</span>
+            <small className="muted">
+              {EV[a.e]}
+              {a.attachment || a.url ? " · reference added" : ""}
+            </small>
+            <CaretRight />
           </Button>
-        ))}
-      </div>
-      {a.s >= 3 && a.e !== 3 && (
-        <div className="evidence-warning evidence-warning-action">
-          <WarningCircle weight="duotone" />
-          <span>Score capped at 2 until evidence is attached.</span>
-          <Button variant="link" onClick={() => setDrawer(true)}>
-            Attach evidence
-          </Button>
-        </div>
-      )}
-      <Button className="guidance-row" variant="secondary" onClick={() => setDrawer(true)}>
-        <Paperclip weight="duotone" />
-        <span>Guidance, rubric & evidence</span>
-        <small className="muted">
-          {EV[a.e]}
-          {a.attachment || a.url ? " · reference added" : ""}
-        </small>
-        <CaretRight />
-      </Button>
-      <div className="assessment-actions">
-        <Button
-          variant="outline"
-          disabled={state.qi === 0}
-          onClick={() => dispatch({ type: "question", qi: state.qi - 1 })}
-        >
-          <ArrowLeft />
-          Previous
-        </Button>
-        <Button
-          onClick={() =>
-            state.qi === 11
-              ? nav({ to: "/gates" })
-              : dispatch({ type: "question", qi: state.qi + 1 })
-          }
-        >
-          {state.qi === 11 ? "Finish · view gate" : "Next control"}
-          <ArrowRight />
-        </Button>
-      </div>
-      <section>
-        <Kicker>All controls</Kicker>
-        {CONTROLS.map((x, i) => {
-          const xa = answerAt(state.answers, x.id);
-          const capped = xa.s >= 3 && xa.e !== 3;
-          return (
+          <div className="assessment-actions">
             <Button
-              variant="ghost"
-              key={x.id}
-              className={"control-list-row " + (state.qi === i ? "active" : "")}
-              onClick={() => dispatch({ type: "question", qi: i })}
+              variant="outline"
+              disabled={state.qi === 0}
+              onClick={() => dispatch({ type: "question", qi: state.qi - 1 })}
             >
-              <span className="success">{x.code}</span>
-              <div>
-                <span>{x.text}</span>
-                <Chip
-                  tone={
-                    xa.e === 3 ? "success" : xa.e === 0 || capped ? "danger" : "neutral"
-                  }
-                >
-                  {capped ? "Capped · " + EV[xa.e] : EV[xa.e]}
-                </Chip>
-              </div>
-              <strong>{xa.s}</strong>
+              <ArrowLeft />
+              Previous
             </Button>
-          );
-        })}
-      </section>
+            <Button
+              onClick={() =>
+                state.qi === 11
+                  ? nav({ to: "/gates" })
+                  : dispatch({ type: "question", qi: state.qi + 1 })
+              }
+            >
+              {state.qi === 11 ? "Finish · view gate" : "Next control"}
+              <ArrowRight />
+            </Button>
+          </div>
+        </section>
+      </div>
       <Dialog open={drawer} onOpenChange={setDrawer}>
         <DialogContent className="veritrail-sheet">
           <Kicker>
@@ -521,7 +686,7 @@ export function AssessScreen() {
               rows={3}
             />
           </label>
-          <Button onClick={() => setDrawer(false)}>Save & close</Button>
+          <Button onClick={() => setDrawer(false)}>Save &amp; close</Button>
         </DialogContent>
       </Dialog>
     </>
