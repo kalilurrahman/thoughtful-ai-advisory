@@ -29,6 +29,10 @@ import {
   RELEASE_GATE_ASSURANCE_ROUNDS,
   releaseGateAssuranceScore,
 } from "./release-gate-assurance-game";
+import {
+  CORRECTIVE_ACTION_ASSURANCE_ROUNDS,
+  correctiveActionAssuranceScore,
+} from "./corrective-action-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -48,6 +52,7 @@ export function ChecklistScreen() {
   const [guardrailAnswers, setGuardrailAnswers] = useState<Record<string, number>>({});
   const [monitoringAnswers, setMonitoringAnswers] = useState<Record<string, number>>({});
   const [releaseGateAnswers, setReleaseGateAnswers] = useState<Record<string, number>>({});
+  const [correctiveAnswers, setCorrectiveAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -62,6 +67,7 @@ export function ChecklistScreen() {
   const guardrailGame = guardrailAssuranceScore(guardrailAnswers);
   const monitoringGame = monitoringAssuranceScore(monitoringAnswers);
   const releaseGateGame = releaseGateAssuranceScore(releaseGateAnswers);
+  const correctiveGame = correctiveActionAssuranceScore(correctiveAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -464,6 +470,62 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good release-gate decision."
                           : "Review the readiness gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="corrective-action-assurance" className="checklist-phase" aria-label="Corrective action and effectiveness verification game">
+        <h2>Corrective action & effectiveness verification</h2>
+        <p>
+          Practice turning findings into owned corrective actions, requiring completion evidence,
+          verifying effectiveness, and following up when fixes do not address root causes. Scenarios
+          are learning prompts, not a substitute for your corrective-action process or specialist
+          review.
+        </p>
+        <p>
+          <strong>
+            {correctiveGame.correct}/{correctiveGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {correctiveGame.complete && (
+            <Button variant="outline" onClick={() => setCorrectiveAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CORRECTIVE_ACTION_ASSURANCE_ROUNDS.map((round) => {
+            const selected = correctiveAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCorrectiveAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good corrective-action assurance choice."
+                          : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
