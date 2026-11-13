@@ -967,7 +967,7 @@ Acceptance criteria:
 
 Acceptance criteria:
 
-- Given the Appearance panel (website header or menu, workspace header, menu or More screen), when I pick Broadsheet, Midnight Gold or Financial Slate, Auto, light or dark, and Editorial serif, KR Tools or Modern sans, then the whole site and workspace restyle at once.
+- Given the Appearance panel (website header or menu, workspace header, menu or More screen), when I pick Assurance, Broadsheet, Midnight Gold or Financial Slate, Auto, light or dark, and the Assurance pairing, Editorial serif, KR Tools or Modern sans, then the whole site and workspace restyle at once.
 - Given Auto, the default until I choose, when my device switches between light and dark, then the page follows it straight away; choosing Light or Dark stops following.
 - Given a saved choice, when any page loads, then it is applied before the first paint, with a matching browser colour, and other open tabs follow.
 - Given any palette and mode, when checked, then text, links and buttons meet WCAG AA contrast.
