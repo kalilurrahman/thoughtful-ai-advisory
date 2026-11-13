@@ -3625,3 +3625,12 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .save-status.error {
   color: var(--danger-ink);
 }
+
+.evidence-readiness-summary {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.evidence-readiness-summary strong { color: var(--foreground); }
+.evidence-card { border-top-color: var(--warning-ink); }
+.gate-evidence-note { margin-top: 10px; font-size: 13px; }
