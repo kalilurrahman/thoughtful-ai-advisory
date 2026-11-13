@@ -283,7 +283,7 @@ Every app, tool and feature, then every website content page, the control librar
 | ID | Capability | Stories | Source | Tests (src/test) |
 |---|---|---|---|---|
 | CAP-001 | Home page | [S01.1](EPICS_AND_STORIES.md#s011) | `src/features/site/home.tsx`, `src/features/site/service-pathways.tsx`, `src/features/site/pages.ts`, `platform/content/website_pages/index.md` | `site-pages.test.ts`, `site-reading.test.ts` |
-| CAP-086 | Readable sitemap | [S01.2](EPICS_AND_STORIES.md#s012) | `src/routes/sitemap.tsx` | `product-catalog.test.ts` |
+| CAP-086 | Readable sitemap | [S01.2](EPICS_AND_STORIES.md#s012) | `src/routes/sitemap.tsx` | `app-routing.test.tsx` |
 | CAP-002 | Website content pages | [S01.2](EPICS_AND_STORIES.md#s012), [S01.3](EPICS_AND_STORIES.md#s013), [S01.4](EPICS_AND_STORIES.md#s014) | `src/routes/$.tsx`, `src/features/site/views.tsx`, `src/features/site/markdown.tsx` | `site-pages.test.ts`, `site-reading.test.ts` |
 | CAP-003 | Control library | [S02.1](EPICS_AND_STORIES.md#s021) | `src/routes/framework.controls.index.tsx`, `platform/content/controls/controls.yaml` | `site-pages.test.ts` |
 | CAP-004 | Control detail | [S02.2](EPICS_AND_STORIES.md#s022) | `src/routes/framework.controls.$controlId.tsx` | `site-pages.test.ts`, `app-routing.test.tsx` |
