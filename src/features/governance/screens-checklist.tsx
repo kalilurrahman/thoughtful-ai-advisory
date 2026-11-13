@@ -21,6 +21,10 @@ import {
   GUARDRAIL_ASSURANCE_ROUNDS,
   guardrailAssuranceScore,
 } from "./guardrail-assurance-game";
+import {
+  MONITORING_ASSURANCE_ROUNDS,
+  monitoringAssuranceScore,
+} from "./monitoring-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -38,6 +42,7 @@ export function ChecklistScreen() {
   const [tabletopAnswers, setTabletopAnswers] = useState<Record<string, number>>({});
   const [crosswalkAnswers, setCrosswalkAnswers] = useState<Record<string, number>>({});
   const [guardrailAnswers, setGuardrailAnswers] = useState<Record<string, number>>({});
+  const [monitoringAnswers, setMonitoringAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -50,6 +55,7 @@ export function ChecklistScreen() {
   const challenge = nextGovernanceChallenge(phases);
   const inclusionScore = inclusiveDesignScore(inclusionAnswers);
   const guardrailGame = guardrailAssuranceScore(guardrailAnswers);
+  const monitoringGame = monitoringAssuranceScore(monitoringAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -342,6 +348,61 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good guardrail assurance choice."
                           : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="monitoring-assurance" className="checklist-phase" aria-label="Monitoring and assurance signals game">
+        <h2>Monitoring & assurance signals</h2>
+        <p>
+          Practice interpreting post-deployment monitoring signals, guardrail drift/breaches, and
+          evidence gaps. Scenarios are learning prompts, not a substitute for your monitoring plan,
+          incident response, or specialist review.
+        </p>
+        <p>
+          <strong>
+            {monitoringGame.correct}/{monitoringGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {monitoringGame.complete && (
+            <Button variant="outline" onClick={() => setMonitoringAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {MONITORING_ASSURANCE_ROUNDS.map((round) => {
+            const selected = monitoringAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.signal}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setMonitoringAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good assurance response."
+                          : "Review the assurance signal."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

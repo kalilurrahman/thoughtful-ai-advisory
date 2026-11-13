@@ -32,6 +32,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "guardrail-assurance",
   },
   {
+    id: "monitoring-assurance",
+    title: "Monitoring & assurance signals",
+    category: "Assurance & monitoring",
+    description:
+      "Interpret monitoring signals, guardrail drift/breaches, and evidence gaps to choose sound assurance actions.",
+    anchor: "monitoring-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
