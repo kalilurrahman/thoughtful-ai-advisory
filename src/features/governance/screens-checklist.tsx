@@ -45,6 +45,10 @@ import {
   DATA_GOVERNANCE_ASSURANCE_ROUNDS,
   dataGovernanceAssuranceScore,
 } from "./data-governance-assurance-game";
+import {
+  TRANSPARENCY_RECORDKEEPING_ROUNDS,
+  transparencyRecordkeepingScore,
+} from "./transparency-recordkeeping-game";
 
 const statusText = {
   complete: "Complete",
@@ -68,6 +72,7 @@ export function ChecklistScreen() {
   const [riskAcceptanceAnswers, setRiskAcceptanceAnswers] = useState<Record<string, number>>({});
   const [oversightAnswers, setOversightAnswers] = useState<Record<string, number>>({});
   const [dataGovernanceAnswers, setDataGovernanceAnswers] = useState<Record<string, number>>({});
+  const [transparencyAnswers, setTransparencyAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -86,6 +91,7 @@ export function ChecklistScreen() {
   const riskAcceptanceGame = riskAcceptanceAssuranceScore(riskAcceptanceAnswers);
   const oversightGame = humanOversightAssuranceScore(oversightAnswers);
   const dataGovernanceGame = dataGovernanceAssuranceScore(dataGovernanceAnswers);
+  const transparencyGame = transparencyRecordkeepingScore(transparencyAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -708,6 +714,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good data governance assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="transparency-recordkeeping-assurance" className="checklist-phase" aria-label="Transparency and recordkeeping assurance game">
+        <h2>Transparency & recordkeeping assurance</h2>
+        <p>
+          Practice system documentation, user-facing transparency and recourse, traceable evidence
+          trails, and versioned change history. Scenarios are learning prompts, not a substitute for
+          your documentation process or specialist review.
+        </p>
+        <p>
+          <strong>
+            {transparencyGame.correct}/{transparencyGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {transparencyGame.complete && (
+            <Button variant="outline" onClick={() => setTransparencyAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {TRANSPARENCY_RECORDKEEPING_ROUNDS.map((round) => {
+            const selected = transparencyAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setTransparencyAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good transparency/recordkeeping assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
