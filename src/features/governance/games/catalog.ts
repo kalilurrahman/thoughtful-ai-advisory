@@ -112,6 +112,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "fairness-impact-assurance",
   },
   {
+    id: "continuous-improvement-assurance",
+    title: "Continuous improvement & assurance review",
+    category: "Continuous assurance",
+    description:
+      "Practice periodic governance reviews, control effectiveness metrics, lessons learned feedback loops, and accountable follow-up.",
+    anchor: "continuous-improvement-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
