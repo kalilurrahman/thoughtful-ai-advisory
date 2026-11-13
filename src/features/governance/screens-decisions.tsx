@@ -100,7 +100,7 @@ export function DecisionsScreen() {
         ? true
         : statusFilter === "Review overdue"
           ? decision.lifecycle === "Current" &&
-            Boolean(decision.reviewBy) &&
+            decision.reviewBy !== null &&
             decision.reviewBy < todayDate
           : decision.lifecycle === statusFilter;
     const query = search.trim().toLowerCase();
