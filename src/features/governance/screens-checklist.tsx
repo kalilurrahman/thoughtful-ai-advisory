@@ -37,6 +37,10 @@ import {
   RISK_ACCEPTANCE_ASSURANCE_ROUNDS,
   riskAcceptanceAssuranceScore,
 } from "./risk-acceptance-assurance-game";
+import {
+  HUMAN_OVERSIGHT_ASSURANCE_ROUNDS,
+  humanOversightAssuranceScore,
+} from "./human-oversight-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -58,6 +62,7 @@ export function ChecklistScreen() {
   const [releaseGateAnswers, setReleaseGateAnswers] = useState<Record<string, number>>({});
   const [correctiveAnswers, setCorrectiveAnswers] = useState<Record<string, number>>({});
   const [riskAcceptanceAnswers, setRiskAcceptanceAnswers] = useState<Record<string, number>>({});
+  const [oversightAnswers, setOversightAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -74,6 +79,7 @@ export function ChecklistScreen() {
   const releaseGateGame = releaseGateAssuranceScore(releaseGateAnswers);
   const correctiveGame = correctiveActionAssuranceScore(correctiveAnswers);
   const riskAcceptanceGame = riskAcceptanceAssuranceScore(riskAcceptanceAnswers);
+  const oversightGame = humanOversightAssuranceScore(oversightAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -586,6 +592,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good decision assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="human-oversight-assurance" className="checklist-phase" aria-label="Human oversight and escalation assurance game">
+        <h2>Human oversight & escalation assurance</h2>
+        <p>
+          Practice meaningful human oversight, escalation/override paths, role competence, and
+          evidence that oversight controls operate in practice. Scenarios are learning prompts, not a
+          substitute for your operating procedures or specialist review.
+        </p>
+        <p>
+          <strong>
+            {oversightGame.correct}/{oversightGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {oversightGame.complete && (
+            <Button variant="outline" onClick={() => setOversightAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {HUMAN_OVERSIGHT_ASSURANCE_ROUNDS.map((round) => {
+            const selected = oversightAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setOversightAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good oversight assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>

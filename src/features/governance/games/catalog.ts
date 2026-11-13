@@ -64,6 +64,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "risk-acceptance-assurance",
   },
   {
+    id: "human-oversight-assurance",
+    title: "Human oversight & escalation",
+    category: "Oversight & assurance",
+    description:
+      "Practice meaningful human oversight, escalation/override paths, role competence, and evidence that controls operate in practice.",
+    anchor: "human-oversight-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
