@@ -120,6 +120,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "continuous-improvement-assurance",
   },
   {
+    id: "policy-alignment-assurance",
+    title: "Policy, standards & alignment assurance",
+    category: "Policy & alignment assurance",
+    description:
+      "Practice mapping applicable policies/standards, translating them into controls, maintaining evidence of alignment, and escalating gaps.",
+    anchor: "policy-alignment-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
