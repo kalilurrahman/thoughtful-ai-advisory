@@ -3634,3 +3634,17 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .evidence-readiness-summary strong { color: var(--foreground); }
 .evidence-card { border-top-color: var(--warning-ink); }
 .gate-evidence-note { margin-top: 10px; font-size: 13px; }
+
+.export-evidence-note {
+  margin: 14px 0 18px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warning-ink);
+}
+.export-evidence-note p {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.export-evidence-note strong { color: var(--foreground); }

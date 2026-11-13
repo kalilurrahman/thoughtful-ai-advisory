@@ -33,11 +33,11 @@ import {
 } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { CALCS, SOURCES, PACKS } from "@/data/governance";
+import { CALCS, SOURCES, PACKS, CONTROLS } from "@/data/governance";
 import { useDarkTheme } from "@/lib/theme";
 import { openAppearance, useAppearanceSummary } from "@/features/appearance/appearance-panel";
 import { useGovernance } from "./store";
-import { at, calculate } from "./model";
+import { at, answerAt, calculate } from "./model";
 import { Chip, Dot, Kicker } from "./screens-core";
 import { buildEvidenceReport, reportFilename } from "./evidence-report";
 import { generateEvidenceFile, type ExportFormat } from "./evidence-files";
@@ -263,6 +263,10 @@ export function ExportScreen() {
     [error, setError] = useState("");
   const pack = PACKS.find((p) => p.id === packId) ?? at(PACKS, 0);
   const icons = [Newspaper, Table, SealCheck];
+  const attached = Object.values(state.answers).filter((a) => a.e === 3).length;
+  const unattachedCritical = CONTROLS.filter(
+    (c) => c.w === "Critical" && answerAt(state.answers, c.id).e !== 3,
+  ).length;
   function download(file: { blob: Blob; filename: string }) {
     const url = URL.createObjectURL(file.blob);
     const anchor = document.createElement("a");
@@ -306,6 +310,21 @@ export function ExportScreen() {
   return (
     <>
       <p className="muted">Client-ready governance deliverables</p>
+      <div className="export-evidence-note" role="status">
+        <Kicker>Preview context</Kicker>
+        <p>
+          <strong>{attached}</strong> of {CONTROLS.length} controls have evidence attached
+          {unattachedCritical ? (
+            <>
+              {" "}· <strong>{unattachedCritical}</strong> critical control{unattachedCritical === 1 ? "" : "s"} without attached evidence
+            </>
+          ) : (
+            " · all critical controls have evidence attached"
+          )}
+          . Exports are demo previews of the current workspace state, not signed or certified
+          deliverables.
+        </p>
+      </div>
       <div className="pack-list">
         {PACKS.map((p, i) => {
           const Icon = at(icons, i);
