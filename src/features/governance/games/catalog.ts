@@ -80,6 +80,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "data-governance-assurance",
   },
   {
+    id: "transparency-recordkeeping-assurance",
+    title: "Transparency & recordkeeping assurance",
+    category: "Transparency & assurance",
+    description:
+      "Practice system documentation, user-facing transparency, traceable evidence trails, and versioned change history.",
+    anchor: "transparency-recordkeeping-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
