@@ -1,4 +1,5 @@
--- Already applied to the live database; statements switched off so replay is a no-op.
+-- Applied to the live database on 2026-11-13 (the rename below was run by hand); statements
+-- switched off so replay is a no-op.
 SELECT 1;
 -- -- Platform renamed from AEGIS to VERITRAIL. The workspace save function keeps its
 -- -- signature, grants and body; only its name changes so the client RPC name matches.

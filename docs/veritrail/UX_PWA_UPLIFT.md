@@ -228,6 +228,6 @@ adds `workspace_trail` (members read, owners / admins / operators append, and a 
 every update or delete, service role included). `trail.functions.ts` appends and loads as the
 caller, the governance provider hydrates the trail when a saved workspace loads, and the Evidence
 screen says "Append-only · saved with the workspace". The demo workspace, an unsaved workspace and
-a database without 0015 keep the tab-only preview, labelled as such.
+a database without 0015 keep the tab-only preview, labelled as such. Migrations 0009, 0011, 0012, 0013 and 0015 were applied to the live database on 2026-11-13 and the Supabase types regenerated from it.
 
 The master mark is option 1a: `favicon.svg`, `favicon.ico`, the PWA icons (`node scripts/generate-pwa-icons.mjs --mark a`, teal shield on brand navy), the site header, the workspace shell and the social-image tile all use it.
