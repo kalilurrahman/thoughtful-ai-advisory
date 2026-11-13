@@ -56,6 +56,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "corrective-action-assurance",
   },
   {
+    id: "risk-acceptance-assurance",
+    title: "Risk acceptance & decision assurance",
+    category: "Governance decisions & assurance",
+    description:
+      "Practice accountable approvals, time-bound risk acceptance, review triggers, and evidence-backed rationale/conditions.",
+    anchor: "risk-acceptance-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
