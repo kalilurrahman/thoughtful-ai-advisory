@@ -108,21 +108,52 @@ export function CalculatorsScreen() {
     </>
   );
 }
+function sourceMatchesType(source: (typeof SOURCES)[number], filter: string) {
+  return (
+    filter === "All" ||
+    source.type.startsWith(filter) ||
+    (filter === "Guidance" && source.type.toLowerCase().includes("guidance"))
+  );
+}
+
+function citationFor(source: (typeof SOURCES)[number]) {
+  const link = source.url && source.url !== "#" ? source.url : "No external link";
+  return `${source.title}. ${source.publisher} (${source.type}, ${source.jurisdiction}). Validation: ${source.status}, ${source.verified}. ${link}`;
+}
+
 export function KnowledgeScreen() {
   const [filter, setFilter] = useState("All");
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState("All regions");
   const [validation, setValidation] = useState("All");
+  const [copied, setCopied] = useState("");
+  const categories = ["All", "Law", "Standard", "Framework", "Guidance", "Vendor", "Advisory"];
+  const categoryCounts = Object.fromEntries(
+    categories.map((x) => [x, SOURCES.filter((s) => sourceMatchesType(s, x)).length]),
+  ) as Record<string, number>;
   const sources = SOURCES.filter(
     (s) =>
-      (filter === "All" ||
-        s.type.startsWith(filter) ||
-        (filter === "Guidance" && s.type.toLowerCase().includes("guidance"))) &&
+      sourceMatchesType(s, filter) &&
       (region === "All regions" || s.jurisdiction.includes(region)) &&
       (validation === "All" || s.status === validation) &&
       Object.values(s).join(" ").toLowerCase().includes(query.trim().toLowerCase()),
   );
   const needsReview = SOURCES.filter((s) => s.status === "Needs review").length;
+  async function copyCitation(source: (typeof SOURCES)[number]) {
+    const text = citationFor(source);
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const area = document.createElement("textarea");
+      area.value = text;
+      document.body.append(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+    }
+    setCopied(source.title);
+    window.setTimeout(() => setCopied((c) => (c === source.title ? "" : c)), 1500);
+  }
   return (
     <>
       <div className="resource-intro">
@@ -145,20 +176,20 @@ export function KnowledgeScreen() {
         />
       </label>
       <div className="filters resource-filters" aria-label="Resource categories">
-        {["All", "Law", "Standard", "Framework", "Guidance", "Vendor", "Advisory"].map((x) => (
+        {categories.map((x) => (
           <Button
             key={x}
             variant={filter === x ? "default" : "outline"}
             aria-pressed={filter === x}
             onClick={() => setFilter(x)}
           >
-            {x}
+            {x} <span>{categoryCounts[x]}</span>
           </Button>
         ))}
       </div>
       <div className="resource-result-bar">
         <p className="muted" aria-live="polite">
-          {sources.length} of {SOURCES.length} resources
+          Showing <strong>{sources.length}</strong> of {SOURCES.length} resources
           {needsReview ? ` · ${needsReview} flagged for review` : ""}
         </p>
         <label>
@@ -207,7 +238,15 @@ export function KnowledgeScreen() {
                 {s.type} · {s.jurisdiction}
               </span>
             </div>
-            <h3>{s.title}</h3>
+            <h3>
+              {s.url !== "#" ? (
+                <a href={s.url} target="_blank" rel="noopener noreferrer">
+                  {s.title}
+                </a>
+              ) : (
+                s.title
+              )}
+            </h3>
             <span className="resource-publisher">{s.publisher}</span>
             <p className="muted">{s.summary}</p>
             <ul className="resource-highlights">
@@ -232,16 +271,20 @@ export function KnowledgeScreen() {
             <p className="muted resource-check">
               <strong>Method:</strong> {s.checkMethod}
             </p>
-            {s.url !== "#" ? (
-              <Button variant="link" asChild>
-                <a href={s.url} target="_blank" rel="noopener noreferrer">
-                  {s.host}
-                  <ArrowSquareOut />
-                </a>
+            <div className="resource-actions" aria-label="Resource actions">
+              {s.url !== "#" ? (
+                <Button variant="link" asChild>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer">
+                    Open source <ArrowSquareOut />
+                  </a>
+                </Button>
+              ) : (
+                <span className="muted">Authored model · no external link</span>
+              )}
+              <Button variant="outline" size="sm" onClick={() => void copyCitation(s)}>
+                {copied === s.title ? "Citation copied" : "Copy citation"}
               </Button>
-            ) : (
-              <span className="muted">Authored model · no external link</span>
-            )}
+            </div>
           </article>
         ))}
       </div>
@@ -249,6 +292,7 @@ export function KnowledgeScreen() {
         <div className="empty-state">
           <EmptyResources />
           <h3>No matching resources</h3>
+          <p className="muted">Try clearing filters or searching by publisher, topic, or jurisdiction.</p>
           <Button
             variant="link"
             onClick={() => {
@@ -258,7 +302,7 @@ export function KnowledgeScreen() {
               setValidation("All");
             }}
           >
-            Clear filters
+            Clear all filters
           </Button>
         </div>
       )}
