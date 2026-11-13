@@ -583,6 +583,15 @@ export function InventoryScreen() {
 }
 export function GuardrailsScreen() {
   const { state, dispatch, coverage } = useGovernance();
+  const requiredControls = GR.flatMap((g) =>
+    g.c
+      .filter(([, rank]) => requiredGuardrail(Number(rank), state.tier))
+      .map(([name]) => ({ category: g.name, name: String(name) })),
+  );
+  const missingRequired = requiredControls.filter(({ name }) => !state.gr[name]);
+  const enableMissingRequired = () => {
+    for (const { name } of missingRequired) dispatch({ type: "guardrail", name });
+  };
   return (
     <>
       <div className="coverage-summary">
@@ -593,11 +602,16 @@ export function GuardrailsScreen() {
         <div>
           <Kicker>Guardrail coverage</Kicker>
           <p>
-            {coverage.enabled} of {coverage.required} required controls
+            {coverage.enabled} of {coverage.required} required controls for <strong>{state.tier}</strong> tier
+          </p>
+          <p className={missingRequired.length ? "danger" : "muted"}>
+            {missingRequired.length
+              ? `${missingRequired.length} required control${missingRequired.length === 1 ? "" : "s"} missing`
+              : "All required controls enabled"}
           </p>
         </div>
       </div>
-      <div className="segments">
+      <div className="segments" aria-label="Risk tier">
         {(["Low", "Medium", "High"] as Tier[]).map((t) => (
           <Button
             key={t}
@@ -608,27 +622,44 @@ export function GuardrailsScreen() {
           </Button>
         ))}
       </div>
+      <div className="action-bar" aria-label="Guardrail actions">
+        <Button onClick={enableMissingRequired} disabled={missingRequired.length === 0}>
+          <CheckCircle />
+          Enable required for {state.tier} tier
+        </Button>
+        {missingRequired.length > 0 && (
+          <p className="muted">
+            Missing:{" "}
+            {missingRequired
+              .slice(0, 4)
+              .map(({ name }) => name)
+              .join(", ")}
+            {missingRequired.length > 4 ? `, +${missingRequired.length - 4} more` : ""}
+          </p>
+        )}
+      </div>
       <div className="guardrail-grid">
         {GR.map((g) => {
           const required = g.c.filter(([, rank]) => requiredGuardrail(Number(rank), state.tier));
+          const missingInGroup = required.filter(([name]) => !state.gr[String(name)]).length;
           return (
             <section key={g.name}>
               <div className="section-heading">
                 <h2>{g.name}</h2>
-                <span className="muted">
-                  {required.filter(([name]) => state.gr[String(name)]).length}/{required.length}{" "}
-                  required
+                <span className={missingInGroup ? "danger" : "muted"}>
+                  {required.length - missingInGroup}/{required.length} required
+                  {missingInGroup ? ` · ${missingInGroup} missing` : ""}
                 </span>
               </div>
               {g.c.map(([name, rank]) => {
-                const required = requiredGuardrail(Number(rank), state.tier),
+                const isRequired = requiredGuardrail(Number(rank), state.tier),
                   enabled = state.gr[String(name)];
                 return (
                   <label className="toggle-row" key={String(name)}>
                     <div>
-                      <span className={!required ? "muted" : ""}>{name}</span>
-                      <small className={required && !enabled ? "danger" : "muted"}>
-                        {required ? (enabled ? "Required" : "Missing") : "Optional"}
+                      <span className={!isRequired ? "muted" : ""}>{name}</span>
+                      <small className={isRequired && !enabled ? "danger" : "muted"}>
+                        {isRequired ? (enabled ? "Required · enabled" : "Required · missing") : "Optional"}
                       </small>
                     </div>
                     <Switch
