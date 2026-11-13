@@ -96,6 +96,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "supply-chain-assurance",
   },
   {
+    id: "security-robustness-assurance",
+    title: "Security, robustness & abuse resilience",
+    category: "Security & robustness assurance",
+    description:
+      "Practice prompt-injection/tool-abuse defenses, least-privilege access, misuse/robustness testing, and security incident response.",
+    anchor: "security-robustness-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
