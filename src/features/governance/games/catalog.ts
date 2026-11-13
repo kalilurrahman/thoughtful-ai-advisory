@@ -48,6 +48,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "release-gate-assurance",
   },
   {
+    id: "corrective-action-assurance",
+    title: "Corrective action & effectiveness",
+    category: "Corrective actions & assurance",
+    description:
+      "Practice owned corrective actions, completion evidence, effectiveness verification, and follow-up when fixes fail.",
+    anchor: "corrective-action-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
