@@ -89,7 +89,18 @@ export function InventoryScreen() {
   const triage = calculateRiskTier({ ...riskProfile, name });
   const tier = triage.tier;
   const triageEnabled = editingIndex === null || Boolean(state.systems[editingIndex]?.riskTriage);
-  const visibleSystems = filterInventory(state.systems, filter, statusFilter, search);
+  const baseSystems = filterInventory(
+    state.systems,
+    filter,
+    ["Untriaged", "Needs attention"].includes(statusFilter) ? "All statuses" : statusFilter,
+    search,
+  );
+  const visibleSystems = baseSystems.filter(({ system }) => {
+    if (statusFilter === "Untriaged") return !system.riskTriage;
+    if (statusFilter === "Needs attention")
+      return !system.riskTriage || system.status === "Not approved" || system.status === "Under review";
+    return true;
+  });
   function openRegistration() {
     setEditingIndex(null);
     setName("");
@@ -136,6 +147,8 @@ export function InventoryScreen() {
             <option>Approved</option>
             <option>Approved with limits</option>
             <option>Not approved</option>
+            <option>Untriaged</option>
+            <option>Needs attention</option>
           </select>
         </label>
         <Button
@@ -195,6 +208,9 @@ export function InventoryScreen() {
           </strong>{" "}
           not approved
         </span>
+        <span>
+          <strong>{state.systems.filter((system) => !system.riskTriage).length}</strong> untriaged
+        </span>
       </div>
       <div className="filters">
         {["All", "High-risk", "Limited", "Minimal", "Prohibited"].map((x) => (
@@ -238,8 +254,15 @@ export function InventoryScreen() {
                 }
               />
               {s.status}
+              {" · "}
+              <Chip tone={s.riskTriage ? "success" : "warning"}>
+                {s.riskTriage ? "Triaged" : "Not triaged"}
+              </Chip>
             </p>
             <p className="muted">{s.vendor}</p>
+            {(!s.owner || !s.vendor) && (
+              <p className="danger inventory-gap">Missing ownership/vendor details</p>
+            )}
             <p
               className="muted"
               title="Workspace-wide gate score — per-system gate scores are coming soon (stub-gate-per-system)"
