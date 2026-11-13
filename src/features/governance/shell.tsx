@@ -42,6 +42,7 @@ import {
 import { requestInstall, useInstallState } from "@/features/pwa/install-store";
 import { openAppearance } from "@/features/appearance/appearance-panel";
 import { useGovernance } from "./store";
+import { VeritrailMark } from "@/features/site/brand-marks";
 
 // The workspace shell (docs/design/assurance/README.md §3.1): a command-navy sidebar from
 // 1024px, the same sidebar as a 72px icon rail from 640px, and a four-item bottom navigation on
@@ -115,7 +116,7 @@ const studioTabs: readonly NavItem[] = [
 function Brand({ className }: { className?: string }) {
   return (
     <Link to="/workspace" className={className ?? "sidebar-brand"} aria-label="VERITRAIL overview">
-      <ShieldCheck weight="fill" aria-hidden="true" />
+      <VeritrailMark size={28} className="sidebar-mark" />
       <span className="sidebar-wordmark">
         VERITRAIL<small>Governance &amp; assurance</small>
       </span>
@@ -274,7 +275,7 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
           </Button>
         )}
         <Link to="/workspace" className="wordmark header-brand" aria-label="VERITRAIL overview">
-          <ShieldCheck weight="fill" aria-hidden="true" />
+          <VeritrailMark size={22} className="header-mark" />
           <span>VERITRAIL</span>
         </Link>
         <button
