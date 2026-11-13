@@ -680,11 +680,33 @@ export function GuardrailsScreen() {
 export function RoadmapScreen() {
   const { state, dispatch } = useGovernance();
   const [editing, setEditing] = useState<string | null>(null);
+  const [filter, setFilter] = useState<"All" | "Open" | "Done">("All");
+  const doneCount = state.roadmap.filter((i) => i.done).length;
+  const openCount = state.roadmap.length - doneCount;
   return (
     <>
       <p className="muted">
         Generated from assessment gaps and gate blockers; add, reassign or move items as plans
-        change. {state.roadmap.filter((i) => i.done).length} of {state.roadmap.length} complete.
+        change.
+      </p>
+      <div className="filters" aria-label="Roadmap filters">
+        {(["All", "Open", "Done"] as const).map((x) => (
+          <Button
+            key={x}
+            variant={filter === x ? "default" : "outline"}
+            aria-pressed={filter === x}
+            onClick={() => setFilter(x)}
+          >
+            {x}{" "}
+            <span>
+              {x === "All" ? state.roadmap.length : x === "Open" ? openCount : doneCount}
+            </span>
+          </Button>
+        ))}
+      </div>
+      <p className="muted" aria-live="polite">
+        <strong>{doneCount}</strong> of {state.roadmap.length} complete · <strong>{openCount}</strong>{" "}
+        open
       </p>
       <details className="decision-intake roadmap-add">
         <summary>
@@ -701,14 +723,20 @@ export function RoadmapScreen() {
       </details>
       <div className="roadmap-grid">
         {PHASES.map((p, phase) => {
-          const items = state.roadmap.filter((i) => i.phase === phase);
+          const phaseItems = state.roadmap.filter((i) => i.phase === phase);
+          const items = phaseItems.filter((i) =>
+            filter === "All" ? true : filter === "Done" ? i.done : !i.done,
+          );
+          const phaseDone = phaseItems.filter((i) => i.done).length;
           return (
             <section className="roadmap-phase" key={p.num}>
               <div className="phase-heading">
                 <strong>{p.num}</strong>
                 <div>
                   <h2>{p.name}</h2>
-                  <p className="muted">{p.window}</p>
+                  <p className="muted">
+                    {p.window} · {phaseDone}/{phaseItems.length} complete
+                  </p>
                 </div>
               </div>
               {items.map((i) =>
@@ -760,7 +788,11 @@ export function RoadmapScreen() {
                   </div>
                 ),
               )}
-              {items.length === 0 && <p className="muted roadmap-empty">No items in this phase.</p>}
+              {items.length === 0 && (
+                <p className="muted roadmap-empty">
+                  {phaseItems.length === 0 ? "No items in this phase." : "No items match this filter."}
+                </p>
+              )}
             </section>
           );
         })}
