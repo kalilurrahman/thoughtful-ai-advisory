@@ -128,6 +128,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "policy-alignment-assurance",
   },
   {
+    id: "change-deployment-assurance",
+    title: "Change management & deployment assurance",
+    category: "Change & deployment assurance",
+    description:
+      "Practice pre-deployment review, controlled rollout/rollback, change approvals and traceability, and post-deployment validation.",
+    anchor: "change-deployment-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
