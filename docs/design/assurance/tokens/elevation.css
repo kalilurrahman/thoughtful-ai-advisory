@@ -1,0 +1,23 @@
+/* Elevation & motion. Hairline borders do most of the work; shadows are reserved for floating layers. */
+:root {
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgba(11, 22, 32, 0.06);
+  --shadow-2: 0 1px 2px rgba(11, 22, 32, 0.05), 0 4px 12px rgba(11, 22, 32, 0.06);
+  --shadow-3: 0 2px 6px rgba(11, 22, 32, 0.08), 0 16px 40px rgba(11, 22, 32, 0.14);
+  --shadow-focus: 0 0 0 3px color-mix(in oklab, var(--border-focus) 35%, transparent);
+  --scrim: rgba(7, 17, 25, 0.55);
+  --blur-glass: saturate(160%) blur(10px);
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+}
+[data-theme="dark"] {
+  --shadow-1: none;
+  --shadow-2: 0 0 0 1px rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.4);
+  --shadow-3: 0 0 0 1px rgba(255,255,255,0.05), 0 20px 48px rgba(0,0,0,0.55);
+  --scrim: rgba(0, 0, 0, 0.65);
+}

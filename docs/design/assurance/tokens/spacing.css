@@ -1,0 +1,47 @@
+/* Spacing, layout, radii. 4px base. */
+:root {
+  --space-0: 0;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 20px;
+  --space-7: 24px;
+  --space-8: 32px;
+  --space-9: 40px;
+  --space-10: 48px;
+  --space-11: 64px;
+  --space-12: 96px;
+
+  /* Layout */
+  --gutter: clamp(16px, 2.5vw, 32px);
+  --content-max: 1360px;
+  --reading-max: 68ch;
+  --sidebar-width: 256px;
+  --sidebar-rail: 72px;
+  --topbar-height: 60px;
+  --bottomnav-height: 64px;
+  --control-height-sm: 32px;
+  --control-height-md: 40px;
+  --control-height-lg: 48px;
+  --touch-target: 44px;
+
+  /* Breakpoints (reference — use in media/container queries) */
+  --bp-phone: 0px;      /* < 640  : bottom nav, single column, stacked tables */
+  --bp-tablet: 640px;   /* 640–1023: icon rail, 2-col grids */
+  --bp-laptop: 1024px;  /* ≥ 1024 : full sidebar, 12-col grid */
+  --bp-wide: 1440px;
+
+  /* Radii — restrained; audit tools should feel exact, not bubbly */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+
+  /* Borders */
+  --border-width: 1px;
+  --rule-double: 4px double var(--rule-ink);
+  --rule-single: 1px solid var(--border-default);
+}

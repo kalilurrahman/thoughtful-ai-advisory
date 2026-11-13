@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>body{margin:0;background:#dfe5e9}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;font-family:var(--font-sans);background:#dfe5e9">
+  <div style="width:100%;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;padding:10px 16px;box-sizing:border-box">
+    <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--ink-600)">PREVIEW</span>
+    <div style="display:flex;gap:2px;padding:3px;background:#cfd7dc;border-radius:6px">
+      <sc-for list="{{ devices }}" as="d" hint-placeholder-count="4">
+        <button onClick="{{ d.onClick }}" style="display:flex;align-items:center;gap:6px;height:30px;padding:0 12px;border:0;border-radius:4px;background:{{ d.bg }};color:{{ d.color }};font:500 12px/1 var(--font-sans);cursor:pointer"><i class="ph ph-{{ d.icon }}" style="font-size:15px"></i>{{ d.label }}</button>
+      </sc-for>
+    </div>
+    <span style="font:var(--text-code);font-size:11px;color:var(--ink-600)">{{ widthLabel }}</span>
+  </div>
+  <div ref="{{ frameRef }}" data-theme="{{ theme }}" style="position:relative;width:{{ frameWidth }};max-width:100%;height:{{ frameHeight }};display:flex;overflow:hidden;background:var(--surface-canvas);color:var(--text-body);border-radius:{{ frameRadius }};box-shadow:0 10px 40px rgba(7,17,25,.18);border:{{ frameBorder }};box-sizing:border-box">
+
+    <sc-if value="{{ showSidebar }}" hint-placeholder-val="{{ true }}">
+      <nav style="width:{{ sidebarWidth }};flex-shrink:0;background:var(--surface-nav);color:var(--text-inverse);display:flex;flex-direction:column;overflow-y:auto">
+        <div style="display:flex;align-items:center;gap:10px;height:60px;padding:0 20px;justify-content:{{ brandJustify }};border-bottom:1px solid rgba(255,255,255,.07)">
+          <img src="assets/veritrail-shield.svg" alt="VERITRAIL" style="width:26px;height:26px">
+          <sc-if value="{{ sidebarFull }}" hint-placeholder-val="{{ true }}"><span style="font:600 16px/1 var(--font-display);letter-spacing:.2em;color:#fff">VERITRAIL</span></sc-if>
+        </div>
+        <sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="2">
+          <div style="padding:14px 12px 4px;display:flex;flex-direction:column;gap:2px">
+            <sc-if value="{{ sidebarFull }}" hint-placeholder-val="{{ true }}"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-inverse-muted);padding:0 10px 6px">{{ g.label }}</span></sc-if>
+            <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+              <button title="{{ it.label }}" onClick="{{ it.onClick }}" style="display:flex;align-items:center;gap:12px;height:40px;padding:0 10px;justify-content:{{ brandJustify }};border:0;border-radius:var(--radius-sm);background:{{ it.bg }};box-shadow:{{ it.shadow }};color:{{ it.color }};font:500 14px/1 var(--font-sans);cursor:pointer;text-align:left">
+                <i class="ph ph-{{ it.icon }}" style="font-size:19px"></i>
+                <sc-if value="{{ sidebarFull }}" hint-placeholder-val="{{ true }}"><span style="flex:1">{{ it.label }}</span><span style="font:var(--text-code);font-size:11px;color:{{ it.countColor }}">{{ it.count }}</span></sc-if>
+              </button>
+            </sc-for>
+          </div>
+        </sc-for>
+        <sc-if value="{{ sidebarFull }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;gap:4px">
+            <span style="font:500 13px/1.3 var(--font-sans);color:#fff">Acme Health</span>
+            <span style="font:var(--text-code);font-size:11px;color:var(--text-inverse-muted)">Demo workspace · rev 0013</span>
+          </div>
+        </sc-if>
+      </nav>
+    </sc-if>
+
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;position:relative">
+      <div style="display:flex;align-items:center;gap:10px;height:60px;flex-shrink:0;padding:0 var(--gutter);background:color-mix(in oklab, var(--surface-canvas) 88%, transparent);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--border-default);box-sizing:border-box">
+        <sc-if value="{{ isPhone }}" hint-placeholder-val="{{ false }}">
+          <img src="assets/veritrail-shield.svg" alt="" style="width:24px;height:24px">
+          <span style="font:600 14px/1 var(--font-display);letter-spacing:.2em;color:var(--brand)">VERITRAIL</span>
+        </sc-if>
+        <sc-if value="{{ notPhone }}" hint-placeholder-val="{{ true }}">
+          <label style="flex:1 1 auto;max-width:420px;display:flex;align-items:center;gap:10px;height:36px;padding:0 12px;border:1px solid var(--border-default);border-radius:var(--radius-sm);background:var(--surface-card);color:var(--text-subtle);min-width:0">
+            <i class="ph ph-magnifying-glass" style="font-size:16px"></i>
+            <input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search systems, owners, vendors…" style="flex:1;min-width:0;border:0;outline:0;background:transparent;font:400 13px/1 var(--font-sans);color:var(--text-strong)">
+            <kbd style="font:var(--text-code);font-size:10px;padding:2px 5px;border:1px solid var(--border-default);border-radius:3px">⌘K</kbd>
+          </label>
+        </sc-if>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+          <sc-if value="{{ notPhone }}" hint-placeholder-val="{{ true }}"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">ACME HEALTH</span></sc-if>
+          <span style="font:500 11px/1 var(--font-sans);padding:6px 8px;background:var(--brand-soft);color:var(--brand-soft-ink);border-radius:var(--radius-xs)">Demo</span>
+          <button onClick="{{ toggleTheme }}" title="Toggle theme" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-default);border-radius:var(--radius-sm);background:var(--surface-card);color:var(--text-body);cursor:pointer"><i class="ph ph-{{ themeIcon }}" style="font-size:17px"></i></button>
+        </div>
+      </div>
+
+      <main style="flex:1;overflow-y:auto;overflow-x:hidden;padding:var(--gutter);padding-bottom:40px">
+        <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
+
+          <header style="display:flex;flex-direction:column;gap:10px">
+            <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">{{ page.eyebrow }}</span>
+            <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px">
+              <h1 style="margin:0;font:var(--text-h1);letter-spacing:var(--tracking-heading);color:var(--text-strong);text-wrap:balance">{{ page.title }}</h1>
+              <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ goAssess }}" style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border:1px solid var(--brand);border-radius:var(--radius-sm);background:var(--brand);color:var(--text-on-brand);font:500 14px/1 var(--font-sans);cursor:pointer;white-space:nowrap">Continue assessment <i class="ph ph-arrow-right"></i></button>
+              </sc-if>
+            </div>
+            <div style="border-bottom:var(--rule-double)"></div>
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)"><span>{{ page.metaL }}</span><span>{{ page.metaR }}</span></div>
+          </header>
+
+          <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ goAssess }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:16px 20px;background:var({{ gate.bg }});border:1px solid color-mix(in oklab, var({{ gate.ink }}) 30%, transparent);border-radius:var(--radius-md);cursor:pointer">
+              <span style="width:10px;height:10px;border-radius:50%;background:var({{ gate.ink }});box-shadow:0 0 0 4px color-mix(in oklab, var({{ gate.ink }}) 18%, transparent)"></span>
+              <div style="flex:1 1 220px;display:flex;flex-direction:column;gap:4px">
+                <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var({{ gate.ink }})">WORKSPACE RELEASE GATE · HIGH TIER</span>
+                <span style="font:600 16px/1.3 var(--font-sans);color:var(--text-strong)">{{ gate.title }}</span>
+                <span style="font:var(--text-caption);color:var(--text-body)">{{ gate.detail }}</span>
+              </div>
+              <span style="display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--font-sans);color:var(--text-strong)">Review controls <i class="ph ph-caret-right"></i></span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+              <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+                <div onClick="{{ k.onClick }}" style="background:var(--surface-card);border:1px solid var(--border-default);border-top:3px solid var({{ k.tone }});border-radius:var(--radius-md);padding:16px 18px;display:flex;flex-direction:column;gap:6px;cursor:pointer;min-width:0">
+                  <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                    <span style="font:600 var(--size-kpi)/1 var(--font-display);color:var({{ k.tone }});font-variant-numeric:tabular-nums">{{ k.value }}<span style="font-size:.45em;color:var(--text-muted);margin-left:2px">{{ k.unit }}</span></span>
+                    <i class="ph ph-{{ k.icon }}" style="font-size:20px;color:var({{ k.tone }})"></i>
+                  </div>
+                  <span style="font:var(--text-label);color:var(--text-body)">{{ k.label }}</span>
+                  <span style="font:var(--text-code);font-size:11px;color:var(--text-muted)">{{ k.delta }}</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px">
+              <section style="background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:22px;display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;align-items:flex-end;gap:18px">
+                  <span style="font:600 var(--size-index)/.85 var(--font-display);color:var(--brand);font-variant-numeric:tabular-nums;letter-spacing:-.03em">{{ index }}</span>
+                  <div style="display:flex;flex-direction:column;gap:4px;padding-bottom:4px">
+                    <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">VERITRAIL INDEX</span>
+                    <span style="font:600 24px/1.1 var(--font-display);color:var(--text-strong)">{{ band }}</span>
+                    <span style="font:var(--text-caption);color:var(--text-muted)">Current workspace maturity</span>
+                  </div>
+                </div>
+                <div style="display:flex;height:8px;gap:2px">
+                  <sc-for list="{{ bands }}" as="b" hint-placeholder-count="5"><div style="flex:1;background:{{ b.bg }}"></div></sc-for>
+                </div>
+                <div style="display:flex;justify-content:space-between;font:var(--text-code);font-size:10px;color:var(--text-subtle)"><span>INITIAL</span><span>DEVELOPING</span><span>ESTABLISHED</span><span>MANAGED</span><span>OPTIMIZED</span></div>
+                <div style="border-top:1px solid var(--border-hairline);padding-top:14px;font:var(--text-label);font-weight:400;color:var(--text-body)">{{ verifiedLine }}</div>
+              </section>
+              <section style="background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:22px;display:flex;flex-direction:column;gap:16px">
+                <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">TILLER PILLARS · MAPPED TO NIST AI RMF</span><span style="display:flex;align-items:center;gap:6px;font:var(--text-code);font-size:10px;color:var(--text-subtle)"><span style="width:2px;height:10px;background:var(--viz-target)"></span>TARGET</span></div>
+                <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="6">
+                  <div onClick="{{ p.onClick }}" style="display:grid;grid-template-columns:26px minmax(0,1fr) 36px;gap:12px;align-items:center;cursor:pointer">
+                    <span style="font:600 21px/1 var(--font-display);color:var(--brand)">{{ p.letter }}</span>
+                    <div style="display:flex;flex-direction:column;gap:7px;min-width:0">
+                      <div style="display:flex;justify-content:space-between;gap:8px"><span style="font:var(--text-label);color:var(--text-strong);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.name }}</span><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-subtle)">{{ p.fn }}</span></div>
+                      <div style="position:relative;height:6px;background:var(--viz-track)"><div style="width:{{ p.pct }};height:100%;background:var({{ p.tone }});transition:width .3s var(--ease-standard)"></div><div style="position:absolute;left:{{ p.targetPct }};top:-4px;width:2px;height:14px;background:var(--viz-target)"></div></div>
+                    </div>
+                    <span style="font:600 18px/1 var(--font-display);color:var({{ p.tone }});text-align:right;font-variant-numeric:tabular-nums">{{ p.score }}</span>
+                  </div>
+                </sc-for>
+              </section>
+            </div>
+
+            <section style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0;font:var(--text-h2);color:var(--text-strong)">Remediation roadmap</h2><span style="font:var(--text-code);font-size:12px;color:var(--text-muted)">2 of 9 complete</span></div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px">
+                <sc-for list="{{ phases }}" as="ph" hint-placeholder-count="4">
+                  <div style="background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:16px;display:flex;flex-direction:column;gap:10px">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 26px/1 var(--font-display);color:var(--brand)">{{ ph.num }}</span><span style="font:var(--text-code);font-size:11px;color:var(--text-muted)">{{ ph.window }}</span></div>
+                    <span style="font:var(--text-h4);color:var(--text-strong)">{{ ph.name }}</span>
+                    <sc-for list="{{ ph.items }}" as="i" hint-placeholder-count="2">
+                      <div style="display:grid;grid-template-columns:18px 1fr;gap:8px;font:var(--text-caption);color:var(--text-body)"><i class="ph{{ i.iconStyle }} ph-{{ i.icon }}" style="font-size:16px;color:{{ i.color }}"></i><span><span style="color:var(--text-strong)">{{ i.title }}</span><br><span style="color:var(--text-muted)">{{ i.owner }} · {{ i.tag }}</span></span></div>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </div>
+            </section>
+          </sc-if>
+
+          <sc-if value="{{ isInventory }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+              <div role="tablist" style="display:flex;gap:4px;padding:3px;background:var(--surface-sunken);border-radius:var(--radius-sm);overflow-x:auto;max-width:100%">
+                <sc-for list="{{ tierTabs }}" as="t" hint-placeholder-count="5">
+                  <button onClick="{{ t.onClick }}" style="display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;border:0;border-radius:var(--radius-xs);background:{{ t.bg }};box-shadow:{{ t.shadow }};color:{{ t.color }};font:500 13px/1 var(--font-sans);cursor:pointer;white-space:nowrap">{{ t.label }}<span style="font:var(--text-code);font-size:11px;color:{{ t.countColor }}">{{ t.count }}</span></button>
+                </sc-for>
+              </div>
+              <button style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border:1px solid var(--brand);border-radius:var(--radius-sm);background:var(--brand);color:var(--text-on-brand);font:500 14px/1 var(--font-sans);cursor:pointer"><i class="ph ph-plus"></i>Register &amp; triage</button>
+            </div>
+            <sc-if value="{{ isPhone }}" hint-placeholder-val="{{ false }}">
+              <label style="display:flex;align-items:center;gap:10px;height:44px;padding:0 12px;border:1px solid var(--border-input);border-radius:var(--radius-sm);background:var(--surface-card);color:var(--text-subtle)"><i class="ph ph-magnifying-glass"></i><input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search systems, owners, vendors…" style="flex:1;min-width:0;border:0;outline:0;background:transparent;font:400 15px/1 var(--font-sans);color:var(--text-strong)"></label>
+            </sc-if>
+            <div style="display:flex;flex-wrap:wrap;gap:6px 20px;padding:12px 16px;background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);font:var(--text-label);font-weight:400;color:var(--text-muted)">
+              <sc-for list="{{ invStats }}" as="s" hint-placeholder-count="4"><span><b style="font:600 15px/1 var(--font-sans);color:var(--text-strong)">{{ s.n }}</b> {{ s.label }}</span></sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:12px">
+              <sc-for list="{{ systems }}" as="s" hint-placeholder-count="6">
+                <button onClick="{{ s.onClick }}" style="text-align:left;background:var(--surface-card);border:1px solid {{ s.border }};border-radius:var(--radius-md);padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;font-family:var(--font-sans);box-shadow:var(--shadow-1)">
+                  <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;width:100%">
+                    <span style="font:600 17px/1.3 var(--font-sans);color:var(--text-strong)">{{ s.name }}</span>
+                    <span style="flex-shrink:0;display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:var(--radius-xs);background:var({{ s.tierBg }});color:var({{ s.tierInk }});font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase">{{ s.tier }}</span>
+                  </div>
+                  <span style="font:var(--text-caption);color:var(--text-muted)">{{ s.kind }} · {{ s.owner }} · {{ s.data }}</span>
+                  <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding-top:10px;border-top:1px solid var(--border-hairline)">
+                    <span style="display:inline-flex;align-items:center;gap:7px;font:500 13px/1 var(--font-sans);color:var(--text-strong)"><span style="width:7px;height:7px;border-radius:50%;background:var({{ s.statusInk }})"></span>{{ s.status }}</span>
+                    <span style="font:var(--text-code);font-size:11px;color:var(--text-muted)">{{ s.vendor }}</span>
+                  </div>
+                </button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ noSystems }}" hint-placeholder-val="{{ false }}"><div style="padding:32px;text-align:center;border:1px dashed var(--border-strong);border-radius:var(--radius-md);font:var(--text-label);color:var(--text-muted)">No systems match “{{ query }}”.</div></sc-if>
+            <p style="margin:0;font:var(--text-caption);color:var(--text-muted)">Screening is a preliminary inference, not a legal classification or approval. New records remain Under review until an accountable human confirms disposition.</p>
+          </sc-if>
+
+          <sc-if value="{{ isAssess }}" hint-placeholder-val="{{ false }}">
+            <div role="tablist" style="display:flex;gap:4px;padding:3px;background:var(--surface-sunken);border-radius:var(--radius-sm);overflow-x:auto;max-width:100%;align-self:flex-start">
+              <sc-for list="{{ pillarTabs }}" as="t" hint-placeholder-count="7">
+                <button onClick="{{ t.onClick }}" style="display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 12px;border:0;border-radius:var(--radius-xs);background:{{ t.bg }};box-shadow:{{ t.shadow }};color:{{ t.color }};font:500 13px/1 var(--font-sans);cursor:pointer;white-space:nowrap">{{ t.label }}<span style="font:var(--text-code);font-size:11px;color:{{ t.countColor }}">{{ t.count }}</span></button>
+              </sc-for>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start">
+              <sc-if value="{{ showCtlList }}" hint-placeholder-val="{{ true }}">
+                <div style="flex:1 1 0;min-width:0;background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);overflow:hidden">
+                  <sc-for list="{{ controls }}" as="c" hint-placeholder-count="6">
+                    <button onClick="{{ c.onClick }}" style="width:100%;text-align:left;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:start;padding:14px 16px;border:0;border-bottom:1px solid var(--border-hairline);background:{{ c.bg }};box-shadow:{{ c.shadow }};cursor:pointer;font-family:var(--font-sans)">
+                      <span style="font:var(--text-code);color:var(--brand);padding-top:2px">{{ c.code }}</span>
+                      <span style="display:flex;flex-direction:column;gap:5px;min-width:0">
+                        <span style="font:500 14px/1.45 var(--font-sans);color:var(--text-strong)">{{ c.text }}</span>
+                        <span style="font:var(--text-caption);color:var(--text-muted)">{{ c.w }} · {{ c.owner }} · Evidence: {{ c.evLabel }}</span>
+                      </span>
+                      <span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:var(--radius-xs);background:var({{ c.bgTone }});color:var({{ c.inkTone }});font:500 12px/1 var(--font-sans);white-space:nowrap"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>{{ c.statusLabel }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ showCtlDetail }}" hint-placeholder-val="{{ true }}">
+                <aside style="flex:1 1 0;min-width:0;max-width:{{ detailMax }};background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:22px;display:flex;flex-direction:column;gap:18px;position:sticky;top:0">
+                  <sc-if value="{{ notLaptop }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ backToList }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0;border:0;background:none;color:var(--text-link);font:500 14px/1 var(--font-sans);cursor:pointer"><i class="ph ph-arrow-left"></i>All controls</button>
+                  </sc-if>
+                  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                    <span style="font:var(--text-code);font-size:13px;padding:3px 7px;border:1px solid var(--brand);color:var(--brand);border-radius:var(--radius-xs)">{{ ctl.code }}</span>
+                    <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">{{ ctl.pillarName }}</span>
+                    <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:var(--radius-xs);background:var({{ ctl.bgTone }});color:var({{ ctl.inkTone }});font:500 12px/1 var(--font-sans)"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>{{ ctl.statusLabel }}</span>
+                  </div>
+                  <h2 style="margin:0;font:600 22px/1.3 var(--font-display);color:var(--text-strong);text-wrap:pretty">{{ ctl.text }}</h2>
+                  <p style="margin:0;font:var(--text-body-md);color:var(--text-muted)">{{ ctl.hint }}</p>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">MATURITY</span>
+                    <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px">
+                      <sc-for list="{{ scoreOpts }}" as="o" hint-placeholder-count="5">
+                        <button onClick="{{ o.onClick }}" style="height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:1px solid {{ o.border }};border-radius:var(--radius-sm);background:{{ o.bg }};color:{{ o.color }};cursor:pointer;padding:0 2px"><span style="font:600 16px/1 var(--font-display)">{{ o.n }}</span><span style="font:500 10px/1 var(--font-sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%">{{ o.label }}</span></button>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">EVIDENCE</span>
+                    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px">
+                      <sc-for list="{{ evOpts }}" as="o" hint-placeholder-count="4">
+                        <button onClick="{{ o.onClick }}" style="min-height:44px;padding:6px 4px;border:1px solid {{ o.border }};border-radius:var(--radius-sm);background:{{ o.bg }};color:{{ o.color }};font:500 12px/1.2 var(--font-sans);cursor:pointer">{{ o.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">WHAT GOOD LOOKS LIKE</span>
+                    <sc-for list="{{ ctl.good }}" as="g" hint-placeholder-count="2"><div style="display:grid;grid-template-columns:18px 1fr;gap:8px;font:var(--text-label);font-weight:400;color:var(--text-body)"><i class="ph ph-check" style="color:var(--status-effective-ink);font-size:15px;padding-top:2px"></i><span>{{ g }}</span></div></sc-for>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:1px solid var(--border-hairline)">
+                    <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">FRAMEWORK REFERENCES · OWNER {{ ctl.owner }}</span>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ ctl.refs }}" as="r" hint-placeholder-count="2"><span style="font:var(--text-code);font-size:12px;padding:4px 8px;border:1px solid var(--border-default);border-radius:var(--radius-xs);color:var(--text-strong)">{{ r }}</span></sc-for></div>
+                  </div>
+                </aside>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isEvidence }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px">
+              <sc-for list="{{ packs }}" as="pk" hint-placeholder-count="3">
+                <div style="background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:18px;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;gap:10px"><i class="ph ph-{{ pk.icon }}" style="font-size:22px;color:var(--brand)"></i><span style="font:var(--text-h4);color:var(--text-strong)">{{ pk.name }}</span></div>
+                  <span style="font:var(--text-caption);color:var(--text-muted)">{{ pk.desc }}</span>
+                  <span style="margin-top:auto;display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--font-sans);color:var(--text-link)"><i class="ph ph-download-simple"></i>Preview export</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:20px;background:var({{ sign.bg }});border:1px solid var(--border-default);border-radius:var(--radius-md)">
+              <i class="ph ph-seal-check" style="font-size:34px;color:var({{ sign.ink }})"></i>
+              <div style="flex:1 1 240px;display:flex;flex-direction:column;gap:4px">
+                <span style="font:600 16px/1.3 var(--font-sans);color:var(--text-strong)">{{ sign.title }}</span>
+                <span style="font:var(--text-caption);color:var(--text-body)">{{ sign.detail }}</span>
+              </div>
+              <button onClick="{{ signOff }}" disabled="{{ sign.disabled }}" style="display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border:1px solid var(--seal);border-radius:var(--radius-sm);background:var(--seal);color:#fff;font:500 14px/1 var(--font-sans);cursor:pointer;opacity:{{ sign.opacity }}"><i class="ph ph-signature"></i>{{ sign.cta }}</button>
+            </div>
+            <section style="background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:8px 20px">
+              <sc-for list="{{ log }}" as="l" hint-placeholder-count="5">
+                <div style="display:grid;grid-template-columns:16px minmax(0,1fr);gap:14px;padding:14px 0;border-bottom:1px solid var(--border-hairline)">
+                  <span style="width:9px;height:9px;margin-top:5px;border-radius:50%;background:var({{ l.ink }});box-shadow:0 0 0 3px var(--surface-card),0 0 0 4px var(--border-default)"></span>
+                  <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+                    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px"><span style="font:500 14px/1.4 var(--font-sans);color:var(--text-strong)">{{ l.title }}</span><span style="font:var(--text-code);font-size:11px;color:var(--text-muted)">{{ l.at }}</span></div>
+                    <span style="font:var(--text-caption);color:var(--text-muted)">{{ l.who }} · <span style="font-family:var(--font-mono)">{{ l.ref }}</span></span>
+                  </div>
+                </div>
+              </sc-for>
+            </section>
+          </sc-if>
+        </div>
+      </main>
+
+      <sc-if value="{{ isPhone }}" hint-placeholder-val="{{ false }}">
+        <nav style="display:grid;grid-template-columns:repeat(4,1fr);height:64px;flex-shrink:0;background:var(--surface-card);border-top:1px solid var(--border-default)">
+          <sc-for list="{{ bottomItems }}" as="b" hint-placeholder-count="4">
+            <button onClick="{{ b.onClick }}" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;background:transparent;color:{{ b.color }};font:500 11px/1 var(--font-sans);cursor:pointer">
+              <span style="position:absolute;top:0;width:28px;height:2px;background:{{ b.bar }}"></span>
+              <i class="ph{{ b.iconStyle }} ph-{{ b.icon }}" style="font-size:22px"></i>{{ b.label }}
+            </button>
+          </sc-for>
+        </nav>
+      </sc-if>
+
+      <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeDrawer }}" style="position:absolute;inset:0;background:var(--scrim);z-index:10"></div>
+        <aside style="position:absolute;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--surface-raised);box-shadow:var(--shadow-3);z-index:11;display:flex;flex-direction:column;overflow-y:auto">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border-default)">
+            <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">SYSTEM RECORD</span>
+            <button onClick="{{ closeDrawer }}" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-default);border-radius:var(--radius-sm);background:var(--surface-card);color:var(--text-body);cursor:pointer"><i class="ph ph-x"></i></button>
+          </div>
+          <div style="padding:22px 20px;display:flex;flex-direction:column;gap:18px">
+            <span style="align-self:flex-start;display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:var(--radius-xs);background:var({{ sys.tierBg }});color:var({{ sys.tierInk }});font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase">{{ sys.tier }}</span>
+            <h2 style="margin:0;font:600 26px/1.2 var(--font-display);color:var(--text-strong)">{{ sys.name }}</h2>
+            <dl style="margin:0;display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px 12px;font:var(--text-label);font-weight:400">
+              <sc-for list="{{ sys.facts }}" as="f" hint-placeholder-count="5"><dt style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-subtle);padding-top:2px">{{ f.k }}</dt><dd style="margin:0;color:var(--text-strong)">{{ f.v }}</dd></sc-for>
+            </dl>
+            <div style="display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid var(--border-hairline)">
+              <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">DISPOSITION</span>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                <sc-for list="{{ sys.actions }}" as="a" hint-placeholder-count="4">
+                  <button onClick="{{ a.onClick }}" style="min-height:44px;padding:8px 10px;display:flex;align-items:center;gap:8px;border:1px solid {{ a.border }};border-radius:var(--radius-sm);background:{{ a.bg }};color:var(--text-strong);font:500 13px/1.2 var(--font-sans);cursor:pointer;text-align:left"><span style="width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var({{ a.ink }})"></span>{{ a.label }}</button>
+                </sc-for>
+              </div>
+              <span style="font:var(--text-caption);color:var(--text-muted)">Changes are written to the evidence trail with your name and a timestamp.</span>
+            </div>
+          </div>
+        </aside>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;},&quot;defaultDevice&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;fit&quot;,&quot;laptop&quot;,&quot;tablet&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;fit&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const PILLARS = [
+  { letter: "T", name: "Trust & Accountability", nist: "Govern", target: 80 },
+  { letter: "I", name: "Inventory & Oversight", nist: "Map", target: 80 },
+  { letter: "L", name: "Lifecycle & Use-Case Control", nist: "Map", target: 75 },
+  { letter: "L", name: "Lawfulness, Ethics & Compliance", nist: "Measure", target: 75 },
+  { letter: "E", name: "Engineering Reliability & Guardrails", nist: "Measure", target: 80 },
+  { letter: "R", name: "Runtime Operations & Monitoring", nist: "Manage", target: 75 },
+];
+const CONTROLS = [
+  { id: "G1", code: "T1", p: 0, w: "Critical", text: "Is there a named executive owner for AI risk with decision rights?", hint: "Look for a charter, RACI or board minute naming the accountable role.", good: ["AI risk owner named in a charter approved by the executive committee.", "Decision rights and escalation paths documented and exercised in the last quarter."], refs: ["NIST AI RMF GOVERN 1.1", "ISO/IEC 42001 §5.3"], owner: "CIO / CRO", s: 3, e: 3 },
+  { id: "G2", code: "T2", p: 0, w: "High", text: "Does an AI council or review board meet on a defined cadence?", hint: "Minutes, membership and a standing agenda count as evidence.", good: ["Cross-functional membership incl. legal, security, data and business.", "Minutes retained with decisions and actions."], refs: ["NIST AI RMF GOVERN 2.1", "ISO/IEC 42001 §5.1"], owner: "Chief of Staff", s: 3, e: 2 },
+  { id: "O1", code: "I1", p: 1, w: "Critical", text: "Is an inventory of AI systems, agents and vendors maintained?", hint: "Including owner, purpose, data touched, permissions and criticality.", good: ["Register covers in-house models, agents, embedded vendor AI and SaaS features.", "Reviewed at least quarterly; new systems added via intake."], refs: ["NIST AI RMF MAP 1.1", "EU AI Act Art. 49", "ISO/IEC 42001 A.6.2"], owner: "Enterprise Architecture", s: 3, e: 3 },
+  { id: "O2", code: "I2", p: 1, w: "High", text: "Is there a shadow-AI discovery process?", hint: "Network, SSO/SCIM and expense data used to find unapproved tools.", good: ["Quarterly discovery report with approved alternatives offered.", "Findings feed the inventory and policy updates."], refs: ["NIST AI RMF MAP 1.6", "ISO/IEC 42001 A.6.1"], owner: "Security Operations", s: 2, e: 1 },
+  { id: "V1", code: "L1", p: 2, w: "High", text: "Do AI use cases pass through an intake with a benefit case and approval?", hint: "A form, workflow or ticket type that gates experimentation and launch.", good: ["Intake captures purpose, data, users, autonomy and expected benefit.", "Approval recorded with conditions and review date."], refs: ["NIST AI RMF MAP 1.3", "ISO/IEC 42001 §6.1.4"], owner: "Product Governance", s: 3, e: 2 },
+  { id: "V2", code: "L2", p: 2, w: "Critical", text: "Are AI tools published as approved, approved with limits, or not approved?", hint: "A tiered list reachable by every employee.", good: ["Tool tiers published with permitted data classes per tier.", "Enforced via SSO, DLP or browser policy where possible."], refs: ["NIST AI RMF GOVERN 1.2", "ISO/IEC 42001 A.4.2"], owner: "IT Policy", s: 2, e: 2 },
+  { id: "E1", code: "L3", p: 3, w: "Critical", text: "Is an AI risk register with DPIA/AIA maintained for high-risk use cases?", hint: "Risk, likelihood, impact, control, owner and residual rating per entry.", good: ["Every high-risk system has a current impact assessment.", "Residual risks accepted by a named owner."], refs: ["NIST AI RMF MAP 5.1", "EU AI Act Art. 9 & 27", "ISO/IEC 42001 §6.1.2"], owner: "Risk & Compliance", s: 2, e: 2 },
+  { id: "E2", code: "L4", p: 3, w: "High", text: "Is a regulatory mapping (EU AI Act, ISO 42001, sector rules) kept current?", hint: "Obligations traced to controls and owners, with a review date.", good: ["Applicability decided per jurisdiction and sector.", "Each obligation mapped to at least one control and evidence item."], refs: ["NIST AI RMF GOVERN 1.1", "EU AI Act Art. 6 & Annex III"], owner: "Legal", s: 2, e: 1 },
+  { id: "R1", code: "E1", p: 4, w: "Critical", text: "Are prompt-injection and jailbreak tests executed before release?", hint: "Direct override, roleplay, encoding, indirect injection, exfiltration, multi-turn.", good: ["Test cases cover direct override, roleplay, encoding, indirect injection, exfiltration and multi-turn attacks.", "Results retained with date, version and pass/fail outcome."], refs: ["OWASP LLM01:2025", "MITRE ATLAS AML.T0051", "NIST AI 600-1 §2.7"], owner: "AI Security", s: 1, e: 0 },
+  { id: "R2", code: "E2", p: 4, w: "Critical", text: "Are input/output guardrails deployed on high-risk use cases?", hint: "PII, toxicity, groundedness, topic restriction, tool permission scopes.", good: ["Guardrail bundle configured per risk tier and versioned.", "Blocked and flagged events logged and reviewed."], refs: ["NIST AI RMF MANAGE 2.4", "OWASP LLM02 & LLM05:2025"], owner: "Platform Engineering", s: 3, e: 3 },
+  { id: "N1", code: "R1", p: 5, w: "Critical", text: "Is production drift, abuse and policy violation monitored?", hint: "Dashboards, alert thresholds and an on-call route.", good: ["Quality, drift and guardrail-trigger metrics with thresholds.", "Alerts route to a named on-call owner."], refs: ["NIST AI RMF MEASURE 2.4", "ISO/IEC 42001 §9.1", "EU AI Act Art. 72"], owner: "ML Ops", s: 1, e: 1 },
+  { id: "N2", code: "R2", p: 5, w: "High", text: "Is there an AI incident response and escalation procedure?", hint: "Severity scale, kill-switch criteria, regulator notification steps.", good: ["AI incidents classified with a severity scale and kill-switch criteria.", "Post-incident reviews feed the risk register."], refs: ["NIST AI RMF MANAGE 4.3", "EU AI Act Art. 73"], owner: "Security Operations", s: 2, e: 2 },
+];
+const SYSTEMS = [
+  { name: "Clinical Summary Copilot", kind: "In-house RAG", owner: "Clinical Informatics", data: "PHI", tier: "High-risk", status: "Approved with limits", vendor: "Azure OpenAI" },
+  { name: "HR Screening Assistant", kind: "Vendor model", owner: "People Ops", data: "PII", tier: "High-risk", status: "Under review", vendor: "Workday" },
+  { name: "Patient Support Agent", kind: "Agent · 4 tools", owner: "Digital Care", data: "PII", tier: "Limited", status: "Approved with limits", vendor: "Anthropic" },
+  { name: "Engineering Code Assistant", kind: "SaaS feature", owner: "Platform Eng", data: "Internal", tier: "Minimal", status: "Approved", vendor: "GitHub" },
+  { name: "Marketing Copy Generator", kind: "SaaS", owner: "Marketing", data: "Public", tier: "Minimal", status: "Approved", vendor: "Jasper" },
+  { name: "Sentiment on Call Recordings", kind: "Vendor model", owner: "Contact Centre", data: "PII · Voice", tier: "Limited", status: "Not approved", vendor: "Unknown (shadow)" },
+];
+const PHASES = [
+  { num: "01", name: "Stabilize", window: "Days 1–30", items: [["Assign AI system owner and approve use-case scope", "CIO", "Govern", true], ["Publish concise AI acceptable-use policy", "IT Policy", "Govern", true], ["Identify top 10 high-risk use cases", "Risk", "Map", false]] },
+  { num: "02", name: "Control", window: "Days 31–90", items: [["Implement data classification and access rules", "Data Protection", "Measure", false], ["Establish agent ownership, permissions and logging", "Platform Eng", "Manage", false]] },
+  { num: "03", name: "Scale", window: "Months 4–6", items: [["Integrate governance into SDLC and vendor onboarding", "Procurement", "Govern", false], ["Role-specific training: execs, product, developers, legal", "L&D", "Govern", false]] },
+  { num: "04", name: "Assure", window: "Months 7–12", items: [["Periodic control testing and red-teaming", "AI Security", "Measure", false], ["Produce audit-ready evidence pack; benchmark maturity", "Risk", "Manage", false]] },
+];
+const PACKS = [
+  { icon: "newspaper", name: "Executive one-pager", desc: "Index, maturity band, pillar chart, top risks, gate status, recommendations." },
+  { icon: "table", name: "Detailed scorecard", desc: "Every control with answer, weight, evidence status, score and calculation." },
+  { icon: "seal-check", name: "Audit evidence pack", desc: "Responses, evidence links, reviewer notes, timestamps, version and sign-off." },
+];
+const SCORE_LABELS = ["None", "Ad hoc", "Defined", "Managed", "Optimized"];
+const EV = ["None", "Claimed", "Partial", "Attached"];
+const TONE = { attested: ["--seal-ink", "--seal-soft", "Attested"], effective: ["--status-effective-ink", "--status-effective-bg", "Effective"], partial: ["--status-partial-ink", "--status-partial-bg", "Partial"], gap: ["--status-gap-ink", "--status-gap-bg", "Gap"] };
+const TIER = { "High-risk": ["--risk-high-ink", "--risk-high-bg"], Limited: ["--risk-limited-ink", "--risk-limited-bg"], Minimal: ["--risk-minimal-ink", "--risk-minimal-bg"], Prohibited: ["--risk-prohibited-ink", "--risk-prohibited-bg"] };
+const STATUS_INK = { "Approved": "--status-effective-ink", "Approved with limits": "--status-partial-ink", "Under review": "--status-info-ink", "Not approved": "--status-gap-ink" };
+const status = (s, e) => (s >= 3 && e === 3 ? "attested" : s >= 3 && e >= 2 ? "effective" : s >= 2 ? "partial" : "gap");
+const value = (s, e) => (s / 4) * 100 * (0.55 + (0.45 * e) / 3);
+const now = () => new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC";
+
+class Component extends DCLogic {
+  state = {
+    screen: "overview", device: this.props.defaultDevice ?? "fit", w: 1200, theme: this.props.theme ?? "light",
+    tier: "all", query: "", sys: null, ctl: "R1", pillar: -1, phoneDetail: false,
+    ans: Object.fromEntries(CONTROLS.map((c) => [c.id, { s: c.s, e: c.e }])),
+    sysStatus: Object.fromEntries(SYSTEMS.map((s) => [s.name, s.status])),
+    signed: false,
+    log: [
+      { title: "Evidence attached to E2 · Guardrail bundle v3.2", who: "Priya Nair, Platform Engineering", ref: "R2 · NIST MANAGE 2.4", at: "2026-11-12 16:42 UTC", ink: "--seal" },
+      { title: "HR Screening Assistant moved to Under review", who: "Dana Ortiz, People Ops", ref: "Inventory · EU AI Act Annex III", at: "2026-11-11 09:15 UTC", ink: "--status-info-ink" },
+      { title: "T1 rated Managed with charter attached", who: "Sam Okafor, CRO office", ref: "G1 · ISO/IEC 42001 §5.3", at: "2026-11-08 11:02 UTC", ink: "--status-effective-ink" },
+      { title: "E1 prompt-injection test run failed release gate", who: "AI Security CI", ref: "R1 · OWASP LLM01:2025", at: "2026-11-06 18:30 UTC", ink: "--status-gap-ink" },
+    ],
+  };
+  frameRef = React.createRef();
+  componentDidMount() {
+    this.ro = new ResizeObserver(([e]) => { const w = Math.round(e.contentRect.width); if (w !== this.state.w) this.setState({ w }); });
+    if (this.frameRef.current) this.ro.observe(this.frameRef.current);
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  addLog(entry) { this.setState((st) => ({ log: [{ ...entry, at: now(), who: "You, Governance lead" }, ...st.log] })); }
+  setAns(id, patch, label) {
+    const c = CONTROLS.find((x) => x.id === id);
+    this.setState((st) => ({ ans: { ...st.ans, [id]: { ...st.ans[id], ...patch } }, signed: false }));
+    const s = { ...this.state.ans[id], ...patch };
+    this.addLog({ title: `${c.code} ${label}`, ref: `${c.id} · ${c.refs[0]}`, ink: `${TONE[status(s.s, s.e)][0]}` });
+  }
+
+  renderVals() {
+    const st = this.state;
+    const mode = st.w < 640 ? "phone" : st.w < 1024 ? "tablet" : "laptop";
+    const isPhone = mode === "phone";
+    const go = (screen) => () => this.setState({ screen, phoneDetail: false });
+    const ctlRows = CONTROLS.map((c) => { const a = st.ans[c.id]; return { ...c, ...a, st: status(a.s, a.e), v: value(a.s, a.e) }; });
+    const pillarScores = PILLARS.map((p, i) => { const r = ctlRows.filter((c) => c.p === i); return Math.round(r.reduce((t, c) => t + c.v, 0) / r.length); });
+    const wsum = ctlRows.reduce((t, c) => t + (c.w === "Critical" ? 1.5 : 1), 0);
+    const index = Math.round(ctlRows.reduce((t, c) => t + c.v * (c.w === "Critical" ? 1.5 : 1), 0) / wsum);
+    const bandI = index < 25 ? 0 : index < 45 ? 1 : index < 65 ? 2 : index < 80 ? 3 : 4;
+    const blocking = ctlRows.filter((c) => c.w === "Critical" && c.st === "gap");
+    const partialCrit = ctlRows.filter((c) => c.w === "Critical" && c.st === "partial");
+    const verified = ctlRows.filter((c) => c.e === 3).length;
+    const gateState = blocking.length ? "blocked" : partialCrit.length ? "conditional" : "ready";
+    const gate = { blocked: { ink: "--status-gap-ink", bg: "--status-gap-bg", title: `Blocked · ${blocking.length} blocking control${blocking.length > 1 ? "s" : ""}`, detail: `Critical controls below Defined: ${blocking.map((c) => c.code).join(", ")}. Release of high-tier systems is held until they reach Defined.` },
+      conditional: { ink: "--status-partial-ink", bg: "--status-partial-bg", title: `Conditional · ${partialCrit.length} critical control${partialCrit.length > 1 ? "s" : ""} partial`, detail: "Release allowed with documented conditions and a review date." },
+      ready: { ink: "--status-effective-ink", bg: "--status-effective-bg", title: "Ready to release", detail: "Every critical control is Managed with evidence." } }[gateState];
+    const toneFor = (score, target) => (score < target - 20 ? "--status-gap-ink" : score < target ? "--status-partial-ink" : "--status-effective-ink");
+    const tabStyle = (on) => ({ bg: on ? "var(--surface-card)" : "transparent", shadow: on ? "var(--shadow-1)" : "none", color: on ? "var(--text-strong)" : "var(--text-muted)", countColor: on ? "var(--brand)" : "var(--text-subtle)" });
+
+    const NAV = [
+      { label: "Workspace", items: [["overview", "Overview", "house", ""], ["assess", "TILLER assessment", "list-checks", String(CONTROLS.length)], ["inventory", "AI inventory", "stack", String(SYSTEMS.length)]] },
+      { label: "Assurance", items: [["evidence", "Evidence & audit trail", "seal-check", blocking.length ? String(blocking.length) : ""]] },
+    ];
+    const navGroups = NAV.map((g) => ({ label: g.label, items: g.items.map(([id, label, icon, count]) => { const on = st.screen === id; return { id, label, icon, count, onClick: go(id), bg: on ? "var(--surface-nav-active)" : "transparent", shadow: on ? "inset 2px 0 0 var(--teal-300)" : "none", color: on ? "#fff" : "var(--text-inverse-muted)", countColor: id === "evidence" ? "#ff8fb4" : "var(--text-inverse-muted)" }; }) }));
+    const bottomItems = [["overview", "Overview", "house"], ["assess", "Assess", "list-checks"], ["inventory", "Systems", "stack"], ["evidence", "Evidence", "seal-check"]].map(([id, label, icon]) => { const on = st.screen === id; return { label, icon, onClick: go(id), color: on ? "var(--brand)" : "var(--text-muted)", bar: on ? "var(--brand)" : "transparent", iconStyle: on ? "-fill" : "" }; });
+
+    const PAGES = {
+      overview: { eyebrow: "WORKSPACE", title: "Governance overview", metaL: "ACME HEALTH · WORKSPACE ASSESSMENT", metaR: "ASSESSMENT TIER · HIGH" },
+      inventory: { eyebrow: "WORKSPACE", title: "AI inventory", metaL: `ACME HEALTH · ${SYSTEMS.length} SYSTEMS REGISTERED`, metaR: "REVIEWED 13 NOV 2026" },
+      assess: { eyebrow: "TILLER ASSESSMENT", title: "Controls & evidence", metaL: `${CONTROLS.length} CONTROLS · ${verified} WITH VERIFIED EVIDENCE`, metaR: "MAPPED TO NIST AI RMF · ISO/IEC 42001 · EU AI ACT" },
+      evidence: { eyebrow: "ASSURANCE", title: "Evidence & audit trail", metaL: `${st.log.length} RECORDED EVENTS`, metaR: "APPEND-ONLY · TIMESTAMPED UTC" },
+    };
+
+    // inventory
+    const q = st.query.trim().toLowerCase();
+    const matchQ = (s) => !q || [s.name, s.owner, s.vendor, st.sysStatus[s.name], s.kind].join(" ").toLowerCase().includes(q);
+    const tiers = ["all", "High-risk", "Limited", "Minimal", "Prohibited"];
+    const tierTabs = tiers.map((t) => ({ label: t === "all" ? "All" : t, count: t === "all" ? SYSTEMS.length : SYSTEMS.filter((s) => s.tier === t).length, onClick: () => this.setState({ tier: t }), ...tabStyle(st.tier === t) }));
+    const sysList = SYSTEMS.filter((s) => (st.tier === "all" || s.tier === st.tier) && matchQ(s));
+    const systems = sysList.map((s) => ({ ...s, status: st.sysStatus[s.name], statusInk: STATUS_INK[st.sysStatus[s.name]], tierInk: TIER[s.tier][0], tierBg: TIER[s.tier][1], border: st.sys === s.name ? "var(--brand)" : "var(--border-default)", onClick: () => this.setState({ sys: s.name }) }));
+    const counts = (k) => Object.values(st.sysStatus).filter((v) => v === k).length;
+    const invStats = [{ n: SYSTEMS.length, label: "registered" }, { n: counts("Under review"), label: "under review" }, { n: counts("Approved") + counts("Approved with limits"), label: "approved" }, { n: counts("Not approved"), label: "not approved" }];
+    const sel = SYSTEMS.find((s) => s.name === st.sys) || SYSTEMS[0];
+    const sys = { ...sel, tierInk: TIER[sel.tier][0], tierBg: TIER[sel.tier][1],
+      facts: [{ k: "TYPE", v: sel.kind }, { k: "OWNER", v: sel.owner }, { k: "DATA", v: sel.data }, { k: "VENDOR", v: sel.vendor }, { k: "STATUS", v: st.sysStatus[sel.name] }],
+      actions: Object.keys(STATUS_INK).map((label) => { const on = st.sysStatus[sel.name] === label; return { label, ink: STATUS_INK[label], bg: on ? "var(--surface-selected)" : "var(--surface-card)", border: on ? "var(--brand)" : "var(--border-default)",
+        onClick: () => { if (on) return; this.setState((x) => ({ sysStatus: { ...x.sysStatus, [sel.name]: label } })); this.addLog({ title: `${sel.name} set to ${label}`, ref: `Inventory · ${sel.tier}`, ink: STATUS_INK[label] }); } }; }) };
+
+    // assessment
+    const pillarTabs = [{ label: "All", count: CONTROLS.length, i: -1 }, ...PILLARS.map((p, i) => ({ label: `${p.letter} · ${p.nist}`, count: CONTROLS.filter((c) => c.p === i).length, i }))].map((t) => ({ ...t, onClick: () => this.setState({ pillar: t.i }), ...tabStyle(st.pillar === t.i) }));
+    const controls = ctlRows.filter((c) => st.pillar < 0 || c.p === st.pillar).map((c) => { const on = c.id === st.ctl && mode === "laptop"; return { ...c, evLabel: EV[c.e], statusLabel: TONE[c.st][2], inkTone: TONE[c.st][0], bgTone: TONE[c.st][1], bg: on ? "var(--surface-selected)" : "transparent", shadow: on ? "inset 3px 0 0 var(--brand)" : "none", onClick: () => this.setState({ ctl: c.id, phoneDetail: true }) }; });
+    const cr = ctlRows.find((c) => c.id === st.ctl);
+    const ctl = { ...cr, pillarName: PILLARS[cr.p].name.toUpperCase(), statusLabel: TONE[cr.st][2], inkTone: TONE[cr.st][0], bgTone: TONE[cr.st][1] };
+    const opt = (on) => ({ bg: on ? "var(--brand)" : "var(--surface-card)", color: on ? "var(--text-on-brand)" : "var(--text-body)", border: on ? "var(--brand)" : "var(--border-default)" });
+    const scoreOpts = SCORE_LABELS.map((label, n) => ({ n, label, ...opt(cr.s === n), onClick: () => cr.s !== n && this.setAns(cr.id, { s: n }, `rated ${label}`) }));
+    const evOpts = EV.map((label, n) => ({ label, ...opt(cr.e === n), onClick: () => cr.e !== n && this.setAns(cr.id, { e: n }, `evidence set to ${label}`) }));
+
+    const signReady = !blocking.length;
+    const sign = st.signed ? { bg: "--seal-soft", ink: "--seal", title: "Audit evidence pack signed", detail: "Signed by You, Governance lead · " + st.signedAt + " · pack hash 9f3a1c", cta: "Signed", disabled: true, opacity: 0.6 }
+      : signReady ? { bg: "--surface-card", ink: "--seal", title: "Ready for sign-off", detail: "No critical control is below Defined. Signing records your name, time and the pack version.", cta: "Sign off evidence pack", disabled: false, opacity: 1 }
+      : { bg: "--surface-card", ink: "--text-subtle", title: "Sign-off unavailable", detail: `Resolve blocking controls first: ${blocking.map((c) => c.code).join(", ")}. VERITRAIL supports readiness and evidence; it does not certify compliance.`, cta: "Sign off evidence pack", disabled: true, opacity: 0.45 };
+
+    const devices = [["fit", "Fit", "arrows-out-line-horizontal"], ["laptop", "Laptop", "laptop"], ["tablet", "Tablet", "device-tablet"], ["phone", "Phone", "device-mobile"]].map(([id, label, icon]) => ({ label, icon, onClick: () => this.setState({ device: id }), bg: st.device === id ? "#fff" : "transparent", color: st.device === id ? "var(--ink-950)" : "var(--ink-600)" }));
+    const dims = { fit: ["100%", "calc(100vh - 52px)"], laptop: ["1280px", "800px"], tablet: ["834px", "1112px"], phone: ["390px", "844px"] }[st.device];
+
+    return {
+      devices, frameRef: this.frameRef, frameWidth: dims[0], frameHeight: dims[1], frameRadius: st.device === "phone" ? "36px" : st.device === "tablet" ? "20px" : st.device === "fit" ? "0" : "10px",
+      frameBorder: st.device === "phone" || st.device === "tablet" ? "8px solid #0b1620" : "0", widthLabel: `${st.w}px · ${mode}`,
+      theme: st.theme, themeIcon: st.theme === "dark" ? "sun" : "moon", toggleTheme: () => this.setState({ theme: st.theme === "dark" ? "light" : "dark" }),
+      isPhone, notPhone: !isPhone, notLaptop: mode !== "laptop", showSidebar: !isPhone, sidebarFull: mode === "laptop", sidebarWidth: mode === "laptop" ? "248px" : "72px", brandJustify: mode === "laptop" ? "flex-start" : "center",
+      navGroups, bottomItems, page: PAGES[st.screen],
+      isOverview: st.screen === "overview", isInventory: st.screen === "inventory", isAssess: st.screen === "assess", isEvidence: st.screen === "evidence",
+      goAssess: go("assess"), gate, index, band: ["Initial", "Developing", "Established", "Managed", "Optimized"][bandI],
+      bands: [0, 1, 2, 3, 4].map((i) => ({ bg: i < bandI ? "var(--teal-300)" : i === bandI ? "var(--brand)" : "var(--viz-track)" })),
+      verifiedLine: `${verified} of ${CONTROLS.length} controls have verified evidence · ${blocking.length} critical gap${blocking.length === 1 ? "" : "s"}`,
+      kpis: [
+        { value: SYSTEMS.length, unit: "", label: "AI systems registered", tone: "--brand", icon: "stack", delta: "+1 since 1 Oct", onClick: go("inventory") },
+        { value: SYSTEMS.filter((s) => s.tier === "High-risk").length, unit: "", label: "Elevated-risk systems", tone: "--status-gap-ink", icon: "warning-circle", delta: "EU AI Act Annex III", onClick: go("inventory") },
+        { value: 86, unit: "%", label: "Guardrail coverage", tone: "--brand", icon: "shield-check", delta: "High tier bundle", onClick: go("assess") },
+        { value: 2, unit: "/9", label: "Remediation complete", tone: "--seal", icon: "seal-check", delta: "Phase 01 · Stabilize", onClick: go("evidence") },
+      ],
+      pillars: PILLARS.map((p, i) => { const sc = pillarScores[i]; return { letter: p.letter, name: p.name, fn: p.nist.toUpperCase(), score: sc, pct: sc + "%", targetPct: p.target + "%", tone: toneFor(sc, p.target), onClick: () => this.setState({ screen: "assess", pillar: i, phoneDetail: false }) }; }),
+      phases: PHASES.map((ph) => ({ ...ph, items: ph.items.map(([title, owner, tag, done]) => ({ title, owner, tag, icon: done ? "check-circle" : "circle", iconStyle: done ? "-fill" : "", color: done ? "var(--status-effective-ink)" : "var(--text-subtle)" })) })),
+      query: st.query, onQuery: (e) => this.setState({ query: e.target.value, screen: "inventory" }),
+      tierTabs, systems, noSystems: systems.length === 0, invStats,
+      drawerOpen: st.screen === "inventory" && !!st.sys, closeDrawer: () => this.setState({ sys: null }), sys,
+      pillarTabs, controls, ctl, scoreOpts, evOpts,
+      showCtlList: mode === "laptop" || !st.phoneDetail, showCtlDetail: mode === "laptop" || st.phoneDetail, detailMax: mode === "laptop" ? "460px" : "none",
+      backToList: () => this.setState({ phoneDetail: false }),
+      packs: PACKS, sign, log: st.log,
+      signOff: () => { if (!signReady || st.signed) return; const t = now(); this.setState({ signed: true, signedAt: t }); this.addLog({ title: "Audit evidence pack signed off", ref: "Pack v13 · sha 9f3a1c", ink: "--seal" }); },
+    };
+  }
+}
+</script>
+</body>
+</html>

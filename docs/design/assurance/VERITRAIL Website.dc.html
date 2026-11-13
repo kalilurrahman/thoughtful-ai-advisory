@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>body{margin:0;background:var(--surface-canvas)}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}</style>
+</helmet>
+<div ref="{{ rootRef }}" data-theme="{{ theme }}" style="background:var(--surface-canvas);color:var(--text-body);font-family:var(--font-sans);min-height:100vh">
+
+  <header style="position:sticky;top:0;z-index:20;background:color-mix(in oklab, var(--surface-canvas) 86%, transparent);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--border-default)">
+    <div style="max-width:1240px;margin:0 auto;height:64px;padding:0 var(--gutter);display:flex;align-items:center;gap:20px">
+      <a href="#" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0"><img src="assets/veritrail-shield.svg" alt="" style="width:28px;height:28px"><span style="font:600 18px/1 var(--font-display);letter-spacing:.2em;color:var(--brand)">VERITRAIL</span></a>
+      <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+        <nav style="display:flex;gap:2px;margin-left:8px">
+          <sc-for list="{{ navLinks }}" as="n" hint-placeholder-count="6"><a href="#" style="display:flex;align-items:center;gap:4px;height:36px;padding:0 10px;border-radius:var(--radius-sm);font:500 14px/1 var(--font-sans);color:var(--text-body);text-decoration:none">{{ n }}<i class="ph ph-caret-down" style="font-size:11px;color:var(--text-subtle)"></i></a></sc-for>
+        </nav>
+      </sc-if>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+        <button onClick="{{ toggleTheme }}" title="Toggle theme" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-default);border-radius:var(--radius-sm);background:var(--surface-card);color:var(--text-body);cursor:pointer"><i class="ph ph-{{ themeIcon }}" style="font-size:17px"></i></button>
+        <sc-if value="{{ notPhone }}" hint-placeholder-val="{{ true }}"><a href="#" style="display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:var(--radius-sm);background:var(--brand);color:var(--text-on-brand);font:500 14px/1 var(--font-sans);text-decoration:none;white-space:nowrap">Book Baseline</a></sc-if>
+        <sc-if value="{{ showMenuBtn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ toggleMenu }}" style="height:40px;display:flex;align-items:center;gap:6px;padding:0 12px;border:1px solid var(--border-default);border-radius:var(--radius-sm);background:var(--surface-card);color:var(--text-strong);font:500 14px/1 var(--font-sans);cursor:pointer"><i class="ph ph-{{ menuIcon }}" style="font-size:17px"></i>Menu</button></sc-if>
+      </div>
+    </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid var(--border-default);background:var(--surface-card);padding:8px var(--gutter) 16px;display:flex;flex-direction:column">
+        <sc-for list="{{ menuLinks }}" as="n" hint-placeholder-count="8"><a href="#" style="display:flex;align-items:center;justify-content:space-between;min-height:48px;border-bottom:1px solid var(--border-hairline);font:500 16px/1 var(--font-sans);color:var(--text-strong);text-decoration:none">{{ n }}<i class="ph ph-caret-right" style="color:var(--text-subtle)"></i></a></sc-for>
+        <a href="#" style="margin-top:12px;display:flex;align-items:center;justify-content:center;height:48px;border-radius:var(--radius-sm);background:var(--brand);color:var(--text-on-brand);font:500 15px/1 var(--font-sans);text-decoration:none">Book a Governance Baseline</a>
+      </div>
+    </sc-if>
+  </header>
+
+  <section data-theme="dark" style="background:var(--navy-950);color:var(--text-body);border-bottom:1px solid var(--border-default)">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) var(--gutter);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(32px,5vw,64px);align-items:center">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--teal-300)">ENTERPRISE AI GOVERNANCE, RUNTIME GUARDRAILS AND EVIDENCE</span>
+        <h1 style="margin:0;font:var(--text-display);letter-spacing:var(--tracking-display);color:#fff;text-wrap:balance">Govern every AI system, agent, and decision with evidence.</h1>
+        <p style="margin:0;font:var(--text-lead);color:var(--text-muted);max-width:56ch;text-wrap:pretty">VERITRAIL Enterprise helps organizations inventory AI, assess risk, govern the lifecycle, protect LLM applications and agents at runtime, and prove responsible AI continuously.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <a href="#" style="display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 22px;border-radius:var(--radius-sm);background:var(--brand);color:var(--text-on-brand);font:500 15px/1 var(--font-sans);text-decoration:none">Start the self-assessment <i class="ph ph-arrow-right"></i></a>
+          <a href="#" style="display:inline-flex;align-items:center;height:48px;padding:0 22px;border-radius:var(--radius-sm);border:1px solid var(--border-strong);color:#fff;font:500 15px/1 var(--font-sans);text-decoration:none">Book a Governance Baseline</a>
+        </div>
+        <p style="margin:0;font:var(--text-caption);color:var(--text-subtle)">VERITRAIL supports readiness and evidence. It does not certify compliance. <a href="#" style="color:var(--text-link)">Open the governance workspace</a>.</p>
+      </div>
+      <div style="position:relative;display:flex;flex-direction:column;gap:12px">
+        <div style="background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);box-shadow:var(--shadow-3);overflow:hidden">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border-default)"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">EVIDENCE TRAIL · ACME HEALTH</span><span style="font:var(--text-code);font-size:11px;color:var(--text-subtle)">rev 0013</span></div>
+          <sc-for list="{{ trail }}" as="t" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border-hairline)">
+              <span style="font:var(--text-code);color:var(--brand)">{{ t.code }}</span>
+              <span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font:500 13px/1.35 var(--font-sans);color:var(--text-strong);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ t.text }}</span><span style="font:var(--text-code);font-size:10.5px;color:var(--text-subtle)">{{ t.ref }}</span></span>
+              <span style="display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:var(--radius-xs);background:var({{ t.bg }});color:var({{ t.ink }});font:500 11.5px/1 var(--font-sans);white-space:nowrap"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>{{ t.label }}</span>
+            </div>
+          </sc-for>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--status-gap-bg)"><span style="width:9px;height:9px;border-radius:50%;background:var(--status-gap-ink)"></span><span style="font:600 13px/1.3 var(--font-sans);color:var(--text-strong)">Release gate · Blocked · 2 blocking controls</span></div>
+        </div>
+        <div style="align-self:flex-end;display:flex;align-items:center;gap:14px;background:var(--surface-raised);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-2)">
+          <span style="font:600 40px/1 var(--font-display);color:var(--brand)">52</span>
+          <span style="display:flex;flex-direction:column;gap:3px"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">VERITRAIL INDEX</span><span style="font:600 15px/1 var(--font-display);color:var(--text-strong)">Established</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:1px solid var(--border-default);background:var(--surface-card)">
+    <div style="max-width:1240px;margin:0 auto;padding:0 var(--gutter);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(50%,180px),1fr))">
+      <sc-for list="{{ proof }}" as="p" hint-placeholder-count="4">
+        <div style="padding:24px 20px 24px 0;display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--border-hairline)">
+          <span style="font:600 clamp(32px,4vw,44px)/1 var(--font-display);color:var(--text-strong);font-variant-numeric:tabular-nums">{{ p.n }}</span>
+          <span style="font:var(--text-label);color:var(--text-muted)">{{ p.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <main style="max-width:1240px;margin:0 auto;padding:0 var(--gutter)">
+    <section style="padding:clamp(48px,6vw,88px) 0;display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:10px"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">GET STARTED</span><h2 style="margin:0;font:var(--text-h1);font-size:var(--size-h2);color:var(--text-strong)">Four ways to start</h2><div style="border-bottom:var(--rule-double)"></div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px">
+        <sc-for list="{{ starts }}" as="s" hint-placeholder-count="4">
+          <a href="#" style="display:flex;flex-direction:column;gap:12px;padding:22px;background:var(--surface-card);border:1px solid var(--border-default);border-top:3px solid var({{ s.tone }});border-radius:var(--radius-md);text-decoration:none;color:inherit;min-height:200px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><i class="ph ph-{{ s.icon }}" style="font-size:26px;color:var(--brand)"></i><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var({{ s.tone }})">{{ s.tag }}</span></div>
+            <span style="font:600 18px/1.3 var(--font-sans);color:var(--text-strong)">{{ s.title }}</span>
+            <span style="font:var(--text-label);font-weight:400;color:var(--text-muted)">{{ s.desc }}</span>
+            <span style="margin-top:auto;display:inline-flex;align-items:center;gap:6px;font:500 14px/1 var(--font-sans);color:var(--text-link)">{{ s.cta }} <i class="ph ph-arrow-right"></i></span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="padding:0 0 clamp(48px,6vw,88px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(24px,4vw,56px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">THE PROBLEM</span>
+        <h2 style="margin:0;font:var(--text-h2);color:var(--text-strong);text-wrap:balance">Five questions most enterprises cannot answer with evidence</h2>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted)">When a board member, auditor, customer or regulator asks a direct question, the honest answer is often</p>
+        <blockquote style="margin:0;padding:18px 0 18px 24px;border-left:3px solid var(--brand);font:italic 600 clamp(36px,4vw,52px)/1 var(--font-display);color:var(--text-strong)">“We think so.”</blockquote>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-body)">VERITRAIL exists to turn each of those questions into a governed, evidenced answer.</p>
+      </div>
+      <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+        <sc-for list="{{ questions }}" as="q" hint-placeholder-count="5">
+          <li style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:18px 0;border-top:1px solid var(--border-default)">
+            <span style="font:600 26px/1 var(--font-display);color:var(--brand)">{{ q.n }}</span>
+            <span style="display:flex;flex-direction:column;gap:6px"><span style="font:600 16px/1.35 var(--font-sans);color:var(--text-strong)">{{ q.q }}</span><span style="font:var(--text-label);font-weight:400;color:var(--text-muted)">{{ q.a }}</span></span>
+          </li>
+        </sc-for>
+      </ol>
+    </section>
+  </main>
+
+  <section style="background:var(--surface-card);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,6vw,88px) var(--gutter);display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:10px"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">ARCHITECTURE</span><h2 style="margin:0;font:var(--text-h2);color:var(--text-strong)">Six layers, one governance system</h2><div style="border-bottom:var(--rule-double)"></div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:0 32px">
+        <sc-for list="{{ layers }}" as="l" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding:18px 0;border-bottom:1px solid var(--border-hairline)">
+            <span style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid var(--brand);border-radius:var(--radius-xs);font:var(--text-code);color:var(--brand)">{{ l.n }}</span>
+            <span style="display:flex;flex-direction:column;gap:6px"><span style="font:600 16px/1.3 var(--font-sans);color:var(--text-strong)">{{ l.name }}</span><span style="font:var(--text-label);font-weight:400;color:var(--text-muted)">{{ l.what }}</span><a href="#" style="font:500 13px/1.3 var(--font-sans);color:var(--text-link);text-decoration:none">{{ l.cap }} →</a></span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <main style="max-width:1240px;margin:0 auto;padding:0 var(--gutter)">
+    <section style="padding:clamp(48px,6vw,88px) 0;display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:10px"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">HOW IT WORKS</span><h2 style="margin:0;font:var(--text-h2);color:var(--text-strong)">Baseline → Register → Control → Shield → Assurance</h2></div>
+      <div role="tablist" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:4px;padding:4px;background:var(--surface-sunken);border-radius:var(--radius-md)">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <button onClick="{{ s.onClick }}" style="display:flex;align-items:center;gap:10px;min-height:52px;padding:0 14px;border:0;border-radius:var(--radius-sm);background:{{ s.bg }};box-shadow:{{ s.shadow }};color:{{ s.color }};font:600 15px/1 var(--font-sans);cursor:pointer;text-align:left"><span style="font:var(--text-code);color:{{ s.numColor }}">{{ s.n }}</span>{{ s.name }}</button>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:24px;padding:28px;background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md)">
+        <div style="display:flex;flex-direction:column;gap:12px"><span style="font:600 28px/1.15 var(--font-display);color:var(--text-strong)">{{ step.name }}</span><p style="margin:0;font:var(--text-body-md);font-size:16px;color:var(--text-body);max-width:var(--reading-max)">{{ step.body }}</p></div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">{{ step.listLabel }}</span>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ step.chips }}" as="c" hint-placeholder-count="5"><span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:var(--radius-xs);background:var({{ c.bg }});color:var({{ c.ink }});font:500 13px/1 var(--font-sans)"><span style="width:6px;height:6px;border-radius:50%;background:currentColor"></span>{{ c.label }}</span></sc-for></div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:0 0 clamp(48px,6vw,88px);display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:10px"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">VALUE BY STAKEHOLDER</span><h2 style="margin:0;font:var(--text-h2);color:var(--text-strong)">Built for the people who answer for AI</h2></div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <sc-for list="{{ roles }}" as="r" hint-placeholder-count="6"><button onClick="{{ r.onClick }}" style="height:40px;padding:0 14px;border:1px solid {{ r.border }};border-radius:var(--radius-pill);background:{{ r.bg }};color:{{ r.color }};font:500 14px/1 var(--font-sans);cursor:pointer">{{ r.role }}</button></sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));border:1px solid var(--border-default);border-radius:var(--radius-md);background:var(--surface-card);overflow:hidden">
+        <div style="padding:24px;display:flex;flex-direction:column;gap:8px;border-right:1px solid var(--border-hairline)"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--text-muted)">WHAT THEY NEED</span><span style="font:600 20px/1.35 var(--font-display);color:var(--text-strong)">{{ role.need }}</span></div>
+        <div style="padding:24px;display:flex;flex-direction:column;gap:8px;background:var(--surface-selected)"><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--brand-soft-ink)">WHAT VERITRAIL PROVIDES</span><span style="font:var(--text-body-md);font-size:16px;color:var(--text-body)">{{ role.give }}</span></div>
+      </div>
+    </section>
+
+    <section style="padding:0 0 clamp(48px,6vw,88px)">
+      <div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;padding:24px;border:1px solid var(--border-strong);border-radius:var(--radius-md);background:var(--surface-sunken)">
+        <i class="ph ph-scales" style="font-size:28px;color:var(--seal)"></i>
+        <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 17px/1.3 var(--font-sans);color:var(--text-strong)">What VERITRAIL does — and does not — claim</span><p style="margin:0;font:var(--text-body-md);color:var(--text-body);max-width:var(--reading-max)">VERITRAIL supports governance readiness, control implementation and evidence collection. Our framework mappings to NIST AI RMF, ISO/IEC 42001 and the EU AI Act are indicative interpretations designed to help you organize evidence. They are not an official crosswalk, a legal opinion or a conformity assessment.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <section style="background:var(--surface-nav);color:#fff">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,6vw,80px) var(--gutter);display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between">
+      <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:12px"><h2 style="margin:0;font:var(--text-h1);font-size:var(--size-h2);color:#fff">Start with an honest baseline</h2><p style="margin:0;font:var(--text-body-md);font-size:16px;color:var(--text-inverse-muted);max-width:60ch">The self-assessment takes about 8 minutes and returns an indicative maturity level, domain scores, critical flags and a 30/60/90-day action plan. Results are self-reported and labelled User-asserted until evidence is reviewed.</p></div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px"><a href="#" style="display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 22px;border-radius:var(--radius-sm);background:var(--teal-300);color:var(--navy-950);font:600 15px/1 var(--font-sans);text-decoration:none">Start the self-assessment <i class="ph ph-arrow-right"></i></a><a href="#" style="display:inline-flex;align-items:center;height:48px;padding:0 22px;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,.3);color:#fff;font:500 15px/1 var(--font-sans);text-decoration:none">Book a Governance Baseline</a></div>
+    </div>
+  </section>
+
+  <footer style="background:var(--surface-nav);border-top:1px solid rgba(255,255,255,.08);color:var(--text-inverse-muted)">
+    <div style="max-width:1240px;margin:0 auto;padding:28px var(--gutter);display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;font:var(--text-caption)">
+      <span style="display:flex;align-items:center;gap:10px"><img src="assets/veritrail-shield.svg" alt="" style="width:20px;height:20px"><span style="font:600 13px/1 var(--font-display);letter-spacing:.2em;color:#fff">VERITRAIL</span></span>
+      <span>Readiness and evidence, not certification. Framework mappings are indicative.</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;}}">
+const STEPS = [
+  { name: "Baseline", body: "Start with the self-assessment, then validate it in a Governance Baseline. Every finding carries an evidence label so leaders can see what is known and what is assumed.", listLabel: "EVIDENCE LABELS", chips: [["Verified", "--status-effective-ink", "--status-effective-bg"], ["User-asserted", "--status-info-ink", "--status-info-bg"], ["Inferred", "--status-untested-ink", "--status-untested-bg"], ["Missing evidence", "--status-partial-ink", "--status-partial-bg"], ["Critical gap", "--status-gap-ink", "--status-gap-bg"]] },
+  { name: "Register", body: "Build the AI system of record: owners, intended purpose, data sources, models, agents, tools and vendors, each classified into a risk tier that a human confirms.", listLabel: "RISK TIERS", chips: [["Prohibited", "--risk-prohibited-ink", "--risk-prohibited-bg"], ["High-risk", "--risk-high-ink", "--risk-high-bg"], ["Limited", "--risk-limited-ink", "--risk-limited-bg"], ["Minimal", "--risk-minimal-ink", "--risk-minimal-bg"]] },
+  { name: "Control", body: "Route every new use case and material change through risk-tiered intake, assessment and approval, with exceptions that expire.", listLabel: "GATE OUTCOMES", chips: [["Ready to release", "--status-effective-ink", "--status-effective-bg"], ["Conditional", "--status-partial-ink", "--status-partial-bg"], ["Blocked", "--status-gap-ink", "--status-gap-bg"]] },
+  { name: "Shield", body: "Put versioned runtime policy in front of LLM applications and agents: redact sensitive data, deny unregistered tools, and require human approval for high-impact actions.", listLabel: "STAGED ROLLOUT", chips: [["Observe", "--status-untested-ink", "--status-untested-bg"], ["Warn", "--status-partial-ink", "--status-partial-bg"], ["Protect", "--status-info-ink", "--status-info-bg"], ["Enforce", "--status-effective-ink", "--status-effective-bg"], ["Contain", "--status-gap-ink", "--status-gap-bg"]] },
+  { name: "Assurance", body: "Test controls, retain tamper-evident logs, manage AI incidents and produce evidence packs on request.", listLabel: "EVIDENCE PACK", chips: [["Tamper-evident logs", "--status-info-ink", "--status-info-bg"], ["Control tests", "--status-effective-ink", "--status-effective-bg"], ["Incidents", "--status-gap-ink", "--status-gap-bg"], ["Signed off", "--seal-ink", "--seal-soft"]] },
+];
+const ROLES = [
+  ["CISO", "Visibility and control over LLM apps, agents and AI data flows", "Agent and tool registry, threat modelling, prompt-injection testing, runtime policy, kill switch and tamper-evident logs"],
+  ["CIO / CTO", "Scale AI safely without slowing delivery", "Risk-proportionate gates, so low-risk use cases move quickly and high-risk ones get the right scrutiny"],
+  ["Chief Risk / Compliance Officer", "A defensible risk position and readiness evidence", "Risk appetite linkage, tiering, exception register, indicative framework mappings and audit-ready evidence packs"],
+  ["Head of AI CoE", "A repeatable intake-to-production path", "Standard intake, triage, assessment modules, approval workflow and reusable runbooks"],
+  ["Engineering lead", "Clear, testable requirements instead of policy prose", "Policy-as-code with ALLOW / DENY / REQUIRE_HUMAN_APPROVAL rules, staged enforcement and change control"],
+  ["Consultant / advisor", "A structured, evidence-first method for client work", "The control library, gap-analysis method, templates and the VERITRAIL Agent for drafting with citations"],
+];
+class Component extends DCLogic {
+  state = { w: 1280, theme: this.props.theme ?? "light", menu: false, step: 0, role: 2 };
+  rootRef = React.createRef();
+  componentDidMount() {
+    this.ro = new ResizeObserver(([e]) => { const w = Math.round(e.contentRect.width); if (w !== this.state.w) this.setState({ w }); });
+    if (this.rootRef.current) this.ro.observe(this.rootRef.current);
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  renderVals() {
+    const st = this.state;
+    const isPhone = st.w < 640, isLaptop = st.w >= 1100;
+    const s = STEPS[st.step], r = ROLES[st.role];
+    return {
+      rootRef: this.rootRef, theme: st.theme, themeIcon: st.theme === "dark" ? "sun" : "moon",
+      toggleTheme: () => this.setState({ theme: st.theme === "dark" ? "light" : "dark" }),
+      showNav: isLaptop, notPhone: !isPhone, showMenuBtn: !isLaptop, menuOpen: st.menu && !isLaptop, menuIcon: st.menu ? "x" : "list",
+      toggleMenu: () => this.setState({ menu: !st.menu }),
+      navLinks: ["Workspace", "Framework", "Solutions", "Compliance", "Tools", "Resources"],
+      menuLinks: ["Workspace", "Framework", "Solutions", "Compliance", "Industries", "Tools", "Resources", "Platform"],
+      trail: [
+        { code: "T1", text: "Named executive owner for AI risk", ref: "ISO/IEC 42001 §5.3", label: "Attested", ink: "--seal-ink", bg: "--seal-soft" },
+        { code: "I1", text: "Inventory of AI systems, agents and vendors", ref: "EU AI Act Art. 49", label: "Effective", ink: "--status-effective-ink", bg: "--status-effective-bg" },
+        { code: "L3", text: "AI risk register with DPIA/AIA", ref: "EU AI Act Art. 9 & 27", label: "Partial", ink: "--status-partial-ink", bg: "--status-partial-bg" },
+        { code: "E1", text: "Prompt-injection tests before release", ref: "OWASP LLM01:2025", label: "Gap", ink: "--status-gap-ink", bg: "--status-gap-bg" },
+      ],
+      proof: [{ n: "64", label: "Versioned controls" }, { n: "5", label: "Framework pillars" }, { n: "6", label: "Governance layers" }, { n: "24", label: "Question self-assessment" }],
+      starts: [
+        { icon: "clipboard-text", tag: "FREE · START HERE", tone: "--brand", title: "Run the AI Governance Maturity Self-Assessment", desc: "24 questions, about 8 minutes, an indicative score across 8 domains.", cta: "Start assessment" },
+        { icon: "calendar-check", tag: "4–6 WEEKS", tone: "--seal", title: "Book a VERITRAIL Governance Baseline", desc: "A fixed-scope 4–6 week engagement that validates your position with evidence.", cta: "Book Baseline" },
+        { icon: "robot", tag: "COPILOT", tone: "--navy-700", title: "Explore the VERITRAIL Agent", desc: "A governance copilot that cites controls and labels evidence.", cta: "Explore Agent" },
+        { icon: "book-open-text", tag: "BLUEPRINT", tone: "--ink-600", title: "Download the VERITRAIL Enterprise Blueprint", desc: "The operating model, control library and rollout plan in one document.", cta: "Download" },
+      ],
+      questions: [
+        ["What AI do we actually run?", "Which systems, models, agents and vendor AI features are in use, who owns each one, and what data does it touch?"],
+        ["Which of them are high-risk, and why?", "Is there a consistent, approved basis for classifying decision impact, data sensitivity, autonomy and regulatory relevance?"],
+        ["Who approved each system, and under what conditions?", "Can we show the risk assessment, the approver and the conditions that were attached before go-live?"],
+        ["What stops an agent from doing something it should not?", "Are tool permissions, data handling and high-impact actions governed at runtime, or only described in a policy document?"],
+        ["Could we produce evidence tomorrow?", "If asked, could we hand over an evidence pack for a material AI system — logs, approvals, test results, monitoring — without a fire drill?"],
+      ].map(([q, a], i) => ({ n: String(i + 1).padStart(2, "0"), q, a })),
+      layers: [
+        ["AI System of Record", "Single, owned, classified inventory of AI systems, models, prompts, agents, tools, data sources and vendor AI", "VERITRAIL Register"],
+        ["Assessment & Risk Engine", "Maturity self-assessment, use-case intake triage, risk tiering, impact assessment, gap analysis", "VERITRAIL Assess"],
+        ["Policy & Control Library", "64 versioned controls with evidence expectations, owners and framework mappings; organisational policy templates", "VERITRAIL Control"],
+        ["Lifecycle Governance", "Approval gates, change and reassessment triggers, exceptions, go-live readiness, periodic review, retirement", "VERITRAIL Control"],
+        ["Runtime Shield", "Policy-as-code evaluation of prompts, responses and tool calls; human approval; rate limits; kill switch", "VERITRAIL Shield"],
+        ["Assurance & Evidence", "Tamper-evident logs, evidence repository, control testing, incidents, monitoring, evidence packs, leadership reporting", "VERITRAIL Assurance"],
+      ].map(([name, what, cap], i) => ({ n: String(i + 1), name, what, cap })),
+      steps: STEPS.map((x, i) => { const on = i === st.step; return { n: String(i + 1).padStart(2, "0"), name: x.name, onClick: () => this.setState({ step: i }), bg: on ? "var(--surface-card)" : "transparent", shadow: on ? "var(--shadow-2)" : "none", color: on ? "var(--text-strong)" : "var(--text-muted)", numColor: on ? "var(--brand)" : "var(--text-subtle)" }; }),
+      step: { name: s.name, body: s.body, listLabel: s.listLabel, chips: s.chips.map(([label, ink, bg]) => ({ label, ink, bg })) },
+      roles: ROLES.map(([role], i) => { const on = i === st.role; return { role, onClick: () => this.setState({ role: i }), bg: on ? "var(--surface-inverse)" : "var(--surface-card)", color: on ? "var(--text-inverse)" : "var(--text-body)", border: on ? "var(--surface-inverse)" : "var(--border-default)" }; }),
+      role: { need: r[1], give: r[2] },
+    };
+  }
+}
+</script>
+</body>
+</html>

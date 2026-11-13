@@ -1,0 +1,7 @@
+/* Minimal base reset used by specimen cards and kits. */
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body { margin: 0; background: var(--surface-canvas); color: var(--text-body); font: var(--text-body-md); font-feature-settings: "tnum" 0; }
+a { color: var(--text-link); text-underline-offset: 3px; }
+a:hover { color: var(--text-link-hover); }
+::selection { background: color-mix(in oklab, var(--brand) 22%, transparent); }
+:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
