@@ -328,7 +328,7 @@ function SiteFooter() {
         </aside>
         <div className="footer-meta">
           <p>
-            An initiative by {siteConfig.organization.name}
+            An initiative by Kalilur Rahman
           </p>
           <ul className="footer-links">
             {siteConfig.footer_links.map((l) => (

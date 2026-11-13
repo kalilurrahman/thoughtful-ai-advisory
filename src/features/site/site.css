@@ -864,7 +864,8 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
     .hero--home::before { background: linear-gradient(90deg, var(--background) 0%, color-mix(in oklch, var(--background) 97%, transparent) 38%, color-mix(in oklch, var(--background) 60%, transparent) 100%); }
   }
   @media (min-width: 80em) {
-    .nav-grouped { width: min(54rem, calc(100vw - 3rem)); grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 1rem; }
+    .nav-item { position: static; }
+    .nav-grouped { left: 50%; right: auto !important; transform: translateX(-50%); width: min(54rem, calc(100vw - 3rem)); grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 1rem; }
     .nav-item:nth-child(2) .nav-grouped { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 36rem; }
     .nav-summary { font-size: 0.95rem; padding-inline: 0.65rem; }
   }

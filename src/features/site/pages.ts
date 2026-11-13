@@ -191,13 +191,18 @@ siteNav.push({
 type HeaderGroup = { label: string; items: NavItem[] };
 type HeaderSection = { id: string; label: string; groups: HeaderGroup[] };
 function publicGroup(id: string, label: string): HeaderGroup {
-  return { label, items: siteNav.find((section) => section.id === id)?.items ?? [] };
+  const section = siteNav.find((entry) => entry.id === id);
+  const items = section?.items ?? sitePages
+    .filter((page) => page.section === id && !page.navExclude && !page.noindex)
+    .sort((a, b) => a.navOrder - b.navOrder)
+    .map((page) => ({ label: page.navLabel, url: page.path }));
+  return { label, items };
 }
 function workspaceGroup(label: string, paths: string[]): HeaderGroup {
   return { label, items: paths.flatMap((path) => workspaceNav.items.filter((item) => item.url === path)) };
 }
 export const headerNav: HeaderSection[] = [
-  { id: "solutions", label: "Services", groups: [publicGroup("solutions", "Governance & assurance"), publicGroup("industries", "Industry expertise"), publicGroup("company", "About & enquiries")] },
+  { id: "solutions", label: "Services", groups: [publicGroup("solutions", "Governance & assurance"), publicGroup("industries", "Industry expertise"), { label: "About & enquiries", items: [{ label: "About VERITRAIL", url: "/about" }, { label: "Discuss your requirements", url: "/contact" }, { label: "Book a governance baseline", url: "/contact/book-governance-baseline" }, { label: "Design-partner programme", url: "/contact/design-partner-programme" }] }] },
   { id: "framework", label: "Framework", groups: [publicGroup("framework", "Governance foundations"), publicGroup("compliance", "Standards & readiness")] },
   { id: "workspace", label: "Workspace", groups: [
     workspaceGroup("Assess & plan", ["/workspace", "/assess", "/inventory", "/roadmap", "/start"]),
