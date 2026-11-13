@@ -334,7 +334,8 @@ export function AssessScreen() {
         <span>Control {state.qi + 1} of 12</span>
         <span>
           {Object.values(state.answers).filter((a) => a.s > 0).length} answered ·{" "}
-          {Object.values(state.answers).filter((a) => a.e === 3).length} evidence attached
+          {Object.values(state.answers).filter((a) => a.e === 3).length} evidence attached ·{" "}
+          {Object.values(state.answers).filter((a) => a.e !== 3).length} need evidence
         </span>
       </div>
       <progress max="12" value={state.qi + 1} />
@@ -375,14 +376,21 @@ export function AssessScreen() {
         ))}
       </div>
       {a.s >= 3 && a.e !== 3 && (
-        <p className="evidence-warning">
-          <WarningCircle weight="duotone" /> Score capped at 2 until evidence is attached.
-        </p>
+        <div className="evidence-warning evidence-warning-action">
+          <WarningCircle weight="duotone" />
+          <span>Score capped at 2 until evidence is attached.</span>
+          <Button variant="link" onClick={() => setDrawer(true)}>
+            Attach evidence
+          </Button>
+        </div>
       )}
       <Button className="guidance-row" variant="secondary" onClick={() => setDrawer(true)}>
         <Paperclip weight="duotone" />
         <span>Guidance, rubric & evidence</span>
-        <small className="muted">{EV[a.e]}</small>
+        <small className="muted">
+          {EV[a.e]}
+          {a.attachment || a.url ? " · reference added" : ""}
+        </small>
         <CaretRight />
       </Button>
       <div className="assessment-actions">
@@ -407,31 +415,31 @@ export function AssessScreen() {
       </div>
       <section>
         <Kicker>All controls</Kicker>
-        {CONTROLS.map((x, i) => (
-          <Button
-            variant="ghost"
-            key={x.id}
-            className={"control-list-row " + (state.qi === i ? "active" : "")}
-            onClick={() => dispatch({ type: "question", qi: i })}
-          >
-            <span className="success">{x.code}</span>
-            <div>
-              <span>{x.text}</span>
-              <Chip
-                tone={
-                  answerAt(state.answers, x.id).e === 3
-                    ? "success"
-                    : answerAt(state.answers, x.id).e === 0
-                      ? "danger"
-                      : "neutral"
-                }
-              >
-                {EV[answerAt(state.answers, x.id).e]}
-              </Chip>
-            </div>
-            <strong>{answerAt(state.answers, x.id).s}</strong>
-          </Button>
-        ))}
+        {CONTROLS.map((x, i) => {
+          const xa = answerAt(state.answers, x.id);
+          const capped = xa.s >= 3 && xa.e !== 3;
+          return (
+            <Button
+              variant="ghost"
+              key={x.id}
+              className={"control-list-row " + (state.qi === i ? "active" : "")}
+              onClick={() => dispatch({ type: "question", qi: i })}
+            >
+              <span className="success">{x.code}</span>
+              <div>
+                <span>{x.text}</span>
+                <Chip
+                  tone={
+                    xa.e === 3 ? "success" : xa.e === 0 || capped ? "danger" : "neutral"
+                  }
+                >
+                  {capped ? "Capped · " + EV[xa.e] : EV[xa.e]}
+                </Chip>
+              </div>
+              <strong>{xa.s}</strong>
+            </Button>
+          );
+        })}
       </section>
       <Dialog open={drawer} onOpenChange={setDrawer}>
         <DialogContent className="veritrail-sheet">
@@ -448,6 +456,10 @@ export function AssessScreen() {
           </ul>
           <Kicker>Scoring rubric</Kicker>
           <p>0 None · 1 Ad hoc · 2 Defined · 3 Managed · 4 Optimized</p>
+          <p className="muted">
+            Add a reference (demo upload, URL, or test result) and set evidence status to{" "}
+            <strong>Evidence attached</strong> when you have support for the score.
+          </p>
           <div className="ref-chips">
             {c.refs.map((r) => (
               <Chip key={r} tone="success">
@@ -478,6 +490,12 @@ export function AssessScreen() {
               Link test
             </Button>
           </div>
+          {a.e !== 3 && (
+            <Button variant="outline" onClick={() => patch({ e: 3 })}>
+              <CheckCircle />
+              Mark evidence attached
+            </Button>
+          )}
           {urlOpen && (
             <label>
               Evidence URL
