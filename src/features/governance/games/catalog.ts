@@ -40,6 +40,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "monitoring-assurance",
   },
   {
+    id: "release-gate-assurance",
+    title: "Release gate & assurance readiness",
+    category: "Governance gates & assurance",
+    description:
+      "Practice go/no-go decisions, conditional approvals, evidence/guardrail readiness, and change-triggered reassessment.",
+    anchor: "release-gate-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
