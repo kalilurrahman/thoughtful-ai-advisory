@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Plus, WarningCircle } from "@phosphor-icons/react";
+import { Copy, Plus, WarningCircle } from "@phosphor-icons/react";
 import { EmptyIncidents } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import type { AIIncident } from "./store";
@@ -33,6 +33,19 @@ const blankIncident = (): Omit<AIIncident, "id"> => ({
   statusHistory: [],
 });
 
+function incidentSummary(incident: AIIncident) {
+  return [
+    `Incident: ${incident.title}`,
+    `Severity/status: ${incident.severity} / ${incident.status}`,
+    `Category: ${incident.category}`,
+    `System: ${incident.system || "Not yet identified"}`,
+    `Detected: ${incident.detectedAt}`,
+    `Owner: ${incident.owner || "Unassigned"}`,
+    `Summary: ${incident.summary}`,
+    incident.response ? `Response notes: ${incident.response}` : "Response notes: none recorded",
+  ].join("\n");
+}
+
 export function IncidentsScreen() {
   const { state, dispatch } = useGovernance();
   const [form, setForm] = useState(blankIncident);
@@ -40,6 +53,23 @@ export function IncidentsScreen() {
   const [severityFilter, setSeverityFilter] = useState("All severities");
   const [systemFilter, setSystemFilter] = useState("All systems");
   const [search, setSearch] = useState("");
+  const [copied, setCopied] = useState("");
+
+  async function copySummary(incident: AIIncident) {
+    const text = incidentSummary(incident);
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const area = document.createElement("textarea");
+      area.value = text;
+      document.body.append(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+    }
+    setCopied(incident.id);
+    window.setTimeout(() => setCopied((c) => (c === incident.id ? "" : c)), 1500);
+  }
 
   function submitIncident(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -56,6 +86,10 @@ export function IncidentsScreen() {
 
   const activeCount = state.incidents.filter(
     (incident) => incident.status !== "Resolved" && incident.status !== "Closed",
+  ).length;
+  const unassignedActive = state.incidents.filter(
+    (incident) =>
+      !incident.owner && incident.status !== "Resolved" && incident.status !== "Closed",
   ).length;
   const visibleIncidents = filterIncidents(state.incidents, {
     status: statusFilter,
@@ -96,6 +130,9 @@ export function IncidentsScreen() {
             }
           </strong>{" "}
           critical active
+        </span>
+        <span>
+          <strong>{unassignedActive}</strong> active unassigned
         </span>
         <label>
           Show
@@ -156,6 +193,10 @@ export function IncidentsScreen() {
         <summary>
           <Plus /> Log an incident or near miss
         </summary>
+        <p className="muted">
+          Required fields: title, detected date, and initial summary. Assign a response owner and
+          add containment notes as soon as known to support traceability and handoff.
+        </p>
         <form onSubmit={submitIncident}>
           <label>
             Incident title
@@ -281,15 +322,21 @@ export function IncidentsScreen() {
             </div>
             <p className="muted">
               {incident.category} · {incident.system || "System not yet identified"} · Detected{" "}
-              {incident.detectedAt}
-              {incident.owner ? ` · Owner: ${incident.owner}` : " · Owner unassigned"}
+              {incident.detectedAt} ·{" "}
+              <strong className={!incident.owner ? "danger" : undefined}>
+                Owner: {incident.owner || "Unassigned"}
+              </strong>
             </p>
             <p>{incident.summary}</p>
-            {incident.response && (
-              <p className="incident-response">
-                <strong>Response notes:</strong> {incident.response}
-              </p>
-            )}
+            <p className={incident.response ? "incident-response" : "muted"}>
+              <strong>Response notes:</strong>{" "}
+              {incident.response || "None recorded yet — add containment/evidence actions."}
+            </p>
+            <div className="decision-actions" aria-label="Incident actions">
+              <Button variant="outline" size="sm" onClick={() => void copySummary(incident)}>
+                <Copy /> {copied === incident.id ? "Summary copied" : "Copy summary"}
+              </Button>
+            </div>
             <details className="incident-history">
               <summary>Update ownership and response notes</summary>
               <form
