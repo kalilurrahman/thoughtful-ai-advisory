@@ -104,6 +104,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "security-robustness-assurance",
   },
   {
+    id: "fairness-impact-assurance",
+    title: "Fairness, bias & impact assurance",
+    category: "Fairness & impact assurance",
+    description:
+      "Practice impact/harms assessment, representative bias evaluation, mitigation/guardrails for disparate outcomes, and recourse/review.",
+    anchor: "fairness-impact-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",

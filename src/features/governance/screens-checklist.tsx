@@ -57,6 +57,10 @@ import {
   SECURITY_ROBUSTNESS_ASSURANCE_ROUNDS,
   securityRobustnessAssuranceScore,
 } from "./security-robustness-assurance-game";
+import {
+  FAIRNESS_IMPACT_ASSURANCE_ROUNDS,
+  fairnessImpactAssuranceScore,
+} from "./fairness-impact-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -83,6 +87,7 @@ export function ChecklistScreen() {
   const [transparencyAnswers, setTransparencyAnswers] = useState<Record<string, number>>({});
   const [supplyChainAnswers, setSupplyChainAnswers] = useState<Record<string, number>>({});
   const [securityAnswers, setSecurityAnswers] = useState<Record<string, number>>({});
+  const [fairnessAnswers, setFairnessAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -104,6 +109,7 @@ export function ChecklistScreen() {
   const transparencyGame = transparencyRecordkeepingScore(transparencyAnswers);
   const supplyChainGame = supplyChainAssuranceScore(supplyChainAnswers);
   const securityGame = securityRobustnessAssuranceScore(securityAnswers);
+  const fairnessGame = fairnessImpactAssuranceScore(fairnessAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -891,6 +897,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good security/robustness assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="fairness-impact-assurance" className="checklist-phase" aria-label="Fairness, bias and impact assurance game">
+        <h2>Fairness, bias & impact assurance</h2>
+        <p>
+          Practice impact/harms assessment, representative evaluation for bias/disparate outcomes,
+          mitigation and guardrails, and recourse/review with evidence-backed follow-up. Scenarios are
+          learning prompts, not a substitute for legal, ethics, or specialist review.
+        </p>
+        <p>
+          <strong>
+            {fairnessGame.correct}/{fairnessGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {fairnessGame.complete && (
+            <Button variant="outline" onClick={() => setFairnessAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {FAIRNESS_IMPACT_ASSURANCE_ROUNDS.map((round) => {
+            const selected = fairnessAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setFairnessAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good fairness/impact assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
