@@ -2,6 +2,10 @@ import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@tanstack/react-start", () => ({ useServerFn: (fn: unknown) => fn }));
+vi.mock("@/features/governance/trail.functions", () => ({
+  appendTrail: vi.fn().mockResolvedValue({ ok: false, reason: "unavailable" }),
+  loadTrail: vi.fn().mockResolvedValue({ ok: false, reason: "unavailable" }),
+}));
 vi.mock("@/features/governance/workspace.functions", () => ({
   loadWorkspace: vi.fn().mockResolvedValue(null),
   saveWorkspace: vi.fn(),

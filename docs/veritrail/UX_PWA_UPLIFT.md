@@ -223,5 +223,11 @@ zero"). Work was done in phases, each gated by `npm test`, `npm run build` and `
 | 4 Screens | Overview: release-gate banner, KPI tiles, the VERITRAIL Index with its band meter, TILLER pillar scores, remediation phase cards, then the existing portfolio, evidence readiness, top gaps, quick links and change log. Assessment: pillar filter tabs, a control list beside a sticky detail panel from 1024px (master → detail with a back link below), status from the real scoring rules (`controlStatus`: attested, partial — capped when a 3 or 4 lacks evidence — gap, not tested). Inventory: system cards with tier tags, a details drawer with facts and a 2×2 disposition that writes to the trail. Evidence: export packs, a sign-off panel (disabled with the reason while blocking controls exist; seal button when ready; signed state shows who, UTC time and a pack fingerprint) and the append-only evidence trail — all labelled previews; the trail lives in this tab's memory until an append-only table exists and is never saved with a workspace. Home: a navy hero with an evidence register drawn from the control library, five-step "How it works" tabs, a stakeholder chip selector and a navy closing band; every word still comes from `index.md`. Section landing pages open on the navy band. |
 | 5 Brand | Product marks in `public/brand` (`brand-marks.tsx`) at 32–44px on the solutions pages, the Workspace menu (TILLER) and the Platform module table; `guardrailIcon(name)` maps guardrail categories, Shield modes and policy decisions to Phosphor glyphs; social images regenerated on the navy 1200×630 layout with eyebrow and title from each page's frontmatter. The master mark (options 1a / 1b / 1c in the handoff) is still to be chosen, so `favicon.svg` and the PWA icons are unchanged; `node scripts/generate-pwa-icons.mjs --mark a|b|c` regenerates them from the chosen mark. |
 
-Still to decide or build: the master mark (then icons and the social-image tile), and a
-server-side append-only trail table (migration) so the evidence trail stops being a preview.
+The evidence trail now persists for saved workspaces: migration `0015_veritrail_evidence_trail`
+adds `workspace_trail` (members read, owners / admins / operators append, and a trigger refuses
+every update or delete, service role included). `trail.functions.ts` appends and loads as the
+caller, the governance provider hydrates the trail when a saved workspace loads, and the Evidence
+screen says "Append-only · saved with the workspace". The demo workspace, an unsaved workspace and
+a database without 0015 keep the tab-only preview, labelled as such.
+
+Still to decide: the master mark (then the icons and the social-image tile).

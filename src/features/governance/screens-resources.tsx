@@ -40,7 +40,7 @@ import { useGovernance } from "./store";
 import { at, answerAt, calculate } from "./model";
 import { Chip, Dot, Kicker } from "./screens-core";
 import { EvidenceTimeline, PageHeader, RouteLink, formatUtc } from "@/components/assurance";
-import { recordTrail, trailActor, useTrail } from "./trail-store";
+import { recordTrail, trailActor, useTrail, useTrailMode } from "./trail-store";
 import { buildEvidenceReport, reportFilename } from "./evidence-report";
 import { generateEvidenceFile, type ExportFormat } from "./evidence-files";
 export function CalculatorsScreen() {
@@ -333,6 +333,7 @@ function packHash(input: string): string {
 export function ExportScreen() {
   const { workspaceName, state, scores, gate, blocking, userId } = useGovernance();
   const trail = useTrail();
+  const trailMode = useTrailMode();
   const [signed, setSigned] = useState<{ who: string; at: string; hash: string } | null>(null);
   const [packId, setPack] = useState("exec"),
     [format, setFormat] = useState("PDF"),
@@ -565,12 +566,16 @@ export function ExportScreen() {
       <section className="trail-panel" aria-labelledby="trail-heading">
         <div className="section-heading">
           <h2 id="trail-heading">Evidence trail</h2>
-          <Chip tone="warning">Preview · this session</Chip>
+          {trailMode === "saved" ? (
+            <Chip tone="success">Append-only · saved with the workspace</Chip>
+          ) : (
+            <Chip tone="warning">Preview · this session</Chip>
+          )}
         </div>
         <p className="muted">
-          Every score, evidence status, disposition and sign-off recorded in this tab, newest first.
-          The trail is a preview held in memory until an append-only record exists; it is not part
-          of the saved workspace.
+          {trailMode === "saved"
+            ? "Every score, evidence status, disposition and sign-off, newest first, kept in the workspace's append-only trail: entries can be added, never edited or removed."
+            : "Every score, evidence status, disposition and sign-off recorded in this tab, newest first. The trail is a preview held in memory until the workspace is saved and its append-only record is available; it is not part of the workspace snapshot."}
         </p>
         <EvidenceTimeline
           entries={trail}
