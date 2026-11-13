@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // Browser smoke test: crawl every page reachable from "/" (plus the workspace routes) in
 // Chromium and fail on runtime errors, console errors (including hydration warnings), error
-// or 404 screens behind internal links, missing linked files, horizontal scrolling at phone
-// width, a website or workspace header that wraps onto a second row (also with each Appearance
-// theme and font), and installable-app files (manifest, icons, service worker, offline page)
+// or 404 screens behind internal links, missing linked files, horizontal scrolling at tablet or
+// phone width, a website or workspace header that wraps onto a second row (also with each
+// Appearance theme and font), and installable-app files (manifest, icons, service worker, offline page)
 // that are missing or malformed.
 //
 //   npx vite dev --port 4173 &   # or any running build of the app
@@ -17,6 +17,7 @@ import { chromium } from "playwright";
 const BASE = (process.argv[2] ?? "http://localhost:4173").replace(/\/+$/, "");
 const SEEDS = ["/", "/workspace", "/auth", "/onboarding", "/reset-password"];
 const PHONE_WIDTH = 390;
+const TABLET_WIDTH = 834;
 const CONCURRENCY = Number(process.env.SMOKE_CONCURRENCY) || 4;
 const FILE_RE = /\.(pdf|png|jpe?g|svg|ico|zip|csv|json|xml|txt|webmanifest|md|docx|xlsx)$/i;
 // Requests the crawl blocks itself, and Vite's dev-only module reloads.
@@ -199,31 +200,34 @@ async function main() {
   await checkInstallableApp(desktop);
   await desktop.close();
 
-  // Phone width: nothing may scroll sideways.
-  const phone = await newContext(browser, PHONE_WIDTH);
-  let next = 0;
-  await Promise.all(
-    Array.from({ length: CONCURRENCY }, async () => {
-      while (next < pages.length) {
-        const path = pages[next++];
-        const r = await visit(phone, path, { collectLinks: false });
-        if (r.overflow > 1)
-          fail(path, `overflow-${PHONE_WIDTH}`, `${r.overflow}px wider than the viewport`);
-        if (r.headerRows > 1)
-          fail(path, `header-wrap-${PHONE_WIDTH}`, `header controls use ${r.headerRows} rows`);
-      }
-    }),
-  );
-  await phone.close();
+  // Tablet (the 72px icon rail) and phone widths: nothing may scroll sideways or wrap a header.
+  for (const width of [TABLET_WIDTH, PHONE_WIDTH]) {
+    const ctx = await newContext(browser, width);
+    let next = 0;
+    await Promise.all(
+      Array.from({ length: CONCURRENCY }, async () => {
+        while (next < pages.length) {
+          const path = pages[next++];
+          const r = await visit(ctx, path, { collectLinks: false });
+          if (r.overflow > 1)
+            fail(path, `overflow-${width}`, `${r.overflow}px wider than the viewport`);
+          if (r.headerRows > 1)
+            fail(path, `header-wrap-${width}`, `header controls use ${r.headerRows} rows`);
+        }
+      }),
+    );
+    await ctx.close();
+  }
 
   // Appearance: the wider fonts and the other palettes must not wrap or widen either header.
   const APPEARANCES = [
+    { "veritrail-palette": "broadsheet", "veritrail-theme": "light", "veritrail-font": "serif" },
     { "veritrail-palette": "gold", "veritrail-theme": "dark", "veritrail-font": "kr" },
     { "veritrail-palette": "slate", "veritrail-theme": "light", "veritrail-font": "sans" },
   ];
   for (const appearance of APPEARANCES) {
     const label = `${appearance["veritrail-palette"]}/${appearance["veritrail-font"]}`;
-    for (const width of [1280, PHONE_WIDTH]) {
+    for (const width of [1280, TABLET_WIDTH, PHONE_WIDTH]) {
       const ctx = await newContext(browser, width, appearance);
       for (const path of ["/", "/workspace", "/framework/controls"]) {
         const r = await visit(ctx, path, { collectLinks: false });
@@ -239,7 +243,7 @@ async function main() {
   await browser.close();
 
   console.log(
-    `Checked ${pages.length} pages and ${files.size} linked files at 1280px and ${PHONE_WIDTH}px.`,
+    `Checked ${pages.length} pages and ${files.size} linked files at 1280px, ${TABLET_WIDTH}px and ${PHONE_WIDTH}px.`,
   );
   if (failures.length) {
     console.error(`\n${failures.length} problem(s):`);
