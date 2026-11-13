@@ -112,14 +112,17 @@ export function KnowledgeScreen() {
   const [filter, setFilter] = useState("All");
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState("All regions");
+  const [validation, setValidation] = useState("All");
   const sources = SOURCES.filter(
     (s) =>
       (filter === "All" ||
         s.type.startsWith(filter) ||
         (filter === "Guidance" && s.type.toLowerCase().includes("guidance"))) &&
       (region === "All regions" || s.jurisdiction.includes(region)) &&
+      (validation === "All" || s.status === validation) &&
       Object.values(s).join(" ").toLowerCase().includes(query.trim().toLowerCase()),
   );
+  const needsReview = SOURCES.filter((s) => s.status === "Needs review").length;
   return (
     <>
       <div className="resource-intro">
@@ -156,7 +159,20 @@ export function KnowledgeScreen() {
       <div className="resource-result-bar">
         <p className="muted" aria-live="polite">
           {sources.length} of {SOURCES.length} resources
+          {needsReview ? ` · ${needsReview} flagged for review` : ""}
         </p>
+        <label>
+          Validation
+          <select
+            aria-label="Validation status"
+            value={validation}
+            onChange={(e) => setValidation(e.target.value)}
+          >
+            {["All", "Page checked", "Search checked", "Dated", "Needs review"].map((v) => (
+              <option key={v}>{v}</option>
+            ))}
+          </select>
+        </label>
         <label>
           Jurisdiction
           <select
@@ -201,7 +217,7 @@ export function KnowledgeScreen() {
             <p className="resource-access">
               <strong>Access:</strong> {s.access}
             </p>
-            <p>
+            <p className={s.status === "Needs review" ? "danger" : ""}>
               <Dot
                 tone={
                   s.status === "Page checked"
@@ -211,9 +227,11 @@ export function KnowledgeScreen() {
                       : "warning"
                 }
               />
-              {s.status} · {s.verified}
+              <strong>Validation:</strong> {s.status} · <strong>Validated:</strong> {s.verified}
             </p>
-            <p className="muted resource-check">{s.checkMethod}</p>
+            <p className="muted resource-check">
+              <strong>Method:</strong> {s.checkMethod}
+            </p>
             {s.url !== "#" ? (
               <Button variant="link" asChild>
                 <a href={s.url} target="_blank" rel="noopener noreferrer">
@@ -237,6 +255,7 @@ export function KnowledgeScreen() {
               setQuery("");
               setFilter("All");
               setRegion("All regions");
+              setValidation("All");
             }}
           >
             Clear filters
