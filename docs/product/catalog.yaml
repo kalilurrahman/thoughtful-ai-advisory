@@ -93,7 +93,7 @@ epics:
         acceptance:
           - Given any page, when I open the menu, then every section and its pages are listed, on desktop and phone.
           - Given an internal link or call to action in any page, when followed, then it resolves to a page (no 404).
-        routes: [/framework, /solutions, /compliance, /industries, /resources, /about]
+        routes: [/framework, /solutions, /compliance, /industries, /resources, /about, /sitemap]
         tests: [site-pages.test.ts, app-routing.test.tsx]
       - id: S01.3
         persona: cro
