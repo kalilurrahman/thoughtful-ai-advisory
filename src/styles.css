@@ -4491,8 +4491,10 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
     width: 44px;
     height: 44px;
   }
-  .veritrail-app .app-header .header-brand {
+  .veritrail-app .app-header a.header-brand[aria-label] {
     width: auto;
+    height: 36px;
+    min-height: 36px;
   }
 }
 @media (max-width: 379px) {

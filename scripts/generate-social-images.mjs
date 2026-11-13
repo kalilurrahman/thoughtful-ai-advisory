@@ -35,10 +35,10 @@ const SHOTS = [
   ["glossary", "/glossary"],
 ];
 
-// The shield mark (public/favicon.svg), in a white tile as the brand-marks layout shows it. Swap
-// for public/brand/veritrail-mark-<x>.svg once the owner picks the master mark.
+// The master mark (1a: public/favicon.svg and public/brand/veritrail-mark-a.svg) in a white
+// tile, as the brand-marks layout shows it.
 const MARK =
-  '<svg viewBox="0 0 28 32" width="46" height="52"><path d="M14 1 26 5.5v9.2c0 7.6-5 13.4-12 16.3C7 28.1 2 22.3 2 14.7V5.5L14 1Z" fill="#0d1d29"/><path d="m8.5 16.2 3.8 3.8 7.4-8" fill="none" stroke="#62c5ee" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  '<svg viewBox="0 0 64 64" width="54" height="54"><path d="M32 4 L55 11.5 V30 C55 44.5 45.5 54.5 32 60 C18.5 54.5 9 44.5 9 30 V11.5 Z" fill="#007396"/><polyline points="21.5,32 29,39.5 43,24.5" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 const STYLE = `
   html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #071119; }

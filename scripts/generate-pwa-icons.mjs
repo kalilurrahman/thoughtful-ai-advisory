@@ -13,7 +13,7 @@
 // Outputs: icon-{192,512}.png (purpose "any"), icon-maskable-{192,512}.png (full bleed, mark
 // inside the 80% safe zone), apple-touch-icon.png (180, opaque) and the 96px shortcut icons
 // listed in public/manifest.webmanifest.
-import { mkdirSync, readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -31,6 +31,8 @@ const SHIELD = "M14 1 26 5.5v9.2c0 7.6-5 13.4-12 16.3C7 28.1 2 22.3 2 14.7V5.5L1
 const CHECK = "m8.5 16.2 3.8 3.8 7.4-8";
 const GRADIENT = `<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
   <stop offset="0" stop-color="#0a8db3"/><stop offset="1" stop-color="#004961"/></linearGradient></defs>`;
+/** Brand navy (README §6): the tile behind a master mark, whose shield is the brand teal. */
+const NAVY = "#0d1d29";
 
 const markArg = process.argv.indexOf("--mark");
 const MASTER = markArg > 0 ? process.argv[markArg + 1] : undefined;
@@ -44,6 +46,8 @@ const MASTER_BODY = MASTER
       .replace(/^[\s\S]*?<svg[^>]*>/, "")
       .replace(/<\/svg>\s*$/, "")
   : null;
+/** The tile fill: the teal gradient behind the white shield, brand navy behind a master mark. */
+const TILE = MASTER_BODY ? NAVY : "url(#g)";
 
 /** The mark centred at (cx, cy) with the given height: the shield with a teal check, or the
  *  chosen master mark (64×64) drawn at the same height. */
@@ -71,7 +75,7 @@ const anyIcon = (size) => {
   const inset = size * 0.04;
   const r = size * 0.2;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${GRADIENT}
-    <rect x="${inset}" y="${inset}" width="${size - inset * 2}" height="${size - inset * 2}" rx="${r}" fill="url(#g)"/>
+    <rect x="${inset}" y="${inset}" width="${size - inset * 2}" height="${size - inset * 2}" rx="${r}" fill="${TILE}"/>
     ${mark(size / 2, size * 0.45, size * 0.48)}
     ${rule(size / 2, size * 0.735, size * 0.4, size / 256)}
   </svg>`;
@@ -79,7 +83,7 @@ const anyIcon = (size) => {
 
 const fullBleed = (size, markScale) =>
   `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${GRADIENT}
-    <rect width="${size}" height="${size}" fill="url(#g)"/>
+    <rect width="${size}" height="${size}" fill="${TILE}"/>
     ${mark(size / 2, size * 0.47, size * markScale)}
     ${rule(size / 2, size * (0.47 + markScale / 2 + 0.05), size * markScale * 0.8, size / 256)}
   </svg>`;
@@ -89,7 +93,7 @@ function shortcut(Icon) {
     createElement(Icon, { size: 56, weight: "duotone", color: "#ffffff" }),
   ).replace("<svg ", '<svg x="20" y="20" ');
   return `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">${GRADIENT}
-    <rect width="96" height="96" rx="20" fill="url(#g)"/>${glyph}</svg>`;
+    <rect width="96" height="96" rx="20" fill="${TILE}"/>${glyph}</svg>`;
 }
 
 const ICONS = {
@@ -105,6 +109,24 @@ const ICONS = {
   "shortcut-workspace.png": shortcut(BookOpenText),
 };
 
+/** favicon.ico: the mark alone at 48px, as a PNG payload inside an ICO container. */
+const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">${mark(24, 24, 46)}</svg>`;
+function icoFromPng(png) {
+  const header = Buffer.alloc(6 + 16);
+  header.writeUInt16LE(0, 0); // reserved
+  header.writeUInt16LE(1, 2); // icon
+  header.writeUInt16LE(1, 4); // one image
+  header.writeUInt8(48, 6); // width
+  header.writeUInt8(48, 7); // height
+  header.writeUInt8(0, 8); // palette
+  header.writeUInt8(0, 9); // reserved
+  header.writeUInt16LE(1, 10); // planes
+  header.writeUInt16LE(32, 12); // bits per pixel
+  header.writeUInt32LE(png.length, 14);
+  header.writeUInt32LE(22, 18); // offset of the image data
+  return Buffer.concat([header, png]);
+}
+
 mkdirSync(OUT, { recursive: true });
 const browser = await chromium.launch(
   process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},
@@ -119,5 +141,14 @@ for (const [file, svg] of Object.entries(ICONS)) {
     .first()
     .screenshot({ path: join(OUT, file), omitBackground: true });
   console.log(`wrote public/icons/${file}`);
+}
+if (MASTER_BODY) {
+  await page.setViewportSize({ width: 48, height: 48 });
+  await page.setContent(
+    `<html><body style="margin:0;background:transparent">${faviconSvg}</body></html>`,
+  );
+  const png = await page.locator("svg").first().screenshot({ omitBackground: true });
+  writeFileSync(join(process.cwd(), "public", "favicon.ico"), icoFromPng(png));
+  console.log("wrote public/favicon.ico");
 }
 await browser.close();

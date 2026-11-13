@@ -60,3 +60,41 @@ export function ProductMark({
     />
   );
 }
+
+/**
+ * The VERITRAIL master mark (option 1a of the handoff; the same drawing as public/favicon.svg):
+ * a teal shield with a white check. `mono` draws it in currentColor for dark chrome.
+ */
+export function VeritrailMark({
+  size = 28,
+  mono = false,
+  className,
+}: {
+  size?: number;
+  mono?: boolean;
+  className?: string | undefined;
+}) {
+  return (
+    <svg
+      className={className ?? "brand-mark"}
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M32 4 L55 11.5 V30 C55 44.5 45.5 54.5 32 60 C18.5 54.5 9 44.5 9 30 V11.5 Z"
+        fill={mono ? "currentColor" : "#007396"}
+      />
+      <polyline
+        points="21.5,32 29,39.5 43,24.5"
+        fill="none"
+        stroke={mono ? "var(--sidebar, #0d1d29)" : "#ffffff"}
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}

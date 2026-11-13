@@ -15,35 +15,13 @@ import {
   useAppearanceSummary,
 } from "@/features/appearance/appearance-panel";
 import { GlossaryTip } from "./glossary-tip";
-import { ProductMark } from "./brand-marks";
+import { ProductMark, VeritrailMark } from "./brand-marks";
 
 // Public website chrome — header with disclosure navigation, breadcrumbs and footer —
 // ported from platform/app/website/templates/partials/{header,breadcrumbs,footer}.html.
 
 function BrandMark() {
-  return (
-    <svg
-      className="brand-mark"
-      width="28"
-      height="32"
-      viewBox="0 0 28 32"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        d="M14 1 26 5.5v9.2c0 7.6-5 13.4-12 16.3C7 28.1 2 22.3 2 14.7V5.5L14 1Z"
-        fill="currentColor"
-      />
-      <path
-        className="brand-mark-check"
-        d="m8.5 16.2 3.8 3.8 7.4-8"
-        fill="none"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return <VeritrailMark size={30} className="brand-mark" />;
 }
 
 /** On phones the appearance settings live in the menu, so the header fits on one row. */
