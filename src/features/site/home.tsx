@@ -21,7 +21,7 @@ import {
 } from "@phosphor-icons/react";
 import type { Token, Tokens } from "marked";
 import { controls, maturityTemplate, pillars, siteConfig } from "./content";
-import { HeroIllustration, ControlMosaic, SectionArt } from "./illustrations";
+import { ControlMosaic, SectionArt } from "./illustrations";
 import { HowItWorksArt } from "./illustrations-tools";
 import {
   SiteMarkdown,
@@ -36,6 +36,8 @@ import type { SitePage } from "./pages";
 import { SiteLink } from "./ui";
 import { WorkspaceGateway } from "./workspace-gateway";
 import { AiDiscussionBand } from "./ai-discussion-band";
+import { ServicePathways } from "./service-pathways";
+import discussionImage from "@/assets/ai-discussion.jpg";
 
 // The home page: the same platform/content/website_pages/index.md as before, laid out as a
 // visual story. Each "## section" is read from the Markdown; sections with a known shape (the
@@ -95,9 +97,10 @@ function HomeHero({ page, layers }: { page: SitePage; layers: number }) {
   return (
     <>
       <section className="hero hero--home" aria-labelledby="hero-title">
+        <img className="home-cover" src={discussionImage} alt="" width={1280} height={800} fetchPriority="high" />
         <div className="container hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">{siteConfig.site_tagline}</p>
+            <p className="eyebrow">Evidence-first · Human-led · Enterprise-focused</p>
             <h1 id="hero-title">
               <HeroTitle text={page.h1} />
             </h1>
@@ -130,9 +133,6 @@ function HomeHero({ page, layers }: { page: SitePage; layers: number }) {
                 <Link to="/workspace">Open the governance workspace</Link>.
               </span>
             </p>
-          </div>
-          <div className="hero-art">
-            <HeroIllustration />
           </div>
         </div>
       </section>
@@ -480,13 +480,20 @@ export function HomeTemplate({ page }: { page: SitePage }) {
   return (
     <>
       <HomeHero page={page} layers={layers} />
-      <AiDiscussionBand />
-      <WorkspaceGateway />
+      <ServicePathways />
+      <nav className="home-directory container" aria-label="Explore this page">
+        <a href="#four-ways-to-start">Get started</a>
+        <a href="#five-pillars-64-controls">Governance framework</a>
+        <a href="#workspace-heading">Practitioner workspace</a>
+        <a href="#ai-discussion-title">AI guidance</a>
+      </nav>
       <div className="home-sections">
         {sections.map((s) => (
           <HomeSection key={s.id || "intro"} section={s} />
         ))}
       </div>
+      <WorkspaceGateway />
+      <AiDiscussionBand />
       <div className="container page-body home-end">
         <PageEnd faq={page.faq} updated={page.updated} />
       </div>

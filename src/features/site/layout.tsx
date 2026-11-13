@@ -3,7 +3,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { usePageViewTracking } from "../platform/analytics";
 import { STANDARD_DISCLAIMER, siteConfig } from "./content";
 import { LeadForm } from "./forms";
-import { footerColumns, siteNav, type Crumb } from "./pages";
+import { footerColumns, headerNav, type Crumb } from "./pages";
 import { SiteLink } from "./ui";
 import { ArrowLeft, ArrowUp, List, Palette, X } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
@@ -177,7 +177,7 @@ function SiteHeader() {
           </p>
           <MenuAppearanceRow />
           <ul className="nav-list">
-            {siteNav.map((sec) => (
+            {headerNav.map((sec) => (
               <li className="nav-item" key={sec.id}>
                 <details
                   className={`nav-disclosure${sec.id === current ? " is-current-section" : ""}`}
@@ -188,18 +188,20 @@ function SiteHeader() {
                   }}
                 >
                   <summary className="nav-summary">{sec.label}</summary>
-                  <ul className={"nav-sub" + (sec.id === "workspace" ? " nav-sub-workspace" : "")}>
-                    {sec.items.map((item) => (
-                      <li key={item.url}>
-                        <Link
-                          to={item.url}
-                          aria-current={item.url === pathname ? "page" : undefined}
-                        >
-                          {item.label}
-                        </Link>
-                      </li>
+                  <div className="nav-sub nav-grouped">
+                    {sec.groups.map((group) => (
+                      <section key={group.label} className="nav-link-group" aria-label={group.label}>
+                        <p className="nav-group-label">{group.label}</p>
+                        <ul>
+                          {group.items.map((item) => (
+                            <li key={item.url}>
+                              <Link to={item.url} aria-current={item.url === pathname ? "page" : undefined}>{item.label}</Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
                     ))}
-                  </ul>
+                  </div>
                 </details>
               </li>
             ))}
@@ -293,6 +295,10 @@ function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="container">
+        <div className="footer-intro">
+          <Link to="/" className="brand">VERITRAIL</Link>
+          <p>AI governance, advisory and assurance.<br />Accountability through evidence. Decisions led by people.</p>
+        </div>
         <div className="footer-grid">
           {footerColumns.map((col) => (
             <div className="footer-col" key={col.label}>
@@ -322,7 +328,7 @@ function SiteFooter() {
         </aside>
         <div className="footer-meta">
           <p>
-            &copy; {new Date().getFullYear()} {siteConfig.organization.name}
+            An initiative by {siteConfig.organization.name}
           </p>
           <ul className="footer-links">
             {siteConfig.footer_links.map((l) => (
