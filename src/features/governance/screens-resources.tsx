@@ -39,6 +39,8 @@ import { openAppearance, useAppearanceSummary } from "@/features/appearance/appe
 import { useGovernance } from "./store";
 import { at, answerAt, calculate } from "./model";
 import { Chip, Dot, Kicker } from "./screens-core";
+import { EvidenceTimeline, PageHeader, RouteLink, formatUtc } from "@/components/assurance";
+import { recordTrail, trailActor, useTrail } from "./trail-store";
 import { buildEvidenceReport, reportFilename } from "./evidence-report";
 import { generateEvidenceFile, type ExportFormat } from "./evidence-files";
 export function CalculatorsScreen() {
@@ -292,7 +294,9 @@ export function KnowledgeScreen() {
         <div className="empty-state">
           <EmptyResources />
           <h3>No matching resources</h3>
-          <p className="muted">Try clearing filters or searching by publisher, topic, or jurisdiction.</p>
+          <p className="muted">
+            Try clearing filters or searching by publisher, topic, or jurisdiction.
+          </p>
           <Button
             variant="link"
             onClick={() => {
@@ -317,8 +321,19 @@ export function KnowledgeScreen() {
     </>
   );
 }
+/** Short, stable fingerprint of a pack for the preview sign-off (not a cryptographic hash). */
+function packHash(input: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < input.length; i++) {
+    h ^= input.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(16).padStart(8, "0");
+}
 export function ExportScreen() {
-  const { workspaceName, state, scores, gate } = useGovernance();
+  const { workspaceName, state, scores, gate, blocking, userId } = useGovernance();
+  const trail = useTrail();
+  const [signed, setSigned] = useState<{ who: string; at: string; hash: string } | null>(null);
   const [packId, setPack] = useState("exec"),
     [format, setFormat] = useState("PDF"),
     [status, setStatus] = useState("idle"),
@@ -370,8 +385,31 @@ export function ExportScreen() {
       );
     }
   }
+  const canSign = blocking.length === 0 && unattachedCritical === 0;
+  function signOff() {
+    const at = new Date().toISOString();
+    const who = trailActor(userId);
+    const hash = packHash(
+      JSON.stringify([pack.id, workspaceName, scores, gate, state.answers, at.slice(0, 16)]),
+    );
+    setSigned({ who, at, hash });
+    recordTrail({
+      title: `${pack.name} signed off (preview) · ${hash}`,
+      who,
+      ref: pack.name,
+      outcome: "attested",
+    });
+  }
   return (
     <>
+      <PageHeader
+        eyebrow={`${workspaceName} · Evidence`}
+        title="Reports & audit pack"
+        meta={[
+          "Client-ready governance deliverables · previews",
+          `${attached} of ${CONTROLS.length} controls evidenced · gate ${gate}`,
+        ]}
+      />
       <p className="muted">Client-ready governance deliverables</p>
       <div className="export-evidence-note" role="status">
         <Kicker>Preview context</Kicker>
@@ -379,7 +417,9 @@ export function ExportScreen() {
           <strong>{attached}</strong> of {CONTROLS.length} controls have evidence attached
           {unattachedCritical ? (
             <>
-              {" "}· <strong>{unattachedCritical}</strong> critical control{unattachedCritical === 1 ? "" : "s"} without attached evidence
+              {" "}
+              · <strong>{unattachedCritical}</strong> critical control
+              {unattachedCritical === 1 ? "" : "s"} without attached evidence
             </>
           ) : (
             " · all critical controls have evidence attached"
@@ -479,6 +519,64 @@ export function ExportScreen() {
         are references only; files are not embedded, and no reviewer sign-off or certification is
         created.
       </p>
+      <section className="signoff-panel" aria-labelledby="signoff-heading">
+        <div className="section-heading">
+          <h2 id="signoff-heading">Sign-off</h2>
+          <Chip tone="warning">Preview</Chip>
+        </div>
+        {signed ? (
+          <div className="signoff-signed">
+            <SealCheck weight="fill" aria-hidden="true" />
+            <div>
+              <strong>{pack.name} signed off (preview)</strong>
+              <p className="muted mono">
+                {signed.who} · {formatUtc(signed.at)} · pack {signed.hash}
+              </p>
+              <p className="muted">
+                A preview attestation for this session only: nothing is certified and no signed
+                export is produced.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <p className="muted">
+              {canSign
+                ? "No blocking controls and every critical control has evidence attached: the pack can be signed off as a preview."
+                : `Sign-off is disabled while ${blocking.length} blocking control${blocking.length === 1 ? "" : "s"} remain${blocking.length === 1 ? "s" : ""}${unattachedCritical ? ` and ${unattachedCritical} critical control${unattachedCritical === 1 ? "" : "s"} lack${unattachedCritical === 1 ? "s" : ""} attached evidence` : ""}.`}
+            </p>
+            <Button
+              variant="seal"
+              disabled={!canSign}
+              onClick={signOff}
+              title={canSign ? undefined : "Resolve blocking controls and attach evidence first"}
+            >
+              <SealCheck weight="fill" />
+              Sign off {pack.name} (preview)
+            </Button>
+            {!canSign && (
+              <Button variant="link" asChild>
+                <RouteLink to="/gates">Review blocking controls</RouteLink>
+              </Button>
+            )}
+          </>
+        )}
+      </section>
+      <section className="trail-panel" aria-labelledby="trail-heading">
+        <div className="section-heading">
+          <h2 id="trail-heading">Evidence trail</h2>
+          <Chip tone="warning">Preview · this session</Chip>
+        </div>
+        <p className="muted">
+          Every score, evidence status, disposition and sign-off recorded in this tab, newest first.
+          The trail is a preview held in memory until an append-only record exists; it is not part
+          of the saved workspace.
+        </p>
+        <EvidenceTimeline
+          entries={trail}
+          empty="Nothing recorded yet in this session. Changes in the assessment and inventory will appear here."
+        />
+      </section>
     </>
   );
 }
@@ -499,7 +597,12 @@ export function MoreScreen() {
       desc: "Six pillars mapped to NIST AI RMF",
       icon: CheckCircle,
     },
-    { to: "/gates", name: "Release readiness", desc: "Readiness by risk tier", icon: TrafficSignal },
+    {
+      to: "/gates",
+      name: "Release readiness",
+      desc: "Readiness by risk tier",
+      icon: TrafficSignal,
+    },
     {
       to: "/guardrails",
       name: "Guardrails designer",

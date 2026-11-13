@@ -1,5 +1,6 @@
-import { useMemo, type ComponentType, type ReactNode } from "react";
+import { useMemo, useState, type ComponentType, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowRight,
   BookOpenText,
@@ -37,7 +38,6 @@ import { SiteLink } from "./ui";
 import { WorkspaceGateway } from "./workspace-gateway";
 import { AiDiscussionBand } from "./ai-discussion-band";
 import { ServicePathways } from "./service-pathways";
-import discussionImage from "@/assets/ai-discussion.jpg";
 
 // The home page: the same platform/content/website_pages/index.md as before, laid out as a
 // visual story. Each "## section" is read from the Markdown; sections with a known shape (the
@@ -84,6 +84,51 @@ function HeroTitle({ text }: { text: string }) {
   );
 }
 
+/**
+ * The evidence card beside the hero copy: the five pillars of the governed control library with
+ * their control and critical counts, laid out like a register so the page shows, not tells,
+ * what an evidence trail looks like. Every figure comes from platform/content/controls.
+ */
+function EvidenceCard() {
+  return (
+    <aside className="evidence-card" aria-label="Control library at a glance">
+      <div className="evidence-card-head">
+        <span className="evidence-card-title">Evidence register</span>
+        <span className="evidence-card-meta">
+          {controls.length} controls · {pillars.length} pillars
+        </span>
+      </div>
+      <ol className="evidence-rows">
+        {pillars.map((p) => {
+          const items = controls.filter((c) => c.pillar === p.id);
+          const critical = items.filter((c) => c.priority === "critical").length;
+          const high = items.filter((c) => c.priority === "high").length;
+          return (
+            <li key={p.id} className="evidence-row">
+              <span className="evidence-code">{p.id}</span>
+              <span className="evidence-name">{p.name}</span>
+              <span className="evidence-bar" aria-hidden="true">
+                <span className="seg seg-critical" style={{ flex: critical }} />
+                <span className="seg seg-high" style={{ flex: high }} />
+                <span className="seg seg-medium" style={{ flex: items.length - critical - high }} />
+              </span>
+              <span className="evidence-count">
+                {items.length}
+                <small> · {critical} critical</small>
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+      <p className="evidence-card-foot">
+        <span className="legend-swatch legend-critical" /> Critical
+        <span className="legend-swatch legend-high" /> High
+        <span className="legend-swatch legend-medium" /> Medium priority
+      </p>
+    </aside>
+  );
+}
+
 function HomeHero({ page, layers }: { page: SitePage; layers: number }) {
   const primary = page.primaryCta ? siteConfig.ctas[page.primaryCta] : undefined;
   const secondary = page.secondaryCta ? siteConfig.ctas[page.secondaryCta] : undefined;
@@ -96,15 +141,8 @@ function HomeHero({ page, layers }: { page: SitePage; layers: number }) {
   ];
   return (
     <>
-      <section className="hero hero--home" aria-labelledby="hero-title">
-        <img
-          className="home-cover"
-          src={discussionImage}
-          alt=""
-          width={1280}
-          height={800}
-          fetchPriority="high"
-        />
+      {/* The hero is a navy band: `dark` scopes the dark tokens to it in both modes. */}
+      <section className="hero hero--home hero--navy dark" aria-labelledby="hero-title">
         <div className="container hero-grid">
           <div className="hero-copy">
             <p className="eyebrow">Evidence-first · Human-led · Enterprise-focused</p>
@@ -141,6 +179,7 @@ function HomeHero({ page, layers }: { page: SitePage; layers: number }) {
               </span>
             </p>
           </div>
+          <EvidenceCard />
         </div>
       </section>
       <section className="proof-strip" aria-label="VERITRAIL at a glance">
@@ -341,37 +380,105 @@ const STAKEHOLDER_ICONS: Array<[RegExp, Icon]> = [
   [/Consult|advis/i, Briefcase],
 ];
 
-function StakeholderGrid({ section, table }: { section: MarkdownSection; table: Tokens.Table }) {
+interface Step {
+  name: string;
+  text: string;
+}
+
+/** "1. **Baseline.** text" items of the How-it-works list; null when the list has another shape. */
+function parseSteps(section: MarkdownSection): Step[] | null {
+  const list = firstOf<Tokens.List>(section.tokens, "list");
+  if (!list?.ordered) return null;
+  const steps: Step[] = [];
+  for (const item of list.items) {
+    const m = /^\s*\*\*([^*]+?)\.?\*\*\s*(.*)$/s.exec(item.text);
+    if (!m) return null;
+    steps.push({ name: (m[1] ?? "").trim(), text: (m[2] ?? "").trim() });
+  }
+  return steps.length >= 2 ? steps : null;
+}
+
+function StepTabs({ section, steps }: { section: MarkdownSection; steps: Step[] }) {
+  const list = firstOf<Tokens.List>(section.tokens, "list");
+  const onClick = useInternalLinkHandler();
+  return (
+    <>
+      <SiteMarkdown className="prose" body={rawExcept(section.tokens, (t) => t === list)} />
+      <Tabs defaultValue={steps[0]?.name} className="step-tabs" onClick={onClick}>
+        <TabsList className="step-tablist" aria-label="How it works, step by step">
+          {steps.map((st, i) => (
+            <TabsTrigger key={st.name} value={st.name} className="step-tab">
+              <span className="step-num" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              {st.name}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {steps.map((st, i) => (
+          <TabsContent key={st.name} value={st.name} className="step-panel" forceMount>
+            <p className="step-eyebrow">
+              Step {i + 1} of {steps.length}
+            </p>
+            <h3>{st.name}</h3>
+            <p>
+              <Inline md={st.text} />
+            </p>
+          </TabsContent>
+        ))}
+      </Tabs>
+    </>
+  );
+}
+
+/** The stakeholder table as a chip selector: pick who you are, read the need and what VERITRAIL provides. */
+function StakeholderSelector({
+  section,
+  table,
+}: {
+  section: MarkdownSection;
+  table: Tokens.Table;
+}) {
   const [, needLabel, providesLabel] = table.header.map((h) => h.text);
+  const rows = table.rows.map((row) => {
+    const [who = "", need = "", provides = ""] = row.map((c) => c.text);
+    return { who, need, provides, plain: who.replace(/\*\*/g, "") };
+  });
+  const [current, setCurrent] = useState(rows[0]?.plain ?? "");
   return (
     <>
       <SiteMarkdown className="prose" body={rawExcept(section.tokens, (t) => t === table)} />
-      <ul className="stakeholder-grid">
-        {table.rows.map((row) => {
-          const [who = "", need = "", provides = ""] = row.map((c) => c.text);
-          const Icon = STAKEHOLDER_ICONS.find(([re]) => re.test(who))?.[1] ?? Briefcase;
-          return (
-            <li key={who} className="stakeholder-card">
-              <h3>
-                <span className="stakeholder-icon">
-                  <Icon weight="duotone" aria-hidden="true" />
-                </span>
-                <Inline md={who} />
-              </h3>
-              <dl>
+      <Tabs value={current} onValueChange={setCurrent} className="stakeholder-tabs">
+        <TabsList className="stakeholder-chips" aria-label="Choose a stakeholder">
+          {rows.map((r) => {
+            const Icon = STAKEHOLDER_ICONS.find(([re]) => re.test(r.plain))?.[1] ?? Briefcase;
+            return (
+              <TabsTrigger key={r.plain} value={r.plain} className="stakeholder-chip">
+                <Icon weight="duotone" aria-hidden="true" />
+                <Inline md={r.who} />
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+        {rows.map((r) => (
+          <TabsContent key={r.plain} value={r.plain} className="stakeholder-panel" forceMount>
+            <dl>
+              <div>
                 <dt>{needLabel}</dt>
                 <dd>
-                  <Inline md={need} />
+                  <Inline md={r.need} />
                 </dd>
+              </div>
+              <div>
                 <dt>{providesLabel}</dt>
                 <dd>
-                  <Inline md={provides} />
+                  <Inline md={r.provides} />
                 </dd>
-              </dl>
-            </li>
-          );
-        })}
-      </ul>
+              </div>
+            </dl>
+          </TabsContent>
+        ))}
+      </Tabs>
     </>
   );
 }
@@ -401,7 +508,11 @@ const LAYOUTS: Record<string, (section: MarkdownSection) => ReactNode | null> = 
   },
   "value-by-stakeholder": (section) => {
     const table = tableWithColumns(section, 3);
-    return table ? <StakeholderGrid section={section} table={table} /> : null;
+    return table ? <StakeholderSelector section={section} table={table} /> : null;
+  },
+  "how-it-works": (section) => {
+    const steps = parseSteps(section);
+    return steps ? <StepTabs section={section} steps={steps} /> : null;
   },
 };
 
@@ -446,6 +557,8 @@ const BANDED = new Set([
   "five-pillars-64-controls",
   "value-by-stakeholder",
 ]);
+/** The closing call to action sits on a navy band (the dark tokens scoped to it). */
+const NAVY = new Set(["start-with-an-honest-baseline"]);
 
 function HomeSection({ section }: { section: MarkdownSection }) {
   const main = LAYOUTS[section.id]?.(section) ?? (
@@ -463,7 +576,7 @@ function HomeSection({ section }: { section: MarkdownSection }) {
   if (!section.id) return <div className="container">{content}</div>;
   return (
     <section
-      className={`home-section home-section--${section.id}${BANDED.has(section.id) ? " home-band" : ""}`}
+      className={`home-section home-section--${section.id}${BANDED.has(section.id) ? " home-band" : ""}${NAVY.has(section.id) ? " home-band--navy dark" : ""}`}
       aria-labelledby={section.id}
     >
       <div className="container">

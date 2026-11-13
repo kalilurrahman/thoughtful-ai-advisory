@@ -1,0 +1,169 @@
+/* VERITRAIL Assurance — colour tokens.
+   Base ramps first, then semantic aliases. Light on :root, dark on [data-theme="dark"].
+   All text pairs meet WCAG AA (4.5:1) on --surface-card and --surface-canvas. */
+:root {
+  /* Ink (cool neutral, slight teal cast) */
+  --ink-950: #0b1620;
+  --ink-900: #13212c;
+  --ink-800: #1e2c38;
+  --ink-700: #33424f;
+  --ink-600: #4a5866;
+  --ink-500: #67747f;
+  --ink-400: #8a96a1;
+  --ink-300: #b6c0c8;
+  --ink-200: #d6dde2;
+  --ink-150: #e3e8eb;
+  --ink-100: #edf1f3;
+  --ink-50:  #f5f7f8;
+  --paper:   #ffffff;
+
+  /* Brand teal — #007396 is the VERITRAIL primary carried over from Broadsheet */
+  --teal-900: #00374a;
+  --teal-800: #004961;
+  --teal-700: #005e7b;
+  --teal-600: #007396;
+  --teal-500: #0088b0;
+  --teal-300: #62c5ee;
+  --teal-200: #b5e3f5;
+  --teal-100: #e1f3fa;
+  --teal-50:  #f0f9fc;
+
+  /* Command navy — sidebar, hero bands, report covers */
+  --navy-950: #071119;
+  --navy-900: #0d1d29;
+  --navy-800: #142a3a;
+  --navy-700: #1d3a4f;
+
+  /* Seal gold — attestation, sign-off, verified evidence */
+  --gold-700: #7a5600;
+  --gold-600: #946a00;
+  --gold-300: #e2bf63;
+  --gold-100: #f8edd2;
+
+  /* Audit status hues */
+  --green-700: #0d6a4a;  --green-100: #dff2e9;
+  --amber-700: #8a5300;  --amber-100: #fcefd4;
+  --crimson-700: #a8124a; --crimson-100: #fce6ee;
+  --plum-900: #4a0b2a;
+
+  /* ---- Semantic: surfaces ---- */
+  --surface-canvas: var(--ink-50);
+  --surface-card: var(--paper);
+  --surface-raised: var(--paper);
+  --surface-sunken: var(--ink-100);
+  --surface-hover: var(--ink-100);
+  --surface-selected: var(--teal-50);
+  --surface-inverse: var(--navy-900);
+  --surface-nav: var(--navy-900);
+  --surface-nav-hover: var(--navy-800);
+  --surface-nav-active: var(--navy-700);
+
+  /* ---- Semantic: text ---- */
+  --text-strong: var(--ink-950);
+  --text-body: var(--ink-800);
+  --text-muted: var(--ink-600);
+  --text-subtle: var(--ink-500);
+  --text-inverse: #f2f5f7;
+  --text-inverse-muted: #a9b8c4;
+  --text-link: var(--teal-600);
+  --text-link-hover: var(--teal-800);
+  --text-on-brand: #ffffff;
+
+  /* ---- Semantic: lines ---- */
+  --border-hairline: var(--ink-150);
+  --border-default: var(--ink-200);
+  --border-strong: var(--ink-300);
+  --border-input: var(--ink-400);
+  --border-focus: var(--teal-500);
+  --rule-ink: var(--ink-950);
+
+  /* ---- Semantic: brand + action ---- */
+  --brand: var(--teal-600);
+  --brand-hover: var(--teal-700);
+  --brand-press: var(--teal-800);
+  --brand-soft: var(--teal-100);
+  --brand-soft-ink: var(--teal-800);
+  --seal: var(--gold-600);
+  --seal-soft: var(--gold-100);
+  --seal-ink: var(--gold-700);
+
+  /* ---- Semantic: control / audit status ---- */
+  --status-effective-ink: var(--green-700);   --status-effective-bg: var(--green-100);
+  --status-partial-ink: var(--amber-700);     --status-partial-bg: var(--amber-100);
+  --status-gap-ink: var(--crimson-700);       --status-gap-bg: var(--crimson-100);
+  --status-untested-ink: var(--ink-600);      --status-untested-bg: var(--ink-100);
+  --status-info-ink: var(--teal-800);         --status-info-bg: var(--teal-100);
+
+  /* ---- Semantic: EU AI Act risk tiers ---- */
+  --risk-prohibited-ink: #ffffff;   --risk-prohibited-bg: var(--plum-900);
+  --risk-high-ink: var(--crimson-700); --risk-high-bg: var(--crimson-100);
+  --risk-limited-ink: var(--amber-700); --risk-limited-bg: var(--amber-100);
+  --risk-minimal-ink: var(--ink-700);  --risk-minimal-bg: var(--ink-100);
+
+  /* ---- Data viz (sequential teal + categorical) ---- */
+  --viz-1: var(--teal-600);
+  --viz-2: var(--navy-700);
+  --viz-3: var(--gold-600);
+  --viz-4: var(--crimson-700);
+  --viz-5: var(--green-700);
+  --viz-track: var(--ink-150);
+  --viz-target: var(--ink-950);
+}
+
+[data-theme="dark"] {
+  --surface-canvas: #081118;
+  --surface-card: #0f1b24;
+  --surface-raised: #142330;
+  --surface-sunken: #0b151d;
+  --surface-hover: #172836;
+  --surface-selected: #0b2a37;
+  --surface-inverse: #e9eef1;
+  --surface-nav: #050c12;
+  --surface-nav-hover: #0f1c27;
+  --surface-nav-active: #14293a;
+
+  --text-strong: #f2f5f7;
+  --text-body: #d5dde3;
+  --text-muted: #a3b0ba;
+  --text-subtle: #84929e;
+  --text-inverse: #0b1620;
+  --text-inverse-muted: #4a5866;
+  --text-link: #62c5ee;
+  --text-link-hover: #a3e0f7;
+  --text-on-brand: #04141c;
+
+  --border-hairline: #18262f;
+  --border-default: #22333f;
+  --border-strong: #33495a;
+  --border-input: #5a6d7c;
+  --border-focus: #62c5ee;
+  --rule-ink: #d5dde3;
+
+  --brand: #4fb8e3;
+  --brand-hover: #7acdf0;
+  --brand-press: #a3e0f7;
+  --brand-soft: #0b2a37;
+  --brand-soft-ink: #a3e0f7;
+  --seal: #e2bf63;
+  --seal-soft: #2a2110;
+  --seal-ink: #ecd087;
+
+  --status-effective-ink: #6fd3a8;  --status-effective-bg: #0b2a20;
+  --status-partial-ink: #f0c060;    --status-partial-bg: #2c2110;
+  --status-gap-ink: #ff8fb4;        --status-gap-bg: #3a1022;
+  --status-untested-ink: #a3b0ba;   --status-untested-bg: #172430;
+  --status-info-ink: #a3e0f7;       --status-info-bg: #0b2a37;
+
+  --risk-prohibited-ink: #ffd6e6;   --risk-prohibited-bg: #5b0e33;
+  --risk-high-ink: #ff8fb4;         --risk-high-bg: #3a1022;
+  --risk-limited-ink: #f0c060;      --risk-limited-bg: #2c2110;
+  --risk-minimal-ink: #c4ced6;      --risk-minimal-bg: #172430;
+
+  --viz-1: #4fb8e3;
+  --viz-2: #8fb3cc;
+  --viz-3: #e2bf63;
+  --viz-4: #ff8fb4;
+  --viz-5: #6fd3a8;
+  --viz-track: #1d2d39;
+  --viz-target: #f2f5f7;
+}

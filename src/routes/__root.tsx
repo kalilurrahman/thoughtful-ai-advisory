@@ -25,7 +25,7 @@ import pwaCss from "../features/pwa/pwa.css?url";
 import searchCss from "../features/search/search.css?url";
 import appearanceCss from "../features/appearance/appearance.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { THEME_INIT_SCRIPT } from "../lib/theme";
+import { DEFAULT_FONT_STYLESHEET, THEME_INIT_SCRIPT } from "../lib/theme";
 
 function NotFoundComponent() {
   return (
@@ -132,10 +132,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap",
-      },
+      // The default font pairing (IBM Plex Sans, Source Serif 4, IBM Plex Mono) ships with the
+      // page; the other Appearance fonts load on demand (src/lib/theme.ts).
+      { rel: "stylesheet", href: DEFAULT_FONT_STYLESHEET },
     ],
   }),
   shellComponent: RootShell,

@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/features/site/layout";
 import { ToolLoading, siteHead } from "@/features/site/views";
 import { Disclaimer } from "@/features/site/ui";
 import { PLATFORM_TOOLS, getPlatformTool, type PlatformTool } from "./catalog";
+import { PLATFORM_TOOL_MARKS, ProductMark } from "../site/brand-marks";
 import { PLATFORM_COMPONENTS } from "./registry";
 
 const RUNTIME_LABEL: Record<PlatformTool["runtime"], string> = {
@@ -47,9 +48,14 @@ export function PlatformIndexView() {
               {PLATFORM_TOOLS.map((t) => (
                 <tr key={t.slug}>
                   <th scope="row">
-                    <Link to="/platform/$tool" params={{ tool: t.slug }}>
-                      {t.title}
-                    </Link>
+                    <span className="module-name">
+                      {PLATFORM_TOOL_MARKS[t.slug] && (
+                        <ProductMark id={PLATFORM_TOOL_MARKS[t.slug]!} size={32} />
+                      )}
+                      <Link to="/platform/$tool" params={{ tool: t.slug }}>
+                        {t.title}
+                      </Link>
+                    </span>
                     {t.restricted && <span className="small"> (sign-in required)</span>}
                   </th>
                   <td>{t.summary}</td>

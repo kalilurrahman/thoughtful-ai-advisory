@@ -206,3 +206,22 @@ calls `self.registration.unregister()` in `activate`; browsers pick it up on the
 
 The full product picture — PRD, capabilities index, epics and user stories, and use cases — is in
 [docs/product](../product/README.md).
+
+## 5. The Assurance theme (design-system uplift)
+
+The visual system was migrated to **VERITRAIL Assurance** from the design handoff in
+[`docs/design/assurance`](../design/assurance/README.md): an audit and advisory look built on the
+same governed content. Nothing in `platform/content`, `src/data` or the routes changed; only
+tokens, components, layout, iconography, illustrations and the shell did (the handoff's "rule
+zero"). Work was done in phases, each gated by `npm test`, `npm run build` and `npm run test:smoke`.
+
+| Phase | What changed |
+|---|---|
+| 1 Tokens | The Assurance palette is the base in `src/styles.css` (`:root` / `.dark`): teal `#007396` on cool paper, command navy `#0D1D29` for navigation, seal gold for attestation, and audit tokens for status (effective / partial / gap / not tested / in review / attested), EU AI Act risk tiers, data-viz track and target. Broadsheet moved to its own `data-palette` blocks and stays selectable with Midnight Gold and Financial Slate; every palette defines the same tokens in light and dark and passes the AA checks in `src/test/theme.test.ts`. The default font pairing is IBM Plex Sans text, Source Serif 4 headings and IBM Plex Mono for control IDs, citations and timestamps, preloaded by the root route. |
+| 2 Primitives | `src/components/assurance`: StatusBadge and RiskTierTag (a word, never a colour alone), KpiTile, PillarScore (target tick; tone by distance to target), ControlRow, GateBanner, PageHeader (serif title over the 4px double rule, mono meta line), FilterTabs, EvidenceTimeline and ResponsiveDrawer (vaul on phones, a right-hand sheet elsewhere). Buttons use the 4px control radius, 32 / 40 / 48px heights and a gold `seal` variant. |
+| 3 Shell | A 248px command-navy sidebar from 1024px with the inset light-teal bar on the active item and mono counts (blocking controls, systems, open incidents and actions); the same sidebar as a 72px icon rail with tooltips from 640px; a 64px four-item bottom navigation (Overview, Assess, Systems, Evidence) with safe-area padding on phones, Roadmap and Workspace & account one tap away in "More actions". The 60px top bar is sticky and translucent with the ⌘K search field, the organisation overline and the Demo / Personal chip, on one row from 360px. The smoke test now also checks every page at 834px. |
+| 4 Screens | Overview: release-gate banner, KPI tiles, the VERITRAIL Index with its band meter, TILLER pillar scores, remediation phase cards, then the existing portfolio, evidence readiness, top gaps, quick links and change log. Assessment: pillar filter tabs, a control list beside a sticky detail panel from 1024px (master → detail with a back link below), status from the real scoring rules (`controlStatus`: attested, partial — capped when a 3 or 4 lacks evidence — gap, not tested). Inventory: system cards with tier tags, a details drawer with facts and a 2×2 disposition that writes to the trail. Evidence: export packs, a sign-off panel (disabled with the reason while blocking controls exist; seal button when ready; signed state shows who, UTC time and a pack fingerprint) and the append-only evidence trail — all labelled previews; the trail lives in this tab's memory until an append-only table exists and is never saved with a workspace. Home: a navy hero with an evidence register drawn from the control library, five-step "How it works" tabs, a stakeholder chip selector and a navy closing band; every word still comes from `index.md`. Section landing pages open on the navy band. |
+| 5 Brand | Product marks in `public/brand` (`brand-marks.tsx`) at 32–44px on the solutions pages, the Workspace menu (TILLER) and the Platform module table; `guardrailIcon(name)` maps guardrail categories, Shield modes and policy decisions to Phosphor glyphs; social images regenerated on the navy 1200×630 layout with eyebrow and title from each page's frontmatter. The master mark (options 1a / 1b / 1c in the handoff) is still to be chosen, so `favicon.svg` and the PWA icons are unchanged; `node scripts/generate-pwa-icons.mjs --mark a|b|c` regenerates them from the chosen mark. |
+
+Still to decide or build: the master mark (then icons and the social-image tile), and a
+server-side append-only trail table (migration) so the evidence trail stops being a preview.

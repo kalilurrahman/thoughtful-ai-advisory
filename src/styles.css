@@ -5,16 +5,17 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Broadsheet design system — the one theme for the whole app.
+ * VERITRAIL Assurance design system — the one theme for the whole app.
  *
- * The :root and .dark blocks below are the single source of colour and shape
- * tokens for the TILLER workspace, the public website and the Platform console.
- * The public website maps them to its own names at the top of
- * src/features/site/site.css, so it follows the same palette and dark mode.
- * `.dark` is set on <html> by the viewer's theme preference (src/lib/theme.ts).
+ * The :root and .dark blocks below are the single source of colour and shape tokens for the
+ * TILLER workspace, the public website and the Platform console: the Assurance palette (teal on
+ * cool paper, command-navy navigation, seal gold for attestation) with IBM Plex Sans text,
+ * Source Serif 4 headings and IBM Plex Mono for control IDs. The public website maps them to its
+ * own names at the top of src/features/site/site.css, so it follows the same palette and dark
+ * mode. `.dark` is set on <html> by the viewer's theme preference (src/lib/theme.ts).
  *
  * The @theme inline block maps the tokens to Tailwind utility classes
- * (e.g. --color-primary -> bg-primary, text-primary).
+ * (e.g. --color-primary -> bg-primary, text-primary, --color-seal -> bg-seal).
  *
  * To add a new semantic color:
  * 1. Add the variable to :root (light value) and .dark (dark value), and to both blocks of
@@ -22,8 +23,9 @@
  * 2. Register it in @theme inline as --color-<name>: var(--<name>) if
  *    Tailwind utilities need it
  *
- * Viewers can also choose a colour palette (`data-palette` on <html>) and a font
- * (`data-font`) in the Appearance panel; see the "Appearance" section after .dark.
+ * Viewers can also choose a colour palette (`data-palette` on <html>: Broadsheet, Midnight Gold
+ * or Financial Slate; Assurance is the default and needs no attribute) and a font (`data-font`)
+ * in the Appearance panel; see the "Appearance" section after .dark.
  */
 
 @theme inline {
@@ -34,6 +36,14 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  /* Assurance shape scale: badge 2 · control 4 · card 6 · sheet 10 (README §2). */
+  --radius-badge: var(--shape-badge);
+  --radius-control: var(--shape-control);
+  --radius-card: var(--shape-card);
+  --radius-sheet: var(--shape-sheet);
+  /* font-sans = body text, font-serif = headings; font-mono follows the --font-mono token. */
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-heading);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -67,26 +77,198 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  /* Status families (effective / partial / gap) and the Assurance audit tokens. */
+  --color-success-ink: var(--success-ink);
+  --color-success-surface: var(--success-surface);
+  --color-warning-ink: var(--warning-ink);
+  --color-warning-surface: var(--warning-surface);
+  --color-danger-ink: var(--danger-ink);
+  --color-danger-surface: var(--danger-surface);
+  --color-neutral-surface: var(--neutral-surface);
+  --color-seal: var(--seal);
+  --color-seal-surface: var(--seal-surface);
+  --color-seal-ink: var(--seal-ink);
+  --color-info-ink: var(--info-ink);
+  --color-info-surface: var(--info-surface);
+  --color-risk-prohibited-ink: var(--risk-prohibited-ink);
+  --color-risk-prohibited-surface: var(--risk-prohibited-surface);
+  --color-risk-high-ink: var(--risk-high-ink);
+  --color-risk-high-surface: var(--risk-high-surface);
+  --color-risk-limited-ink: var(--risk-limited-ink);
+  --color-risk-limited-surface: var(--risk-limited-surface);
+  --color-risk-minimal-ink: var(--risk-minimal-ink);
+  --color-risk-minimal-surface: var(--risk-minimal-surface);
+  --color-viz-track: var(--viz-track);
+  --color-viz-target: var(--viz-target);
+  --color-nav-muted: var(--nav-muted);
+  --color-rule: var(--rule);
+  --color-row-rule: var(--row-rule);
 }
 
 :root {
-  /* Shape */
-  --radius: 0.125rem;
-  /* Type: switched by data-font (Appearance). Headings follow the body unless a font pairs them. */
-  --font-body: "Source Serif 4", Georgia, serif;
-  --font-heading: var(--font-body);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  /* Shape: 6px cards; badge 2 · control 4 · sheet 10 are fixed steps. */
+  --radius: 0.375rem;
+  --shape-badge: 2px;
+  --shape-control: 4px;
+  --shape-card: var(--radius);
+  --shape-sheet: 10px;
+  /* Type: switched by data-font (Appearance). The Assurance pairing ships with the page. */
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Source Serif 4", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --heading-weight: 600;
-  /* Newspaper rules under titles; a palette may colour them. */
-  --rule: var(--foreground);
+  /* The signature double rule under titles; a palette may colour it. */
+  --rule: #0b1620;
   /* Surfaces and text */
-  --background: oklch(0.977 0.002 240);
+  --background: #f5f7f8;
+  --foreground: #0b1620;
+  --card: #ffffff;
+  --card-foreground: #0b1620;
+  --popover: #ffffff;
+  --popover-foreground: #0b1620;
+  --secondary: #edf1f3;
+  --secondary-foreground: #0b1620;
+  --muted: #edf1f3;
+  --muted-foreground: #4a5866;
+  --border: #d6dde2;
+  --input: #78858f;
+  --row-rule: #e3e8eb;
+  --scrim: rgba(7, 17, 25, 0.55);
+  --workspace-shadow: 0 1px 2px rgba(11, 22, 32, 0.06);
+  --popover-shadow: 0 1px 2px rgba(11, 22, 32, 0.05), 0 4px 12px rgba(11, 22, 32, 0.06);
+  --drawer-shadow: 0 2px 6px rgba(11, 22, 32, 0.08), 0 16px 40px rgba(11, 22, 32, 0.14);
+  /* Brand and states. Text colours meet WCAG AA (4.5:1) on every surface above; --input and
+     --ring meet the 3:1 non-text minimum. */
+  --primary: #007396;
+  --primary-foreground: #ffffff;
+  --accent: #e1f3fa;
+  --accent-foreground: #004961;
+  --ring: #0088b0;
+  --destructive: #a8124a;
+  --destructive-foreground: #ffffff;
+  --success-ink: #0d6a4a;
+  --success-surface: #dff2e9;
+  --warning-ink: #8a5300;
+  --warning-surface: #fcefd4;
+  --danger-ink: #a8124a;
+  --danger-surface: #fce6ee;
+  --neutral-surface: #edf1f3;
+  --seal: #946a00;
+  --seal-surface: #f8edd2;
+  --seal-ink: #7a5600;
+  --info-ink: #004961;
+  --info-surface: #e1f3fa;
+  --risk-prohibited-ink: #ffffff;
+  --risk-prohibited-surface: #4a0b2a;
+  --risk-high-ink: #a8124a;
+  --risk-high-surface: #fce6ee;
+  --risk-limited-ink: #8a5300;
+  --risk-limited-surface: #fcefd4;
+  --risk-minimal-ink: #33424f;
+  --risk-minimal-surface: #edf1f3;
+  --viz-track: #e3e8eb;
+  --viz-target: #0b1620;
+  --nav-muted: #a9b8c4;
+  /* shadcn/ui charts and the command-navy sidebar */
+  --chart-1: #007396;
+  --chart-2: #1d3a4f;
+  --chart-3: #946a00;
+  --chart-4: #a8124a;
+  --chart-5: #0d6a4a;
+  --sidebar: #0d1d29;
+  --sidebar-foreground: #f2f5f7;
+  --sidebar-primary: #62c5ee;
+  --sidebar-primary-foreground: #071119;
+  --sidebar-accent: #1d3a4f;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-ring: #62c5ee;
+}
+
+.dark {
+  --rule: #d5dde3;
+  --background: #081118;
+  --foreground: #f2f5f7;
+  --card: #0f1b24;
+  --card-foreground: #f2f5f7;
+  --popover: #142330;
+  --popover-foreground: #f2f5f7;
+  --secondary: #172836;
+  --secondary-foreground: #f2f5f7;
+  --muted: #172430;
+  --muted-foreground: #a3b0ba;
+  --border: #22333f;
+  --input: #5a6d7c;
+  --row-rule: #18262f;
+  --scrim: rgba(0, 0, 0, 0.65);
+  --workspace-shadow: none;
+  --popover-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --drawer-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  --primary: #4fb8e3;
+  --primary-foreground: #04141c;
+  --accent: #0b2a37;
+  --accent-foreground: #a3e0f7;
+  --ring: #62c5ee;
+  --destructive: #ff8fb4;
+  --destructive-foreground: #3a1022;
+  --success-ink: #6fd3a8;
+  --success-surface: #0b2a20;
+  --warning-ink: #f0c060;
+  --warning-surface: #2c2110;
+  --danger-ink: #ff8fb4;
+  --danger-surface: #3a1022;
+  --neutral-surface: #172430;
+  --seal: #e2bf63;
+  --seal-surface: #2a2110;
+  --seal-ink: #ecd087;
+  --info-ink: #a3e0f7;
+  --info-surface: #0b2a37;
+  --risk-prohibited-ink: #ffd6e6;
+  --risk-prohibited-surface: #5b0e33;
+  --risk-high-ink: #ff8fb4;
+  --risk-high-surface: #3a1022;
+  --risk-limited-ink: #f0c060;
+  --risk-limited-surface: #2c2110;
+  --risk-minimal-ink: #c4ced6;
+  --risk-minimal-surface: #172430;
+  --viz-track: #1d2d39;
+  --viz-target: #f2f5f7;
+  --nav-muted: #84929e;
+  --chart-1: #4fb8e3;
+  --chart-2: #7acdf0;
+  --chart-3: #e2bf63;
+  --chart-4: #ff8fb4;
+  --chart-5: #6fd3a8;
+  --sidebar: #050c12;
+  --sidebar-foreground: #f2f5f7;
+  --sidebar-primary: #62c5ee;
+  --sidebar-primary-foreground: #071119;
+  --sidebar-accent: #14293a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #62c5ee;
+}
+
+
+/*
+ * Appearance — palettes and fonts chosen in the Appearance panel (src/lib/theme.ts).
+ * Assurance (above) is the default. Broadsheet is the original teal-on-newsprint theme;
+ * Midnight Gold and Financial Slate take their cue from the KR Tools themes of FinPrompt and
+ * Claudiator. Each palette has a light and a dark block defining the same tokens (the dark block
+ * needs the higher specificity of :root.dark). In Broadsheet and the KR palettes "success" is the
+ * brand ink; Midnight Gold moves warnings to burnt orange so they never read as gold. Text colours
+ * meet WCAG AA, checked by src/test/theme.test.ts.
+ */
+:root[data-palette="broadsheet"] {
+  --radius: 0.125rem;
+  --rule: #201e1d;
+  --background: #f6f8f9;
   --foreground: #201e1d;
-  --card: oklch(1 0 0);
+  --card: #ffffff;
   --card-foreground: #201e1d;
   --popover: #f3f2f2;
   --popover-foreground: #201e1d;
-  --secondary: oklch(0.947 0.006 240);
+  --secondary: #eef0f2;
   --secondary-foreground: #201e1d;
   --muted: #eae7e7;
   --muted-foreground: #6b6665;
@@ -94,10 +276,8 @@
   --input: #8e8988;
   --row-rule: rgba(32, 30, 29, 0.08);
   --scrim: rgba(32, 30, 29, 0.5);
-  --workspace-shadow: 0 4px 18px oklch(0.25 0.015 240 / 0.04);
-  --popover-shadow: 0 12px 32px oklch(0.25 0.015 240 / 0.14);
-  /* Brand and states. Text colours meet WCAG AA (4.5:1) on every surface above; --input and
-     --ring meet the 3:1 non-text minimum. --ring stays the brighter cyan. */
+  --workspace-shadow: 0 4px 18px rgba(36, 40, 46, 0.04);
+  --popover-shadow: 0 12px 32px rgba(36, 40, 46, 0.14);
   --primary: #007396;
   --primary-foreground: #f3f2f2;
   --accent: #e9f8ff;
@@ -106,82 +286,88 @@
   --destructive: #d6006c;
   --destructive-foreground: #fff1f4;
   --success-ink: #006786;
-  --danger-ink: #aa0b56;
-  --warning-ink: #8a6000;
   --success-surface: #e9f8ff;
+  --warning-ink: #8a6000;
+  --warning-surface: #f6ecd0;
+  --danger-ink: #aa0b56;
   --danger-surface: #fff1f4;
-  --warning-surface: oklch(0.96 0.036 87);
   --neutral-surface: #eae7e7;
-  /* shadcn/ui charts and sidebar */
+  --seal: #8a6000;
+  --seal-surface: #f8edd2;
+  --seal-ink: #6e4c00;
+  --info-ink: #004961;
+  --info-surface: #e9f8ff;
+  --risk-prohibited-ink: #ffffff;
+  --risk-prohibited-surface: #4b1528;
+  --risk-high-ink: #aa0b56;
+  --risk-high-surface: #fff1f4;
+  --risk-limited-ink: #8a6000;
+  --risk-limited-surface: #f8edd2;
+  --risk-minimal-ink: #4f4b4a;
+  --risk-minimal-surface: #eae7e7;
+  --viz-track: #e3e0e0;
+  --viz-target: #201e1d;
+  --nav-muted: #a9b8c4;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
 }
-
-.dark {
-  --background: oklch(0.205 0.005 240);
+:root.dark[data-palette="broadsheet"] {
+  --radius: 0.125rem;
+  --rule: #f3f2f2;
+  --background: #151719;
   --foreground: #f3f2f2;
-  --card: oklch(0.25 0.006 240);
+  --card: #1d2022;
   --card-foreground: #f3f2f2;
   --popover: #1b1a19;
   --popover-foreground: #f3f2f2;
-  --secondary: oklch(0.28 0.007 240);
+  --secondary: #26292c;
   --secondary-foreground: #f3f2f2;
   --muted: #444141;
   --muted-foreground: #bab6b6;
   --border: #444141;
   --input: #77726f;
   --row-rule: rgba(243, 242, 242, 0.12);
+  --scrim: rgba(0, 0, 0, 0.6);
   --workspace-shadow: none;
-  --popover-shadow: 0 12px 32px oklch(0 0 0 / 0.5);
+  --popover-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
   --primary: #62c5ee;
   --primary-foreground: #1b1a19;
   --accent: #0a303e;
   --accent-foreground: #99e0ff;
   --ring: #62c5ee;
+  --destructive: #ff90b1;
+  --destructive-foreground: #4b1528;
   --success-ink: #62c5ee;
-  --danger-ink: #ff90b1;
-  --warning-ink: #e3b650;
   --success-surface: #0a303e;
+  --warning-ink: #e3b650;
+  --warning-surface: #3d3320;
+  --danger-ink: #ff90b1;
   --danger-surface: #4b1528;
-  --warning-surface: oklch(0.3 0.036 87);
   --neutral-surface: #444141;
+  --seal: #e3b650;
+  --seal-surface: #2a2110;
+  --seal-ink: #ecd087;
+  --info-ink: #99e0ff;
+  --info-surface: #0a303e;
+  --risk-prohibited-ink: #ffd6e6;
+  --risk-prohibited-surface: #5b0e33;
+  --risk-high-ink: #ff90b1;
+  --risk-high-surface: #4b1528;
+  --risk-limited-ink: #e3b650;
+  --risk-limited-surface: #2c2110;
+  --risk-minimal-ink: #cfcaca;
+  --risk-minimal-surface: #444141;
+  --viz-track: #3a3737;
+  --viz-target: #f3f2f2;
+  --nav-muted: #84929e;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
-}
-
-/*
- * Appearance — palettes and fonts chosen in the Appearance panel (src/lib/theme.ts).
- * Midnight Gold and Financial Slate take their cue from the KR Tools themes of FinPrompt and
- * Claudiator. Each palette has a light and a dark block defining the same tokens (the dark block
- * needs the higher specificity of :root.dark). As in Broadsheet, "success" is the brand ink;
- * Midnight Gold moves warnings to burnt orange so they never read as gold. Text colours meet
- * WCAG AA, checked by src/test/theme.test.ts.
- */
-:root[data-palette="gold"],
-:root[data-palette="slate"] {
-  --radius: 0.375rem;
 }
 
 :root[data-palette="gold"] {
@@ -210,6 +396,22 @@
   --warning-surface: #fbe6d8;
   --neutral-surface: #e7e0cf;
   --rule: #80600f;
+  --seal: #80600f;
+  --seal-surface: #f5ebcf;
+  --seal-ink: #5a4304;
+  --info-ink: #5a4304;
+  --info-surface: #f5ebcf;
+  --risk-prohibited-ink: #ffffff;
+  --risk-prohibited-surface: #4b1528;
+  --risk-high-ink: #aa0b56;
+  --risk-high-surface: #fff1f4;
+  --risk-limited-ink: #a3410b;
+  --risk-limited-surface: #fbe6d8;
+  --risk-minimal-ink: #4a4538;
+  --risk-minimal-surface: #e7e0cf;
+  --viz-track: #e3dccb;
+  --viz-target: #1b1d24;
+  --nav-muted: #b3a98e;
 }
 :root.dark[data-palette="gold"] {
   --background: #070b12;
@@ -237,6 +439,22 @@
   --warning-surface: #3a1f0e;
   --neutral-surface: #1f2a3c;
   --rule: #d4af57;
+  --seal: #d4af57;
+  --seal-surface: #2a2313;
+  --seal-ink: #ecd087;
+  --info-ink: #ecd087;
+  --info-surface: #2a2313;
+  --risk-prohibited-ink: #ffd6e6;
+  --risk-prohibited-surface: #5b0e33;
+  --risk-high-ink: #ff90b1;
+  --risk-high-surface: #4b1528;
+  --risk-limited-ink: #f59e5b;
+  --risk-limited-surface: #3a1f0e;
+  --risk-minimal-ink: #cdc3ab;
+  --risk-minimal-surface: #1f2a3c;
+  --viz-track: #26314a;
+  --viz-target: #f4f1ea;
+  --nav-muted: #9a917a;
 }
 
 :root[data-palette="slate"] {
@@ -263,6 +481,22 @@
   --success-surface: #e1ecfb;
   --neutral-surface: #dae3ed;
   --rule: #0f1f33;
+  --seal: #8a6000;
+  --seal-surface: #f8edd2;
+  --seal-ink: #6e4c00;
+  --info-ink: #00428f;
+  --info-surface: #e1ecfb;
+  --risk-prohibited-ink: #ffffff;
+  --risk-prohibited-surface: #4b1528;
+  --risk-high-ink: #aa0b56;
+  --risk-high-surface: #fff1f4;
+  --risk-limited-ink: #8a6000;
+  --risk-limited-surface: #f8edd2;
+  --risk-minimal-ink: #3d5470;
+  --risk-minimal-surface: #dae3ed;
+  --viz-track: #d3dde8;
+  --viz-target: #0f1f33;
+  --nav-muted: #a9b8c4;
 }
 :root.dark[data-palette="slate"] {
   --background: #0a1020;
@@ -288,9 +522,32 @@
   --success-surface: #13264a;
   --neutral-surface: #1d2840;
   --rule: #e5edff;
+  --seal: #e3b650;
+  --seal-surface: #2a2110;
+  --seal-ink: #ecd087;
+  --info-ink: #acccff;
+  --info-surface: #13264a;
+  --risk-prohibited-ink: #ffd6e6;
+  --risk-prohibited-surface: #5b0e33;
+  --risk-high-ink: #ff90b1;
+  --risk-high-surface: #4b1528;
+  --risk-limited-ink: #e3b650;
+  --risk-limited-surface: #2c2110;
+  --risk-minimal-ink: #b3c0da;
+  --risk-minimal-surface: #1d2840;
+  --viz-track: #243252;
+  --viz-target: #e5edff;
+  --nav-muted: #84929e;
 }
 
-/* KR Tools pairs DM Sans text with Cormorant Garamond headings; Modern sans is Inter throughout. */
+/* Assurance (the default, in :root) pairs IBM Plex Sans text with Source Serif 4 headings and IBM
+   Plex Mono code. Editorial serif is Source Serif 4 throughout; KR Tools pairs DM Sans text with
+   Cormorant Garamond headings; Modern sans is Inter throughout. */
+:root[data-font="serif"] {
+  --font-body: "Source Serif 4", Georgia, serif;
+  --font-heading: var(--font-body);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
 :root[data-font="kr"] {
   --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-heading: "Cormorant Garamond", "Source Serif 4", Georgia, serif;
@@ -300,6 +557,7 @@
 :root[data-font="sans"] {
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-heading: var(--font-body);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 /* The wordmarks are display type: they follow the heading font. */
 .wordmark,
@@ -3722,4 +3980,1028 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* ==========================================================================================
+ * Assurance shell (docs/design/assurance/README.md §3.1). Appended last so it supersedes the
+ * Broadsheet shell rules above at every width: a command-navy sidebar from 1024px, the same
+ * sidebar as a 72px icon rail from 640px, a four-item bottom navigation on phones, and a sticky
+ * translucent top bar with the ⌘K search field. Every colour is a token.
+ * ========================================================================================== */
+.veritrail-app {
+  max-width: none;
+  margin: 0;
+  padding-left: 0;
+  background: var(--background);
+}
+.veritrail-app .kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+}
+/* ---- Top bar: 60px, sticky, canvas at 88% under a 10px blur, one row from 360px. */
+.veritrail-app .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  height: 60px;
+  padding: 0 clamp(12px, 2.5vw, 24px);
+  background: color-mix(in oklab, var(--background) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.veritrail-app .app-header svg {
+  width: 20px;
+  height: 20px;
+  color: var(--primary);
+}
+.veritrail-app .app-header button,
+.veritrail-app .app-header a[aria-label] {
+  min-width: 36px;
+  min-height: 36px;
+  height: 36px;
+  width: 36px;
+  border-radius: var(--shape-control);
+}
+.veritrail-app .header-back {
+  flex: none;
+}
+.veritrail-app .app-header .header-brand {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  min-width: 0;
+  height: 36px;
+  padding: 0 4px;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  text-decoration: none;
+}
+.veritrail-app .app-header .header-brand svg {
+  width: 22px;
+  height: 22px;
+}
+.veritrail-app .header-search-field {
+  display: none;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+  max-width: 420px;
+  min-width: 0;
+  height: 36px;
+  padding: 0 10px 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--shape-control);
+  background: var(--card);
+  color: var(--muted-foreground);
+  font: 500 13px/1 var(--font-body);
+  text-align: left;
+  cursor: text;
+  transition:
+    border-color 120ms cubic-bezier(0.2, 0, 0, 1),
+    background-color 120ms cubic-bezier(0.2, 0, 0, 1);
+}
+.veritrail-app .header-search-field:hover {
+  border-color: var(--input);
+  background: var(--secondary);
+}
+.veritrail-app .header-search-field svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--muted-foreground);
+}
+.veritrail-app .header-search-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.veritrail-app .header-search-field kbd {
+  flex: none;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--shape-badge);
+  background: var(--secondary);
+  font: 500 11px/1.3 var(--font-mono);
+  color: var(--muted-foreground);
+}
+.veritrail-app .app-header .client-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0 0 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+  font: 500 11px/1.3 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.veritrail-app .app-header .workspace-badge {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  height: 22px;
+  margin: 0;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-foreground);
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.veritrail-app .header-actions {
+  display: none;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+}
+.veritrail-app .app-header .header-overflow {
+  flex: none;
+}
+/* ---- Page body */
+.veritrail-app .app-content {
+  max-width: 1240px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 20px clamp(16px, 2.5vw, 32px) calc(96px + env(safe-area-inset-bottom));
+}
+.veritrail-app .screen-title {
+  margin: 4px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 4px double var(--rule);
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 1.4vw + 24px, 46px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+/* A screen that renders its own PageHeader hides the shell's title (Phase 4 screens). */
+.veritrail-app .app-content:has(> .assurance-page-header) > .screen-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+/* ---- Bottom nav: 64px, four items, active = brand with a 28×2px top bar. */
+.veritrail-app .bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: none;
+  width: auto;
+  max-width: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 0 0 env(safe-area-inset-bottom);
+  background: color-mix(in oklab, var(--card) 94%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  z-index: 30;
+}
+.veritrail-app .tab-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 64px;
+  min-width: 0;
+  padding: 6px 4px;
+  border-radius: 0;
+  color: var(--muted-foreground);
+  font: 500 11px/1.3 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+}
+.veritrail-app .tab-link svg {
+  width: 24px;
+  height: 24px;
+  color: currentColor;
+}
+.veritrail-app .tab-link.active {
+  color: var(--primary);
+}
+.veritrail-app .tab-link.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 28px;
+  height: 2px;
+  margin-left: -14px;
+  background: var(--primary);
+}
+.veritrail-app .tab-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+/* ---- Sidebar: hidden on phones, a rail from 640px, full width from 1024px. */
+.veritrail-app .desktop-sidebar {
+  display: none;
+}
+@media (min-width: 640px) {
+  .veritrail-app:not(.onboarding-app) {
+    padding-left: 72px;
+  }
+  .veritrail-app .app-header .header-brand,
+  .veritrail-app .app-header .header-back {
+    display: none;
+  }
+  .veritrail-app .header-search-field {
+    display: inline-flex;
+  }
+  .veritrail-app .header-actions {
+    display: inline-flex;
+  }
+  .veritrail-app .app-header .header-overflow {
+    display: none;
+  }
+  .veritrail-app .bottom-nav {
+    display: none;
+  }
+  .veritrail-app .app-content {
+    padding-top: 28px;
+    padding-bottom: 64px;
+  }
+  .veritrail-app .desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 72px;
+    padding: 0 0 12px;
+    border-right: 1px solid var(--sidebar-border);
+    background: var(--sidebar);
+    color: var(--sidebar-foreground);
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    z-index: 40;
+  }
+  .veritrail-app .sidebar-brand {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 60px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--sidebar-border);
+    color: var(--sidebar-foreground);
+    text-decoration: none;
+  }
+  .veritrail-app .sidebar-brand > svg {
+    width: 28px;
+    height: 28px;
+    flex: none;
+    color: var(--sidebar-primary);
+  }
+  .veritrail-app .sidebar-wordmark {
+    display: none;
+    min-width: 0;
+    font-family: var(--font-heading);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+  .veritrail-app .sidebar-wordmark small {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    color: var(--nav-muted);
+  }
+  .veritrail-app .sidebar-label {
+    display: none;
+    margin: 18px 12px 6px;
+    font: 500 11px/1.3 var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--nav-muted);
+  }
+  .veritrail-app .desktop-sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 12px 0;
+  }
+  .veritrail-app .desktop-sidebar nav + .sidebar-label {
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--sidebar-border);
+  }
+  .veritrail-app .desktop-sidebar nav + nav {
+    padding-top: 12px;
+  }
+  .veritrail-app .sidebar-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 48px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--shape-control);
+    color: var(--sidebar-foreground);
+    font: 500 14px/1.3 var(--font-body);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 120ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  .veritrail-app .sidebar-link svg {
+    width: 19px;
+    height: 19px;
+    flex: none;
+    color: var(--nav-muted);
+  }
+  .veritrail-app .sidebar-link:hover {
+    background: color-mix(in oklab, var(--sidebar-accent) 60%, var(--sidebar));
+    color: var(--sidebar-accent-foreground);
+  }
+  .veritrail-app .sidebar-link:hover svg {
+    color: var(--sidebar-accent-foreground);
+  }
+  .veritrail-app .sidebar-link.active {
+    background: var(--sidebar-accent);
+    color: var(--sidebar-accent-foreground);
+    font-weight: 500;
+  }
+  .veritrail-app .sidebar-link.active svg {
+    color: var(--sidebar-primary);
+  }
+  .veritrail-app .sidebar-link.active::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 0;
+    width: 2px;
+    border-radius: 1px;
+    background: var(--sidebar-primary);
+  }
+  .veritrail-app .sidebar-link:focus-visible {
+    outline: 2px solid var(--sidebar-ring);
+    outline-offset: 2px;
+  }
+  .veritrail-app .sidebar-link .sidebar-text {
+    display: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .veritrail-app .sidebar-count {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--sidebar-accent);
+    color: var(--sidebar-foreground);
+    font: 500 10px/16px var(--font-mono);
+    text-align: center;
+  }
+  .veritrail-app .sidebar-count.alert {
+    color: #ff8fb4;
+  }
+  .veritrail-app .sidebar-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+    padding: 12px;
+    border-top: 1px solid var(--sidebar-border);
+    color: var(--sidebar-foreground);
+    font-size: 13px;
+  }
+  .veritrail-app .sidebar-footer svg {
+    width: 22px;
+    height: 22px;
+    flex: none;
+    color: var(--nav-muted);
+  }
+  .veritrail-app .sidebar-footer .sidebar-text {
+    display: none;
+    min-width: 0;
+  }
+  .veritrail-app .sidebar-org {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font: 500 11px/1.3 var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .veritrail-app .sidebar-footer small {
+    display: block;
+    margin-top: 3px;
+    font-size: 10px;
+    line-height: 1.35;
+    color: var(--nav-muted);
+  }
+}
+@media (min-width: 1024px) {
+  .veritrail-app:not(.onboarding-app) {
+    padding-left: 248px;
+  }
+  .veritrail-app .desktop-sidebar {
+    width: 248px;
+  }
+  .veritrail-app .sidebar-brand {
+    justify-content: flex-start;
+    padding: 0 16px;
+  }
+  .veritrail-app .sidebar-wordmark,
+  .veritrail-app .sidebar-label,
+  .veritrail-app .sidebar-link .sidebar-text,
+  .veritrail-app .sidebar-footer .sidebar-text {
+    display: block;
+  }
+  .veritrail-app .sidebar-link {
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0 10px 0 12px;
+  }
+  .veritrail-app .sidebar-count {
+    position: static;
+    flex: none;
+    height: 18px;
+    min-width: 18px;
+    font-size: 11px;
+    line-height: 18px;
+    background: transparent;
+    color: var(--nav-muted);
+  }
+  .veritrail-app .sidebar-count.alert {
+    color: #ff8fb4;
+  }
+  .veritrail-app .sidebar-footer {
+    justify-content: flex-start;
+    padding: 14px 16px;
+  }
+  .veritrail-app .app-header {
+    padding: 0 32px;
+  }
+  .veritrail-app .app-content {
+    padding: 32px clamp(16px, 2.5vw, 32px) 64px;
+    animation: workspace-enter 240ms cubic-bezier(0.2, 0, 0, 1);
+  }
+}
+@media (max-width: 639px) {
+  .veritrail-app .app-header .header-actions {
+    display: none;
+  }
+}
+@media (max-width: 379px) {
+  .veritrail-app .app-header .workspace-badge {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .veritrail-app .app-content,
+  .veritrail-app .sidebar-link,
+  .veritrail-app .header-search-field {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================================
+ * Assurance screens (README §3.2–3.5): overview, assessment master/detail, inventory cards and
+ * drawer, evidence and sign-off. Appended after the shell so these win over the older rules.
+ * ========================================================================================== */
+.veritrail-app .assurance-page-header {
+  margin: 4px 0 20px;
+}
+.veritrail-app .assurance-page-header + .content-update-date,
+.veritrail-app .assurance-page-header + * {
+  margin-top: 0;
+}
+.veritrail-app .assurance-panel {
+  margin: 0;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--shape-card);
+  box-shadow: var(--workspace-shadow);
+}
+.veritrail-app .assurance-panel > .kicker {
+  margin-bottom: 12px;
+}
+/* ---- Overview */
+.veritrail-app .kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 20px 0 24px;
+}
+.veritrail-app .overview-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
+  margin: 0 0 30px;
+}
+.veritrail-app .overview-index-panel .index-summary {
+  margin: 0 0 14px;
+  gap: 18px;
+}
+.veritrail-app .overview-index-panel .index-number {
+  font-family: var(--font-heading);
+  font-size: clamp(56px, 6vw, 88px);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.veritrail-app .index-number.success {
+  color: var(--success-ink);
+}
+.veritrail-app .index-number.warning {
+  color: var(--warning-ink);
+}
+.veritrail-app .index-number.danger {
+  color: var(--danger-ink);
+}
+.veritrail-app .overview-index-panel h2 {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  margin: 0;
+}
+.veritrail-app .band-meter {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 3px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+.veritrail-app .band-meter li {
+  height: 6px;
+  border-radius: 1px;
+  background: var(--viz-track);
+  position: relative;
+}
+.veritrail-app .band-meter li.reached {
+  background: var(--primary);
+}
+.veritrail-app .band-meter li span {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  font: 500 10px/1.3 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+.veritrail-app .band-meter li[aria-current="true"] span {
+  color: var(--foreground);
+}
+.veritrail-app .band-meter {
+  margin-bottom: 30px;
+}
+.veritrail-app .overview-index-panel .index-caption {
+  margin: 0 0 14px;
+}
+.veritrail-app .overview-pillars .pillar-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+.veritrail-app .phase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 12px;
+}
+.veritrail-app .phase-card {
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--shape-card);
+  box-shadow: var(--workspace-shadow);
+}
+.veritrail-app .phase-card header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--row-rule);
+}
+.veritrail-app .phase-card .phase-num {
+  font: 500 12px/1 var(--font-mono);
+  color: var(--primary);
+}
+.veritrail-app .phase-card h3 {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.veritrail-app .phase-card .phase-count {
+  font: 500 11px/1 var(--font-mono);
+}
+.veritrail-app .phase-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.veritrail-app .phase-card li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.veritrail-app .phase-card li svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  margin-top: 2px;
+  color: var(--muted-foreground);
+}
+.veritrail-app .phase-card li.done svg {
+  color: var(--success-ink);
+}
+.veritrail-app .phase-card li.done span {
+  color: var(--muted-foreground);
+}
+.veritrail-app .phase-card li.more {
+  font-size: 12px;
+}
+.veritrail-app .portfolio-item .split {
+  align-items: center;
+}
+/* ---- Assessment master / detail */
+.veritrail-app .assess-filter {
+  margin: 16px 0 20px;
+}
+.veritrail-app .assess-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.veritrail-app .assess-list > .kicker {
+  margin-bottom: 8px;
+}
+.veritrail-app .assurance-list {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--shape-card);
+  overflow: hidden;
+}
+.veritrail-app .assurance-list > :last-child {
+  border-bottom: 0;
+}
+.veritrail-app .assess-detail {
+  margin: 0;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--shape-card);
+  box-shadow: var(--workspace-shadow);
+}
+.veritrail-app .assess-back {
+  height: auto;
+  padding: 0;
+  margin-bottom: 12px;
+}
+.veritrail-app .assess-detail .control-header {
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+.veritrail-app .code-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--primary);
+  border-radius: var(--shape-badge);
+  font: 500 13px/1 var(--font-mono);
+  color: var(--primary);
+}
+.veritrail-app .assess-detail .question {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  line-height: 1.3;
+  margin: 12px 0 6px;
+}
+.veritrail-app .assess-detail .score-options button {
+  height: 52px;
+  border-radius: var(--shape-control);
+}
+.veritrail-app .assess-detail .segments button {
+  min-height: 44px;
+}
+.veritrail-app .good-list {
+  margin: 8px 0 18px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.veritrail-app .good-list li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.veritrail-app .good-list svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  margin-top: 2px;
+  color: var(--success-ink);
+}
+.veritrail-app .ref-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  margin: 0 6px 6px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--shape-badge);
+  background: var(--secondary);
+  font: 500 11px/1 var(--font-mono);
+  color: var(--foreground);
+}
+.veritrail-app .assess-detail .guidance-row {
+  margin-top: 8px;
+}
+@media (max-width: 1023px) {
+  .veritrail-app .assess-layout[data-detail="true"] .assess-list {
+    display: none;
+  }
+  .veritrail-app .assess-layout[data-detail="false"] .assess-detail {
+    display: none;
+  }
+}
+@media (min-width: 1024px) {
+  .veritrail-app .assess-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 460px);
+  }
+  .veritrail-app .assess-detail {
+    position: sticky;
+    top: 76px;
+    max-height: calc(100dvh - 92px);
+    overflow-y: auto;
+  }
+  .veritrail-app .assess-back {
+    display: none;
+  }
+}
+/* ---- Inventory */
+.veritrail-app .inventory-tier-tabs {
+  margin: 0 0 16px;
+}
+.veritrail-app .system-cards {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+}
+.veritrail-app .system-card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border-left: 1px solid var(--border);
+  border-radius: var(--shape-card);
+  box-shadow: var(--workspace-shadow);
+}
+.veritrail-app .system-card:has([data-tier="High-risk"]),
+.veritrail-app .system-card:has([data-tier="Prohibited"]) {
+  border-top: 3px solid var(--danger-ink);
+}
+.veritrail-app .system-card:has([data-tier="Limited"]) {
+  border-top: 3px solid var(--warning-ink);
+}
+.veritrail-app .system-card:has([data-tier="Minimal"]) {
+  border-top: 3px solid var(--border);
+}
+.veritrail-app .system-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+}
+.veritrail-app .system-open {
+  all: unset;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+.veritrail-app .system-open:hover {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.veritrail-app .system-open:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.veritrail-app .system-card .hairline {
+  margin: 12px 0 10px;
+  border: 0;
+  border-top: 1px solid var(--row-rule);
+}
+.veritrail-app .system-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.veritrail-app .system-card .mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.veritrail-app .system-card .row-actions {
+  margin-top: auto;
+  padding-top: 10px;
+}
+.veritrail-app .inventory-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--shape-card);
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.veritrail-app .inventory-summary strong {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+.drawer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px 16px;
+  margin: 4px 0 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--row-rule);
+  border-bottom: 1px solid var(--row-rule);
+}
+.facts dt {
+  font: 500 11px/1.3 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.facts dd {
+  margin: 2px 0 6px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.disposition-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+.disposition-grid button {
+  min-height: 44px;
+  white-space: normal;
+  line-height: 1.2;
+}
+/* ---- Evidence, sign-off and trail */
+.veritrail-app .signoff-panel,
+.veritrail-app .trail-panel {
+  margin-top: 30px;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--shape-card);
+  box-shadow: var(--workspace-shadow);
+}
+.veritrail-app .signoff-panel .section-heading,
+.veritrail-app .trail-panel .section-heading {
+  align-items: center;
+}
+.veritrail-app .signoff-signed {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px solid var(--seal);
+  border-radius: var(--shape-card);
+  background: var(--seal-surface);
+  color: var(--seal-ink);
+}
+.veritrail-app .signoff-signed > svg {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  color: var(--seal);
+}
+.veritrail-app .signoff-signed p {
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+.veritrail-app .signoff-signed .mono {
+  font-family: var(--font-mono);
+}
+.veritrail-app .pack-card {
+  border-color: var(--border);
+  border-radius: var(--shape-card);
+  background: var(--card);
+}
+.veritrail-app .pack-card.selected {
+  border-color: var(--primary);
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+/* The old two-column assessment layout: the Assurance master/detail replaces it. */
+@media (min-width: 1024px) {
+  .veritrail-app .page-assess section {
+    columns: auto;
+    column-gap: normal;
+  }
+  .veritrail-app .page-assess .assess-detail .question {
+    max-width: none;
+    font-size: 22px;
+  }
+  .veritrail-app .page-assess .assessment-actions {
+    max-width: none;
+    margin-left: 0;
+  }
+}
+/* ---- Brand assets (README §6–7): product marks and guardrail glyphs */
+.product-mark {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+  border-radius: 6px;
+}
+.veritrail-app .guardrail-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.veritrail-app .guardrail-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--shape-control);
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+.veritrail-app .guardrail-glyph svg {
+  width: 22px;
+  height: 22px;
+}
+.decision-glyph {
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+  vertical-align: -2px;
 }

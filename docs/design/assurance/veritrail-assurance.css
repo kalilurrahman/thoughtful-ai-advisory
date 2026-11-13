@@ -1,0 +1,107 @@
+/*
+ * VERITRAIL Assurance palette — drop-in for src/styles.css (Tailwind v4 + shadcn token names).
+ * Paste after the existing "slate" palette blocks. It defines the SAME token set every palette
+ * defines (src/test/theme.test.ts requires matching light/dark blocks), plus new audit tokens.
+ */
+:root[data-palette="assurance"] {
+  --radius: 0.375rem; /* 6px cards; components use calc() steps from @theme */
+  --background: #f5f7f8;
+  --foreground: #0b1620;
+  --card: #ffffff;
+  --card-foreground: #0b1620;
+  --popover: #ffffff;
+  --popover-foreground: #0b1620;
+  --secondary: #edf1f3;
+  --secondary-foreground: #0b1620;
+  --muted: #edf1f3;
+  --muted-foreground: #4a5866;
+  --border: #d6dde2;
+  --input: #8a96a1;
+  --row-rule: #e3e8eb;
+  --scrim: rgba(7, 17, 25, 0.55);
+  --primary: #007396;
+  --primary-foreground: #ffffff;
+  --accent: #e1f3fa;
+  --accent-foreground: #004961;
+  --ring: #0088b0;
+  --destructive: #a8124a;
+  --destructive-foreground: #ffffff;
+  --success-ink: #0d6a4a;
+  --success-surface: #dff2e9;
+  --warning-ink: #8a5300;
+  --warning-surface: #fcefd4;
+  --danger-ink: #a8124a;
+  --danger-surface: #fce6ee;
+  --neutral-surface: #edf1f3;
+  --rule: #0b1620;
+  --sidebar: #0d1d29;
+  --sidebar-foreground: #f2f5f7;
+  --sidebar-primary: #62c5ee;
+  --sidebar-primary-foreground: #071119;
+  --sidebar-accent: #1d3a4f;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-ring: #62c5ee;
+  /* New audit tokens */
+  --seal: #946a00; --seal-surface: #f8edd2; --seal-ink: #7a5600;
+  --info-ink: #004961; --info-surface: #e1f3fa;
+  --risk-prohibited-ink: #ffffff; --risk-prohibited-surface: #4a0b2a;
+  --risk-high-ink: #a8124a; --risk-high-surface: #fce6ee;
+  --risk-limited-ink: #8a5300; --risk-limited-surface: #fcefd4;
+  --risk-minimal-ink: #33424f; --risk-minimal-surface: #edf1f3;
+  --viz-track: #e3e8eb; --viz-target: #0b1620;
+  --nav-muted: #a9b8c4;
+}
+:root.dark[data-palette="assurance"] {
+  --background: #081118;
+  --foreground: #f2f5f7;
+  --card: #0f1b24;
+  --card-foreground: #f2f5f7;
+  --popover: #142330;
+  --popover-foreground: #f2f5f7;
+  --secondary: #172836;
+  --secondary-foreground: #f2f5f7;
+  --muted: #172430;
+  --muted-foreground: #a3b0ba;
+  --border: #22333f;
+  --input: #5a6d7c;
+  --row-rule: #18262f;
+  --scrim: rgba(0, 0, 0, 0.65);
+  --primary: #4fb8e3;
+  --primary-foreground: #04141c;
+  --accent: #0b2a37;
+  --accent-foreground: #a3e0f7;
+  --ring: #62c5ee;
+  --destructive: #ff8fb4;
+  --destructive-foreground: #3a1022;
+  --success-ink: #6fd3a8;
+  --success-surface: #0b2a20;
+  --warning-ink: #f0c060;
+  --warning-surface: #2c2110;
+  --danger-ink: #ff8fb4;
+  --danger-surface: #3a1022;
+  --neutral-surface: #172430;
+  --rule: #d5dde3;
+  --sidebar: #050c12;
+  --sidebar-foreground: #f2f5f7;
+  --sidebar-primary: #62c5ee;
+  --sidebar-primary-foreground: #071119;
+  --sidebar-accent: #14293a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #62c5ee;
+  --seal: #e2bf63; --seal-surface: #2a2110; --seal-ink: #ecd087;
+  --info-ink: #a3e0f7; --info-surface: #0b2a37;
+  --risk-prohibited-ink: #ffd6e6; --risk-prohibited-surface: #5b0e33;
+  --risk-high-ink: #ff8fb4; --risk-high-surface: #3a1022;
+  --risk-limited-ink: #f0c060; --risk-limited-surface: #2c2110;
+  --risk-minimal-ink: #c4ced6; --risk-minimal-surface: #172430;
+  --viz-track: #1d2d39; --viz-target: #f2f5f7;
+  --nav-muted: #84929e;
+}
+/* Font choice "plex": add to FONTS in src/lib/theme.ts (see README §3.2). */
+:root[data-font="plex"] {
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Source Serif 4", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}

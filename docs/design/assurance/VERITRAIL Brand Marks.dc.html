@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<style>body{margin:0;background:#eceff1;font-family:var(--font-sans)}a{color:var(--text-link)}a:hover{color:var(--text-link-hover)}.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}.dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}</style>
+</helmet>
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">VERITRAIL brand marks, product family, TILLER, guardrail icons, framework labels and social images</span></div>
+
+  <div class="dv-opts">
+    <sc-for list="{{ logos }}" as="l" hint-placeholder-count="3">
+      <div class="dv-opt" id="{{ l.id }}">
+        <div class="dv-olabel"><a class="dv-oid" href="#{{ l.id }}">{{ l.id }}</a>{{ l.label }}</div>
+        <div class="dv-card" style="width:420px">
+          <div style="display:flex;align-items:center;gap:14px;padding:30px 28px;background:var(--paper)">
+            <img src="{{ l.src }}" alt="" style="width:52px;height:52px">
+            <span style="display:flex;flex-direction:column;gap:6px"><span style="font:600 28px/1 var(--font-display);letter-spacing:.2em;color:var(--teal-600)">VERITRAIL</span><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--ink-600)">AI GOVERNANCE · GUARDRAILS · EVIDENCE</span></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:24px 28px;background:var(--navy-900)">
+            <img src="{{ l.src }}" alt="" style="width:40px;height:40px">
+            <span style="font:600 22px/1 var(--font-display);letter-spacing:.2em;color:#fff">VERITRAIL</span>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:18px;padding:20px 28px;border-top:1px solid var(--ink-150)">
+            <div style="width:72px;height:72px;border-radius:16px;background:var(--navy-900);display:flex;align-items:center;justify-content:center"><img src="{{ l.src }}" alt="" style="width:48px;height:48px"></div>
+            <div style="width:44px;height:44px;border-radius:10px;background:var(--ink-50);border:1px solid var(--ink-150);display:flex;align-items:center;justify-content:center"><img src="{{ l.src }}" alt="" style="width:30px;height:30px"></div>
+            <img src="{{ l.src }}" alt="" style="width:16px;height:16px">
+            <span style="margin-left:auto;font:var(--text-caption);color:var(--ink-600);max-width:150px">{{ l.note }}</span>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+
+    <div class="dv-opt" id="1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Product family — one shield grammar, one glyph each</div>
+      <div class="dv-card" style="width:880px;padding:24px;box-sizing:border-box">
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px">
+          <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
+            <div style="display:flex;align-items:center;gap:12px;padding:14px;border:1px solid var(--ink-150);border-radius:var(--radius-md)">
+              <img src="{{ p.src }}" alt="" style="width:44px;height:44px;flex-shrink:0">
+              <span style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font:600 14px/1.2 var(--font-sans);color:var(--ink-950)">{{ p.name }}</span><span style="font:var(--text-caption);font-size:11px;color:var(--ink-600)">{{ p.role }}</span></span>
+            </div>
+          </sc-for>
+        </div>
+        <p style="margin:16px 0 0;font:var(--text-caption);color:var(--ink-600)">Navy shield container, white primary glyph, one teal (or seal gold for Assurance) accent. Use at 24, 32, 44 or 64px. Product names follow <span style="font-family:var(--font-mono)">VERITRAIL &lt;Product&gt;</span>.</p>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>TILLER — methodology mark and six-lens system</div>
+      <div class="dv-card" style="width:640px">
+        <div style="display:flex;align-items:center;gap:16px;padding:26px 28px">
+          <img src="assets/brand/tiller-mark.svg" alt="" style="width:60px;height:60px">
+          <span style="display:flex;flex-direction:column;gap:6px"><span style="font:600 30px/1 var(--font-display);letter-spacing:.24em;color:var(--ink-950)">TILLER</span><span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--ink-600)">ASSESSMENT &amp; ASSURANCE STUDIO · MAPPED TO NIST AI RMF</span></span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid var(--ink-150)">
+          <sc-for list="{{ lenses }}" as="t" hint-placeholder-count="6">
+            <div style="padding:16px 12px;display:flex;flex-direction:column;gap:8px;border-right:1px solid var(--ink-150)">
+              <span style="width:34px;height:34px;border-radius:6px;background:{{ t.bg }};color:{{ t.fg }};display:flex;align-items:center;justify-content:center;font:600 18px/1 var(--font-display)">{{ t.letter }}</span>
+              <span style="font:500 12px/1.3 var(--font-sans);color:var(--ink-950)">{{ t.name }}</span>
+              <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--ink-500)">{{ t.fn }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1f">
+      <div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Guardrail icon set — Phosphor bold in status tiles</div>
+      <div class="dv-card" style="width:880px;padding:24px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px">
+        <sc-for list="{{ iconGroups }}" as="g" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font:var(--text-overline);letter-spacing:var(--tracking-overline);color:var(--ink-600)">{{ g.label }}</span>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px">
+              <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="6">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px;border:1px solid var(--ink-150);border-radius:var(--radius-md);text-align:center">
+                  <span style="width:44px;height:44px;border-radius:10px;background:var({{ i.bg }});color:var({{ i.ink }});display:flex;align-items:center;justify-content:center"><i class="ph-bold ph-{{ i.icon }}" style="font-size:22px"></i></span>
+                  <span style="font:500 11.5px/1.25 var(--font-sans);color:var(--ink-950)">{{ i.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1g">
+      <div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>Framework reference labels (typographic — not official logos)</div>
+      <div class="dv-card" style="width:640px;padding:24px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ frameworks }}" as="f" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;align-items:center;padding:10px 0;border-bottom:1px solid var(--ink-150)">
+            <span style="display:inline-flex;align-items:center;gap:8px;justify-self:start;height:30px;padding:0 10px;border:1.5px solid var(--ink-950);border-radius:var(--radius-xs);font:600 13px/1 var(--font-mono);color:var(--ink-950)"><span style="width:8px;height:8px;background:var({{ f.tone }})"></span>{{ f.name }}</span>
+            <span style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ f.tags }}" as="t" hint-placeholder-count="3"><span style="font:var(--text-code);font-size:11px;padding:3px 7px;background:var(--ink-100);border-radius:var(--radius-xs);color:var(--ink-700)">{{ t }}</span></sc-for></span>
+          </div>
+        </sc-for>
+        <p style="margin:4px 0 0;font:var(--text-caption);color:var(--ink-600)">Third-party standards are named in plain type with their exact citation form. Do not imitate NIST, EU, ISO or OWASP marks.</p>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1h">
+      <div class="dv-olabel"><a class="dv-oid" href="#1h">1h</a>Social / hero images — 1200×630, shown at 50%</div>
+      <div style="display:grid;grid-template-columns:repeat(2,600px);gap:16px">
+        <sc-for list="{{ ogs }}" as="o" hint-placeholder-count="4">
+          <div class="dv-card" style="width:600px;height:315px;position:relative">
+            <div style="position:absolute;top:0;left:0;width:1200px;height:630px;transform:scale(.5);transform-origin:0 0;background:var(--navy-950);display:grid;grid-template-columns:1fr 470px;gap:48px;padding:72px 80px;box-sizing:border-box">
+              <div style="display:flex;flex-direction:column;gap:26px">
+                <div style="display:flex;align-items:center;gap:14px"><span style="width:72px;height:72px;border-radius:14px;background:#ffffff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px rgba(255,255,255,.15)"><img src="{{ o.mark }}" alt="" style="width:54px;height:54px"></span><span style="font:600 26px/1 var(--font-display);letter-spacing:.2em;color:#fff">{{ o.brand }}</span></div>
+                <span style="font:500 15px/1.3 var(--font-mono);letter-spacing:.1em;color:var(--teal-300)">{{ o.eyebrow }}</span>
+                <span style="font:600 58px/1.06 var(--font-display);letter-spacing:-.02em;color:#fff;text-wrap:balance">{{ o.title }}</span>
+                <span style="margin-top:auto;font:400 20px/1.4 var(--font-sans);color:#a9b8c4">{{ o.sub }}</span>
+              </div>
+              <div style="align-self:center;display:flex;flex-direction:column;gap:12px">
+                <sc-if value="{{ o.isMosaic }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:8px">
+                    <sc-for list="{{ mosaic }}" as="m" hint-placeholder-count="64"><span style="aspect-ratio:1;border-radius:3px;background:{{ m }}"></span></sc-for>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font:500 14px/1 var(--font-mono);color:#a9b8c4;letter-spacing:.08em"><span>AO</span><span>EI</span><span>GL</span><span>IS</span><span>SE</span></div>
+                </sc-if>
+                <sc-if value="{{ o.isBars }}" hint-placeholder-val="{{ false }}">
+                  <sc-for list="{{ ogBars }}" as="b" hint-placeholder-count="6">
+                    <div style="display:grid;grid-template-columns:34px 1fr 44px;gap:14px;align-items:center"><span style="font:600 30px/1 var(--font-display);color:var(--teal-300)">{{ b.l }}</span><span style="position:relative;height:12px;background:#1d2d39"><span style="position:absolute;inset:0 auto 0 0;width:{{ b.w }};background:{{ b.c }}"></span><span style="position:absolute;left:{{ b.t }};top:-6px;width:3px;height:24px;background:#fff"></span></span><span style="font:600 26px/1 var(--font-display);color:#fff;text-align:right">{{ b.s }}</span></div>
+                  </sc-for>
+                </sc-if>
+                <sc-if value="{{ o.isLog }}" hint-placeholder-val="{{ false }}">
+                  <sc-for list="{{ ogLog }}" as="r" hint-placeholder-count="5">
+                    <div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:14px 16px;background:#0f1b24;border:1px solid #22333f;border-radius:6px"><span style="font:500 16px/1.3 var(--font-mono);color:#d5dde3;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">{{ r.call }}</span><span style="font:600 13px/1 var(--font-mono);letter-spacing:.06em;padding:7px 10px;border-radius:3px;background:{{ r.bg }};color:{{ r.fg }}">{{ r.d }}</span></div>
+                  </sc-for>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <p class="dv-next">Try next: "make <a class="dv-oid" href="#1b">1b</a> the master mark and update the favicon" · "product marks in teal instead of navy" · "export the 1h cards as PNGs"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const statusTile = { neutral: ["--ink-950", "--ink-100"], brand: ["--teal-800", "--teal-100"], ok: ["--green-700", "--green-100"], warn: ["--amber-700", "--amber-100"], bad: ["--crimson-700", "--crimson-100"], seal: ["--gold-700", "--gold-100"], navy: ["--paper", "--navy-900"] };
+    const g = (label, items) => ({ label, items: items.map(([l, icon, t]) => ({ label: l, icon, ink: statusTile[t][0], bg: statusTile[t][1] })) });
+    let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+    const pal = ["#62c5ee", "#4fb8e3", "#007396", "#1d3a4f", "#e2bf63", "#ff8fb4"];
+    const mosaic = Array.from({ length: 64 }, () => { const r = rnd(); return r < .3 ? pal[0] : r < .55 ? pal[1] : r < .75 ? pal[2] : r < .88 ? pal[3] : r < .95 ? pal[4] : pal[5]; });
+    return {
+      logos: [
+        { id: "1a", label: "Evolved original — shield + check, teal", src: "assets/brand/veritrail-mark-a.svg", note: "Closest to today's favicon. Lowest migration cost." },
+        { id: "1b", label: "Evidence trail — dots resolve into a verified check", src: "assets/brand/veritrail-mark-b.svg", note: "Tells the story: evidence accumulates, then verifies." },
+        { id: "1c", label: "Ledger V — double rule over a V monogram", src: "assets/brand/veritrail-mark-c.svg", note: "Carries the Broadsheet double rule into the mark." },
+      ],
+      products: [
+        { name: "VERITRAIL Register", role: "AI system of record", src: "assets/brand/product-register.svg" },
+        { name: "VERITRAIL Assess", role: "Maturity, triage, risk tiering", src: "assets/brand/product-assess.svg" },
+        { name: "VERITRAIL Control", role: "Lifecycle gates & approvals", src: "assets/brand/product-control.svg" },
+        { name: "VERITRAIL Shield", role: "Runtime guardrails", src: "assets/brand/product-shield.svg" },
+        { name: "VERITRAIL Assurance", role: "Evidence packs & sign-off", src: "assets/brand/product-assurance.svg" },
+        { name: "VERITRAIL Agent", role: "Governance copilot", src: "assets/brand/product-agent.svg" },
+        { name: "Policy engine", role: "ALLOW · DENY · APPROVAL", src: "assets/brand/product-policy.svg" },
+        { name: "TILLER", role: "Assessment studio", src: "assets/brand/tiller-mark.svg" },
+      ],
+      lenses: [["T", "Trust & Accountability", "GOVERN"], ["I", "Inventory & Oversight", "MAP"], ["L", "Lifecycle & Use-Case Control", "MAP"], ["L", "Lawfulness, Ethics & Compliance", "MEASURE"], ["E", "Engineering Reliability & Guardrails", "MEASURE"], ["R", "Runtime Operations & Monitoring", "MANAGE"]]
+        .map(([letter, name, fn], i) => ({ letter, name, fn, bg: ["#62c5ee", "#4fb8e3", "#007396", "#0088b0", "#0d1d29", "#1d3a4f"][i], fg: i < 2 ? "#0b1620" : "#fff" })),
+      iconGroups: [
+        g("GUARDRAIL CATEGORIES", [["Data", "database", "navy"], ["Input", "arrow-square-in", "navy"], ["Output", "arrow-square-out", "navy"], ["Agent", "robot", "navy"], ["Human oversight", "user-check", "navy"], ["Monitoring", "pulse", "navy"], ["Testing", "flask", "navy"]]),
+        g("CONTROLS", [["Prompt injection", "syringe", "brand"], ["PII masking", "eye-slash", "brand"], ["Groundedness", "anchor", "brand"], ["Toxicity", "warning-octagon", "brand"], ["Tool allow-list", "wrench", "brand"], ["Spend limit", "currency-circle-dollar", "brand"], ["Approval gate", "hand-palm", "brand"], ["Kill switch", "power", "bad"], ["Audit log", "scroll", "seal"]]),
+        g("SHIELD MODES & POLICY DECISIONS", [["Observe", "eye", "neutral"], ["Warn", "warning", "warn"], ["Protect", "shield-check", "brand"], ["Enforce", "lock-key", "ok"], ["Contain", "prohibit", "bad"], ["ALLOW", "check-circle", "ok"], ["DENY", "x-circle", "bad"], ["REQUIRE HUMAN APPROVAL", "user-focus", "seal"]]),
+      ],
+      frameworks: [
+        { name: "NIST AI RMF 1.0", tone: "--teal-600", tags: ["GOVERN", "MAP", "MEASURE", "MANAGE"] },
+        { name: "NIST AI 600-1", tone: "--teal-600", tags: ["Generative AI Profile"] },
+        { name: "EU AI Act", tone: "--amber-700", tags: ["Reg. (EU) 2024/1689", "Art. 9", "Annex III"] },
+        { name: "ISO/IEC 42001", tone: "--navy-700", tags: ["AI management system", "§6.1.2", "A.6.2"] },
+        { name: "ISO/IEC 23894", tone: "--navy-700", tags: ["AI risk management"] },
+        { name: "OWASP LLM Top 10", tone: "--crimson-700", tags: ["LLM01:2025", "LLM02", "LLM05"] },
+        { name: "MITRE ATLAS", tone: "--crimson-700", tags: ["AML.T0051"] },
+      ],
+      mosaic,
+      ogBars: [["T", 63, 80], ["I", 63, 80], ["L", 50, 75], ["L", 50, 75], ["E", 50, 80], ["R", 38, 75]].map(([l, s, t]) => ({ l, s, w: s + "%", t: t + "%", c: s < t - 20 ? "#ff8fb4" : s < t ? "#e2bf63" : "#6fd3a8" })),
+      ogLog: [["tool.call send_email → external", "REQUIRE APPROVAL", "#2a2110", "#e2bf63"], ["prompt: ignore previous instructions…", "DENY", "#3a1022", "#ff8fb4"], ["response: PHI detected → redacted", "ALLOW · REDACT", "#0b2a20", "#6fd3a8"], ["tool.call crm.lookup (registered)", "ALLOW", "#0b2a20", "#6fd3a8"], ["tool.call db.drop (unregistered)", "DENY", "#3a1022", "#ff8fb4"]].map(([call, d, bg, fg]) => ({ call, d, bg, fg })),
+      ogs: [
+        { brand: "VERITRAIL", mark: "assets/brand/veritrail-mark-b.svg", eyebrow: "AI GOVERNANCE, ADVISORY AND ASSURANCE", title: "Govern every AI system, agent, and decision with evidence.", sub: "veritrail.kalilurrahman.com", isMosaic: true, isBars: false, isLog: false },
+        { brand: "TILLER", mark: "assets/brand/tiller-mark.svg", eyebrow: "ASSESSMENT & ASSURANCE STUDIO", title: "Six lenses. One evidence-backed maturity score.", sub: "Mapped to NIST AI RMF · Govern, Map, Measure, Manage", isMosaic: false, isBars: true, isLog: false },
+        { brand: "VERITRAIL SHIELD", mark: "assets/brand/product-shield.svg", eyebrow: "RUNTIME GUARDRAILS FOR LLM APPS AND AGENTS", title: "Policy-as-code in front of every prompt and tool call.", sub: "Observe → Warn → Protect → Enforce · tested Contain mode", isMosaic: false, isBars: false, isLog: true },
+        { brand: "VERITRAIL CONTROL", mark: "assets/brand/product-control.svg", eyebrow: "CONTROL LIBRARY", title: "64 controls across 5 pillars, each with evidence expectations.", sub: "Indicative mappings to NIST AI RMF, ISO/IEC 42001 and the EU AI Act", isMosaic: true, isBars: false, isLog: false },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

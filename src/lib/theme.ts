@@ -12,8 +12,8 @@ export const PALETTE_STORAGE_KEY = "veritrail-palette";
 export const FONT_STORAGE_KEY = "veritrail-font";
 
 export type Mode = "auto" | "light" | "dark";
-export type Palette = "broadsheet" | "gold" | "slate";
-export type FontChoice = "serif" | "kr" | "sans";
+export type Palette = "assurance" | "broadsheet" | "gold" | "slate";
+export type FontChoice = "plex" | "serif" | "kr" | "sans";
 
 /** The colours a palette is recognised by; they match its tokens in src/styles.css. */
 export interface Swatch {
@@ -45,12 +45,21 @@ export interface FontOption {
 
 /** Auto follows the device's light/dark setting, live; it applies until a viewer picks one. */
 export const DEFAULT_MODE: Mode = "auto";
-export const DEFAULT_PALETTE: Palette = "broadsheet";
-export const DEFAULT_FONT: FontChoice = "serif";
+export const DEFAULT_PALETTE: Palette = "assurance";
+export const DEFAULT_FONT: FontChoice = "plex";
 
-// Midnight Gold and Financial Slate take their cue from the KR Tools themes of FinPrompt and
-// Claudiator (gold on midnight; blue slate with an Arctic light mode).
+// Assurance is the default (teal on cool paper, command-navy navigation, seal gold for
+// attestation). Broadsheet is the original; Midnight Gold and Financial Slate take their cue from
+// the KR Tools themes of FinPrompt and Claudiator (gold on midnight; blue slate with an Arctic
+// light mode).
 export const PALETTES: readonly PaletteOption[] = [
+  {
+    id: "assurance",
+    name: "Assurance",
+    description: "Teal on cool paper, navy navigation — the audit theme",
+    light: { background: "#f5f7f8", card: "#ffffff", primary: "#007396", foreground: "#0b1620" },
+    dark: { background: "#081118", card: "#0f1b24", primary: "#4fb8e3", foreground: "#f2f5f7" },
+  },
   {
     id: "broadsheet",
     name: "Broadsheet",
@@ -74,14 +83,27 @@ export const PALETTES: readonly PaletteOption[] = [
   },
 ];
 
+/** The Assurance pairing; preloaded by the root route because it is the default. */
+export const DEFAULT_FONT_STYLESHEET =
+  "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap";
+
 export const FONTS: readonly FontOption[] = [
+  {
+    id: "plex",
+    name: "Assurance",
+    description: "IBM Plex Sans text, Source Serif 4 headings",
+    body: '"IBM Plex Sans", system-ui, sans-serif',
+    heading: '"Source Serif 4", Georgia, serif',
+    stylesheet: null,
+  },
   {
     id: "serif",
     name: "Editorial serif",
     description: "Source Serif 4 throughout",
     body: '"Source Serif 4", Georgia, serif',
     heading: '"Source Serif 4", Georgia, serif',
-    stylesheet: null,
+    stylesheet:
+      "https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap",
   },
   {
     id: "kr",
@@ -235,7 +257,7 @@ export function setFont(id: FontChoice): void {
   changed();
 }
 
-/** Back to Auto, Broadsheet and Editorial serif. */
+/** Back to Auto, Assurance and the Assurance font pairing. */
 export function resetAppearance(): void {
   applyMode(DEFAULT_MODE);
   applyPalette(DEFAULT_PALETTE);

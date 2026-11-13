@@ -176,7 +176,7 @@ VERITRAIL functions as a full **Progressive Web App (PWA)**, providing native-li
 * **One-Click Installation**: Prompts on Chrome, Edge, Android, iOS Safari, and macOS Dock. Shortcuts point directly to Self-Assessment, Risk Triage, Control Library, Ask VERITRAIL, and the TILLER Workspace.
 * **Offline-First Reading**: Production service worker (`public/sw.js`) caches visited pages, illustrations, and client-side rule engines for instant offline access.
 * **Smart Search (⌘K / Ctrl+K)**: Instant fuzzy search across every page, FAQ, governance control ID, glossary definition, and workspace tool.
-* **Appearance — themes & fonts**: Three colour themes — **Broadsheet** (VERITRAIL teal), **Midnight Gold** and **Financial Slate**, inspired by financial risk interfaces — each in light and dark with an **Auto** mode that follows the device (the default), plus three fonts (**Editorial serif**, **KR Tools** DM Sans + Cormorant Garamond, **Modern sans** Inter). Applied before first paint, remembered per browser, WCAG AA in every theme.
+* **Appearance — themes & fonts**: Four colour themes — **Assurance** (the default: teal on cool paper, command-navy navigation and seal gold for attestation), **Broadsheet** (the original VERITRAIL teal on newsprint), **Midnight Gold** and **Financial Slate**, inspired by financial risk interfaces — each in light and dark with an **Auto** mode that follows the device (the default), plus four fonts (the **Assurance** pairing of IBM Plex Sans, Source Serif 4 and IBM Plex Mono, **Editorial serif**, **KR Tools** DM Sans + Cormorant Garamond, **Modern sans** Inter). Applied before first paint, remembered per browser, WCAG AA in every theme.
 
 | Mobile Home View | Workspace Install Card | iPhone Installation Guide |
 | :--------------: | :--------------------: | :-----------------------: |
@@ -261,7 +261,7 @@ VERITRAIL pairs a content-driven marketing website with client-side interactive 
 | :-------- | :------------- | :---------- |
 | **Frontend Framework** | [React 19](https://react.dev/) & [TanStack Start](https://tanstack.com/router) | Fullstack SSR + CSR framework powered by TanStack Router |
 | **Language** | [TypeScript 5.8](https://www.typescriptlang.org/) | Strict type safety across client, server, and governance engines |
-| **Styling & UI** | [Tailwind CSS v4](https://tailwindcss.com/) & [Radix UI](https://www.radix-ui.com/) | High-contrast design tokens, accessible primitives; Broadsheet, Midnight Gold and Financial Slate themes |
+| **Styling & UI** | [Tailwind CSS v4](https://tailwindcss.com/) & [Radix UI](https://www.radix-ui.com/) | High-contrast design tokens, accessible primitives; Assurance, Broadsheet, Midnight Gold and Financial Slate themes |
 | **Data Visualization** | [Recharts](https://recharts.org/) | SVG radar & bar charts for maturity scores and system risk distributions |
 | **Database & Auth** | [Supabase](https://supabase.com/) & [Drizzle ORM](https://orm.drizzle.team/) | Row-Level Security (RLS), atomic workspace saving, PostgreSQL migrations |
 | **Export Engines** | `exceljs`, `pptxgenjs`, `jspdf`, `docx` | One-click generation of client-ready XLSX, PPTX, PDF, and Word audit reports |

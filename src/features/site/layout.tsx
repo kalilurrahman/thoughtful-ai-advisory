@@ -15,6 +15,7 @@ import {
   useAppearanceSummary,
 } from "@/features/appearance/appearance-panel";
 import { GlossaryTip } from "./glossary-tip";
+import { ProductMark } from "./brand-marks";
 
 // Public website chrome — header with disclosure navigation, breadcrumbs and footer —
 // ported from platform/app/website/templates/partials/{header,breadcrumbs,footer}.html.
@@ -187,7 +188,10 @@ function SiteHeader() {
                     setOpenSection((s) => (isOpen ? sec.id : s === sec.id ? null : s));
                   }}
                 >
-                  <summary className="nav-summary">{sec.label}</summary>
+                  <summary className="nav-summary">
+                    {sec.id === "workspace" && <ProductMark id="tiller" size={32} />}
+                    {sec.label}
+                  </summary>
                   <div className="nav-sub nav-grouped">
                     {sec.groups.map((group) => (
                       <section
