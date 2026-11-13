@@ -42,6 +42,13 @@ export function HomeScreen() {
     .filter((g) => g.points > 0)
     .sort((a, b) => b.priority - a.priority)
     .slice(0, 3);
+  const unverified = CONTROLS.map((c) => ({ c, a: answerAt(state.answers, c.id) }))
+    .filter(({ a }) => a.e !== 3)
+    .sort((x, y) => {
+      const w = { Critical: 0, High: 1, Medium: 2 } as Record<string, number>;
+      return (w[x.c.w] ?? 3) - (w[y.c.w] ?? 3) || y.a.s - x.a.s;
+    });
+  const evidenceQueue = unverified.slice(0, 3);
   return (
     <>
       <div className="newspaper-rule" />
@@ -190,6 +197,50 @@ export function HomeScreen() {
             </Button>
           ))}
         </div>
+      </section>
+      <section>
+        <div className="section-heading">
+          <h2>Evidence readiness</h2>
+          <Button asChild variant="link">
+            <Link to="/assess">
+              Open assessment <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+        <p className="muted evidence-readiness-summary">
+          <strong>{unverified.length}</strong> of {CONTROLS.length} controls do not yet have
+          evidence attached. Scores of 3–4 are capped until evidence is attached; treat
+          unattached claims as provisional for release and assurance decisions.
+        </p>
+        <div className="gap-list">
+          {evidenceQueue.map(({ c, a }) => (
+            <article className="gap-card evidence-card" key={c.id}>
+              <div className="split">
+                <Kicker>
+                  {at(PILLARS, c.p).letter} · {c.code}
+                </Kicker>
+                <Chip tone={a.e === 0 ? "danger" : "warning"}>{EV[a.e]}</Chip>
+              </div>
+              <h3>{c.text}</h3>
+              <p className="muted">
+                {c.owner} · {c.w} control · self-score {a.s}/4
+              </p>
+              <Button
+                variant="link"
+                onClick={() => {
+                  dispatch({ type: "question", qi: CONTROLS.indexOf(c) });
+                  nav({ to: "/assess" });
+                }}
+              >
+                <ArrowRight />
+                Review and attach evidence
+              </Button>
+            </article>
+          ))}
+        </div>
+        {unverified.length === 0 && (
+          <p className="success">All controls have evidence attached.</p>
+        )}
       </section>
       <section>
         <div className="section-heading">
@@ -461,6 +512,10 @@ export function AssessScreen() {
 export function GatesScreen() {
   const { state, scores, gate, blocking, dispatch } = useGovernance();
   const nav = useNavigate();
+  const unverifiedCritical = CONTROLS.filter((c) => {
+    const a = answerAt(state.answers, c.id);
+    return c.w === "Critical" && a.e !== 3;
+  });
   return (
     <>
       <div className="gate-status">
@@ -475,6 +530,10 @@ export function GatesScreen() {
         {PILLARS.slice(3)
           .map((p) => p.name)
           .join(", ")}
+      </p>
+      <p className="muted gate-evidence-note">
+        <strong>{unverifiedCritical.length}</strong> critical controls do not yet have evidence
+        attached. Review and attach evidence before any release recommendation.
       </p>
       <section>
         {PILLARS.slice(3).map((p, i) => (
@@ -511,6 +570,31 @@ export function GatesScreen() {
         ))
       ) : (
         <p className="success">No blocking controls.</p>
+      )}
+      {unverifiedCritical.length > 0 && (
+        <section>
+          <h2>Attach evidence to critical controls</h2>
+          <p className="muted">Open each control to attach and record evidence status.</p>
+          <div className="gap-list">
+            {unverifiedCritical.slice(0, 4).map((c) => (
+              <Button
+                key={"ev-" + c.id}
+                className="blocking-card evidence-card"
+                variant="secondary"
+                onClick={() => {
+                  dispatch({ type: "question", qi: CONTROLS.indexOf(c) });
+                  nav({ to: "/assess" });
+                }}
+              >
+                <span className="warning">{c.code}</span>
+                <span>
+                  {c.text} <span className="muted">· {EV[answerAt(state.answers, c.id).e]}</span>
+                </span>
+                <CaretRight />
+              </Button>
+            ))}
+          </div>
+        </section>
       )}
       <Button
         className="full-button"
