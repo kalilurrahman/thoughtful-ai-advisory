@@ -3667,3 +3667,16 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .sitemap-group li {
   overflow-wrap: anywhere;
 }
+
+.resource-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+.source-row h3 a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
