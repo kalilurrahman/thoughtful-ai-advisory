@@ -1016,3 +1016,11 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
     .hero--home .hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: center; }
   }
 }
+/* Product marks (README §6) beside section labels, menu labels and Platform module names. */
+.veritrail-site {
+  .product-mark { display: inline-block; flex: none; vertical-align: middle; border-radius: 6px; }
+  .eyebrow-mark { display: inline-flex; align-items: center; gap: 0.6rem; }
+  .nav-summary .product-mark { margin-right: 0.5rem; }
+  .module-name { display: inline-flex; align-items: center; gap: 0.6rem; }
+  .decision-glyph { width: 14px; height: 14px; margin-right: 4px; vertical-align: -2px; }
+}

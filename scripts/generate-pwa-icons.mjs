@@ -2,12 +2,18 @@
 // Regenerate the installable-app icons in public/icons from the VERITRAIL shield mark (the same
 // path as public/favicon.svg and the site header), rasterised in Chromium.
 //
-//   node scripts/generate-pwa-icons.mjs
+//   node scripts/generate-pwa-icons.mjs            # the current shield mark
+//   node scripts/generate-pwa-icons.mjs --mark b   # a master mark from public/brand (a | b | c)
+//
+// The Assurance handoff offers three master marks (docs/design/assurance, "VERITRAIL Brand
+// Marks" 1a / 1b / 1c). Until the owner picks one the current shield stays; pass --mark to
+// regenerate every icon from public/brand/veritrail-mark-<x>.svg instead (the mark sits inside
+// the 80% maskable safe zone).
 //
 // Outputs: icon-{192,512}.png (purpose "any"), icon-maskable-{192,512}.png (full bleed, mark
 // inside the 80% safe zone), apple-touch-icon.png (180, opaque) and the 96px shortcut icons
 // listed in public/manifest.webmanifest.
-import { mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -26,8 +32,26 @@ const CHECK = "m8.5 16.2 3.8 3.8 7.4-8";
 const GRADIENT = `<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
   <stop offset="0" stop-color="#0a8db3"/><stop offset="1" stop-color="#004961"/></linearGradient></defs>`;
 
-/** Shield mark centred at (cx, cy) with the given height, white with a teal check. */
+const markArg = process.argv.indexOf("--mark");
+const MASTER = markArg > 0 ? process.argv[markArg + 1] : undefined;
+if (MASTER && !/^[abc]$/.test(MASTER)) {
+  console.error("--mark takes a, b or c (public/brand/veritrail-mark-<x>.svg)");
+  process.exit(1);
+}
+/** The inner markup of a master mark SVG (64×64 viewBox), without its <svg> wrapper. */
+const MASTER_BODY = MASTER
+  ? readFileSync(join(process.cwd(), "public", "brand", `veritrail-mark-${MASTER}.svg`), "utf8")
+      .replace(/^[\s\S]*?<svg[^>]*>/, "")
+      .replace(/<\/svg>\s*$/, "")
+  : null;
+
+/** The mark centred at (cx, cy) with the given height: the shield with a teal check, or the
+ *  chosen master mark (64×64) drawn at the same height. */
 function mark(cx, cy, height) {
+  if (MASTER_BODY) {
+    const s = height / 64;
+    return `<g transform="translate(${cx - 32 * s} ${cy - 32 * s}) scale(${s})">${MASTER_BODY}</g>`;
+  }
   const s = height / 32;
   const x = cx - 14 * s;
   const y = cy - 16 * s;

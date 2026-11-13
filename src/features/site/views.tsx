@@ -22,6 +22,7 @@ import { CONTROL_LIBRARY_PATH, breadcrumbsFor, type FaqItem, type SitePage } fro
 import { CtaBlock, SiteLink } from "./ui";
 import { TOOL_COMPONENTS } from "./tools/registry";
 import { ControlMosaic, SectionArt, artFor, type ArtKind } from "./illustrations";
+import { PLATFORM_TOOL_MARKS, ProductMark, markForPath } from "./brand-marks";
 import {
   MaturitySpotArt,
   RiskTriageSpotArt,
@@ -91,10 +92,20 @@ function pageHeaderProps(page: SitePage, kind?: ArtKind) {
   if (page.template === "page" && minutes >= 2 && !/minutes to read/.test(page.body))
     parts.push(`${minutes} min read`);
   if (page.updated) parts.push(`Reviewed ${formatDate(page.updated)}`);
+  const mark = markForPath(page.path);
+  const label = siteConfig.section_labels[page.section];
   return {
     h1: page.h1,
     lead: page.lead,
-    eyebrow: siteConfig.section_labels[page.section] ?? undefined,
+    // A solutions page shows its product mark (README §6) beside the section label.
+    eyebrow: mark ? (
+      <span className="eyebrow-mark">
+        <ProductMark id={mark} size={40} />
+        {label}
+      </span>
+    ) : (
+      (label ?? undefined)
+    ),
     meta: parts.length ? parts.join(" · ") : undefined,
     art: art ? <SectionArt kind={art} /> : undefined,
     // A section's landing page (/framework, /solutions, …) opens on the navy band.
@@ -178,7 +189,11 @@ function ToolTemplate({ page }: { page: SitePage }) {
     <>
       <PageHeader
         {...pageHeaderProps(page, "tools")}
-        art={page.tool ? (TOOL_ART[page.tool]?.() ?? pageHeaderProps(page, "tools").art) : pageHeaderProps(page, "tools").art}
+        art={
+          page.tool
+            ? (TOOL_ART[page.tool]?.() ?? pageHeaderProps(page, "tools").art)
+            : pageHeaderProps(page, "tools").art
+        }
       />
       <div className="container page-body">
         {page.body.trim() && (

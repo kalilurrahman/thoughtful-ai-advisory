@@ -39,6 +39,7 @@ import {
   gateState,
 } from "@/components/assurance";
 import { recordTrail, trailActor } from "./trail-store";
+import { guardrailIcon } from "./guardrail-icons";
 const DISPOSITIONS = ["Approved", "Approved with limits", "Under review", "Not approved"] as const;
 const triageSelects: [string, string, string][] = [
   [
@@ -700,6 +701,15 @@ export function InventoryScreen() {
     </>
   );
 }
+/** The category glyph of a guardrail group (README §7), in a 44px status tile. */
+function GuardrailGlyph({ name }: { name: string }) {
+  const Icon = guardrailIcon(name);
+  return (
+    <span className="guardrail-glyph" aria-hidden="true">
+      <Icon weight="bold" />
+    </span>
+  );
+}
 export function GuardrailsScreen() {
   const { state, dispatch, coverage } = useGovernance();
   const requiredControls = GR.flatMap((g) =>
@@ -765,7 +775,10 @@ export function GuardrailsScreen() {
           return (
             <section key={g.name}>
               <div className="section-heading">
-                <h2>{g.name}</h2>
+                <h2 className="guardrail-heading">
+                  <GuardrailGlyph name={g.name} />
+                  {g.name}
+                </h2>
                 <span className={missingInGroup ? "danger" : "muted"}>
                   {required.length - missingInGroup}/{required.length} required
                   {missingInGroup ? ` · ${missingInGroup} missing` : ""}

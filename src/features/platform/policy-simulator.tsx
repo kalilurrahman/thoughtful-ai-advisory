@@ -1,3 +1,4 @@
+import { guardrailIcon } from "@/features/governance/guardrail-icons";
 import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { CitedControls, FormStatus, KeyValues, ResultTable } from "../site/tools/tool-fields";
 import { downloadText } from "./reports/exporters";
@@ -206,6 +207,11 @@ function pretty(v: unknown): string {
   return typeof v === "string" ? v : JSON.stringify(v, null, 2);
 }
 
+/** The decision glyph (README §7): check for ALLOW, cross for DENY, focused user for approval. */
+function DecisionGlyph({ decision }: { decision: string }) {
+  const Icon = guardrailIcon(decision);
+  return <Icon weight="bold" aria-hidden="true" className="decision-glyph" />;
+}
 function decisionTone(d: string): string {
   if (d === "ALLOW") return "badge badge-verified";
   if (d === "REDACT" || d === "TRANSFORM") return "badge badge-inferred";
@@ -1001,7 +1007,10 @@ function DecisionView({ decision: d }: { decision: Decision }) {
   return (
     <>
       <p>
-        <span className={decisionTone(d.decision)}>{d.decision}</span>{" "}
+        <span className={decisionTone(d.decision)}>
+          <DecisionGlyph decision={d.decision} />
+          {d.decision}
+        </span>{" "}
         {d.allowed ? "The caller may proceed with the payload below." : "The action is blocked."}
         {d.warning ? " Warning: the policy would not allow this under full enforcement." : ""}
       </p>
