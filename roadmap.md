@@ -1,4 +1,5 @@
 # VERITRAIL build
+- [ ] Refine the public site around governance and assurance services, group navigation, remove premature brand ownership claims and verify mobile presentation.
 - [x] Add and verify a public content change log on the governance overview with a last-updated date and recent summaries.
 - [x] Add site-grounded chat with private saved threads and dedicated conversation URLs.
 - [x] Add mobile conversation history and deletion, guarded loading, server-owned saving and model privacy checks.
