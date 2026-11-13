@@ -241,6 +241,78 @@ export type Database = {
         }
         Relationships: []
       }
+      billing_customers: {
+        Row: {
+          created_at: string
+          customer_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      billing_subscriptions: {
+        Row: {
+          cancel_at_next_billing_date: boolean
+          customer_id: string
+          event_at: string
+          next_billing_date: string | null
+          plan: string | null
+          product_id: string
+          status: string
+          subscription_id: string
+          updated_at: string
+        }
+        Insert: {
+          cancel_at_next_billing_date?: boolean
+          customer_id: string
+          event_at: string
+          next_billing_date?: string | null
+          plan?: string | null
+          product_id: string
+          status: string
+          subscription_id: string
+          updated_at?: string
+        }
+        Update: {
+          cancel_at_next_billing_date?: boolean
+          customer_id?: string
+          event_at?: string
+          next_billing_date?: string | null
+          plan?: string | null
+          product_id?: string
+          status?: string
+          subscription_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      billing_webhook_events: {
+        Row: {
+          received_at: string
+          type: string
+          webhook_id: string
+        }
+        Insert: {
+          received_at?: string
+          type: string
+          webhook_id: string
+        }
+        Update: {
+          received_at?: string
+          type?: string
+          webhook_id?: string
+        }
+        Relationships: []
+      }
       guardrail_configs: {
         Row: {
           controls: Json
@@ -267,24 +339,103 @@ export type Database = {
           },
         ]
       }
+      organization_invitations: {
+        Row: {
+          accepted_at: string | null
+          accepted_by: string | null
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          invited_by: string
+          organization_id: string
+          role: string
+          token_hash: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string
+          email: string
+          expires_at?: string
+          id?: string
+          invited_by: string
+          organization_id: string
+          role: string
+          token_hash: string
+        }
+        Update: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          invited_by?: string
+          organization_id?: string
+          role?: string
+          token_hash?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_invitations_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organization_members: {
+        Row: {
+          created_at: string
+          organization_id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          organization_id: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          organization_id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_members_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organizations: {
         Row: {
           created_at: string
           id: string
           name: string
           owner_id: string
+          revision: number
         }
         Insert: {
           created_at?: string
           id?: string
           name: string
           owner_id?: string
+          revision?: number
         }
         Update: {
           created_at?: string
           id?: string
           name?: string
           owner_id?: string
+          revision?: number
         }
         Relationships: []
       }
@@ -357,14 +508,14 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          id?: never
+          id?: number
           name: string
           path?: string
           props?: Json
         }
         Update: {
           created_at?: string
-          id?: never
+          id?: number
           name?: string
           path?: string
           props?: Json
@@ -442,18 +593,105 @@ export type Database = {
           },
         ]
       }
+      workspace_trail: {
+        Row: {
+          actor_id: string
+          id: number
+          organization_id: string
+          outcome: string
+          recorded_at: string
+          ref: string | null
+          title: string
+          who: string
+        }
+        Insert: {
+          actor_id?: string
+          id?: number
+          organization_id: string
+          outcome: string
+          recorded_at?: string
+          ref?: string | null
+          title: string
+          who: string
+        }
+        Update: {
+          actor_id?: string
+          id?: number
+          organization_id?: string
+          outcome?: string
+          recorded_at?: string
+          ref?: string | null
+          title?: string
+          who?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_trail_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      accept_org_invitation: {
+        Args: { p_token_hash: string }
+        Returns: string
+      }
+      can_edit_org: {
+        Args: { p_org: string }
+        Returns: boolean
+      }
+      can_read_org: {
+        Args: { p_org: string }
+        Returns: boolean
+      }
+      claim_workspace_revision: {
+        Args: { p_expected: number; p_org: string }
+        Returns: number
+      }
       consume_ai_quota: {
         Args: { p_feature: string; p_limit: number }
         Returns: boolean
       }
-      save_aegis_workspace: {
+      org_member_directory: {
+        Args: { p_org: string }
+        Returns: {
+          user_id: string
+          role: string
+          display_name: string
+          email: string
+          joined_at: string
+        }[]
+      }
+      org_role: {
+        Args: { p_org: string }
+        Returns: string
+      }
+      record_billing_webhook: {
+        Args: { p_subscription: Json; p_type: string; p_webhook_id: string }
+        Returns: string
+      }
+      remove_org_member: {
+        Args: { p_org: string; p_user: string }
+        Returns: undefined
+      }
+      save_veritrail_workspace: {
         Args: { p_name: string; p_org: string; p_sources: Json; p_state: Json }
         Returns: string
+      }
+      save_workspace_checked: {
+        Args: { p_name: string; p_org: string; p_revision: number; p_sources: Json; p_state: Json }
+        Returns: Json
+      }
+      set_org_member_role: {
+        Args: { p_org: string; p_role: string; p_user: string }
+        Returns: undefined
       }
     }
     Enums: {
