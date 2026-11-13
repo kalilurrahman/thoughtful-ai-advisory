@@ -6,7 +6,10 @@ import discussionImage from "@/assets/ai-discussion.jpg";
 /** Home page entry to the everyday AI discussion tools: the advisor and Ask VERITRAIL. */
 export function AiDiscussionBand() {
   return (
-    <section className="border-y border-border bg-secondary py-12" aria-labelledby="ai-discussion-title">
+    <section
+      className="border-y border-border bg-secondary py-12"
+      aria-labelledby="ai-discussion-title"
+    >
       <div className="container grid items-center gap-8 md:grid-cols-2">
         <img
           src={discussionImage}
@@ -17,9 +20,7 @@ export function AiDiscussionBand() {
           className="aspect-[8/5] w-full rounded-md object-cover"
         />
         <div className="min-w-0 space-y-4">
-          <p className="text-sm font-medium text-muted-foreground">
-            AI-assisted practice
-          </p>
+          <p className="text-sm font-medium text-muted-foreground">AI-assisted practice</p>
           <h2 id="ai-discussion-title" className="text-2xl font-semibold text-foreground">
             A governance conversation, grounded in evidence
           </h2>

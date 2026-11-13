@@ -7,7 +7,8 @@ export const CONTENT_CHANGES: readonly ContentChange[] = [
     id: "service-led-site-presentation",
     date: "2026-11-13",
     title: "Governance, advisory and assurance pathways",
-    summary: "Reorganized public navigation into services, framework, workspace and resources; clarified governance and assurance pathways and removed premature brand copyright claims while retaining attribution and disclaimers.",
+    summary:
+      "Reorganized public navigation into services, framework, workspace and resources; clarified governance and assurance pathways and removed premature brand copyright claims while retaining attribution and disclaimers.",
   },
   {
     id: "eu-ai-act-digital-omnibus",

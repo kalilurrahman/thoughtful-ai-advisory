@@ -8,7 +8,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 | Area | Capabilities | Live | Demo | Preview | Planned |
 |---|---|---|---|---|---|
-| [Public website and content](#public-website-and-content) | 4 | 4 | 0 | 0 | 0 |
+| [Public website and content](#public-website-and-content) | 5 | 5 | 0 | 0 | 0 |
 | [Free interactive tools](#free-interactive-tools) | 6 | 4 | 0 | 0 | 2 |
 | [Lead capture](#lead-capture) | 1 | 1 | 0 | 0 | 0 |
 | [Workspace — assessment and release readiness](#workspace--assessment-and-release-readiness) | 6 | 6 | 0 | 0 | 0 |
@@ -27,7 +27,8 @@ Every app, tool and feature, then every website content page, the control librar
 
 | ID | Capability | Route | Status | Data | For | Epic | What it does |
 |---|---|---|---|---|---|---|---|
-| CAP-001 | Home page | `/` | Live | None | Prospective buyer | [E01](EPICS_AND_STORIES.md#e01--public-website-and-governed-content) | Visual story of the product from index.md: hero, proof strip, start cards, layers, pillars, method, stakeholders. |
+| CAP-001 | Home page | `/` | Live | None | Prospective buyer | [E01](EPICS_AND_STORIES.md#e01--public-website-and-governed-content) | Service-led home page: governance advisory, risk controls and assurance pathways; grouped menus, framework, practitioner workspace and AI guidance. |
+| CAP-086 | Readable sitemap | `/sitemap` | Live | None | Prospective buyer | [E01](EPICS_AND_STORIES.md#e01--public-website-and-governed-content) | Grouped public page directory with XML sitemap viewing and download. |
 | CAP-002 | Website content pages | `/$` | Live | None | Prospective buyer, Chief Risk / Compliance Officer | [E01](EPICS_AND_STORIES.md#e01--public-website-and-governed-content) | Every Markdown page in platform/content/website_pages (listed below) rendered with reading aids. |
 | CAP-003 | Control library | `/framework/controls` | Live | None | AI governance lead, Internal auditor / assessor | [E02](EPICS_AND_STORIES.md#e02--control-library-and-framework-mappings) | All 64 controls by pillar with priority mosaic and pillar cards. |
 | CAP-004 | Control detail | `/framework/controls/$controlId` | Live | None | Internal auditor / assessor, AI governance lead | [E02](EPICS_AND_STORIES.md#e02--control-library-and-framework-mappings) | One control's owner, evidence, mappings, related questions and flags. |
@@ -151,7 +152,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 | Page | Route | Type | What it covers | Words | FAQs | Delivered by | Stories |
 |---|---|---|---|---|---|---|---|
-| Govern every AI system, agent, and decision with evidence. | `/` | home | VERITRAIL helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously. | 1009 | 3 | CAP-001 Home page | [S01.1](EPICS_AND_STORIES.md#s011) |
+| VERITRAIL | `/` | home | Evidence-first AI governance, advisory and assurance: maturity assessment, risk controls, lifecycle oversight and readiness reporting for enterprise teams. | 1009 | 3 | CAP-001 Home page | [S01.1](EPICS_AND_STORIES.md#s011) |
 
 ### Framework
 
@@ -281,7 +282,8 @@ Every app, tool and feature, then every website content page, the control librar
 
 | ID | Capability | Stories | Source | Tests (src/test) |
 |---|---|---|---|---|
-| CAP-001 | Home page | [S01.1](EPICS_AND_STORIES.md#s011) | `src/features/site/home.tsx`, `platform/content/website_pages/index.md` | `site-pages.test.ts`, `site-reading.test.ts` |
+| CAP-001 | Home page | [S01.1](EPICS_AND_STORIES.md#s011) | `src/features/site/home.tsx`, `src/features/site/service-pathways.tsx`, `src/features/site/pages.ts`, `platform/content/website_pages/index.md` | `site-pages.test.ts`, `site-reading.test.ts` |
+| CAP-086 | Readable sitemap | [S01.2](EPICS_AND_STORIES.md#s012) | `src/routes/sitemap.tsx` | `product-catalog.test.ts` |
 | CAP-002 | Website content pages | [S01.2](EPICS_AND_STORIES.md#s012), [S01.3](EPICS_AND_STORIES.md#s013), [S01.4](EPICS_AND_STORIES.md#s014) | `src/routes/$.tsx`, `src/features/site/views.tsx`, `src/features/site/markdown.tsx` | `site-pages.test.ts`, `site-reading.test.ts` |
 | CAP-003 | Control library | [S02.1](EPICS_AND_STORIES.md#s021) | `src/routes/framework.controls.index.tsx`, `platform/content/controls/controls.yaml` | `site-pages.test.ts` |
 | CAP-004 | Control detail | [S02.2](EPICS_AND_STORIES.md#s022) | `src/routes/framework.controls.$controlId.tsx` | `site-pages.test.ts`, `app-routing.test.tsx` |

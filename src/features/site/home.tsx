@@ -97,7 +97,14 @@ function HomeHero({ page, layers }: { page: SitePage; layers: number }) {
   return (
     <>
       <section className="hero hero--home" aria-labelledby="hero-title">
-        <img className="home-cover" src={discussionImage} alt="" width={1280} height={800} fetchPriority="high" />
+        <img
+          className="home-cover"
+          src={discussionImage}
+          alt=""
+          width={1280}
+          height={800}
+          fetchPriority="high"
+        />
         <div className="container hero-grid">
           <div className="hero-copy">
             <p className="eyebrow">Evidence-first · Human-led · Enterprise-focused</p>

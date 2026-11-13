@@ -57,8 +57,10 @@ function SitemapPage() {
   const grouped = useMemo(() => {
     const groups = new Map<string, SitemapEntry[]>();
     for (const entry of entries) {
-      const key = entry.path === "/" ? "Home" : (entry.path.split("/").filter(Boolean)[0] ?? "Other");
-      const label = key === "Home" ? "Home" : key.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+      const key =
+        entry.path === "/" ? "Home" : (entry.path.split("/").filter(Boolean)[0] ?? "Other");
+      const label =
+        key === "Home" ? "Home" : key.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
       const list = groups.get(label) ?? [];
       list.push(entry);
       groups.set(label, list);
@@ -91,7 +93,11 @@ function SitemapPage() {
             {loading ? "Loading sitemap…" : `${entries.length} URLs`}
           </p>
         </div>
-        {error && <p role="alert" className="danger">{error}</p>}
+        {error && (
+          <p role="alert" className="danger">
+            {error}
+          </p>
+        )}
         {!loading && !error && (
           <div className="sitemap-groups">
             {grouped.map(([label, items]) => (

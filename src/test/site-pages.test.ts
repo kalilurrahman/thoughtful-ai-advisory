@@ -102,7 +102,11 @@ describe("public website pages", () => {
   });
 
   it("preserves every existing public and workspace destination in the grouped menus", () => {
-    const groupedPaths = new Set(headerNav.flatMap((section) => section.groups.flatMap((group) => group.items.map((item) => item.url))));
+    const groupedPaths = new Set(
+      headerNav.flatMap((section) =>
+        section.groups.flatMap((group) => group.items.map((item) => item.url)),
+      ),
+    );
     for (const item of siteNav.flatMap((section) => section.items)) {
       expect(groupedPaths.has(item.url), item.url).toBe(true);
     }
