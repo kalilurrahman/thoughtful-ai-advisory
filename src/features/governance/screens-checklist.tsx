@@ -25,6 +25,10 @@ import {
   MONITORING_ASSURANCE_ROUNDS,
   monitoringAssuranceScore,
 } from "./monitoring-assurance-game";
+import {
+  RELEASE_GATE_ASSURANCE_ROUNDS,
+  releaseGateAssuranceScore,
+} from "./release-gate-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -43,6 +47,7 @@ export function ChecklistScreen() {
   const [crosswalkAnswers, setCrosswalkAnswers] = useState<Record<string, number>>({});
   const [guardrailAnswers, setGuardrailAnswers] = useState<Record<string, number>>({});
   const [monitoringAnswers, setMonitoringAnswers] = useState<Record<string, number>>({});
+  const [releaseGateAnswers, setReleaseGateAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -56,6 +61,7 @@ export function ChecklistScreen() {
   const inclusionScore = inclusiveDesignScore(inclusionAnswers);
   const guardrailGame = guardrailAssuranceScore(guardrailAnswers);
   const monitoringGame = monitoringAssuranceScore(monitoringAnswers);
+  const releaseGateGame = releaseGateAssuranceScore(releaseGateAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -403,6 +409,61 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good assurance response."
                           : "Review the assurance signal."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="release-gate-assurance" className="checklist-phase" aria-label="Release gate and assurance readiness game">
+        <h2>Release gate & assurance readiness</h2>
+        <p>
+          Practice go/no-go decisions, conditional approvals, required evidence/guardrail readiness,
+          and change-triggered reassessment. Scenarios are learning prompts, not a substitute for
+          your release process, accountable approvals, or specialist review.
+        </p>
+        <p>
+          <strong>
+            {releaseGateGame.correct}/{releaseGateGame.attempted}
+          </strong>{" "}
+          sound readiness decisions ·{" "}
+          {releaseGateGame.complete && (
+            <Button variant="outline" onClick={() => setReleaseGateAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {RELEASE_GATE_ASSURANCE_ROUNDS.map((round) => {
+            const selected = releaseGateAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setReleaseGateAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good release-gate decision."
+                          : "Review the readiness gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
