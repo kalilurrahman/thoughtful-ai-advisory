@@ -833,6 +833,49 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
 @keyframes ill-rise { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
 @keyframes ill-pop { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: none; } }
 
+/* Service-led presentation; original palette and viewer-selected typography are preserved. */
+.veritrail-site {
+  .brand, .eyebrow, .nav-group-label { letter-spacing: 0; }
+  .hero--home { position: relative; isolation: isolate; overflow: hidden; padding: 3rem 0 2rem; background: var(--c-bg); }
+  .home-cover { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .hero--home::before { content: ""; position: absolute; inset: 0; z-index: -1; background: color-mix(in oklch, var(--background) 91%, transparent); }
+  .hero--home .hero-grid { display: block; }
+  .hero--home .hero-grid::after { display: none; }
+  .hero--home .hero-copy { max-width: 46rem; }
+  .hero--home h1 { font-size: 3.5rem; max-width: 100%; line-height: 1.05; letter-spacing: 0; margin-bottom: 1rem; }
+  .hero-em { background: none; color: var(--c-heading); padding: 0; }
+  .hero--home .lead { max-width: 44rem; font-size: 1.3rem; line-height: 1.5; color: var(--c-heading); }
+  .home-directory { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--c-border); }
+  .home-directory a { display: inline-flex; align-items: center; min-height: 44px; font-size: 0.95rem; text-decoration: none; }
+  .nav-grouped { display: grid; gap: 1rem; max-height: 70dvh; overflow-y: auto; }
+  .nav-link-group { min-width: 0; }
+  .nav-link-group ul { list-style: none; margin: 0; padding: 0; }
+  .nav-group-label { margin: 0.5rem 0 0.3rem; padding: 0 0.5rem 0.5rem; border-bottom: 1px solid var(--c-border); color: var(--c-muted); font-size: 0.8rem; font-weight: 600; }
+  .nav-grouped a { font-size: 0.93rem; line-height: 1.4; }
+  .footer-intro { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--c-border); margin-bottom: 2rem; padding-bottom: 1.5rem; }
+  .footer-intro p { margin: 0; color: var(--c-muted); font-size: 0.95rem; }
+  .start-card, .stakeholder-card, .mosaic-figure { border-radius: 6px; }
+  .start-badge { position: static; align-self: flex-start; letter-spacing: 0; }
+  .home-section-head h2 { font-size: 2rem; }
+  .stat-list strong { font-size: 2rem; }
+  @media (min-width: 56em) {
+    .hero--home { padding-top: 4rem; padding-bottom: 3rem; }
+    .hero--home h1 { font-size: 4.5rem; }
+    .hero--home::before { background: linear-gradient(90deg, var(--background) 0%, color-mix(in oklch, var(--background) 97%, transparent) 38%, color-mix(in oklch, var(--background) 60%, transparent) 100%); }
+  }
+  @media (min-width: 80em) {
+    .nav-grouped { width: min(54rem, calc(100vw - 3rem)); grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 1rem; }
+    .nav-item:nth-child(2) .nav-grouped { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 36rem; }
+    .nav-summary { font-size: 0.95rem; padding-inline: 0.65rem; }
+  }
+  @media (max-width: 30em) {
+    .hero--home h1 { font-size: 2.75rem; }
+    .hero--home .lead { font-size: 1.15rem; }
+    .hero-actions { flex-direction: column; }
+    .hero-actions .btn { width: 100%; }
+  }
+}
+
 /* Hide the install-card's neighbours that would collide with it on phones. */
 @media (max-width: 40em) {
   :root[data-install-card] .veritrail-site .back-to-top { opacity: 0; pointer-events: none; }

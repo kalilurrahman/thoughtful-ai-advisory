@@ -187,7 +187,36 @@ siteNav.push({
   ),
 });
 
-export const footerColumns = siteNav.map((s) => ({ label: s.label, items: s.items.slice(0, 7) }));
+// Keep the exhaustive directory for search and route checks; present it in fewer, grouped menus.
+type HeaderGroup = { label: string; items: NavItem[] };
+type HeaderSection = { id: string; label: string; groups: HeaderGroup[] };
+function publicGroup(id: string, label: string): HeaderGroup {
+  return { label, items: siteNav.find((section) => section.id === id)?.items ?? [] };
+}
+function workspaceGroup(label: string, paths: string[]): HeaderGroup {
+  return { label, items: paths.flatMap((path) => workspaceNav.items.filter((item) => item.url === path)) };
+}
+export const headerNav: HeaderSection[] = [
+  { id: "solutions", label: "Services", groups: [publicGroup("solutions", "Governance & assurance"), publicGroup("industries", "Industry expertise"), publicGroup("company", "About & enquiries")] },
+  { id: "framework", label: "Framework", groups: [publicGroup("framework", "Governance foundations"), publicGroup("compliance", "Standards & readiness")] },
+  { id: "workspace", label: "Workspace", groups: [
+    workspaceGroup("Assess & plan", ["/workspace", "/assess", "/inventory", "/roadmap", "/start"]),
+    workspaceGroup("Operate & assure", ["/guardrails", "/gates", "/decisions", "/changes", "/monitoring", "/incidents", "/actions", "/checklist", "/export"]),
+    workspaceGroup("Learn & collaborate", ["/advisor", "/assistant", "/playbook", "/templates", "/knowledge", "/calculators", "/plans", "/more"]),
+  ] },
+  { id: "resources", label: "Resources", groups: [publicGroup("resources", "Knowledge & learning"), publicGroup("tools", "Public assessment tools"), publicGroup("platform", "Platform toolkit")] },
+];
+export const footerColumns = [
+  { label: "Services", items: siteNav.find((s) => s.id === "solutions")?.items ?? [] },
+  { label: "Framework & readiness", items: [
+    { label: "Governance framework", url: "/framework" }, { label: "Control library", url: CONTROL_LIBRARY_PATH },
+    { label: "NIST AI RMF", url: "/compliance/nist-ai-rmf" }, { label: "ISO/IEC 42001", url: "/compliance/iso-42001" }, { label: "EU AI Act", url: "/compliance/eu-ai-act" },
+  ] },
+  { label: "Practitioner resources", items: [
+    { label: "Governance workspace", url: "/workspace" }, { label: "Site assistant", url: "/assistant" },
+    { label: "Knowledge library", url: "/resources" }, { label: "Training", url: TRAINING_PATH }, { label: "Platform toolkit", url: "/platform" },
+  ] },
+];
 
 export interface Crumb {
   label: string;

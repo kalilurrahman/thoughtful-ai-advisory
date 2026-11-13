@@ -4,6 +4,12 @@ import type { ContentChange } from "@/features/governance/content-changelog-mode
 // Historical dates are verified against repository commits 39568a0, 4f24938 and 8763950.
 export const CONTENT_CHANGES: readonly ContentChange[] = [
   {
+    id: "service-led-site-presentation",
+    date: "2026-11-13",
+    title: "Governance, advisory and assurance pathways",
+    summary: "Reorganized public navigation into services, framework, workspace and resources; clarified governance and assurance pathways and removed premature brand copyright claims while retaining attribution and disclaimers.",
+  },
+  {
     id: "eu-ai-act-digital-omnibus",
     date: "2026-10-29",
     title: "EU AI Act — Digital Omnibus regulatory refresh",
