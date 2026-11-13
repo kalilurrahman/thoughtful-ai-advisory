@@ -35,6 +35,7 @@ export function GamesScreen() {
               <Button asChild>
                 <Link
                   to="/checklist"
+                  hash={game.anchor}
                   onClick={() =>
                     setPreferences((current) => ({
                       ...current,
