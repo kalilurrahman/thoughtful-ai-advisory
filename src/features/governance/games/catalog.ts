@@ -88,6 +88,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "transparency-recordkeeping-assurance",
   },
   {
+    id: "supply-chain-assurance",
+    title: "Third-party & supply-chain assurance",
+    category: "Third-party & supply-chain assurance",
+    description:
+      "Practice vendor/model terms, fitness-for-use evidence, integration guardrails, and ongoing monitoring/exit readiness.",
+    anchor: "supply-chain-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
