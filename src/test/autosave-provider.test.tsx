@@ -7,6 +7,10 @@ import { blankState } from "@/features/governance/store";
 
 const { load, save } = vi.hoisted(() => ({ load: vi.fn(), save: vi.fn() }));
 vi.mock("@tanstack/react-start", () => ({ useServerFn: (fn: unknown) => fn }));
+vi.mock("@/features/governance/trail.functions", () => ({
+  appendTrail: vi.fn().mockResolvedValue({ ok: false, reason: "unavailable" }),
+  loadTrail: vi.fn().mockResolvedValue({ ok: false, reason: "unavailable" }),
+}));
 vi.mock("@/features/governance/workspace.functions", () => ({
   loadWorkspace: load,
   saveWorkspace: save,

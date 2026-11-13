@@ -4154,17 +4154,10 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   line-height: 1.1;
   letter-spacing: -0.01em;
 }
-/* A screen that renders its own PageHeader hides the shell's title (Phase 4 screens). */
+/* A screen that renders its own PageHeader (its own h1) removes the shell's title, so the page
+   keeps a single h1 in the accessibility tree. */
 .veritrail-app .app-content:has(> .assurance-page-header) > .screen-title {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
+  display: none;
 }
 /* ---- Bottom nav: 64px, four items, active = brand with a 28×2px top bar. */
 .veritrail-app .bottom-nav {
@@ -4489,6 +4482,17 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 @media (max-width: 639px) {
   .veritrail-app .app-header .header-actions {
     display: none;
+  }
+  /* Phone tap targets: 44px hit areas around the 36px-looking controls. */
+  .veritrail-app .app-header button,
+  .veritrail-app .app-header a[aria-label] {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
+  .veritrail-app .app-header .header-brand {
+    width: auto;
   }
 }
 @media (max-width: 379px) {
@@ -4823,6 +4827,9 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 }
 .veritrail-app .system-open {
   all: unset;
+  display: inline-block;
+  padding: 11px 0;
+  margin: -11px 0;
   cursor: pointer;
   color: inherit;
   font: inherit;

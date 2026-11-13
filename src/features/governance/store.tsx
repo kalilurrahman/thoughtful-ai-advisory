@@ -10,6 +10,8 @@ import {
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { loadWorkspace, saveWorkspace } from "./workspace.functions";
+import { appendTrail, loadTrail } from "./trail.functions";
+import { attachTrailSink, clearTrail, type TrailEntry } from "./trail-store";
 import { canEdit, type MemberRole } from "./team-model";
 import { AUTOSAVE_DELAY_MS, shouldAutosave, snapshotKey, type SaveStatus } from "./autosave-model";
 import { SOURCES } from "@/data/governance";
@@ -148,7 +150,15 @@ export type Action =
       id: string;
       fields: Pick<
         MonitoringPlan,
-        "metric" | "domain" | "unit" | "threshold" | "breachDirection" | "cadence" | "nextDue" | "owner" | "notes"
+        | "metric"
+        | "domain"
+        | "unit"
+        | "threshold"
+        | "breachDirection"
+        | "cadence"
+        | "nextDue"
+        | "owner"
+        | "notes"
       >;
     }
   | { type: "corrective-action"; action: CorrectiveAction }
@@ -231,8 +241,7 @@ export function reducer(s: GovernanceState, a: Action): GovernanceState {
       const inventoryStatus =
         a.decision.outcome === "Approved"
           ? "Approved"
-          : a.decision.outcome === "Conditional approval" ||
-              a.decision.outcome === "Risk accepted"
+          : a.decision.outcome === "Conditional approval" || a.decision.outcome === "Risk accepted"
             ? "Approved with limits"
             : a.decision.outcome === "Rejected" ||
                 a.decision.outcome === "Paused" ||
@@ -461,6 +470,44 @@ export function GovernanceProvider({ children }: { children: ReactNode }) {
       subscription.unsubscribe();
     };
   }, [load, adoptWorkspace]);
+
+  // The evidence trail follows the saved workspace (migration 0015): hydrate it from the
+  // database and append there from now on; the demo and an unsaved workspace keep a tab-only
+  // preview. A sign-out clears it with the rest of the private state.
+  const appendTrailFn = useServerFn(appendTrail),
+    loadTrailFn = useServerFn(loadTrail);
+  useEffect(() => {
+    if (!userId) {
+      clearTrail();
+      return;
+    }
+    if (!workspaceId) {
+      void attachTrailSink(null);
+      return;
+    }
+    const organizationId = workspaceId;
+    const unwrap = (r: { ok: true; entries: TrailEntry[] } | { ok: false }) =>
+      r.ok ? r.entries : null;
+    void attachTrailSink({
+      workspaceId: organizationId,
+      append: async (entries) =>
+        unwrap(
+          await appendTrailFn({
+            data: {
+              organizationId,
+              entries: entries.map((e) => ({
+                who: e.who,
+                title: e.title,
+                ...(e.ref ? { ref: e.ref } : {}),
+                outcome: e.outcome,
+                at: e.at,
+              })),
+            },
+          }),
+        ),
+      load: async () => unwrap(await loadTrailFn({ data: { organizationId } })),
+    });
+  }, [userId, workspaceId, appendTrailFn, loadTrailFn]);
 
   // Autosave a saved workspace shortly after an editor stops changing it.
   const dirty =
