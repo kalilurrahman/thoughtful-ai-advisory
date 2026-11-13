@@ -1,16 +1,16 @@
 ---
-title: "VERITRAIL Enterprise — AI governance, runtime guardrails and evidence"
-h1: "Govern every AI system, agent, and decision with evidence."
-lead: "VERITRAIL Enterprise helps organizations inventory AI, assess risk, govern the lifecycle, protect LLM applications and agents at runtime, and prove responsible AI continuously."
+title: "VERITRAIL — AI governance, advisory and assurance"
+h1: "VERITRAIL"
+lead: "AI governance, advisory and assurance. Establish accountability, manage AI risk and build the evidence your leadership, customers and auditors need."
 slug: /
-description: "VERITRAIL helps enterprises inventory AI, assess risk, govern the lifecycle, protect LLM apps and agents at runtime, and evidence responsible AI continuously."
+description: "Evidence-first AI governance, advisory and assurance: maturity assessment, risk controls, lifecycle oversight and readiness reporting for enterprise teams."
 section: home
 nav_label: "Home"
 nav_order: 0
 template: home
 schema_type: WebPage
-primary_cta: assessment
-secondary_cta: baseline
+primary_cta: baseline
+secondary_cta: assessment
 faq:
   - q: "Does VERITRAIL make my organization compliant with the EU AI Act or ISO/IEC 42001?"
     a: "No. VERITRAIL supports governance readiness, control implementation and evidence collection. It does not certify ISO/IEC 42001 conformity, determine EU AI Act compliance or replace legal advice. Framework mappings are indicative."
@@ -18,7 +18,7 @@ faq:
     a: "Most organizations start with the free 8-minute maturity self-assessment, then validate the result with evidence in a 4–6 week VERITRAIL Governance Baseline."
   - q: "Does VERITRAIL work with agents as well as models?"
     a: "Yes. VERITRAIL registers agents and their tools, and VERITRAIL Shield evaluates prompts, responses and tool calls against versioned runtime policy, including human approval for high-impact actions."
-updated: 2026-10-21
+updated: 2026-11-13
 ---
 
 ## Four ways to start

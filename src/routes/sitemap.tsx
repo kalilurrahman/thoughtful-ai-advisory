@@ -21,7 +21,7 @@ function parseSitemap(xml: string): SitemapEntry[] {
     } catch {
       // keep raw loc
     }
-    return [{ loc, lastmod, path }];
+    return [{ loc, path, ...(lastmod ? { lastmod } : {}) }];
   });
 }
 
@@ -57,8 +57,10 @@ function SitemapPage() {
   const grouped = useMemo(() => {
     const groups = new Map<string, SitemapEntry[]>();
     for (const entry of entries) {
-      const key = entry.path === "/" ? "Home" : (entry.path.split("/").filter(Boolean)[0] ?? "Other");
-      const label = key === "Home" ? "Home" : key.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+      const key =
+        entry.path === "/" ? "Home" : (entry.path.split("/").filter(Boolean)[0] ?? "Other");
+      const label =
+        key === "Home" ? "Home" : key.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
       const list = groups.get(label) ?? [];
       list.push(entry);
       groups.set(label, list);
@@ -68,14 +70,14 @@ function SitemapPage() {
 
   return (
     <>
-      <Breadcrumbs trail={[{ label: "Home", href: "/" }, { label: "Sitemap" }]} />
+      <Breadcrumbs crumbs={[{ label: "Home", url: "/" }, { label: "Sitemap" }]} />
       <PageHeader
         h1="Sitemap"
         eyebrow="Site map"
         lead="A readable index of public pages on this site. The machine-readable XML sitemap remains available for search engines and download."
       />
       <div className="container page-body">
-        <div className="action-bar" style={{ marginBottom: 16 }}>
+        <div className="action-bar mb-4">
           <Button asChild>
             <a href="/sitemap.xml" download="sitemap.xml">
               <DownloadSimple />
@@ -91,7 +93,11 @@ function SitemapPage() {
             {loading ? "Loading sitemap…" : `${entries.length} URLs`}
           </p>
         </div>
-        {error && <p role="alert" className="danger">{error}</p>}
+        {error && (
+          <p role="alert" className="danger">
+            {error}
+          </p>
+        )}
         {!loading && !error && (
           <div className="sitemap-groups">
             {grouped.map(([label, items]) => (

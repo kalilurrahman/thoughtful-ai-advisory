@@ -18,7 +18,7 @@
 # data:    where state lives — none · session (sessionStorage) · browser (localStorage) ·
 #          memory (lost on reload) · cloud (Supabase, RLS) · server (server function)
 version: 1.0.0
-updated: 2026-10-24
+updated: 2026-11-13
 
 personas:
   - id: visitor
@@ -93,7 +93,7 @@ epics:
         acceptance:
           - Given any page, when I open the menu, then every section and its pages are listed, on desktop and phone.
           - Given an internal link or call to action in any page, when followed, then it resolves to a page (no 404).
-        routes: [/framework, /solutions, /compliance, /industries, /resources, /about]
+        routes: [/framework, /solutions, /compliance, /industries, /resources, /about, /sitemap]
         tests: [site-pages.test.ts, app-routing.test.tsx]
       - id: S01.3
         persona: cro
@@ -1130,7 +1130,8 @@ use_cases:
 
 capabilities:
   # ---------------------------------------------------------------- website (React pages)
-  - {id: CAP-001, name: Home page, area: site, route: /, status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/home.tsx, platform/content/website_pages/index.md], tests: [site-pages.test.ts, site-reading.test.ts], summary: "Visual story of the product from index.md: hero, proof strip, start cards, layers, pillars, method, stakeholders."}
+  - {id: CAP-001, name: Home page, area: site, route: /, status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/home.tsx, src/features/site/service-pathways.tsx, src/features/site/pages.ts, platform/content/website_pages/index.md], tests: [site-pages.test.ts, site-reading.test.ts], summary: "Service-led home page: governance advisory, risk controls and assurance pathways; grouped menus, framework, practitioner workspace and AI guidance."}
+  - {id: CAP-086, name: Readable sitemap, area: site, route: /sitemap, status: live, data: none, epic: E01, personas: [visitor], source: [src/routes/sitemap.tsx], tests: [app-routing.test.tsx], summary: "Grouped public page directory with XML sitemap viewing and download."}
   - {id: CAP-002, name: Website content pages, area: site, route: /$, status: live, data: none, epic: E01, personas: [visitor, cro], source: [src/routes/$.tsx, src/features/site/views.tsx, src/features/site/markdown.tsx], tests: [site-pages.test.ts, site-reading.test.ts], summary: "Every Markdown page in platform/content/website_pages (listed below) rendered with reading aids."}
   - {id: CAP-003, name: Control library, area: site, route: /framework/controls, status: live, data: none, epic: E02, personas: [gov-lead, auditor], source: [src/routes/framework.controls.index.tsx, platform/content/controls/controls.yaml], tests: [site-pages.test.ts], summary: "All 64 controls by pillar with priority mosaic and pillar cards."}
   - {id: CAP-004, name: Control detail, area: site, route: /framework/controls/$controlId, status: live, data: none, epic: E02, personas: [auditor, gov-lead], source: [src/routes/framework.controls.$controlId.tsx], tests: [site-pages.test.ts, app-routing.test.tsx], summary: "One control's owner, evidence, mappings, related questions and flags."}
