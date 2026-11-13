@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { ClipboardText, PencilSimple, Plus, WarningCircle } from "@phosphor-icons/react";
+import { ClipboardText, Copy, PencilSimple, Plus, WarningCircle } from "@phosphor-icons/react";
 import { EmptyDecisions } from "@/features/site/illustrations-empty";
 import { Button } from "@/components/ui/button";
 import {
@@ -71,6 +71,18 @@ function reviewState(decision: GovernanceDecision, todayDate: string) {
   return decision.reviewBy === todayDate ? "Review due today" : `Review by ${decision.reviewBy}`;
 }
 
+function decisionSummary(decision: GovernanceDecision, todayDate: string) {
+  return [
+    `System: ${decision.system}`,
+    `Outcome: ${decision.outcome} (${decision.lifecycle})`,
+    `Decision date: ${decision.decidedAt}`,
+    `Approver: ${decision.approver}`,
+    `Review: ${reviewState(decision, todayDate)}`,
+    `Rationale: ${decision.rationale}`,
+    decision.conditions ? `Conditions/follow-up: ${decision.conditions}` : "Conditions/follow-up: none recorded",
+  ].join("\n");
+}
+
 export function DecisionsScreen() {
   const { state, dispatch } = useGovernance();
   const [form, setForm] = useState(blankForm);
@@ -83,7 +95,14 @@ export function DecisionsScreen() {
   const overdue = current.filter((decision) => decision.reviewBy && decision.reviewBy < todayDate);
   const byId = new Map(state.decisions.map((decision) => [decision.id, decision]));
   const visible = state.decisions.filter((decision) => {
-    const statusMatches = statusFilter === "All" || decision.lifecycle === statusFilter;
+    const statusMatches =
+      statusFilter === "All"
+        ? true
+        : statusFilter === "Review overdue"
+          ? decision.lifecycle === "Current" &&
+            Boolean(decision.reviewBy) &&
+            decision.reviewBy < todayDate
+          : decision.lifecycle === statusFilter;
     const query = search.trim().toLowerCase();
     const queryMatches =
       !query ||
@@ -147,6 +166,7 @@ export function DecisionsScreen() {
             onChange={(event) => setStatusFilter(event.target.value)}
           >
             <option>Current</option>
+            <option>Review overdue</option>
             <option>Superseded</option>
             <option>Withdrawn</option>
             <option>All</option>
@@ -169,8 +189,9 @@ export function DecisionsScreen() {
         </summary>
         <p className="muted">
           A new decision for a system supersedes its previous current decision and retains that
-          earlier record in history. Risk acceptance and conditional approval require a review date.
-          To fix a record that was entered wrongly, use <em>Correct this record</em> on it instead.
+          earlier record in history. Required fields: system, disposition, decision date, approver,
+          and rationale. Risk acceptance and conditional approval require a review date. To fix a
+          record entered wrongly, use <em>Correct this record</em> on it instead.
         </p>
         <form onSubmit={submit}>
           <DecisionFields form={form} onChange={setForm} systems={state.systems} />
@@ -321,13 +342,34 @@ function DecisionCard({
   const [form, setForm] = useState(() => formFrom(decision));
   const [reason, setReason] = useState("");
   const [failure, setFailure] = useState("");
+  const [copied, setCopied] = useState(false);
   const closed = closingEvent(decision);
+  const overdue =
+    decision.lifecycle === "Current" &&
+    Boolean(decision.reviewBy) &&
+    (decision.reviewBy as string) < todayDate;
 
   function close() {
     setMode("view");
     setForm(formFrom(decision));
     setReason("");
     setFailure("");
+  }
+
+  async function copySummary() {
+    const text = decisionSummary(decision, todayDate);
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const area = document.createElement("textarea");
+      area.value = text;
+      document.body.append(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1500);
   }
 
   function saveCorrection(event: FormEvent<HTMLFormElement>) {
@@ -378,8 +420,8 @@ function DecisionCard({
         </div>
         <span className="decision-lifecycle">{lifecycleLabel(decision)}</span>
       </div>
-      <p className="muted">
-        Decided {decision.decidedAt} · Approver: {decision.approver} ·{" "}
+      <p className={overdue ? "danger" : "muted"}>
+        Decided {decision.decidedAt} · <strong>Approver:</strong> {decision.approver} ·{" "}
         {reviewState(decision, todayDate)}
       </p>
       {decision.corrects && (
@@ -400,21 +442,25 @@ function DecisionCard({
       <p>
         <strong>Rationale:</strong> {decision.rationale}
       </p>
-      {decision.conditions && (
-        <p>
-          <strong>Conditions and follow-up:</strong> {decision.conditions}
-        </p>
-      )}
-      {decision.lifecycle === "Current" && mode === "view" && (
-        <div className="decision-actions">
-          <Button variant="outline" onClick={() => setMode("correct")}>
-            <PencilSimple /> Correct this record…
-          </Button>
-          <Button variant="ghost" className="danger" onClick={() => setMode("withdraw")}>
-            Withdraw…
-          </Button>
-        </div>
-      )}
+      <p>
+        <strong>Conditions and follow-up:</strong>{" "}
+        {decision.conditions || <span className="muted">None recorded</span>}
+      </p>
+      <div className="decision-actions" aria-label="Decision actions">
+        <Button variant="outline" size="sm" onClick={() => void copySummary()}>
+          <Copy /> {copied ? "Summary copied" : "Copy summary"}
+        </Button>
+        {decision.lifecycle === "Current" && mode === "view" && (
+          <>
+            <Button variant="outline" onClick={() => setMode("correct")}>
+              <PencilSimple /> Correct this record…
+            </Button>
+            <Button variant="ghost" className="danger" onClick={() => setMode("withdraw")}>
+              Withdraw…
+            </Button>
+          </>
+        )}
+      </div>
       {mode === "correct" && (
         <form
           className="decision-correction"
