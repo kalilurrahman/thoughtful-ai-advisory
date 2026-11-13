@@ -2,6 +2,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
+  DEFAULT_FONT,
+  DEFAULT_PALETTE,
   FONTS,
   FONT_STORAGE_KEY,
   PALETTES,
@@ -84,7 +86,7 @@ describe("appearance preferences", () => {
     ]);
   });
 
-  it("falls back to Auto, Broadsheet and the serif for missing or unknown values", () => {
+  it("falls back to Auto and the default palette and font for missing or unknown values", () => {
     localStorage.setItem(THEME_STORAGE_KEY, "sepia");
     localStorage.setItem(PALETTE_STORAGE_KEY, "neon");
     localStorage.setItem(FONT_STORAGE_KEY, "comic");
@@ -137,7 +139,7 @@ describe("appearance preferences", () => {
   });
 
   it("loads a font's stylesheet once, and never for the default font", () => {
-    ensureFontStylesheet("serif");
+    ensureFontStylesheet("plex");
     expect(fontSheets()).toHaveLength(0);
     setFont("kr");
     setFont("kr");
@@ -155,7 +157,8 @@ describe("appearance preferences", () => {
     expect(root().hasAttribute("data-palette")).toBe(false);
     expect(root().hasAttribute("data-font")).toBe(false);
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe("auto");
-    expect(localStorage.getItem(PALETTE_STORAGE_KEY)).toBe("broadsheet");
+    expect(localStorage.getItem(PALETTE_STORAGE_KEY)).toBe(DEFAULT_PALETTE);
+    expect(localStorage.getItem(FONT_STORAGE_KEY)).toBe(DEFAULT_FONT);
     expect(themeColor()).toBe(PALETTES[0]?.light.background);
   });
 });
@@ -213,6 +216,17 @@ const TEXT_PAIRS: Array<[string, string]> = [
   ["--warning-ink", "--warning-surface"],
   ["--danger-ink", "--card"],
   ["--danger-ink", "--danger-surface"],
+  // Assurance audit tokens: attestation seal, information, EU AI Act risk tiers.
+  ["--seal-ink", "--card"],
+  ["--seal-ink", "--seal-surface"],
+  ["--info-ink", "--info-surface"],
+  ["--risk-prohibited-ink", "--risk-prohibited-surface"],
+  ["--risk-high-ink", "--risk-high-surface"],
+  ["--risk-limited-ink", "--risk-limited-surface"],
+  ["--risk-minimal-ink", "--risk-minimal-surface"],
+  ["--sidebar-foreground", "--sidebar"],
+  ["--sidebar-accent-foreground", "--sidebar-accent"],
+  ["--nav-muted", "--sidebar"],
 ];
 const NON_TEXT_PAIRS: Array<[string, string]> = [
   ["--input", "--background"],
@@ -220,7 +234,44 @@ const NON_TEXT_PAIRS: Array<[string, string]> = [
 ];
 
 describe("colour palettes", () => {
-  const themed = PALETTES.filter((p) => p.id !== "broadsheet");
+  // The default palette lives in :root / .dark; every other palette has its own blocks.
+  const themed = PALETTES.filter((p) => p.id !== DEFAULT_PALETTE);
+
+  it("puts the default palette first, with its swatches in :root and .dark", () => {
+    expect(PALETTES[0]?.id).toBe(DEFAULT_PALETTE);
+    const p = PALETTES[0]!;
+    expect(BASE_LIGHT.get("--background")).toBe(p.light.background);
+    expect(BASE_LIGHT.get("--card")).toBe(p.light.card);
+    expect(BASE_LIGHT.get("--primary")).toBe(p.light.primary);
+    expect(BASE_LIGHT.get("--foreground")).toBe(p.light.foreground);
+    expect(BASE_DARK.get("--background")).toBe(p.dark.background);
+    expect(BASE_DARK.get("--card")).toBe(p.dark.card);
+    expect(BASE_DARK.get("--primary")).toBe(p.dark.primary);
+    expect(BASE_DARK.get("--foreground")).toBe(p.dark.foreground);
+  });
+
+  it("meets WCAG AA contrast in the default palette (light and dark)", () => {
+    for (const [mode, block] of [
+      ["light", BASE_LIGHT],
+      ["dark", BASE_DARK],
+    ] as const) {
+      const value = (t: string) => block.get(t) ?? BASE_LIGHT.get(t) ?? "";
+      let checked = 0;
+      for (const [pairs, min] of [
+        [TEXT_PAIRS, 4.5],
+        [NON_TEXT_PAIRS, 3],
+      ] as const) {
+        for (const [fg, bg] of pairs) {
+          const a = value(fg);
+          const b = value(bg);
+          if (!HEX.test(a) || !HEX.test(b)) continue;
+          checked++;
+          expect(contrast(a, b), `default ${mode}: ${fg} on ${bg}`).toBeGreaterThanOrEqual(min);
+        }
+      }
+      expect(checked).toBeGreaterThanOrEqual(24);
+    }
+  });
 
   it.each(themed.map((p) => p.id))("defines the same tokens in light and dark (%s)", (id) => {
     const light = tokens(`:root[data-palette="${id}"]`);
@@ -269,10 +320,15 @@ describe("colour palettes", () => {
   );
 
   it("gives every font a name, a stack and a stylesheet except the default", () => {
-    expect(FONTS.map((f) => f.id)).toEqual(["serif", "kr", "sans"]);
+    expect(FONTS.map((f) => f.id)).toEqual(["plex", "serif", "kr", "sans"]);
+    expect(FONTS[0]?.id).toBe(DEFAULT_FONT);
     expect(FONTS[0]?.stylesheet).toBeNull();
     for (const f of FONTS.slice(1))
       expect(f.stylesheet).toMatch(/^https:\/\/fonts\.googleapis\.com\/css2\?/);
-    for (const id of ["kr", "sans"]) expect(stylesCss).toContain(`:root[data-font="${id}"]`);
+    for (const f of FONTS.slice(1)) expect(stylesCss).toContain(`:root[data-font="${f.id}"]`);
+    // The default pairing is the :root value, so it needs no data-font block.
+    expect(stylesCss).not.toContain(`:root[data-font="${DEFAULT_FONT}"]`);
+    expect(stylesCss).toMatch(/--font-body: "IBM Plex Sans"/);
+    expect(stylesCss).toMatch(/--font-heading: "Source Serif 4"/);
   });
 });
