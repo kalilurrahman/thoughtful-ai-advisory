@@ -55,7 +55,7 @@
 
 **Stories:** [S01.1](EPICS_AND_STORIES.md#s011) (E01), [S01.2](EPICS_AND_STORIES.md#s012) (E01), [S01.3](EPICS_AND_STORIES.md#s013) (E01), [S01.4](EPICS_AND_STORIES.md#s014) (E01), [S15.3](EPICS_AND_STORIES.md#s153) (E15), [S15.4](EPICS_AND_STORIES.md#s154) (E15), [S15.6](EPICS_AND_STORIES.md#s156) (E15)
 
-**Capabilities:** CAP-001 Home page, CAP-002 Website content pages, CAP-005 Glossary, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-074 Reading aids, CAP-077 Appearance — themes and fonts
+**Capabilities:** CAP-001 Home page, CAP-002 Website content pages, CAP-005 Glossary, CAP-072 Site-wide search, CAP-073 Glossary definitions in text, CAP-074 Reading aids, CAP-077 Appearance — themes and fonts, CAP-086 Readable sitemap
 
 ## UC02 — Run the maturity self-assessment
 
@@ -534,6 +534,7 @@
 | Capability | Status | Use cases |
 |---|---|---|
 | CAP-001 Home page | Live | UC01 |
+| CAP-086 Readable sitemap | Live | UC01 |
 | CAP-002 Website content pages | Live | UC01 |
 | CAP-003 Control library | Live | UC07 |
 | CAP-004 Control detail | Live | UC07 |

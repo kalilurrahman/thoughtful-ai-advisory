@@ -29,7 +29,7 @@
 
 **Area:** Public website and content · **Status:** Live
 
-**Capabilities:** CAP-001 Home page, CAP-002 Website content pages, CAP-074 Reading aids, CAP-075 Section illustrations and share images
+**Capabilities:** CAP-001 Home page, CAP-086 Readable sitemap, CAP-002 Website content pages, CAP-074 Reading aids, CAP-075 Section illustrations and share images
 
 ### S01.1
 
@@ -55,7 +55,7 @@ Acceptance criteria:
 - Given any page, when I open the menu, then every section and its pages are listed, on desktop and phone.
 - Given an internal link or call to action in any page, when followed, then it resolves to a page (no 404).
 
-**Routes:** `/framework`, `/solutions`, `/compliance`, `/industries`, `/resources`, `/about` · **Capabilities:** CAP-002 · **Tests:** `site-pages.test.ts`, `app-routing.test.tsx`
+**Routes:** `/framework`, `/solutions`, `/compliance`, `/industries`, `/resources`, `/about`, `/sitemap` · **Capabilities:** CAP-002, CAP-086 · **Tests:** `site-pages.test.ts`, `app-routing.test.tsx`
 
 ### S01.3
 

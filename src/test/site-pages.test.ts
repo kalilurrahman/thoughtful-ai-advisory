@@ -9,10 +9,12 @@ import {
   TRAINING_PATH,
   breadcrumbsFor,
   getSitePage,
+  headerNav,
   isSitePath,
   siteNav,
   sitePages,
   toPath,
+  workspaceNav,
 } from "@/features/site/pages";
 
 const knownPaths = new Set<string>([
@@ -97,6 +99,20 @@ describe("public website pages", () => {
       "/framework/pillars",
       "/framework/pillars/inventory",
     ]);
+  });
+
+  it("preserves every existing public and workspace destination in the grouped menus", () => {
+    const groupedPaths = new Set(
+      headerNav.flatMap((section) =>
+        section.groups.flatMap((group) => group.items.map((item) => item.url)),
+      ),
+    );
+    for (const item of siteNav.flatMap((section) => section.items)) {
+      expect(groupedPaths.has(item.url), item.url).toBe(true);
+    }
+    for (const item of workspaceNav.items) {
+      expect(groupedPaths.has(item.url), item.url).toBe(true);
+    }
   });
 
   it("classifies site and workspace paths", () => {
