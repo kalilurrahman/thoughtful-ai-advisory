@@ -17,15 +17,15 @@
 
 **Enterprise-grade AI risk management, governance capabilities, safety controls, and regulatory compliance.**
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-thoughtful--ai--governance.lovable.app-0066CC?style=for-the-badge&logo=react)](https://thoughtful-ai-governance.lovable.app/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-veritrail.kalilurrahman.com-0066CC?style=for-the-badge&logo=react)](https://veritrail.kalilurrahman.com/)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-kalilurrahman%2Fthoughtful--ai--advisory-black?style=for-the-badge&logo=github)](https://github.com/kalilurrahman/thoughtful-ai-advisory)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
 [![TanStack Start](https://img.shields.io/badge/TanStack%20Start-1.168-FF4154?style=for-the-badge)](https://tanstack.com/router)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
-[![PWA Ready](https://img.shields.io/badge/PWA-Offline%20%26%20Installable-5A0FC8?style=for-the-badge&logo=pwa)](https://thoughtful-ai-governance.lovable.app/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Offline%20%26%20Installable-5A0FC8?style=for-the-badge&logo=pwa)](https://veritrail.kalilurrahman.com/)
 
-[Live Demo](https://thoughtful-ai-governance.lovable.app/) • [Video Walkthrough](#-video-walkthrough--interactive-demo) • [Landing Showcase](#-public-landing-site-showcase) • [Workspace Showcase](#-operational-governance-workspace-showcase) • [TILLER Pillars](#-the-6-tiller-governance-pillars) • [Export Studio](#-enterprise-multi-format-audit-export-engine) • [Architecture & Routes](#-platform-architecture--full-route-map) • [Quick Start](#-quick-start--local-development)
+[Live Demo](https://veritrail.kalilurrahman.com/) • [Video Walkthrough](#-video-walkthrough--interactive-demo) • [Landing Showcase](#-public-landing-site-showcase) • [Workspace Showcase](#-operational-governance-workspace-showcase) • [TILLER Pillars](#-the-6-tiller-governance-pillars) • [Export Studio](#-enterprise-multi-format-audit-export-engine) • [Architecture & Routes](#-platform-architecture--full-route-map) • [Quick Start](#-quick-start--local-development)
 
 </div>
 

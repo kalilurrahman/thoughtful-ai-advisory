@@ -550,7 +550,7 @@ const OG_DEFAULT = "/og-default.png";
  */
 export const SITE_ORIGIN = (
   (import.meta.env["VITE_SITE_URL"] as string | undefined) ??
-  "https://thoughtful-ai-governance.lovable.app"
+  "https://veritrail.kalilurrahman.com"
 ).replace(/\/+$/, "");
 /** Sections with their own link-preview image in public/og/ (scripts/generate-social-images.mjs). */
 export const OG_SECTIONS = new Set<string>([
