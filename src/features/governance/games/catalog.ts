@@ -168,6 +168,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "continuity-resilience-assurance",
   },
   {
+    id: "user-recourse-contestability-assurance",
+    title: "User recourse & contestability assurance",
+    category: "Recourse & contestability",
+    description:
+      "Practice accessible recourse paths, timely human review/correction, clear communication of options, and tracked fair remediation.",
+    anchor: "user-recourse-contestability-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
