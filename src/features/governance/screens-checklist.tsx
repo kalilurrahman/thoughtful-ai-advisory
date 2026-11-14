@@ -73,6 +73,10 @@ import {
   CHANGE_DEPLOYMENT_ASSURANCE_ROUNDS,
   changeDeploymentAssuranceScore,
 } from "./change-deployment-assurance-game";
+import {
+  ACCOUNTABILITY_RACI_ASSURANCE_ROUNDS,
+  accountabilityRaciAssuranceScore,
+} from "./accountability-raci-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -103,6 +107,7 @@ export function ChecklistScreen() {
   const [improvementAnswers, setImprovementAnswers] = useState<Record<string, number>>({});
   const [policyAnswers, setPolicyAnswers] = useState<Record<string, number>>({});
   const [changeAnswers, setChangeAnswers] = useState<Record<string, number>>({});
+  const [accountabilityAnswers, setAccountabilityAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -128,6 +133,7 @@ export function ChecklistScreen() {
   const improvementGame = continuousImprovementAssuranceScore(improvementAnswers);
   const policyGame = policyAlignmentAssuranceScore(policyAnswers);
   const changeGame = changeDeploymentAssuranceScore(changeAnswers);
+  const accountabilityGame = accountabilityRaciAssuranceScore(accountabilityAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -1135,6 +1141,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good change/deployment assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="accountability-raci-assurance" className="checklist-phase" aria-label="Accountability, roles and RACI assurance game">
+        <h2>Accountability, roles & RACI assurance</h2>
+        <p>
+          Practice clear ownership, decision rights and approvals, role competence and training, and
+          evidence of accountable oversight. Scenarios are learning prompts, not compliance
+          determinations.
+        </p>
+        <p>
+          <strong>
+            {accountabilityGame.correct}/{accountabilityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {accountabilityGame.complete && (
+            <Button variant="outline" onClick={() => setAccountabilityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {ACCOUNTABILITY_RACI_ASSURANCE_ROUNDS.map((round) => {
+            const selected = accountabilityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAccountabilityAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good accountability/roles assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
