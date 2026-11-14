@@ -160,6 +160,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "stakeholder-reporting-assurance",
   },
   {
+    id: "continuity-resilience-assurance",
+    title: "Business continuity & resilience assurance",
+    category: "Continuity & resilience",
+    description:
+      "Practice dependency/failure planning, fallback and degraded-mode procedures, recovery objectives/testing, and readiness evidence.",
+    anchor: "continuity-resilience-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
