@@ -136,6 +136,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "change-deployment-assurance",
   },
   {
+    id: "accountability-raci-assurance",
+    title: "Accountability, roles & RACI assurance",
+    category: "Accountability & oversight",
+    description:
+      "Practice clear ownership, decision rights and approvals, role competence/training, and evidence of accountable oversight.",
+    anchor: "accountability-raci-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
