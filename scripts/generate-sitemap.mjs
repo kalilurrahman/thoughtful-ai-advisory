@@ -4,7 +4,7 @@ import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parse } from "yaml";
 
-const origin = (process.argv[2] ?? "https://thoughtful-ai-governance.lovable.app").replace(
+const origin = (process.argv[2] ?? "https://veritrail.kalilurrahman.com").replace(
   /\/+$/,
   "",
 );

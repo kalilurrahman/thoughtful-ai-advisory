@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://thoughtful-ai-governance.lovable.app/sitemap.xml
+Sitemap: https://veritrail.kalilurrahman.com/sitemap.xml
