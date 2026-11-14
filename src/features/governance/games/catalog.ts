@@ -152,6 +152,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "training-awareness-assurance",
   },
   {
+    id: "stakeholder-reporting-assurance",
+    title: "Stakeholder communication & reporting assurance",
+    category: "Communication & reporting",
+    description:
+      "Practice evidence-backed governance reporting, communicating limitations/changes and incidents, and audience-appropriate channels/escalation.",
+    anchor: "stakeholder-reporting-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
