@@ -176,6 +176,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "user-recourse-contestability-assurance",
   },
   {
+    id: "resource-efficiency-assurance",
+    title: "Environmental & resource efficiency assurance",
+    category: "Efficiency & sustainability",
+    description:
+      "Practice proportionate resource-impact assessment, right-sizing, efficiency monitoring signals, and lifecycle optimization evidence.",
+    anchor: "resource-efficiency-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
