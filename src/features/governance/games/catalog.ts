@@ -144,6 +144,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "accountability-raci-assurance",
   },
   {
+    id: "training-awareness-assurance",
+    title: "Training, awareness & competence assurance",
+    category: "Training & competence",
+    description:
+      "Practice role-relevant training, acceptable-use awareness, competence verification and refreshers, and learning updates after changes/incidents.",
+    anchor: "training-awareness-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
