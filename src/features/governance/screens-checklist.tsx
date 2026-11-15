@@ -101,6 +101,10 @@ import {
   TESTING_VALIDATION_ASSURANCE_ROUNDS,
   testingValidationAssuranceScore,
 } from "./testing-validation-assurance-game";
+import {
+  PURPOSE_BOUNDARY_ASSURANCE_ROUNDS,
+  purposeBoundaryAssuranceScore,
+} from "./purpose-boundary-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -138,6 +142,7 @@ export function ChecklistScreen() {
   const [recourseAnswers, setRecourseAnswers] = useState<Record<string, number>>({});
   const [efficiencyAnswers, setEfficiencyAnswers] = useState<Record<string, number>>({});
   const [testingAnswers, setTestingAnswers] = useState<Record<string, number>>({});
+  const [boundaryAnswers, setBoundaryAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -170,6 +175,7 @@ export function ChecklistScreen() {
   const recourseGame = userRecourseContestabilityScore(recourseAnswers);
   const efficiencyGame = resourceEfficiencyAssuranceScore(efficiencyAnswers);
   const testingGame = testingValidationAssuranceScore(testingAnswers);
+  const boundaryGame = purposeBoundaryAssuranceScore(boundaryAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -1562,6 +1568,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good testing/validation assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="purpose-boundary-assurance" className="checklist-phase" aria-label="Purpose limitation and use-case boundary assurance game">
+        <h2>Purpose limitation & use-case boundary assurance</h2>
+        <p>
+          Practice defining approved/prohibited uses, enforcing scope guardrails for out-of-bounds
+          requests, reviewing repurposing or expansion, and communicating/evidencing boundaries.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {boundaryGame.correct}/{boundaryGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {boundaryGame.complete && (
+            <Button variant="outline" onClick={() => setBoundaryAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PURPOSE_BOUNDARY_ASSURANCE_ROUNDS.map((round) => {
+            const selected = boundaryAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setBoundaryAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good purpose/boundary assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
