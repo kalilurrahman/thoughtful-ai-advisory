@@ -248,6 +248,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "service-level-reliability-assurance",
   },
   {
+    id: "explainability-interpretability-assurance",
+    title: "Explainability & interpretability assurance",
+    category: "Explainability & interpretability",
+    description:
+      "Practice appropriate explanations for context/audience, communicating limitations, supporting reviewer understanding, and validating/documenting usefulness.",
+    anchor: "explainability-interpretability-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
