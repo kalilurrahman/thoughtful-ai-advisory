@@ -13,7 +13,7 @@
  * Kill switch: replace this file with one that calls self.registration.unregister() in its
  * activate handler and deletes the "veritrail-" caches.
  */
-const VERSION = "v1";
+const VERSION = "v2"; // bumped with the major release (src/data/release.ts)
 const STATIC_CACHE = `veritrail-static-${VERSION}`;
 const PAGE_CACHE = `veritrail-pages-${VERSION}`;
 const FONT_CACHE = `veritrail-fonts-${VERSION}`;

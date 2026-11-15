@@ -1286,7 +1286,8 @@ textarea:focus {
   align-items: start;
   gap: 10px;
 }
-.system-row h3 {
+.system-row h3,
+.system-row h2 {
   font-size: 19px;
   flex: 1;
 }
@@ -1543,7 +1544,8 @@ input[type="range"] {
 .pack-card > div {
   flex: 1;
 }
-.pack-card h3 {
+.pack-card h3,
+.pack-card h2 {
   font-size: 18px;
 }
 .pack-card p {
@@ -4823,7 +4825,8 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .veritrail-app .system-card:has([data-tier="Minimal"]) {
   border-top: 3px solid var(--border);
 }
-.veritrail-app .system-card h3 {
+.veritrail-app .system-card h3,
+.veritrail-app .system-card h2 {
   font-size: 17px;
   font-weight: 600;
 }
@@ -5013,4 +5016,11 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   height: 14px;
   margin-right: 4px;
   vertical-align: -2px;
+}
+
+/* ---- Release watermark (src/data/release.ts) */
+.veritrail-app .sidebar-release {
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
