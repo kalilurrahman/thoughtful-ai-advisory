@@ -256,6 +256,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "explainability-interpretability-assurance",
   },
   {
+    id: "data-retention-deletion-assurance",
+    title: "Data retention & deletion assurance",
+    category: "Data retention & deletion",
+    description:
+      "Practice proportionate retention limits, reliable deletion/lifecycle disposal, protection during retention, and evidence of compliance.",
+    anchor: "data-retention-deletion-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
