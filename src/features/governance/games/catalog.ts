@@ -184,6 +184,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "resource-efficiency-assurance",
   },
   {
+    id: "testing-validation-assurance",
+    title: "Testing, validation & evaluation assurance",
+    category: "Testing & evaluation",
+    description:
+      "Practice evaluation design and acceptance criteria, representative/edge-case testing, guardrail validation, and regression evidence after changes.",
+    anchor: "testing-validation-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
