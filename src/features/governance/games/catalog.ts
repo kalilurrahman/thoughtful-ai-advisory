@@ -359,4 +359,12 @@ export const GOVERNANCE_GAMES = [
       "Practice risk-based vendor due diligence, contractual guardrails, dependency/concentration planning, and ongoing monitoring with evidence refresh.",
     anchor: "vendor-ai-assurance",
   },
+  {
+    id: "transparency-disclosure-assurance",
+    title: "Transparency & user disclosure assurance",
+    category: "Transparency & user rights",
+    description:
+      "Practice clear AI disclosure, communicating limitations/uncertainty, contestability and recourse channels, and evidence-backed transparency effectiveness.",
+    anchor: "transparency-disclosure-assurance",
+  },
 ] as const;

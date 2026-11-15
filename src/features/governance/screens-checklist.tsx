@@ -169,6 +169,10 @@ import {
   VENDOR_AI_ASSURANCE_ROUNDS,
   vendorAIAssuranceScore,
 } from "./vendor-ai-assurance-game";
+import {
+  TRANSPARENCY_DISCLOSURE_ASSURANCE_ROUNDS,
+  transparencyDisclosureAssuranceScore,
+} from "./transparency-disclosure-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -223,6 +227,7 @@ export function ChecklistScreen() {
   const [literacyAnswers, setLiteracyAnswers] = useState<Record<string, number>>({});
   const [handoffAnswers, setHandoffAnswers] = useState<Record<string, number>>({});
   const [vendorAssuranceAnswers, setVendorAssuranceAnswers] = useState<Record<string, number>>({});
+  const [disclosureAnswers, setDisclosureAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -272,6 +277,7 @@ export function ChecklistScreen() {
   const literacyGame = aiLiteracyEnablementAssuranceScore(literacyAnswers);
   const handoffGame = humanAIHandoffAssuranceScore(handoffAnswers);
   const vendorGame = vendorAIAssuranceScore(vendorAssuranceAnswers);
+  const disclosureGame = transparencyDisclosureAssuranceScore(disclosureAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2617,6 +2623,64 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good vendor-assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="transparency-disclosure-assurance" className="checklist-phase" aria-label="Transparency and user disclosure assurance game">
+        <h2>Transparency & user disclosure assurance</h2>
+        <p>
+          Practice clear AI disclosure and notice, communicating limitations and uncertainty,
+          providing contestability/feedback/recourse channels, and evaluating transparency
+          effectiveness with evidence. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {disclosureGame.correct}/{disclosureGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {disclosureGame.complete && (
+            <Button variant="outline" onClick={() => setDisclosureAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {TRANSPARENCY_DISCLOSURE_ASSURANCE_ROUNDS.map((round) => {
+            const selected = disclosureAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setDisclosureAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good transparency/disclosure assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
