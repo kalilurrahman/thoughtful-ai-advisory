@@ -186,6 +186,57 @@ export function calculate(
       action: "Weakest pillar: " + at(PILLARS, scores.indexOf(Math.min(...scores))).name + ".",
     };
   }
+  if (id === "guardrail-effort") {
+    const systems = v["systems"] ?? 0,
+      req = v["req"] ?? 0,
+      missingPct = (v["missing"] ?? 0) / 100,
+      hoursPer = v["hours"] ?? 0,
+      rate = v["rate"] ?? 0,
+      totalRequired = systems * req,
+      missing = Math.round(totalRequired * missingPct),
+      hours = missing * hoursPer,
+      cost = hours * rate,
+      weeks = Math.max(1, Math.ceil(hours / 40));
+    return {
+      headline: "Guardrail remediation effort",
+      value: missing.toLocaleString() + " controls",
+      raw: missing,
+      rows: [
+        ["Total required controls (est.)", Math.round(totalRequired).toLocaleString()],
+        ["Estimated remediation hours", hours.toLocaleString() + " h"],
+        ["Estimated effort cost", money(cost)],
+        ["At 40 h/week", weeks + " week" + (weeks === 1 ? "" : "s")],
+      ],
+      action:
+        missing > 0
+          ? "Prioritize missing required guardrails for high-risk systems and track evidence as each control is implemented and verified."
+          : "No missing required controls estimated — maintain evidence and review coverage as systems or tiers change.",
+    };
+  }
+  if (id === "assurance-readiness") {
+    const evidence = v["evidence"] ?? 0,
+      incidents = v["incidents"] ?? 0,
+      gates = v["gates"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      score = Math.round(evidence * 0.35 + incidents * 0.2 + gates * 0.25 + monitoring * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Assurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Evidence attached (35%)", evidence + "%"],
+        ["Incident readiness (20%)", incidents + "%"],
+        ["Release gates (25%)", gates + "%"],
+        ["Monitoring cadence (20%)", monitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Focus on the lowest area: attach evidence to tested controls, assign incident owners/responses, satisfy release gates, and review monitoring signals on cadence."
+          : "Readiness is trending well — keep evidence current, exercise incident/gate workflows, and review assurance signals regularly.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
