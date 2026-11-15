@@ -121,6 +121,10 @@ import {
   MODEL_PROMPT_CONFIG_ASSURANCE_ROUNDS,
   modelPromptConfigAssuranceScore,
 } from "./model-prompt-config-assurance-game";
+import {
+  CONTENT_SAFETY_MISUSE_ASSURANCE_ROUNDS,
+  contentSafetyMisuseAssuranceScore,
+} from "./content-safety-misuse-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -163,6 +167,7 @@ export function ChecklistScreen() {
   const [loggingAnswers, setLoggingAnswers] = useState<Record<string, number>>({});
   const [accessAnswers, setAccessAnswers] = useState<Record<string, number>>({});
   const [configAnswers, setConfigAnswers] = useState<Record<string, number>>({});
+  const [safetyAnswers, setSafetyAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -200,6 +205,7 @@ export function ChecklistScreen() {
   const loggingGame = loggingTraceabilityAssuranceScore(loggingAnswers);
   const accessGame = accessIdentityAssuranceScore(accessAnswers);
   const configGame = modelPromptConfigAssuranceScore(configAnswers);
+  const safetyGame = contentSafetyMisuseAssuranceScore(safetyAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -1867,6 +1873,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good configuration-governance assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="content-safety-misuse-assurance" className="checklist-phase" aria-label="Content safety and misuse prevention assurance game">
+        <h2>Content safety & misuse prevention assurance</h2>
+        <p>
+          Practice safety/misuse policies, input/output safeguards and refusal behaviors, handling
+          dual-use or ambiguous requests with escalation, and evidence-backed tuning of guardrails.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {safetyGame.correct}/{safetyGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {safetyGame.complete && (
+            <Button variant="outline" onClick={() => setSafetyAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CONTENT_SAFETY_MISUSE_ASSURANCE_ROUNDS.map((round) => {
+            const selected = safetyAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setSafetyAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good content-safety assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
