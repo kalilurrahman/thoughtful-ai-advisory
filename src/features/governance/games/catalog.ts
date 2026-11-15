@@ -208,6 +208,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "output-quality-reliability-assurance",
   },
   {
+    id: "logging-traceability-assurance",
+    title: "Logging, traceability & auditability assurance",
+    category: "Logging & auditability",
+    description:
+      "Practice meaningful logging, integrity/privacy protection, traceable investigation records, and retention/review for audit readiness.",
+    anchor: "logging-traceability-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",

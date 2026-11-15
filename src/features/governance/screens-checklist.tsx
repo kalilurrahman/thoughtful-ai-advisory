@@ -109,6 +109,10 @@ import {
   OUTPUT_QUALITY_RELIABILITY_ROUNDS,
   outputQualityReliabilityScore,
 } from "./output-quality-reliability-game";
+import {
+  LOGGING_TRACEABILITY_ASSURANCE_ROUNDS,
+  loggingTraceabilityAssuranceScore,
+} from "./logging-traceability-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -148,6 +152,7 @@ export function ChecklistScreen() {
   const [testingAnswers, setTestingAnswers] = useState<Record<string, number>>({});
   const [boundaryAnswers, setBoundaryAnswers] = useState<Record<string, number>>({});
   const [qualityAnswers, setQualityAnswers] = useState<Record<string, number>>({});
+  const [loggingAnswers, setLoggingAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -182,6 +187,7 @@ export function ChecklistScreen() {
   const testingGame = testingValidationAssuranceScore(testingAnswers);
   const boundaryGame = purposeBoundaryAssuranceScore(boundaryAnswers);
   const qualityGame = outputQualityReliabilityScore(qualityAnswers);
+  const loggingGame = loggingTraceabilityAssuranceScore(loggingAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -1684,6 +1690,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good output-quality assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="logging-traceability-assurance" className="checklist-phase" aria-label="Logging, traceability and auditability assurance game">
+        <h2>Logging, traceability & auditability assurance</h2>
+        <p>
+          Practice meaningful and proportionate logging, protecting integrity/privacy, maintaining
+          traceability for investigation and review, and retention/access practices for audit
+          readiness. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {loggingGame.correct}/{loggingGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {loggingGame.complete && (
+            <Button variant="outline" onClick={() => setLoggingAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {LOGGING_TRACEABILITY_ASSURANCE_ROUNDS.map((round) => {
+            const selected = loggingAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setLoggingAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good logging/traceability assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
