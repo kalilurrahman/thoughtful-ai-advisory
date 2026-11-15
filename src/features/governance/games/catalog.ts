@@ -272,6 +272,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "ethical-values-alignment-assurance",
   },
   {
+    id: "procurement-contracting-assurance",
+    title: "Procurement & contracting assurance for AI",
+    category: "Procurement & contracting",
+    description:
+      "Practice AI-specific procurement requirements, evidence-based vendor evaluation, clear contract terms, and ongoing onboarding/vendor assurance reviews.",
+    anchor: "procurement-contracting-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
