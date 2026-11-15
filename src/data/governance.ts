@@ -1150,6 +1150,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "vendor-ai-assurance",
+    name: "Third-party AI assurance readiness",
+    desc: "Estimate readiness for third-party/vendor AI assurance across due diligence, contracts, dependency planning, and ongoing monitoring.",
+    inputs: [
+      {
+        k: "assessed",
+        label: "Critical AI vendors assessed with evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "contracts",
+        label: "Contracts with data, security & incident terms",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "fallback",
+        label: "Critical dependencies with fallback/exit coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Vendors monitored with refreshed assurance evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
