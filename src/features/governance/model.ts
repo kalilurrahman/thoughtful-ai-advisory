@@ -237,6 +237,30 @@ export function calculate(
           : "Readiness is trending well — keep evidence current, exercise incident/gate workflows, and review assurance signals regularly.",
     };
   }
+  if (id === "literacy-enablement") {
+    const roles = v["roles"] ?? 0,
+      safeuse = v["safeuse"] ?? 0,
+      freshness = v["freshness"] ?? 0,
+      reporting = v["reporting"] ?? 0,
+      score = Math.round(roles * 0.3 + safeuse * 0.3 + freshness * 0.2 + reporting * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI literacy & enablement coverage",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Role-appropriate guidance (30%)", roles + "%"],
+        ["Practical safe-use guidance (30%)", safeuse + "%"],
+        ["Guidance freshness/cadence (20%)", freshness + "%"],
+        ["Issue/uncertainty reporting adoption (20%)", reporting + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: extend role-tailored guidance and safe-use examples, keep materials current on a review cadence, and make reporting/escalation easy and expected."
+          : "Coverage is trending well — refresh guidance as systems change, reinforce verification practices, and use feedback signals to improve enablement.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

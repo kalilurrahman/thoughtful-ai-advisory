@@ -1107,6 +1107,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "literacy-enablement",
+    name: "AI literacy & enablement coverage",
+    desc: "Estimate role-based AI literacy and enablement coverage, freshness, and reporting adoption.",
+    inputs: [
+      {
+        k: "roles",
+        label: "Roles/users with role-appropriate guidance",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "safeuse",
+        label: "Users with practical safe-use guidance/examples",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "freshness",
+        label: "Guidance current/reviewed on cadence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reporting",
+        label: "Users able and encouraged to report issues/uncertainty",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
