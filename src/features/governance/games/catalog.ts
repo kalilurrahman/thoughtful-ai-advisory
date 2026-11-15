@@ -200,6 +200,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "purpose-boundary-assurance",
   },
   {
+    id: "output-quality-reliability-assurance",
+    title: "Output quality & reliability assurance",
+    category: "Quality & reliability",
+    description:
+      "Practice quality/reliability expectations, handling errors/hallucinations and uncertainty, confidence communication, and evidence-backed improvement.",
+    anchor: "output-quality-reliability-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
