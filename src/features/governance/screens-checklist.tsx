@@ -157,6 +157,10 @@ import {
   DECOMMISSIONING_RETIREMENT_ASSURANCE_ROUNDS,
   decommissioningRetirementAssuranceScore,
 } from "./decommissioning-retirement-assurance-game";
+import {
+  AI_LITERACY_ENABLEMENT_ASSURANCE_ROUNDS,
+  aiLiteracyEnablementAssuranceScore,
+} from "./ai-literacy-enablement-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -208,6 +212,7 @@ export function ChecklistScreen() {
   const [labelingAnswers, setLabelingAnswers] = useState<Record<string, number>>({});
   const [incidentCommsAnswers, setIncidentCommsAnswers] = useState<Record<string, number>>({});
   const [retirementAnswers, setRetirementAnswers] = useState<Record<string, number>>({});
+  const [literacyAnswers, setLiteracyAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -254,6 +259,7 @@ export function ChecklistScreen() {
   const labelingGame = dataLabelingQualityAssuranceScore(labelingAnswers);
   const incidentCommsGame = incidentCommunicationTabletopScore(incidentCommsAnswers);
   const retirementGame = decommissioningRetirementAssuranceScore(retirementAnswers);
+  const literacyGame = aiLiteracyEnablementAssuranceScore(literacyAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2424,6 +2430,64 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good decommissioning/retirement assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="ai-literacy-enablement-assurance" className="checklist-phase" aria-label="AI literacy and user enablement assurance game">
+        <h2>AI literacy & user enablement assurance</h2>
+        <p>
+          Practice role-appropriate AI literacy, clear expectations of capabilities and limitations,
+          safe/effective use guidance and examples, and feedback-driven improvement of enablement
+          resources. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {literacyGame.correct}/{literacyGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {literacyGame.complete && (
+            <Button variant="outline" onClick={() => setLiteracyAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {AI_LITERACY_ENABLEMENT_ASSURANCE_ROUNDS.map((round) => {
+            const selected = literacyAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setLiteracyAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good AI-literacy/enablement assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
