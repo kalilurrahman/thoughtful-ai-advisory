@@ -288,6 +288,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "data-labeling-quality-assurance",
   },
   {
+    id: "incident-communication-tabletop-assurance",
+    title: "Incident communication tabletop assurance",
+    category: "Incident communication",
+    description:
+      "Practice cross-functional coordination, timely/factual updates, escalation and decision logging, and after-action communication review.",
+    anchor: "incident-communication-tabletop-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",

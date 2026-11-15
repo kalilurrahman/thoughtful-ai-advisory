@@ -149,6 +149,10 @@ import {
   DATA_LABELING_QUALITY_ASSURANCE_ROUNDS,
   dataLabelingQualityAssuranceScore,
 } from "./data-labeling-quality-assurance-game";
+import {
+  INCIDENT_COMMUNICATION_TABLETOP_ROUNDS,
+  incidentCommunicationTabletopScore,
+} from "./incident-communication-tabletop-game";
 
 const statusText = {
   complete: "Complete",
@@ -198,6 +202,7 @@ export function ChecklistScreen() {
   const [ethicsAnswers, setEthicsAnswers] = useState<Record<string, number>>({});
   const [procurementAnswers, setProcurementAnswers] = useState<Record<string, number>>({});
   const [labelingAnswers, setLabelingAnswers] = useState<Record<string, number>>({});
+  const [incidentCommsAnswers, setIncidentCommsAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -242,6 +247,7 @@ export function ChecklistScreen() {
   const ethicsGame = ethicalValuesAlignmentAssuranceScore(ethicsAnswers);
   const procurementGame = procurementContractingAssuranceScore(procurementAnswers);
   const labelingGame = dataLabelingQualityAssuranceScore(labelingAnswers);
+  const incidentCommsGame = incidentCommunicationTabletopScore(incidentCommsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2295,6 +2301,64 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good data-labeling assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="incident-communication-tabletop-assurance" className="checklist-phase" aria-label="Incident communication tabletop assurance game">
+        <h2>Incident communication tabletop assurance</h2>
+        <p>
+          Practice cross-functional coordination during AI incidents, timely and factual stakeholder
+          updates, escalation and decision logging under pressure, and after-action review of
+          communication effectiveness. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {incidentCommsGame.correct}/{incidentCommsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {incidentCommsGame.complete && (
+            <Button variant="outline" onClick={() => setIncidentCommsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {INCIDENT_COMMUNICATION_TABLETOP_ROUNDS.map((round) => {
+            const selected = incidentCommsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setIncidentCommsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good incident-communication assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
