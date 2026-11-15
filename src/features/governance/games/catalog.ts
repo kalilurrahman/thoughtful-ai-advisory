@@ -296,6 +296,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "incident-communication-tabletop-assurance",
   },
   {
+    id: "decommissioning-retirement-assurance",
+    title: "AI system decommissioning & retirement assurance",
+    category: "Decommissioning & retirement",
+    description:
+      "Practice planned retirement, stakeholder communication and alternatives, access revocation and data/model disposal, and closure evidence/lessons learned.",
+    anchor: "decommissioning-retirement-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
