@@ -117,6 +117,10 @@ import {
   ACCESS_IDENTITY_ASSURANCE_ROUNDS,
   accessIdentityAssuranceScore,
 } from "./access-identity-assurance-game";
+import {
+  MODEL_PROMPT_CONFIG_ASSURANCE_ROUNDS,
+  modelPromptConfigAssuranceScore,
+} from "./model-prompt-config-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -158,6 +162,7 @@ export function ChecklistScreen() {
   const [qualityAnswers, setQualityAnswers] = useState<Record<string, number>>({});
   const [loggingAnswers, setLoggingAnswers] = useState<Record<string, number>>({});
   const [accessAnswers, setAccessAnswers] = useState<Record<string, number>>({});
+  const [configAnswers, setConfigAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -194,6 +199,7 @@ export function ChecklistScreen() {
   const qualityGame = outputQualityReliabilityScore(qualityAnswers);
   const loggingGame = loggingTraceabilityAssuranceScore(loggingAnswers);
   const accessGame = accessIdentityAssuranceScore(accessAnswers);
+  const configGame = modelPromptConfigAssuranceScore(configAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -1806,6 +1812,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good access/identity assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="model-prompt-config-assurance" className="checklist-phase" aria-label="Model and prompt configuration governance assurance game">
+        <h2>Model & prompt configuration governance</h2>
+        <p>
+          Practice controlled management of models/prompts/configurations, versioning and approvals,
+          safe settings and guardrail alignment, and rollback readiness with traceable evidence.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {configGame.correct}/{configGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {configGame.complete && (
+            <Button variant="outline" onClick={() => setConfigAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {MODEL_PROMPT_CONFIG_ASSURANCE_ROUNDS.map((round) => {
+            const selected = configAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setConfigAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good configuration-governance assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
