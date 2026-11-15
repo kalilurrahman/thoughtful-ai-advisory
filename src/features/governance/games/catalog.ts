@@ -351,4 +351,12 @@ export const GOVERNANCE_GAMES = [
       "Practice clear task division and handoffs, preserving human context/judgment, escalation on low confidence, and evidence-backed review to avoid overreliance.",
     anchor: "human-ai-handoff-assurance",
   },
+  {
+    id: "vendor-ai-assurance",
+    title: "Third-party & vendor AI assurance",
+    category: "Third-party & supply chain",
+    description:
+      "Practice risk-based vendor due diligence, contractual guardrails, dependency/concentration planning, and ongoing monitoring with evidence refresh.",
+    anchor: "vendor-ai-assurance",
+  },
 ] as const;
