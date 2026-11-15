@@ -133,6 +133,10 @@ import {
   EXPLAINABILITY_INTERPRETABILITY_ROUNDS,
   explainabilityInterpretabilityScore,
 } from "./explainability-interpretability-game";
+import {
+  DATA_RETENTION_DELETION_ASSURANCE_ROUNDS,
+  dataRetentionDeletionAssuranceScore,
+} from "./data-retention-deletion-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -178,6 +182,7 @@ export function ChecklistScreen() {
   const [safetyAnswers, setSafetyAnswers] = useState<Record<string, number>>({});
   const [serviceAnswers, setServiceAnswers] = useState<Record<string, number>>({});
   const [explainabilityAnswers, setExplainabilityAnswers] = useState<Record<string, number>>({});
+  const [retentionAnswers, setRetentionAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -218,6 +223,7 @@ export function ChecklistScreen() {
   const safetyGame = contentSafetyMisuseAssuranceScore(safetyAnswers);
   const serviceGame = serviceLevelReliabilityAssuranceScore(serviceAnswers);
   const explainabilityGame = explainabilityInterpretabilityScore(explainabilityAnswers);
+  const retentionGame = dataRetentionDeletionAssuranceScore(retentionAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2050,6 +2056,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good explainability/interpretability assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="data-retention-deletion-assurance" className="checklist-phase" aria-label="Data retention and deletion assurance game">
+        <h2>Data retention & deletion assurance</h2>
+        <p>
+          Practice proportionate retention limits, reliable deletion/lifecycle disposal, protection
+          of retained data, and evidence that retention/deletion practices are followed. Scenarios
+          are learning prompts, not legal advice or compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {retentionGame.correct}/{retentionGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {retentionGame.complete && (
+            <Button variant="outline" onClick={() => setRetentionAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {DATA_RETENTION_DELETION_ASSURANCE_ROUNDS.map((round) => {
+            const selected = retentionAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setRetentionAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good retention/deletion assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
