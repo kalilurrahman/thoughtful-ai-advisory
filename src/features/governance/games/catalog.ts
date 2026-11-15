@@ -224,6 +224,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "access-identity-assurance",
   },
   {
+    id: "model-prompt-config-assurance",
+    title: "Model & prompt configuration governance",
+    category: "Configuration governance",
+    description:
+      "Practice controlled model/prompt/config management, versioning and approvals, safe settings/guardrails, and rollback traceability.",
+    anchor: "model-prompt-config-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
