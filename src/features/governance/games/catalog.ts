@@ -216,6 +216,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "logging-traceability-assurance",
   },
   {
+    id: "access-identity-assurance",
+    title: "Access control & identity assurance",
+    category: "Access & identity",
+    description:
+      "Practice least-privilege access, strong identity/authentication, access reviews/revocation, and segregation of duties with evidence.",
+    anchor: "access-identity-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
