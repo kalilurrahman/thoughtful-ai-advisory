@@ -232,6 +232,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "model-prompt-config-assurance",
   },
   {
+    id: "content-safety-misuse-assurance",
+    title: "Content safety & misuse prevention assurance",
+    category: "Content safety & misuse",
+    description:
+      "Practice safety/misuse policies, input/output safeguards and refusals, dual-use handling and escalation, and evidence-backed guardrail tuning.",
+    anchor: "content-safety-misuse-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
