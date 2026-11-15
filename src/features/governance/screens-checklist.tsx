@@ -141,6 +141,10 @@ import {
   ETHICAL_VALUES_ALIGNMENT_ASSURANCE_ROUNDS,
   ethicalValuesAlignmentAssuranceScore,
 } from "./ethical-values-alignment-assurance-game";
+import {
+  PROCUREMENT_CONTRACTING_ASSURANCE_ROUNDS,
+  procurementContractingAssuranceScore,
+} from "./procurement-contracting-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -188,6 +192,7 @@ export function ChecklistScreen() {
   const [explainabilityAnswers, setExplainabilityAnswers] = useState<Record<string, number>>({});
   const [retentionAnswers, setRetentionAnswers] = useState<Record<string, number>>({});
   const [ethicsAnswers, setEthicsAnswers] = useState<Record<string, number>>({});
+  const [procurementAnswers, setProcurementAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -230,6 +235,7 @@ export function ChecklistScreen() {
   const explainabilityGame = explainabilityInterpretabilityScore(explainabilityAnswers);
   const retentionGame = dataRetentionDeletionAssuranceScore(retentionAnswers);
   const ethicsGame = ethicalValuesAlignmentAssuranceScore(ethicsAnswers);
+  const procurementGame = procurementContractingAssuranceScore(procurementAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2173,6 +2179,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good ethical/values-alignment assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="procurement-contracting-assurance" className="checklist-phase" aria-label="Procurement and contracting assurance for AI game">
+        <h2>Procurement & contracting assurance for AI</h2>
+        <p>
+          Practice AI-specific procurement requirements, evidence-based vendor evaluation, clear
+          contract terms and responsibilities, and onboarding due diligence with ongoing vendor
+          assurance reviews. Scenarios are learning prompts, not legal or compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {procurementGame.correct}/{procurementGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {procurementGame.complete && (
+            <Button variant="outline" onClick={() => setProcurementAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PROCUREMENT_CONTRACTING_ASSURANCE_ROUNDS.map((round) => {
+            const selected = procurementAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setProcurementAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good procurement/contracting assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
