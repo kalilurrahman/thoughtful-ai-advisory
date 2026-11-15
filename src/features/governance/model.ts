@@ -261,6 +261,30 @@ export function calculate(
           : "Coverage is trending well — refresh guidance as systems change, reinforce verification practices, and use feedback signals to improve enablement.",
     };
   }
+  if (id === "vendor-ai-assurance") {
+    const assessed = v["assessed"] ?? 0,
+      contracts = v["contracts"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      score = Math.round(assessed * 0.3 + contracts * 0.3 + fallback * 0.2 + monitoring * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Third-party AI assurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Critical vendors assessed (30%)", assessed + "%"],
+        ["Contracts with guardrail/incident terms (30%)", contracts + "%"],
+        ["Fallback/exit coverage (20%)", fallback + "%"],
+        ["Monitoring & evidence refresh (20%)", monitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: complete risk-based due diligence for critical vendors, strengthen contractual data/security/incident terms, plan fallback/exit options, and monitor vendors with refreshed assurance evidence."
+          : "Readiness is trending well — keep vendor assessments, contracts, dependency plans, and monitoring evidence current as services and risks change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
