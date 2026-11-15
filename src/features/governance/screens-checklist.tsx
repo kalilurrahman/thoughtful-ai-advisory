@@ -161,6 +161,10 @@ import {
   AI_LITERACY_ENABLEMENT_ASSURANCE_ROUNDS,
   aiLiteracyEnablementAssuranceScore,
 } from "./ai-literacy-enablement-assurance-game";
+import {
+  HUMAN_AI_HANDOFF_ASSURANCE_ROUNDS,
+  humanAIHandoffAssuranceScore,
+} from "./human-ai-handoff-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -213,6 +217,7 @@ export function ChecklistScreen() {
   const [incidentCommsAnswers, setIncidentCommsAnswers] = useState<Record<string, number>>({});
   const [retirementAnswers, setRetirementAnswers] = useState<Record<string, number>>({});
   const [literacyAnswers, setLiteracyAnswers] = useState<Record<string, number>>({});
+  const [handoffAnswers, setHandoffAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -260,6 +265,7 @@ export function ChecklistScreen() {
   const incidentCommsGame = incidentCommunicationTabletopScore(incidentCommsAnswers);
   const retirementGame = decommissioningRetirementAssuranceScore(retirementAnswers);
   const literacyGame = aiLiteracyEnablementAssuranceScore(literacyAnswers);
+  const handoffGame = humanAIHandoffAssuranceScore(handoffAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2488,6 +2494,65 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good AI-literacy/enablement assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="human-ai-handoff-assurance" className="checklist-phase" aria-label="Human-AI collaboration and handoff assurance game">
+        <h2>Human-AI collaboration & handoff assurance</h2>
+        <p>
+          Practice clear task division and handoff points, preserving human context and judgment,
+          escalation on low confidence or elevated risk, and evidence-backed review to avoid
+          overreliance and automation complacency. Scenarios are learning prompts, not compliance
+          determinations.
+        </p>
+        <p>
+          <strong>
+            {handoffGame.correct}/{handoffGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {handoffGame.complete && (
+            <Button variant="outline" onClick={() => setHandoffAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {HUMAN_AI_HANDOFF_ASSURANCE_ROUNDS.map((round) => {
+            const selected = handoffAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setHandoffAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good collaboration/handoff assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>

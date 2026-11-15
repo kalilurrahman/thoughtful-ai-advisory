@@ -343,4 +343,12 @@ export const GOVERNANCE_GAMES = [
       "Map material AI changes to the governance areas that require review before implementation.",
     anchor: "change-impact",
   },
+  {
+    id: "human-ai-handoff-assurance",
+    title: "Human-AI collaboration & handoff assurance",
+    category: "Human oversight & collaboration",
+    description:
+      "Practice clear task division and handoffs, preserving human context/judgment, escalation on low confidence, and evidence-backed review to avoid overreliance.",
+    anchor: "human-ai-handoff-assurance",
+  },
 ] as const;
