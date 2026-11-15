@@ -264,6 +264,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "data-retention-deletion-assurance",
   },
   {
+    id: "ethical-values-alignment-assurance",
+    title: "Ethical use & values alignment assurance",
+    category: "Ethics & values alignment",
+    description:
+      "Practice defining AI principles, assessing use cases against values/impacts, transparent trade-offs, and evidence-backed concern review.",
+    anchor: "ethical-values-alignment-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",

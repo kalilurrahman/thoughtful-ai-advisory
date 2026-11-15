@@ -137,6 +137,10 @@ import {
   DATA_RETENTION_DELETION_ASSURANCE_ROUNDS,
   dataRetentionDeletionAssuranceScore,
 } from "./data-retention-deletion-assurance-game";
+import {
+  ETHICAL_VALUES_ALIGNMENT_ASSURANCE_ROUNDS,
+  ethicalValuesAlignmentAssuranceScore,
+} from "./ethical-values-alignment-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -183,6 +187,7 @@ export function ChecklistScreen() {
   const [serviceAnswers, setServiceAnswers] = useState<Record<string, number>>({});
   const [explainabilityAnswers, setExplainabilityAnswers] = useState<Record<string, number>>({});
   const [retentionAnswers, setRetentionAnswers] = useState<Record<string, number>>({});
+  const [ethicsAnswers, setEthicsAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -224,6 +229,7 @@ export function ChecklistScreen() {
   const serviceGame = serviceLevelReliabilityAssuranceScore(serviceAnswers);
   const explainabilityGame = explainabilityInterpretabilityScore(explainabilityAnswers);
   const retentionGame = dataRetentionDeletionAssuranceScore(retentionAnswers);
+  const ethicsGame = ethicalValuesAlignmentAssuranceScore(ethicsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2111,6 +2117,62 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good retention/deletion assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="ethical-values-alignment-assurance" className="checklist-phase" aria-label="Ethical use and values alignment assurance game">
+        <h2>Ethical use & values alignment assurance</h2>
+        <p>
+          Practice defining AI principles and boundaries, assessing use cases against values and
+          stakeholder impacts, handling trade-offs transparently, and reviewing/responding to
+          ethical concerns with evidence-backed learning. Scenarios are learning prompts, not
+          compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {ethicsGame.correct}/{ethicsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {ethicsGame.complete && (
+            <Button variant="outline" onClick={() => setEthicsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {ETHICAL_VALUES_ALIGNMENT_ASSURANCE_ROUNDS.map((round) => {
+            const selected = ethicsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setEthicsAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good ethical/values-alignment assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
