@@ -125,6 +125,10 @@ import {
   CONTENT_SAFETY_MISUSE_ASSURANCE_ROUNDS,
   contentSafetyMisuseAssuranceScore,
 } from "./content-safety-misuse-assurance-game";
+import {
+  SERVICE_LEVEL_RELIABILITY_ASSURANCE_ROUNDS,
+  serviceLevelReliabilityAssuranceScore,
+} from "./service-level-reliability-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -168,6 +172,7 @@ export function ChecklistScreen() {
   const [accessAnswers, setAccessAnswers] = useState<Record<string, number>>({});
   const [configAnswers, setConfigAnswers] = useState<Record<string, number>>({});
   const [safetyAnswers, setSafetyAnswers] = useState<Record<string, number>>({});
+  const [serviceAnswers, setServiceAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -206,6 +211,7 @@ export function ChecklistScreen() {
   const accessGame = accessIdentityAssuranceScore(accessAnswers);
   const configGame = modelPromptConfigAssuranceScore(configAnswers);
   const safetyGame = contentSafetyMisuseAssuranceScore(safetyAnswers);
+  const serviceGame = serviceLevelReliabilityAssuranceScore(serviceAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -1928,6 +1934,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good content-safety assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="service-level-reliability-assurance" className="checklist-phase" aria-label="Performance and service-level assurance game">
+        <h2>Performance & service-level assurance</h2>
+        <p>
+          Practice service/reliability expectations, capacity and safe degraded-mode safeguards,
+          actionable monitoring and alerts, and evidence-backed reliability review/improvement.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {serviceGame.correct}/{serviceGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {serviceGame.complete && (
+            <Button variant="outline" onClick={() => setServiceAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SERVICE_LEVEL_RELIABILITY_ASSURANCE_ROUNDS.map((round) => {
+            const selected = serviceAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setServiceAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good service-level assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>

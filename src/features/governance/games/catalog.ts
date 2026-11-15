@@ -240,6 +240,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "content-safety-misuse-assurance",
   },
   {
+    id: "service-level-reliability-assurance",
+    title: "Performance & service-level assurance",
+    category: "Performance & reliability",
+    description:
+      "Practice service/reliability expectations, capacity and degraded-mode safeguards, actionable monitoring/alerts, and evidence-backed improvement.",
+    anchor: "service-level-reliability-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
