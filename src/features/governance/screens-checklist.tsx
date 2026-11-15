@@ -113,6 +113,10 @@ import {
   LOGGING_TRACEABILITY_ASSURANCE_ROUNDS,
   loggingTraceabilityAssuranceScore,
 } from "./logging-traceability-assurance-game";
+import {
+  ACCESS_IDENTITY_ASSURANCE_ROUNDS,
+  accessIdentityAssuranceScore,
+} from "./access-identity-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -153,6 +157,7 @@ export function ChecklistScreen() {
   const [boundaryAnswers, setBoundaryAnswers] = useState<Record<string, number>>({});
   const [qualityAnswers, setQualityAnswers] = useState<Record<string, number>>({});
   const [loggingAnswers, setLoggingAnswers] = useState<Record<string, number>>({});
+  const [accessAnswers, setAccessAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -188,6 +193,7 @@ export function ChecklistScreen() {
   const boundaryGame = purposeBoundaryAssuranceScore(boundaryAnswers);
   const qualityGame = outputQualityReliabilityScore(qualityAnswers);
   const loggingGame = loggingTraceabilityAssuranceScore(loggingAnswers);
+  const accessGame = accessIdentityAssuranceScore(accessAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -1745,6 +1751,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good logging/traceability assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="access-identity-assurance" className="checklist-phase" aria-label="Access control and identity assurance game">
+        <h2>Access control & identity assurance</h2>
+        <p>
+          Practice least-privilege and role-based access, strong identity/authentication and
+          credential control, access reviews and timely revocation, and segregation of duties with
+          evidence. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {accessGame.correct}/{accessGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {accessGame.complete && (
+            <Button variant="outline" onClick={() => setAccessAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {ACCESS_IDENTITY_ASSURANCE_ROUNDS.map((round) => {
+            const selected = accessAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAccessAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good access/identity assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
