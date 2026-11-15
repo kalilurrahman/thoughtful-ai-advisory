@@ -304,6 +304,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "decommissioning-retirement-assurance",
   },
   {
+    id: "ai-literacy-enablement-assurance",
+    title: "AI literacy & user enablement assurance",
+    category: "Literacy & enablement",
+    description:
+      "Practice role-appropriate AI literacy, clear capabilities/limitations, safe/effective use guidance, and feedback-driven enablement improvement.",
+    anchor: "ai-literacy-enablement-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
