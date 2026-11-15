@@ -280,6 +280,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "procurement-contracting-assurance",
   },
   {
+    id: "data-labeling-quality-assurance",
+    title: "Data labeling & annotation quality assurance",
+    category: "Data labeling & quality",
+    description:
+      "Practice clear labeling guidelines, annotator training and consistency, ambiguity/edge-case handling, and QA audits with evidence-backed feedback.",
+    anchor: "data-labeling-quality-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
