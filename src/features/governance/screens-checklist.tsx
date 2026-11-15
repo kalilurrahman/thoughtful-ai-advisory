@@ -222,7 +222,7 @@ export function ChecklistScreen() {
   const [retirementAnswers, setRetirementAnswers] = useState<Record<string, number>>({});
   const [literacyAnswers, setLiteracyAnswers] = useState<Record<string, number>>({});
   const [handoffAnswers, setHandoffAnswers] = useState<Record<string, number>>({});
-  const [vendorAnswers, setVendorAnswers] = useState<Record<string, number>>({});
+  const [vendorAssuranceAnswers, setVendorAssuranceAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -271,7 +271,7 @@ export function ChecklistScreen() {
   const retirementGame = decommissioningRetirementAssuranceScore(retirementAnswers);
   const literacyGame = aiLiteracyEnablementAssuranceScore(literacyAnswers);
   const handoffGame = humanAIHandoffAssuranceScore(handoffAnswers);
-  const vendorGame = vendorAIAssuranceScore(vendorAnswers);
+  const vendorGame = vendorAIAssuranceScore(vendorAssuranceAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2584,14 +2584,14 @@ export function ChecklistScreen() {
           </strong>{" "}
           sound assurance decisions ·{" "}
           {vendorGame.complete && (
-            <Button variant="outline" onClick={() => setVendorAnswers({})}>
+            <Button variant="outline" onClick={() => setVendorAssuranceAnswers({})}>
               Replay
             </Button>
           )}
         </p>
         <div className="checklist-tasks">
           {VENDOR_AI_ASSURANCE_ROUNDS.map((round) => {
-            const selected = vendorAnswers[round.id];
+            const selected = vendorAssuranceAnswers[round.id];
             return (
               <article className="checklist-task" key={round.id}>
                 <div>
@@ -2603,7 +2603,7 @@ export function ChecklistScreen() {
                       variant={selected === index ? "default" : "outline"}
                       disabled={selected !== undefined}
                       onClick={() =>
-                        setVendorAnswers((answers) => ({
+                        setVendorAssuranceAnswers((answers) => ({
                           ...answers,
                           [round.id]: index,
                         }))
