@@ -129,6 +129,10 @@ import {
   SERVICE_LEVEL_RELIABILITY_ASSURANCE_ROUNDS,
   serviceLevelReliabilityAssuranceScore,
 } from "./service-level-reliability-assurance-game";
+import {
+  EXPLAINABILITY_INTERPRETABILITY_ROUNDS,
+  explainabilityInterpretabilityScore,
+} from "./explainability-interpretability-game";
 
 const statusText = {
   complete: "Complete",
@@ -173,6 +177,7 @@ export function ChecklistScreen() {
   const [configAnswers, setConfigAnswers] = useState<Record<string, number>>({});
   const [safetyAnswers, setSafetyAnswers] = useState<Record<string, number>>({});
   const [serviceAnswers, setServiceAnswers] = useState<Record<string, number>>({});
+  const [explainabilityAnswers, setExplainabilityAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -212,6 +217,7 @@ export function ChecklistScreen() {
   const configGame = modelPromptConfigAssuranceScore(configAnswers);
   const safetyGame = contentSafetyMisuseAssuranceScore(safetyAnswers);
   const serviceGame = serviceLevelReliabilityAssuranceScore(serviceAnswers);
+  const explainabilityGame = explainabilityInterpretabilityScore(explainabilityAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -1989,6 +1995,61 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good service-level assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="explainability-interpretability-assurance" className="checklist-phase" aria-label="Explainability and interpretability assurance game">
+        <h2>Explainability & interpretability assurance</h2>
+        <p>
+          Practice providing explanations appropriate to context and audience, communicating
+          limitations, supporting reviewer/user understanding and review, and validating/documenting
+          usefulness and risks. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {explainabilityGame.correct}/{explainabilityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {explainabilityGame.complete && (
+            <Button variant="outline" onClick={() => setExplainabilityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {EXPLAINABILITY_INTERPRETABILITY_ROUNDS.map((round) => {
+            const selected = explainabilityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setExplainabilityAnswers((answers) => ({ ...answers, [round.id]: index }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good explainability/interpretability assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
