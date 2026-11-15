@@ -153,6 +153,10 @@ import {
   INCIDENT_COMMUNICATION_TABLETOP_ROUNDS,
   incidentCommunicationTabletopScore,
 } from "./incident-communication-tabletop-game";
+import {
+  DECOMMISSIONING_RETIREMENT_ASSURANCE_ROUNDS,
+  decommissioningRetirementAssuranceScore,
+} from "./decommissioning-retirement-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -203,6 +207,7 @@ export function ChecklistScreen() {
   const [procurementAnswers, setProcurementAnswers] = useState<Record<string, number>>({});
   const [labelingAnswers, setLabelingAnswers] = useState<Record<string, number>>({});
   const [incidentCommsAnswers, setIncidentCommsAnswers] = useState<Record<string, number>>({});
+  const [retirementAnswers, setRetirementAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -248,6 +253,7 @@ export function ChecklistScreen() {
   const procurementGame = procurementContractingAssuranceScore(procurementAnswers);
   const labelingGame = dataLabelingQualityAssuranceScore(labelingAnswers);
   const incidentCommsGame = incidentCommunicationTabletopScore(incidentCommsAnswers);
+  const retirementGame = decommissioningRetirementAssuranceScore(retirementAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2359,6 +2365,65 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good incident-communication assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="decommissioning-retirement-assurance" className="checklist-phase" aria-label="AI system decommissioning and retirement assurance game">
+        <h2>AI system decommissioning & retirement assurance</h2>
+        <p>
+          Practice planned and owned retirement, stakeholder communication and continuity guidance,
+          access revocation and lifecycle disposal of data/models/configurations, and verified
+          closure evidence with lessons learned. Scenarios are learning prompts, not compliance
+          determinations.
+        </p>
+        <p>
+          <strong>
+            {retirementGame.correct}/{retirementGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {retirementGame.complete && (
+            <Button variant="outline" onClick={() => setRetirementAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {DECOMMISSIONING_RETIREMENT_ASSURANCE_ROUNDS.map((round) => {
+            const selected = retirementAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setRetirementAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good decommissioning/retirement assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
