@@ -165,6 +165,10 @@ import {
   HUMAN_AI_HANDOFF_ASSURANCE_ROUNDS,
   humanAIHandoffAssuranceScore,
 } from "./human-ai-handoff-assurance-game";
+import {
+  VENDOR_AI_ASSURANCE_ROUNDS,
+  vendorAIAssuranceScore,
+} from "./vendor-ai-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -218,6 +222,7 @@ export function ChecklistScreen() {
   const [retirementAnswers, setRetirementAnswers] = useState<Record<string, number>>({});
   const [literacyAnswers, setLiteracyAnswers] = useState<Record<string, number>>({});
   const [handoffAnswers, setHandoffAnswers] = useState<Record<string, number>>({});
+  const [vendorAnswers, setVendorAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -266,6 +271,7 @@ export function ChecklistScreen() {
   const retirementGame = decommissioningRetirementAssuranceScore(retirementAnswers);
   const literacyGame = aiLiteracyEnablementAssuranceScore(literacyAnswers);
   const handoffGame = humanAIHandoffAssuranceScore(handoffAnswers);
+  const vendorGame = vendorAIAssuranceScore(vendorAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2553,6 +2559,64 @@ export function ChecklistScreen() {
                       <strong>
                         {selected === round.best
                           ? "Good collaboration/handoff assurance choice."
+                          : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="vendor-ai-assurance" className="checklist-phase" aria-label="Third-party and vendor AI assurance game">
+        <h2>Third-party & vendor AI assurance</h2>
+        <p>
+          Practice risk-based vendor due diligence, contractual guardrails and responsibilities,
+          dependency and concentration planning, and ongoing monitoring with evidence refresh.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {vendorGame.correct}/{vendorGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {vendorGame.complete && (
+            <Button variant="outline" onClick={() => setVendorAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {VENDOR_AI_ASSURANCE_ROUNDS.map((round) => {
+            const selected = vendorAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setVendorAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good vendor-assurance choice."
                           : "Review the assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
