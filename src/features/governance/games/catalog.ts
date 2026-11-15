@@ -192,6 +192,14 @@ export const GOVERNANCE_GAMES = [
     anchor: "testing-validation-assurance",
   },
   {
+    id: "purpose-boundary-assurance",
+    title: "Purpose limitation & use-case boundary assurance",
+    category: "Purpose & boundaries",
+    description:
+      "Practice defining approved/prohibited uses, enforcing scope guardrails, reviewing repurposing, and evidencing communicated boundaries.",
+    anchor: "purpose-boundary-assurance",
+  },
+  {
     id: "inclusive-design",
     title: "Inclusive design challenge",
     category: "Responsible AI",
