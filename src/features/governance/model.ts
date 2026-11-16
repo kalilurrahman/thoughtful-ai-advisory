@@ -405,6 +405,30 @@ export function calculate(
           : "Readiness is trending well — keep logging and traceability comprehensive, protect record integrity/retention, and ensure audit evidence remains accessible and reviewable.",
     };
   }
+  if (id === "bias-fairness-impact") {
+    const assessment = v["assessment"] ?? 0,
+      mitigation = v["mitigation"] ?? 0,
+      stakeholders = v["stakeholders"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      score = Math.round(assessment * 0.3 + mitigation * 0.25 + stakeholders * 0.2 + monitoring * 0.25),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Bias, fairness & impact assessment readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Impact/fairness assessments completed (30%)", assessment + "%"],
+        ["Mitigations & guardrail controls (25%)", mitigation + "%"],
+        ["Stakeholder/affected-group review (20%)", stakeholders + "%"],
+        ["Monitoring & remediation evidence (25%)", monitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: complete impact/fairness assessments for key uses, implement mitigations and guardrails, engage stakeholders/affected groups for review and feedback, and monitor outcomes with documented remediation."
+          : "Readiness is trending well — keep assessments, mitigations, stakeholder engagement, and monitoring/remediation evidence current as systems, data, and contexts change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
