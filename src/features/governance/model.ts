@@ -549,6 +549,30 @@ export function calculate(
           : "Readiness is trending well — maintain safety controls, monitor for misuse, keep testing current, and use incident reviews to drive continuous improvement.",
     };
   }
+  if (id === "inventory-risk-classification") {
+    const inventory = v["inventory"] ?? 0,
+      classification = v["classification"] ?? 0,
+      ownership = v["ownership"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(inventory * 0.3 + classification * 0.25 + ownership * 0.25 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI inventory & risk classification readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["AI systems & use cases inventoried (30%)", inventory + "%"],
+        ["Risk tiering/classification coverage (25%)", classification + "%"],
+        ["Ownership & lifecycle tracking (25%)", ownership + "%"],
+        ["Periodic review/revalidation evidence (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain a complete AI inventory, classify systems/use cases by risk, assign ownership and lifecycle tracking, and conduct periodic review/revalidation with evidence."
+          : "Readiness is trending well — keep the inventory, risk classifications, ownership/lifecycle records, and review evidence current as AI systems and uses change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
