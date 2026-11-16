@@ -22,17 +22,28 @@ export function GamesScreen() {
           operational controls.
         </p>
       </section>
-      <div className="checklist-phases">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
         {GOVERNANCE_GAMES.map((game) => (
-          <section className="checklist-phase" key={game.id}>
-            <article className="checklist-task">
-              <GameController weight="duotone" />
-              <div>
-                <small>{game.category}</small>
-                <h2>{game.title}</h2>
-                <p>{game.description}</p>
+          <article
+            key={game.id}
+            className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 text-card-foreground"
+          >
+            <div className="flex items-start gap-3">
+              <GameController
+                weight="duotone"
+                aria-hidden="true"
+                className="mt-1 size-7 shrink-0 text-primary"
+              />
+              <div className="min-w-0">
+                <small className="text-xs uppercase tracking-wide text-muted-foreground">
+                  {game.category}
+                </small>
+                <h2 className="mt-1 text-xl font-semibold leading-tight">{game.title}</h2>
+                <p className="mt-2 text-sm text-muted-foreground">{game.description}</p>
               </div>
-              <Button asChild>
+            </div>
+            <div className="mt-auto flex flex-wrap gap-2">
+              <Button asChild className="flex-1 sm:flex-none">
                 <Link
                   to="/checklist"
                   hash={game.anchor}
@@ -51,6 +62,7 @@ export function GamesScreen() {
               </Button>
               <Button
                 variant="outline"
+                className="flex-1 sm:flex-none"
                 aria-pressed={preferences.favorites.includes(game.id)}
                 onClick={() =>
                   setPreferences((current) => ({
@@ -63,8 +75,8 @@ export function GamesScreen() {
               >
                 {preferences.favorites.includes(game.id) ? "Remove favorite" : "Favorite"}
               </Button>
-            </article>
-          </section>
+            </div>
+          </article>
         ))}
       </div>
       {preferences.favorites.length > 0 && (
