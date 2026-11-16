@@ -1279,6 +1279,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "privacy-data-minimization",
+    name: "AI privacy & data-minimization readiness",
+    desc: "Estimate readiness for privacy and data-minimization across data inventory, lawful/purpose controls, access-retention-deletion, and privacy review evidence.",
+    inputs: [
+      {
+        k: "inventory",
+        label: "Data flows inventoried with minimization/purpose limits",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "lawful",
+        label: "Lawful basis, consent & purpose controls applied",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "controls",
+        label: "Access, retention & deletion controls enforced",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reviews",
+        label: "Privacy impact/review evidence current",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
