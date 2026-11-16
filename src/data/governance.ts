@@ -1451,6 +1451,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "access-identity-assurance",
+    name: "Access control & identity assurance readiness",
+    desc: "Estimate readiness for access and identity assurance across least-privilege coverage, credential/secret management, access reviews, and privileged-action monitoring.",
+    inputs: [
+      {
+        k: "leastpriv",
+        label: "Least-privilege roles & access coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "secrets",
+        label: "Credential, API key & secret management controls",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reviews",
+        label: "Access review & recertification cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Privileged-action logging & monitoring in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
