@@ -885,6 +885,32 @@ export function calculate(
           : "Readiness is trending well — keep inclusive testing, accommodations, alternative routes, and remediation of inclusion findings current as users and systems change.",
     };
   }
+  if (id === "guardrail-effectiveness") {
+    const effectiveness = v["effectiveness"] ?? 0,
+      tuning = v["tuning"] ?? 0,
+      overrides = v["overrides"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      score = Math.round(
+        effectiveness * 0.3 + tuning * 0.3 + overrides * 0.2 + evidence * 0.2,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Guardrail effectiveness & tuning readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Measured effectiveness vs test/red-team cases (30%)", effectiveness + "%"],
+        ["False-positive/false-negative tuning cadence (30%)", tuning + "%"],
+        ["Override & exception handling reviewed (20%)", overrides + "%"],
+        ["Tuning & exception evidence kept (20%)", evidence + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: measure guardrail effectiveness against test and red-team cases, tune false positives/negatives on a cadence, record and review overrides and exceptions, and keep tuning evidence for review."
+          : "Readiness is trending well — keep effectiveness testing, tuning cadence, override/exception review, and tuning evidence current as models, prompts, and threat patterns change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
