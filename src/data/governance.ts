@@ -2268,6 +2268,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "guardrail-effectiveness",
+    name: "Guardrail effectiveness & tuning readiness",
+    desc: "Estimate readiness to prove guardrails work: effectiveness measured against test and red-team cases, false-positive/false-negative tuning on cadence, override and exception handling recorded, and tuning evidence kept for review.",
+    inputs: [
+      {
+        k: "effectiveness",
+        label: "Effectiveness measured against test & red-team cases",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "tuning",
+        label: "False-positive/false-negative tuning on cadence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "overrides",
+        label: "Override & exception handling recorded and reviewed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Tuning & exception evidence kept for review",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
