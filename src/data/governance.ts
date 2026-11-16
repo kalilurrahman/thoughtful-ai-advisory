@@ -1537,6 +1537,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "provenance-lineage",
+    name: "Data/model provenance & lineage readiness",
+    desc: "Estimate readiness for provenance and lineage across data/source lineage, model/version provenance, transformation/pipeline documentation, and provenance evidence review.",
+    inputs: [
+      {
+        k: "datalineage",
+        label: "Data/source lineage documented for key uses",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "modelprov",
+        label: "Model/version provenance tracked and recorded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "pipelines",
+        label: "Transformations & pipeline steps documented",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Provenance evidence reviewed & current",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

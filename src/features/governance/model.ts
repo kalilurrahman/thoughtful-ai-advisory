@@ -477,6 +477,30 @@ export function calculate(
           : "Readiness is trending well — keep dependency mapping, fallback plans, recovery objectives, and resilience exercises current as systems and operating conditions change.",
     };
   }
+  if (id === "provenance-lineage") {
+    const datalineage = v["datalineage"] ?? 0,
+      modelprov = v["modelprov"] ?? 0,
+      pipelines = v["pipelines"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      score = Math.round(datalineage * 0.3 + modelprov * 0.25 + pipelines * 0.25 + evidence * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Data/model provenance & lineage readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Data/source lineage documented (30%)", datalineage + "%"],
+        ["Model/version provenance tracked (25%)", modelprov + "%"],
+        ["Transformations & pipeline steps documented (25%)", pipelines + "%"],
+        ["Provenance evidence reviewed & current (20%)", evidence + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: document data/source lineage for key uses, track model/version provenance, record transformations and pipeline steps, and review provenance evidence to keep it current."
+          : "Readiness is trending well — maintain lineage and provenance records, keep pipeline documentation current, and review provenance evidence as data, models, and workflows change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
