@@ -813,6 +813,30 @@ export function calculate(
           : "Readiness is trending well — keep user testing, error/override handling, workload safeguards, and usability review evidence current as AI features and users change.",
     };
   }
+  if (id === "ethical-societal-impact") {
+    const review = v["review"] ?? 0,
+      principles = v["principles"] ?? 0,
+      societal = v["societal"] ?? 0,
+      escalation = v["escalation"] ?? 0,
+      score = Math.round(review * 0.3 + principles * 0.25 + societal * 0.25 + escalation * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Ethical risk & societal impact readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Ethics & values review coverage (30%)", review + "%"],
+        ["Documented ethical principles applied (25%)", principles + "%"],
+        ["Societal, externality & community scan (25%)", societal + "%"],
+        ["Escalation, dissent & remedy path evidenced (20%)", escalation + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: review AI use cases against ethics and values, document and apply ethical principles in decisions, scan societal and community effects, and evidence an escalation, dissent and remedy path."
+          : "Readiness is trending well — keep ethics reviews, applied principles, societal/community scans, and escalation and remedy evidence current as use cases and contexts change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
