@@ -2397,6 +2397,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "procurement-contracting",
+    name: "AI procurement & contracting assurance readiness",
+    desc: "Estimate readiness for procuring AI systems and suppliers through AI requirements and risk tiering at sourcing, contractual terms for data, security, incidents, IP and liability, supplier onboarding and ongoing obligations, and renewal/exit decision records.",
+    inputs: [
+      {
+        k: "requirements",
+        label: "AI requirements & risk tiering defined before sourcing",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "terms",
+        label: "Data, security, incident, IP & liability terms in contracts",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "onboarding",
+        label: "Supplier onboarding & contractual obligations verified",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Renewal/exit reviews & decisions recorded with evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

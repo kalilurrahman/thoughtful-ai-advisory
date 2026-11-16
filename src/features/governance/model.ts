@@ -959,6 +959,30 @@ export function calculate(
           : "Readiness is trending well — keep retirement criteria, disposal and access removal, continuity planning, and decommissioning evidence current as systems and dependencies change.",
     };
   }
+  if (id === "procurement-contracting") {
+    const requirements = v["requirements"] ?? 0,
+      terms = v["terms"] ?? 0,
+      onboarding = v["onboarding"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(requirements * 0.3 + terms * 0.3 + onboarding * 0.2 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI procurement & contracting assurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["AI requirements & risk tiering at sourcing (30%)", requirements + "%"],
+        ["Data/security/incident/IP/liability terms (30%)", terms + "%"],
+        ["Supplier onboarding & obligation verification (20%)", onboarding + "%"],
+        ["Renewal/exit reviews & evidence (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define AI requirements and risk tiering before sourcing, put data/security/incident/IP/liability terms in contracts, verify supplier onboarding and obligations, and record renewal and exit reviews with evidence."
+          : "Readiness is trending well — keep sourcing requirements, contract terms, supplier onboarding checks, and renewal/exit records current as suppliers and obligations change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
