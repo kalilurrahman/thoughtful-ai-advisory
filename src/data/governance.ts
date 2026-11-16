@@ -1494,6 +1494,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "business-continuity-resilience",
+    name: "Business continuity & resilience readiness",
+    desc: "Estimate readiness for AI continuity and resilience across dependency mapping, fallback/degraded-mode plans, recovery objectives, and resilience testing.",
+    inputs: [
+      {
+        k: "dependencies",
+        label: "Critical AI dependencies mapped & understood",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "fallback",
+        label: "Fallback/degraded-mode plans in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "recovery",
+        label: "Backup & recovery objectives defined",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "testing",
+        label: "Resilience testing & exercise cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
