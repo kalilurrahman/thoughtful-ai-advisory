@@ -789,6 +789,30 @@ export function calculate(
           : "Readiness is trending well — keep provenance checks, dependency inventory, supplier/license reviews, and monitoring evidence current as components and suppliers change.",
     };
   }
+  if (id === "human-factors-usability") {
+    const testing = v["testing"] ?? 0,
+      errors = v["errors"] ?? 0,
+      workload = v["workload"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(testing * 0.3 + errors * 0.25 + workload * 0.25 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Human factors & usability readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["User testing & feedback coverage (30%)", testing + "%"],
+        ["Error & override handling (25%)", errors + "%"],
+        ["Workload & comprehension safeguards (25%)", workload + "%"],
+        ["Usability review & evidence cadence (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: expand user testing and feedback coverage for AI features, support error and override handling, apply workload and comprehension safeguards, and maintain usability review evidence on cadence."
+          : "Readiness is trending well — keep user testing, error/override handling, workload safeguards, and usability review evidence current as AI features and users change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
