@@ -525,6 +525,30 @@ export function calculate(
           : "Readiness is trending well — keep policies, accountability mapping, training, and enforcement evidence current as AI use, risks, and requirements evolve.",
     };
   }
+  if (id === "safety-misuse-prevention") {
+    const controls = v["controls"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      testing = v["testing"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(controls * 0.3 + monitoring * 0.25 + testing * 0.2 + review * 0.25),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Safety & misuse prevention readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Safety/guardrail controls implemented (30%)", controls + "%"],
+        ["Misuse/abuse monitoring & response (25%)", monitoring + "%"],
+        ["Red-teaming/safety testing cadence (20%)", testing + "%"],
+        ["Safety incident review & improvement (25%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: implement and enable safety/guardrail controls, strengthen misuse monitoring and response, run red-teaming/safety testing on cadence, and review safety incidents with documented improvements."
+          : "Readiness is trending well — maintain safety controls, monitor for misuse, keep testing current, and use incident reviews to drive continuous improvement.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
