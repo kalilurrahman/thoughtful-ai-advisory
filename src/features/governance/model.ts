@@ -333,6 +333,30 @@ export function calculate(
           : "Readiness is trending well — keep change controls, rollout/rollback plans, and post-deploy assurance evidence current as systems and risks evolve.",
     };
   }
+  if (id === "privacy-data-minimization") {
+    const inventory = v["inventory"] ?? 0,
+      lawful = v["lawful"] ?? 0,
+      controls = v["controls"] ?? 0,
+      reviews = v["reviews"] ?? 0,
+      score = Math.round(inventory * 0.3 + lawful * 0.25 + controls * 0.25 + reviews * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI privacy & data-minimization readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Data inventory & minimization/purpose limits (30%)", inventory + "%"],
+        ["Lawful basis, consent & purpose controls (25%)", lawful + "%"],
+        ["Access, retention & deletion controls (25%)", controls + "%"],
+        ["Privacy impact/review evidence (20%)", reviews + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: map data flows and minimize/purpose-limit collection, apply lawful-basis and consent/purpose controls, enforce access-retention-deletion, and keep privacy impact/review evidence current."
+          : "Readiness is trending well — maintain data minimization and purpose controls, verify access/retention/deletion practices, and refresh privacy reviews as systems and data use change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
