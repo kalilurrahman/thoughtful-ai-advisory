@@ -409,7 +409,7 @@ export type Database = {
           {
             foreignKeyName: "organization_members_organization_id_fkey"
             columns: ["organization_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
@@ -508,14 +508,14 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          id?: number
+          id?: never
           name: string
           path?: string
           props?: Json
         }
         Update: {
           created_at?: string
-          id?: number
+          id?: never
           name?: string
           path?: string
           props?: Json
@@ -639,18 +639,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      accept_org_invitation: {
-        Args: { p_token_hash: string }
-        Returns: string
-      }
-      can_edit_org: {
-        Args: { p_org: string }
-        Returns: boolean
-      }
-      can_read_org: {
-        Args: { p_org: string }
-        Returns: boolean
-      }
+      accept_org_invitation: { Args: { p_token_hash: string }; Returns: string }
+      can_edit_org: { Args: { p_org: string }; Returns: boolean }
+      can_read_org: { Args: { p_org: string }; Returns: boolean }
       claim_workspace_revision: {
         Args: { p_expected: number; p_org: string }
         Returns: number
@@ -662,17 +653,14 @@ export type Database = {
       org_member_directory: {
         Args: { p_org: string }
         Returns: {
-          user_id: string
-          role: string
           display_name: string
           email: string
           joined_at: string
+          role: string
+          user_id: string
         }[]
       }
-      org_role: {
-        Args: { p_org: string }
-        Returns: string
-      }
+      org_role: { Args: { p_org: string }; Returns: string }
       record_billing_webhook: {
         Args: { p_subscription: Json; p_type: string; p_webhook_id: string }
         Returns: string
@@ -686,7 +674,13 @@ export type Database = {
         Returns: string
       }
       save_workspace_checked: {
-        Args: { p_name: string; p_org: string; p_revision: number; p_sources: Json; p_state: Json }
+        Args: {
+          p_name: string
+          p_org: string
+          p_revision: number
+          p_sources: Json
+          p_state: Json
+        }
         Returns: Json
       }
       set_org_member_role: {

@@ -404,7 +404,7 @@ function StepTabs({ section, steps }: { section: MarkdownSection; steps: Step[] 
   return (
     <>
       <SiteMarkdown className="prose" body={rawExcept(section.tokens, (t) => t === list)} />
-      <Tabs defaultValue={steps[0]?.name} className="step-tabs" onClick={onClick}>
+      <Tabs defaultValue={steps[0]?.name ?? ""} className="step-tabs" onClick={onClick}>
         <TabsList className="step-tablist" aria-label="How it works, step by step">
           {steps.map((st, i) => (
             <TabsTrigger key={st.name} value={st.name} className="step-tab">
