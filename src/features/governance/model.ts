@@ -501,6 +501,30 @@ export function calculate(
           : "Readiness is trending well — maintain lineage and provenance records, keep pipeline documentation current, and review provenance evidence as data, models, and workflows change.",
     };
   }
+  if (id === "policy-accountability") {
+    const coverageVal = v["coverage"] ?? 0,
+      accountability = v["accountability"] ?? 0,
+      training = v["training"] ?? 0,
+      enforcement = v["enforcement"] ?? 0,
+      score = Math.round(coverageVal * 0.3 + accountability * 0.25 + training * 0.2 + enforcement * 0.25),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Responsible AI policy & accountability readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Policy coverage for key risks/uses (30%)", coverageVal + "%"],
+        ["Roles, ownership & accountability (25%)", accountability + "%"],
+        ["Training & policy acknowledgment (20%)", training + "%"],
+        ["Policy review, enforcement & evidence (25%)", enforcement + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: expand policy coverage for key AI risks and uses, clarify roles and accountability, strengthen training/acknowledgment, and maintain review, enforcement, and evidence."
+          : "Readiness is trending well — keep policies, accountability mapping, training, and enforcement evidence current as AI use, risks, and requirements evolve.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
