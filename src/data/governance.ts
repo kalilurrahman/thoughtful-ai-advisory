@@ -2354,6 +2354,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "decommissioning-retirement",
+    name: "AI decommissioning & retirement readiness",
+    desc: "Estimate readiness for decommissioning and retiring AI systems across defined retirement criteria and triggers, data/model/asset disposal and access removal, stakeholder communication and continuity or alternatives, and evidenced decommissioning records.",
+    inputs: [
+      {
+        k: "criteria",
+        label: "Retirement criteria, triggers & approval path defined",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "disposal",
+        label: "Data, models & access removed or securely disposed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "continuity",
+        label: "Stakeholder notice, continuity & alternatives planned",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Decommissioning actions recorded and evidenced",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
