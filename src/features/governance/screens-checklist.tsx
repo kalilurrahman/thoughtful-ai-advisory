@@ -193,6 +193,10 @@ import {
   HUMAN_FACTORS_USABILITY_ASSURANCE_ROUNDS,
   humanFactorsUsabilityAssuranceScore,
 } from "./human-factors-usability-assurance-game";
+import {
+  MODEL_DOCUMENTATION_TRANSPARENCY_ROUNDS,
+  modelDocumentationTransparencyScore,
+} from "./model-documentation-transparency-game";
 
 const statusText = {
   complete: "Complete",
@@ -253,6 +257,7 @@ export function ChecklistScreen() {
   const [tuningAnswers, setTuningAnswers] = useState<Record<string, number>>({});
   const [driftAnswers, setDriftAnswers] = useState<Record<string, number>>({});
   const [usabilityAnswers, setUsabilityAnswers] = useState<Record<string, number>>({});
+  const [documentationAnswers, setDocumentationAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -308,6 +313,7 @@ export function ChecklistScreen() {
   const tuningGame = guardrailTuningAssuranceScore(tuningAnswers);
   const driftGame = performanceDriftAssuranceScore(driftAnswers);
   const usabilityGame = humanFactorsUsabilityAssuranceScore(usabilityAnswers);
+  const documentationGame = modelDocumentationTransparencyScore(documentationAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3024,6 +3030,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good human factors & usability assurance choice."
                           : "Review the usability assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="model-documentation-transparency-assurance"
+        className="checklist-phase"
+        aria-label="Model documentation and transparency assurance game"
+      >
+        <h2>Model documentation & transparency assurance</h2>
+        <p>
+          Practice documenting intended use and limitations, versioning model changes and notifying
+          operators, recording failure modes, and keeping performance evidence traceable and
+          current. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {documentationGame.correct}/{documentationGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {documentationGame.complete && (
+            <Button variant="outline" onClick={() => setDocumentationAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {MODEL_DOCUMENTATION_TRANSPARENCY_ROUNDS.map((round) => {
+            const selected = documentationAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setDocumentationAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good documentation & transparency assurance choice."
+                          : "Review the documentation gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
