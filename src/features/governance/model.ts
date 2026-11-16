@@ -911,6 +911,30 @@ export function calculate(
           : "Readiness is trending well — keep effectiveness testing, tuning cadence, override/exception review, and tuning evidence current as models, prompts, and threat patterns change.",
     };
   }
+  if (id === "retention-deletion") {
+    const schedules = v["schedules"] ?? 0,
+      deletion = v["deletion"] ?? 0,
+      requests = v["requests"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      score = Math.round(schedules * 0.3 + deletion * 0.3 + requests * 0.2 + evidence * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Data retention & deletion assurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Retention schedules defined (30%)", schedules + "%"],
+        ["Timely deletion & secure disposal (30%)", deletion + "%"],
+        ["Erasure, holds & requests handled (20%)", requests + "%"],
+        ["Retention & disposal evidence (20%)", evidence + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define retention schedules for AI data and artifacts, execute timely deletion and secure disposal, handle erasure/holds and requests, and keep retention and disposal actions evidenced and reviewed."
+          : "Readiness is trending well — keep retention schedules, deletion/disposal execution, request handling, and disposal evidence current as data, systems, and obligations change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
