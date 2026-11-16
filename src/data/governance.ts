@@ -2139,6 +2139,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "ethical-societal-impact",
+    name: "Ethical risk & societal impact readiness",
+    desc: "Estimate readiness for ethical risk and societal impact management across ethics/values review coverage of use cases, documented ethical principles applied to decisions, societal/externality scans, and evidenced escalation, dissent and remedy paths.",
+    inputs: [
+      {
+        k: "review",
+        label: "Ethics & values review coverage for AI use cases",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "principles",
+        label: "Documented ethical principles applied to decisions",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "societal",
+        label: "Societal, externality & affected-community scan done",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "escalation",
+        label: "Ethics escalation, dissent & remedy path evidenced",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
