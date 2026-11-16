@@ -645,6 +645,30 @@ export function calculate(
           : "Readiness is trending well — keep patching, hardening, security testing cadence, and incident/remediation evidence current as AI components and threats evolve.",
     };
   }
+  if (id === "regulatory-compliance-alignment") {
+    const mapping = v["mapping"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      remediation = v["remediation"] ?? 0,
+      score = Math.round(mapping * 0.3 + evidence * 0.25 + monitoring * 0.25 + remediation * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Regulatory & compliance alignment readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Applicable requirements mapped (30%)", mapping + "%"],
+        ["Control mapping & evidence coverage (25%)", evidence + "%"],
+        ["Compliance monitoring & assessment cadence (25%)", monitoring + "%"],
+        ["Remediation & attestation evidence (20%)", remediation + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: map applicable regulatory and compliance requirements to AI uses and controls, maintain control mapping and evidence coverage, conduct compliance monitoring and assessments on cadence, and document remediation and attestation with evidence."
+          : "Readiness is trending well — keep requirement mappings, control evidence, compliance assessments, and remediation/attestation records current as regulations and AI uses change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

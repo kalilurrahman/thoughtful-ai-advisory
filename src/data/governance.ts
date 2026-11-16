@@ -1838,6 +1838,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "regulatory-compliance-alignment",
+    name: "Regulatory & compliance alignment readiness",
+    desc: "Estimate readiness for regulatory and compliance alignment across mapped applicable requirements, control mapping and evidence coverage, compliance monitoring/assessment cadence, and remediation/attestation evidence.",
+    inputs: [
+      {
+        k: "mapping",
+        label: "Applicable requirements mapped to AI uses/controls",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Control mapping & evidence coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Compliance monitoring & assessment cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "remediation",
+        label: "Remediation & attestation evidence current",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
