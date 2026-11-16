@@ -1024,5 +1024,11 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
   .module-name { display: inline-flex; align-items: center; gap: 0.6rem; }
   .decision-glyph { width: 14px; height: 14px; margin-right: 4px; vertical-align: -2px; }
 }
+/* Footer attribution (src/data/author.ts): the author's portfolio and LinkedIn, same muted tone as the line. */
+.veritrail-site .footer-attribution { margin: 0; line-height: 1.8; flex: 1 1 auto; min-width: min(100%, 36rem); }
+.veritrail-site .footer-attribution > a { color: inherit; text-decoration: underline; text-decoration-color: var(--c-border); text-underline-offset: 0.2em; }
+.veritrail-site .footer-attribution > a:hover { color: var(--c-heading); text-decoration-color: currentColor; }
+.veritrail-site .footer-profile { margin-left: 0.75rem; padding-left: 0.75rem; border-left: 1px solid var(--c-border); white-space: nowrap; }
+.veritrail-site .footer-profile svg { display: inline-block; width: 1rem; height: 1rem; margin-right: 0.3rem; vertical-align: -0.2em; }
 /* Release watermark in the footer (src/data/release.ts). */
 .veritrail-site .footer-release { margin-left: 0.75rem; padding-left: 0.75rem; border-left: 1px solid var(--c-border); font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); white-space: nowrap; }
