@@ -285,6 +285,30 @@ export function calculate(
           : "Readiness is trending well — keep vendor assessments, contracts, dependency plans, and monitoring evidence current as services and risks change.",
     };
   }
+  if (id === "incident-response-readiness") {
+    const playbooks = v["playbooks"] ?? 0,
+      detection = v["detection"] ?? 0,
+      comms = v["comms"] ?? 0,
+      recovery = v["recovery"] ?? 0,
+      score = Math.round(playbooks * 0.3 + detection * 0.25 + comms * 0.2 + recovery * 0.25),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Incident response & recovery readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Playbooks & named owners (30%)", playbooks + "%"],
+        ["Detection, triage & escalation (25%)", detection + "%"],
+        ["Communication/notification readiness (20%)", comms + "%"],
+        ["Exercises & recovery objectives (25%)", recovery + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define incident playbooks and owners, test detection/triage/escalation paths, prepare stakeholder communications, and run exercises with clear recovery/fallback objectives."
+          : "Readiness is trending well — exercise and update playbooks, validate escalation and communications, and review recovery objectives as systems and risks change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
