@@ -2096,6 +2096,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "human-factors-usability",
+    name: "Human factors & usability readiness",
+    desc: "Estimate readiness for human factors and usability across user testing/feedback coverage, error and override handling, workload and comprehension safeguards, and usability review evidence cadence.",
+    inputs: [
+      {
+        k: "testing",
+        label: "User testing & feedback coverage for AI features",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "errors",
+        label: "Error & override handling supported",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "workload",
+        label: "Workload & comprehension safeguards in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Usability review & evidence cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
