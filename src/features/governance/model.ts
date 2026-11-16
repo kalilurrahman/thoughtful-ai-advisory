@@ -861,6 +861,30 @@ export function calculate(
           : "Readiness is trending well — keep completion coverage, competence checks, change-triggered refreshers, and role-mapped training records current as systems and roles change.",
     };
   }
+  if (id === "inclusive-accessibility") {
+    const testing = v["testing"] ?? 0,
+      access = v["access"] ?? 0,
+      alternatives = v["alternatives"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      score = Math.round(testing * 0.3 + access * 0.3 + alternatives * 0.2 + evidence * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Inclusive design & accessibility readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Inclusive usability testing (30%)", testing + "%"],
+        ["Accessibility & language accommodations (30%)", access + "%"],
+        ["Human/non-AI alternative route (20%)", alternatives + "%"],
+        ["Findings tracked to remediation (20%)", evidence + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: test with affected users, provide accessibility and language accommodations, keep a human or non-AI route when AI is unsuitable, and track inclusion findings to remediation with evidence."
+          : "Readiness is trending well — keep inclusive testing, accommodations, alternative routes, and remediation of inclusion findings current as users and systems change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

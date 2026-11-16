@@ -2225,6 +2225,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "inclusive-accessibility",
+    name: "Inclusive design & accessibility readiness",
+    desc: "Estimate readiness for inclusive design and accessibility across testing with affected users, accessibility and language accommodations, human or non-AI alternatives when AI is unsuitable, and inclusion findings tracked to remediation.",
+    inputs: [
+      {
+        k: "testing",
+        label: "Inclusive usability testing with affected users",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "access",
+        label: "Accessibility & language accommodations supported",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "alternatives",
+        label: "Human or non-AI alternative route when AI is unsuitable",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Inclusion findings tracked to remediation with evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
