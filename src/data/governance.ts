@@ -1322,6 +1322,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "model-quality-evaluation",
+    name: "Model & output quality evaluation readiness",
+    desc: "Estimate readiness to evaluate and maintain AI quality across test coverage, acceptance criteria, human review/calibration, and regression monitoring.",
+    inputs: [
+      {
+        k: "coverage",
+        label: "Evaluation/test coverage for key use cases",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "criteria",
+        label: "Quality acceptance thresholds/criteria defined",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Human review & calibration coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Regression/quality monitoring & review cadence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
