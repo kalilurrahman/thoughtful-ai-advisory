@@ -177,6 +177,10 @@ import {
   PRIVACY_MINIMIZATION_ASSURANCE_ROUNDS,
   privacyMinimizationAssuranceScore,
 } from "./privacy-minimization-assurance-game";
+import {
+  INVENTORY_RISK_CLASSIFICATION_ROUNDS,
+  inventoryRiskClassificationScore,
+} from "./inventory-risk-classification-game";
 
 const statusText = {
   complete: "Complete",
@@ -233,6 +237,7 @@ export function ChecklistScreen() {
   const [vendorAssuranceAnswers, setVendorAssuranceAnswers] = useState<Record<string, number>>({});
   const [disclosureAnswers, setDisclosureAnswers] = useState<Record<string, number>>({});
   const [privacyAnswers, setPrivacyAnswers] = useState<Record<string, number>>({});
+  const [inventoryAnswers, setInventoryAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -284,6 +289,7 @@ export function ChecklistScreen() {
   const vendorGame = vendorAIAssuranceScore(vendorAssuranceAnswers);
   const disclosureGame = transparencyDisclosureAssuranceScore(disclosureAnswers);
   const privacyGame = privacyMinimizationAssuranceScore(privacyAnswers);
+  const inventoryGame = inventoryRiskClassificationScore(inventoryAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2751,6 +2757,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good data-minimization assurance choice."
                           : "Review the minimization gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="inventory-risk-classification-assurance"
+        className="checklist-phase"
+        aria-label="AI inventory and risk classification assurance game"
+      >
+        <h2>AI inventory & risk classification assurance</h2>
+        <p>
+          Practice registering every AI use with an owner, classifying risk against documented
+          criteria, keeping the inventory current through change, and turning tiers into
+          proportionate assurance action. Scenarios are learning prompts, not compliance
+          determinations.
+        </p>
+        <p>
+          <strong>
+            {inventoryGame.correct}/{inventoryGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {inventoryGame.complete && (
+            <Button variant="outline" onClick={() => setInventoryAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {INVENTORY_RISK_CLASSIFICATION_ROUNDS.map((round) => {
+            const selected = inventoryAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setInventoryAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good inventory & classification assurance choice."
+                          : "Review the inventory gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
