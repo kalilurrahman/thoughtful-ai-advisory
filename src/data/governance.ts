@@ -1967,6 +1967,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "model-documentation-transparency",
+    name: "Model documentation & transparency readiness",
+    desc: "Estimate readiness for model documentation and transparency across model/system documentation coverage, intended use and limitations documentation, stakeholder-appropriate transparency artifacts, and documentation review and update evidence.",
+    inputs: [
+      {
+        k: "coverage",
+        label: "Model/system documentation coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "limitations",
+        label: "Intended use & limitations documented",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "artifacts",
+        label: "Stakeholder-appropriate transparency artifacts provided",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Documentation review & update evidence current",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

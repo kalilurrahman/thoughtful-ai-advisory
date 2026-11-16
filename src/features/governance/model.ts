@@ -717,6 +717,30 @@ export function calculate(
           : "Readiness is trending well — keep oversight points, escalation paths and targets, reviewer readiness, and oversight evidence current as AI uses and risks change.",
     };
   }
+  if (id === "model-documentation-transparency") {
+    const coverageVal = v["coverage"] ?? 0,
+      limitations = v["limitations"] ?? 0,
+      artifacts = v["artifacts"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(coverageVal * 0.3 + limitations * 0.25 + artifacts * 0.25 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Model documentation & transparency readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Model/system documentation coverage (30%)", coverageVal + "%"],
+        ["Intended use & limitations documented (25%)", limitations + "%"],
+        ["Stakeholder-appropriate transparency artifacts (25%)", artifacts + "%"],
+        ["Documentation review & update evidence (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: expand model/system documentation coverage, document intended use and limitations clearly, provide stakeholder-appropriate transparency artifacts, and maintain documentation review and update evidence on cadence."
+          : "Readiness is trending well — keep documentation, intended-use/limitation statements, transparency artifacts, and review evidence current as models and uses change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
