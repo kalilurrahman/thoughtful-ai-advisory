@@ -1236,6 +1236,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "deployment-change-control",
+    name: "Secure deployment & change-control readiness",
+    desc: "Estimate readiness for safe AI deployment and change control across pre-release checks, gates, rollout/rollback, and post-deploy assurance.",
+    inputs: [
+      {
+        k: "prechecks",
+        label: "Pre-release testing & guardrail checks completed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "gates",
+        label: "Approvals & release gates satisfied with evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rollout",
+        label: "Staged rollout & rollback plans ready/tested",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "postdeploy",
+        label: "Post-deploy monitoring & evidence capture in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
