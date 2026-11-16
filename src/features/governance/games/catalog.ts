@@ -407,4 +407,12 @@ export const GOVERNANCE_GAMES = [
       "Practice representative user testing, usable error and correction paths, workload and comprehension safeguards, and repeated usability reviews with evidence.",
     anchor: "human-factors-usability-assurance",
   },
+  {
+    id: "model-documentation-transparency-assurance",
+    title: "Model documentation & transparency assurance",
+    category: "Transparency & documentation",
+    description:
+      "Practice documenting intended use and limitations, versioning model changes and notifying operators, recording failure modes, and keeping performance evidence traceable and current.",
+    anchor: "model-documentation-transparency-assurance",
+  },
 ] as const;
