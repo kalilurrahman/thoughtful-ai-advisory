@@ -367,4 +367,12 @@ export const GOVERNANCE_GAMES = [
       "Practice clear AI disclosure, communicating limitations/uncertainty, contestability and recourse channels, and evidence-backed transparency effectiveness.",
     anchor: "transparency-disclosure-assurance",
   },
+  {
+    id: "privacy-minimization-assurance",
+    title: "AI privacy & data minimization assurance",
+    category: "Data & privacy assurance",
+    description:
+      "Practice minimizing personal data at collection, before third-party model calls, and on secondary use, with minimization evidence kept on review.",
+    anchor: "privacy-minimization-assurance",
+  },
 ] as const;
