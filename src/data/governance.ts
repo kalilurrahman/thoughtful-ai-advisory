@@ -2311,6 +2311,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "retention-deletion",
+    name: "Data retention & deletion assurance readiness",
+    desc: "Estimate readiness for AI data retention and deletion across defined retention schedules, timely deletion and secure disposal, handling of erasure/retention requests, and evidence that retention and disposal are followed.",
+    inputs: [
+      {
+        k: "schedules",
+        label: "Retention schedules defined for AI data and artifacts",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "deletion",
+        label: "Timely deletion & secure disposal executed on schedule",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "requests",
+        label: "Erasure, retention holds & data-subject requests handled",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Retention & disposal actions evidenced and reviewed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
