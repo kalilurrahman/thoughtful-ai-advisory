@@ -597,6 +597,30 @@ export function calculate(
           : "Readiness is trending well — keep explanations, user guidance, and limitation/uncertainty communications current, and review explainability evidence as systems and uses change.",
     };
   }
+  if (id === "continuous-monitoring-oversight") {
+    const signals = v["signals"] ?? 0,
+      alerting = v["alerting"] ?? 0,
+      oversight = v["oversight"] ?? 0,
+      remediation = v["remediation"] ?? 0,
+      score = Math.round(signals * 0.3 + alerting * 0.25 + oversight * 0.25 + remediation * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Continuous monitoring & oversight readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Monitoring signal coverage (30%)", signals + "%"],
+        ["Alerting & thresholds configured (25%)", alerting + "%"],
+        ["Human review & oversight cadence (25%)", oversight + "%"],
+        ["Drift/issue detection & remediation evidence (20%)", remediation + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: expand monitoring signal coverage, configure actionable alerting/thresholds, maintain human review and oversight cadence, and document drift/issue detection and remediation with evidence."
+          : "Readiness is trending well — keep monitoring signals, alerting, oversight cadence, and remediation evidence current as systems, risks, and performance change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

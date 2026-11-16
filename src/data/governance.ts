@@ -1752,6 +1752,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "continuous-monitoring-oversight",
+    name: "Continuous monitoring & oversight readiness",
+    desc: "Estimate readiness for continuous monitoring and oversight across signal coverage, alerting/thresholds, human review cadence, and drift/issue remediation evidence.",
+    inputs: [
+      {
+        k: "signals",
+        label: "Monitoring signal coverage for key risks/metrics",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "alerting",
+        label: "Alerting & thresholds configured and actionable",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "oversight",
+        label: "Human review & oversight cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "remediation",
+        label: "Drift/issue detection & remediation evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
