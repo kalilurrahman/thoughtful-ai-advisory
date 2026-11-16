@@ -1365,6 +1365,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "logging-traceability-audit",
+    name: "Logging, traceability & audit readiness",
+    desc: "Estimate readiness for AI logging and traceability across event coverage, linkage to inputs/decisions, record integrity/retention, and audit evidence access.",
+    inputs: [
+      {
+        k: "coverage",
+        label: "AI events/actions logged with key context",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "traceability",
+        label: "Traceability to inputs, decisions & model versions",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "integrity",
+        label: "Retention, integrity & tamper-evidence of records",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "audit",
+        label: "Audit evidence access & review readiness",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
