@@ -741,6 +741,30 @@ export function calculate(
           : "Readiness is trending well — keep documentation, intended-use/limitation statements, transparency artifacts, and review evidence current as models and uses change.",
     };
   }
+  if (id === "post-deployment-performance-drift") {
+    const kpis = v["kpis"] ?? 0,
+      drift = v["drift"] ?? 0,
+      thresholds = v["thresholds"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(kpis * 0.3 + drift * 0.25 + thresholds * 0.25 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Post-deployment performance & drift readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Performance & quality KPI coverage (30%)", kpis + "%"],
+        ["Drift & degradation detection (25%)", drift + "%"],
+        ["Retraining/rollback thresholds & process (25%)", thresholds + "%"],
+        ["Performance review & evidence cadence (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define performance and quality KPIs, configure drift and degradation detection, establish retraining/rollback thresholds and process, and maintain performance review evidence on cadence."
+          : "Readiness is trending well — keep KPIs, drift detection, retraining/rollback thresholds, and performance review evidence current as models and data change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

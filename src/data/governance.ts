@@ -2010,6 +2010,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "post-deployment-performance-drift",
+    name: "Post-deployment performance & drift readiness",
+    desc: "Estimate readiness for post-deployment performance and drift management across performance/quality KPI coverage, drift and degradation detection, retraining/rollback thresholds and process, and performance review evidence cadence.",
+    inputs: [
+      {
+        k: "kpis",
+        label: "Performance & quality KPI coverage in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "drift",
+        label: "Drift & degradation detection configured",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "thresholds",
+        label: "Retraining/rollback thresholds & process defined",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Performance review & evidence cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
