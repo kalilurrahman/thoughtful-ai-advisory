@@ -4,6 +4,13 @@ import type { ContentChange } from "@/features/governance/content-changelog-mode
 // Historical dates are verified against repository commits 39568a0, 4f24938 and 8763950.
 export const CONTENT_CHANGES: readonly ContentChange[] = [
   {
+    id: "readiness-calculator-library",
+    date: "2026-11-16",
+    title: "Readiness calculators for every governance domain",
+    summary:
+      "The calculators page grew from six economics and maturity models into a library of 32: guardrail remediation effort and AI literacy coverage, and 24 per-domain readiness scores spanning assurance, third-party and supply-chain assurance, incident response, secure deployment, privacy, model quality, logging and audit, bias and impact, access control, continuity, provenance, policy and accountability, safety and misuse, inventory and classification, explainability, continuous monitoring, security, regulatory alignment, data quality, human oversight, documentation and transparency, post-deployment drift, and human factors. Each is a transparent weighted model with its own inputs; none stores data.",
+  },
+  {
     id: "assurance-design-system-release",
     date: "2026-11-14",
     title: "VERITRAIL Assurance design system (release v2.0.0)",

@@ -177,8 +177,8 @@ Each requirement is detailed as user stories with acceptance criteria in
   due dates) and corrective actions (evidence and verified closure).
 - **FR-35** Show a phased roadmap and a lifecycle checklist derived from the workspace.
 - **FR-36** Provide the playbook (12 chapters, notes, progress), eight templates, a source
-  register, guided start, six calculators and an AI advisor that maps a concern to controls and
-  corrective actions.
+  register, guided start, a calculator library (economics, maturity and per-domain readiness
+  models) and an AI advisor that maps a concern to controls and corrective actions.
 - **FR-37** Generate executive, scorecard and audit-evidence packs in PDF, DOCX, XLSX and PPTX,
   labelled previews with blank sign-off.
 
