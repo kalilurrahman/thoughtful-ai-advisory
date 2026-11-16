@@ -357,6 +357,30 @@ export function calculate(
           : "Readiness is trending well — maintain data minimization and purpose controls, verify access/retention/deletion practices, and refresh privacy reviews as systems and data use change.",
     };
   }
+  if (id === "model-quality-evaluation") {
+    const coverageVal = v["coverage"] ?? 0,
+      criteria = v["criteria"] ?? 0,
+      review = v["review"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      score = Math.round(coverageVal * 0.3 + criteria * 0.25 + review * 0.2 + monitoring * 0.25),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Model & output quality evaluation readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Evaluation/test coverage (30%)", coverageVal + "%"],
+        ["Quality acceptance thresholds/criteria (25%)", criteria + "%"],
+        ["Human review & calibration (20%)", review + "%"],
+        ["Regression/quality monitoring cadence (25%)", monitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: expand evaluation/test coverage for key use cases, define acceptance thresholds, strengthen human review/calibration, and monitor quality/regressions on a regular cadence."
+          : "Readiness is trending well — keep evaluations, acceptance criteria, review practices, and regression monitoring current as models, data, and use cases change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
