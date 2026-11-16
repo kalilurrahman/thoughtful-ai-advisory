@@ -429,6 +429,30 @@ export function calculate(
           : "Readiness is trending well — keep assessments, mitigations, stakeholder engagement, and monitoring/remediation evidence current as systems, data, and contexts change.",
     };
   }
+  if (id === "access-identity-assurance") {
+    const leastpriv = v["leastpriv"] ?? 0,
+      secrets = v["secrets"] ?? 0,
+      reviews = v["reviews"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      score = Math.round(leastpriv * 0.3 + secrets * 0.25 + reviews * 0.2 + monitoring * 0.25),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Access control & identity assurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Least-privilege roles & access (30%)", leastpriv + "%"],
+        ["Credential/API key/secret management (25%)", secrets + "%"],
+        ["Access review & recertification (20%)", reviews + "%"],
+        ["Privileged-action logging & monitoring (25%)", monitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: enforce least-privilege roles and access, strengthen credential/API key/secret management, run access reviews/recertification on cadence, and log/monitor privileged actions with evidence."
+          : "Readiness is trending well — maintain least-privilege access, protect credentials and secrets, keep access reviews current, and monitor privileged activity as systems and users change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
