@@ -669,6 +669,30 @@ export function calculate(
           : "Readiness is trending well — keep requirement mappings, control evidence, compliance assessments, and remediation/attestation records current as regulations and AI uses change.",
     };
   }
+  if (id === "data-quality-integrity") {
+    const quality = v["quality"] ?? 0,
+      integrity = v["integrity"] ?? 0,
+      issues = v["issues"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      score = Math.round(quality * 0.3 + integrity * 0.25 + issues * 0.25 + monitoring * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Data quality & integrity readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Source/data quality checks (30%)", quality + "%"],
+        ["Integrity & validation controls (25%)", integrity + "%"],
+        ["Data quality issue handling & remediation (25%)", issues + "%"],
+        ["Quality monitoring & evidence cadence (20%)", monitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: strengthen source and data quality checks, apply integrity and validation controls, improve data quality issue handling and remediation, and maintain quality monitoring with evidence on cadence."
+          : "Readiness is trending well — keep data quality checks, integrity and validation controls, issue remediation, and monitoring evidence current as data sources and AI uses change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
