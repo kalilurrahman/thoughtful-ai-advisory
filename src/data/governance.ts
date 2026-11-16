@@ -1623,6 +1623,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "safety-misuse-prevention",
+    name: "Safety & misuse prevention readiness",
+    desc: "Estimate readiness to prevent and manage unsafe or misuse scenarios across safety controls, misuse monitoring/response, red-teaming/testing, and safety review evidence.",
+    inputs: [
+      {
+        k: "controls",
+        label: "Safety/guardrail controls implemented & enabled",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Misuse/abuse monitoring & response readiness",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "testing",
+        label: "Red-teaming/safety testing cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Safety incident review & improvement evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
