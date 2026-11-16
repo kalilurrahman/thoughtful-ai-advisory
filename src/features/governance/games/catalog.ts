@@ -375,4 +375,12 @@ export const GOVERNANCE_GAMES = [
       "Practice minimizing personal data at collection, before third-party model calls, and on secondary use, with minimization evidence kept on review.",
     anchor: "privacy-minimization-assurance",
   },
+  {
+    id: "inventory-risk-classification-assurance",
+    title: "AI inventory & risk classification assurance",
+    category: "Inventory & risk classification",
+    description:
+      "Practice registering every AI use, classifying risk against documented criteria, keeping the inventory current through change, and turning tiers into proportionate assurance action.",
+    anchor: "inventory-risk-classification-assurance",
+  },
 ] as const;
