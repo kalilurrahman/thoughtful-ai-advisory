@@ -189,6 +189,10 @@ import {
   PERFORMANCE_DRIFT_ASSURANCE_ROUNDS,
   performanceDriftAssuranceScore,
 } from "./performance-drift-assurance-game";
+import {
+  HUMAN_FACTORS_USABILITY_ASSURANCE_ROUNDS,
+  humanFactorsUsabilityAssuranceScore,
+} from "./human-factors-usability-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -248,6 +252,7 @@ export function ChecklistScreen() {
   const [inventoryAnswers, setInventoryAnswers] = useState<Record<string, number>>({});
   const [tuningAnswers, setTuningAnswers] = useState<Record<string, number>>({});
   const [driftAnswers, setDriftAnswers] = useState<Record<string, number>>({});
+  const [usabilityAnswers, setUsabilityAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -302,6 +307,7 @@ export function ChecklistScreen() {
   const inventoryGame = inventoryRiskClassificationScore(inventoryAnswers);
   const tuningGame = guardrailTuningAssuranceScore(tuningAnswers);
   const driftGame = performanceDriftAssuranceScore(driftAnswers);
+  const usabilityGame = humanFactorsUsabilityAssuranceScore(usabilityAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2956,6 +2962,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good drift assurance choice."
                           : "Review the drift assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="human-factors-usability-assurance"
+        className="checklist-phase"
+        aria-label="Human factors and usability assurance game"
+      >
+        <h2>Human factors & usability assurance</h2>
+        <p>
+          Practice representative user testing, usable error and correction paths, workload and
+          comprehension safeguards, and repeated usability reviews with evidence. Scenarios are
+          learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {usabilityGame.correct}/{usabilityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {usabilityGame.complete && (
+            <Button variant="outline" onClick={() => setUsabilityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {HUMAN_FACTORS_USABILITY_ASSURANCE_ROUNDS.map((round) => {
+            const selected = usabilityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setUsabilityAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good human factors & usability assurance choice."
+                          : "Review the usability assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
