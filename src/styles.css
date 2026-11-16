@@ -2937,6 +2937,12 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
 .checklist-task > svg {
   width: 22px;
   height: 22px;
+  align-self: start;
+  margin-top: 2px;
+}
+.checklist-task > div:only-child button[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
 }
 .checklist-task > div:only-child {
   grid-column: 1 / -1;
@@ -3628,8 +3634,10 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
     grid-template-columns: 24px minmax(0, 1fr);
   }
   .checklist-task > .checklist-status,
-  .checklist-task > button {
+  .checklist-task > button,
+  .checklist-task > a {
     grid-column: 2;
+    justify-self: start;
   }
   .inventory-toolbar {
     grid-template-columns: minmax(0, 1fr);
