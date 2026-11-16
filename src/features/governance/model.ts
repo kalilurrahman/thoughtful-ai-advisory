@@ -453,6 +453,30 @@ export function calculate(
           : "Readiness is trending well — maintain least-privilege access, protect credentials and secrets, keep access reviews current, and monitor privileged activity as systems and users change.",
     };
   }
+  if (id === "business-continuity-resilience") {
+    const dependencies = v["dependencies"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      recovery = v["recovery"] ?? 0,
+      testing = v["testing"] ?? 0,
+      score = Math.round(dependencies * 0.3 + fallback * 0.25 + recovery * 0.25 + testing * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Business continuity & resilience readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Critical AI dependencies mapped (30%)", dependencies + "%"],
+        ["Fallback/degraded-mode plans (25%)", fallback + "%"],
+        ["Backup & recovery objectives defined (25%)", recovery + "%"],
+        ["Resilience testing & exercise cadence (20%)", testing + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: map critical AI dependencies, define fallback/degraded-mode plans, set backup and recovery objectives, and test resilience through regular exercises."
+          : "Readiness is trending well — keep dependency mapping, fallback plans, recovery objectives, and resilience exercises current as systems and operating conditions change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
