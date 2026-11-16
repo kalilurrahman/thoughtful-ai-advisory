@@ -309,6 +309,30 @@ export function calculate(
           : "Readiness is trending well — exercise and update playbooks, validate escalation and communications, and review recovery objectives as systems and risks change.",
     };
   }
+  if (id === "deployment-change-control") {
+    const prechecks = v["prechecks"] ?? 0,
+      gates = v["gates"] ?? 0,
+      rollout = v["rollout"] ?? 0,
+      postdeploy = v["postdeploy"] ?? 0,
+      score = Math.round(prechecks * 0.3 + gates * 0.25 + rollout * 0.2 + postdeploy * 0.25),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Secure deployment & change-control readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Pre-release testing & guardrail checks (30%)", prechecks + "%"],
+        ["Approvals & release gates with evidence (25%)", gates + "%"],
+        ["Staged rollout & rollback readiness (20%)", rollout + "%"],
+        ["Post-deploy monitoring & evidence (25%)", postdeploy + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: complete pre-release testing and guardrail checks, enforce approvals/release gates with evidence, prepare staged rollout and rollback, and capture post-deploy monitoring signals and evidence."
+          : "Readiness is trending well — keep change controls, rollout/rollback plans, and post-deploy assurance evidence current as systems and risks evolve.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
