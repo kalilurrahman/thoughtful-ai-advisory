@@ -573,6 +573,30 @@ export function calculate(
           : "Readiness is trending well — keep the inventory, risk classifications, ownership/lifecycle records, and review evidence current as AI systems and uses change.",
     };
   }
+  if (id === "explainability-interpretability") {
+    const coverageVal = v["coverage"] ?? 0,
+      rationale = v["rationale"] ?? 0,
+      uncertainty = v["uncertainty"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(coverageVal * 0.3 + rationale * 0.25 + uncertainty * 0.25 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Explainability & interpretability readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Explanation/interpretability coverage (30%)", coverageVal + "%"],
+        ["User-appropriate rationale & guidance (25%)", rationale + "%"],
+        ["Limitations & uncertainty communicated (25%)", uncertainty + "%"],
+        ["Explainability review & evidence cadence (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: expand explanation/interpretability coverage for key uses, provide user-appropriate rationale and guidance, communicate limitations and uncertainty clearly, and review explainability practices with supporting evidence."
+          : "Readiness is trending well — keep explanations, user guidance, and limitation/uncertainty communications current, and review explainability evidence as systems and uses change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

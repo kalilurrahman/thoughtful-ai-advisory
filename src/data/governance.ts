@@ -1709,6 +1709,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "explainability-interpretability",
+    name: "Explainability & interpretability readiness",
+    desc: "Estimate readiness for explainability and interpretability across explanation coverage, user-appropriate rationale, limitations/uncertainty communication, and review evidence.",
+    inputs: [
+      {
+        k: "coverage",
+        label: "Explanation/interpretability coverage for key uses",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rationale",
+        label: "User-appropriate rationale & guidance provided",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "uncertainty",
+        label: "Limitations & uncertainty clearly communicated",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Explainability review & evidence cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
