@@ -935,6 +935,30 @@ export function calculate(
           : "Readiness is trending well — keep retention schedules, deletion/disposal execution, request handling, and disposal evidence current as data, systems, and obligations change.",
     };
   }
+  if (id === "decommissioning-retirement") {
+    const criteria = v["criteria"] ?? 0,
+      disposal = v["disposal"] ?? 0,
+      continuity = v["continuity"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      score = Math.round(criteria * 0.25 + disposal * 0.3 + continuity * 0.25 + evidence * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI decommissioning & retirement readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Retirement criteria, triggers & approvals (25%)", criteria + "%"],
+        ["Data/model disposal & access removal (30%)", disposal + "%"],
+        ["Stakeholder notice, continuity & alternatives (25%)", continuity + "%"],
+        ["Decommissioning records & evidence (20%)", evidence + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define retirement criteria, triggers and approvals, remove or securely dispose data/models and access, plan stakeholder notice and continuity/alternatives, and record decommissioning actions as evidence."
+          : "Readiness is trending well — keep retirement criteria, disposal and access removal, continuity planning, and decommissioning evidence current as systems and dependencies change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
