@@ -1580,6 +1580,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "policy-accountability",
+    name: "Responsible AI policy & accountability readiness",
+    desc: "Estimate readiness for responsible AI policy and accountability across policy coverage, role/accountability mapping, training/acknowledgment, and policy review/enforcement evidence.",
+    inputs: [
+      {
+        k: "coverage",
+        label: "Policies cover key AI risks, uses & guardrails",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "accountability",
+        label: "Roles, ownership & accountability clearly mapped",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "training",
+        label: "Training & policy acknowledgment coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "enforcement",
+        label: "Policy review, enforcement & evidence current",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
