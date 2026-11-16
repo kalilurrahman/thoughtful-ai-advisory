@@ -399,4 +399,12 @@ export const GOVERNANCE_GAMES = [
       "Practice baselining post-deployment performance, watching for data and quality drift, assigning drift response owners and SLAs, and keeping auditable drift evidence.",
     anchor: "performance-drift-assurance",
   },
+  {
+    id: "human-factors-usability-assurance",
+    title: "Human factors & usability assurance",
+    category: "Human factors & usability",
+    description:
+      "Practice representative user testing, usable error and correction paths, workload and comprehension safeguards, and repeated usability reviews with evidence.",
+    anchor: "human-factors-usability-assurance",
+  },
 ] as const;
