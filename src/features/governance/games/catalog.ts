@@ -391,4 +391,12 @@ export const GOVERNANCE_GAMES = [
       "Practice tuning noisy guardrails against real traffic, changing thresholds with recorded evidence, measuring catch and miss rates, and reviewing overrides as tuning signals.",
     anchor: "guardrail-tuning-assurance",
   },
+  {
+    id: "performance-drift-assurance",
+    title: "Post-deployment performance & drift assurance",
+    category: "Monitoring & assurance",
+    description:
+      "Practice baselining post-deployment performance, watching for data and quality drift, assigning drift response owners and SLAs, and keeping auditable drift evidence.",
+    anchor: "performance-drift-assurance",
+  },
 ] as const;
