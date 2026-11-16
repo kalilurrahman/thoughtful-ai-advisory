@@ -621,6 +621,30 @@ export function calculate(
           : "Readiness is trending well — keep monitoring signals, alerting, oversight cadence, and remediation evidence current as systems, risks, and performance change.",
     };
   }
+  if (id === "security-vulnerability-management") {
+    const patching = v["patching"] ?? 0,
+      hardening = v["hardening"] ?? 0,
+      testing = v["testing"] ?? 0,
+      remediation = v["remediation"] ?? 0,
+      score = Math.round(patching * 0.3 + hardening * 0.25 + testing * 0.25 + remediation * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Security & vulnerability management readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Vulnerability & patch coverage (30%)", patching + "%"],
+        ["Secure configuration & hardening (25%)", hardening + "%"],
+        ["Security testing & assessment cadence (25%)", testing + "%"],
+        ["Security incident & remediation evidence (20%)", remediation + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: improve vulnerability and patch coverage for AI components, enforce secure configuration and hardening, maintain regular security testing and assessments, and document security incidents and remediation with evidence."
+          : "Readiness is trending well — keep patching, hardening, security testing cadence, and incident/remediation evidence current as AI components and threats evolve.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
