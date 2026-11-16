@@ -765,6 +765,30 @@ export function calculate(
           : "Readiness is trending well — keep KPIs, drift detection, retraining/rollback thresholds, and performance review evidence current as models and data change.",
     };
   }
+  if (id === "ai-supply-chain-dependency-assurance") {
+    const provenance = v["provenance"] ?? 0,
+      inventory = v["inventory"] ?? 0,
+      supplier = v["supplier"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      score = Math.round(provenance * 0.3 + inventory * 0.25 + supplier * 0.25 + monitoring * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI supply chain & dependency assurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Component/model/source provenance checks (30%)", provenance + "%"],
+        ["Dependency inventory / SBOM coverage (25%)", inventory + "%"],
+        ["Supplier assurance & license/usage review (25%)", supplier + "%"],
+        ["Dependency monitoring & update evidence (20%)", monitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: run provenance checks on components, models and sources, maintain a dependency inventory/SBOM, complete supplier assurance and license/usage reviews, and keep dependency monitoring and update evidence current."
+          : "Readiness is trending well — keep provenance checks, dependency inventory, supplier/license reviews, and monitoring evidence current as components and suppliers change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

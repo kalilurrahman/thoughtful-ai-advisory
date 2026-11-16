@@ -2053,6 +2053,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "ai-supply-chain-dependency-assurance",
+    name: "AI supply chain & dependency assurance readiness",
+    desc: "Estimate readiness for AI supply chain and dependency assurance across component/model/source provenance checks, dependency inventory (SBOM) coverage, supplier assurance and license/usage review, and dependency monitoring and update evidence.",
+    inputs: [
+      {
+        k: "provenance",
+        label: "Component/model/source provenance checks in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "inventory",
+        label: "Dependency inventory / SBOM coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "supplier",
+        label: "Supplier assurance & license/usage review covered",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Dependency monitoring & update evidence current",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
