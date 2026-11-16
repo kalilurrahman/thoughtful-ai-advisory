@@ -1666,6 +1666,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "inventory-risk-classification",
+    name: "AI inventory & risk classification readiness",
+    desc: "Estimate readiness for AI inventory and risk governance across system/use-case coverage, risk tiering/classification, ownership/lifecycle tracking, and periodic review evidence.",
+    inputs: [
+      {
+        k: "inventory",
+        label: "AI systems & use cases inventoried",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "classification",
+        label: "Risk tiering/classification coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "ownership",
+        label: "Ownership & lifecycle tracking in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Periodic review/revalidation evidence current",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
