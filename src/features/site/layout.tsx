@@ -5,7 +5,7 @@ import { STANDARD_DISCLAIMER, siteConfig } from "./content";
 import { LeadForm } from "./forms";
 import { footerColumns, headerNav, type Crumb } from "./pages";
 import { SiteLink } from "./ui";
-import { ArrowLeft, ArrowUp, List, Palette, X } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowUp, LinkedinLogo, List, Palette, X } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { InstallAppButton } from "@/features/pwa/pwa-layer";
 import { SearchButton } from "@/features/search/search-palette";
@@ -17,6 +17,7 @@ import {
 import { GlossaryTip } from "./glossary-tip";
 import { ProductMark, VeritrailMark } from "./brand-marks";
 import { RELEASE, RELEASE_LABEL } from "@/data/release";
+import { AUTHOR } from "@/data/author";
 
 // Public website chrome — header with disclosure navigation, breadcrumbs and footer —
 // ported from platform/app/website/templates/partials/{header,breadcrumbs,footer}.html.
@@ -325,8 +326,21 @@ function SiteFooter() {
           <p>{STANDARD_DISCLAIMER}</p>
         </aside>
         <div className="footer-meta">
-          <p>
-            An initiative by Kalilur Rahman
+          <p className="footer-attribution">
+            An initiative by{" "}
+            <a href={AUTHOR.site} target="_blank" rel="noopener noreferrer">
+              {AUTHOR.name}
+            </a>
+            <a
+              className="footer-profile"
+              href={AUTHOR.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${AUTHOR.name} on LinkedIn (opens in a new tab)`}
+            >
+              <LinkedinLogo weight="fill" aria-hidden="true" />
+              LinkedIn
+            </a>
             <span className="footer-release" title={`Release ${RELEASE.version}, ${RELEASE.date}`}>
               {RELEASE_LABEL}
             </span>
