@@ -1182,7 +1182,7 @@ label {
   display: block;
   font-size: 14px;
 }
-input:not([type="range"]),
+input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
 textarea {
   display: block;
   width: 100%;
@@ -1193,6 +1193,24 @@ textarea {
   border-radius: 2px;
   margin-top: 8px;
   min-height: 44px;
+}
+/* Checkboxes and radios are controls, not fields: keep them control-sized beside their label
+   instead of inheriting the full-width, 44px-tall field box above. */
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+  margin-top: 0;
+  padding: 0;
+  border: 1px solid var(--input);
+  border-radius: 3px;
+  background: var(--background);
+  accent-color: var(--primary);
+  vertical-align: middle;
+  flex: none;
+  cursor: pointer;
 }
 input:focus,
 textarea:focus {
@@ -2959,9 +2977,10 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   text-align: left;
   white-space: normal;
   height: auto;
-  min-height: 40px;
-  padding: 10px 14px;
-  line-height: 1.45;
+  min-height: 36px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 .checklist-complete > svg {
   color: var(--success-ink);
