@@ -1924,6 +1924,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "human-oversight-escalation",
+    name: "Human oversight & escalation readiness",
+    desc: "Estimate readiness for human oversight and escalation across defined oversight points, escalation paths and response targets, reviewer training and authority, and oversight evidence and review cadence.",
+    inputs: [
+      {
+        k: "points",
+        label: "Defined oversight points for key AI decisions/outputs",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "escalation",
+        label: "Escalation paths & response targets in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "training",
+        label: "Reviewer training & authority established",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Oversight evidence & review cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

@@ -693,6 +693,30 @@ export function calculate(
           : "Readiness is trending well — keep data quality checks, integrity and validation controls, issue remediation, and monitoring evidence current as data sources and AI uses change.",
     };
   }
+  if (id === "human-oversight-escalation") {
+    const points = v["points"] ?? 0,
+      escalation = v["escalation"] ?? 0,
+      training = v["training"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      score = Math.round(points * 0.3 + escalation * 0.25 + training * 0.25 + evidence * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Human oversight & escalation readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Defined oversight points (30%)", points + "%"],
+        ["Escalation paths & response targets (25%)", escalation + "%"],
+        ["Reviewer training & authority (25%)", training + "%"],
+        ["Oversight evidence & review cadence (20%)", evidence + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define oversight points for key AI decisions/outputs, establish escalation paths and response targets, ensure reviewer training and authority, and maintain oversight evidence and review cadence."
+          : "Readiness is trending well — keep oversight points, escalation paths and targets, reviewer readiness, and oversight evidence current as AI uses and risks change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
