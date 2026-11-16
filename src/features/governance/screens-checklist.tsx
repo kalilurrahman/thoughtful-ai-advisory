@@ -181,6 +181,10 @@ import {
   INVENTORY_RISK_CLASSIFICATION_ROUNDS,
   inventoryRiskClassificationScore,
 } from "./inventory-risk-classification-game";
+import {
+  GUARDRAIL_TUNING_ASSURANCE_ROUNDS,
+  guardrailTuningAssuranceScore,
+} from "./guardrail-tuning-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -238,6 +242,7 @@ export function ChecklistScreen() {
   const [disclosureAnswers, setDisclosureAnswers] = useState<Record<string, number>>({});
   const [privacyAnswers, setPrivacyAnswers] = useState<Record<string, number>>({});
   const [inventoryAnswers, setInventoryAnswers] = useState<Record<string, number>>({});
+  const [tuningAnswers, setTuningAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -290,6 +295,7 @@ export function ChecklistScreen() {
   const disclosureGame = transparencyDisclosureAssuranceScore(disclosureAnswers);
   const privacyGame = privacyMinimizationAssuranceScore(privacyAnswers);
   const inventoryGame = inventoryRiskClassificationScore(inventoryAnswers);
+  const tuningGame = guardrailTuningAssuranceScore(tuningAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2820,6 +2826,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good inventory & classification assurance choice."
                           : "Review the inventory gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="guardrail-tuning-assurance"
+        className="checklist-phase"
+        aria-label="Guardrail tuning and effectiveness assurance game"
+      >
+        <h2>Guardrail tuning & effectiveness assurance</h2>
+        <p>
+          Practice tuning noisy guardrails against real traffic, changing thresholds with recorded
+          evidence, measuring catch and miss rates, and reviewing overrides as tuning signals.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {tuningGame.correct}/{tuningGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {tuningGame.complete && (
+            <Button variant="outline" onClick={() => setTuningAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {GUARDRAIL_TUNING_ASSURANCE_ROUNDS.map((round) => {
+            const selected = tuningAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setTuningAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good guardrail tuning assurance choice."
+                          : "Review the tuning gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

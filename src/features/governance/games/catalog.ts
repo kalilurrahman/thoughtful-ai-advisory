@@ -383,4 +383,12 @@ export const GOVERNANCE_GAMES = [
       "Practice registering every AI use, classifying risk against documented criteria, keeping the inventory current through change, and turning tiers into proportionate assurance action.",
     anchor: "inventory-risk-classification-assurance",
   },
+  {
+    id: "guardrail-tuning-assurance",
+    title: "Guardrail tuning & effectiveness assurance",
+    category: "Guardrails & assurance",
+    description:
+      "Practice tuning noisy guardrails against real traffic, changing thresholds with recorded evidence, measuring catch and miss rates, and reviewing overrides as tuning signals.",
+    anchor: "guardrail-tuning-assurance",
+  },
 ] as const;
