@@ -40,6 +40,7 @@ import { useGovernance } from "./store";
 import { at, answerAt, calculate } from "./model";
 import { Chip, Dot, Kicker } from "./screens-core";
 import { EvidenceTimeline, PageHeader, RouteLink, formatUtc } from "@/components/assurance";
+import { RELEASE_LABEL } from "@/data/release";
 import { recordTrail, trailActor, useTrail, useTrailMode } from "./trail-store";
 import { buildEvidenceReport, reportFilename } from "./evidence-report";
 import { generateEvidenceFile, type ExportFormat } from "./evidence-files";
@@ -447,7 +448,7 @@ export function ExportScreen() {
             >
               <Icon weight="duotone" />
               <div>
-                <h3>{p.name}</h3>
+                <h2>{p.name}</h2>
                 <p className="muted">{p.desc}</p>
               </div>
               {packId === p.id ? (
@@ -508,7 +509,9 @@ export function ExportScreen() {
               VERITRAIL_{pack.name.replace(/ /g, "-")}_
               {workspaceName.replace(/[^a-zA-Z0-9]+/g, "-")}.{format.toLowerCase()}
             </strong>
-            <p>Preview ready · v1.3 · generated {new Date().toLocaleString()}</p>
+            <p>
+              Preview ready · {RELEASE_LABEL} · generated {new Date().toLocaleString()}
+            </p>
           </div>
           <Button variant="outline" onClick={() => generated && download(generated)}>
             <DownloadSimple /> Download again

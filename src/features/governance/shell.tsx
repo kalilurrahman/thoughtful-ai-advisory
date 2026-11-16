@@ -43,6 +43,7 @@ import { requestInstall, useInstallState } from "@/features/pwa/install-store";
 import { openAppearance } from "@/features/appearance/appearance-panel";
 import { useGovernance } from "./store";
 import { VeritrailMark } from "@/features/site/brand-marks";
+import { RELEASE_LABEL } from "@/data/release";
 
 // The workspace shell (docs/design/assurance/README.md §3.1): a command-navy sidebar from
 // 1024px, the same sidebar as a 72px icon rail from 640px, and a four-item bottom navigation on
@@ -257,6 +258,7 @@ export function GovernanceShell({ children }: { children: ReactNode }) {
           <span className="sidebar-text">
             <span className="sidebar-org">{workspaceName}</span>
             <small>{mode} · NIST AI RMF · GOVERN · MAP · MEASURE · MANAGE</small>
+            <small className="sidebar-release">{RELEASE_LABEL}</small>
           </span>
         </div>
       </aside>

@@ -15,7 +15,10 @@ export function ContentUpdateDate() {
       <span>
         Content last updated: <time dateTime={updatedAt}>{formatContentDate(updatedAt)}</time>
       </span>
-      <a href="#content-change-log" className="text-primary underline underline-offset-4">
+      <a
+        href="#content-change-log"
+        className="inline-flex min-h-6 items-center py-1 text-primary underline underline-offset-4"
+      >
         View change log
       </a>
     </p>

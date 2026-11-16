@@ -16,6 +16,7 @@ import {
 } from "@/features/appearance/appearance-panel";
 import { GlossaryTip } from "./glossary-tip";
 import { ProductMark, VeritrailMark } from "./brand-marks";
+import { RELEASE, RELEASE_LABEL } from "@/data/release";
 
 // Public website chrome — header with disclosure navigation, breadcrumbs and footer —
 // ported from platform/app/website/templates/partials/{header,breadcrumbs,footer}.html.
@@ -324,7 +325,12 @@ function SiteFooter() {
           <p>{STANDARD_DISCLAIMER}</p>
         </aside>
         <div className="footer-meta">
-          <p>An initiative by Kalilur Rahman</p>
+          <p>
+            An initiative by Kalilur Rahman
+            <span className="footer-release" title={`Release ${RELEASE.version}, ${RELEASE.date}`}>
+              {RELEASE_LABEL}
+            </span>
+          </p>
           <ul className="footer-links">
             {siteConfig.footer_links.map((l) => (
               <li key={l.url}>

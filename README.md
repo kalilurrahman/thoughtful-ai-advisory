@@ -17,6 +17,7 @@
 
 **Enterprise-grade AI risk management, governance capabilities, safety controls, and regulatory compliance.**
 
+[![Release](https://img.shields.io/badge/Release-v2.0.0%20Assurance-0D1D29?style=for-the-badge)](./src/data/release.ts)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-veritrail.kalilurrahman.com-0066CC?style=for-the-badge&logo=react)](https://veritrail.kalilurrahman.com/)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-kalilurrahman%2Fthoughtful--ai--advisory-black?style=for-the-badge&logo=github)](https://github.com/kalilurrahman/thoughtful-ai-advisory)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)

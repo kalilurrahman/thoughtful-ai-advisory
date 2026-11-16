@@ -4,6 +4,13 @@ import type { ContentChange } from "@/features/governance/content-changelog-mode
 // Historical dates are verified against repository commits 39568a0, 4f24938 and 8763950.
 export const CONTENT_CHANGES: readonly ContentChange[] = [
   {
+    id: "assurance-design-system-release",
+    date: "2026-11-14",
+    title: "VERITRAIL Assurance design system (release v2.0.0)",
+    summary:
+      "The site and workspace moved to the Assurance design system: a new default palette and type pairing, a command-navy workspace shell with a tablet rail and phone navigation, redesigned overview, assessment, inventory and evidence screens, product marks and the new master mark, and an append-only evidence trail for saved workspaces. Every page, control, FAQ, glossary term and tool is unchanged in content.",
+  },
+  {
     id: "service-led-site-presentation",
     date: "2026-11-13",
     title: "Governance, advisory and assurance pathways",

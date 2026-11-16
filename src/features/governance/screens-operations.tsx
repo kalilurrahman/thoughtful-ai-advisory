@@ -263,7 +263,7 @@ export function InventoryScreen() {
         {visibleSystems.map(({ system: s, index }) => (
           <article className="system-row system-card" key={s.name + index}>
             <div className="split">
-              <h3>
+              <h2>
                 <button
                   type="button"
                   className="system-open"
@@ -272,7 +272,7 @@ export function InventoryScreen() {
                 >
                   {s.name}
                 </button>
-              </h3>
+              </h2>
               <RiskTierTag tier={s.tier} />
             </div>
             <p className="muted">

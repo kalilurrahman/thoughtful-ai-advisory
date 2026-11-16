@@ -1024,3 +1024,5 @@ progress::-moz-progress-bar { background: var(--c-accent); border-radius: 0; }
   .module-name { display: inline-flex; align-items: center; gap: 0.6rem; }
   .decision-glyph { width: 14px; height: 14px; margin-right: 4px; vertical-align: -2px; }
 }
+/* Release watermark in the footer (src/data/release.ts). */
+.veritrail-site .footer-release { margin-left: 0.75rem; padding-left: 0.75rem; border-left: 1px solid var(--c-border); font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); white-space: nowrap; }
