@@ -1193,6 +1193,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "incident-response-readiness",
+    name: "Incident response & recovery readiness",
+    desc: "Estimate readiness to detect, respond to, communicate, and recover from AI incidents and failures.",
+    inputs: [
+      {
+        k: "playbooks",
+        label: "Systems with incident playbooks & named owners",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "detection",
+        label: "Detection, triage & escalation paths defined/tested",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "comms",
+        label: "Stakeholder communication/notification readiness",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "recovery",
+        label: "Exercises & recovery/fallback objectives in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
