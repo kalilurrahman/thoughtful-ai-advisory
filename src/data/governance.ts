@@ -2182,6 +2182,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "training-competency",
+    name: "Training & competency assurance readiness",
+    desc: "Estimate readiness for role-based training and competency assurance across required-role completion coverage, verified competence rather than completion alone, refresher and change-triggered cadence, and training records kept as evidence.",
+    inputs: [
+      {
+        k: "coverage",
+        label: "Required-role training completion coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "competence",
+        label: "Competence verified by assessment, not completion alone",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "refresher",
+        label: "Refresher & change-triggered training on cadence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Training records & role mapping kept as evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
