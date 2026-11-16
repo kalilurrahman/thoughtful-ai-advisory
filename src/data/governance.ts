@@ -1881,6 +1881,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "data-quality-integrity",
+    name: "Data quality & integrity readiness",
+    desc: "Estimate readiness for AI data quality and integrity across source/data quality checks, integrity and validation controls, data quality issue handling, and quality monitoring and evidence cadence.",
+    inputs: [
+      {
+        k: "quality",
+        label: "Source/data quality checks in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "integrity",
+        label: "Integrity & validation controls applied",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "issues",
+        label: "Data quality issue handling & remediation coverage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Quality monitoring & evidence cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
