@@ -837,6 +837,30 @@ export function calculate(
           : "Readiness is trending well — keep ethics reviews, applied principles, societal/community scans, and escalation and remedy evidence current as use cases and contexts change.",
     };
   }
+  if (id === "training-competency") {
+    const coverage = v["coverage"] ?? 0,
+      competence = v["competence"] ?? 0,
+      refresher = v["refresher"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      score = Math.round(coverage * 0.3 + competence * 0.3 + refresher * 0.2 + evidence * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Training & competency assurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Required-role completion coverage (30%)", coverage + "%"],
+        ["Competence verified by assessment (30%)", competence + "%"],
+        ["Refresher & change-triggered cadence (20%)", refresher + "%"],
+        ["Training records & role mapping (20%)", evidence + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: close required-role training coverage, verify competence with assessment rather than completion alone, trigger refreshers on change, and keep training records mapped to roles as evidence."
+          : "Readiness is trending well — keep completion coverage, competence checks, change-triggered refreshers, and role-mapped training records current as systems and roles change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
