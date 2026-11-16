@@ -1408,6 +1408,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "bias-fairness-impact",
+    name: "Bias, fairness & impact assessment readiness",
+    desc: "Estimate readiness to assess and manage bias, fairness, and impact across assessments, mitigations, stakeholder review, and monitoring/remediation.",
+    inputs: [
+      {
+        k: "assessment",
+        label: "Impact/fairness assessments completed for key uses",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "mitigation",
+        label: "Mitigations & guardrail controls implemented",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "stakeholders",
+        label: "Stakeholder/affected-group review & feedback",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Monitoring & remediation evidence in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
