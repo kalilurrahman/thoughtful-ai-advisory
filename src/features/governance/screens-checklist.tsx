@@ -173,6 +173,10 @@ import {
   TRANSPARENCY_DISCLOSURE_ASSURANCE_ROUNDS,
   transparencyDisclosureAssuranceScore,
 } from "./transparency-disclosure-assurance-game";
+import {
+  PRIVACY_MINIMIZATION_ASSURANCE_ROUNDS,
+  privacyMinimizationAssuranceScore,
+} from "./privacy-minimization-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -228,6 +232,7 @@ export function ChecklistScreen() {
   const [handoffAnswers, setHandoffAnswers] = useState<Record<string, number>>({});
   const [vendorAssuranceAnswers, setVendorAssuranceAnswers] = useState<Record<string, number>>({});
   const [disclosureAnswers, setDisclosureAnswers] = useState<Record<string, number>>({});
+  const [privacyAnswers, setPrivacyAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -278,6 +283,7 @@ export function ChecklistScreen() {
   const handoffGame = humanAIHandoffAssuranceScore(handoffAnswers);
   const vendorGame = vendorAIAssuranceScore(vendorAssuranceAnswers);
   const disclosureGame = transparencyDisclosureAssuranceScore(disclosureAnswers);
+  const privacyGame = privacyMinimizationAssuranceScore(privacyAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -2682,6 +2688,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good transparency/disclosure assurance choice."
                           : "Review the assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="privacy-minimization-assurance"
+        className="checklist-phase"
+        aria-label="AI privacy and data minimization assurance game"
+      >
+        <h2>AI privacy & data minimization assurance</h2>
+        <p>
+          Practice collecting only the personal data a purpose needs, minimizing and redacting
+          before third-party model calls, applying purpose limitation on secondary use, and keeping
+          minimization evidence on review. Scenarios are learning prompts, not compliance
+          determinations.
+        </p>
+        <p>
+          <strong>
+            {privacyGame.correct}/{privacyGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {privacyGame.complete && (
+            <Button variant="outline" onClick={() => setPrivacyAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PRIVACY_MINIMIZATION_ASSURANCE_ROUNDS.map((round) => {
+            const selected = privacyAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setPrivacyAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good data-minimization assurance choice."
+                          : "Review the minimization gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
