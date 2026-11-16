@@ -1795,6 +1795,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "security-vulnerability-management",
+    name: "Security & vulnerability management readiness",
+    desc: "Estimate readiness for AI security and vulnerability management across vulnerability/patch coverage, secure configuration and hardening, security testing cadence, and incident/remediation evidence.",
+    inputs: [
+      {
+        k: "patching",
+        label: "Vulnerability & patch coverage for AI components",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "hardening",
+        label: "Secure configuration & hardening in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "testing",
+        label: "Security testing & assessment cadence met",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "remediation",
+        label: "Security incident & remediation evidence current",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
