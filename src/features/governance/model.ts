@@ -381,6 +381,30 @@ export function calculate(
           : "Readiness is trending well — keep evaluations, acceptance criteria, review practices, and regression monitoring current as models, data, and use cases change.",
     };
   }
+  if (id === "logging-traceability-audit") {
+    const coverageVal = v["coverage"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      integrity = v["integrity"] ?? 0,
+      audit = v["audit"] ?? 0,
+      score = Math.round(coverageVal * 0.3 + traceability * 0.25 + integrity * 0.25 + audit * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Logging, traceability & audit readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Event/action log coverage (30%)", coverageVal + "%"],
+        ["Traceability to inputs/decisions/versions (25%)", traceability + "%"],
+        ["Record retention & integrity (25%)", integrity + "%"],
+        ["Audit evidence access & review (20%)", audit + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: expand logging of key AI events and context, strengthen traceability to inputs/decisions/model versions, ensure retention and integrity of records, and make audit evidence accessible for timely review."
+          : "Readiness is trending well — keep logging and traceability comprehensive, protect record integrity/retention, and ensure audit evidence remains accessible and reviewable.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
