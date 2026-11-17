@@ -5037,6 +5037,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "annotation-workforce",
+    name: "AI data annotation & labelling workforce readiness",
+    desc: "Estimate readiness for the people who label, rate and review the data behind a model, whether in-house or through a supplier: tasks issued with written guidelines, examples and a quality bar, pay that reflects the actual effort including rework and waiting, harmful content exposure limited with warnings, rotation, counselling and an opt-out that carries no penalty, quality checked by sampling with disagreements reviewed and annotator feedback reaching model owners, and supplier contracts that carry these terms and are actually checked.",
+    inputs: [
+      {
+        k: "guidelines",
+        label: "Tasks issued with written guidelines, examples & a quality bar",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "pay",
+        label: "Pay reflects actual effort, including rework & waiting",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "wellbeing",
+        label: "Harmful content limited, with warnings, rotation & support",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "quality",
+        label: "Quality sampled, disagreements reviewed, feedback reaches owners",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "supplier",
+        label: "Supplier contracts carry these terms & are checked",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

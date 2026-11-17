@@ -2411,6 +2411,34 @@ export function calculate(
           : "Readiness is trending well — re-test adverse impact when the model or criteria change, check that reviewers actually reject model rankings, and confirm candidates can reach the alternative route without having to ask twice.",
     };
   }
+  if (id === "annotation-workforce") {
+    const guidelines = v["guidelines"] ?? 0,
+      pay = v["pay"] ?? 0,
+      wellbeing = v["wellbeing"] ?? 0,
+      quality = v["quality"] ?? 0,
+      supplier = v["supplier"] ?? 0,
+      score = Math.round(
+        guidelines * 0.2 + pay * 0.2 + wellbeing * 0.25 + quality * 0.2 + supplier * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI data annotation & labelling workforce readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Tasks issued with written guidelines, examples & a quality bar (20%)", guidelines + "%"],
+        ["Pay reflects actual effort, including rework & waiting (20%)", pay + "%"],
+        ["Harmful content limited, with warnings, rotation & support (25%)", wellbeing + "%"],
+        ["Quality sampled, disagreements reviewed, feedback reaches owners (20%)", quality + "%"],
+        ["Supplier contracts carry these terms & are checked (15%)", supplier + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: issue tasks with written guidelines, examples and a quality bar, pay for the real effort including rework and waiting, limit harmful content with warnings, rotation, counselling and a penalty-free opt-out, sample quality and route annotator disagreement back to model owners, and put these terms into supplier contracts and check them."
+          : "Readiness is trending well — re-check wellbeing controls when task mix changes to harder content, ask annotators whether the guidelines match the edge cases they actually see, and verify supplier terms by sampling their work rather than reading the contract.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
