@@ -1295,6 +1295,30 @@ export function calculate(
           : "Readiness is trending well — re-check ownership terms, similarity checks, licence obligations and disclosure records when models, providers or output uses change.",
     };
   }
+  if (id === "oversight-capacity") {
+    const capacity = v["capacity"] ?? 0,
+      competence = v["competence"] ?? 0,
+      workload = v["workload"] ?? 0,
+      bias = v["bias"] ?? 0,
+      score = Math.round(capacity * 0.3 + competence * 0.3 + workload * 0.2 + bias * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI human oversight capacity readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Review capacity matched to decision volume (30%)", capacity + "%"],
+        ["Reviewer competence & authority to override (30%)", competence + "%"],
+        ["Workload limits allow real review time (20%)", workload + "%"],
+        ["Override rates & rubber-stamping monitored (20%)", bias + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: match review capacity to decision volume, confirm reviewer competence and authority to override, set workload limits that allow real review time, and monitor override rates for rubber-stamping."
+          : "Readiness is trending well — keep review capacity, reviewer authority, workload limits and override monitoring aligned as decision volume grows.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

@@ -2999,6 +2999,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "oversight-capacity",
+    name: "AI human oversight capacity readiness",
+    desc: "Estimate readiness for staffing human oversight of AI decisions across review capacity that matches decision volume, reviewer competence and authority to override, workload limits that allow real review time, and monitoring for rubber-stamping and automation bias.",
+    inputs: [
+      {
+        k: "capacity",
+        label: "Review capacity matched to decision volume",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "competence",
+        label: "Reviewer competence & authority to override",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "workload",
+        label: "Workload limits allow real review time per decision",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "bias",
+        label: "Override rates & rubber-stamping monitored",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
