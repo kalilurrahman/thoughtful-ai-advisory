@@ -1,10 +1,14 @@
 import { ArrowRight, ClipboardCheck, ShieldCheck, FileCheck2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteLink } from "./ui";
+import governanceImg from "@/assets/service-governance.jpg";
+import controlsImg from "@/assets/service-controls.jpg";
+import assuranceImg from "@/assets/service-assurance.jpg";
 
 const SERVICE_PATHWAYS = [
   {
     number: "01",
+    image: governanceImg,
     icon: ClipboardCheck,
     title: "Governance & advisory",
     description:
@@ -15,6 +19,7 @@ const SERVICE_PATHWAYS = [
   },
   {
     number: "02",
+    image: controlsImg,
     icon: ShieldCheck,
     title: "Risk & control implementation",
     description:
@@ -25,6 +30,7 @@ const SERVICE_PATHWAYS = [
   },
   {
     number: "03",
+    image: assuranceImg,
     icon: FileCheck2,
     title: "Assurance & readiness",
     description:
@@ -53,11 +59,19 @@ export function ServicePathways() {
         </header>
         <div className="grid gap-6 md:grid-cols-3">
           {SERVICE_PATHWAYS.map(
-            ({ number, icon: Icon, title, description, deliverables, href, action }) => (
+            ({ number, image, icon: Icon, title, description, deliverables, href, action }) => (
               <article
                 key={number}
                 className="flex min-w-0 flex-col border-t-2 border-primary pt-5"
               >
+                <img
+                  src={image}
+                  alt=""
+                  loading="lazy"
+                  width={1024}
+                  height={640}
+                  className="mb-5 aspect-[16/10] w-full rounded-lg border border-border object-cover"
+                />
                 <div className="flex items-center justify-between text-primary">
                   <Icon size={28} strokeWidth={1.5} aria-hidden="true" />
                   <span className="font-mono text-sm text-muted-foreground">{number}</span>

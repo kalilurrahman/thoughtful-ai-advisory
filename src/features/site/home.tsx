@@ -37,6 +37,7 @@ import type { SitePage } from "./pages";
 import { SiteLink } from "./ui";
 import { WorkspaceGateway } from "./workspace-gateway";
 import { AiDiscussionBand } from "./ai-discussion-band";
+import heroImg from "@/assets/hero-governance.jpg";
 import { ServicePathways } from "./service-pathways";
 
 // The home page: the same platform/content/website_pages/index.md as before, laid out as a
@@ -143,6 +144,14 @@ function HomeHero({ page, layers }: { page: SitePage; layers: number }) {
     <>
       {/* The hero is a navy band: `dark` scopes the dark tokens to it in both modes. */}
       <section className="hero hero--home hero--navy dark" aria-labelledby="hero-title">
+        <img
+          src={heroImg}
+          alt=""
+          width={1600}
+          height={912}
+          fetchPriority="high"
+          className="hero-bg-img"
+        />
         <div className="container hero-grid">
           <div className="hero-copy">
             <p className="eyebrow">Evidence-first · Human-led · Enterprise-focused</p>
