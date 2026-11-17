@@ -4361,6 +4361,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "value-realisation",
+    name: "AI value realisation readiness",
+    desc: "Estimate readiness for proving an AI investment delivered something: a baseline captured before deployment, outcomes measured against it rather than against activity, attribution stated honestly including what else changed at the same time, adoption and usage measured instead of licences bought, and a scheduled review with the authority to scale, fix or stop.",
+    inputs: [
+      {
+        k: "baseline",
+        label: "Baseline captured before deployment",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "outcome",
+        label: "Outcomes measured, not activity or output volume",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "attribution",
+        label: "Attribution stated honestly, including other changes",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "adoption",
+        label: "Adoption & real usage measured, not licences bought",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Scheduled review with authority to scale, fix or stop",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
