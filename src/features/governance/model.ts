@@ -1907,6 +1907,34 @@ export function calculate(
           : "Readiness is trending well — rotate testers, re-scope as the system grows, and confirm retested findings stay fixed in later releases.",
     };
   }
+  if (id === "prompt-governance") {
+    const versioning = v["versioning"] ?? 0,
+      review = v["review"] ?? 0,
+      regression = v["regression"] ?? 0,
+      release = v["release"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      score = Math.round(
+        versioning * 0.25 + review * 0.25 + regression * 0.25 + release * 0.15 + monitoring * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI prompt & instruction governance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Prompts versioned with a diffable history (25%)", versioning + "%"],
+        ["Owned & reviewed before change (25%)", review + "%"],
+        ["Tested against a regression set (25%)", regression + "%"],
+        ["Released through a controlled path with rollback (15%)", release + "%"],
+        ["Behaviour monitored after release (10%)", monitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: version prompts and instructions with a diffable history, give them an owner and review before change, test against a regression set that includes known failure modes, release through a controlled path with rollback, and monitor behaviour after release."
+          : "Readiness is trending well — check that hotfixes still go through review, that the regression set grows with each incident, and that rollback is exercised rather than assumed.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
