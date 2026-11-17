@@ -2784,6 +2784,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "governance-operating-model",
+    name: "AI governance operating model & decision rights readiness",
+    desc: "Estimate readiness for operating AI governance across chartered forums with named members, documented decision rights for approval, waiver and stop, escalation routes with turnaround commitments, and a reviewed operating model as the estate grows.",
+    inputs: [
+      {
+        k: "forums",
+        label: "Chartered AI forums with named members",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rights",
+        label: "Decision rights for approve, waive & stop documented",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "escalation",
+        label: "Escalation routes with turnaround commitments",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Operating model reviewed as the estate grows",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
