@@ -543,4 +543,12 @@ export const GOVERNANCE_GAMES = [
       "Practice replacing vanity counts with decision-grade metrics, tracing figures to system sources, reporting failures and near misses honestly, and tying every metric to a decision and owner.",
     anchor: "governance-metrics-assurance",
   },
+  {
+    id: "production-testing-assurance",
+    title: "AI production testing & canary assurance",
+    category: "Deployment & release",
+    description:
+      "Practice staged exposure in shadow and canary, pre-agreed success and stop criteria, rehearsed rollback and kill switches, and safeguards for live test data and affected users.",
+    anchor: "production-testing-assurance",
+  },
 ] as const;
