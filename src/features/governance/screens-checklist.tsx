@@ -253,6 +253,7 @@ import { BOARD_OVERSIGHT_ROUNDS, boardOversightScore } from "./board-oversight-g
 import { INCIDENT_SEVERITY_ROUNDS, incidentSeverityScore } from "./incident-severity-game";
 import { SECRETS_HYGIENE_ROUNDS, secretsHygieneScore } from "./secrets-hygiene-game";
 import { EVIDENCE_PACK_ROUNDS, evidencePackScore } from "./evidence-pack-game";
+import { PROMPT_INJECTION_ROUNDS, promptInjectionScore } from "./prompt-injection-game";
 
 const statusText = {
   complete: "Complete",
@@ -336,6 +337,7 @@ export function ChecklistScreen() {
   const [incidentSeverityAnswers, setIncidentSeverityAnswers] = useState<Record<string, number>>({});
   const [secretsAnswers, setSecretsAnswers] = useState<Record<string, number>>({});
   const [evidencePackAnswers, setEvidencePackAnswers] = useState<Record<string, number>>({});
+  const [promptInjectionAnswers, setPromptInjectionAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -414,6 +416,7 @@ export function ChecklistScreen() {
   const incidentSeverityGame = incidentSeverityScore(incidentSeverityAnswers);
   const secretsGame = secretsHygieneScore(secretsAnswers);
   const evidencePackGame = evidencePackScore(evidencePackAnswers);
+  const promptInjectionGame = promptInjectionScore(promptInjectionAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -4558,6 +4561,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good evidence pack choice."
                           : "Review the evidence pack gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="prompt-injection-assurance"
+        className="checklist-phase"
+        aria-label="Prompt injection and jailbreak resilience assurance game"
+      >
+        <h2>Prompt injection &amp; jailbreak resilience assurance</h2>
+        <p>
+          Practice treating retrieved content as untrusted, scoping agent tools and data, turning
+          red-team attacks into regression tests, and detecting instruction-extraction attempts in
+          production. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {promptInjectionGame.correct}/{promptInjectionGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {promptInjectionGame.complete && (
+            <Button variant="outline" onClick={() => setPromptInjectionAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PROMPT_INJECTION_ROUNDS.map((round) => {
+            const selected = promptInjectionAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setPromptInjectionAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good injection resilience choice."
+                          : "Review the injection resilience gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
