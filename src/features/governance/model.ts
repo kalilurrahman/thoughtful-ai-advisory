@@ -1415,6 +1415,30 @@ export function calculate(
           : "Readiness is trending well — keep board attention scheduled, reporting candid, challenge minuted, and decisions followed through as the AI portfolio grows.",
     };
   }
+  if (id === "incident-severity") {
+    const tiers = v["tiers"] ?? 0,
+      triage = v["triage"] ?? 0,
+      notification = v["notification"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(tiers * 0.3 + triage * 0.3 + notification * 0.2 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI incident severity & notification readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Severity tiers cover AI-specific harms (30%)", tiers + "%"],
+        ["Named triage owner with a decision window (30%)", triage + "%"],
+        ["Notification triggers & timelines agreed in advance (20%)", notification + "%"],
+        ["Blameless review & corrective actions tracked (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define severity tiers that cover AI-specific harms, name a triage owner with a decision window, agree notification triggers and timelines with legal and communications beforehand, and run blameless reviews with tracked corrective actions."
+          : "Readiness is trending well — re-test severity calls against real near misses, keep notification contacts and timelines current, and close corrective actions on schedule.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
