@@ -93,7 +93,7 @@ export function WorkspaceControls() {
       <h2>{userId ? "Your workspace" : "Save your workspace"}</h2>
       {userId ? (
         <>
-          {workspaces.length > 1 && (
+          {workspaces.length > 0 && (
             <label>
               Workspace
               <select
