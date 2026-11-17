@@ -583,4 +583,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping model keys server-side and least-privilege, registering keys with owners and environments, rehearsing rotation and revocation, and catching secrets that leak into repos, logs or prompts.",
     anchor: "secrets-hygiene-assurance",
   },
+  {
+    id: "evidence-pack-assurance",
+    title: "AI assurance evidence pack assurance",
+    category: "Assurance & audit",
+    description:
+      "Practice mapping claims to specific evidence, replacing stale evidence after material change, recording owners and sources per claim, and testing a pack with an unaided reviewer.",
+    anchor: "evidence-pack-assurance",
+  },
 ] as const;
