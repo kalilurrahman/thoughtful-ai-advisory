@@ -2075,6 +2075,34 @@ export function calculate(
           : "Readiness is trending well — keep the baseline when scope changes, re-test attribution as other initiatives land, and confirm the review can still stop a system that is not delivering.",
     };
   }
+  if (id === "third-party-audit-rights") {
+    const right = v["right"] ?? 0,
+      scope = v["scope"] ?? 0,
+      exercise = v["exercise"] ?? 0,
+      reports = v["reports"] ?? 0,
+      findings = v["findings"] ?? 0,
+      score = Math.round(
+        right * 0.25 + scope * 0.2 + exercise * 0.2 + reports * 0.2 + findings * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI third-party audit & assurance access readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Contractual right to audit or receive assurance evidence (25%)", right + "%"],
+        ["Scope covers models, data, subprocessors & controls (20%)", scope + "%"],
+        ["Right exercised or relied on in practice (20%)", exercise + "%"],
+        ["Independent reports read with a gap analysis (20%)", reports + "%"],
+        ["Findings tracked to closure with the provider (15%)", findings + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: secure a contractual right to audit or receive assurance evidence, extend the scope to models, data handling, subprocessors and controls, exercise or rely on the right in practice, read independent reports with a gap analysis rather than as a substitute, and track findings to closure with the provider."
+          : "Readiness is trending well — test that the right still applies after a service change, re-read reports against your actual use, and confirm closed findings stay closed in the next cycle.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
