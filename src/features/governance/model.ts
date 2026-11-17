@@ -1631,6 +1631,30 @@ export function calculate(
           : "Readiness is trending well — keep the dependency map current, re-test the guardrails a change invalidates, and keep sign-off proportional to the blast radius.",
     };
   }
+  if (id === "agent-memory") {
+    const register = v["register"] ?? 0,
+      retention = v["retention"] ?? 0,
+      isolation = v["isolation"] ?? 0,
+      control = v["control"] ?? 0,
+      score = Math.round(register * 0.3 + retention * 0.25 + isolation * 0.25 + control * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Agent memory governance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Register of what is stored & why (30%)", register + "%"],
+        ["Retention & deletion remove memories for real (25%)", retention + "%"],
+        ["Isolation between users & tenants (25%)", isolation + "%"],
+        ["User visibility & control over what is kept (20%)", control + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: keep a register of what the agent stores and why, verify retention and deletion actually remove memories, test isolation so one user's memories never surface for another, and give users visibility and control over what is kept."
+          : "Readiness is trending well — review the memory register as new memory types appear, re-test deletion and isolation after changes, and keep user controls honest.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
