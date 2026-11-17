@@ -273,6 +273,7 @@ import { VULN_MANAGEMENT_ROUNDS, vulnManagementScore } from "./vuln-management-g
 import { DATA_RESIDENCY_ROUNDS, dataResidencyScore } from "./data-residency-game";
 import { AGENT_EVALUATION_ROUNDS, agentEvaluationScore } from "./agent-evaluation-game";
 import { CONTENT_PROVENANCE_ROUNDS, contentProvenanceScore } from "./content-provenance-game";
+import { TEST_ISOLATION_ROUNDS, testIsolationScore } from "./test-isolation-game";
 
 const statusText = {
   complete: "Complete",
@@ -388,6 +389,7 @@ export function ChecklistScreen() {
   const [contentProvenanceAnswers, setContentProvenanceAnswers] = useState<Record<string, number>>(
     {},
   );
+  const [testIsolationAnswers, setTestIsolationAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -486,6 +488,7 @@ export function ChecklistScreen() {
   const dataResidencyGame = dataResidencyScore(dataResidencyAnswers);
   const agentEvaluationGame = agentEvaluationScore(agentEvaluationAnswers);
   const contentProvenanceGame = contentProvenanceScore(contentProvenanceAnswers);
+  const testIsolationGame = testIsolationScore(testIsolationAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -5881,6 +5884,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good provenance choice."
                           : "Review the provenance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="test-isolation-assurance"
+        className="checklist-phase"
+        aria-label="AI test and sandbox isolation assurance game"
+      >
+        <h2>AI test &amp; sandbox isolation assurance</h2>
+        <p>
+          Practice keeping production personal data out of test environments, using isolated model
+          endpoints and keys, removing production write access from test credentials, controlling
+          egress to public tools, and expiring environments with a recorded owner for extensions.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {testIsolationGame.correct}/{testIsolationGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {testIsolationGame.complete && (
+            <Button variant="outline" onClick={() => setTestIsolationAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {TEST_ISOLATION_ROUNDS.map((round) => {
+            const selected = testIsolationAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setTestIsolationAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good isolation choice."
+                          : "Review the isolation gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
