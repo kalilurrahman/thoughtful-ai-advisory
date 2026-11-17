@@ -3300,6 +3300,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "evidence-pack",
+    name: "AI assurance evidence pack readiness",
+    desc: "Estimate readiness for assembling an assurance evidence pack across evidence mapped to the claims it supports, evidence that is dated and still current, each claim traceable to an owner and a source, and a walkthrough that lets a reviewer reproduce the result without asking you.",
+    inputs: [
+      {
+        k: "mapping",
+        label: "Evidence mapped to the claims it supports",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "freshness",
+        label: "Evidence dated & still current",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "traceability",
+        label: "Each claim traceable to an owner & source",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "walkthrough",
+        label: "Reviewer can navigate & reproduce unaided",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

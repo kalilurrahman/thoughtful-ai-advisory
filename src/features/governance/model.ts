@@ -1463,6 +1463,30 @@ export function calculate(
           : "Readiness is trending well — keep the key register current, re-test revocation, and treat prompt and log output as a place secrets can escape.",
     };
   }
+  if (id === "evidence-pack") {
+    const mapping = v["mapping"] ?? 0,
+      freshness = v["freshness"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      walkthrough = v["walkthrough"] ?? 0,
+      score = Math.round(mapping * 0.3 + freshness * 0.25 + traceability * 0.25 + walkthrough * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI assurance evidence pack readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Evidence mapped to the claims it supports (30%)", mapping + "%"],
+        ["Evidence dated & still current (25%)", freshness + "%"],
+        ["Each claim traceable to an owner & source (25%)", traceability + "%"],
+        ["Reviewer can navigate & reproduce unaided (20%)", walkthrough + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: map each claim to the evidence behind it, date the evidence and refresh it, name an owner and source per claim, and run a walkthrough with someone who did not assemble the pack."
+          : "Readiness is trending well — re-date evidence before each review, keep the claim-to-evidence map current, and re-run the unaided walkthrough after major changes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
