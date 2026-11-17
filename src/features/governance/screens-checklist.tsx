@@ -279,6 +279,10 @@ import { AUDIT_RIGHTS_ROUNDS, auditRightsScore } from "./audit-rights-game";
 import { CONSENT_WITHDRAWAL_ROUNDS, consentWithdrawalScore } from "./consent-withdrawal-game";
 import { COMPLAINT_FEEDBACK_ROUNDS, complaintFeedbackScore } from "./complaint-feedback-game";
 import { RISK_TRANSFER_ROUNDS, riskTransferScore } from "./risk-transfer-game";
+import {
+  ASSURANCE_INDEPENDENCE_ROUNDS,
+  assuranceIndependenceScore,
+} from "./assurance-independence-game";
 
 const statusText = {
   complete: "Complete",
@@ -404,6 +408,9 @@ export function ChecklistScreen() {
     {},
   );
   const [riskTransferAnswers, setRiskTransferAnswers] = useState<Record<string, number>>({});
+  const [assuranceIndependenceAnswers, setAssuranceIndependenceAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -508,6 +515,7 @@ export function ChecklistScreen() {
   const consentWithdrawalGame = consentWithdrawalScore(consentWithdrawalAnswers);
   const complaintFeedbackGame = complaintFeedbackScore(complaintFeedbackAnswers);
   const riskTransferGame = riskTransferScore(riskTransferAnswers);
+  const assuranceIndependenceGame = assuranceIndependenceScore(assuranceIndependenceAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6281,6 +6289,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good risk transfer choice."
                           : "Review the risk transfer gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="assurance-independence-assurance"
+        className="checklist-phase"
+        aria-label="AI assurance independence and audit coverage game"
+      >
+        <h2>AI assurance independence &amp; audit coverage</h2>
+        <p>
+          Practice keeping assurance independent of the build team, choosing coverage by risk with
+          recorded exclusions, reporting findings unedited to a level with authority, declaring
+          reliance on supplier evidence, and re-testing findings independently before closure.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {assuranceIndependenceGame.correct}/{assuranceIndependenceGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {assuranceIndependenceGame.complete && (
+            <Button variant="outline" onClick={() => setAssuranceIndependenceAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {ASSURANCE_INDEPENDENCE_ROUNDS.map((round) => {
+            const selected = assuranceIndependenceAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAssuranceIndependenceAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good independence choice."
+                          : "Review the independence gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
