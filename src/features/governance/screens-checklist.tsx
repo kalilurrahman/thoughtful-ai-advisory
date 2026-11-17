@@ -266,6 +266,7 @@ import { INCIDENT_EVIDENCE_ROUNDS, incidentEvidenceScore } from "./incident-evid
 import { DATA_SUBJECT_REQUEST_ROUNDS, dataSubjectRequestScore } from "./data-subject-request-game";
 import { COST_ALLOCATION_ROUNDS, costAllocationScore } from "./cost-allocation-game";
 import { SHADOW_AI_ROUNDS, shadowAiScore } from "./shadow-ai-game";
+import { RAG_GROUNDING_ROUNDS, ragGroundingScore } from "./rag-grounding-game";
 
 const statusText = {
   complete: "Complete",
@@ -370,6 +371,7 @@ export function ChecklistScreen() {
   >({});
   const [costAllocationAnswers, setCostAllocationAnswers] = useState<Record<string, number>>({});
   const [shadowAiAnswers, setShadowAiAnswers] = useState<Record<string, number>>({});
+  const [ragGroundingAnswers, setRagGroundingAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -461,6 +463,7 @@ export function ChecklistScreen() {
   const dataSubjectRequestGame = dataSubjectRequestScore(dataSubjectRequestAnswers);
   const costAllocationGame = costAllocationScore(costAllocationAnswers);
   const shadowAiGame = shadowAiScore(shadowAiAnswers);
+  const ragGroundingGame = ragGroundingScore(ragGroundingAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -5415,6 +5418,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good containment choice."
                           : "Review the containment gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="rag-grounding-assurance"
+        className="checklist-phase"
+        aria-label="Retrieval grounding integrity assurance game"
+      >
+        <h2>Retrieval grounding integrity assurance</h2>
+        <p>
+          Practice giving retrieved sources an owner and refresh date, requiring answers to cite the
+          passages they rely on, resolving conflicts by a stated rule, making abstention acceptable,
+          and monitoring the corpus for drift and poisoning. Scenarios are learning prompts, not
+          compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {ragGroundingGame.correct}/{ragGroundingGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {ragGroundingGame.complete && (
+            <Button variant="outline" onClick={() => setRagGroundingAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {RAG_GROUNDING_ROUNDS.map((round) => {
+            const selected = ragGroundingAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setRagGroundingAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good grounding choice."
+                          : "Review the grounding gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

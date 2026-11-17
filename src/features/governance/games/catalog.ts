@@ -695,4 +695,12 @@ export const GOVERNANCE_GAMES = [
       "Practice finding unsanctioned tools through network, spend and identity signals, making the sanctioned route easier than the workaround, bounding data reach with egress controls, offering amnesty for disclosure, and recording a disposition for every tool found.",
     anchor: "shadow-ai-assurance",
   },
+  {
+    id: "rag-grounding-assurance",
+    title: "Retrieval grounding integrity assurance",
+    category: "Guardrails & controls",
+    description:
+      "Practice giving retrieved sources an owner and refresh date, requiring answers to cite the passages they rely on, resolving conflicts by a stated rule, making abstention acceptable, and monitoring the corpus for drift and poisoning.",
+    anchor: "rag-grounding-assurance",
+  },
 ] as const;
