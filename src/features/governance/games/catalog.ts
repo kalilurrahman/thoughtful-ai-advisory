@@ -687,4 +687,12 @@ export const GOVERNANCE_GAMES = [
       "Practice metering usage per team, system and feature, agreeing a chargeback or showback basis with finance, giving owners their spend against a budget, reviewing runaway and idle usage, and pulling untracked tools into the same picture.",
     anchor: "cost-allocation-assurance",
   },
+  {
+    id: "shadow-ai-assurance",
+    title: "Shadow AI containment assurance",
+    category: "Guardrails & controls",
+    description:
+      "Practice finding unsanctioned tools through network, spend and identity signals, making the sanctioned route easier than the workaround, bounding data reach with egress controls, offering amnesty for disclosure, and recording a disposition for every tool found.",
+    anchor: "shadow-ai-assurance",
+  },
 ] as const;
