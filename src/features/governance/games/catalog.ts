@@ -663,4 +663,12 @@ export const GOVERNANCE_GAMES = [
       "Practice answering an inquiry from a maintained evidence index, routing it through one named responder with legal review, tracking deadlines with a deputy, and verifying each answer against evidence.",
     anchor: "regulator-inquiry-assurance",
   },
+  {
+    id: "incident-evidence-assurance",
+    title: "AI incident evidence preservation assurance",
+    category: "Incident response",
+    description:
+      "Practice capturing prompts, retrieved context, model versions and outputs at the time, applying a hold before rotation, keeping chain of custody, and demonstrating root cause with a replayable trail.",
+    anchor: "incident-evidence-assurance",
+  },
 ] as const;
