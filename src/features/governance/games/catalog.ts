@@ -799,4 +799,12 @@ export const GOVERNANCE_GAMES = [
       "Practice mapping AI risk to actual policy wording and exclusions, notifying insurers within the policy terms, matching indemnities and caps to the exposure carried, testing limits against plausible loss scenarios, and assembling claim evidence before an incident.",
     anchor: "risk-transfer-assurance",
   },
+  {
+    id: "assurance-independence-assurance",
+    title: "AI assurance independence & audit coverage",
+    category: "Risk & assurance",
+    description:
+      "Practice keeping assurance independent of the build team, choosing coverage by risk with recorded exclusions, reporting findings unedited to a level with authority, declaring reliance on supplier evidence, and re-testing findings independently before closure.",
+    anchor: "assurance-independence-assurance",
+  },
 ] as const;
