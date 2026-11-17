@@ -1559,6 +1559,30 @@ export function calculate(
           : "Readiness is trending well — re-run your own evaluation when candidates change, revisit right-sizing as usage grows, and keep the exit path credible.",
     };
   }
+  if (id === "environmental-impact") {
+    const measurement = v["measurement"] ?? 0,
+      efficiency = v["efficiency"] ?? 0,
+      reporting = v["reporting"] ?? 0,
+      targets = v["targets"] ?? 0,
+      score = Math.round(measurement * 0.3 + efficiency * 0.3 + reporting * 0.2 + targets * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI compute & environmental impact readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Energy & compute measured per workload (30%)", measurement + "%"],
+        ["Right-sizing, caching & low-carbon scheduling (30%)", efficiency + "%"],
+        ["Impact in sustainability reporting, assumptions stated (20%)", reporting + "%"],
+        ["Reduction targets with owners & review (20%)", targets + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: measure energy and compute per workload with a stated method, apply right-sizing, caching and low-carbon scheduling, include AI impact in sustainability reporting with assumptions, and set reduction targets with owners."
+          : "Readiness is trending well — keep measurement with the workload, re-test efficiency as usage grows, and report impact with the same rigour as cost.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
