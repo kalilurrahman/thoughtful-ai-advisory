@@ -567,4 +567,12 @@ export const GOVERNANCE_GAMES = [
       "Practice putting AI on the board agenda with a named executive owner, reporting risk and failures honestly, minuting challenge and dissent, and tracking board decisions to completion.",
     anchor: "board-oversight-assurance",
   },
+  {
+    id: "incident-severity-assurance",
+    title: "AI incident severity & notification assurance",
+    category: "Incident response",
+    description:
+      "Practice classifying AI-specific harms, naming a triage owner with a decision window, pre-agreeing notification triggers and timelines, and running blameless reviews with tracked corrective actions.",
+    anchor: "incident-severity-assurance",
+  },
 ] as const;
