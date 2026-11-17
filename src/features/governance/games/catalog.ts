@@ -535,4 +535,12 @@ export const GOVERNANCE_GAMES = [
       "Practice detecting automation bias and rubber-stamping, giving reviewers real override authority, matching review capacity to decision volume, and assigning competent reviewers with context.",
     anchor: "oversight-capacity-assurance",
   },
+  {
+    id: "governance-metrics-assurance",
+    title: "AI governance metrics & reporting assurance",
+    category: "Assurance operations",
+    description:
+      "Practice replacing vanity counts with decision-grade metrics, tracing figures to system sources, reporting failures and near misses honestly, and tying every metric to a decision and owner.",
+    anchor: "governance-metrics-assurance",
+  },
 ] as const;
