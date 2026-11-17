@@ -3386,6 +3386,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "synthetic-data",
+    name: "Synthetic data governance readiness",
+    desc: "Estimate readiness for using synthetic data in AI work across recorded generation provenance, fidelity and utility validated against real data, checks that the generator does not reproduce real people or sensitive records, and reviewed labels with known limitations documented.",
+    inputs: [
+      {
+        k: "provenance",
+        label: "Generation method, model & parameters recorded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "fidelity",
+        label: "Fidelity & utility validated against real data",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "leakage",
+        label: "No real people or records reproduced",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "labels",
+        label: "Synthetic labels reviewed, limits documented",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
