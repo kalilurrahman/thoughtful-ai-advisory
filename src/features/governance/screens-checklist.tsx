@@ -219,6 +219,10 @@ import {
   guardrailConfigAssuranceScore,
 } from "./guardrail-config-assurance-game";
 import { ASSURANCE_CADENCE_ROUNDS, assuranceCadenceScore } from "./assurance-cadence-game";
+import {
+  RISK_APPETITE_ASSURANCE_ROUNDS,
+  riskAppetiteAssuranceScore,
+} from "./risk-appetite-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -286,6 +290,7 @@ export function ChecklistScreen() {
   const [rightsAnswers, setRightsAnswers] = useState<Record<string, number>>({});
   const [guardrailConfigAnswers, setGuardrailConfigAnswers] = useState<Record<string, number>>({});
   const [cadenceAnswers, setCadenceAnswers] = useState<Record<string, number>>({});
+  const [appetiteAnswers, setAppetiteAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -348,6 +353,7 @@ export function ChecklistScreen() {
   const rightsGame = dataRightsLicensingAssuranceScore(rightsAnswers);
   const guardrailConfigGame = guardrailConfigAssuranceScore(guardrailConfigAnswers);
   const cadenceGame = assuranceCadenceScore(cadenceAnswers);
+  const appetiteGame = riskAppetiteAssuranceScore(appetiteAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3499,6 +3505,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good assurance cadence choice."
                           : "Review the cadence gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="risk-appetite-assurance"
+        className="checklist-phase"
+        aria-label="AI risk appetite and tolerance assurance game"
+      >
+        <h2>AI risk appetite &amp; tolerance assurance</h2>
+        <p>
+          Practice setting appetite before approval, routing tolerance breaches to named owners with
+          defined responses, reviewing appetite against the live portfolio, and recording risk
+          acceptance. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {appetiteGame.correct}/{appetiteGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {appetiteGame.complete && (
+            <Button variant="outline" onClick={() => setAppetiteAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {RISK_APPETITE_ASSURANCE_ROUNDS.map((round) => {
+            const selected = appetiteAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAppetiteAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good risk appetite assurance choice."
+                          : "Review the appetite and tolerance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
