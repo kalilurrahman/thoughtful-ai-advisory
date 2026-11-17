@@ -5193,6 +5193,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "coding-assistants",
+    name: "AI coding assistant governance readiness",
+    desc: "Estimate readiness for AI coding assistants writing code into your systems: approved tools and permitted repositories stated with what must never be pasted, all AI-generated code going through the same review, tests and security checks as human code, licence and provenance of suggested code checked before merge, prompts blocked from carrying secrets, personal data or restricted source, and authors remaining accountable with assistant use recorded where it affects assurance.",
+    inputs: [
+      {
+        k: "policy",
+        label: "Approved tools & repositories stated; prohibited inputs clear",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "AI-generated code passes the same review, tests & security checks",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "licence",
+        label: "Licence & provenance of suggested code checked before merge",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "secrets",
+        label: "Prompts blocked from carrying secrets, personal data & restricted code",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "accountability",
+        label: "Authors remain accountable; assistant use recorded where it matters",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

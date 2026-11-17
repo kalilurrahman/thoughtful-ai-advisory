@@ -2495,6 +2495,43 @@ export function calculate(
           : "Readiness is trending well — re-test the lowest-volume language before it grows, check that refusals survive mixed-script and code-switched inputs, and confirm local reviewers see the same escalations as the English queue.",
     };
   }
+  if (id === "coding-assistants") {
+    const policy = v["policy"] ?? 0,
+      review = v["review"] ?? 0,
+      licence = v["licence"] ?? 0,
+      secrets = v["secrets"] ?? 0,
+      accountability = v["accountability"] ?? 0,
+      score = Math.round(
+        policy * 0.25 + review * 0.25 + licence * 0.2 + secrets * 0.15 + accountability * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI coding assistant governance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Approved tools & repositories stated; prohibited inputs clear (25%)", policy + "%"],
+        [
+          "AI-generated code passes the same review, tests & security checks (25%)",
+          review + "%",
+        ],
+        ["Licence & provenance of suggested code checked before merge (20%)", licence + "%"],
+        [
+          "Prompts blocked from carrying secrets, personal data & restricted code (15%)",
+          secrets + "%",
+        ],
+        [
+          "Authors remain accountable; assistant use recorded where it matters (15%)",
+          accountability + "%",
+        ],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: name the approved assistants and repositories with an explicit list of what must never be pasted, send all AI-generated code through the same review, tests and security checks as human code, check licence and provenance of suggestions before merge, block prompts carrying secrets, personal data or restricted source, and keep the author accountable with assistant use recorded where it affects assurance."
+          : "Readiness is trending well — sample merged code for suggestions that skipped review, check that licence scanning covers generated snippets, and confirm the prohibited-input list still matches what the assistant can actually see.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
