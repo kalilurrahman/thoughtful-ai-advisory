@@ -2243,6 +2243,34 @@ export function calculate(
           : "Readiness is trending well — check the scan still covers the jurisdictions you operate in, confirm deadlines are met rather than tracked, and revisit earlier no-action calls when a system changes.",
     };
   }
+  if (id === "output-sampling") {
+    const plan = v["plan"] ?? 0,
+      reviewers = v["reviewers"] ?? 0,
+      rubric = v["rubric"] ?? 0,
+      coverage = v["coverage"] ?? 0,
+      feedback = v["feedback"] ?? 0,
+      score = Math.round(
+        plan * 0.25 + reviewers * 0.2 + rubric * 0.2 + coverage * 0.2 + feedback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI production output sampling readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Sampling plan with rate tied to risk & volume (25%)", plan + "%"],
+        ["Reviewers competent & separate from the producing queue (20%)", reviewers + "%"],
+        ["Scoring rubric with defined failure categories (20%)", rubric + "%"],
+        ["Coverage across channels, languages & edge cases (20%)", coverage + "%"],
+        ["Findings routed to a fix & trended over time (15%)", feedback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: set a sampling plan whose rate follows risk and volume, use reviewers who are competent and separate from the producing queue, score against a rubric with defined failure categories, cover channels, languages and edge cases, and route findings to a fix while trending them over time."
+          : "Readiness is trending well — re-weight the rate as volume grows, rotate reviewers to avoid drift, and check that a falling defect trend is not just a rubric that stopped catching cases.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

@@ -4725,6 +4725,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "output-sampling",
+    name: "AI production output sampling readiness",
+    desc: "Estimate readiness for checking live AI output rather than trusting pre-deployment tests: a sampling plan whose rate follows risk and volume, reviewers competent and separate from the queue that produced the output, a scoring rubric with defined failure categories, coverage across channels, languages and edge cases, and findings routed to a fix and trended over time.",
+    inputs: [
+      {
+        k: "plan",
+        label: "Sampling plan with rate tied to risk & volume",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reviewers",
+        label: "Reviewers competent & separate from the producing queue",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rubric",
+        label: "Scoring rubric with defined failure categories",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "coverage",
+        label: "Coverage across channels, languages & edge cases",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "feedback",
+        label: "Findings routed to a fix & trended over time",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
