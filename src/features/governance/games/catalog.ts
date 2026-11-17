@@ -487,4 +487,12 @@ export const GOVERNANCE_GAMES = [
       "Practice bringing shadow AI into intake, proportionate review for pilots with real users, verified onboarding evidence, and recorded handover of ongoing obligations.",
     anchor: "intake-onboarding-assurance",
   },
+  {
+    id: "operating-model-assurance",
+    title: "AI governance operating model assurance",
+    category: "Governance operations",
+    description:
+      "Practice publishing decision rights, keeping forums operating with quorum and decision logs, owning escalation turnaround, and reviewing the operating model as the estate grows.",
+    anchor: "operating-model-assurance",
+  },
 ] as const;

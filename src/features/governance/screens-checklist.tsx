@@ -228,6 +228,7 @@ import {
   INTAKE_ONBOARDING_ROUNDS,
   intakeOnboardingScore,
 } from "./intake-onboarding-game";
+import { OPERATING_MODEL_ROUNDS, operatingModelScore } from "./operating-model-game";
 
 const statusText = {
   complete: "Complete",
@@ -298,6 +299,7 @@ export function ChecklistScreen() {
   const [appetiteAnswers, setAppetiteAnswers] = useState<Record<string, number>>({});
   const [evalIntegrityAnswers, setEvalIntegrityAnswers] = useState<Record<string, number>>({});
   const [intakeAnswers, setIntakeAnswers] = useState<Record<string, number>>({});
+  const [operatingModelAnswers, setOperatingModelAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -363,6 +365,7 @@ export function ChecklistScreen() {
   const appetiteGame = riskAppetiteAssuranceScore(appetiteAnswers);
   const evalIntegrityGame = evalIntegrityScore(evalIntegrityAnswers);
   const intakeGame = intakeOnboardingScore(intakeAnswers);
+  const operatingModelGame = operatingModelScore(operatingModelAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3700,6 +3703,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good intake & onboarding assurance choice."
                           : "Review the intake and onboarding gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="operating-model-assurance"
+        className="checklist-phase"
+        aria-label="AI governance operating model assurance game"
+      >
+        <h2>AI governance operating model assurance</h2>
+        <p>
+          Practice publishing decision rights, keeping forums operating with quorum and decision
+          logs, owning escalation turnaround, and reviewing the operating model as the estate grows.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {operatingModelGame.correct}/{operatingModelGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {operatingModelGame.complete && (
+            <Button variant="outline" onClick={() => setOperatingModelAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {OPERATING_MODEL_ROUNDS.map((round) => {
+            const selected = operatingModelAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setOperatingModelAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good operating model assurance choice."
+                          : "Review the operating model gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
