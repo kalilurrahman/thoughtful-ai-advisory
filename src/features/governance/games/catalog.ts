@@ -815,4 +815,12 @@ export const GOVERNANCE_GAMES = [
       "Practice naming sources and a scanning cadence, triaging each change against the system inventory, setting internal deadlines ahead of external ones, updating the controls and contracts the obligation touches, and recording no-action calls with their rationale.",
     anchor: "regulatory-horizon-assurance",
   },
+  {
+    id: "output-sampling-assurance",
+    title: "AI production output sampling assurance",
+    category: "Quality & reliability",
+    description:
+      "Practice weighting sample rates by risk and volume, separating reviewers from the producing queue, scoring against a calibrated rubric, stratifying coverage across channels and languages, and trending findings by category so drift is visible.",
+    anchor: "output-sampling-assurance",
+  },
 ] as const;
