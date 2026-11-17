@@ -783,4 +783,12 @@ export const GOVERNANCE_GAMES = [
       "Practice treating derived artifacts as in scope, stating and measuring a removal window, requiring confirmation from downstream processors, recording per-withdrawal evidence, and checking consent state at the point of reuse.",
     anchor: "consent-withdrawal-assurance",
   },
+  {
+    id: "complaint-feedback-assurance",
+    title: "AI complaint & feedback loop assurance",
+    category: "Accountability & redress",
+    description:
+      "Practice placing intake where the decision happens, triaging by theme so patterns surface, measuring response against the promise, tracing root cause to the model, data, prompt or process, and closing the loop with the people who reported it.",
+    anchor: "complaint-feedback-assurance",
+  },
 ] as const;
