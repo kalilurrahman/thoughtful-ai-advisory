@@ -1991,6 +1991,34 @@ export function calculate(
           : "Readiness is trending well — grow the task set from real failures, check that a lucky run cannot pass without the right steps, and keep the evaluation current as tools change.",
     };
   }
+  if (id === "content-provenance") {
+    const marking = v["marking"] ?? 0,
+      survival = v["survival"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      detection = v["detection"] ?? 0,
+      register = v["register"] ?? 0,
+      score = Math.round(
+        marking * 0.3 + survival * 0.25 + disclosure * 0.2 + detection * 0.15 + register * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI content provenance & labelling readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Outputs marked at generation with machine-readable provenance (30%)", marking + "%"],
+        ["Marks survive copy, conversion & re-publish (25%)", survival + "%"],
+        ["Visible disclosure where a mark cannot travel (20%)", disclosure + "%"],
+        ["Unlabeled or stripped output detected & handled (15%)", detection + "%"],
+        ["Register of channels & formats where marking is required (10%)", register + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: mark outputs at generation with machine-readable provenance, test that marks survive copy, conversion and re-publish, add visible disclosure wherever a mark cannot travel, detect and handle unlabeled or stripped output, and register the channels and formats where marking is required."
+          : "Readiness is trending well — re-test survival after format and channel changes, check that detection catches stripped marks, and keep the register current as new distribution routes appear.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
