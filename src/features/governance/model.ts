@@ -1127,6 +1127,30 @@ export function calculate(
           : "Readiness is trending well — keep appetite statements, tolerance limits, breach responses and portfolio reviews current as use cases and risk exposure change.",
     };
   }
+  if (id === "evaluation-dataset-governance") {
+    const versioned = v["versioned"] ?? 0,
+      holdout = v["holdout"] ?? 0,
+      coverage = v["coverage"] ?? 0,
+      refresh = v["refresh"] ?? 0,
+      score = Math.round(versioned * 0.3 + holdout * 0.3 + coverage * 0.2 + refresh * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI evaluation dataset governance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Evaluation sets versioned & documented (30%)", versioned + "%"],
+        ["Holdout discipline & contamination checks (30%)", holdout + "%"],
+        ["Coverage of real cases & edge conditions (20%)", coverage + "%"],
+        ["Refresh & sign-off on model/data change (20%)", refresh + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: version and document evaluation sets, keep holdouts uncontaminated, cover real cases and edge conditions, and refresh and sign off evaluations when models or data change."
+          : "Readiness is trending well — keep eval versions, holdout integrity, coverage and refresh sign-off current so results still mean what they claim.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
