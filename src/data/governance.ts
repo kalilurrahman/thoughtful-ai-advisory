@@ -4049,14 +4049,65 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "red-team-program",
+    name: "AI red-team programme readiness",
+    desc: "Estimate readiness for running adversarial testing as a programme rather than an event: scope and rules of engagement agreed before testers begin, testers independent enough to find what the builders missed, findings triaged by severity with an owner, remediation verified by retest, and discovered harms handled safely rather than quietly closed.",
+    inputs: [
+      {
+        k: "scope",
+        label: "Scope & rules of engagement agreed before testing",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "independence",
+        label: "Testers independent of the building team",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "triage",
+        label: "Findings triaged by severity with an owner",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "retest",
+        label: "Remediation verified by retest",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "harms",
+        label: "Discovered harms handled safely, not quietly closed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
   {
     num: "01",
     name: "Stabilize",
-    window: "Days 1–30",
-    items: [
+    window: "Days 1–30",    items: [
       {
         title: "Assign AI system owner and approve use-case scope",
         owner: "CIO",
