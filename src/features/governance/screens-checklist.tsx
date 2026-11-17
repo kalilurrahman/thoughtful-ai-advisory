@@ -285,6 +285,10 @@ import {
 } from "./assurance-independence-game";
 import { REGULATORY_HORIZON_ROUNDS, regulatoryHorizonScore } from "./regulatory-horizon-game";
 import { OUTPUT_SAMPLING_ROUNDS, outputSamplingScore } from "./output-sampling-game";
+import {
+  CLAIMS_SUBSTANTIATION_ROUNDS,
+  claimsSubstantiationScore,
+} from "./claims-substantiation-game";
 
 const statusText = {
   complete: "Complete",
@@ -417,6 +421,9 @@ export function ChecklistScreen() {
     {},
   );
   const [outputSamplingAnswers, setOutputSamplingAnswers] = useState<Record<string, number>>({});
+  const [claimsSubstantiationAnswers, setClaimsSubstantiationAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -524,6 +531,7 @@ export function ChecklistScreen() {
   const assuranceIndependenceGame = assuranceIndependenceScore(assuranceIndependenceAnswers);
   const regulatoryHorizonGame = regulatoryHorizonScore(regulatoryHorizonAnswers);
   const outputSamplingGame = outputSamplingScore(outputSamplingAnswers);
+  const claimsSubstantiationGame = claimsSubstantiationScore(claimsSubstantiationAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6486,6 +6494,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good sampling choice."
                           : "Review the sampling gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="claims-substantiation-assurance"
+        className="checklist-phase"
+        aria-label="AI public claims and marketing substantiation game"
+      >
+        <h2>AI public claims &amp; marketing substantiation</h2>
+        <p>
+          Practice replacing unevidenced superlatives with testable claims, sourcing and verifying
+          vendor claims, re-running evidence when the system changes, describing compliance work
+          accurately, and withdrawing a claim everywhere it appears. Scenarios are learning prompts,
+          not compliance or legal determinations.
+        </p>
+        <p>
+          <strong>
+            {claimsSubstantiationGame.correct}/{claimsSubstantiationGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {claimsSubstantiationGame.complete && (
+            <Button variant="outline" onClick={() => setClaimsSubstantiationAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CLAIMS_SUBSTANTIATION_ROUNDS.map((round) => {
+            const selected = claimsSubstantiationAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setClaimsSubstantiationAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good substantiation choice."
+                          : "Review the claims gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
