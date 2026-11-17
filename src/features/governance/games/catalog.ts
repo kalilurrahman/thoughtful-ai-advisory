@@ -887,4 +887,12 @@ export const GOVERNANCE_GAMES = [
       "Practice evaluating each supported language instead of inferring from English results, testing guardrails and refusals across languages and scripts, reviewing local law and accessibility per market, staffing in-language review, and tying language coverage to real volumes.",
     anchor: "multilingual-assurance",
   },
+  {
+    id: "coding-assistants-assurance",
+    title: "AI coding assistant governance game",
+    category: "Operational readiness",
+    description:
+      "Practice reviewing generated code like human code, checking licence and provenance of suggestions, rotating secrets after a paste and blocking prohibited inputs, approving assistants before they touch repositories, and keeping the author accountable.",
+    anchor: "coding-assistants-assurance",
+  },
 ] as const;

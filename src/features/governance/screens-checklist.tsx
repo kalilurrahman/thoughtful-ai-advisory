@@ -299,6 +299,7 @@ import {
 } from "./annotation-workforce-game";
 import { AI_HANDOVER_ROUNDS, aiHandoverScore } from "./ai-handover-game";
 import { MULTILINGUAL_ROUNDS, multilingualScore } from "./multilingual-assurance-game";
+import { CODING_ASSISTANTS_ROUNDS, codingAssistantsScore } from "./coding-assistants-game";
 
 const statusText = {
   complete: "Complete",
@@ -443,6 +444,9 @@ export function ChecklistScreen() {
   >({});
   const [aiHandoverAnswers, setAiHandoverAnswers] = useState<Record<string, number>>({});
   const [multilingualAnswers, setMultilingualAnswers] = useState<Record<string, number>>({});
+  const [codingAssistantsAnswers, setCodingAssistantsAnswers] = useState<Record<string, number>>(
+    {},
+  );
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -558,6 +562,7 @@ export function ChecklistScreen() {
   const annotationWorkforceGame = annotationWorkforceScore(annotationWorkforceAnswers);
   const aiHandoverGame = aiHandoverScore(aiHandoverAnswers);
   const multilingualGame = multilingualScore(multilingualAnswers);
+  const codingAssistantsGame = codingAssistantsScore(codingAssistantsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7025,6 +7030,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good localisation choice."
                           : "Review the localisation gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="coding-assistants-assurance"
+        className="checklist-phase"
+        aria-label="AI coding assistant governance game"
+      >
+        <h2>AI coding assistant governance</h2>
+        <p>
+          Practice reviewing generated code like human code, checking licence and provenance of
+          suggestions, rotating secrets after a paste and blocking prohibited inputs, approving
+          assistants before they touch repositories, and keeping the author accountable. Scenarios are
+          learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {codingAssistantsGame.correct}/{codingAssistantsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {codingAssistantsGame.complete && (
+            <Button variant="outline" onClick={() => setCodingAssistantsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CODING_ASSISTANTS_ROUNDS.map((round) => {
+            const selected = codingAssistantsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCodingAssistantsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good assistant governance choice."
+                          : "Review the assistant governance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
