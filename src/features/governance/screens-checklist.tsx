@@ -257,6 +257,7 @@ import { PROMPT_INJECTION_ROUNDS, promptInjectionScore } from "./prompt-injectio
 import { SYNTHETIC_DATA_ROUNDS, syntheticDataScore } from "./synthetic-data-game";
 import { MODEL_SELECTION_ROUNDS, modelSelectionScore } from "./model-selection-game";
 import { ENV_IMPACT_ROUNDS, envImpactScore } from "./env-impact-game";
+import { TABLETOP_ROUNDS, tabletopScore } from "./tabletop-game";
 
 const statusText = {
   complete: "Complete",
@@ -344,6 +345,9 @@ export function ChecklistScreen() {
   const [syntheticDataAnswers, setSyntheticDataAnswers] = useState<Record<string, number>>({});
   const [modelSelectionAnswers, setModelSelectionAnswers] = useState<Record<string, number>>({});
   const [envImpactAnswers, setEnvImpactAnswers] = useState<Record<string, number>>({});
+  const [assuranceTabletopAnswers, setAssuranceTabletopAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -426,6 +430,7 @@ export function ChecklistScreen() {
   const syntheticDataGame = syntheticDataScore(syntheticDataAnswers);
   const modelSelectionGame = modelSelectionScore(modelSelectionAnswers);
   const envImpactGame = envImpactScore(envImpactAnswers);
+  const assuranceTabletopGame = tabletopScore(assuranceTabletopAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -4818,6 +4823,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good environmental impact choice."
                           : "Review the environmental impact gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="tabletop-assurance"
+        className="checklist-phase"
+        aria-label="AI assurance tabletop and rehearsal assurance game"
+      >
+        <h2>AI assurance tabletop &amp; rehearsal assurance</h2>
+        <p>
+          Practice building scenarios from real AI failure modes, rehearsing cross-functionally with
+          legal and communications, running on a cadence that reuses real incidents, and tracking
+          findings to closure. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {assuranceTabletopGame.correct}/{assuranceTabletopGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {assuranceTabletopGame.complete && (
+            <Button variant="outline" onClick={() => setAssuranceTabletopAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {TABLETOP_ROUNDS.map((round) => {
+            const selected = assuranceTabletopAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAssuranceTabletopAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good tabletop choice."
+                          : "Review the rehearsal gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

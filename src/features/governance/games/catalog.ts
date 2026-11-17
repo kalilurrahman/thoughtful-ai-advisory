@@ -623,4 +623,12 @@ export const GOVERNANCE_GAMES = [
       "Practice measuring energy and compute per workload, right-sizing and scheduling for efficiency, reporting AI impact with assumptions, and owning reduction targets with a review cadence.",
     anchor: "env-impact-assurance",
   },
+  {
+    id: "tabletop-assurance",
+    title: "AI assurance tabletop & rehearsal assurance",
+    category: "Incident response",
+    description:
+      "Practice building scenarios from real AI failure modes, rehearsing cross-functionally with legal and communications, running on a cadence that reuses real incidents, and tracking findings to closure.",
+    anchor: "tabletop-assurance",
+  },
 ] as const;
