@@ -2827,6 +2827,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "agentic-guardrails",
+    name: "Agentic AI action guardrails readiness",
+    desc: "Estimate readiness for guarding AI agents that act across tools and systems through least-privilege tool permissions, human approval for irreversible or high-impact actions, enforced scope, spend and rate limits, and complete action logs that can be replayed for review.",
+    inputs: [
+      {
+        k: "permissions",
+        label: "Least-privilege tool & action permissions for agents",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "approval",
+        label: "Human approval for irreversible or high-impact actions",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "limits",
+        label: "Scope, spend & rate limits enforced",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "replay",
+        label: "Action logs complete and replayable for review",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
