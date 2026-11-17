@@ -2047,6 +2047,34 @@ export function calculate(
           : "Readiness is trending well — check that copies age out, that keys are rotated when testers leave, and that a new sandbox cannot reach production by default.",
     };
   }
+  if (id === "value-realisation") {
+    const baseline = v["baseline"] ?? 0,
+      outcome = v["outcome"] ?? 0,
+      attribution = v["attribution"] ?? 0,
+      adoption = v["adoption"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(
+        baseline * 0.25 + outcome * 0.25 + attribution * 0.2 + adoption * 0.15 + review * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI value realisation readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Baseline captured before deployment (25%)", baseline + "%"],
+        ["Outcomes measured, not activity or output volume (25%)", outcome + "%"],
+        ["Attribution stated honestly, including other changes (20%)", attribution + "%"],
+        ["Adoption & real usage measured, not licences bought (15%)", adoption + "%"],
+        ["Scheduled review with authority to scale, fix or stop (15%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: capture a baseline before deployment, measure outcomes rather than activity or output volume, state attribution honestly including what else changed, measure real usage instead of licences bought, and schedule a review with the authority to scale, fix or stop."
+          : "Readiness is trending well — keep the baseline when scope changes, re-test attribution as other initiatives land, and confirm the review can still stop a system that is not delivering.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
