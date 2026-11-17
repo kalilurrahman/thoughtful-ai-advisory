@@ -2159,6 +2159,34 @@ export function calculate(
           : "Readiness is trending well — cluster complaints by theme rather than volume, check that fixes survive the next model or prompt change, and confirm complainants are told what changed.",
     };
   }
+  if (id === "risk-transfer-insurance") {
+    const coverage = v["coverage"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      indemnity = v["indemnity"] ?? 0,
+      limits = v["limits"] ?? 0,
+      claims = v["claims"] ?? 0,
+      score = Math.round(
+        coverage * 0.25 + disclosure * 0.2 + indemnity * 0.2 + limits * 0.2 + claims * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI risk transfer & insurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["AI risks mapped to coverage, including exclusions (25%)", coverage + "%"],
+        ["AI use & material incidents disclosed to insurers (20%)", disclosure + "%"],
+        ["Indemnities & liability caps matched to exposure (20%)", indemnity + "%"],
+        ["Limits & deductibles tested against loss scenarios (20%)", limits + "%"],
+        ["Claim evidence assembled before an incident (15%)", claims + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: map AI risks against actual coverage including exclusions, disclose AI use and material incidents to insurers, match contract indemnities and liability caps to the exposure you carry, test limits and deductibles against realistic loss scenarios, and assemble claim evidence before an incident rather than after."
+          : "Readiness is trending well — re-check exclusions when a model or use changes, confirm disclosure obligations at each renewal, and test that a claim could be evidenced within the notice period.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
