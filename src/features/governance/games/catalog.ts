@@ -703,4 +703,12 @@ export const GOVERNANCE_GAMES = [
       "Practice giving retrieved sources an owner and refresh date, requiring answers to cite the passages they rely on, resolving conflicts by a stated rule, making abstention acceptable, and monitoring the corpus for drift and poisoning.",
     anchor: "rag-grounding-assurance",
   },
+  {
+    id: "assurance-case-assurance",
+    title: "AI assurance case integrity assurance",
+    category: "Assurance evidence",
+    description:
+      "Practice tying claims to evidence that shows the control operating, dating evidence and refreshing it on change, recording known gaps as defeaters, re-assessing when scope or data moves, and routing approvers to the argument rather than a summary.",
+    anchor: "assurance-case-assurance",
+  },
 ] as const;
