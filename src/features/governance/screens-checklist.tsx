@@ -275,6 +275,7 @@ import { AGENT_EVALUATION_ROUNDS, agentEvaluationScore } from "./agent-evaluatio
 import { CONTENT_PROVENANCE_ROUNDS, contentProvenanceScore } from "./content-provenance-game";
 import { TEST_ISOLATION_ROUNDS, testIsolationScore } from "./test-isolation-game";
 import { VALUE_REALISATION_ROUNDS, valueRealisationScore } from "./value-realisation-game";
+import { AUDIT_RIGHTS_ROUNDS, auditRightsScore } from "./audit-rights-game";
 
 const statusText = {
   complete: "Complete",
@@ -392,6 +393,7 @@ export function ChecklistScreen() {
   );
   const [testIsolationAnswers, setTestIsolationAnswers] = useState<Record<string, number>>({});
   const [valueRealisationAnswers, setValueRealisationAnswers] = useState<Record<string, number>>({});
+  const [auditRightsAnswers, setAuditRightsAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -492,6 +494,7 @@ export function ChecklistScreen() {
   const contentProvenanceGame = contentProvenanceScore(contentProvenanceAnswers);
   const testIsolationGame = testIsolationScore(testIsolationAnswers);
   const valueRealisationGame = valueRealisationScore(valueRealisationAnswers);
+  const auditRightsGame = auditRightsScore(auditRightsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6013,6 +6016,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good value assurance choice."
                           : "Review the value assurance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="third-party-audit-assurance"
+        className="checklist-phase"
+        aria-label="AI third-party audit and assurance access game"
+      >
+        <h2>AI third-party audit &amp; assurance access</h2>
+        <p>
+          Practice securing a right to audit or receive assurance evidence, extending scope to models,
+          data and subprocessors, exercising the right on a risk-based cadence, reading reports against
+          actual use, and verifying findings to closure with evidence. Scenarios are learning prompts,
+          not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {auditRightsGame.correct}/{auditRightsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {auditRightsGame.complete && (
+            <Button variant="outline" onClick={() => setAuditRightsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {AUDIT_RIGHTS_ROUNDS.map((round) => {
+            const selected = auditRightsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAuditRightsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good assurance access choice."
+                          : "Review the assurance access gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

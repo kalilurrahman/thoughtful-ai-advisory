@@ -767,4 +767,12 @@ export const GOVERNANCE_GAMES = [
       "Practice capturing a baseline before deployment, measuring outcomes rather than activity, stating attribution honestly alongside other changes, measuring real usage instead of licences, and recording review decisions with the authority to scale, fix or stop.",
     anchor: "value-realisation-assurance",
   },
+  {
+    id: "third-party-audit-assurance",
+    title: "AI third-party audit & assurance access",
+    category: "Third-party & supply chain",
+    description:
+      "Practice securing a right to audit or receive assurance evidence, extending scope to models, data and subprocessors, exercising the right on a risk-based cadence, reading reports against actual use, and verifying findings to closure with evidence.",
+    anchor: "third-party-audit-assurance",
+  },
 ] as const;
