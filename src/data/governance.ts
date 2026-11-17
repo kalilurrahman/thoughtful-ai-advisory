@@ -2698,6 +2698,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "evaluation-dataset-governance",
+    name: "AI evaluation dataset governance readiness",
+    desc: "Estimate readiness for governing the datasets used to judge AI systems across versioned and documented eval sets, holdout discipline with contamination checks, representative coverage of real cases and edge conditions, and refresh plus sign-off when models or data change.",
+    inputs: [
+      {
+        k: "versioned",
+        label: "Evaluation sets versioned and documented",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "holdout",
+        label: "Holdout discipline & contamination checks in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "coverage",
+        label: "Eval coverage of real cases & edge conditions",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "refresh",
+        label: "Refresh & sign-off when models or data change",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
