@@ -471,4 +471,12 @@ export const GOVERNANCE_GAMES = [
       "Practice setting appetite before approval, routing tolerance breaches to named owners with defined responses, reviewing appetite against the live portfolio, and recording risk acceptance.",
     anchor: "risk-appetite-assurance",
   },
+  {
+    id: "eval-integrity-assurance",
+    title: "AI evaluation integrity assurance",
+    category: "Testing & evaluation",
+    description:
+      "Practice holdout integrity and contamination checks, complete and honest reporting, evaluation relevance as products change, and sign-off on eval set versions and thresholds.",
+    anchor: "eval-integrity-assurance",
+  },
 ] as const;

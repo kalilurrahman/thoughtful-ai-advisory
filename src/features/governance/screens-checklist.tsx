@@ -223,6 +223,7 @@ import {
   RISK_APPETITE_ASSURANCE_ROUNDS,
   riskAppetiteAssuranceScore,
 } from "./risk-appetite-assurance-game";
+import { EVAL_INTEGRITY_ROUNDS, evalIntegrityScore } from "./eval-integrity-game";
 
 const statusText = {
   complete: "Complete",
@@ -291,6 +292,7 @@ export function ChecklistScreen() {
   const [guardrailConfigAnswers, setGuardrailConfigAnswers] = useState<Record<string, number>>({});
   const [cadenceAnswers, setCadenceAnswers] = useState<Record<string, number>>({});
   const [appetiteAnswers, setAppetiteAnswers] = useState<Record<string, number>>({});
+  const [evalIntegrityAnswers, setEvalIntegrityAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -354,6 +356,7 @@ export function ChecklistScreen() {
   const guardrailConfigGame = guardrailConfigAssuranceScore(guardrailConfigAnswers);
   const cadenceGame = assuranceCadenceScore(cadenceAnswers);
   const appetiteGame = riskAppetiteAssuranceScore(appetiteAnswers);
+  const evalIntegrityGame = evalIntegrityScore(evalIntegrityAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3567,6 +3570,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good risk appetite assurance choice."
                           : "Review the appetite and tolerance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="eval-integrity-assurance"
+        className="checklist-phase"
+        aria-label="AI evaluation integrity assurance game"
+      >
+        <h2>AI evaluation integrity assurance</h2>
+        <p>
+          Practice holdout integrity and contamination checks, complete and honest reporting,
+          evaluation relevance as products change, and sign-off on eval set versions and thresholds.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {evalIntegrityGame.correct}/{evalIntegrityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {evalIntegrityGame.complete && (
+            <Button variant="outline" onClick={() => setEvalIntegrityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {EVAL_INTEGRITY_ROUNDS.map((round) => {
+            const selected = evalIntegrityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setEvalIntegrityAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good evaluation integrity choice."
+                          : "Review the evaluation integrity gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
