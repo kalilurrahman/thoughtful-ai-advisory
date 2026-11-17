@@ -607,4 +607,12 @@ export const GOVERNANCE_GAMES = [
       "Practice recording how synthetic data was generated, validating fidelity and utility against real data, testing for memorised records, and documenting label limits before reuse.",
     anchor: "synthetic-data-assurance",
   },
+  {
+    id: "model-selection-assurance",
+    title: "AI model selection & fitness-for-purpose assurance",
+    category: "Model lifecycle",
+    description:
+      "Practice setting the quality bar before choosing, evaluating candidates on your own data, recording cost and risk trade-offs, and keeping a credible switch path before lock-in.",
+    anchor: "model-selection-assurance",
+  },
 ] as const;
