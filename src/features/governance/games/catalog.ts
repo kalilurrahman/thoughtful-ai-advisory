@@ -551,4 +551,12 @@ export const GOVERNANCE_GAMES = [
       "Practice staged exposure in shadow and canary, pre-agreed success and stop criteria, rehearsed rollback and kill switches, and safeguards for live test data and affected users.",
     anchor: "production-testing-assurance",
   },
+  {
+    id: "model-deprecation-assurance",
+    title: "AI model deprecation & migration assurance",
+    category: "Model lifecycle",
+    description:
+      "Practice tracking model versions and sunset dates, controlling unpinned model change, re-running evaluation before migration, and re-approving the system after a model swap.",
+    anchor: "model-deprecation-assurance",
+  },
 ] as const;
