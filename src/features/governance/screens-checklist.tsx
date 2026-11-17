@@ -213,6 +213,10 @@ import {
   DATA_RIGHTS_LICENSING_ASSURANCE_ROUNDS,
   dataRightsLicensingAssuranceScore,
 } from "./data-rights-licensing-assurance-game";
+import {
+  GUARDRAIL_CONFIG_ASSURANCE_ROUNDS,
+  guardrailConfigAssuranceScore,
+} from "./guardrail-config-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -278,6 +282,7 @@ export function ChecklistScreen() {
   const [misuseAnswers, setMisuseAnswers] = useState<Record<string, number>>({});
   const [exceptionAnswers, setExceptionAnswers] = useState<Record<string, number>>({});
   const [rightsAnswers, setRightsAnswers] = useState<Record<string, number>>({});
+  const [guardrailConfigAnswers, setGuardrailConfigAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -338,6 +343,7 @@ export function ChecklistScreen() {
   const misuseGame = safetyMisuseAssuranceScore(misuseAnswers);
   const exceptionGame = guardrailExceptionAssuranceScore(exceptionAnswers);
   const rightsGame = dataRightsLicensingAssuranceScore(rightsAnswers);
+  const guardrailConfigGame = guardrailConfigAssuranceScore(guardrailConfigAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3364,6 +3370,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good data rights & licensing assurance choice."
                           : "Review the data rights gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="guardrail-config-assurance"
+        className="checklist-phase"
+        aria-label="Guardrail configuration change assurance game"
+      >
+        <h2>Guardrail configuration change assurance</h2>
+        <p>
+          Practice configuration history and approval, environment parity, pre-release rule testing
+          on edge and adversarial cases, and tested rollback for guardrail changes. Scenarios are
+          learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {guardrailConfigGame.correct}/{guardrailConfigGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {guardrailConfigGame.complete && (
+            <Button variant="outline" onClick={() => setGuardrailConfigAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {GUARDRAIL_CONFIG_ASSURANCE_ROUNDS.map((round) => {
+            const selected = guardrailConfigAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setGuardrailConfigAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good guardrail configuration assurance choice."
+                          : "Review the configuration change gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
