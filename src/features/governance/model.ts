@@ -1879,6 +1879,34 @@ export function calculate(
           : "Readiness is trending well — test the route as an affected person would, confirm reviewers can and do overturn decisions, and check that appeal patterns reach the teams that own the model.",
     };
   }
+  if (id === "red-team-program") {
+    const scope = v["scope"] ?? 0,
+      independence = v["independence"] ?? 0,
+      triage = v["triage"] ?? 0,
+      retest = v["retest"] ?? 0,
+      harms = v["harms"] ?? 0,
+      score = Math.round(
+        scope * 0.25 + independence * 0.25 + triage * 0.25 + retest * 0.15 + harms * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI red-team programme readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Scope & rules of engagement agreed before testing (25%)", scope + "%"],
+        ["Testers independent of the building team (25%)", independence + "%"],
+        ["Findings triaged by severity with an owner (25%)", triage + "%"],
+        ["Remediation verified by retest (15%)", retest + "%"],
+        ["Discovered harms handled safely, not quietly closed (10%)", harms + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: agree scope and rules of engagement before testing, use testers independent of the building team, triage findings by severity with an owner, verify remediation by retest, and handle discovered harms safely instead of closing them quietly."
+          : "Readiness is trending well — rotate testers, re-scope as the system grows, and confirm retested findings stay fixed in later releases.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
