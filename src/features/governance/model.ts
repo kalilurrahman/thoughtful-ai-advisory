@@ -1511,6 +1511,30 @@ export function calculate(
           : "Resilience is trending well — re-run attacks after every model, prompt or tool change, and keep tool and data scopes narrow.",
     };
   }
+  if (id === "synthetic-data") {
+    const provenance = v["provenance"] ?? 0,
+      fidelity = v["fidelity"] ?? 0,
+      leakage = v["leakage"] ?? 0,
+      labels = v["labels"] ?? 0,
+      score = Math.round(provenance * 0.3 + fidelity * 0.25 + leakage * 0.25 + labels * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Synthetic data governance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Generation method, model & parameters recorded (30%)", provenance + "%"],
+        ["Fidelity & utility validated against real data (25%)", fidelity + "%"],
+        ["No real people or records reproduced (25%)", leakage + "%"],
+        ["Synthetic labels reviewed, limits documented (20%)", labels + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: record how each synthetic dataset was generated, validate fidelity and utility against real data, test that the generator does not reproduce real people or records, and review labels while documenting known limits."
+          : "Readiness is trending well — keep provenance with the dataset, re-test leakage and fidelity when the generator changes, and state synthetic limits wherever the data is used.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
