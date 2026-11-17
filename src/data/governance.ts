@@ -3644,6 +3644,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "incentive-alignment",
+    name: "AI incentive alignment readiness",
+    desc: "Estimate readiness for keeping business incentives from quietly overriding AI guardrails: incentives that touch AI use mapped (sales targets, throughput, cost per ticket), places where those incentives reward bypassing a control identified, performance measures paired with quality and safety indicators, and a route to flag pressure to bypass without penalty.",
+    inputs: [
+      {
+        k: "incentivemap",
+        label: "Incentives touching AI use mapped",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "conflicts",
+        label: "Places where incentives reward bypassing controls",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "balanced",
+        label: "Performance measures paired with quality & safety",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "escalation",
+        label: "Safe route to flag pressure to bypass",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
