@@ -277,6 +277,7 @@ import { TEST_ISOLATION_ROUNDS, testIsolationScore } from "./test-isolation-game
 import { VALUE_REALISATION_ROUNDS, valueRealisationScore } from "./value-realisation-game";
 import { AUDIT_RIGHTS_ROUNDS, auditRightsScore } from "./audit-rights-game";
 import { CONSENT_WITHDRAWAL_ROUNDS, consentWithdrawalScore } from "./consent-withdrawal-game";
+import { COMPLAINT_FEEDBACK_ROUNDS, complaintFeedbackScore } from "./complaint-feedback-game";
 
 const statusText = {
   complete: "Complete",
@@ -398,6 +399,9 @@ export function ChecklistScreen() {
   const [consentWithdrawalAnswers, setConsentWithdrawalAnswers] = useState<Record<string, number>>(
     {},
   );
+  const [complaintFeedbackAnswers, setComplaintFeedbackAnswers] = useState<Record<string, number>>(
+    {},
+  );
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -500,6 +504,7 @@ export function ChecklistScreen() {
   const valueRealisationGame = valueRealisationScore(valueRealisationAnswers);
   const auditRightsGame = auditRightsScore(auditRightsAnswers);
   const consentWithdrawalGame = consentWithdrawalScore(consentWithdrawalAnswers);
+  const complaintFeedbackGame = complaintFeedbackScore(complaintFeedbackAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6147,6 +6152,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good withdrawal choice."
                           : "Review the withdrawal gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="complaint-feedback-assurance"
+        className="checklist-phase"
+        aria-label="AI complaint and feedback loop assurance game"
+      >
+        <h2>AI complaint &amp; feedback loop assurance</h2>
+        <p>
+          Practice placing intake where the decision happens, triaging by theme so patterns surface,
+          measuring response against the promise, tracing root cause to the model, data, prompt or
+          process, and closing the loop with the people who reported it. Scenarios are learning
+          prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {complaintFeedbackGame.correct}/{complaintFeedbackGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {complaintFeedbackGame.complete && (
+            <Button variant="outline" onClick={() => setComplaintFeedbackAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {COMPLAINT_FEEDBACK_ROUNDS.map((round) => {
+            const selected = complaintFeedbackAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setComplaintFeedbackAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good feedback loop choice."
+                          : "Review the feedback loop gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
