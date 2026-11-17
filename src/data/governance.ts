@@ -4257,6 +4257,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "content-provenance",
+    name: "AI content provenance & labelling readiness",
+    desc: "Estimate readiness for marking AI-generated content so its origin travels with it: outputs marked at generation with machine-readable provenance, marks that survive copy, conversion and re-publish, a visible disclosure wherever a mark cannot travel, detection and handling of unlabeled or stripped output, and a register of the channels and formats where marking is required.",
+    inputs: [
+      {
+        k: "marking",
+        label: "Outputs marked at generation with machine-readable provenance",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "survival",
+        label: "Marks survive copy, conversion & re-publish",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "disclosure",
+        label: "Visible disclosure where a mark cannot travel",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "detection",
+        label: "Unlabeled or stripped output detected & handled",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "register",
+        label: "Register of channels & formats where marking is required",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
