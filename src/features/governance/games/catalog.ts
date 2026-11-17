@@ -879,4 +879,12 @@ export const GOVERNANCE_GAMES = [
       "Practice naming a second owner for every AI asset, documenting design rationale and known limits, moving access and vendor contacts to the team, rehearsing a handover and fixing what it exposes, and checking each asset off before a leaver's access is removed.",
     anchor: "ai-handover-assurance",
   },
+  {
+    id: "multilingual-assurance",
+    title: "Multilingual & localisation assurance game",
+    category: "Guardrails & assurance",
+    description:
+      "Practice evaluating each supported language instead of inferring from English results, testing guardrails and refusals across languages and scripts, reviewing local law and accessibility per market, staffing in-language review, and tying language coverage to real volumes.",
+    anchor: "multilingual-assurance",
+  },
 ] as const;
