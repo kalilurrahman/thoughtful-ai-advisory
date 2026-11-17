@@ -3128,6 +3128,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "model-deprecation",
+    name: "AI model deprecation & migration readiness",
+    desc: "Estimate readiness for handling model and provider change across a register of model versions and sunset dates, re-evaluation and regression testing before migration, tested fallback or portability options, and recorded re-approval of the migrated system.",
+    inputs: [
+      {
+        k: "register",
+        label: "Model versions & provider sunset dates tracked",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "retest",
+        label: "Re-evaluation & regression tests before migration",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "fallback",
+        label: "Tested fallback or portability option available",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reapproval",
+        label: "Migrated system re-approved & recorded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
