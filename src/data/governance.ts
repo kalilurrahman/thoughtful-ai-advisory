@@ -4881,6 +4881,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "research-ethics",
+    name: "AI research ethics & human-participant testing readiness",
+    desc: "Estimate readiness for AI testing that involves people: a review proportionate to risk before any study starts, participants told what the system does and how their data and outputs will be used, consent that is specific and revocable rather than buried in terms, safeguards for participants exposed to harmful or distressing output including stopping rules, and findings reported honestly even when they undermine the launch case.",
+    inputs: [
+      {
+        k: "review",
+        label: "Proportionate ethics review before a study starts",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "disclosure",
+        label: "Participants told what the system does & how data is used",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "consent",
+        label: "Consent specific, recorded & revocable",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "safeguards",
+        label: "Safeguards & stopping rules for harmful or distressing output",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reporting",
+        label: "Findings reported honestly, including negative results",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
