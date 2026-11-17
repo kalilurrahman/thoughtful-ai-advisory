@@ -839,4 +839,12 @@ export const GOVERNANCE_GAMES = [
       "Practice justifying each monitoring use with a recorded necessity and proportionality test, disclosing what is captured and why, keeping a human in decisions about work and pay, giving workers access and appeal, and deleting data on a stated schedule.",
     anchor: "worker-monitoring-assurance",
   },
+  {
+    id: "research-ethics-assurance",
+    title: "AI research ethics & human-participant testing assurance",
+    category: "Testing & evaluation",
+    description:
+      "Practice reviewing a study before participants start, disclosing what is retained and how outputs are used, taking specific and revocable consent, stopping when a participant signals distress, and reporting inconvenient findings with their limits.",
+    anchor: "research-ethics-assurance",
+  },
 ] as const;
