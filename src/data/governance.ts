@@ -5089,6 +5089,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "ai-handover",
+    name: "AI handover & key-person dependency readiness",
+    desc: "Estimate readiness for what happens when the person who owns a model, prompt set, evaluation suite or vendor relationship leaves: every AI asset has a named owner and a second, documentation explains how it works, why it was built that way, its known limits and open risks, access, credentials, runbooks and vendor contacts are held by the team rather than one inbox, a handover is rehearsed by the deputy with gaps recorded and fixed, and departures run a checklist that confirms handover before access is removed.",
+    inputs: [
+      {
+        k: "ownership",
+        label: "Every AI asset has a named owner & a second",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "documented",
+        label: "Documentation explains design, limits & open risks",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "access",
+        label: "Access, runbooks & vendor contacts held by the team",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rehearsed",
+        label: "Handover rehearsed by the deputy, gaps fixed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "departure",
+        label: "Departure checklist confirms handover before access removal",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

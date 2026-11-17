@@ -2439,6 +2439,34 @@ export function calculate(
           : "Readiness is trending well — re-check wellbeing controls when task mix changes to harder content, ask annotators whether the guidelines match the edge cases they actually see, and verify supplier terms by sampling their work rather than reading the contract.",
     };
   }
+  if (id === "ai-handover") {
+    const ownership = v["ownership"] ?? 0,
+      documented = v["documented"] ?? 0,
+      access = v["access"] ?? 0,
+      rehearsed = v["rehearsed"] ?? 0,
+      departure = v["departure"] ?? 0,
+      score = Math.round(
+        ownership * 0.2 + documented * 0.25 + access * 0.2 + rehearsed * 0.2 + departure * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI handover & key-person dependency readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Every AI asset has a named owner & a second (20%)", ownership + "%"],
+        ["Documentation explains design, limits & open risks (25%)", documented + "%"],
+        ["Access, runbooks & vendor contacts held by the team (20%)", access + "%"],
+        ["Handover rehearsed by the deputy, gaps fixed (20%)", rehearsed + "%"],
+        ["Departure checklist confirms handover before access removal (15%)", departure + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: name an owner and a second for every model, prompt set, evaluation suite and vendor relationship, document how each works, why it was built that way, its known limits and open risks, move access, runbooks and vendor contacts from one inbox to the team, rehearse a handover with the deputy and fix what the rehearsal exposes, and add AI ownership to the departure checklist before access is removed."
+          : "Readiness is trending well — rehearse handover for the asset everyone assumes is covered, check that the deputy can actually run an evaluation and answer a vendor notice unaided, and confirm documentation is updated when the model or prompts change rather than at departure.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
