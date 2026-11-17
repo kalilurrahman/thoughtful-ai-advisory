@@ -2741,6 +2741,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "assurance-case",
+    name: "AI assurance case readiness",
+    desc: "Estimate readiness for building a defensible assurance case across explicit safety/quality claims, evidence mapped to each claim, documented assumptions and limits, and independent challenge of the argument before reliance.",
+    inputs: [
+      {
+        k: "claims",
+        label: "Explicit claims stated for the AI system",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Evidence mapped to each claim",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "assumptions",
+        label: "Assumptions, limits & counter-arguments documented",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "challenge",
+        label: "Independent challenge of the argument recorded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

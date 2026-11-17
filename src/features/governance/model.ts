@@ -1151,6 +1151,30 @@ export function calculate(
           : "Readiness is trending well — keep eval versions, holdout integrity, coverage and refresh sign-off current so results still mean what they claim.",
     };
   }
+  if (id === "assurance-case") {
+    const claims = v["claims"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      assumptions = v["assumptions"] ?? 0,
+      challenge = v["challenge"] ?? 0,
+      score = Math.round(claims * 0.3 + evidence * 0.3 + assumptions * 0.2 + challenge * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI assurance case readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Explicit claims stated for the system (30%)", claims + "%"],
+        ["Evidence mapped to each claim (30%)", evidence + "%"],
+        ["Assumptions, limits & counter-arguments (20%)", assumptions + "%"],
+        ["Independent challenge recorded (20%)", challenge + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: state explicit claims for the AI system, map evidence to each claim, document assumptions, limits and counter-arguments, and record independent challenge before relying on the argument."
+          : "Readiness is trending well — keep claims, evidence mapping, assumptions and independent challenge current as the system and its context change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
