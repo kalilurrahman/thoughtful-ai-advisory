@@ -2655,6 +2655,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "risk-appetite",
+    name: "AI risk appetite & tolerance readiness",
+    desc: "Estimate readiness for setting and operating AI risk appetite across documented appetite per use case and tier, quantified tolerance thresholds and limits, breach detection with defined responses, and periodic appetite review against the live portfolio.",
+    inputs: [
+      {
+        k: "appetite",
+        label: "Risk appetite documented per use case & tier",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "tolerance",
+        label: "Tolerance thresholds & limits quantified",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "breach",
+        label: "Breach detection with defined responses",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Appetite reviewed against the live portfolio",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

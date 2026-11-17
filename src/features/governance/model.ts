@@ -1103,6 +1103,30 @@ export function calculate(
           : "Readiness is trending well — keep the review calendar, control testing, evidence freshness and overdue escalation working as systems and risks change.",
     };
   }
+  if (id === "risk-appetite") {
+    const appetite = v["appetite"] ?? 0,
+      tolerance = v["tolerance"] ?? 0,
+      breach = v["breach"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(appetite * 0.3 + tolerance * 0.3 + breach * 0.2 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI risk appetite & tolerance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Risk appetite documented per use case & tier (30%)", appetite + "%"],
+        ["Tolerance thresholds & limits quantified (30%)", tolerance + "%"],
+        ["Breach detection with defined responses (20%)", breach + "%"],
+        ["Appetite reviewed against the live portfolio (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: document risk appetite per use case and tier, quantify tolerance thresholds and limits, detect breaches with defined responses, and review appetite against the live portfolio."
+          : "Readiness is trending well — keep appetite statements, tolerance limits, breach responses and portfolio reviews current as use cases and risk exposure change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
