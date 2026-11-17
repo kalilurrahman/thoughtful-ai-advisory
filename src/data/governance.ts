@@ -5245,6 +5245,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "ma-ai-diligence",
+    name: "AI due diligence for mergers, acquisitions & divestments readiness",
+    desc: "Estimate readiness for buying, selling or merging a business that runs on AI: AI assets, models, vendors and data identified from how the business actually works rather than what the data room lists, inherited contracts, licences, change-of-control and termination rights reviewed, past incidents, complaints, regulator contact and open disputes checked, rights to training and customer data confirmed to transfer with consents and residency respected, and an integration or separation plan naming owners, timelines and what must keep running on day one.",
+    inputs: [
+      {
+        k: "inventory",
+        label: "AI assets, vendors & data identified from real operations",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "contracts",
+        label: "Inherited contracts, licences & change-of-control rights reviewed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "liability",
+        label: "Past incidents, complaints & regulator contact checked",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "data",
+        label: "Data rights transfer confirmed; consents & residency respected",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "integration",
+        label: "Integration or separation plan names owners & day-one needs",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
