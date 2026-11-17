@@ -1655,6 +1655,30 @@ export function calculate(
           : "Readiness is trending well — review the memory register as new memory types appear, re-test deletion and isolation after changes, and keep user controls honest.",
     };
   }
+  if (id === "incentive-alignment") {
+    const incentivemap = v["incentivemap"] ?? 0,
+      conflicts = v["conflicts"] ?? 0,
+      balanced = v["balanced"] ?? 0,
+      escalation = v["escalation"] ?? 0,
+      score = Math.round(incentivemap * 0.3 + conflicts * 0.25 + balanced * 0.25 + escalation * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI incentive alignment readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Incentives touching AI use mapped (30%)", incentivemap + "%"],
+        ["Places where incentives reward bypassing controls (25%)", conflicts + "%"],
+        ["Performance measures paired with quality & safety (25%)", balanced + "%"],
+        ["Safe route to flag pressure to bypass (20%)", escalation + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: map the incentives that touch AI use, find where they reward bypassing a control, pair performance measures with quality and safety indicators, and give people a safe route to flag pressure to bypass."
+          : "Readiness is trending well — re-check incentives whenever targets change, watch for new shortcuts as tools evolve, and keep the flag route visibly safe.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
