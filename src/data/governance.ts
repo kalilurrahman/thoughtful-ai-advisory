@@ -3042,6 +3042,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "governance-metrics",
+    name: "AI governance metrics & reporting readiness",
+    desc: "Estimate readiness for reporting AI governance honestly across a small set of defined metrics with owners and thresholds, traceable data sources rather than manual decks, reporting that includes failures and near misses, and decisions recorded from what the numbers showed.",
+    inputs: [
+      {
+        k: "defined",
+        label: "Defined metrics with owners & thresholds",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "sources",
+        label: "Metrics traced to system data, not manual decks",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "honest",
+        label: "Reporting includes failures & near misses",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "decisions",
+        label: "Decisions recorded from what the metrics showed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
