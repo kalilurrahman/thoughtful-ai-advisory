@@ -4621,6 +4621,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "assurance-independence",
+    name: "AI assurance independence & audit coverage readiness",
+    desc: "Estimate readiness for assurance that can disagree with the people it reviews: AI risks included in the audit or assurance plan with a risk-based rationale, assurance performed by people who do not own or build the system, findings reported to a level with authority to act without owner editing, conflicts of interest declared and managed including reliance on supplier evidence, and findings re-tested independently until closure.",
+    inputs: [
+      {
+        k: "coverage",
+        label: "AI risks in the assurance plan with a risk-based rationale",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "independence",
+        label: "Assurance performed by people outside the build team",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reporting",
+        label: "Findings reported upward without owner editing",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "conflicts",
+        label: "Conflicts declared, incl. reliance on supplier evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "followup",
+        label: "Findings re-tested independently until closure",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
