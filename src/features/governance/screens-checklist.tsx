@@ -290,6 +290,7 @@ import {
   claimsSubstantiationScore,
 } from "./claims-substantiation-game";
 import { WORKER_MONITORING_ROUNDS, workerMonitoringScore } from "./worker-monitoring-game";
+import { RESEARCH_ETHICS_ROUNDS, researchEthicsScore } from "./research-ethics-game";
 
 const statusText = {
   complete: "Complete",
@@ -426,6 +427,7 @@ export function ChecklistScreen() {
     Record<string, number>
   >({});
   const [workerMonitoringAnswers, setWorkerMonitoringAnswers] = useState<Record<string, number>>({});
+  const [researchEthicsAnswers, setResearchEthicsAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -535,6 +537,7 @@ export function ChecklistScreen() {
   const outputSamplingGame = outputSamplingScore(outputSamplingAnswers);
   const claimsSubstantiationGame = claimsSubstantiationScore(claimsSubstantiationAnswers);
   const workerMonitoringGame = workerMonitoringScore(workerMonitoringAnswers);
+  const researchEthicsGame = researchEthicsScore(researchEthicsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6623,6 +6626,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good monitoring choice."
                           : "Review the monitoring gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="research-ethics-assurance"
+        className="checklist-phase"
+        aria-label="AI research ethics and human-participant testing game"
+      >
+        <h2>AI research ethics &amp; human-participant testing</h2>
+        <p>
+          Practice reviewing a study before participants start, disclosing what is retained and how
+          outputs are used, taking specific and revocable consent, stopping when a participant
+          signals distress, and reporting inconvenient findings with their limits. Scenarios are
+          learning prompts, not ethics-committee or legal determinations.
+        </p>
+        <p>
+          <strong>
+            {researchEthicsGame.correct}/{researchEthicsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {researchEthicsGame.complete && (
+            <Button variant="outline" onClick={() => setResearchEthicsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {RESEARCH_ETHICS_ROUNDS.map((round) => {
+            const selected = researchEthicsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setResearchEthicsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good ethics choice."
+                          : "Review the participant safeguard."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
