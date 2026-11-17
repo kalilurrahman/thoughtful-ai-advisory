@@ -2327,6 +2327,34 @@ export function calculate(
           : "Readiness is trending well — re-test proportionality when a new signal or score is added, confirm the human reviewer can actually overrule the model, and check that workers know the appeal route exists.",
     };
   }
+  if (id === "research-ethics") {
+    const review = v["review"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      consent = v["consent"] ?? 0,
+      safeguards = v["safeguards"] ?? 0,
+      reporting = v["reporting"] ?? 0,
+      score = Math.round(
+        review * 0.2 + disclosure * 0.2 + consent * 0.2 + safeguards * 0.25 + reporting * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI research ethics & human-participant testing readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Proportionate ethics review before a study starts (20%)", review + "%"],
+        ["Participants told what the system does & how data is used (20%)", disclosure + "%"],
+        ["Consent specific, recorded & revocable (20%)", consent + "%"],
+        ["Safeguards & stopping rules for harmful or distressing output (25%)", safeguards + "%"],
+        ["Findings reported honestly, including negative results (15%)", reporting + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: run a proportionate ethics review before a study starts, tell participants what the system does and how their data and outputs will be used, record specific and revocable consent, put safeguards and stopping rules in place for harmful or distressing output, and report findings honestly including negative results."
+          : "Readiness is trending well — review the study protocol whenever output risk changes, check that withdrawing consent actually removes the data, and keep negative results in the record rather than only the launch metrics.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
