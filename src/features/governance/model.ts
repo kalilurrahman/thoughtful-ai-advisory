@@ -1055,6 +1055,30 @@ export function calculate(
           : "Readiness is trending well — re-check lawful basis, licences, opt-out handling and dataset evidence whenever data sources, model versions or terms change.",
     };
   }
+  if (id === "guardrail-config-governance") {
+    const versioned = v["versioned"] ?? 0,
+      review = v["review"] ?? 0,
+      testing = v["testing"] ?? 0,
+      rollback = v["rollback"] ?? 0,
+      score = Math.round(versioned * 0.3 + review * 0.3 + testing * 0.2 + rollback * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Guardrail configuration & change governance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Rules & thresholds version-controlled (30%)", versioned + "%"],
+        ["Threshold/policy changes reviewed & approved (30%)", review + "%"],
+        ["Rule changes tested before release (20%)", testing + "%"],
+        ["Rollback path & environment parity (20%)", rollback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: version-control guardrail rules and thresholds, review and approve threshold and policy changes, test rule changes against known cases before release, and confirm rollback paths and environment parity."
+          : "Readiness is trending well — keep rule versions, change approvals, pre-release tests and rollback parity current so guardrail behaviour cannot change unobserved.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
