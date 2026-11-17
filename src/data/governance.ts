@@ -3773,6 +3773,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "incident-evidence",
+    name: "AI incident evidence preservation readiness",
+    desc: "Estimate readiness for preserving what an AI incident actually was before it disappears: the prompt, retrieved context, model version and outputs captured at the time, retention and legal hold applied before logs rotate or models change, handling and access recorded so the record is defensible, and a replayable trail that supports root-cause review.",
+    inputs: [
+      {
+        k: "capture",
+        label: "Prompt, context, model version & outputs captured",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "hold",
+        label: "Retention & legal hold applied before rotation",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "custody",
+        label: "Handling, access & chain of custody recorded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "replay",
+        label: "Replayable trail for root-cause review",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
