@@ -4829,6 +4829,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "worker-monitoring",
+    name: "AI worker monitoring & algorithmic management readiness",
+    desc: "Estimate readiness for AI that monitors, scores or manages people at work: each monitoring use defined with a lawful basis and a recorded necessity and proportionality test, workers and their representatives told what is monitored and why, data minimisation with no covert capture and bounded retention, human review of any decision that affects someone's work, pay or standing, and a route for a worker to see the data, challenge an assessment and get a recorded outcome.",
+    inputs: [
+      {
+        k: "purpose",
+        label: "Each monitoring use defined, with necessity & proportionality recorded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "transparency",
+        label: "Workers & representatives told what is monitored and why",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "minimisation",
+        label: "Data minimised, no covert capture, retention bounded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "humanreview",
+        label: "Human reviews decisions on work, pay or standing",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "recourse",
+        label: "Worker can see data, challenge an assessment & appeal",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

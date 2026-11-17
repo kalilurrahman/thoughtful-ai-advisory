@@ -2299,6 +2299,34 @@ export function calculate(
           : "Readiness is trending well — re-check claims when the model, prompts or benchmarks change, keep vendor-supplied claims on the register with their evidence, and make sure a withdrawn claim actually disappears from live channels and sales material.",
     };
   }
+  if (id === "worker-monitoring") {
+    const purpose = v["purpose"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      minimisation = v["minimisation"] ?? 0,
+      humanreview = v["humanreview"] ?? 0,
+      recourse = v["recourse"] ?? 0,
+      score = Math.round(
+        purpose * 0.2 + transparency * 0.2 + minimisation * 0.2 + humanreview * 0.25 + recourse * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI worker monitoring & algorithmic management readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Each monitoring use defined, with necessity & proportionality recorded (20%)", purpose + "%"],
+        ["Workers & representatives told what is monitored and why (20%)", transparency + "%"],
+        ["Data minimised, no covert capture, retention bounded (20%)", minimisation + "%"],
+        ["Human reviews decisions on work, pay or standing (25%)", humanreview + "%"],
+        ["Worker can see data, challenge an assessment & appeal (15%)", recourse + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define each monitoring use with a lawful basis and a recorded necessity and proportionality test, tell workers and their representatives what is monitored and why, minimise data with no covert capture and bounded retention, have a human review any decision affecting someone's work, pay or standing, and give workers a route to see their data, challenge an assessment and appeal."
+          : "Readiness is trending well — re-test proportionality when a new signal or score is added, confirm the human reviewer can actually overrule the model, and check that workers know the appeal route exists.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
