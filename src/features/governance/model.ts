@@ -1487,6 +1487,30 @@ export function calculate(
           : "Readiness is trending well — re-date evidence before each review, keep the claim-to-evidence map current, and re-run the unaided walkthrough after major changes.",
     };
   }
+  if (id === "prompt-injection") {
+    const threatmodel = v["threatmodel"] ?? 0,
+      filtering = v["filtering"] ?? 0,
+      leastprivilege = v["leastprivilege"] ?? 0,
+      redteam = v["redteam"] ?? 0,
+      score = Math.round(threatmodel * 0.3 + filtering * 0.3 + leastprivilege * 0.2 + redteam * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Prompt injection & jailbreak resilience readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Retrieved & user content treated as untrusted (30%)", threatmodel + "%"],
+        ["Input/output filtering & instruction isolation (30%)", filtering + "%"],
+        ["Tools & data scoped against a hijack (20%)", leastprivilege + "%"],
+        ["Red-team attacks in a regression suite (20%)", redteam + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: treat retrieved and user content as untrusted, isolate instructions and filter input and output, scope tools and data so a hijacked prompt cannot act widely, and turn red-team attacks into a regression suite."
+          : "Resilience is trending well — re-run attacks after every model, prompt or tool change, and keep tool and data scopes narrow.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

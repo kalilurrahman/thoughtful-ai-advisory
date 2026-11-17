@@ -3343,6 +3343,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "prompt-injection",
+    name: "Prompt injection & jailbreak resilience readiness",
+    desc: "Estimate readiness against prompt injection and jailbreaks across a threat model that treats retrieved and user content as untrusted, filtering and instruction isolation on input and output, least-privilege tools and data so a hijacked prompt cannot act widely, and red-team testing that becomes a regression suite.",
+    inputs: [
+      {
+        k: "threatmodel",
+        label: "Retrieved & user content treated as untrusted",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "filtering",
+        label: "Input/output filtering & instruction isolation",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "leastprivilege",
+        label: "Tools & data scoped so a hijack cannot act widely",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "redteam",
+        label: "Red-team attacks turned into a regression suite",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
