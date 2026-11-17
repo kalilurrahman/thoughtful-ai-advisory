@@ -4101,6 +4101,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "prompt-governance",
+    name: "AI prompt & instruction governance readiness",
+    desc: "Estimate readiness for treating prompts, system instructions and tool definitions as governed code: versioned with a diffable history, owned and reviewed before change, tested against a regression set that includes known failure modes, released through a controlled path with a rollback, and monitored after release for drift in behaviour.",
+    inputs: [
+      {
+        k: "versioning",
+        label: "Prompts versioned with a diffable history",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Owned & reviewed before change",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "regression",
+        label: "Tested against a regression set",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "release",
+        label: "Released through a controlled path with rollback",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Behaviour monitored after release",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
