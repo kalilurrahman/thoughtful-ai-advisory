@@ -743,4 +743,12 @@ export const GOVERNANCE_GAMES = [
       "Practice reviewing tool-use traces rather than final answers, defining success criteria per task type, routing repeated failures through a taxonomy, evaluating with representative tools and errors, and re-running regression when tools, prompts or models change.",
     anchor: "agent-evaluation-assurance",
   },
+  {
+    id: "content-provenance-assurance",
+    title: "AI content provenance & labelling assurance",
+    category: "Content safety & misuse",
+    description:
+      "Practice marking at generation and testing every export path, verifying marks survive format and channel changes, adding visible disclosure where a mark cannot travel, detecting stripped or unlabeled content on ingest, and keeping a register of channels where labelling is required.",
+    anchor: "content-provenance-assurance",
+  },
 ] as const;

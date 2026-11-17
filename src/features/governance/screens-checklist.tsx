@@ -272,6 +272,7 @@ import { PROMPT_GOVERNANCE_ROUNDS, promptGovernanceScore } from "./prompt-govern
 import { VULN_MANAGEMENT_ROUNDS, vulnManagementScore } from "./vuln-management-game";
 import { DATA_RESIDENCY_ROUNDS, dataResidencyScore } from "./data-residency-game";
 import { AGENT_EVALUATION_ROUNDS, agentEvaluationScore } from "./agent-evaluation-game";
+import { CONTENT_PROVENANCE_ROUNDS, contentProvenanceScore } from "./content-provenance-game";
 
 const statusText = {
   complete: "Complete",
@@ -384,6 +385,9 @@ export function ChecklistScreen() {
   const [vulnManagementAnswers, setVulnManagementAnswers] = useState<Record<string, number>>({});
   const [dataResidencyAnswers, setDataResidencyAnswers] = useState<Record<string, number>>({});
   const [agentEvaluationAnswers, setAgentEvaluationAnswers] = useState<Record<string, number>>({});
+  const [contentProvenanceAnswers, setContentProvenanceAnswers] = useState<Record<string, number>>(
+    {},
+  );
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -481,6 +485,7 @@ export function ChecklistScreen() {
   const vulnManagementGame = vulnManagementScore(vulnManagementAnswers);
   const dataResidencyGame = dataResidencyScore(dataResidencyAnswers);
   const agentEvaluationGame = agentEvaluationScore(agentEvaluationAnswers);
+  const contentProvenanceGame = contentProvenanceScore(contentProvenanceAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -5813,6 +5818,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good evaluation choice."
                           : "Review the evaluation gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="content-provenance-assurance"
+        className="checklist-phase"
+        aria-label="AI content provenance and labelling assurance game"
+      >
+        <h2>AI content provenance &amp; labelling assurance</h2>
+        <p>
+          Practice marking at generation and testing every export path, verifying marks survive format
+          and channel changes, adding visible disclosure where a mark cannot travel, detecting stripped
+          or unlabeled content on ingest, and keeping a register of channels where labelling is
+          required. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {contentProvenanceGame.correct}/{contentProvenanceGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {contentProvenanceGame.complete && (
+            <Button variant="outline" onClick={() => setContentProvenanceAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CONTENT_PROVENANCE_ROUNDS.map((round) => {
+            const selected = contentProvenanceAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setContentProvenanceAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good provenance choice."
+                          : "Review the provenance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
