@@ -719,4 +719,12 @@ export const GOVERNANCE_GAMES = [
       "Practice versioning prompts with a diffable history, reviewing instruction changes with a recorded approver, growing the regression set from incidents, releasing with a tested rollback, and monitoring behaviour for drift after release.",
     anchor: "prompt-governance-assurance",
   },
+  {
+    id: "vuln-management-assurance",
+    title: "AI vulnerability management assurance",
+    category: "Security & robustness assurance",
+    description:
+      "Practice extending inventory and scanning to model SDKs, runtimes and containers, applying compensating controls with dated exceptions when patching cannot happen, triaging by exploitability and exposure, verifying the deployed version, and tracking provider security notices.",
+    anchor: "vuln-management-assurance",
+  },
 ] as const;
