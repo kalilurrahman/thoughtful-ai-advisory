@@ -1271,6 +1271,30 @@ export function calculate(
           : "Readiness is trending well — keep statements, owners, treatment dates, residual evidence and register reviews current so the register stays a working tool rather than an archive.",
     };
   }
+  if (id === "output-ip-rights") {
+    const ownership = v["ownership"] ?? 0,
+      infringement = v["infringement"] ?? 0,
+      licences = v["licences"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      score = Math.round(ownership * 0.3 + infringement * 0.2 + licences * 0.3 + disclosure * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI output ownership & IP risk readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Output ownership & usage rights in contracts (30%)", ownership + "%"],
+        ["Infringement & similarity checks (20%)", infringement + "%"],
+        ["Third-party & open-source licence tracking (30%)", licences + "%"],
+        ["AI-assisted work disclosed & recorded (20%)", disclosure + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: settle output ownership and usage rights in contracts, run infringement and similarity checks on generated material, track third-party and open-source licence obligations, and record where AI assisted the work."
+          : "Readiness is trending well — re-check ownership terms, similarity checks, licence obligations and disclosure records when models, providers or output uses change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
