@@ -1223,6 +1223,30 @@ export function calculate(
           : "Readiness is trending well — re-test agent permissions, approval gates, limits and action logs whenever tools, scopes or autonomy levels change.",
     };
   }
+  if (id === "workforce-role-change") {
+    const mapping = v["mapping"] ?? 0,
+      consultation = v["consultation"] ?? 0,
+      reskilling = v["reskilling"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      score = Math.round(mapping * 0.3 + consultation * 0.3 + reskilling * 0.2 + monitoring * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI workforce impact & role change readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Affected roles & task-level impact mapped (30%)", mapping + "%"],
+        ["Consultation with affected workers (30%)", consultation + "%"],
+        ["Reskilling & redeployment paths agreed (20%)", reskilling + "%"],
+        ["Displacement, workload & quality monitored (20%)", monitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: map affected roles and task-level impact, consult affected workers and their representatives, agree reskilling and redeployment paths, and monitor displacement, workload and quality effects after deployment."
+          : "Readiness is trending well — keep role-impact mapping, consultation, reskilling paths and post-deployment workforce monitoring current as AI changes the work.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

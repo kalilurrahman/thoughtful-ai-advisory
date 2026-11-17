@@ -2870,6 +2870,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "workforce-role-change",
+    name: "AI workforce impact & role change readiness",
+    desc: "Estimate readiness for managing how AI changes work across affected-role mapping and task-level impact, consultation with the people doing the work, reskilling and redeployment paths, and monitoring of displacement, workload and quality effects after deployment.",
+    inputs: [
+      {
+        k: "mapping",
+        label: "Affected roles & task-level impact mapped",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "consultation",
+        label: "Consultation with affected workers & representatives",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reskilling",
+        label: "Reskilling & redeployment paths agreed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Displacement, workload & quality effects monitored",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
