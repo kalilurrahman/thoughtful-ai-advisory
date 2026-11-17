@@ -1175,6 +1175,30 @@ export function calculate(
           : "Readiness is trending well — keep claims, evidence mapping, assumptions and independent challenge current as the system and its context change.",
     };
   }
+  if (id === "governance-operating-model") {
+    const forums = v["forums"] ?? 0,
+      rights = v["rights"] ?? 0,
+      escalation = v["escalation"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(forums * 0.3 + rights * 0.3 + escalation * 0.2 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI governance operating model & decision rights readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Chartered AI forums with named members (30%)", forums + "%"],
+        ["Decision rights for approve/waive/stop (30%)", rights + "%"],
+        ["Escalation routes with turnaround commitments (20%)", escalation + "%"],
+        ["Operating model reviewed as the estate grows (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: charter AI forums with named members, document decision rights for approve, waive and stop, set escalation routes with turnaround commitments, and review the operating model as the estate grows."
+          : "Readiness is trending well — keep forum membership, decision rights, escalation turnaround and operating-model reviews current as use cases multiply.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
