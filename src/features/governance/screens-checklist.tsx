@@ -250,6 +250,7 @@ import {
 } from "./production-testing-game";
 import { MODEL_DEPRECATION_ROUNDS, modelDeprecationScore } from "./model-deprecation-game";
 import { BOARD_OVERSIGHT_ROUNDS, boardOversightScore } from "./board-oversight-game";
+import { INCIDENT_SEVERITY_ROUNDS, incidentSeverityScore } from "./incident-severity-game";
 
 const statusText = {
   complete: "Complete",
@@ -330,6 +331,7 @@ export function ChecklistScreen() {
   const [productionTestingAnswers, setProductionTestingAnswers] = useState<Record<string, number>>({});
   const [deprecationAnswers, setDeprecationAnswers] = useState<Record<string, number>>({});
   const [boardOversightAnswers, setBoardOversightAnswers] = useState<Record<string, number>>({});
+  const [incidentSeverityAnswers, setIncidentSeverityAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -405,6 +407,7 @@ export function ChecklistScreen() {
   const productionTestingGame = productionTestingScore(productionTestingAnswers);
   const deprecationGame = modelDeprecationScore(deprecationAnswers);
   const boardOversightGame = boardOversightScore(boardOversightAnswers);
+  const incidentSeverityGame = incidentSeverityScore(incidentSeverityAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -4362,6 +4365,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good board oversight choice."
                           : "Review the board oversight gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="incident-severity-assurance"
+        className="checklist-phase"
+        aria-label="AI incident severity and notification assurance game"
+      >
+        <h2>AI incident severity &amp; notification assurance</h2>
+        <p>
+          Practice classifying AI-specific harms, naming a triage owner with a decision window,
+          pre-agreeing notification triggers and timelines, and running blameless reviews with
+          tracked corrective actions. Scenarios are learning prompts, not compliance
+          determinations.
+        </p>
+        <p>
+          <strong>
+            {incidentSeverityGame.correct}/{incidentSeverityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {incidentSeverityGame.complete && (
+            <Button variant="outline" onClick={() => setIncidentSeverityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {INCIDENT_SEVERITY_ROUNDS.map((round) => {
+            const selected = incidentSeverityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setIncidentSeverityAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good incident severity choice."
+                          : "Review the incident classification gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
