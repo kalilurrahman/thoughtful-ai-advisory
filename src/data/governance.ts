@@ -3214,6 +3214,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "incident-severity",
+    name: "AI incident severity & notification readiness",
+    desc: "Estimate readiness for classifying and notifying AI incidents across severity tiers that cover AI-specific harms, a named triage owner with a decision window, pre-agreed notification triggers and timelines for regulators, customers and partners, and blameless review with tracked corrective actions.",
+    inputs: [
+      {
+        k: "tiers",
+        label: "Severity tiers cover AI-specific harms",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "triage",
+        label: "Named triage owner with a decision window",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "notification",
+        label: "Notification triggers & timelines agreed in advance",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Blameless review & corrective actions tracked",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
