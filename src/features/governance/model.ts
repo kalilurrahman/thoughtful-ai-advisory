@@ -2383,6 +2383,34 @@ export function calculate(
           : "Readiness is trending well — test the channel with a concern that implicates a senior person, check that reporters who used it would use it again, and review repeat themes rather than only individual closures.",
     };
   }
+  if (id === "hiring-screening") {
+    const purpose = v["purpose"] ?? 0,
+      biastesting = v["biastesting"] ?? 0,
+      humanreview = v["humanreview"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      records = v["records"] ?? 0,
+      score = Math.round(
+        purpose * 0.2 + biastesting * 0.25 + humanreview * 0.2 + disclosure * 0.2 + records * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI hiring & candidate screening readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Screening use defined per role; alternatives considered (20%)", purpose + "%"],
+        ["Adverse impact measured by group across every stage (25%)", biastesting + "%"],
+        ["Human reviews before rejection & can override (20%)", humanreview + "%"],
+        ["Candidates told AI is used & offered an accessible alternative (20%)", disclosure + "%"],
+        ["Screening records retained to explain & challenge decisions (15%)", records + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define each screening use for the role and consider less invasive alternatives, measure adverse impact by group across every stage rather than relying on a vendor claim, have a human review before any rejection with reasoning recorded and the ability to override, tell candidates AI is used and offer an accessible alternative, and retain screening records so a decision can be explained and challenged later."
+          : "Readiness is trending well — re-test adverse impact when the model or criteria change, check that reviewers actually reject model rankings, and confirm candidates can reach the alternative route without having to ask twice.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

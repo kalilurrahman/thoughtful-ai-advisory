@@ -4985,6 +4985,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "hiring-screening",
+    name: "AI hiring & candidate screening readiness",
+    desc: "Estimate readiness for AI used to screen, rank or assess candidates: each screening use defined for the role with necessity and less invasive alternatives considered, adverse impact measured by group across every stage rather than taken from a vendor claim, a human reviewing before any rejection with the reasoning recorded and the ability to override, candidates told AI is used and offered an accessible alternative, and screening records retained so a decision can be explained and challenged later.",
+    inputs: [
+      {
+        k: "purpose",
+        label: "Screening use defined per role; alternatives considered",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "biastesting",
+        label: "Adverse impact measured by group across every stage",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "humanreview",
+        label: "Human reviews before rejection & can override",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "disclosure",
+        label: "Candidates told AI is used & offered an accessible alternative",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "records",
+        label: "Screening records retained to explain & challenge decisions",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
