@@ -591,4 +591,12 @@ export const GOVERNANCE_GAMES = [
       "Practice mapping claims to specific evidence, replacing stale evidence after material change, recording owners and sources per claim, and testing a pack with an unaided reviewer.",
     anchor: "evidence-pack-assurance",
   },
+  {
+    id: "prompt-injection-assurance",
+    title: "Prompt injection & jailbreak resilience assurance",
+    category: "Security & access",
+    description:
+      "Practice treating retrieved content as untrusted, scoping agent tools and data, turning red-team attacks into regression tests, and detecting instruction-extraction attempts in production.",
+    anchor: "prompt-injection-assurance",
+  },
 ] as const;
