@@ -298,6 +298,7 @@ import {
   annotationWorkforceScore,
 } from "./annotation-workforce-game";
 import { AI_HANDOVER_ROUNDS, aiHandoverScore } from "./ai-handover-game";
+import { MULTILINGUAL_ROUNDS, multilingualScore } from "./multilingual-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -441,6 +442,7 @@ export function ChecklistScreen() {
     Record<string, number>
   >({});
   const [aiHandoverAnswers, setAiHandoverAnswers] = useState<Record<string, number>>({});
+  const [multilingualAnswers, setMultilingualAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -555,6 +557,7 @@ export function ChecklistScreen() {
   const hiringScreeningGame = hiringScreeningScore(hiringScreeningAnswers);
   const annotationWorkforceGame = annotationWorkforceScore(annotationWorkforceAnswers);
   const aiHandoverGame = aiHandoverScore(aiHandoverAnswers);
+  const multilingualGame = multilingualScore(multilingualAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6959,6 +6962,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good handover choice."
                           : "Review the handover gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="multilingual-assurance"
+        className="checklist-phase"
+        aria-label="Multilingual and localisation assurance game"
+      >
+        <h2>Multilingual &amp; localisation assurance</h2>
+        <p>
+          Practice evaluating each supported language instead of inferring from English results,
+          testing guardrails and refusals across languages and scripts, reviewing local law and
+          accessibility per market, staffing in-language review, and tying language coverage to real
+          volumes. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {multilingualGame.correct}/{multilingualGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {multilingualGame.complete && (
+            <Button variant="outline" onClick={() => setMultilingualAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {MULTILINGUAL_ROUNDS.map((round) => {
+            const selected = multilingualAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setMultilingualAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good localisation choice."
+                          : "Review the localisation gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
