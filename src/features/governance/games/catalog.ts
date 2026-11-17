@@ -455,4 +455,12 @@ export const GOVERNANCE_GAMES = [
       "Practice configuration history and approval, environment parity, pre-release rule testing on edge and adversarial cases, and tested rollback for guardrail changes.",
     anchor: "guardrail-config-assurance",
   },
+  {
+    id: "assurance-cadence",
+    title: "Assurance review cadence & evidence refresh",
+    category: "Assurance operations",
+    description:
+      "Practice owned review calendars, evidence freshness after system change, authoritative evidence registers, and escalating overdue assurance items before audit.",
+    anchor: "assurance-cadence",
+  },
 ] as const;
