@@ -233,6 +233,10 @@ import {
   AGENTIC_GUARDRAILS_ROUNDS,
   agenticGuardrailsScore,
 } from "./agentic-guardrails-game";
+import {
+  NEAR_MISS_REPORTING_ROUNDS,
+  nearMissReportingScore,
+} from "./near-miss-reporting-game";
 
 const statusText = {
   complete: "Complete",
@@ -305,6 +309,7 @@ export function ChecklistScreen() {
   const [intakeAnswers, setIntakeAnswers] = useState<Record<string, number>>({});
   const [operatingModelAnswers, setOperatingModelAnswers] = useState<Record<string, number>>({});
   const [agenticGuardrailsAnswers, setAgenticGuardrailsAnswers] = useState<Record<string, number>>({});
+  const [nearMissAnswers, setNearMissAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -372,6 +377,7 @@ export function ChecklistScreen() {
   const intakeGame = intakeOnboardingScore(intakeAnswers);
   const operatingModelGame = operatingModelScore(operatingModelAnswers);
   const agenticGuardrailsGame = agenticGuardrailsScore(agenticGuardrailsAnswers);
+  const nearMissGame = nearMissReportingScore(nearMissAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3833,6 +3839,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good agentic guardrail assurance choice."
                           : "Review the agent guardrail gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="near-miss-reporting-assurance"
+        className="checklist-phase"
+        aria-label="AI near-miss reporting and learning assurance game"
+      >
+        <h2>AI near-miss reporting &amp; learning assurance</h2>
+        <p>
+          Practice blame-free near-miss reporting, a reportable near-miss category, closed-loop
+          learning with reporters, and impact-based triage and escalation. Scenarios are learning
+          prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {nearMissGame.correct}/{nearMissGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {nearMissGame.complete && (
+            <Button variant="outline" onClick={() => setNearMissAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {NEAR_MISS_REPORTING_ROUNDS.map((round) => {
+            const selected = nearMissAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setNearMissAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good near-miss learning choice."
+                          : "Review the near-miss reporting gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

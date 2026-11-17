@@ -503,4 +503,12 @@ export const GOVERNANCE_GAMES = [
       "Practice least-privilege agent credentials, approval gates for irreversible actions, enforced spend and step limits, and replayable action logs for tool-using agents.",
     anchor: "agentic-guardrails-assurance",
   },
+  {
+    id: "near-miss-reporting-assurance",
+    title: "AI near-miss reporting & learning assurance",
+    category: "Incident & learning",
+    description:
+      "Practice blame-free near-miss reporting, a reportable near-miss category, closed-loop learning with reporters, and impact-based triage and escalation.",
+    anchor: "near-miss-reporting-assurance",
+  },
 ] as const;
