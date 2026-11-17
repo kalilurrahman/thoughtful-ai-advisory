@@ -647,4 +647,12 @@ export const GOVERNANCE_GAMES = [
       "Practice spotting where targets reward bypassing a guardrail, pairing throughput measures with quality and safety, protecting people who flag pressure, and making cost-versus-quality trade-offs explicit.",
     anchor: "incentive-alignment-assurance",
   },
+  {
+    id: "provider-terms-assurance",
+    title: "AI provider terms change assurance",
+    category: "Third-party & supply chain",
+    description:
+      "Practice registering subprocessors and model cards, routing provider notices to an owner, assessing term changes against actual use, and testing an exit path before it is needed.",
+    anchor: "provider-terms-assurance",
+  },
 ] as const;
