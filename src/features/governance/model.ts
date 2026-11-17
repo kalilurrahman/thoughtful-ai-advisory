@@ -2532,6 +2532,37 @@ export function calculate(
           : "Readiness is trending well — sample merged code for suggestions that skipped review, check that licence scanning covers generated snippets, and confirm the prohibited-input list still matches what the assistant can actually see.",
     };
   }
+  if (id === "ma-ai-diligence") {
+    const inventory = v["inventory"] ?? 0,
+      contracts = v["contracts"] ?? 0,
+      liability = v["liability"] ?? 0,
+      data = v["data"] ?? 0,
+      integration = v["integration"] ?? 0,
+      score = Math.round(
+        inventory * 0.25 + contracts * 0.2 + liability * 0.2 + data * 0.2 + integration * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI due diligence for mergers, acquisitions & divestments readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["AI assets, vendors & data identified from real operations (25%)", inventory + "%"],
+        [
+          "Inherited contracts, licences & change-of-control rights reviewed (20%)",
+          contracts + "%",
+        ],
+        ["Past incidents, complaints & regulator contact checked (20%)", liability + "%"],
+        ["Data rights transfer confirmed; consents & residency respected (20%)", data + "%"],
+        ["Integration or separation plan names owners & day-one needs (15%)", integration + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: identify AI assets, models, vendors and data from how the business actually operates, review inherited contracts, licences, change-of-control and termination rights, check past incidents, complaints, regulator contact and open disputes, confirm rights to training and customer data transfer with consents and residency respected, and write an integration or separation plan naming owners, timelines and what must keep running on day one."
+          : "Readiness is trending well — verify the inventory against a live walkthrough rather than the data room, test whether the vendor will actually honour change-of-control terms, and check that day-one operations do not depend on a contract that ends at completion.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
