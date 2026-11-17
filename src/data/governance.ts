@@ -4205,6 +4205,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "agent-evaluation",
+    name: "AI agent evaluation readiness",
+    desc: "Estimate readiness for evaluating agents on what they do rather than only what they say: success criteria defined per task type, tool-use traces reviewed so a lucky answer is not mistaken for a good run, a failure taxonomy that routes each miss to a fix, sandboxed evaluation with representative tasks and tools, and regression whenever tools, prompts or models change.",
+    inputs: [
+      {
+        k: "criteria",
+        label: "Success criteria defined per task type",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "traces",
+        label: "Tool-use traces reviewed, not just final answers",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "taxonomy",
+        label: "Failure taxonomy routes each miss to a fix",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "sandbox",
+        label: "Sandboxed evaluation with representative tasks",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "regression",
+        label: "Regression when tools, prompts or models change",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

@@ -1963,6 +1963,34 @@ export function calculate(
           : "Readiness is trending well — re-check region settings after each provider release, confirm support-access assumptions still hold, and test that a region change would reach you before your data moves.",
     };
   }
+  if (id === "agent-evaluation") {
+    const criteria = v["criteria"] ?? 0,
+      traces = v["traces"] ?? 0,
+      taxonomy = v["taxonomy"] ?? 0,
+      sandbox = v["sandbox"] ?? 0,
+      regression = v["regression"] ?? 0,
+      score = Math.round(
+        criteria * 0.3 + traces * 0.25 + taxonomy * 0.2 + sandbox * 0.15 + regression * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI agent evaluation readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Success criteria defined per task type (30%)", criteria + "%"],
+        ["Tool-use traces reviewed, not just final answers (25%)", traces + "%"],
+        ["Failure taxonomy routes each miss to a fix (20%)", taxonomy + "%"],
+        ["Sandboxed evaluation with representative tasks (15%)", sandbox + "%"],
+        ["Regression when tools, prompts or models change (10%)", regression + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define success criteria per task type, review tool-use traces rather than only final answers, route each failure through a taxonomy to a fix, evaluate in a sandbox with representative tasks and tools, and re-run regression when tools, prompts or models change."
+          : "Readiness is trending well — grow the task set from real failures, check that a lucky run cannot pass without the right steps, and keep the evaluation current as tools change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
