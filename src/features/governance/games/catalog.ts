@@ -423,4 +423,12 @@ export const GOVERNANCE_GAMES = [
       "Practice data lineage and metadata, ground-truth auditing, data health monitoring in production, and documented remediation of bad datasets.",
     anchor: "data-quality-integrity-assurance",
   },
+  {
+    id: "safety-misuse-assurance",
+    title: "AI safety & misuse prevention assurance",
+    category: "Safety & misuse prevention",
+    description:
+      "Practice adversarial and misuse testing, capability-gated safeguards, misuse monitoring and response, and documented safety incident review and closure.",
+    anchor: "safety-misuse-assurance",
+  },
 ] as const;
