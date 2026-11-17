@@ -4465,6 +4465,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "consent-withdrawal",
+    name: "AI consent withdrawal propagation readiness",
+    desc: "Estimate readiness for making a consent withdrawal actually take effect: an inventory of where consent-derived data lives, including derived artifacts such as embeddings, caches, fine-tunes, agent memory and evaluation sets, propagation and removal within a stated window, downstream processors notified with confirmation, per-withdrawal evidence, and a consent state that is checked before data is reused.",
+    inputs: [
+      {
+        k: "inventory",
+        label: "Consent-derived data mapped, including derived artifacts",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "propagation",
+        label: "Withdrawal propagated & removed within a stated window",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "downstream",
+        label: "Downstream processors notified & confirming",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Per-withdrawal evidence recorded & retrievable",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reuse",
+        label: "Consent state checked before data is reused",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
