@@ -463,4 +463,12 @@ export const GOVERNANCE_GAMES = [
       "Practice owned review calendars, evidence freshness after system change, authoritative evidence registers, and escalating overdue assurance items before audit.",
     anchor: "assurance-cadence",
   },
+  {
+    id: "risk-appetite-assurance",
+    title: "AI risk appetite & tolerance assurance",
+    category: "Risk appetite & acceptance",
+    description:
+      "Practice setting appetite before approval, routing tolerance breaches to named owners with defined responses, reviewing appetite against the live portfolio, and recording risk acceptance.",
+    anchor: "risk-appetite-assurance",
+  },
 ] as const;
