@@ -201,6 +201,10 @@ import {
   DATA_QUALITY_INTEGRITY_ASSURANCE_ROUNDS,
   dataQualityIntegrityAssuranceScore,
 } from "./data-quality-integrity-assurance-game";
+import {
+  SAFETY_MISUSE_ASSURANCE_ROUNDS,
+  safetyMisuseAssuranceScore,
+} from "./safety-misuse-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -263,6 +267,7 @@ export function ChecklistScreen() {
   const [usabilityAnswers, setUsabilityAnswers] = useState<Record<string, number>>({});
   const [documentationAnswers, setDocumentationAnswers] = useState<Record<string, number>>({});
   const [dataQualityAnswers, setDataQualityAnswers] = useState<Record<string, number>>({});
+  const [misuseAnswers, setMisuseAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -320,6 +325,7 @@ export function ChecklistScreen() {
   const usabilityGame = humanFactorsUsabilityAssuranceScore(usabilityAnswers);
   const documentationGame = modelDocumentationTransparencyScore(documentationAnswers);
   const dataQualityGame = dataQualityIntegrityAssuranceScore(dataQualityAnswers);
+  const misuseGame = safetyMisuseAssuranceScore(misuseAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3160,6 +3166,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good data quality & integrity assurance choice."
                           : "Review the data quality gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="safety-misuse-assurance"
+        className="checklist-phase"
+        aria-label="AI safety and misuse prevention assurance game"
+      >
+        <h2>AI safety & misuse prevention assurance</h2>
+        <p>
+          Practice adversarial and misuse testing, capability-gated safeguards, misuse monitoring
+          and response, and documented safety incident review and closure. Scenarios are learning
+          prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {misuseGame.correct}/{misuseGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {misuseGame.complete && (
+            <Button variant="outline" onClick={() => setMisuseAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SAFETY_MISUSE_ASSURANCE_ROUNDS.map((round) => {
+            const selected = misuseAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setMisuseAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good safety & misuse prevention assurance choice."
+                          : "Review the safety assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
