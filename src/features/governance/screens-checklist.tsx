@@ -292,6 +292,7 @@ import {
 import { WORKER_MONITORING_ROUNDS, workerMonitoringScore } from "./worker-monitoring-game";
 import { RESEARCH_ETHICS_ROUNDS, researchEthicsScore } from "./research-ethics-game";
 import { SPEAK_UP_ROUNDS, speakUpScore } from "./speak-up-game";
+import { HIRING_SCREENING_ROUNDS, hiringScreeningScore } from "./hiring-screening-game";
 
 const statusText = {
   complete: "Complete",
@@ -430,6 +431,7 @@ export function ChecklistScreen() {
   const [workerMonitoringAnswers, setWorkerMonitoringAnswers] = useState<Record<string, number>>({});
   const [researchEthicsAnswers, setResearchEthicsAnswers] = useState<Record<string, number>>({});
   const [speakUpAnswers, setSpeakUpAnswers] = useState<Record<string, number>>({});
+  const [hiringScreeningAnswers, setHiringScreeningAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -541,6 +543,7 @@ export function ChecklistScreen() {
   const workerMonitoringGame = workerMonitoringScore(workerMonitoringAnswers);
   const researchEthicsGame = researchEthicsScore(researchEthicsAnswers);
   const speakUpGame = speakUpScore(speakUpAnswers);
+  const hiringScreeningGame = hiringScreeningScore(hiringScreeningAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6755,6 +6758,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good speak-up choice."
                           : "Review the reporting gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="hiring-screening-assurance"
+        className="checklist-phase"
+        aria-label="AI hiring and candidate screening game"
+      >
+        <h2>AI hiring &amp; candidate screening</h2>
+        <p>
+          Practice measuring adverse impact on your own pipeline instead of trusting a vendor fairness
+          claim, putting a human in front of every rejection, disclosing AI assessment to candidates,
+          offering a genuine accessible alternative, and retaining records that explain a decision.
+          Scenarios are learning prompts, not compliance or employment-law determinations.
+        </p>
+        <p>
+          <strong>
+            {hiringScreeningGame.correct}/{hiringScreeningGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {hiringScreeningGame.complete && (
+            <Button variant="outline" onClick={() => setHiringScreeningAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {HIRING_SCREENING_ROUNDS.map((round) => {
+            const selected = hiringScreeningAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setHiringScreeningAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good screening choice."
+                          : "Review the screening gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

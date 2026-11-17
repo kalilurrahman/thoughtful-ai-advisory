@@ -855,4 +855,12 @@ export const GOVERNANCE_GAMES = [
       "Practice offering routes outside the line, treating adverse treatment after a concern as retaliation risk, triaging concerns with an owner and a clock, giving reporters an outcome, and escalating repeat themes into governance.",
     anchor: "speak-up-assurance",
   },
+  {
+    id: "hiring-screening-assurance",
+    title: "AI hiring & candidate screening assurance",
+    category: "People & workforce",
+    description:
+      "Practice measuring adverse impact on your own pipeline instead of trusting a vendor fairness claim, putting a human in front of every rejection, disclosing AI assessment to candidates, offering a genuine accessible alternative, and retaining records that explain a decision.",
+    anchor: "hiring-screening-assurance",
+  },
 ] as const;
