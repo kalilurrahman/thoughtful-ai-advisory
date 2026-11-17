@@ -4673,6 +4673,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "regulatory-horizon",
+    name: "AI regulatory horizon scanning readiness",
+    desc: "Estimate readiness for noticing AI rule changes before they bite: defined sources and a scanning cadence rather than ad hoc reading, each change triaged for relevance against the system inventory, affected systems, owners and deadlines assigned, controls, policies and contracts updated before the deadline, and decisions recorded including a reasoned no-action.",
+    inputs: [
+      {
+        k: "sources",
+        label: "Defined sources & scanning cadence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "triage",
+        label: "Changes triaged against the system inventory",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "impact",
+        label: "Affected systems, owners & deadlines assigned",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "action",
+        label: "Controls, policies & contracts updated before deadline",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "record",
+        label: "Decisions recorded, including reasoned no-action",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

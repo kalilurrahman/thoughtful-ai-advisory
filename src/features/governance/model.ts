@@ -2215,6 +2215,34 @@ export function calculate(
           : "Readiness is trending well — keep the assurance plan risk-based as systems change, protect the reporting line when findings are uncomfortable, and check that reliance on supplier evidence is still justified.",
     };
   }
+  if (id === "regulatory-horizon") {
+    const sources = v["sources"] ?? 0,
+      triage = v["triage"] ?? 0,
+      impact = v["impact"] ?? 0,
+      action = v["action"] ?? 0,
+      record = v["record"] ?? 0,
+      score = Math.round(
+        sources * 0.2 + triage * 0.25 + impact * 0.2 + action * 0.2 + record * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI regulatory horizon scanning readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Defined sources & scanning cadence (20%)", sources + "%"],
+        ["Changes triaged against the system inventory (25%)", triage + "%"],
+        ["Affected systems, owners & deadlines assigned (20%)", impact + "%"],
+        ["Controls, policies & contracts updated before deadline (20%)", action + "%"],
+        ["Decisions recorded, including reasoned no-action (15%)", record + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define sources and a scanning cadence, triage each change against the system inventory, assign affected systems, owners and deadlines, update controls, policies and contracts before the deadline, and record decisions including a reasoned no-action."
+          : "Readiness is trending well — check the scan still covers the jurisdictions you operate in, confirm deadlines are met rather than tracked, and revisit earlier no-action calls when a system changes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
