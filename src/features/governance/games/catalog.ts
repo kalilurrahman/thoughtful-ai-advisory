@@ -639,4 +639,12 @@ export const GOVERNANCE_GAMES = [
       "Practice registering what an agent remembers, deleting memories across every store, testing isolation between users and tenants, and validating what can be written to memory before it becomes an instruction.",
     anchor: "agent-memory-assurance",
   },
+  {
+    id: "incentive-alignment-assurance",
+    title: "AI incentive alignment assurance",
+    category: "Governance operating model",
+    description:
+      "Practice spotting where targets reward bypassing a guardrail, pairing throughput measures with quality and safety, protecting people who flag pressure, and making cost-versus-quality trade-offs explicit.",
+    anchor: "incentive-alignment-assurance",
+  },
 ] as const;

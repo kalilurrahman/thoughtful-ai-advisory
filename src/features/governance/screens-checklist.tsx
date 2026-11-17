@@ -259,6 +259,7 @@ import { MODEL_SELECTION_ROUNDS, modelSelectionScore } from "./model-selection-g
 import { ENV_IMPACT_ROUNDS, envImpactScore } from "./env-impact-game";
 import { TABLETOP_ROUNDS, tabletopScore } from "./tabletop-game";
 import { AGENT_MEMORY_ROUNDS, agentMemoryScore } from "./agent-memory-game";
+import { INCENTIVE_ROUNDS, incentiveAlignmentScore } from "./incentive-alignment-game";
 
 const statusText = {
   complete: "Complete",
@@ -350,6 +351,7 @@ export function ChecklistScreen() {
     Record<string, number>
   >({});
   const [agentMemoryAnswers, setAgentMemoryAnswers] = useState<Record<string, number>>({});
+  const [incentiveAnswers, setIncentiveAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -434,6 +436,7 @@ export function ChecklistScreen() {
   const envImpactGame = envImpactScore(envImpactAnswers);
   const assuranceTabletopGame = tabletopScore(assuranceTabletopAnswers);
   const agentMemoryGame = agentMemoryScore(agentMemoryAnswers);
+  const incentiveGame = incentiveAlignmentScore(incentiveAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -4951,6 +4954,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good agent memory choice."
                           : "Review the agent memory gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="incentive-alignment-assurance"
+        className="checklist-phase"
+        aria-label="AI incentive alignment assurance game"
+      >
+        <h2>AI incentive alignment assurance</h2>
+        <p>
+          Practice spotting where targets reward bypassing a guardrail, pairing throughput measures
+          with quality and safety, protecting people who flag pressure, and making cost-versus-quality
+          trade-offs explicit. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {incentiveGame.correct}/{incentiveGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {incentiveGame.complete && (
+            <Button variant="outline" onClick={() => setIncentiveAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {INCENTIVE_ROUNDS.map((round) => {
+            const selected = incentiveAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setIncentiveAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good incentive alignment choice."
+                          : "Review the incentive conflict."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
