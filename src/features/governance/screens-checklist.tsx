@@ -197,6 +197,10 @@ import {
   MODEL_DOCUMENTATION_TRANSPARENCY_ROUNDS,
   modelDocumentationTransparencyScore,
 } from "./model-documentation-transparency-game";
+import {
+  DATA_QUALITY_INTEGRITY_ASSURANCE_ROUNDS,
+  dataQualityIntegrityAssuranceScore,
+} from "./data-quality-integrity-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -258,6 +262,7 @@ export function ChecklistScreen() {
   const [driftAnswers, setDriftAnswers] = useState<Record<string, number>>({});
   const [usabilityAnswers, setUsabilityAnswers] = useState<Record<string, number>>({});
   const [documentationAnswers, setDocumentationAnswers] = useState<Record<string, number>>({});
+  const [dataQualityAnswers, setDataQualityAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -314,6 +319,7 @@ export function ChecklistScreen() {
   const driftGame = performanceDriftAssuranceScore(driftAnswers);
   const usabilityGame = humanFactorsUsabilityAssuranceScore(usabilityAnswers);
   const documentationGame = modelDocumentationTransparencyScore(documentationAnswers);
+  const dataQualityGame = dataQualityIntegrityAssuranceScore(dataQualityAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3092,6 +3098,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good documentation & transparency assurance choice."
                           : "Review the documentation gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="data-quality-integrity-assurance"
+        className="checklist-phase"
+        aria-label="Data quality and integrity assurance game"
+      >
+        <h2>Data quality & integrity assurance</h2>
+        <p>
+          Practice data lineage and metadata, ground-truth auditing, data health monitoring in
+          production, and documented remediation of bad datasets. Scenarios are learning prompts, not
+          compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {dataQualityGame.correct}/{dataQualityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {dataQualityGame.complete && (
+            <Button variant="outline" onClick={() => setDataQualityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {DATA_QUALITY_INTEGRITY_ASSURANCE_ROUNDS.map((round) => {
+            const selected = dataQualityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setDataQualityAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good data quality & integrity assurance choice."
+                          : "Review the data quality gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
