@@ -735,4 +735,12 @@ export const GOVERNANCE_GAMES = [
       "Practice verifying where each call path processes data, documenting support-access locations and transfer bases, tracking subprocessor and region changes, asking for evidence covering backups and replicas, and stopping undocumented transfers.",
     anchor: "data-residency-assurance",
   },
+  {
+    id: "agent-evaluation-assurance",
+    title: "AI agent evaluation assurance",
+    category: "Agentic AI",
+    description:
+      "Practice reviewing tool-use traces rather than final answers, defining success criteria per task type, routing repeated failures through a taxonomy, evaluating with representative tools and errors, and re-running regression when tools, prompts or models change.",
+    anchor: "agent-evaluation-assurance",
+  },
 ] as const;
