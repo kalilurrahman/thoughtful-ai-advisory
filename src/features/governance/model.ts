@@ -1007,6 +1007,30 @@ export function calculate(
           : "Readiness is trending well — keep values applied to decisions, ethics deliberation, stakeholder input, and finding closure current as use cases and expectations change.",
     };
   }
+  if (id === "transparency-disclosure") {
+    const notice = v["notice"] ?? 0,
+      limits = v["limits"] ?? 0,
+      appeal = v["appeal"] ?? 0,
+      record = v["record"] ?? 0,
+      score = Math.round(notice * 0.3 + limits * 0.25 + appeal * 0.25 + record * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI transparency & user disclosure readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Clear notice that AI is in use (30%)", notice + "%"],
+        ["Purpose, limits & failure modes disclosed (25%)", limits + "%"],
+        ["Question, appeal & human-contact routes (25%)", appeal + "%"],
+        ["Disclosure decisions recorded across channels (20%)", record + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: tell users when AI is in use, disclose purpose, limits and known failure modes, publish question, appeal and human-contact routes, and record disclosure decisions across channels and languages."
+          : "Readiness is trending well — keep AI-in-use notices, limit disclosures, appeal routes and channel coverage current as features and audiences change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
