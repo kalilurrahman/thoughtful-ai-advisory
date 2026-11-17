@@ -4153,6 +4153,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "data-residency",
+    name: "AI data residency & sovereignty readiness",
+    desc: "Estimate readiness for keeping AI data where it is required to be: inference and storage regions pinned per system and recorded, subprocessor and support-access locations known rather than assumed, a transfer basis documented wherever data crosses a border, provider evidence that region controls are enforced rather than merely selected, and notice when regions or subprocessors change.",
+    inputs: [
+      {
+        k: "pinning",
+        label: "Inference & storage regions pinned and recorded per system",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "subprocessors",
+        label: "Subprocessor & support-access locations known",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "transfer",
+        label: "Transfer basis documented where data crosses borders",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Provider evidence that region controls are enforced",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "change",
+        label: "Notice when regions or subprocessors change",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

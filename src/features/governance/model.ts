@@ -1935,6 +1935,34 @@ export function calculate(
           : "Readiness is trending well — check that hotfixes still go through review, that the regression set grows with each incident, and that rollback is exercised rather than assumed.",
     };
   }
+  if (id === "data-residency") {
+    const pinning = v["pinning"] ?? 0,
+      subprocessors = v["subprocessors"] ?? 0,
+      transfer = v["transfer"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      change = v["change"] ?? 0,
+      score = Math.round(
+        pinning * 0.3 + subprocessors * 0.25 + transfer * 0.2 + evidence * 0.15 + change * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI data residency & sovereignty readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Inference & storage regions pinned and recorded per system (30%)", pinning + "%"],
+        ["Subprocessor & support-access locations known (25%)", subprocessors + "%"],
+        ["Transfer basis documented where data crosses borders (20%)", transfer + "%"],
+        ["Provider evidence that region controls are enforced (15%)", evidence + "%"],
+        ["Notice when regions or subprocessors change (10%)", change + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: pin and record inference and storage regions per system, establish where subprocessors and support staff can access data, document the transfer basis where data crosses borders, ask the provider for evidence that region controls are enforced, and track notices when regions or subprocessors change."
+          : "Readiness is trending well — re-check region settings after each provider release, confirm support-access assumptions still hold, and test that a region change would reach you before your data moves.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
