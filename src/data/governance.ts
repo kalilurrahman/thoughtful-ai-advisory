@@ -3687,6 +3687,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "provider-terms-watch",
+    name: "AI provider terms change readiness",
+    desc: "Estimate readiness for catching provider changes that quietly alter your assurance assumptions: a register of the terms, data-processing agreements, subprocessors and model cards you rely on with an owner, notice channels actually monitored, changes assessed against your assurance case before adoption, and a tested fallback if terms become unacceptable.",
+    inputs: [
+      {
+        k: "register",
+        label: "Terms, DPAs, subprocessors & model cards registered",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "monitoring",
+        label: "Notice channels monitored (status, changelog, legal)",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "impactreview",
+        label: "Changes assessed against the assurance case",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "fallback",
+        label: "Tested fallback if terms become unacceptable",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
