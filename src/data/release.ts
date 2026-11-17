@@ -6,11 +6,11 @@
 
 export const RELEASE = {
   /** Semantic version of the deployed release. */
-  version: "2.0.0",
+  version: "2.1.0",
   /** The release's name: the design system it shipped. */
   name: "Assurance",
   /** Date the release reached the live site (ISO, editorial). */
-  date: "2026-11-14",
+  date: "2026-11-17",
 } as const;
 
 /** "v2.0.0 · Assurance" for footers and metadata lines. */

@@ -21,7 +21,7 @@
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
 | [E14](#e14--administration-and-privacy-first-analytics) | Administration and privacy-first analytics | Administration and analytics | Live | 2 | 2 | 0 | 0 |
 | [E15](#e15--installable-app-search-and-reading-experience) | Installable app, search and reading experience | Installable app | Live | 9 | 9 | 0 | 0 |
-| [E16](#e16--planned-capabilities) | Planned capabilities | Free interactive tools | Planned | 4 | 0 | 0 | 4 |
+| [E16](#e16--planned-capabilities) | Planned capabilities | Free interactive tools | Partial | 4 | 2 | 0 | 2 |
 
 ## E01 — Public website and governed content
 
@@ -1016,9 +1016,9 @@ Acceptance criteria:
 
 ## E16 — Planned capabilities
 
-**Goal:** Capabilities announced or designed but not yet built.
+**Goal:** Capabilities announced or designed after launch; the two checkers shipped in v2.1.0, the rest remain planned.
 
-**Area:** Free interactive tools · **Status:** Planned
+**Area:** Free interactive tools · **Status:** Partial
 
 **Capabilities:** CAP-014 Agentic AI risk checker, CAP-015 EU AI Act readiness checker
 
@@ -1026,25 +1026,37 @@ Acceptance criteria:
 
 **As a CISO / security architect**, I want an agentic AI risk checker, so that I can assess tool inventory, least privilege, high-impact actions, injection, containment, limits and logging for an agent.
 
-*Status: Planned*
+*Status: Done*
 
 Acceptance criteria:
 
-- Given the page today, when visited, then it describes the intended checks and offers a waitlist form.
+- Given the agent's autonomy, external reach, untrusted input and tools, when I answer the seven areas, then I get an indicative posture (ready for supervised operation, needs controls, or not ready for autonomous operation), per-area evidence labels and next actions citing controls.
+- Given an agent that acts autonomously, externally or with write-capable tools, when approvals, containment or least privilege is answered No, then that area is a critical gap and the posture is not ready for autonomous operation.
+- Given any result, when shown, then it is labelled Inferred and requires reviewer confirmation; nothing is stored.
 
-**Routes:** `/tools/agentic-risk-checker` · **Capabilities:** CAP-014 · **Tests:** none yet
+**Routes:** `/tools/agentic-risk-checker` · **Capabilities:** CAP-014 · **Tests:** `site-agentic-risk.test.ts`
+
+Known gaps:
+
+- No UI test for the checker form.
 
 ### S16.2
 
 **As a Chief Risk / Compliance Officer**, I want an EU AI Act readiness checker, so that I can screen my role and obligation areas without a legal determination.
 
-*Status: Planned*
+*Status: Done*
 
 Acceptance criteria:
 
-- Given the page today, when visited, then it describes role screening and obligation areas and offers a waitlist form.
+- Given my role, EU exposure, domain, decision impact and transparency facts, when I answer the obligation areas, then each is shown as applicable, applicable via my provider, voluntary on these facts or not triggered, with an evidence label and controls.
+- Given a purpose that matches a prohibited-practice screen, when checked, then legal review is the first next step (AO-10).
+- Given any result, when shown, then it states it is not a legal classification or compliance determination; nothing is stored.
 
-**Routes:** `/tools/eu-ai-act-readiness-checker` · **Capabilities:** CAP-015 · **Tests:** none yet
+**Routes:** `/tools/eu-ai-act-readiness-checker` · **Capabilities:** CAP-015 · **Tests:** `site-eu-ai-act-readiness.test.ts`
+
+Known gaps:
+
+- No UI test for the checker form.
 
 ### S16.3
 
@@ -1100,3 +1112,5 @@ Every gap recorded against a story, in one list for planning.
 | [S12.5](#s125) | E12 | Approvers cannot yet record approvals |
 | [S12.5](#s125) | E12 | because the workspace saves as one snapshot. |
 | [S13.1](#s131) | E13 | Synthetic data only; approvals have no external effect. |
+| [S16.1](#s161) | E16 | No UI test for the checker form. |
+| [S16.2](#s162) | E16 | No UI test for the checker form. |

@@ -822,25 +822,33 @@ epics:
   - id: E16
     title: Planned capabilities
     area: tools
-    goal: Capabilities announced or designed but not yet built.
-    status: planned
+    goal: Capabilities announced or designed after launch; the two checkers shipped in v2.1.0, the rest remain planned.
+    status: partial
     stories:
       - id: S16.1
         persona: ciso
         want: an agentic AI risk checker
         so_that: I can assess tool inventory, least privilege, high-impact actions, injection, containment, limits and logging for an agent
-        status: planned
+        status: done
         acceptance:
-          - Given the page today, when visited, then it describes the intended checks and offers a waitlist form.
+          - Given the agent's autonomy, external reach, untrusted input and tools, when I answer the seven areas, then I get an indicative posture (ready for supervised operation, needs controls, or not ready for autonomous operation), per-area evidence labels and next actions citing controls.
+          - Given an agent that acts autonomously, externally or with write-capable tools, when approvals, containment or least privilege is answered No, then that area is a critical gap and the posture is not ready for autonomous operation.
+          - Given any result, when shown, then it is labelled Inferred and requires reviewer confirmation; nothing is stored.
         routes: [/tools/agentic-risk-checker]
+        tests: [site-agentic-risk.test.ts]
+        gaps: [No UI test for the checker form.]
       - id: S16.2
         persona: cro
         want: an EU AI Act readiness checker
         so_that: I can screen my role and obligation areas without a legal determination
-        status: planned
+        status: done
         acceptance:
-          - Given the page today, when visited, then it describes role screening and obligation areas and offers a waitlist form.
+          - Given my role, EU exposure, domain, decision impact and transparency facts, when I answer the obligation areas, then each is shown as applicable, applicable via my provider, voluntary on these facts or not triggered, with an evidence label and controls.
+          - Given a purpose that matches a prohibited-practice screen, when checked, then legal review is the first next step (AO-10).
+          - Given any result, when shown, then it states it is not a legal classification or compliance determination; nothing is stored.
         routes: [/tools/eu-ai-act-readiness-checker]
+        tests: [site-eu-ai-act-readiness.test.ts]
+        gaps: [No UI test for the checker form.]
       - id: S16.3
         persona: gov-lead
         want: real evidence upload, several workspaces and team roles
@@ -1142,8 +1150,8 @@ capabilities:
   - {id: CAP-011, name: Risk triage, area: tools, route: /tools/risk-triage, status: live, data: none, epic: E03, personas: [owner], source: [src/features/site/tools/risk-triage.tsx, src/features/site/engines/risk-tier.ts], tests: [site-risk-tier.test.ts], summary: "Suggested tier (Prohibited-review, High, Medium, Low) with factors, triggers and review path; Inferred."}
   - {id: CAP-012, name: Guardrail generator, area: tools, route: /tools/guardrail-generator, status: live, data: none, epic: E03, personas: [ciso, engineer], source: [src/features/site/tools/guardrail-generator.tsx, src/features/site/engines/shield], tests: [site-shield.test.ts], summary: "Risk rating, tool permission matrix and draft veritrail.policy/v1 in Observe mode."}
   - {id: CAP-013, name: Ask VERITRAIL, area: tools, route: /tools/ask-veritrail, status: live, data: memory, epic: E03, personas: [visitor, consultant], source: [src/features/site/tools/ask-veritrail.tsx, src/features/site/engines/ask-veritrail], tests: [site-ask-veritrail.test.ts], summary: "Deterministic, cited answers from the governed content with safety refusals; no AI model or network."}
-  - {id: CAP-014, name: Agentic AI risk checker, area: tools, route: /tools/agentic-risk-checker, status: planned, data: none, epic: E16, personas: [ciso], source: [platform/content/website_pages/tools-agentic-risk-checker.md], tests: [], summary: "Planned; waitlist form only."}
-  - {id: CAP-015, name: EU AI Act readiness checker, area: tools, route: /tools/eu-ai-act-readiness-checker, status: planned, data: none, epic: E16, personas: [cro], source: [platform/content/website_pages/tools-eu-ai-act-readiness-checker.md], tests: [], summary: "Planned; waitlist form only."}
+  - {id: CAP-014, name: Agentic AI risk checker, area: tools, route: /tools/agentic-risk-checker, status: live, data: none, epic: E16, personas: [ciso, engineer], source: [src/features/site/tools/agentic-risk-checker.tsx, src/features/site/engines/agentic-risk.ts, platform/content/website_pages/tools-agentic-risk-checker.md], tests: [site-agentic-risk.test.ts], summary: "Seven-area review of one agent (inventory, least privilege, approvals, injection, containment, limits, logging); critical areas follow the agent's exposure; indicative posture with next actions."}
+  - {id: CAP-015, name: EU AI Act readiness checker, area: tools, route: /tools/eu-ai-act-readiness-checker, status: live, data: none, epic: E16, personas: [cro, gov-lead], source: [src/features/site/tools/eu-ai-act-readiness-checker.tsx, src/features/site/engines/eu-ai-act-readiness.ts, platform/content/website_pages/tools-eu-ai-act-readiness-checker.md], tests: [site-eu-ai-act-readiness.test.ts], summary: "Role-aware readiness by obligation area (Art. 4, 9–15, 26, 50, 72–73) with prohibited-practice and Annex III-like screens; indicative view, not a classification."}
 
   # ---------------------------------------------------------------- leads
   - {id: CAP-020, name: Lead forms, area: leads, route: /contact, status: live, data: server, epic: E04, personas: [visitor], source: [src/features/site/forms.tsx, src/features/site/leads.functions.ts, src/features/site/lead-intake.ts], tests: [platform-misc-parity.test.ts, rate-limit.test.ts, site-analytics-events.test.tsx, server-logic.test.ts], summary: "Baseline, demo, contact, newsletter, blueprint, design partner, waitlist and assessment forms into site_leads (RLS); per-client rate limit; business-email gate; honeypot; optional CRM push."}

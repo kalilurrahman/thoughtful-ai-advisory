@@ -48,6 +48,11 @@ const TOOL_META: Record<string, { anchor: string; jump: string }> = {
   "guardrail-generator": { anchor: "guardrail-generator", jump: "Go to the tool" },
   "ask-veritrail": { anchor: "ask-veritrail", jump: "Go to the tool" },
   "risk-triage": { anchor: "risk-triage", jump: "Go to the tool" },
+  "agentic-risk-checker": { anchor: "agentic-risk-checker", jump: "Check an agent" },
+  "eu-ai-act-readiness-checker": {
+    anchor: "eu-ai-act-readiness-checker",
+    jump: "Start the readiness check",
+  },
 };
 
 export function PageHeader({
@@ -549,8 +554,7 @@ const OG_DEFAULT = "/og-default.png";
  * VITE_SITE_URL for a custom domain; the default matches scripts/generate-sitemap.mjs.
  */
 export const SITE_ORIGIN = (
-  (import.meta.env["VITE_SITE_URL"] as string | undefined) ??
-  "https://veritrail.kalilurrahman.com"
+  (import.meta.env["VITE_SITE_URL"] as string | undefined) ?? "https://veritrail.kalilurrahman.com"
 ).replace(/\/+$/, "");
 /** Sections with their own link-preview image in public/og/ (scripts/generate-social-images.mjs). */
 export const OG_SECTIONS = new Set<string>([

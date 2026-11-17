@@ -543,8 +543,8 @@
 | CAP-011 Risk triage | Live | UC03 |
 | CAP-012 Guardrail generator | Live | UC04 |
 | CAP-013 Ask VERITRAIL | Live | UC05 |
-| CAP-014 Agentic AI risk checker | Planned | — |
-| CAP-015 EU AI Act readiness checker | Planned | — |
+| CAP-014 Agentic AI risk checker | Live | — |
+| CAP-015 EU AI Act readiness checker | Live | — |
 | CAP-020 Lead forms | Live | UC02, UC06 |
 | CAP-030 Governance overview | Live | UC09 |
 | CAP-031 TILLER assessment | Live | UC09 |

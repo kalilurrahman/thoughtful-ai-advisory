@@ -17,7 +17,7 @@ faq:
     a: "The Regulation applies in stages. Regulation (EU) 2026/1744 (the Digital Omnibus), in force from 27 July 2026, moved stand-alone Annex III high-risk obligations to 2 December 2027 and Annex I product-embedded systems to 2 August 2028. Verify all dates against the current EUR-Lex text before relying on them."
   - q: "We only use AI built by vendors. Does the Act affect us?"
     a: "Possibly. Deployers of high-risk AI systems have their own obligations, and some deployers can take on provider obligations — for example by substantially modifying a system. Your legal team should assess your role for each system."
-updated: 2026-10-21
+updated: 2026-11-17
 ---
 
 {{disclaimer}}
@@ -85,6 +85,6 @@ The mapping below uses the article references in VERITRAIL Control Library v1.0.
 4. **Assess and close gaps** against the obligation areas relevant to your role, using the [gap-analysis method](/compliance/gap-analysis/).
 5. **Operate and evidence.** Logging, oversight, monitoring, incident handling and documentation, maintained continuously.
 
-The self-assessment produces indicative EU AI Act readiness indicators for selected themes (Art. 4, 9, 10, 11–12, 13 and 50, 14, 15, 72–73). The [EU AI Act readiness checker](/tools/eu-ai-act-readiness-checker/), which will go deeper by role, is planned.
+The self-assessment produces indicative EU AI Act readiness indicators for selected themes (Art. 4, 9, 10, 11–12, 13 and 50, 14, 15, 72–73). The [EU AI Act readiness checker](/tools/eu-ai-act-readiness-checker/) goes deeper by role and obligation area.
 
 {{cta:baseline}}

@@ -6702,7 +6702,7 @@
       }
     },
     "website": {
-      "summary": "pages=57 total_words=31443 min=143 max=1335",
+      "summary": "pages=57 total_words=31602 min=143 max=1335",
       "rows": [
         {
           "name": "about.md",
@@ -6717,7 +6717,7 @@
           "slug": "/compliance/eu-ai-act/",
           "section": "compliance",
           "template": "page",
-          "words": 984,
+          "words": 983,
           "faq": 3
         },
         {
@@ -7109,7 +7109,7 @@
           "slug": "/tools/agentic-risk-checker/",
           "section": "tools",
           "template": "tool",
-          "words": 207,
+          "words": 333,
           "faq": 0
         },
         {
@@ -7125,7 +7125,7 @@
           "slug": "/tools/eu-ai-act-readiness-checker/",
           "section": "tools",
           "template": "tool",
-          "words": 246,
+          "words": 256,
           "faq": 0
         },
         {
@@ -7157,7 +7157,7 @@
           "slug": "/tools/",
           "section": "tools",
           "template": "page",
-          "words": 322,
+          "words": 346,
           "faq": 0
         }
       ],

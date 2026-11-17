@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block main %}
 {% include "partials/page_header.html" %}
-{% set tool_anchor = {'maturity-assessment': 'assessment', 'guardrail-generator': 'guardrail-generator', 'ask-veritrail': 'ask-veritrail', 'risk-triage': 'risk-triage', 'waitlist': 'form-heading'}[page.tool] %}
+{% set tool_anchor = {'maturity-assessment': 'assessment', 'guardrail-generator': 'guardrail-generator', 'ask-veritrail': 'ask-veritrail', 'risk-triage': 'risk-triage', 'agentic-risk-checker': 'agentic-risk-checker', 'eu-ai-act-readiness-checker': 'eu-ai-act-readiness-checker', 'waitlist': 'form-heading'}[page.tool] %}
 <div class="container page-body">
   {% if body %}<p class="tool-jump"><a class="btn btn-primary" href="#{{ tool_anchor }}" data-cta="tool_jump_{{ page.tool }}">{{ 'Start the assessment' if page.tool == 'maturity-assessment' else ('Join the waitlist' if page.tool == 'waitlist' else 'Go to the tool') }}</a></p>{% endif %}
   {% if body %}<div class="prose tool-intro">{{ body }}</div>{% endif %}
@@ -12,6 +12,13 @@
   {% elif page.tool == 'guardrail-generator' %}{% include "partials/tool_guardrail.html" %}
   {% elif page.tool == 'ask-veritrail' %}{% include "partials/tool_ask.html" %}
   {% elif page.tool == 'risk-triage' %}{% include "partials/tool_risk.html" %}
+  {% elif page.tool in ('agentic-risk-checker', 'eu-ai-act-readiness-checker') %}
+  {# The interactive checkers are browser tools of the web app (src/features/site/tools); the static site links to them. #}
+  <section class="tool" id="{{ page.tool }}" data-tool="{{ page.tool }}" aria-labelledby="{{ page.tool }}-heading">
+    <h2 id="{{ page.tool }}-heading">Open the interactive checker</h2>
+    <div class="notice notice--info"><p>This checker runs in the browser on the VERITRAIL web app. Nothing you enter is stored.</p>
+    <p><a class="btn btn-primary" href="{{ site.site_url }}{{ page.slug }}" data-cta="tool_open_{{ page.tool }}">Open the checker</a></p></div>
+  </section>
   {% elif page.tool == 'waitlist' %}
   <section class="form-panel" aria-labelledby="form-heading">
     <h2 id="form-heading">Join the waitlist</h2>
