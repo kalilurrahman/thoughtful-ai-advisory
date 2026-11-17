@@ -751,4 +751,12 @@ export const GOVERNANCE_GAMES = [
       "Practice marking at generation and testing every export path, verifying marks survive format and channel changes, adding visible disclosure where a mark cannot travel, detecting stripped or unlabeled content on ingest, and keeping a register of channels where labelling is required.",
     anchor: "content-provenance-assurance",
   },
+  {
+    id: "test-isolation-assurance",
+    title: "AI test & sandbox isolation assurance",
+    category: "Access & identity",
+    description:
+      "Practice keeping production personal data out of test environments, using isolated model endpoints and keys, removing production write access from test credentials, controlling egress to public tools, and expiring environments with a recorded owner for extensions.",
+    anchor: "test-isolation-assurance",
+  },
 ] as const;
