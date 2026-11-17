@@ -1391,6 +1391,30 @@ export function calculate(
           : "Readiness is trending well — watch provider deprecation notices, re-test on every model change, and keep fallback and re-approval records current.",
     };
   }
+  if (id === "board-oversight") {
+    const attention = v["attention"] ?? 0,
+      reporting = v["reporting"] ?? 0,
+      challenge = v["challenge"] ?? 0,
+      decisions = v["decisions"] ?? 0,
+      score = Math.round(attention * 0.3 + reporting * 0.3 + challenge * 0.2 + decisions * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI board & executive oversight readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Scheduled board attention with executive owner (30%)", attention + "%"],
+        ["Board reporting includes risk, incidents & failures (30%)", reporting + "%"],
+        ["Challenge & dissent recorded in minutes (20%)", challenge + "%"],
+        ["Executive decisions tracked to completion (20%)", decisions + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: put AI on the board agenda with a named executive owner, report risk, incidents and failures honestly, minute the challenge and dissent, and track executive decisions to completion."
+          : "Readiness is trending well — keep board attention scheduled, reporting candid, challenge minuted, and decisions followed through as the AI portfolio grows.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

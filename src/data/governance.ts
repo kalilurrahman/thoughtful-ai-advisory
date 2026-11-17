@@ -3171,6 +3171,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "board-oversight",
+    name: "AI board & executive oversight readiness",
+    desc: "Estimate readiness for oversight at the top across scheduled board attention to AI with executive ownership, reporting that includes risk, incidents and failures, recorded challenge and dissent in minutes, and executive decisions with follow-through.",
+    inputs: [
+      {
+        k: "attention",
+        label: "Scheduled board attention with executive owner",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reporting",
+        label: "Board reporting includes risk, incidents & failures",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "challenge",
+        label: "Challenge & dissent recorded in minutes",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "decisions",
+        label: "Executive decisions tracked to completion",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
