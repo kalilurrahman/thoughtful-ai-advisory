@@ -871,4 +871,12 @@ export const GOVERNANCE_GAMES = [
       "Practice defining labels with worked examples before work starts, paying for real effort including rework, limiting harmful content with warnings, rotation, support and a penalty-free opt-out, routing annotator disagreement to model owners, and verifying supplier terms by sampling the work.",
     anchor: "annotation-workforce-assurance",
   },
+  {
+    id: "ai-handover-assurance",
+    title: "AI handover & key-person dependency assurance",
+    category: "Operating model",
+    description:
+      "Practice naming a second owner for every AI asset, documenting design rationale and known limits, moving access and vendor contacts to the team, rehearsing a handover and fixing what it exposes, and checking each asset off before a leaver's access is removed.",
+    anchor: "ai-handover-assurance",
+  },
 ] as const;
