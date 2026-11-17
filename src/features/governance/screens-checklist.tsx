@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { WorkspaceVisual } from "./workspace-visual";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle, Circle, MinusCircle } from "@phosphor-icons/react";
 import { EmptyChecklist } from "@/features/site/illustrations-empty";
@@ -359,6 +360,7 @@ export function ChecklistScreen() {
   return (
     <>
       <section className="checklist-intro">
+        <WorkspaceVisual section="checklist" />
         <h2>Governance lifecycle review</h2>
         <p>
           This checklist is derived from the live workspace inventory, governance assessment,

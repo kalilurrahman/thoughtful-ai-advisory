@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { WorkspaceVisual } from "./workspace-visual";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, GameController } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ export function GamesScreen() {
   return (
     <>
       <section className="checklist-intro">
+        <WorkspaceVisual section="games" />
         <h2>AI Governance Games</h2>
         <p>
           Practice governance decisions through short, scenario-based exercises. Scores are
