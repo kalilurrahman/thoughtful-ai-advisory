@@ -4777,6 +4777,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "claims-substantiation",
+    name: "AI public claims & marketing substantiation readiness",
+    desc: "Estimate readiness for the claims made about AI systems outside the building: a register of public claims with an owner and channel, each claim backed by current evidence including test results and stated limits, review and approval before publication including vendor-supplied claims, wording that avoids unqualified superlatives and vague compliance assertions, and a route to correct or withdraw a claim when evidence changes or someone challenges it.",
+    inputs: [
+      {
+        k: "register",
+        label: "Public AI claims registered with owner & channel",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Each claim backed by current evidence & stated limits",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "approval",
+        label: "Reviewed & approved before publication, incl. vendor claims",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "wording",
+        label: "Wording avoids superlatives & vague compliance assertions",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "correction",
+        label: "Route to correct or withdraw a challenged claim",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
