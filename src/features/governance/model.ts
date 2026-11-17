@@ -1079,6 +1079,30 @@ export function calculate(
           : "Readiness is trending well — keep rule versions, change approvals, pre-release tests and rollback parity current so guardrail behaviour cannot change unobserved.",
     };
   }
+  if (id === "assurance-cadence") {
+    const schedule = v["schedule"] ?? 0,
+      testing = v["testing"] ?? 0,
+      freshness = v["freshness"] ?? 0,
+      escalation = v["escalation"] ?? 0,
+      score = Math.round(schedule * 0.3 + testing * 0.3 + freshness * 0.2 + escalation * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Assurance review cadence & evidence refresh readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Scheduled reviews with named owners (30%)", schedule + "%"],
+        ["Control testing against a dated plan (30%)", testing + "%"],
+        ["Evidence refresh & staleness tracking (20%)", freshness + "%"],
+        ["Overdue reviews & evidence escalated (20%)", escalation + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: schedule reviews with named owners, test controls against a dated plan, refresh evidence and track staleness, and escalate overdue reviews and evidence."
+          : "Readiness is trending well — keep the review calendar, control testing, evidence freshness and overdue escalation working as systems and risks change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

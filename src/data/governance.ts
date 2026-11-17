@@ -2612,6 +2612,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "assurance-cadence",
+    name: "Assurance review cadence & evidence refresh readiness",
+    desc: "Estimate readiness for keeping AI assurance current across scheduled reviews with named owners, control testing against a dated plan, evidence refresh and staleness tracking, and escalation when reviews or evidence fall overdue.",
+    inputs: [
+      {
+        k: "schedule",
+        label: "Scheduled reviews with named owners in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "testing",
+        label: "Control testing runs against a dated plan",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "freshness",
+        label: "Evidence refresh & staleness tracked",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "escalation",
+        label: "Overdue reviews & evidence escalated",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
