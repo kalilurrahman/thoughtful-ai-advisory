@@ -269,6 +269,7 @@ import { SHADOW_AI_ROUNDS, shadowAiScore } from "./shadow-ai-game";
 import { RAG_GROUNDING_ROUNDS, ragGroundingScore } from "./rag-grounding-game";
 import { ASSURANCE_CASE_ROUNDS, assuranceCaseScore } from "./assurance-case-game";
 import { PROMPT_GOVERNANCE_ROUNDS, promptGovernanceScore } from "./prompt-governance-game";
+import { VULN_MANAGEMENT_ROUNDS, vulnManagementScore } from "./vuln-management-game";
 
 const statusText = {
   complete: "Complete",
@@ -378,6 +379,7 @@ export function ChecklistScreen() {
   const [promptGovernanceAnswers, setPromptGovernanceAnswers] = useState<Record<string, number>>(
     {},
   );
+  const [vulnManagementAnswers, setVulnManagementAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -472,6 +474,7 @@ export function ChecklistScreen() {
   const ragGroundingGame = ragGroundingScore(ragGroundingAnswers);
   const assuranceCaseGame = assuranceCaseScore(assuranceCaseAnswers);
   const promptGovernanceGame = promptGovernanceScore(promptGovernanceAnswers);
+  const vulnManagementGame = vulnManagementScore(vulnManagementAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -5615,6 +5618,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good instruction governance choice."
                           : "Review the instruction governance gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="vuln-management-assurance"
+        className="checklist-phase"
+        aria-label="AI vulnerability management assurance game"
+      >
+        <h2>AI vulnerability management assurance</h2>
+        <p>
+          Practice extending inventory and scanning to model SDKs, runtimes and containers, applying
+          compensating controls with dated exceptions when patching cannot happen, triaging by
+          exploitability and exposure, verifying the deployed version, and tracking provider security
+          notices. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {vulnManagementGame.correct}/{vulnManagementGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {vulnManagementGame.complete && (
+            <Button variant="outline" onClick={() => setVulnManagementAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {VULN_MANAGEMENT_ROUNDS.map((round) => {
+            const selected = vulnManagementAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setVulnManagementAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good vulnerability management choice."
+                          : "Review the vulnerability management gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
