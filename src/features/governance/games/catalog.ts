@@ -447,4 +447,12 @@ export const GOVERNANCE_GAMES = [
       "Practice confirming lawful basis for training data, checking licence terms against actual use, honouring opt-outs and withdrawals, and reviewing scraped corpora before use.",
     anchor: "data-rights-licensing-assurance",
   },
+  {
+    id: "guardrail-config-assurance",
+    title: "Guardrail configuration change assurance",
+    category: "Guardrails & configuration",
+    description:
+      "Practice configuration history and approval, environment parity, pre-release rule testing on edge and adversarial cases, and tested rollback for guardrail changes.",
+    anchor: "guardrail-config-assurance",
+  },
 ] as const;
