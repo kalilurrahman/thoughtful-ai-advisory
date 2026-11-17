@@ -2440,6 +2440,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "ethics-values-alignment",
+    name: "AI ethics & values alignment readiness",
+    desc: "Estimate readiness for aligning AI use with stated values across codified values and principles, ethics deliberation for edge cases and value conflicts, stakeholder and affected-group input into value trade-offs, and closed ethics findings with review cadence.",
+    inputs: [
+      {
+        k: "values",
+        label: "Values & principles codified and used in AI decisions",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 45,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "deliberation",
+        label: "Ethics deliberation for edge cases & value conflicts",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "stakeholders",
+        label: "Affected-group & stakeholder input into value trade-offs",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "closure",
+        label: "Ethics findings tracked to decision & closure with review",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

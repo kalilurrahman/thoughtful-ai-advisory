@@ -983,6 +983,30 @@ export function calculate(
           : "Readiness is trending well — keep sourcing requirements, contract terms, supplier onboarding checks, and renewal/exit records current as suppliers and obligations change.",
     };
   }
+  if (id === "ethics-values-alignment") {
+    const values = v["values"] ?? 0,
+      deliberation = v["deliberation"] ?? 0,
+      stakeholders = v["stakeholders"] ?? 0,
+      closure = v["closure"] ?? 0,
+      score = Math.round(values * 0.3 + deliberation * 0.25 + stakeholders * 0.25 + closure * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI ethics & values alignment readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Codified values applied to AI decisions (30%)", values + "%"],
+        ["Ethics deliberation for edge cases/conflicts (25%)", deliberation + "%"],
+        ["Affected-group input into value trade-offs (25%)", stakeholders + "%"],
+        ["Ethics findings tracked to closure (20%)", closure + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: codify values and apply them in AI decisions, deliberate edge cases and value conflicts, bring affected groups into value trade-offs, and track ethics findings to decision and closure."
+          : "Readiness is trending well — keep values applied to decisions, ethics deliberation, stakeholder input, and finding closure current as use cases and expectations change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
