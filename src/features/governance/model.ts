@@ -1367,6 +1367,30 @@ export function calculate(
           : "Readiness is trending well — keep shadow comparisons, canary criteria, tested rollback and production safeguards current as models and traffic change.",
     };
   }
+  if (id === "model-deprecation") {
+    const register = v["register"] ?? 0,
+      retest = v["retest"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      reapproval = v["reapproval"] ?? 0,
+      score = Math.round(register * 0.3 + retest * 0.3 + fallback * 0.2 + reapproval * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI model deprecation & migration readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Model versions & sunset dates tracked (30%)", register + "%"],
+        ["Re-evaluation & regression tests before migration (30%)", retest + "%"],
+        ["Tested fallback or portability option (20%)", fallback + "%"],
+        ["Migrated system re-approved & recorded (20%)", reapproval + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: track model versions and provider sunset dates, re-evaluate and regression-test before migration, keep a tested fallback or portability option, and re-approve and record the migrated system."
+          : "Readiness is trending well — watch provider deprecation notices, re-test on every model change, and keep fallback and re-approval records current.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
