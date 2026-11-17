@@ -218,6 +218,7 @@ import {
   GUARDRAIL_CONFIG_ASSURANCE_ROUNDS,
   guardrailConfigAssuranceScore,
 } from "./guardrail-config-assurance-game";
+import { ASSURANCE_CADENCE_ROUNDS, assuranceCadenceScore } from "./assurance-cadence-game";
 
 const statusText = {
   complete: "Complete",
@@ -284,6 +285,7 @@ export function ChecklistScreen() {
   const [exceptionAnswers, setExceptionAnswers] = useState<Record<string, number>>({});
   const [rightsAnswers, setRightsAnswers] = useState<Record<string, number>>({});
   const [guardrailConfigAnswers, setGuardrailConfigAnswers] = useState<Record<string, number>>({});
+  const [cadenceAnswers, setCadenceAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -345,6 +347,7 @@ export function ChecklistScreen() {
   const exceptionGame = guardrailExceptionAssuranceScore(exceptionAnswers);
   const rightsGame = dataRightsLicensingAssuranceScore(rightsAnswers);
   const guardrailConfigGame = guardrailConfigAssuranceScore(guardrailConfigAnswers);
+  const cadenceGame = assuranceCadenceScore(cadenceAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3434,6 +3437,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good guardrail configuration assurance choice."
                           : "Review the configuration change gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="assurance-cadence"
+        className="checklist-phase"
+        aria-label="Assurance review cadence and evidence refresh game"
+      >
+        <h2>Assurance review cadence &amp; evidence refresh</h2>
+        <p>
+          Practice owned review calendars, evidence freshness after system change, authoritative
+          evidence registers, and escalating overdue assurance items before audit. Scenarios are
+          learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {cadenceGame.correct}/{cadenceGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {cadenceGame.complete && (
+            <Button variant="outline" onClick={() => setCadenceAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {ASSURANCE_CADENCE_ROUNDS.map((round) => {
+            const selected = cadenceAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCadenceAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good assurance cadence choice."
+                          : "Review the cadence gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
