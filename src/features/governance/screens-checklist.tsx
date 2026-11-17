@@ -265,6 +265,7 @@ import { REGULATOR_INQUIRY_ROUNDS, regulatorInquiryScore } from "./regulator-inq
 import { INCIDENT_EVIDENCE_ROUNDS, incidentEvidenceScore } from "./incident-evidence-game";
 import { DATA_SUBJECT_REQUEST_ROUNDS, dataSubjectRequestScore } from "./data-subject-request-game";
 import { COST_ALLOCATION_ROUNDS, costAllocationScore } from "./cost-allocation-game";
+import { SHADOW_AI_ROUNDS, shadowAiScore } from "./shadow-ai-game";
 
 const statusText = {
   complete: "Complete",
@@ -368,6 +369,7 @@ export function ChecklistScreen() {
     Record<string, number>
   >({});
   const [costAllocationAnswers, setCostAllocationAnswers] = useState<Record<string, number>>({});
+  const [shadowAiAnswers, setShadowAiAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -458,6 +460,7 @@ export function ChecklistScreen() {
   const incidentEvidenceGame = incidentEvidenceScore(incidentEvidenceAnswers);
   const dataSubjectRequestGame = dataSubjectRequestScore(dataSubjectRequestAnswers);
   const costAllocationGame = costAllocationScore(costAllocationAnswers);
+  const shadowAiGame = shadowAiScore(shadowAiAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -5349,6 +5352,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good allocation choice."
                           : "Review the allocation gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="shadow-ai-assurance"
+        className="checklist-phase"
+        aria-label="Shadow AI containment assurance game"
+      >
+        <h2>Shadow AI containment assurance</h2>
+        <p>
+          Practice finding unsanctioned tools through network, spend and identity signals, making
+          the sanctioned route easier than the workaround, bounding data reach with egress controls,
+          offering amnesty for disclosure, and recording a disposition for every tool found.
+          Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {shadowAiGame.correct}/{shadowAiGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {shadowAiGame.complete && (
+            <Button variant="outline" onClick={() => setShadowAiAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SHADOW_AI_ROUNDS.map((round) => {
+            const selected = shadowAiAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setShadowAiAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good containment choice."
+                          : "Review the containment gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
