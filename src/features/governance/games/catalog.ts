@@ -431,4 +431,12 @@ export const GOVERNANCE_GAMES = [
       "Practice adversarial and misuse testing, capability-gated safeguards, misuse monitoring and response, and documented safety incident review and closure.",
     anchor: "safety-misuse-assurance",
   },
+  {
+    id: "guardrail-exception-assurance",
+    title: "Guardrail exception & override assurance",
+    category: "Guardrails & exceptions",
+    description:
+      "Practice time-boxed overrides with expiry, exception trend review, exception ownership and review, and assessing the impact of outputs produced while an override was active.",
+    anchor: "guardrail-exception-assurance",
+  },
 ] as const;
