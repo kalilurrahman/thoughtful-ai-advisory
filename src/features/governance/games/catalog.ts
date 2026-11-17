@@ -415,4 +415,12 @@ export const GOVERNANCE_GAMES = [
       "Practice documenting intended use and limitations, versioning model changes and notifying operators, recording failure modes, and keeping performance evidence traceable and current.",
     anchor: "model-documentation-transparency-assurance",
   },
+  {
+    id: "data-quality-integrity-assurance",
+    title: "Data quality & integrity assurance",
+    category: "Data quality & integrity",
+    description:
+      "Practice data lineage and metadata, ground-truth auditing, data health monitoring in production, and documented remediation of bad datasets.",
+    anchor: "data-quality-integrity-assurance",
+  },
 ] as const;
