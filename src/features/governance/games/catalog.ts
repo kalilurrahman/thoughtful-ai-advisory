@@ -759,4 +759,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping production personal data out of test environments, using isolated model endpoints and keys, removing production write access from test credentials, controlling egress to public tools, and expiring environments with a recorded owner for extensions.",
     anchor: "test-isolation-assurance",
   },
+  {
+    id: "value-realisation-assurance",
+    title: "AI value realisation assurance",
+    category: "Operations & value",
+    description:
+      "Practice capturing a baseline before deployment, measuring outcomes rather than activity, stating attribution honestly alongside other changes, measuring real usage instead of licences, and recording review decisions with the authority to scale, fix or stop.",
+    anchor: "value-realisation-assurance",
+  },
 ] as const;
