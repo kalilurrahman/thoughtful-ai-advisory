@@ -1319,6 +1319,30 @@ export function calculate(
           : "Readiness is trending well — keep review capacity, reviewer authority, workload limits and override monitoring aligned as decision volume grows.",
     };
   }
+  if (id === "governance-metrics") {
+    const defined = v["defined"] ?? 0,
+      sources = v["sources"] ?? 0,
+      honest = v["honest"] ?? 0,
+      decisions = v["decisions"] ?? 0,
+      score = Math.round(defined * 0.3 + sources * 0.3 + honest * 0.2 + decisions * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI governance metrics & reporting readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Defined metrics with owners & thresholds (30%)", defined + "%"],
+        ["Metrics traced to system data (30%)", sources + "%"],
+        ["Reporting includes failures & near misses (20%)", honest + "%"],
+        ["Decisions recorded from the metrics (20%)", decisions + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define a small set of metrics with owners and thresholds, trace them to system data rather than manual decks, include failures and near misses in reporting, and record the decisions the numbers drove."
+          : "Readiness is trending well — keep metric definitions, data lineage, honest reporting and recorded decisions current so reporting stays decision-grade rather than decorative.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
