@@ -527,4 +527,12 @@ export const GOVERNANCE_GAMES = [
       "Practice settling output ownership terms, running similarity and infringement checks on generated content, checking licence obligations in AI-assisted code, and disclosing and recording AI involvement.",
     anchor: "output-ip-assurance",
   },
+  {
+    id: "oversight-capacity-assurance",
+    title: "AI human oversight capacity assurance",
+    category: "Human oversight",
+    description:
+      "Practice detecting automation bias and rubber-stamping, giving reviewers real override authority, matching review capacity to decision volume, and assigning competent reviewers with context.",
+    anchor: "oversight-capacity-assurance",
+  },
 ] as const;
