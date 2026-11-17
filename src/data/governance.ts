@@ -2913,6 +2913,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "risk-register-quality",
+    name: "AI risk register quality & treatment tracking readiness",
+    desc: "Estimate readiness for keeping the AI risk register usable across current and specific risk statements tied to systems, named owners and treatment plans with dates, tracked residual risk with evidence, and regular review that closes stale or duplicated entries.",
+    inputs: [
+      {
+        k: "statements",
+        label: "Risk statements current, specific & tied to systems",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "owners",
+        label: "Named owners & treatment plans with dates",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "residual",
+        label: "Residual risk tracked with evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Register reviewed; stale & duplicate entries closed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

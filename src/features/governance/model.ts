@@ -1247,6 +1247,30 @@ export function calculate(
           : "Readiness is trending well — keep role-impact mapping, consultation, reskilling paths and post-deployment workforce monitoring current as AI changes the work.",
     };
   }
+  if (id === "risk-register-quality") {
+    const statements = v["statements"] ?? 0,
+      owners = v["owners"] ?? 0,
+      residual = v["residual"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(statements * 0.3 + owners * 0.3 + residual * 0.2 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI risk register quality & treatment tracking readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Risk statements current, specific & tied to systems (30%)", statements + "%"],
+        ["Named owners & dated treatment plans (30%)", owners + "%"],
+        ["Residual risk tracked with evidence (20%)", residual + "%"],
+        ["Register reviewed; stale & duplicates closed (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: keep risk statements current, specific and tied to systems, assign named owners with dated treatment plans, track residual risk with evidence, and review the register to close stale or duplicated entries."
+          : "Readiness is trending well — keep statements, owners, treatment dates, residual evidence and register reviews current so the register stays a working tool rather than an archive.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
