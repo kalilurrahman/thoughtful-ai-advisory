@@ -1727,6 +1727,30 @@ export function calculate(
           : "Readiness is trending well — refresh the index as systems change, rehearse a live inquiry end to end, and keep the legal review path from becoming a bottleneck.",
     };
   }
+  if (id === "incident-evidence") {
+    const capture = v["capture"] ?? 0,
+      hold = v["hold"] ?? 0,
+      custody = v["custody"] ?? 0,
+      replay = v["replay"] ?? 0,
+      score = Math.round(capture * 0.3 + hold * 0.25 + custody * 0.25 + replay * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI incident evidence preservation readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Prompt, context, model version & outputs captured (30%)", capture + "%"],
+        ["Retention & legal hold applied before rotation (25%)", hold + "%"],
+        ["Handling, access & chain of custody recorded (25%)", custody + "%"],
+        ["Replayable trail for root-cause review (20%)", replay + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: capture the prompt, retrieved context, model version and outputs at the time, apply retention and legal hold before logs rotate or models change, record handling and access, and keep a replayable trail for root-cause review."
+          : "Readiness is trending well — test preservation on a recent incident, re-check that holds survive model and provider changes, and keep the custody record with the evidence.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
