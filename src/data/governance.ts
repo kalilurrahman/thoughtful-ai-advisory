@@ -4413,6 +4413,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "third-party-audit-rights",
+    name: "AI third-party audit & assurance access readiness",
+    desc: "Estimate readiness for being able to look inside an AI supplier's controls: a contractual right to audit or to receive assurance evidence, a scope that covers models, data handling, subprocessors and security controls, the right exercised or relied on in practice rather than only signed, independent reports read with a gap analysis instead of treated as a substitute, and findings tracked to closure with the provider.",
+    inputs: [
+      {
+        k: "right",
+        label: "Contractual right to audit or receive assurance evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "scope",
+        label: "Scope covers models, data, subprocessors & controls",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "exercise",
+        label: "Right exercised or relied on in practice",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reports",
+        label: "Independent reports read with a gap analysis",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "findings",
+        label: "Findings tracked to closure with the provider",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
