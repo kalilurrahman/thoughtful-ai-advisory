@@ -3472,6 +3472,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "environmental-impact",
+    name: "AI compute & environmental impact readiness",
+    desc: "Estimate readiness for managing the environmental footprint of AI workloads across energy and compute measured per workload with a stated method, efficiency measures such as right-sizing, caching and low-carbon scheduling, impact included in sustainability reporting with assumptions, and reduction targets with owners and review.",
+    inputs: [
+      {
+        k: "measurement",
+        label: "Energy & compute measured per workload",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "efficiency",
+        label: "Right-sizing, caching & low-carbon scheduling",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reporting",
+        label: "Impact in sustainability reporting, assumptions stated",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "targets",
+        label: "Reduction targets with owners & review",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
