@@ -2103,6 +2103,34 @@ export function calculate(
           : "Readiness is trending well — test that the right still applies after a service change, re-read reports against your actual use, and confirm closed findings stay closed in the next cycle.",
     };
   }
+  if (id === "consent-withdrawal") {
+    const inventory = v["inventory"] ?? 0,
+      propagation = v["propagation"] ?? 0,
+      downstream = v["downstream"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      reuse = v["reuse"] ?? 0,
+      score = Math.round(
+        inventory * 0.3 + propagation * 0.25 + downstream * 0.2 + evidence * 0.15 + reuse * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI consent withdrawal propagation readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Consent-derived data mapped, including derived artifacts (30%)", inventory + "%"],
+        ["Withdrawal propagated & removed within a stated window (25%)", propagation + "%"],
+        ["Downstream processors notified & confirming (20%)", downstream + "%"],
+        ["Per-withdrawal evidence recorded & retrievable (15%)", evidence + "%"],
+        ["Consent state checked before data is reused (10%)", reuse + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: map where consent-derived data lives including embeddings, caches, fine-tunes, agent memory and evaluation sets, propagate and remove within a stated window, notify downstream processors and obtain confirmation, record per-withdrawal evidence, and check consent state before data is reused."
+          : "Readiness is trending well — re-check derived artifacts after each pipeline change, test that a withdrawal reaches processors, and confirm a revoked record cannot re-enter a future dataset.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
