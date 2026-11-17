@@ -2019,6 +2019,34 @@ export function calculate(
           : "Readiness is trending well — re-test survival after format and channel changes, check that detection catches stripped marks, and keep the register current as new distribution routes appear.",
     };
   }
+  if (id === "test-environment-isolation") {
+    const data = v["data"] ?? 0,
+      credentials = v["credentials"] ?? 0,
+      models = v["models"] ?? 0,
+      egress = v["egress"] ?? 0,
+      teardown = v["teardown"] ?? 0,
+      score = Math.round(
+        data * 0.25 + credentials * 0.2 + models * 0.2 + egress * 0.2 + teardown * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI test & sandbox environment isolation readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Production personal data kept out or de-identified (25%)", data + "%"],
+        ["Separate credentials, no production write access (20%)", credentials + "%"],
+        ["Isolated model endpoints & keys for test traffic (20%)", models + "%"],
+        ["Egress controls stop test data reaching public tools (20%)", egress + "%"],
+        ["Environments expire & are cleared after testing (15%)", teardown + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: keep production personal data out of test environments or de-identify it before copying, use separate credentials with no production write access, isolate model endpoints and keys so test traffic cannot train or bill against live systems, control egress so test data cannot reach public tools, and expire and clear environments after testing."
+          : "Readiness is trending well — check that copies age out, that keys are rotated when testers leave, and that a new sandbox cannot reach production by default.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
