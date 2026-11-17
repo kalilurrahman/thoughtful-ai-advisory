@@ -575,4 +575,12 @@ export const GOVERNANCE_GAMES = [
       "Practice classifying AI-specific harms, naming a triage owner with a decision window, pre-agreeing notification triggers and timelines, and running blameless reviews with tracked corrective actions.",
     anchor: "incident-severity-assurance",
   },
+  {
+    id: "secrets-hygiene-assurance",
+    title: "AI model key & secrets hygiene assurance",
+    category: "Security & access",
+    description:
+      "Practice keeping model keys server-side and least-privilege, registering keys with owners and environments, rehearsing rotation and revocation, and catching secrets that leak into repos, logs or prompts.",
+    anchor: "secrets-hygiene-assurance",
+  },
 ] as const;

@@ -251,6 +251,7 @@ import {
 import { MODEL_DEPRECATION_ROUNDS, modelDeprecationScore } from "./model-deprecation-game";
 import { BOARD_OVERSIGHT_ROUNDS, boardOversightScore } from "./board-oversight-game";
 import { INCIDENT_SEVERITY_ROUNDS, incidentSeverityScore } from "./incident-severity-game";
+import { SECRETS_HYGIENE_ROUNDS, secretsHygieneScore } from "./secrets-hygiene-game";
 
 const statusText = {
   complete: "Complete",
@@ -332,6 +333,7 @@ export function ChecklistScreen() {
   const [deprecationAnswers, setDeprecationAnswers] = useState<Record<string, number>>({});
   const [boardOversightAnswers, setBoardOversightAnswers] = useState<Record<string, number>>({});
   const [incidentSeverityAnswers, setIncidentSeverityAnswers] = useState<Record<string, number>>({});
+  const [secretsAnswers, setSecretsAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -408,6 +410,7 @@ export function ChecklistScreen() {
   const deprecationGame = modelDeprecationScore(deprecationAnswers);
   const boardOversightGame = boardOversightScore(boardOversightAnswers);
   const incidentSeverityGame = incidentSeverityScore(incidentSeverityAnswers);
+  const secretsGame = secretsHygieneScore(secretsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -4428,6 +4431,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good incident severity choice."
                           : "Review the incident classification gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="secrets-hygiene-assurance"
+        className="checklist-phase"
+        aria-label="AI model key and secrets hygiene assurance game"
+      >
+        <h2>AI model key &amp; secrets hygiene assurance</h2>
+        <p>
+          Practice keeping model keys server-side and least-privilege, registering keys with owners
+          and environments, rehearsing rotation and revocation, and catching secrets that leak into
+          repos, logs or prompts. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {secretsGame.correct}/{secretsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {secretsGame.complete && (
+            <Button variant="outline" onClick={() => setSecretsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SECRETS_HYGIENE_ROUNDS.map((round) => {
+            const selected = secretsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setSecretsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good secrets hygiene choice."
+                          : "Review the secrets handling gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
