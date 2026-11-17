@@ -3515,6 +3515,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "tabletop-exercise",
+    name: "AI assurance tabletop & rehearsal readiness",
+    desc: "Estimate readiness for rehearsing AI failures before they happen across scenarios that cover your real AI failure modes, participants from engineering, business, legal and communications, a regular cadence that includes the last real incident, and findings tracked to closure with owners.",
+    inputs: [
+      {
+        k: "scenarios",
+        label: "Scenarios cover your real AI failure modes",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "participants",
+        label: "Engineering, business, legal & comms take part",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "cadence",
+        label: "Regular cadence including the last real incident",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "findings",
+        label: "Findings tracked to closure with owners",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

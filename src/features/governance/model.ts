@@ -1583,6 +1583,30 @@ export function calculate(
           : "Readiness is trending well — keep measurement with the workload, re-test efficiency as usage grows, and report impact with the same rigour as cost.",
     };
   }
+  if (id === "tabletop-exercise") {
+    const scenarios = v["scenarios"] ?? 0,
+      participants = v["participants"] ?? 0,
+      cadence = v["cadence"] ?? 0,
+      findings = v["findings"] ?? 0,
+      score = Math.round(scenarios * 0.3 + participants * 0.25 + cadence * 0.25 + findings * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI assurance tabletop & rehearsal readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Scenarios cover your real AI failure modes (30%)", scenarios + "%"],
+        ["Engineering, business, legal & comms take part (25%)", participants + "%"],
+        ["Regular cadence including the last real incident (25%)", cadence + "%"],
+        ["Findings tracked to closure with owners (20%)", findings + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: build scenarios from your real AI failure modes, involve engineering, business, legal and communications, run a regular cadence that reuses the last real incident, and track findings to closure with owners."
+          : "Readiness is trending well — refresh scenarios from near misses and incidents, keep cross-functional attendance real, and verify findings are closed rather than noted.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
