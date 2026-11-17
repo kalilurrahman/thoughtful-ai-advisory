@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import { WorkspaceControls } from "./workspace-controls";
+import { WorkspaceVisual } from "./workspace-visual";
 import { TeamPanel } from "./team-panel";
 import { PendingInviteBanner } from "./invite-screen";
 import { useState } from "react";
@@ -55,6 +56,7 @@ export function CalculatorsScreen() {
   const out = calculate(calc.id, v, scores, coverage.percent);
   return (
     <>
+      <WorkspaceVisual section="calculators" />
       <div className="filters calculator-tabs">
         {CALCS.map((c) => (
           <Button

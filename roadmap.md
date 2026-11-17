@@ -1,4 +1,5 @@
 # VERITRAIL build
+- [x] Add low-cost section imagery and icons to Checklist, Games, Calculators and Workspace; verify desktop and phone layouts.
 - [x] Refine the public site around governance and assurance services, group navigation, remove premature brand ownership claims and verify mobile presentation.
 - [x] Add and verify a public content change log on the governance overview with a last-updated date and recent summaries.
 - [x] Add site-grounded chat with private saved threads and dedicated conversation URLs.

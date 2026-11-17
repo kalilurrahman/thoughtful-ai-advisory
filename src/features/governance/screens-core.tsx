@@ -52,6 +52,7 @@ import {
 } from "./model";
 import { recordTrail, trailActor } from "./trail-store";
 import { ContentChangelog, ContentUpdateDate } from "./content-changelog";
+import { WorkspaceVisual } from "./workspace-visual";
 export function Kicker({ children }: { children: ReactNode }) {
   return <p className="kicker">{children}</p>;
 }
@@ -114,6 +115,7 @@ export function HomeScreen() {
         ]}
       />
       <ContentUpdateDate />
+      <WorkspaceVisual section="workspace" />
       <GateBanner
         to="/gates"
         state={gateState(gate)}
