@@ -711,4 +711,12 @@ export const GOVERNANCE_GAMES = [
       "Practice tying claims to evidence that shows the control operating, dating evidence and refreshing it on change, recording known gaps as defeaters, re-assessing when scope or data moves, and routing approvers to the argument rather than a summary.",
     anchor: "assurance-case-assurance",
   },
+  {
+    id: "prompt-governance-assurance",
+    title: "AI prompt & instruction governance assurance",
+    category: "Configuration governance",
+    description:
+      "Practice versioning prompts with a diffable history, reviewing instruction changes with a recorded approver, growing the regression set from incidents, releasing with a tested rollback, and monitoring behaviour for drift after release.",
+    anchor: "prompt-governance-assurance",
+  },
 ] as const;
