@@ -1679,6 +1679,30 @@ export function calculate(
           : "Readiness is trending well — re-check incentives whenever targets change, watch for new shortcuts as tools evolve, and keep the flag route visibly safe.",
     };
   }
+  if (id === "provider-terms-watch") {
+    const register = v["register"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      impactreview = v["impactreview"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      score = Math.round(register * 0.3 + monitoring * 0.25 + impactreview * 0.25 + fallback * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI provider terms change readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Terms, DPAs, subprocessors & model cards registered (30%)", register + "%"],
+        ["Notice channels monitored (status, changelog, legal) (25%)", monitoring + "%"],
+        ["Changes assessed against the assurance case (25%)", impactreview + "%"],
+        ["Tested fallback if terms become unacceptable (20%)", fallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: register the terms, data-processing agreements, subprocessors and model cards you rely on with an owner, monitor notice channels, assess changes against your assurance case before adoption, and test a fallback if terms become unacceptable."
+          : "Readiness is trending well — keep the register current, route legal and changelog notices to an owner, and re-test the fallback as dependencies grow.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
