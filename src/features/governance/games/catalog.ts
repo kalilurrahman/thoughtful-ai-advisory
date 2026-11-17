@@ -519,4 +519,12 @@ export const GOVERNANCE_GAMES = [
       "Practice writing specific system-tied risk statements, assigning named owners with dated treatment, evidencing residual risk, and keeping the register free of duplicates and stale entries.",
     anchor: "risk-register-quality-assurance",
   },
+  {
+    id: "output-ip-assurance",
+    title: "AI output ownership & IP assurance",
+    category: "Rights & disclosure",
+    description:
+      "Practice settling output ownership terms, running similarity and infringement checks on generated content, checking licence obligations in AI-assisted code, and disclosing and recording AI involvement.",
+    anchor: "output-ip-assurance",
+  },
 ] as const;

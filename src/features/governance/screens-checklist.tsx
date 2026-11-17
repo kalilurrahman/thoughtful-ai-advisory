@@ -238,6 +238,7 @@ import {
   nearMissReportingScore,
 } from "./near-miss-reporting-game";
 import { RISK_REGISTER_ROUNDS, riskRegisterScore } from "./risk-register-game";
+import { OUTPUT_IP_ROUNDS, outputIpScore } from "./output-ip-game";
 
 const statusText = {
   complete: "Complete",
@@ -312,6 +313,7 @@ export function ChecklistScreen() {
   const [agenticGuardrailsAnswers, setAgenticGuardrailsAnswers] = useState<Record<string, number>>({});
   const [nearMissAnswers, setNearMissAnswers] = useState<Record<string, number>>({});
   const [riskRegisterAnswers, setRiskRegisterAnswers] = useState<Record<string, number>>({});
+  const [outputIpAnswers, setOutputIpAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -381,6 +383,7 @@ export function ChecklistScreen() {
   const agenticGuardrailsGame = agenticGuardrailsScore(agenticGuardrailsAnswers);
   const nearMissGame = nearMissReportingScore(nearMissAnswers);
   const riskRegisterGame = riskRegisterScore(riskRegisterAnswers);
+  const outputIpGame = outputIpScore(outputIpAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3966,6 +3969,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good risk register assurance choice."
                           : "Review the risk register gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="output-ip-assurance"
+        className="checklist-phase"
+        aria-label="AI output ownership and IP assurance game"
+      >
+        <h2>AI output ownership &amp; IP assurance</h2>
+        <p>
+          Practice settling output ownership terms, running similarity and infringement checks on
+          generated content, checking licence obligations in AI-assisted code, and disclosing and
+          recording AI involvement. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {outputIpGame.correct}/{outputIpGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {outputIpGame.complete && (
+            <Button variant="outline" onClick={() => setOutputIpAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {OUTPUT_IP_ROUNDS.map((round) => {
+            const selected = outputIpAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setOutputIpAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good output rights assurance choice."
+                          : "Review the output rights gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
