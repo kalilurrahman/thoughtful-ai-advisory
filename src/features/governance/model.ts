@@ -2187,6 +2187,34 @@ export function calculate(
           : "Readiness is trending well — re-check exclusions when a model or use changes, confirm disclosure obligations at each renewal, and test that a claim could be evidenced within the notice period.",
     };
   }
+  if (id === "assurance-independence") {
+    const coverage = v["coverage"] ?? 0,
+      independence = v["independence"] ?? 0,
+      reporting = v["reporting"] ?? 0,
+      conflicts = v["conflicts"] ?? 0,
+      followup = v["followup"] ?? 0,
+      score = Math.round(
+        coverage * 0.25 + independence * 0.25 + reporting * 0.2 + conflicts * 0.15 + followup * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI assurance independence & audit coverage readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["AI risks in the assurance plan with a risk-based rationale (25%)", coverage + "%"],
+        ["Assurance performed by people outside the build team (25%)", independence + "%"],
+        ["Findings reported upward without owner editing (20%)", reporting + "%"],
+        ["Conflicts declared, incl. reliance on supplier evidence (15%)", conflicts + "%"],
+        ["Findings re-tested independently until closure (15%)", followup + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: include AI risks in the audit or assurance plan with a risk-based rationale, have assurance performed by people who do not own or build the system, report findings to a level with authority to act without owner editing, declare and manage conflicts including reliance on supplier evidence, and re-test findings independently until closure."
+          : "Readiness is trending well — keep the assurance plan risk-based as systems change, protect the reporting line when findings are uncomfortable, and check that reliance on supplier evidence is still justified.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
