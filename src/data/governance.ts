@@ -3997,6 +3997,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "user-recourse",
+    name: "AI decision recourse & contestability readiness",
+    desc: "Estimate readiness for letting a person challenge an AI-assisted decision: a route to contest that is findable and usable by the people affected, a human reviewer with the authority and context to change the outcome, a stated timeline the person is told about, remedy that actually reverses or corrects the decision, and appeal outcomes tracked so patterns become fixes.",
+    inputs: [
+      {
+        k: "route",
+        label: "Contest route findable & usable by affected people",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reviewer",
+        label: "Reviewer has authority & context to change the outcome",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "timeline",
+        label: "Stated timeline the person is told about",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "remedy",
+        label: "Remedy reverses or corrects the decision",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "patterns",
+        label: "Appeal outcomes tracked & turned into fixes",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

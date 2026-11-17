@@ -1851,6 +1851,34 @@ export function calculate(
           : "Readiness is trending well — sample answers against their cited sources, re-check the conflict rule as documents are superseded, and watch for retrieved content that changed without an owner noticing.",
     };
   }
+  if (id === "user-recourse") {
+    const route = v["route"] ?? 0,
+      reviewer = v["reviewer"] ?? 0,
+      timeline = v["timeline"] ?? 0,
+      remedy = v["remedy"] ?? 0,
+      patterns = v["patterns"] ?? 0,
+      score = Math.round(
+        route * 0.3 + reviewer * 0.25 + timeline * 0.2 + remedy * 0.15 + patterns * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI decision recourse & contestability readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Contest route findable & usable by affected people (30%)", route + "%"],
+        ["Reviewer has authority & context to change the outcome (25%)", reviewer + "%"],
+        ["Stated timeline the person is told about (20%)", timeline + "%"],
+        ["Remedy reverses or corrects the decision (15%)", remedy + "%"],
+        ["Appeal outcomes tracked & turned into fixes (10%)", patterns + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: publish a contest route the affected person can actually find and use, give the reviewer authority and context to change the outcome, tell the person the timeline, make remedy reverse or correct the decision, and track appeal outcomes so patterns become fixes."
+          : "Readiness is trending well — test the route as an affected person would, confirm reviewers can and do overturn decisions, and check that appeal patterns reach the teams that own the model.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
