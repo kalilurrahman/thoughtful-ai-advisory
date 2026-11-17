@@ -258,6 +258,7 @@ import { SYNTHETIC_DATA_ROUNDS, syntheticDataScore } from "./synthetic-data-game
 import { MODEL_SELECTION_ROUNDS, modelSelectionScore } from "./model-selection-game";
 import { ENV_IMPACT_ROUNDS, envImpactScore } from "./env-impact-game";
 import { TABLETOP_ROUNDS, tabletopScore } from "./tabletop-game";
+import { AGENT_MEMORY_ROUNDS, agentMemoryScore } from "./agent-memory-game";
 
 const statusText = {
   complete: "Complete",
@@ -348,6 +349,7 @@ export function ChecklistScreen() {
   const [assuranceTabletopAnswers, setAssuranceTabletopAnswers] = useState<
     Record<string, number>
   >({});
+  const [agentMemoryAnswers, setAgentMemoryAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -431,6 +433,7 @@ export function ChecklistScreen() {
   const modelSelectionGame = modelSelectionScore(modelSelectionAnswers);
   const envImpactGame = envImpactScore(envImpactAnswers);
   const assuranceTabletopGame = tabletopScore(assuranceTabletopAnswers);
+  const agentMemoryGame = agentMemoryScore(agentMemoryAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -4885,6 +4888,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good tabletop choice."
                           : "Review the rehearsal gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="agent-memory-assurance"
+        className="checklist-phase"
+        aria-label="Agent memory governance assurance game"
+      >
+        <h2>Agent memory governance assurance</h2>
+        <p>
+          Practice registering what an agent remembers, deleting memories across every store,
+          testing isolation between users and tenants, and validating what can be written to memory
+          before it becomes an instruction. Scenarios are learning prompts, not compliance
+          determinations.
+        </p>
+        <p>
+          <strong>
+            {agentMemoryGame.correct}/{agentMemoryGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {agentMemoryGame.complete && (
+            <Button variant="outline" onClick={() => setAgentMemoryAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {AGENT_MEMORY_ROUNDS.map((round) => {
+            const selected = agentMemoryAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAgentMemoryAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good agent memory choice."
+                          : "Review the agent memory gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

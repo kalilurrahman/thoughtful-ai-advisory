@@ -631,4 +631,12 @@ export const GOVERNANCE_GAMES = [
       "Practice building scenarios from real AI failure modes, rehearsing cross-functionally with legal and communications, running on a cadence that reuses real incidents, and tracking findings to closure.",
     anchor: "tabletop-assurance",
   },
+  {
+    id: "agent-memory-assurance",
+    title: "Agent memory governance assurance",
+    category: "Agentic AI",
+    description:
+      "Practice registering what an agent remembers, deleting memories across every store, testing isolation between users and tenants, and validating what can be written to memory before it becomes an instruction.",
+    anchor: "agent-memory-assurance",
+  },
 ] as const;
