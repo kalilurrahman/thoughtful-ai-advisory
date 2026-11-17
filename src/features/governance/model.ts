@@ -1439,6 +1439,30 @@ export function calculate(
           : "Readiness is trending well — re-test severity calls against real near misses, keep notification contacts and timelines current, and close corrective actions on schedule.",
     };
   }
+  if (id === "secrets-hygiene") {
+    const register = v["register"] ?? 0,
+      scoping = v["scoping"] ?? 0,
+      rotation = v["rotation"] ?? 0,
+      detection = v["detection"] ?? 0,
+      score = Math.round(register * 0.3 + scoping * 0.3 + rotation * 0.2 + detection * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI model key & secrets hygiene readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Key register with owners & environments (30%)", register + "%"],
+        ["Least-privilege keys, never in client code (30%)", scoping + "%"],
+        ["Rotation & revocation rehearsed (20%)", rotation + "%"],
+        ["Leaks in repos, logs or prompts detected (20%)", detection + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: register every model key with an owner and environment, scope keys to least privilege and keep them server-side, rehearse rotation and revocation, and scan repos, logs and prompts for leaks."
+          : "Readiness is trending well — keep the key register current, re-test revocation, and treat prompt and log output as a place secrets can escape.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

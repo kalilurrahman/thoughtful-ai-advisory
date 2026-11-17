@@ -3257,6 +3257,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "secrets-hygiene",
+    name: "AI model key & secrets hygiene readiness",
+    desc: "Estimate readiness for controlling model API keys and other AI secrets across a register of keys with owners and environments, scoped least-privilege keys kept out of client code, rotation and revocation that is rehearsed, and detection of keys leaked into repos, logs or prompts.",
+    inputs: [
+      {
+        k: "register",
+        label: "Key register with owners & environments",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "scoping",
+        label: "Least-privilege keys, never in client code",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rotation",
+        label: "Rotation & revocation rehearsed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "detection",
+        label: "Leaks in repos, logs or prompts detected",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
