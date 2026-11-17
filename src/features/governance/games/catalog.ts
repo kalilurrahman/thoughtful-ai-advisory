@@ -807,4 +807,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping assurance independent of the build team, choosing coverage by risk with recorded exclusions, reporting findings unedited to a level with authority, declaring reliance on supplier evidence, and re-testing findings independently before closure.",
     anchor: "assurance-independence-assurance",
   },
+  {
+    id: "regulatory-horizon-assurance",
+    title: "AI regulatory horizon scanning assurance",
+    category: "Regulatory & assurance",
+    description:
+      "Practice naming sources and a scanning cadence, triaging each change against the system inventory, setting internal deadlines ahead of external ones, updating the controls and contracts the obligation touches, and recording no-action calls with their rationale.",
+    anchor: "regulatory-horizon-assurance",
+  },
 ] as const;
