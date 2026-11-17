@@ -3859,6 +3859,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "ai-cost-allocation",
+    name: "AI usage cost allocation readiness",
+    desc: "Estimate readiness for making AI consumption accountable: usage metered per team, system and feature rather than one shared bill, an allocation basis (chargeback or showback) agreed with finance and communicated, owners who can see their own spend against a budget or forecast, and a review that catches runaway usage, idle spend and untracked tools.",
+    inputs: [
+      {
+        k: "metering",
+        label: "Usage metered per team, system & feature",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "basis",
+        label: "Chargeback or showback basis agreed with finance",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "visibility",
+        label: "Owners see their spend against a budget",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Review catches runaway, idle & untracked spend",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

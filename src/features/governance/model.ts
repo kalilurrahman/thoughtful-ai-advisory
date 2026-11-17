@@ -1775,6 +1775,30 @@ export function calculate(
           : "Readiness is trending well — test a request end to end on a live system, extend discovery as new memory and log stores appear, and keep the evidence trail complete.",
     };
   }
+  if (id === "ai-cost-allocation") {
+    const metering = v["metering"] ?? 0,
+      basis = v["basis"] ?? 0,
+      visibility = v["visibility"] ?? 0,
+      review = v["review"] ?? 0,
+      score = Math.round(metering * 0.3 + basis * 0.25 + visibility * 0.25 + review * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI usage cost allocation readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Usage metered per team, system & feature (30%)", metering + "%"],
+        ["Chargeback or showback basis agreed with finance (25%)", basis + "%"],
+        ["Owners see their spend against a budget (25%)", visibility + "%"],
+        ["Review catches runaway, idle & untracked spend (20%)", review + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: meter usage per team, system and feature rather than one shared bill, agree a chargeback or showback basis with finance, give owners their spend against a budget, and review for runaway, idle and untracked usage."
+          : "Readiness is trending well — check that allocation survives new models and pricing changes, and that untracked tools surface in the same review.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
