@@ -1343,6 +1343,30 @@ export function calculate(
           : "Readiness is trending well — keep metric definitions, data lineage, honest reporting and recorded decisions current so reporting stays decision-grade rather than decorative.",
     };
   }
+  if (id === "production-testing") {
+    const shadow = v["shadow"] ?? 0,
+      canary = v["canary"] ?? 0,
+      rollback = v["rollback"] ?? 0,
+      safeguards = v["safeguards"] ?? 0,
+      score = Math.round(shadow * 0.3 + canary * 0.3 + rollback * 0.2 + safeguards * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI production testing & canary readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Shadow-mode comparison before exposure (30%)", shadow + "%"],
+        ["Canary rollout with success & stop criteria (30%)", canary + "%"],
+        ["Rollback & kill switch tested in production (20%)", rollback + "%"],
+        ["Production test data & user safeguards (20%)", safeguards + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: compare in shadow mode before real exposure, run a canary with pre-agreed success and stop criteria, test rollback and kill switches in production, and protect test data and affected users."
+          : "Readiness is trending well — keep shadow comparisons, canary criteria, tested rollback and production safeguards current as models and traffic change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

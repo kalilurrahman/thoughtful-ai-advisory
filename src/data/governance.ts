@@ -3085,6 +3085,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "production-testing",
+    name: "AI production testing & canary readiness",
+    desc: "Estimate readiness for testing AI safely in production across shadow-mode comparison before real exposure, canary rollout with pre-agreed success and stop criteria, tested rollback and kill switches, and safeguards for production test data and affected users.",
+    inputs: [
+      {
+        k: "shadow",
+        label: "Shadow-mode comparison before real exposure",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "canary",
+        label: "Canary rollout with agreed success & stop criteria",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rollback",
+        label: "Rollback & kill switch tested in production",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "safeguards",
+        label: "Production test data & user safeguards in place",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
