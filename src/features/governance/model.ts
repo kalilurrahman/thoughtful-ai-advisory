@@ -2467,6 +2467,34 @@ export function calculate(
           : "Readiness is trending well — rehearse handover for the asset everyone assumes is covered, check that the deputy can actually run an evaluation and answer a vendor notice unaided, and confirm documentation is updated when the model or prompts change rather than at departure.",
     };
   }
+  if (id === "multilingual-assurance") {
+    const coverage = v["coverage"] ?? 0,
+      evaluation = v["evaluation"] ?? 0,
+      guardrails = v["guardrails"] ?? 0,
+      localpolicy = v["localpolicy"] ?? 0,
+      reviewers = v["reviewers"] ?? 0,
+      score = Math.round(
+        coverage * 0.2 + evaluation * 0.25 + guardrails * 0.2 + localpolicy * 0.2 + reviewers * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Multilingual & localisation assurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Languages in use known; each marked tested or unsupported (20%)", coverage + "%"],
+        ["Quality & safety evaluated per language, not inferred (25%)", evaluation + "%"],
+        ["Guardrails & refusals tested in each language and script (20%)", guardrails + "%"],
+        ["Local law, culture & accessibility reviewed per market (20%)", localpolicy + "%"],
+        ["In-language reviewers available; translation quality monitored (15%)", reviewers + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: list the languages actually in use with their volumes and mark each tested or unsupported, evaluate quality and safety per language instead of inferring from English results, test guardrails, filters and refusals in each supported language and script, review local law, cultural expectations and accessibility per market, and make in-language reviewers available while monitoring translation quality over time."
+          : "Readiness is trending well — re-test the lowest-volume language before it grows, check that refusals survive mixed-script and code-switched inputs, and confirm local reviewers see the same escalations as the English queue.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

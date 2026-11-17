@@ -5141,6 +5141,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "multilingual-assurance",
+    name: "Multilingual & localisation assurance readiness",
+    desc: "Estimate readiness for AI that serves people in more than one language: the languages actually in use are known with their volumes and each is named as tested or unsupported, quality and safety are evaluated per language rather than inferred from English results, guardrails, filters and refusals are tested in each supported language and script, local law, cultural expectations and accessibility needs are reviewed per market, and in-language human reviewers are available with translation quality monitored over time.",
+    inputs: [
+      {
+        k: "coverage",
+        label: "Languages in use known; each marked tested or unsupported",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evaluation",
+        label: "Quality & safety evaluated per language, not inferred",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "guardrails",
+        label: "Guardrails & refusals tested in each language and script",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "localpolicy",
+        label: "Local law, culture & accessibility reviewed per market",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "reviewers",
+        label: "In-language reviewers available; translation quality monitored",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
