@@ -2271,6 +2271,34 @@ export function calculate(
           : "Readiness is trending well — re-weight the rate as volume grows, rotate reviewers to avoid drift, and check that a falling defect trend is not just a rubric that stopped catching cases.",
     };
   }
+  if (id === "claims-substantiation") {
+    const register = v["register"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      approval = v["approval"] ?? 0,
+      wording = v["wording"] ?? 0,
+      correction = v["correction"] ?? 0,
+      score = Math.round(
+        register * 0.2 + evidence * 0.25 + approval * 0.2 + wording * 0.2 + correction * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI public claims & marketing substantiation readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Public AI claims registered with owner & channel (20%)", register + "%"],
+        ["Each claim backed by current evidence & stated limits (25%)", evidence + "%"],
+        ["Reviewed & approved before publication, incl. vendor claims (20%)", approval + "%"],
+        ["Wording avoids superlatives & vague compliance assertions (20%)", wording + "%"],
+        ["Route to correct or withdraw a challenged claim (15%)", correction + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: register every public AI claim with an owner and channel, back each claim with current evidence including test results and stated limits, review and approve claims before publication including vendor-supplied claims, remove unqualified superlatives and vague compliance assertions, and define a route to correct or withdraw a claim when evidence changes or someone challenges it."
+          : "Readiness is trending well — re-check claims when the model, prompts or benchmarks change, keep vendor-supplied claims on the register with their evidence, and make sure a withdrawn claim actually disappears from live channels and sales material.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
