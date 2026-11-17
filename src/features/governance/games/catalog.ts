@@ -559,4 +559,12 @@ export const GOVERNANCE_GAMES = [
       "Practice tracking model versions and sunset dates, controlling unpinned model change, re-running evaluation before migration, and re-approving the system after a model swap.",
     anchor: "model-deprecation-assurance",
   },
+  {
+    id: "board-oversight-assurance",
+    title: "AI board & executive oversight assurance",
+    category: "Leadership & accountability",
+    description:
+      "Practice putting AI on the board agenda with a named executive owner, reporting risk and failures honestly, minuting challenge and dissent, and tracking board decisions to completion.",
+    anchor: "board-oversight-assurance",
+  },
 ] as const;
