@@ -727,4 +727,12 @@ export const GOVERNANCE_GAMES = [
       "Practice extending inventory and scanning to model SDKs, runtimes and containers, applying compensating controls with dated exceptions when patching cannot happen, triaging by exploitability and exposure, verifying the deployed version, and tracking provider security notices.",
     anchor: "vuln-management-assurance",
   },
+  {
+    id: "data-residency-assurance",
+    title: "AI data residency & sovereignty assurance",
+    category: "Data & privacy assurance",
+    description:
+      "Practice verifying where each call path processes data, documenting support-access locations and transfer bases, tracking subprocessor and region changes, asking for evidence covering backups and replicas, and stopping undocumented transfers.",
+    anchor: "data-residency-assurance",
+  },
 ] as const;

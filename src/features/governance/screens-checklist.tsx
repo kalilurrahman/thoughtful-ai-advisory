@@ -270,6 +270,7 @@ import { RAG_GROUNDING_ROUNDS, ragGroundingScore } from "./rag-grounding-game";
 import { ASSURANCE_CASE_ROUNDS, assuranceCaseScore } from "./assurance-case-game";
 import { PROMPT_GOVERNANCE_ROUNDS, promptGovernanceScore } from "./prompt-governance-game";
 import { VULN_MANAGEMENT_ROUNDS, vulnManagementScore } from "./vuln-management-game";
+import { DATA_RESIDENCY_ROUNDS, dataResidencyScore } from "./data-residency-game";
 
 const statusText = {
   complete: "Complete",
@@ -380,6 +381,7 @@ export function ChecklistScreen() {
     {},
   );
   const [vulnManagementAnswers, setVulnManagementAnswers] = useState<Record<string, number>>({});
+  const [dataResidencyAnswers, setDataResidencyAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -475,6 +477,7 @@ export function ChecklistScreen() {
   const assuranceCaseGame = assuranceCaseScore(assuranceCaseAnswers);
   const promptGovernanceGame = promptGovernanceScore(promptGovernanceAnswers);
   const vulnManagementGame = vulnManagementScore(vulnManagementAnswers);
+  const dataResidencyGame = dataResidencyScore(dataResidencyAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -5681,6 +5684,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good vulnerability management choice."
                           : "Review the vulnerability management gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="data-residency-assurance"
+        className="checklist-phase"
+        aria-label="AI data residency and sovereignty assurance game"
+      >
+        <h2>AI data residency &amp; sovereignty assurance</h2>
+        <p>
+          Practice verifying where each call path processes data, documenting support-access locations
+          and transfer bases, tracking subprocessor and region changes, asking for evidence covering
+          backups and replicas, and stopping undocumented transfers. Scenarios are learning prompts,
+          not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {dataResidencyGame.correct}/{dataResidencyGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {dataResidencyGame.complete && (
+            <Button variant="outline" onClick={() => setDataResidencyAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {DATA_RESIDENCY_ROUNDS.map((round) => {
+            const selected = dataResidencyAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setDataResidencyAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good residency choice."
+                          : "Review the residency gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
