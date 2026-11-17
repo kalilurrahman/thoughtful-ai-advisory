@@ -823,4 +823,12 @@ export const GOVERNANCE_GAMES = [
       "Practice weighting sample rates by risk and volume, separating reviewers from the producing queue, scoring against a calibrated rubric, stratifying coverage across channels and languages, and trending findings by category so drift is visible.",
     anchor: "output-sampling-assurance",
   },
+  {
+    id: "claims-substantiation-assurance",
+    title: "AI public claims & marketing substantiation assurance",
+    category: "Risk & assurance",
+    description:
+      "Practice replacing unevidenced superlatives with testable claims, sourcing and verifying vendor claims, re-running evidence when the system changes, describing compliance work accurately, and withdrawing a claim everywhere it appears.",
+    anchor: "claims-substantiation-assurance",
+  },
 ] as const;
