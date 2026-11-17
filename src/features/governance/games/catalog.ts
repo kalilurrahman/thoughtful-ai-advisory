@@ -791,4 +791,12 @@ export const GOVERNANCE_GAMES = [
       "Practice placing intake where the decision happens, triaging by theme so patterns surface, measuring response against the promise, tracing root cause to the model, data, prompt or process, and closing the loop with the people who reported it.",
     anchor: "complaint-feedback-assurance",
   },
+  {
+    id: "risk-transfer-assurance",
+    title: "AI risk transfer & insurance assurance",
+    category: "Risk & assurance",
+    description:
+      "Practice mapping AI risk to actual policy wording and exclusions, notifying insurers within the policy terms, matching indemnities and caps to the exposure carried, testing limits against plausible loss scenarios, and assembling claim evidence before an incident.",
+    anchor: "risk-transfer-assurance",
+  },
 ] as const;

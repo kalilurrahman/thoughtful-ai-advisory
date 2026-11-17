@@ -278,6 +278,7 @@ import { VALUE_REALISATION_ROUNDS, valueRealisationScore } from "./value-realisa
 import { AUDIT_RIGHTS_ROUNDS, auditRightsScore } from "./audit-rights-game";
 import { CONSENT_WITHDRAWAL_ROUNDS, consentWithdrawalScore } from "./consent-withdrawal-game";
 import { COMPLAINT_FEEDBACK_ROUNDS, complaintFeedbackScore } from "./complaint-feedback-game";
+import { RISK_TRANSFER_ROUNDS, riskTransferScore } from "./risk-transfer-game";
 
 const statusText = {
   complete: "Complete",
@@ -402,6 +403,7 @@ export function ChecklistScreen() {
   const [complaintFeedbackAnswers, setComplaintFeedbackAnswers] = useState<Record<string, number>>(
     {},
   );
+  const [riskTransferAnswers, setRiskTransferAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -505,6 +507,7 @@ export function ChecklistScreen() {
   const auditRightsGame = auditRightsScore(auditRightsAnswers);
   const consentWithdrawalGame = consentWithdrawalScore(consentWithdrawalAnswers);
   const complaintFeedbackGame = complaintFeedbackScore(complaintFeedbackAnswers);
+  const riskTransferGame = riskTransferScore(riskTransferAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6215,6 +6218,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good feedback loop choice."
                           : "Review the feedback loop gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="risk-transfer-assurance"
+        className="checklist-phase"
+        aria-label="AI risk transfer and insurance assurance game"
+      >
+        <h2>AI risk transfer &amp; insurance assurance</h2>
+        <p>
+          Practice mapping AI risk to actual policy wording and exclusions, notifying insurers within
+          the policy terms, matching indemnities and caps to the exposure carried, testing limits
+          against plausible loss scenarios, and assembling claim evidence before an incident. Scenarios
+          are learning prompts, not compliance or insurance determinations.
+        </p>
+        <p>
+          <strong>
+            {riskTransferGame.correct}/{riskTransferGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {riskTransferGame.complete && (
+            <Button variant="outline" onClick={() => setRiskTransferAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {RISK_TRANSFER_ROUNDS.map((round) => {
+            const selected = riskTransferAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setRiskTransferAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good risk transfer choice."
+                          : "Review the risk transfer gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
