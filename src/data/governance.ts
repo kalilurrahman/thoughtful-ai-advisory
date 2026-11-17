@@ -4309,6 +4309,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "test-environment-isolation",
+    name: "AI test & sandbox environment isolation readiness",
+    desc: "Estimate readiness for keeping test and sandbox environments from becoming a shadow production: real personal data kept out or de-identified before it is copied, separate credentials with no production write access, isolated model endpoints and keys so test traffic cannot train or bill against live systems, egress controls that stop test data reaching public tools, and environments that expire and are cleared after testing.",
+    inputs: [
+      {
+        k: "data",
+        label: "Production personal data kept out or de-identified",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "credentials",
+        label: "Separate credentials, no production write access",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "models",
+        label: "Isolated model endpoints & keys for test traffic",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "egress",
+        label: "Egress controls stop test data reaching public tools",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "teardown",
+        label: "Environments expire & are cleared after testing",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
