@@ -271,6 +271,7 @@ import { ASSURANCE_CASE_ROUNDS, assuranceCaseScore } from "./assurance-case-game
 import { PROMPT_GOVERNANCE_ROUNDS, promptGovernanceScore } from "./prompt-governance-game";
 import { VULN_MANAGEMENT_ROUNDS, vulnManagementScore } from "./vuln-management-game";
 import { DATA_RESIDENCY_ROUNDS, dataResidencyScore } from "./data-residency-game";
+import { AGENT_EVALUATION_ROUNDS, agentEvaluationScore } from "./agent-evaluation-game";
 
 const statusText = {
   complete: "Complete",
@@ -382,6 +383,7 @@ export function ChecklistScreen() {
   );
   const [vulnManagementAnswers, setVulnManagementAnswers] = useState<Record<string, number>>({});
   const [dataResidencyAnswers, setDataResidencyAnswers] = useState<Record<string, number>>({});
+  const [agentEvaluationAnswers, setAgentEvaluationAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -478,6 +480,7 @@ export function ChecklistScreen() {
   const promptGovernanceGame = promptGovernanceScore(promptGovernanceAnswers);
   const vulnManagementGame = vulnManagementScore(vulnManagementAnswers);
   const dataResidencyGame = dataResidencyScore(dataResidencyAnswers);
+  const agentEvaluationGame = agentEvaluationScore(agentEvaluationAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -5747,6 +5750,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good residency choice."
                           : "Review the residency gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="agent-evaluation-assurance"
+        className="checklist-phase"
+        aria-label="AI agent evaluation assurance game"
+      >
+        <h2>AI agent evaluation assurance</h2>
+        <p>
+          Practice reviewing tool-use traces rather than final answers, defining success criteria per
+          task type, routing repeated failures through a taxonomy, evaluating with representative
+          tools and errors, and re-running regression when tools, prompts or models change. Scenarios
+          are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {agentEvaluationGame.correct}/{agentEvaluationGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {agentEvaluationGame.complete && (
+            <Button variant="outline" onClick={() => setAgentEvaluationAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {AGENT_EVALUATION_ROUNDS.map((round) => {
+            const selected = agentEvaluationAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAgentEvaluationAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good evaluation choice."
+                          : "Review the evaluation gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
