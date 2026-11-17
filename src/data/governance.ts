@@ -3601,6 +3601,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "agent-memory",
+    name: "Agent memory governance readiness",
+    desc: "Estimate readiness for governing what an AI agent remembers across sessions: a register of what is stored and why, retention and deletion that actually remove memories, isolation so one user's memories never surface for another, and user visibility and control over what is kept.",
+    inputs: [
+      {
+        k: "register",
+        label: "Register of what is stored & why",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "retention",
+        label: "Retention & deletion remove memories for real",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "isolation",
+        label: "Isolation between users & tenants",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "control",
+        label: "User visibility & control over what is kept",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
