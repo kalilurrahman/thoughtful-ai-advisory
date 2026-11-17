@@ -3902,6 +3902,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "shadow-ai",
+    name: "Shadow AI containment readiness",
+    desc: "Estimate readiness for finding and containing AI tools nobody approved: discovery that looks at network, spend and identity signals rather than self-reporting, a sanctioned alternative that is genuinely easier to use than the workaround, egress and data controls that limit what an unsanctioned tool can reach, an amnesty route so people can disclose use without punishment, and a disposition for every tool found — sanction, contain or retire.",
+    inputs: [
+      {
+        k: "discovery",
+        label: "Discovery uses network, spend & identity signals",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "alternative",
+        label: "Sanctioned route is easier than the workaround",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "egress",
+        label: "Egress & data controls limit what tools can reach",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "amnesty",
+        label: "Amnesty route & recorded disposition per tool",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

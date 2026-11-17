@@ -1799,6 +1799,30 @@ export function calculate(
           : "Readiness is trending well — check that allocation survives new models and pricing changes, and that untracked tools surface in the same review.",
     };
   }
+  if (id === "shadow-ai") {
+    const discovery = v["discovery"] ?? 0,
+      alternative = v["alternative"] ?? 0,
+      egress = v["egress"] ?? 0,
+      amnesty = v["amnesty"] ?? 0,
+      score = Math.round(discovery * 0.3 + alternative * 0.25 + egress * 0.25 + amnesty * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Shadow AI containment readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Discovery uses network, spend & identity signals (30%)", discovery + "%"],
+        ["Sanctioned route is easier than the workaround (25%)", alternative + "%"],
+        ["Egress & data controls limit what tools can reach (25%)", egress + "%"],
+        ["Amnesty route & recorded disposition per tool (20%)", amnesty + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: find unsanctioned tools through network, spend and identity signals rather than self-reporting, make the sanctioned route easier than the workaround, limit what tools can reach with egress and data controls, and give people an amnesty route with a recorded disposition per tool."
+          : "Readiness is trending well — re-run discovery as new tools appear, check the sanctioned route still wins on convenience, and confirm every tool found has a recorded disposition.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
