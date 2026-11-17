@@ -1535,6 +1535,30 @@ export function calculate(
           : "Readiness is trending well — keep provenance with the dataset, re-test leakage and fidelity when the generator changes, and state synthetic limits wherever the data is used.",
     };
   }
+  if (id === "model-selection") {
+    const requirements = v["requirements"] ?? 0,
+      evaluation = v["evaluation"] ?? 0,
+      rightsize = v["rightsize"] ?? 0,
+      switchpath = v["switchpath"] ?? 0,
+      score = Math.round(requirements * 0.3 + evaluation * 0.3 + rightsize * 0.2 + switchpath * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI model selection & fitness-for-purpose readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Task requirements & quality bar set first (30%)", requirements + "%"],
+        ["Candidates evaluated on your own data (30%)", evaluation + "%"],
+        ["Smallest adequate model, trade-offs recorded (20%)", rightsize + "%"],
+        ["Switch or exit path assessed before lock-in (20%)", switchpath + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: write the task requirements and quality bar before choosing, evaluate candidates on your own data, choose the smallest model that clears the bar and record the trade-offs, and assess a switch or exit path before lock-in."
+          : "Readiness is trending well — re-run your own evaluation when candidates change, revisit right-sizing as usage grows, and keep the exit path credible.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

@@ -3429,6 +3429,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "model-selection",
+    name: "AI model selection & fitness-for-purpose readiness",
+    desc: "Estimate readiness for choosing a model deliberately across task requirements and quality bar defined before selection, candidates evaluated on your own data rather than vendor benchmarks, the smallest adequate model chosen with cost, latency and risk trade-offs recorded, and a switch or exit path assessed before lock-in.",
+    inputs: [
+      {
+        k: "requirements",
+        label: "Task requirements & quality bar set first",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evaluation",
+        label: "Candidates evaluated on your own data",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rightsize",
+        label: "Smallest adequate model, trade-offs recorded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "switchpath",
+        label: "Switch or exit path assessed before lock-in",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
