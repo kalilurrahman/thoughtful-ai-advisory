@@ -2569,6 +2569,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "guardrail-config-governance",
+    name: "Guardrail configuration & change governance readiness",
+    desc: "Estimate readiness for governing guardrail configuration across version-controlled rules, reviewed threshold and policy changes, tested rule changes before release, and rollback plus environment parity for production guardrails.",
+    inputs: [
+      {
+        k: "versioned",
+        label: "Guardrail rules & thresholds version-controlled",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "review",
+        label: "Threshold & policy changes reviewed and approved",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "testing",
+        label: "Rule changes tested against known cases before release",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rollback",
+        label: "Rollback path & environment parity confirmed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
