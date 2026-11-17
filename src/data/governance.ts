@@ -3558,6 +3558,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "change-impact",
+    name: "AI change impact assessment readiness",
+    desc: "Estimate readiness for scoping the impact of an AI change before release across a dependency map of the prompts, tools, datasets and systems it touches, affected user groups and their obligations, a re-test plan for the guardrails and evaluations it invalidates, and a reviewed sign-off that includes risk and legal where needed.",
+    inputs: [
+      {
+        k: "dependencies",
+        label: "Dependency map of what the change touches",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "affected",
+        label: "Affected user groups & obligations identified",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "retest",
+        label: "Re-test plan for guardrails & evaluations",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "signoff",
+        label: "Reviewed sign-off incl. risk & legal",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

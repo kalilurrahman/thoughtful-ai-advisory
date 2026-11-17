@@ -1607,6 +1607,30 @@ export function calculate(
           : "Readiness is trending well — refresh scenarios from near misses and incidents, keep cross-functional attendance real, and verify findings are closed rather than noted.",
     };
   }
+  if (id === "change-impact") {
+    const dependencies = v["dependencies"] ?? 0,
+      affected = v["affected"] ?? 0,
+      retest = v["retest"] ?? 0,
+      signoff = v["signoff"] ?? 0,
+      score = Math.round(dependencies * 0.3 + affected * 0.25 + retest * 0.25 + signoff * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI change impact assessment readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Dependency map of what the change touches (30%)", dependencies + "%"],
+        ["Affected user groups & obligations identified (25%)", affected + "%"],
+        ["Re-test plan for guardrails & evaluations (25%)", retest + "%"],
+        ["Reviewed sign-off incl. risk & legal (20%)", signoff + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: map the prompts, tools, datasets and systems the change touches, identify affected user groups and their obligations, plan the guardrail and evaluation re-tests it invalidates, and get a reviewed sign-off that includes risk and legal."
+          : "Readiness is trending well — keep the dependency map current, re-test the guardrails a change invalidates, and keep sign-off proportional to the blast radius.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
