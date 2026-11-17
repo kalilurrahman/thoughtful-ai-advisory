@@ -1751,6 +1751,30 @@ export function calculate(
           : "Readiness is trending well — test preservation on a recent incident, re-check that holds survive model and provider changes, and keep the custody record with the evidence.",
     };
   }
+  if (id === "data-subject-request") {
+    const triage = v["triage"] ?? 0,
+      discovery = v["discovery"] ?? 0,
+      redaction = v["redaction"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      score = Math.round(triage * 0.3 + discovery * 0.25 + redaction * 0.25 + evidence * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI data subject request readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Requests triaged, identity verified, deadline tracked (30%)", triage + "%"],
+        ["Search reaches prompts, logs, memory & summaries (25%)", discovery + "%"],
+        ["Third-party data redacted before disclosure (25%)", redaction + "%"],
+        ["Search & outcome recorded as evidence (20%)", evidence + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: triage requests with identity verification and a tracked deadline, search prompts, logs, agent memory and derived summaries rather than only the primary database, redact third-party data before disclosure, and record the search and outcome as evidence."
+          : "Readiness is trending well — test a request end to end on a live system, extend discovery as new memory and log stores appear, and keep the evidence trail complete.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
