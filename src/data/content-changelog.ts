@@ -4,6 +4,13 @@ import type { ContentChange } from "@/features/governance/content-changelog-mode
 // Historical dates are verified against repository commits 39568a0, 4f24938 and 8763950.
 export const CONTENT_CHANGES: readonly ContentChange[] = [
   {
+    id: "checkers-release-2-1-0",
+    date: "2026-11-17",
+    title: "Agentic AI risk checker and EU AI Act readiness checker (release v2.1.0)",
+    summary:
+      "Two tools that were planned since launch are now live and free, running entirely in the browser with nothing stored. The agentic AI risk checker reviews one agent across tool inventory, least privilege, high-impact actions, injection exposure, containment, limits and logging, with critical areas set by the agent's exposure. The EU AI Act readiness checker gives a role-aware readiness view by obligation area (Articles 4, 9–15, 26, 50 and 72–73) with prohibited-practice and Annex III-like screens; it is indicative and not a legal classification. The tools index and the EU AI Act guide now describe both as available.",
+  },
+  {
     id: "readiness-calculator-library",
     date: "2026-11-16",
     title: "Readiness calculators for every governance domain",

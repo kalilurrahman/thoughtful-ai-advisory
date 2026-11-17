@@ -1,38 +1,34 @@
 ---
-title: "EU AI Act readiness checker (planned) — join the waitlist"
-h1: "EU AI Act readiness checker — planned"
+title: "EU AI Act readiness checker — role-aware readiness by obligation area"
+h1: "EU AI Act readiness checker"
 slug: /tools/eu-ai-act-readiness-checker/
-description: "Planned VERITRAIL tool: role-aware readiness questions for EU AI Act obligation areas, mapped to VERITRAIL controls. Not yet available — join the waitlist."
+description: "Free VERITRAIL tool: role-aware EU AI Act readiness by obligation area, mapped to controls. Indicative, not a legal classification. Nothing stored."
 section: tools
-nav_label: "EU AI Act checker (planned)"
+nav_label: "EU AI Act checker"
 nav_order: 70
 template: tool
-tool: waitlist
+tool: eu-ai-act-readiness-checker
 schema_type: WebPage
 primary_cta: assessment
 secondary_cta: baseline
-updated: 2026-10-21
+updated: 2026-11-17
 ---
 
-**Status: planned. This tool is not available yet.** Join the waitlist to hear when an early version is ready. We do not have a release date to share.
-
-## What it is intended to do
-
-The checker is planned to help you organize readiness work for one AI system against EU AI Act obligation areas, taking your role into account:
+The checker helps you organise readiness work for one AI system against EU AI Act obligation areas, taking your role into account:
 
 1. **Role.** Capture the facts relevant to whether you act as provider, deployer, or both, for the system — for legal review.
-2. **Screening.** Prompt screening against prohibited practices (AO-10) and record classification facts (EI-02) for legal assessment.
-3. **Obligation areas.** Readiness questions for the areas relevant to your role — for example risk management (Art. 9), data governance (Art. 10), documentation and record-keeping (Art. 11–12), transparency (Art. 13 and 50), human oversight (Art. 14), accuracy, robustness and cybersecurity (Art. 15), AI literacy (Art. 4) and post-market monitoring and incidents (Art. 72–73).
-4. **Output.** A readiness view with evidence labels and VERITRAIL control citations — not a compliance determination.
+2. **Screening.** The stated purpose is screened against prohibited practices (AO-10) and the domain and decision impact are screened against Annex III-like areas, so the classification facts can be recorded (EI-02) for legal assessment.
+3. **Obligation areas.** Readiness questions for AI literacy (Art. 4), risk management (Art. 9), data governance (Art. 10), documentation and record-keeping (Art. 11–12), transparency and instructions (Art. 13), human oversight (Art. 14), accuracy, robustness and cybersecurity (Art. 15), deployer obligations (Art. 26), transparency to people (Art. 50) and post-market monitoring and incidents (Art. 72–73). Each area is shown as applicable, applicable via your provider, voluntary on these facts, or not triggered.
+4. **Output.** A readiness view with evidence labels, next steps and VERITRAIL control citations — not a compliance determination.
 
 {{controls:AO-10,EI-02,AO-05,IS-09,SE-08}}
 
 ## Honest limits
 
-The checker will not classify your system under the Act, and it does not make compliance determinations. EU AI Act timelines were amended by Regulation (EU) 2026/1744 (the Digital Omnibus, in force 27 July 2026); verify all dates against the current EUR-Lex text.
+The checker does not classify your system under the Act, and it does not make compliance determinations; screens are triggers for legal review. EU AI Act timelines were amended by Regulation (EU) 2026/1744 (the Digital Omnibus, in force 27 July 2026); verify all dates against the current EUR-Lex text.
 
-## Available today
+## Go further
 
-The [maturity self-assessment](/tools/maturity-assessment/) already produces indicative readiness indicators for selected EU AI Act themes, and the [EU AI Act readiness guide](/compliance/eu-ai-act/) explains how VERITRAIL controls relate to each obligation area.
+The [maturity self-assessment](/tools/maturity-assessment/) produces indicative readiness indicators for selected EU AI Act themes across your whole programme, and the [EU AI Act readiness guide](/compliance/eu-ai-act/) explains how VERITRAIL controls relate to each obligation area.
 
 {{disclaimer}}

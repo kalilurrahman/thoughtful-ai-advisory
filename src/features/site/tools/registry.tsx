@@ -38,4 +38,12 @@ export const TOOL_COMPONENTS: Record<string, ComponentType> = {
     import("./ask-veritrail").then((m) => ({ default: m.AskVeritrailTool })),
   ),
   "risk-triage": lazy(() => import("./risk-triage").then((m) => ({ default: m.RiskTriageTool }))),
+  "agentic-risk-checker": lazy(() =>
+    import("./agentic-risk-checker").then((m) => ({ default: m.AgenticRiskCheckerTool })),
+  ),
+  "eu-ai-act-readiness-checker": lazy(() =>
+    import("./eu-ai-act-readiness-checker").then((m) => ({
+      default: m.EuAiActReadinessCheckerTool,
+    })),
+  ),
 };

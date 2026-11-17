@@ -58,7 +58,7 @@ export const SECTOR_SENSITIVE: Record<string, number> = {
 };
 const CATEGORY_POINTS = 30;
 
-const PROHIBITED_SCREEN_TERMS: Array<[string, string]> = [
+export const PROHIBITED_SCREEN_TERMS: Array<[string, string]> = [
   ["social scoring", "Social scoring"],
   ["social score", "Social scoring"],
   ["emotion recognition", "Emotion recognition (workplace/education contexts)"],
@@ -71,7 +71,7 @@ const PROHIBITED_SCREEN_TERMS: Array<[string, string]> = [
   ["real-time remote biometric", "Real-time remote biometric identification in public spaces"],
 ];
 
-const WRITE_TOOL_HINTS = [
+export const WRITE_TOOL_HINTS = [
   "write",
   "update",
   "delete",

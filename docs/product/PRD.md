@@ -115,7 +115,7 @@ These are requirements on every feature, enforced by tests where possible.
 | Surface | Status | Notes |
 |---|---|---|
 | Website, control library, glossary | Live | 56 pages, 64 controls, 38 terms |
-| Free tools (assessment, triage, guardrails, Ask) | Live | Two further tools are planned (waitlist) |
+| Free tools (assessment, triage, guardrails, Ask, agentic risk checker, EU AI Act readiness checker) | Live | All six run in the browser; nothing is stored |
 | Lead capture and qualification | Live | Rate-limited per client; no confirmation e-mails yet |
 | TILLER workspace | Live | Open demo; private workspace when signed in (manual save) |
 | Reports and audit pack | Preview | Labelled demo previews with blank sign-off |
@@ -275,7 +275,7 @@ rating or intent) and `form_submit` (with the form) count use of each free tool 
 
 **Later (new capability).**
 
-1. Agentic AI risk checker and EU AI Act readiness checker (E16, waitlists open).
+1. Agentic AI risk checker and EU AI Act readiness checker (E16): shipped in v2.1.0.
 2. Private evidence upload with reviewer status; several workspaces and team roles; SSO and MFA.
 3. Per-system release gates with per-system gate scores (stub-gate-per-system); decisions that update inventory status.
 4. Telemetry-fed monitoring; a runtime enforcement point for Shield policies.

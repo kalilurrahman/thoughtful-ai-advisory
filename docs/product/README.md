@@ -16,13 +16,13 @@ the platform console and the installable app — described four ways, from one c
 
 | Measure | Count |
 |---|---|
-| Capabilities | 61 (54 live, 4 demo, 1 preview, 2 planned) |
-| Website content pages | 57 in 10 sections, about 33k words |
+| Capabilities | 61 (56 live, 4 demo, 1 preview, 0 planned) |
+| Website content pages | 57 in 10 sections, about 34k words |
 | Controls in the library | 64 across 5 pillars |
 | Glossary terms | 38 in 4 topics |
-| Epics / user stories | 16 / 63 (56 done, 3 partial, 4 planned) |
+| Epics / user stories | 16 / 63 (58 done, 3 partial, 2 planned) |
 | Use cases | 24 |
-| Known gaps recorded against stories | 24 |
+| Known gaps recorded against stories | 26 |
 
 ## Personas
 

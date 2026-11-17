@@ -14,7 +14,8 @@ from .errors import BuildError
 SECTIONS = {"home", "framework", "solutions", "compliance", "industries", "tools", "resources",
             "contact", "legal", "company"}
 TEMPLATES = {"page", "home", "tool", "form"}
-TOOLS = {"maturity-assessment", "guardrail-generator", "ask-veritrail", "risk-triage", "waitlist"}
+TOOLS = {"maturity-assessment", "guardrail-generator", "ask-veritrail", "risk-triage",
+         "agentic-risk-checker", "eu-ai-act-readiness-checker", "waitlist"}
 FORMS = {"baseline", "demo", "contact", "newsletter", "blueprint", "design_partner"}  # design_partner: extension (API supports it)
 SCHEMA_TYPES = {"WebPage", "Service", "Article", "FAQPage", "CollectionPage", "ContactPage"}
 CTA_KEYS = {"assessment", "baseline", "agent", "blueprint", "demo", "guardrails"}

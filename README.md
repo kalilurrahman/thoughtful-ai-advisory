@@ -36,7 +36,7 @@
 
 **VERITRAIL** is an all-in-one, enterprise-ready AI governance platform, landing site, and assurance workspace built for AI safety teams, compliance officers, risk managers, and engineering leaders establishing operational AI controls aligned with global standards (**NIST AI RMF 1.0**, **EU AI Act**, and **ISO/IEC 42001:2023**).
 
-VERITRAIL integrates a full public marketing & content site, a 64-control governance library, in-browser interactive rule engines (Maturity Assessment, Risk Triage, Guardrail Generator, Ask VERITRAIL), and an operational governance workspace (TILLER Assessment Studio, AI System Inventory, Incident Register, Release Gate Reviews, Action Tracking, and Multi-Format Audit Deliverable Studio).
+VERITRAIL integrates a full public marketing & content site, a 64-control governance library, in-browser interactive rule engines (Maturity Assessment, Risk Triage, Guardrail Generator, Ask VERITRAIL, Agentic AI Risk Checker, EU AI Act Readiness Checker), and an operational governance workspace (TILLER Assessment Studio, AI System Inventory, Incident Register, Release Gate Reviews, Action Tracking, and Multi-Format Audit Deliverable Studio).
 
 > **Naming Note.** The platform was previously named _AEGIS_ and its assessment studio _GOVERN_. To avoid confusion with established industry frameworks (e.g. Forrester AEGIS and NIST AI RMF GOVERN function), the platform is **VERITRAIL** and the assessment studio is **TILLER**. The six workspace pillars spell **TILLER** (**T**rust, **I**nventory, **L**ifecycle, **L**awfulness, **E**ngineering, **R**untime).
 
@@ -88,6 +88,8 @@ Zero-latency, client-side TypeScript rule engines held in fixture-tested parity 
 * **Risk Triage Engine**: Risk tiering against VERITRAIL tiers (Minimal, Limited, High-risk, Prohibited-review) with EU AI Act cross-references and explainable decision rationale.
 * **Guardrail Generator**: Automated policy rule synthesis based on model deployment parameters.
 * **Ask VERITRAIL**: Searchable governance assistant querying curated regulatory guidance and framework controls.
+* **Agentic AI Risk Checker**: Seven-area review of one agent (tool inventory, least privilege, approvals, injection exposure, containment, limits, logging) with an indicative posture and next actions.
+* **EU AI Act Readiness Checker**: Role-aware readiness view by obligation area (Art. 4, 9–15, 26, 50, 72–73) with prohibited-practice and Annex III-like screens; indicative, not a legal classification.
 
 ---
 

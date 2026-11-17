@@ -9,7 +9,7 @@ Every app, tool and feature, then every website content page, the control librar
 | Area | Capabilities | Live | Demo | Preview | Planned |
 |---|---|---|---|---|---|
 | [Public website and content](#public-website-and-content) | 5 | 5 | 0 | 0 | 0 |
-| [Free interactive tools](#free-interactive-tools) | 6 | 4 | 0 | 0 | 2 |
+| [Free interactive tools](#free-interactive-tools) | 6 | 6 | 0 | 0 | 0 |
 | [Lead capture](#lead-capture) | 1 | 1 | 0 | 0 | 0 |
 | [Workspace — assessment and release readiness](#workspace--assessment-and-release-readiness) | 6 | 6 | 0 | 0 | 0 |
 | [Workspace — AI inventory](#workspace--ai-inventory) | 1 | 1 | 0 | 0 | 0 |
@@ -41,8 +41,8 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-011 | Risk triage | `/tools/risk-triage` | Live | None | AI system owner | [E03](EPICS_AND_STORIES.md#e03--free-assessment-and-triage-tools) | Suggested tier (Prohibited-review, High, Medium, Low) with factors, triggers and review path; Inferred. |
 | CAP-012 | Guardrail generator | `/tools/guardrail-generator` | Live | None | CISO / security architect, Engineering / platform lead | [E03](EPICS_AND_STORIES.md#e03--free-assessment-and-triage-tools) | Risk rating, tool permission matrix and draft veritrail.policy/v1 in Observe mode. |
 | CAP-013 | Ask VERITRAIL | `/tools/ask-veritrail` | Live | Page memory | Prospective buyer, Consultant / advisor | [E03](EPICS_AND_STORIES.md#e03--free-assessment-and-triage-tools) | Deterministic, cited answers from the governed content with safety refusals; no AI model or network. |
-| CAP-014 | Agentic AI risk checker | `/tools/agentic-risk-checker` | Planned | None | CISO / security architect | [E16](EPICS_AND_STORIES.md#e16--planned-capabilities) | Planned; waitlist form only. |
-| CAP-015 | EU AI Act readiness checker | `/tools/eu-ai-act-readiness-checker` | Planned | None | Chief Risk / Compliance Officer | [E16](EPICS_AND_STORIES.md#e16--planned-capabilities) | Planned; waitlist form only. |
+| CAP-014 | Agentic AI risk checker | `/tools/agentic-risk-checker` | Live | None | CISO / security architect, Engineering / platform lead | [E16](EPICS_AND_STORIES.md#e16--planned-capabilities) | Seven-area review of one agent (inventory, least privilege, approvals, injection, containment, limits, logging); critical areas follow the agent's exposure; indicative posture with next actions. |
+| CAP-015 | EU AI Act readiness checker | `/tools/eu-ai-act-readiness-checker` | Live | None | Chief Risk / Compliance Officer, AI governance lead | [E16](EPICS_AND_STORIES.md#e16--planned-capabilities) | Role-aware readiness by obligation area (Art. 4, 9–15, 26, 50, 72–73) with prohibited-practice and Annex III-like screens; indicative view, not a classification. |
 
 ### Lead capture
 
@@ -146,7 +146,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 ## Website content
 
-57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,425 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
+57 pages written in Markdown in `platform/content/website_pages` and shared with the Python platform, about 33,588 words. The React site renders them with the reading aids in CAP-074; tool and form pages add the capability named in the last column.
 
 ### Home
 
@@ -188,7 +188,7 @@ Every app, tool and feature, then every website content page, the control librar
 | Compliance readiness, without compliance claims | `/compliance` | page | How VERITRAIL helps organize evidence against NIST AI RMF, ISO/IEC 42001 and the EU AI Act — indicative mappings, a gap-analysis method and honest limits. | 517 | 2 | CAP-002 Website content pages | [S01.2](EPICS_AND_STORIES.md#s012) |
 | NIST AI Risk Management Framework and VERITRAIL | `/compliance/nist-ai-rmf` | page | How VERITRAIL controls relate indicatively to the NIST AI RMF 1.0 functions Govern, Map, Measure and Manage, with subcategory-level mappings and known gaps. | 861 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
 | ISO/IEC 42001 and VERITRAIL | `/compliance/iso-42001` | page | How VERITRAIL controls support an ISO/IEC 42001 AI management system across clauses 4–10 and Annex A — indicative mappings for readiness, not certification. | 842 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
-| EU AI Act readiness | `/compliance/eu-ai-act` | page | Prepare evidence for key EU AI Act obligation areas — risk management, data, documentation, logging, transparency, oversight, incidents — with VERITRAIL. | 1107 | 3 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
+| EU AI Act readiness | `/compliance/eu-ai-act` | page | Prepare evidence for key EU AI Act obligation areas — risk management, data, documentation, logging, transparency, oversight, incidents — with VERITRAIL. | 1106 | 3 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
 | Gap analysis method | `/compliance/gap-analysis` | page | The VERITRAIL gap-analysis method: five evidence statuses, four severities with 30/60/90/180-day remediation SLAs, and a human-reviewed workflow. | 755 | 2 | CAP-002 Website content pages | [S01.3](EPICS_AND_STORIES.md#s013) |
 
 ### Industries
@@ -206,13 +206,13 @@ Every app, tool and feature, then every website content page, the control librar
 
 | Page | Route | Type | What it covers | Words | FAQs | Delivered by | Stories |
 |---|---|---|---|---|---|---|---|
-| AI governance tools | `/tools` | page | Free VERITRAIL tools: the 8-minute AI governance maturity self-assessment, use-case risk triage, a runtime guardrail generator and the Ask VERITRAIL demo. | 342 | — | CAP-002 Website content pages | — |
+| AI governance tools | `/tools` | page | Free VERITRAIL tools: the 8-minute AI governance maturity self-assessment, use-case risk triage, a runtime guardrail generator and the Ask VERITRAIL demo. | 366 | — | CAP-002 Website content pages | — |
 | AI Governance Maturity Self-Assessment | `/tools/maturity-assessment` | tool: maturity-assessment | Score your AI governance across 8 weighted domains in about 8 minutes. Get an indicative maturity level, critical flags and a 30/60/90-day action plan. | 362 | 4 | CAP-010 Maturity self-assessment | [S03.1](EPICS_AND_STORIES.md#s031), [S03.2](EPICS_AND_STORIES.md#s032) |
 | Runtime guardrail generator | `/tools/guardrail-generator` | tool: guardrail-generator | Describe an LLM app or AI agent and get a draft risk profile, tool permission matrix, approval rules and a VERITRAIL policy-as-code starting point to review. | 382 | 2 | CAP-012 Guardrail generator | [S03.4](EPICS_AND_STORIES.md#s034) |
 | Ask VERITRAIL (limited demo) | `/tools/ask-veritrail` | tool: ask-veritrail | Try a limited public demo of the VERITRAIL Agent: ask about AI governance controls and framework mappings and get answers that cite VERITRAIL control IDs. | 229 | 2 | CAP-013 Ask VERITRAIL | [S03.5](EPICS_AND_STORIES.md#s035) |
 | AI use-case risk triage | `/tools/risk-triage` | tool: risk-triage | Answer a short intake about one AI use case and get a suggested VERITRAIL risk tier, the factors behind it and the modules it needs. A human confirms it. | 284 | 2 | CAP-011 Risk triage | [S03.3](EPICS_AND_STORIES.md#s033) |
-| Agentic AI risk checker — planned | `/tools/agentic-risk-checker` | tool: waitlist | Planned VERITRAIL tool: review an AI agent's tools, autonomy, approvals and containment against VERITRAIL controls. Not yet available — join the waitlist. | 229 | — | CAP-014 Agentic AI risk checker | [S16.1](EPICS_AND_STORIES.md#s161) |
-| EU AI Act readiness checker — planned | `/tools/eu-ai-act-readiness-checker` | tool: waitlist | Planned VERITRAIL tool: role-aware readiness questions for EU AI Act obligation areas, mapped to VERITRAIL controls. Not yet available — join the waitlist. | 260 | — | CAP-015 EU AI Act readiness checker | [S16.2](EPICS_AND_STORIES.md#s162) |
+| Agentic AI risk checker | `/tools/agentic-risk-checker` | tool: agentic-risk-checker | Free VERITRAIL tool: review an AI agent's tools, privileges, approvals, injection exposure, containment, limits and logging. Browser-only; nothing stored. | 358 | — | CAP-014 Agentic AI risk checker | [S16.1](EPICS_AND_STORIES.md#s161) |
+| EU AI Act readiness checker | `/tools/eu-ai-act-readiness-checker` | tool: eu-ai-act-readiness-checker | Free VERITRAIL tool: role-aware EU AI Act readiness by obligation area, mapped to controls. Indicative, not a legal classification. Nothing stored. | 271 | — | CAP-015 EU AI Act readiness checker | [S16.2](EPICS_AND_STORIES.md#s162) |
 
 ### Resources
 
@@ -292,8 +292,8 @@ Every app, tool and feature, then every website content page, the control librar
 | CAP-011 | Risk triage | [S03.3](EPICS_AND_STORIES.md#s033) | `src/features/site/tools/risk-triage.tsx`, `src/features/site/engines/risk-tier.ts` | `site-risk-tier.test.ts` |
 | CAP-012 | Guardrail generator | [S03.4](EPICS_AND_STORIES.md#s034) | `src/features/site/tools/guardrail-generator.tsx`, `src/features/site/engines/shield` | `site-shield.test.ts` |
 | CAP-013 | Ask VERITRAIL | [S03.5](EPICS_AND_STORIES.md#s035) | `src/features/site/tools/ask-veritrail.tsx`, `src/features/site/engines/ask-veritrail` | `site-ask-veritrail.test.ts` |
-| CAP-014 | Agentic AI risk checker | [S16.1](EPICS_AND_STORIES.md#s161) | `platform/content/website_pages/tools-agentic-risk-checker.md` | **None** |
-| CAP-015 | EU AI Act readiness checker | [S16.2](EPICS_AND_STORIES.md#s162) | `platform/content/website_pages/tools-eu-ai-act-readiness-checker.md` | **None** |
+| CAP-014 | Agentic AI risk checker | [S16.1](EPICS_AND_STORIES.md#s161) | `src/features/site/tools/agentic-risk-checker.tsx`, `src/features/site/engines/agentic-risk.ts`, `platform/content/website_pages/tools-agentic-risk-checker.md` | `site-agentic-risk.test.ts` |
+| CAP-015 | EU AI Act readiness checker | [S16.2](EPICS_AND_STORIES.md#s162) | `src/features/site/tools/eu-ai-act-readiness-checker.tsx`, `src/features/site/engines/eu-ai-act-readiness.ts`, `platform/content/website_pages/tools-eu-ai-act-readiness-checker.md` | `site-eu-ai-act-readiness.test.ts` |
 | CAP-020 | Lead forms | [S03.2](EPICS_AND_STORIES.md#s032), [S04.1](EPICS_AND_STORIES.md#s041), [S04.2](EPICS_AND_STORIES.md#s042), [S04.3](EPICS_AND_STORIES.md#s043) | `src/features/site/forms.tsx`, `src/features/site/leads.functions.ts`, `src/features/site/lead-intake.ts` | `platform-misc-parity.test.ts`, `rate-limit.test.ts`, `site-analytics-events.test.tsx`, `server-logic.test.ts` |
 | CAP-030 | Governance overview | [S05.2](EPICS_AND_STORIES.md#s052) | `src/features/governance/screens-core.tsx`, `src/features/governance/model.ts`, `src/data/content-changelog.ts`, `src/features/governance/content-changelog.tsx` | `governance.test.ts`, `governance-provider.test.tsx`, `content-changelog.test.ts` |
 | CAP-031 | TILLER assessment | [S05.1](EPICS_AND_STORIES.md#s051) | `src/features/governance/screens-core.tsx` | `governance.test.ts` |
