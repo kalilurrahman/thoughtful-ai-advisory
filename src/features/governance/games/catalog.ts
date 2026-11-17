@@ -511,4 +511,12 @@ export const GOVERNANCE_GAMES = [
       "Practice blame-free near-miss reporting, a reportable near-miss category, closed-loop learning with reporters, and impact-based triage and escalation.",
     anchor: "near-miss-reporting-assurance",
   },
+  {
+    id: "risk-register-quality-assurance",
+    title: "AI risk register quality assurance",
+    category: "Risk & appetite",
+    description:
+      "Practice writing specific system-tied risk statements, assigning named owners with dated treatment, evidencing residual risk, and keeping the register free of duplicates and stale entries.",
+    anchor: "risk-register-quality-assurance",
+  },
 ] as const;
