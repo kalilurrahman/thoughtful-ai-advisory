@@ -775,4 +775,12 @@ export const GOVERNANCE_GAMES = [
       "Practice securing a right to audit or receive assurance evidence, extending scope to models, data and subprocessors, exercising the right on a risk-based cadence, reading reports against actual use, and verifying findings to closure with evidence.",
     anchor: "third-party-audit-assurance",
   },
+  {
+    id: "consent-withdrawal-assurance",
+    title: "AI consent withdrawal assurance",
+    category: "Data & privacy assurance",
+    description:
+      "Practice treating derived artifacts as in scope, stating and measuring a removal window, requiring confirmation from downstream processors, recording per-withdrawal evidence, and checking consent state at the point of reuse.",
+    anchor: "consent-withdrawal-assurance",
+  },
 ] as const;

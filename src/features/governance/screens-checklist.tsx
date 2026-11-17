@@ -276,6 +276,7 @@ import { CONTENT_PROVENANCE_ROUNDS, contentProvenanceScore } from "./content-pro
 import { TEST_ISOLATION_ROUNDS, testIsolationScore } from "./test-isolation-game";
 import { VALUE_REALISATION_ROUNDS, valueRealisationScore } from "./value-realisation-game";
 import { AUDIT_RIGHTS_ROUNDS, auditRightsScore } from "./audit-rights-game";
+import { CONSENT_WITHDRAWAL_ROUNDS, consentWithdrawalScore } from "./consent-withdrawal-game";
 
 const statusText = {
   complete: "Complete",
@@ -394,6 +395,9 @@ export function ChecklistScreen() {
   const [testIsolationAnswers, setTestIsolationAnswers] = useState<Record<string, number>>({});
   const [valueRealisationAnswers, setValueRealisationAnswers] = useState<Record<string, number>>({});
   const [auditRightsAnswers, setAuditRightsAnswers] = useState<Record<string, number>>({});
+  const [consentWithdrawalAnswers, setConsentWithdrawalAnswers] = useState<Record<string, number>>(
+    {},
+  );
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -495,6 +499,7 @@ export function ChecklistScreen() {
   const testIsolationGame = testIsolationScore(testIsolationAnswers);
   const valueRealisationGame = valueRealisationScore(valueRealisationAnswers);
   const auditRightsGame = auditRightsScore(auditRightsAnswers);
+  const consentWithdrawalGame = consentWithdrawalScore(consentWithdrawalAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6079,6 +6084,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good assurance access choice."
                           : "Review the assurance access gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="consent-withdrawal-assurance"
+        className="checklist-phase"
+        aria-label="AI consent withdrawal assurance game"
+      >
+        <h2>AI consent withdrawal assurance</h2>
+        <p>
+          Practice treating derived artifacts as in scope, stating and measuring a removal window,
+          requiring confirmation from downstream processors, recording per-withdrawal evidence, and
+          checking consent state at the point of reuse. Scenarios are learning prompts, not compliance
+          determinations.
+        </p>
+        <p>
+          <strong>
+            {consentWithdrawalGame.correct}/{consentWithdrawalGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {consentWithdrawalGame.complete && (
+            <Button variant="outline" onClick={() => setConsentWithdrawalAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CONSENT_WITHDRAWAL_ROUNDS.map((round) => {
+            const selected = consentWithdrawalAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setConsentWithdrawalAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good withdrawal choice."
+                          : "Review the withdrawal gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
