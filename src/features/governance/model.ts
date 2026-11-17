@@ -1199,6 +1199,30 @@ export function calculate(
           : "Readiness is trending well — keep forum membership, decision rights, escalation turnaround and operating-model reviews current as use cases multiply.",
     };
   }
+  if (id === "agentic-guardrails") {
+    const permissions = v["permissions"] ?? 0,
+      approval = v["approval"] ?? 0,
+      limits = v["limits"] ?? 0,
+      replay = v["replay"] ?? 0,
+      score = Math.round(permissions * 0.3 + approval * 0.3 + limits * 0.2 + replay * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Agentic AI action guardrails readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Least-privilege tool & action permissions (30%)", permissions + "%"],
+        ["Human approval for irreversible actions (30%)", approval + "%"],
+        ["Scope, spend & rate limits enforced (20%)", limits + "%"],
+        ["Action logs complete and replayable (20%)", replay + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: restrict agents to least-privilege tool and action permissions, require human approval for irreversible or high-impact actions, enforce scope, spend and rate limits, and keep action logs complete and replayable."
+          : "Readiness is trending well — re-test agent permissions, approval gates, limits and action logs whenever tools, scopes or autonomy levels change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
