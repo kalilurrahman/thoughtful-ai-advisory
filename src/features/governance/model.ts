@@ -2355,6 +2355,34 @@ export function calculate(
           : "Readiness is trending well — review the study protocol whenever output risk changes, check that withdrawing consent actually removes the data, and keep negative results in the record rather than only the launch metrics.",
     };
   }
+  if (id === "speak-up-channel") {
+    const channels = v["channels"] ?? 0,
+      protection = v["protection"] ?? 0,
+      triage = v["triage"] ?? 0,
+      feedback = v["feedback"] ?? 0,
+      learning = v["learning"] ?? 0,
+      score = Math.round(
+        channels * 0.2 + protection * 0.2 + triage * 0.2 + feedback * 0.2 + learning * 0.2,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI speak-up & concern reporting readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Multiple routes to raise a concern, incl. outside the line (20%)", channels + "%"],
+        ["Non-retaliation stated and visible in practice (20%)", protection + "%"],
+        ["Concerns triaged with an owner and a timeframe (20%)", triage + "%"],
+        ["Reporter told what happened, within stated limits (20%)", feedback + "%"],
+        ["Trends reviewed & repeat concerns reach governance (20%)", learning + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: offer more than one route to raise a concern including one outside the line, state and visibly uphold non-retaliation, triage AI-specific concerns with an owner and a timeframe, tell the reporter what happened within stated limits, and review trends so repeat concerns reach governance instead of being closed one at a time."
+          : "Readiness is trending well — test the channel with a concern that implicates a senior person, check that reporters who used it would use it again, and review repeat themes rather than only individual closures.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
