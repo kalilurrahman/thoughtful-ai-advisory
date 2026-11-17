@@ -863,4 +863,12 @@ export const GOVERNANCE_GAMES = [
       "Practice measuring adverse impact on your own pipeline instead of trusting a vendor fairness claim, putting a human in front of every rejection, disclosing AI assessment to candidates, offering a genuine accessible alternative, and retaining records that explain a decision.",
     anchor: "hiring-screening-assurance",
   },
+  {
+    id: "annotation-workforce-assurance",
+    title: "AI data annotation & labelling workforce assurance",
+    category: "People & workforce",
+    description:
+      "Practice defining labels with worked examples before work starts, paying for real effort including rework, limiting harmful content with warnings, rotation, support and a penalty-free opt-out, routing annotator disagreement to model owners, and verifying supplier terms by sampling the work.",
+    anchor: "annotation-workforce-assurance",
+  },
 ] as const;

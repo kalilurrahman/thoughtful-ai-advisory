@@ -293,6 +293,10 @@ import { WORKER_MONITORING_ROUNDS, workerMonitoringScore } from "./worker-monito
 import { RESEARCH_ETHICS_ROUNDS, researchEthicsScore } from "./research-ethics-game";
 import { SPEAK_UP_ROUNDS, speakUpScore } from "./speak-up-game";
 import { HIRING_SCREENING_ROUNDS, hiringScreeningScore } from "./hiring-screening-game";
+import {
+  ANNOTATION_WORKFORCE_ROUNDS,
+  annotationWorkforceScore,
+} from "./annotation-workforce-game";
 
 const statusText = {
   complete: "Complete",
@@ -432,6 +436,9 @@ export function ChecklistScreen() {
   const [researchEthicsAnswers, setResearchEthicsAnswers] = useState<Record<string, number>>({});
   const [speakUpAnswers, setSpeakUpAnswers] = useState<Record<string, number>>({});
   const [hiringScreeningAnswers, setHiringScreeningAnswers] = useState<Record<string, number>>({});
+  const [annotationWorkforceAnswers, setAnnotationWorkforceAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -544,6 +551,7 @@ export function ChecklistScreen() {
   const researchEthicsGame = researchEthicsScore(researchEthicsAnswers);
   const speakUpGame = speakUpScore(speakUpAnswers);
   const hiringScreeningGame = hiringScreeningScore(hiringScreeningAnswers);
+  const annotationWorkforceGame = annotationWorkforceScore(annotationWorkforceAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6821,6 +6829,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good screening choice."
                           : "Review the screening gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="annotation-workforce-assurance"
+        className="checklist-phase"
+        aria-label="AI data annotation and labelling workforce game"
+      >
+        <h2>AI data annotation &amp; labelling workforce</h2>
+        <p>
+          Practice defining labels with worked examples before work starts, paying for real effort
+          including rework, limiting harmful content with warnings, rotation, support and a
+          penalty-free opt-out, routing annotator disagreement to model owners, and verifying supplier
+          terms by sampling the work. Scenarios are learning prompts, not compliance or
+          employment-law determinations.
+        </p>
+        <p>
+          <strong>
+            {annotationWorkforceGame.correct}/{annotationWorkforceGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {annotationWorkforceGame.complete && (
+            <Button variant="outline" onClick={() => setAnnotationWorkforceAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {ANNOTATION_WORKFORCE_ROUNDS.map((round) => {
+            const selected = annotationWorkforceAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAnnotationWorkforceAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good labelling choice."
+                          : "Review the labelling gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
