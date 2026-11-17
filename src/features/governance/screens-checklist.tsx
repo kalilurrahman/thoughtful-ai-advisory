@@ -268,6 +268,7 @@ import { COST_ALLOCATION_ROUNDS, costAllocationScore } from "./cost-allocation-g
 import { SHADOW_AI_ROUNDS, shadowAiScore } from "./shadow-ai-game";
 import { RAG_GROUNDING_ROUNDS, ragGroundingScore } from "./rag-grounding-game";
 import { ASSURANCE_CASE_ROUNDS, assuranceCaseScore } from "./assurance-case-game";
+import { PROMPT_GOVERNANCE_ROUNDS, promptGovernanceScore } from "./prompt-governance-game";
 
 const statusText = {
   complete: "Complete",
@@ -374,6 +375,9 @@ export function ChecklistScreen() {
   const [shadowAiAnswers, setShadowAiAnswers] = useState<Record<string, number>>({});
   const [ragGroundingAnswers, setRagGroundingAnswers] = useState<Record<string, number>>({});
   const [assuranceCaseAnswers, setAssuranceCaseAnswers] = useState<Record<string, number>>({});
+  const [promptGovernanceAnswers, setPromptGovernanceAnswers] = useState<Record<string, number>>(
+    {},
+  );
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -467,6 +471,7 @@ export function ChecklistScreen() {
   const shadowAiGame = shadowAiScore(shadowAiAnswers);
   const ragGroundingGame = ragGroundingScore(ragGroundingAnswers);
   const assuranceCaseGame = assuranceCaseScore(assuranceCaseAnswers);
+  const promptGovernanceGame = promptGovernanceScore(promptGovernanceAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -5547,6 +5552,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good assurance case choice."
                           : "Review the assurance case gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="prompt-governance-assurance"
+        className="checklist-phase"
+        aria-label="AI prompt and instruction governance assurance game"
+      >
+        <h2>AI prompt &amp; instruction governance assurance</h2>
+        <p>
+          Practice versioning prompts with a diffable history, reviewing instruction changes with a
+          recorded approver, growing the regression set from incidents, releasing with a tested
+          rollback, and monitoring behaviour for drift after release. Scenarios are learning prompts,
+          not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {promptGovernanceGame.correct}/{promptGovernanceGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {promptGovernanceGame.complete && (
+            <Button variant="outline" onClick={() => setPromptGovernanceAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PROMPT_GOVERNANCE_ROUNDS.map((round) => {
+            const selected = promptGovernanceAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setPromptGovernanceAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good instruction governance choice."
+                          : "Review the instruction governance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
