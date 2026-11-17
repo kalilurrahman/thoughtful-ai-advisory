@@ -655,4 +655,12 @@ export const GOVERNANCE_GAMES = [
       "Practice registering subprocessors and model cards, routing provider notices to an owner, assessing term changes against actual use, and testing an exit path before it is needed.",
     anchor: "provider-terms-assurance",
   },
+  {
+    id: "regulator-inquiry-assurance",
+    title: "AI regulator inquiry assurance",
+    category: "Regulatory & assurance",
+    description:
+      "Practice answering an inquiry from a maintained evidence index, routing it through one named responder with legal review, tracking deadlines with a deputy, and verifying each answer against evidence.",
+    anchor: "regulator-inquiry-assurance",
+  },
 ] as const;
