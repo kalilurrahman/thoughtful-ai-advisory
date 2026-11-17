@@ -2483,6 +2483,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "transparency-disclosure",
+    name: "AI transparency & user disclosure readiness",
+    desc: "Estimate readiness for disclosing AI use to the people it affects across clear notice that AI is in use, stated purpose, limits and known failure modes, routes to question, appeal or reach a human, and recorded disclosure decisions across channels and languages.",
+    inputs: [
+      {
+        k: "notice",
+        label: "Users are clearly told when AI is in use",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 50,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "limits",
+        label: "Purpose, limits & known failure modes disclosed",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "appeal",
+        label: "Question, appeal & human-contact routes published",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "record",
+        label: "Disclosure decisions recorded across channels & languages",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
