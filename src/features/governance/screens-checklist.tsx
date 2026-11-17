@@ -239,6 +239,10 @@ import {
 } from "./near-miss-reporting-game";
 import { RISK_REGISTER_ROUNDS, riskRegisterScore } from "./risk-register-game";
 import { OUTPUT_IP_ROUNDS, outputIpScore } from "./output-ip-game";
+import {
+  OVERSIGHT_CAPACITY_ROUNDS,
+  oversightCapacityScore,
+} from "./oversight-capacity-game";
 
 const statusText = {
   complete: "Complete",
@@ -314,6 +318,7 @@ export function ChecklistScreen() {
   const [nearMissAnswers, setNearMissAnswers] = useState<Record<string, number>>({});
   const [riskRegisterAnswers, setRiskRegisterAnswers] = useState<Record<string, number>>({});
   const [outputIpAnswers, setOutputIpAnswers] = useState<Record<string, number>>({});
+  const [oversightCapacityAnswers, setOversightCapacityAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -384,6 +389,7 @@ export function ChecklistScreen() {
   const nearMissGame = nearMissReportingScore(nearMissAnswers);
   const riskRegisterGame = riskRegisterScore(riskRegisterAnswers);
   const outputIpGame = outputIpScore(outputIpAnswers);
+  const oversightCapacityGame = oversightCapacityScore(oversightCapacityAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -4031,6 +4037,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good output rights assurance choice."
                           : "Review the output rights gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="oversight-capacity-assurance"
+        className="checklist-phase"
+        aria-label="AI human oversight capacity assurance game"
+      >
+        <h2>AI human oversight capacity assurance</h2>
+        <p>
+          Practice detecting automation bias and rubber-stamping, giving reviewers real override
+          authority, matching review capacity to decision volume, and assigning competent reviewers
+          with context. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {oversightCapacityGame.correct}/{oversightCapacityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {oversightCapacityGame.complete && (
+            <Button variant="outline" onClick={() => setOversightCapacityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {OVERSIGHT_CAPACITY_ROUNDS.map((round) => {
+            const selected = oversightCapacityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setOversightCapacityAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good oversight capacity assurance choice."
+                          : "Review the oversight capacity gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
