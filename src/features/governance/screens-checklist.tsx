@@ -237,6 +237,7 @@ import {
   NEAR_MISS_REPORTING_ROUNDS,
   nearMissReportingScore,
 } from "./near-miss-reporting-game";
+import { RISK_REGISTER_ROUNDS, riskRegisterScore } from "./risk-register-game";
 
 const statusText = {
   complete: "Complete",
@@ -310,6 +311,7 @@ export function ChecklistScreen() {
   const [operatingModelAnswers, setOperatingModelAnswers] = useState<Record<string, number>>({});
   const [agenticGuardrailsAnswers, setAgenticGuardrailsAnswers] = useState<Record<string, number>>({});
   const [nearMissAnswers, setNearMissAnswers] = useState<Record<string, number>>({});
+  const [riskRegisterAnswers, setRiskRegisterAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -378,6 +380,7 @@ export function ChecklistScreen() {
   const operatingModelGame = operatingModelScore(operatingModelAnswers);
   const agenticGuardrailsGame = agenticGuardrailsScore(agenticGuardrailsAnswers);
   const nearMissGame = nearMissReportingScore(nearMissAnswers);
+  const riskRegisterGame = riskRegisterScore(riskRegisterAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3901,6 +3904,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good near-miss learning choice."
                           : "Review the near-miss reporting gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="risk-register-quality-assurance"
+        className="checklist-phase"
+        aria-label="AI risk register quality assurance game"
+      >
+        <h2>AI risk register quality assurance</h2>
+        <p>
+          Practice writing specific system-tied risk statements, assigning named owners with dated
+          treatment, evidencing residual risk, and keeping the register free of duplicates and stale
+          entries. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {riskRegisterGame.correct}/{riskRegisterGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {riskRegisterGame.complete && (
+            <Button variant="outline" onClick={() => setRiskRegisterAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {RISK_REGISTER_ROUNDS.map((round) => {
+            const selected = riskRegisterAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setRiskRegisterAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good risk register assurance choice."
+                          : "Review the risk register gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
