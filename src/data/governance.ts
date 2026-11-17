@@ -4933,6 +4933,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "speak-up-channel",
+    name: "AI speak-up & concern reporting readiness",
+    desc: "Estimate readiness for hearing about AI problems from the people who see them first: more than one route to raise a concern, including a way to do it without going through the line, protection from retaliation that is stated and visible in practice, triage with an owner and a timeframe for AI-specific harms, feedback to the reporter about what happened, and trends reviewed so repeat concerns reach governance rather than being closed one at a time.",
+    inputs: [
+      {
+        k: "channels",
+        label: "Multiple routes to raise a concern, incl. outside the line",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "protection",
+        label: "Non-retaliation stated and visible in practice",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "triage",
+        label: "Concerns triaged with an owner and a timeframe",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "feedback",
+        label: "Reporter told what happened, within stated limits",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "learning",
+        label: "Trends reviewed & repeat concerns reach governance",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
