@@ -1031,6 +1031,30 @@ export function calculate(
           : "Readiness is trending well — keep AI-in-use notices, limit disclosures, appeal routes and channel coverage current as features and audiences change.",
     };
   }
+  if (id === "data-rights-licensing") {
+    const basis = v["basis"] ?? 0,
+      licence = v["licence"] ?? 0,
+      optout = v["optout"] ?? 0,
+      evidence = v["evidence"] ?? 0,
+      score = Math.round(basis * 0.3 + licence * 0.3 + optout * 0.2 + evidence * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Training data rights & licensing readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Lawful basis & consent documented (30%)", basis + "%"],
+        ["Dataset licences & contract terms checked (30%)", licence + "%"],
+        ["Opt-out & withdrawal honoured in models (20%)", optout + "%"],
+        ["Scraped/third-party dataset review evidence (20%)", evidence + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: document lawful basis and consent for training data, check dataset licences and contract terms before use, honour opt-out and withdrawal requests in models, and keep review evidence for scraped and third-party datasets."
+          : "Readiness is trending well — re-check lawful basis, licences, opt-out handling and dataset evidence whenever data sources, model versions or terms change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

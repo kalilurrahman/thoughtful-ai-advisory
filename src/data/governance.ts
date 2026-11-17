@@ -2526,6 +2526,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "data-rights-licensing",
+    name: "Training data rights & licensing readiness",
+    desc: "Estimate readiness for using AI training and fine-tuning data lawfully across documented lawful basis and consent, dataset licence and contract terms checked, opt-out and withdrawal honoured in models, and review evidence for scraped and third-party datasets.",
+    inputs: [
+      {
+        k: "basis",
+        label: "Lawful basis & consent documented for training data",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 40,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "licence",
+        label: "Dataset licences & contract terms checked before use",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "optout",
+        label: "Opt-out & withdrawal requests honoured in models",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Scraped & third-party dataset review evidence kept",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
