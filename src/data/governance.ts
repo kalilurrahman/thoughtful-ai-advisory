@@ -2956,6 +2956,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "output-ip-rights",
+    name: "AI output ownership & IP risk readiness",
+    desc: "Estimate readiness for handling rights in AI-generated content across contractual ownership of outputs, infringement and similarity checks for generated material, third-party and open-source licence obligations, and disclosure plus record-keeping for AI-assisted work.",
+    inputs: [
+      {
+        k: "ownership",
+        label: "Output ownership & usage rights settled in contracts",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 35,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "infringement",
+        label: "Infringement & similarity checks for generated content",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "licences",
+        label: "Third-party & open-source licence obligations tracked",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "disclosure",
+        label: "AI-assisted work disclosed & recorded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
