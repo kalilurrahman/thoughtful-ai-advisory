@@ -291,6 +291,7 @@ import {
 } from "./claims-substantiation-game";
 import { WORKER_MONITORING_ROUNDS, workerMonitoringScore } from "./worker-monitoring-game";
 import { RESEARCH_ETHICS_ROUNDS, researchEthicsScore } from "./research-ethics-game";
+import { SPEAK_UP_ROUNDS, speakUpScore } from "./speak-up-game";
 
 const statusText = {
   complete: "Complete",
@@ -428,6 +429,7 @@ export function ChecklistScreen() {
   >({});
   const [workerMonitoringAnswers, setWorkerMonitoringAnswers] = useState<Record<string, number>>({});
   const [researchEthicsAnswers, setResearchEthicsAnswers] = useState<Record<string, number>>({});
+  const [speakUpAnswers, setSpeakUpAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -538,6 +540,7 @@ export function ChecklistScreen() {
   const claimsSubstantiationGame = claimsSubstantiationScore(claimsSubstantiationAnswers);
   const workerMonitoringGame = workerMonitoringScore(workerMonitoringAnswers);
   const researchEthicsGame = researchEthicsScore(researchEthicsAnswers);
+  const speakUpGame = speakUpScore(speakUpAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6689,6 +6692,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good ethics choice."
                           : "Review the participant safeguard."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="speak-up-assurance"
+        className="checklist-phase"
+        aria-label="AI speak-up and concern reporting game"
+      >
+        <h2>AI speak-up &amp; concern reporting</h2>
+        <p>
+          Practice offering routes outside the line, treating adverse treatment after a concern as
+          retaliation risk, triaging concerns with an owner and a clock, giving reporters an outcome,
+          and escalating repeat themes into governance. Scenarios are learning prompts, not
+          compliance or employment-law determinations.
+        </p>
+        <p>
+          <strong>
+            {speakUpGame.correct}/{speakUpGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {speakUpGame.complete && (
+            <Button variant="outline" onClick={() => setSpeakUpAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SPEAK_UP_ROUNDS.map((round) => {
+            const selected = speakUpAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setSpeakUpAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good speak-up choice."
+                          : "Review the reporting gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

@@ -847,4 +847,12 @@ export const GOVERNANCE_GAMES = [
       "Practice reviewing a study before participants start, disclosing what is retained and how outputs are used, taking specific and revocable consent, stopping when a participant signals distress, and reporting inconvenient findings with their limits.",
     anchor: "research-ethics-assurance",
   },
+  {
+    id: "speak-up-assurance",
+    title: "AI speak-up & concern reporting assurance",
+    category: "People & workforce",
+    description:
+      "Practice offering routes outside the line, treating adverse treatment after a concern as retaliation risk, triaging concerns with an owner and a clock, giving reporters an outcome, and escalating repeat themes into governance.",
+    anchor: "speak-up-assurance",
+  },
 ] as const;
