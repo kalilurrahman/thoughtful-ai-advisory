@@ -3945,6 +3945,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "rag-grounding",
+    name: "Retrieval grounding integrity readiness",
+    desc: "Estimate readiness for keeping answers tied to sources you control: every retrieved document has a named owner and a refresh date, answers cite the passages they rely on so a reader can check them, conflicting or stale sources are resolved by a rule rather than the highest similarity score, the system says it does not know instead of answering from memory, and retrieved content is monitored for drift and poisoning.",
+    inputs: [
+      {
+        k: "sources",
+        label: "Sources have a named owner & refresh date",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "citations",
+        label: "Answers cite the passages they rely on",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "conflict",
+        label: "Conflicts & stale sources resolved by rule",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "refusal",
+        label: "Says it does not know instead of guessing",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "drift",
+        label: "Retrieved content monitored for drift & poisoning",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

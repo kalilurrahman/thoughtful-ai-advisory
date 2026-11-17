@@ -1823,6 +1823,34 @@ export function calculate(
           : "Readiness is trending well — re-run discovery as new tools appear, check the sanctioned route still wins on convenience, and confirm every tool found has a recorded disposition.",
     };
   }
+  if (id === "rag-grounding") {
+    const sources = v["sources"] ?? 0,
+      citations = v["citations"] ?? 0,
+      conflict = v["conflict"] ?? 0,
+      refusal = v["refusal"] ?? 0,
+      drift = v["drift"] ?? 0,
+      score = Math.round(
+        sources * 0.3 + citations * 0.25 + conflict * 0.25 + refusal * 0.1 + drift * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Retrieval grounding integrity readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Sources have a named owner & refresh date (30%)", sources + "%"],
+        ["Answers cite the passages they rely on (25%)", citations + "%"],
+        ["Conflicts & stale sources resolved by rule (25%)", conflict + "%"],
+        ["Says it does not know instead of guessing (10%)", refusal + "%"],
+        ["Retrieved content monitored for drift & poisoning (10%)", drift + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: give every retrieved source an owner and a refresh date, cite the passages each answer relies on, resolve conflicting or stale sources by a stated rule, make 'I do not know' an acceptable answer, and monitor retrieved content for drift and poisoning."
+          : "Readiness is trending well — sample answers against their cited sources, re-check the conflict rule as documents are superseded, and watch for retrieved content that changed without an owner noticing.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
