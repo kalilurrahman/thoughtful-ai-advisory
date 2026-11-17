@@ -243,6 +243,7 @@ import {
   OVERSIGHT_CAPACITY_ROUNDS,
   oversightCapacityScore,
 } from "./oversight-capacity-game";
+import { GOVERNANCE_METRICS_ROUNDS, governanceMetricsScore } from "./governance-metrics-game";
 
 const statusText = {
   complete: "Complete",
@@ -319,6 +320,7 @@ export function ChecklistScreen() {
   const [riskRegisterAnswers, setRiskRegisterAnswers] = useState<Record<string, number>>({});
   const [outputIpAnswers, setOutputIpAnswers] = useState<Record<string, number>>({});
   const [oversightCapacityAnswers, setOversightCapacityAnswers] = useState<Record<string, number>>({});
+  const [metricsAnswers, setMetricsAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -390,6 +392,7 @@ export function ChecklistScreen() {
   const riskRegisterGame = riskRegisterScore(riskRegisterAnswers);
   const outputIpGame = outputIpScore(outputIpAnswers);
   const oversightCapacityGame = oversightCapacityScore(oversightCapacityAnswers);
+  const metricsGame = governanceMetricsScore(metricsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -4099,6 +4102,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good oversight capacity assurance choice."
                           : "Review the oversight capacity gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="governance-metrics-assurance"
+        className="checklist-phase"
+        aria-label="AI governance metrics and reporting assurance game"
+      >
+        <h2>AI governance metrics &amp; reporting assurance</h2>
+        <p>
+          Practice replacing vanity counts with decision-grade metrics, tracing figures to system
+          sources, reporting failures and near misses honestly, and tying every metric to a decision
+          and owner. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {metricsGame.correct}/{metricsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {metricsGame.complete && (
+            <Button variant="outline" onClick={() => setMetricsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {GOVERNANCE_METRICS_ROUNDS.map((round) => {
+            const selected = metricsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setMetricsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good metrics and reporting choice."
+                          : "Review the reporting gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
