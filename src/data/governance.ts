@@ -3816,6 +3816,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "data-subject-request",
+    name: "AI data subject request readiness",
+    desc: "Estimate readiness for answering access, correction and erasure requests that touch AI systems: requests triaged with identity verified and the deadline tracked, a search that reaches prompts, logs, agent memory and derived summaries rather than only the primary database, third-party data redacted before disclosure, and the search and outcome recorded as evidence.",
+    inputs: [
+      {
+        k: "triage",
+        label: "Requests triaged, identity verified, deadline tracked",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "discovery",
+        label: "Search reaches prompts, logs, memory & summaries",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "redaction",
+        label: "Third-party data redacted before disclosure",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "evidence",
+        label: "Search & outcome recorded as evidence",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
