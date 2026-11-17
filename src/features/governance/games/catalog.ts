@@ -599,4 +599,12 @@ export const GOVERNANCE_GAMES = [
       "Practice treating retrieved content as untrusted, scoping agent tools and data, turning red-team attacks into regression tests, and detecting instruction-extraction attempts in production.",
     anchor: "prompt-injection-assurance",
   },
+  {
+    id: "synthetic-data-assurance",
+    title: "Synthetic data governance assurance",
+    category: "Data governance",
+    description:
+      "Practice recording how synthetic data was generated, validating fidelity and utility against real data, testing for memorised records, and documenting label limits before reuse.",
+    anchor: "synthetic-data-assurance",
+  },
 ] as const;
