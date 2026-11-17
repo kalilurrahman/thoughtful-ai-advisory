@@ -679,4 +679,12 @@ export const GOVERNANCE_GAMES = [
       "Practice verifying identity and tracking deadlines, searching prompts, logs, agent memory and derived summaries, redacting third-party data before disclosure, propagating corrections, and recording how each request was handled.",
     anchor: "data-subject-request-assurance",
   },
+  {
+    id: "cost-allocation-assurance",
+    title: "AI usage cost allocation assurance",
+    category: "Operations & value",
+    description:
+      "Practice metering usage per team, system and feature, agreeing a chargeback or showback basis with finance, giving owners their spend against a budget, reviewing runaway and idle usage, and pulling untracked tools into the same picture.",
+    anchor: "cost-allocation-assurance",
+  },
 ] as const;
