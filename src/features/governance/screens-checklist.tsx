@@ -284,6 +284,7 @@ import {
   assuranceIndependenceScore,
 } from "./assurance-independence-game";
 import { REGULATORY_HORIZON_ROUNDS, regulatoryHorizonScore } from "./regulatory-horizon-game";
+import { OUTPUT_SAMPLING_ROUNDS, outputSamplingScore } from "./output-sampling-game";
 
 const statusText = {
   complete: "Complete",
@@ -415,6 +416,7 @@ export function ChecklistScreen() {
   const [regulatoryHorizonAnswers, setRegulatoryHorizonAnswers] = useState<Record<string, number>>(
     {},
   );
+  const [outputSamplingAnswers, setOutputSamplingAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -521,6 +523,7 @@ export function ChecklistScreen() {
   const riskTransferGame = riskTransferScore(riskTransferAnswers);
   const assuranceIndependenceGame = assuranceIndependenceScore(assuranceIndependenceAnswers);
   const regulatoryHorizonGame = regulatoryHorizonScore(regulatoryHorizonAnswers);
+  const outputSamplingGame = outputSamplingScore(outputSamplingAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6420,6 +6423,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good scanning choice."
                           : "Review the scanning gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="output-sampling-assurance"
+        className="checklist-phase"
+        aria-label="AI production output sampling assurance game"
+      >
+        <h2>AI production output sampling assurance</h2>
+        <p>
+          Practice weighting sample rates by risk and volume, separating reviewers from the producing
+          queue, scoring against a calibrated rubric, stratifying coverage across channels and
+          languages, and trending findings by category so drift is visible. Scenarios are learning
+          prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {outputSamplingGame.correct}/{outputSamplingGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {outputSamplingGame.complete && (
+            <Button variant="outline" onClick={() => setOutputSamplingAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {OUTPUT_SAMPLING_ROUNDS.map((round) => {
+            const selected = outputSamplingAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setOutputSamplingAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good sampling choice."
+                          : "Review the sampling gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
