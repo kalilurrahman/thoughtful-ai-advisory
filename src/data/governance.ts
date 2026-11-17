@@ -4569,6 +4569,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "risk-transfer-insurance",
+    name: "AI risk transfer & insurance readiness",
+    desc: "Estimate readiness for transferring AI risk rather than only documenting it: AI risks mapped against actual insurance coverage including exclusions, AI use and material incidents disclosed to insurers, contract indemnities and liability caps matched to the exposure you carry, limits and deductibles tested against realistic loss scenarios, and claim evidence assembled before an incident rather than after.",
+    inputs: [
+      {
+        k: "coverage",
+        label: "AI risks mapped to coverage, including exclusions",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "disclosure",
+        label: "AI use & material incidents disclosed to insurers",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "indemnity",
+        label: "Indemnities & liability caps matched to exposure",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "limits",
+        label: "Limits & deductibles tested against loss scenarios",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "claims",
+        label: "Claim evidence assembled before an incident",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
