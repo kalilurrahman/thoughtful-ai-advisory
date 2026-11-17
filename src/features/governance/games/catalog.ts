@@ -831,4 +831,12 @@ export const GOVERNANCE_GAMES = [
       "Practice replacing unevidenced superlatives with testable claims, sourcing and verifying vendor claims, re-running evidence when the system changes, describing compliance work accurately, and withdrawing a claim everywhere it appears.",
     anchor: "claims-substantiation-assurance",
   },
+  {
+    id: "worker-monitoring-assurance",
+    title: "AI worker monitoring & algorithmic management assurance",
+    category: "People & workforce",
+    description:
+      "Practice justifying each monitoring use with a recorded necessity and proportionality test, disclosing what is captured and why, keeping a human in decisions about work and pay, giving workers access and appeal, and deleting data on a stated schedule.",
+    anchor: "worker-monitoring-assurance",
+  },
 ] as const;

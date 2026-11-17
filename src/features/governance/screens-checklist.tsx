@@ -289,6 +289,7 @@ import {
   CLAIMS_SUBSTANTIATION_ROUNDS,
   claimsSubstantiationScore,
 } from "./claims-substantiation-game";
+import { WORKER_MONITORING_ROUNDS, workerMonitoringScore } from "./worker-monitoring-game";
 
 const statusText = {
   complete: "Complete",
@@ -424,6 +425,7 @@ export function ChecklistScreen() {
   const [claimsSubstantiationAnswers, setClaimsSubstantiationAnswers] = useState<
     Record<string, number>
   >({});
+  const [workerMonitoringAnswers, setWorkerMonitoringAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -532,6 +534,7 @@ export function ChecklistScreen() {
   const regulatoryHorizonGame = regulatoryHorizonScore(regulatoryHorizonAnswers);
   const outputSamplingGame = outputSamplingScore(outputSamplingAnswers);
   const claimsSubstantiationGame = claimsSubstantiationScore(claimsSubstantiationAnswers);
+  const workerMonitoringGame = workerMonitoringScore(workerMonitoringAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -6557,6 +6560,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good substantiation choice."
                           : "Review the claims gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="worker-monitoring-assurance"
+        className="checklist-phase"
+        aria-label="AI worker monitoring and algorithmic management game"
+      >
+        <h2>AI worker monitoring &amp; algorithmic management</h2>
+        <p>
+          Practice justifying each monitoring use with a recorded necessity and proportionality test,
+          disclosing what is captured and why, keeping a human in decisions about work and pay,
+          giving workers access and appeal, and deleting data on a stated schedule. Scenarios are
+          learning prompts, not compliance or employment-law determinations.
+        </p>
+        <p>
+          <strong>
+            {workerMonitoringGame.correct}/{workerMonitoringGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {workerMonitoringGame.complete && (
+            <Button variant="outline" onClick={() => setWorkerMonitoringAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {WORKER_MONITORING_ROUNDS.map((round) => {
+            const selected = workerMonitoringAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setWorkerMonitoringAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good monitoring choice."
+                          : "Review the monitoring gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
