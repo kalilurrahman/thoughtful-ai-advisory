@@ -895,4 +895,12 @@ export const GOVERNANCE_GAMES = [
       "Practice reviewing generated code like human code, checking licence and provenance of suggestions, rotating secrets after a paste and blocking prohibited inputs, approving assistants before they touch repositories, and keeping the author accountable.",
     anchor: "coding-assistants-assurance",
   },
+  {
+    id: "ma-diligence-assurance",
+    title: "AI due diligence for mergers & divestments game",
+    category: "Operating model",
+    description:
+      "Practice building the AI inventory from real operations, checking change-of-control and termination rights before signing, surfacing inherited incidents and regulator contact, confirming data rights transfer or costing a retrain, and planning what must keep running on day one.",
+    anchor: "ma-diligence-assurance",
+  },
 ] as const;
