@@ -495,4 +495,12 @@ export const GOVERNANCE_GAMES = [
       "Practice publishing decision rights, keeping forums operating with quorum and decision logs, owning escalation turnaround, and reviewing the operating model as the estate grows.",
     anchor: "operating-model-assurance",
   },
+  {
+    id: "agentic-guardrails-assurance",
+    title: "Agentic AI action guardrails assurance",
+    category: "Guardrails & configuration",
+    description:
+      "Practice least-privilege agent credentials, approval gates for irreversible actions, enforced spend and step limits, and replayable action logs for tool-using agents.",
+    anchor: "agentic-guardrails-assurance",
+  },
 ] as const;

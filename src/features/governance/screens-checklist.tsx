@@ -229,6 +229,10 @@ import {
   intakeOnboardingScore,
 } from "./intake-onboarding-game";
 import { OPERATING_MODEL_ROUNDS, operatingModelScore } from "./operating-model-game";
+import {
+  AGENTIC_GUARDRAILS_ROUNDS,
+  agenticGuardrailsScore,
+} from "./agentic-guardrails-game";
 
 const statusText = {
   complete: "Complete",
@@ -300,6 +304,7 @@ export function ChecklistScreen() {
   const [evalIntegrityAnswers, setEvalIntegrityAnswers] = useState<Record<string, number>>({});
   const [intakeAnswers, setIntakeAnswers] = useState<Record<string, number>>({});
   const [operatingModelAnswers, setOperatingModelAnswers] = useState<Record<string, number>>({});
+  const [agenticGuardrailsAnswers, setAgenticGuardrailsAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -366,6 +371,7 @@ export function ChecklistScreen() {
   const evalIntegrityGame = evalIntegrityScore(evalIntegrityAnswers);
   const intakeGame = intakeOnboardingScore(intakeAnswers);
   const operatingModelGame = operatingModelScore(operatingModelAnswers);
+  const agenticGuardrailsGame = agenticGuardrailsScore(agenticGuardrailsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3765,6 +3771,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good operating model assurance choice."
                           : "Review the operating model gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="agentic-guardrails-assurance"
+        className="checklist-phase"
+        aria-label="Agentic AI action guardrails assurance game"
+      >
+        <h2>Agentic AI action guardrails assurance</h2>
+        <p>
+          Practice least-privilege agent credentials, approval gates for irreversible actions,
+          enforced spend and step limits, and replayable action logs for tool-using agents. Scenarios
+          are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {agenticGuardrailsGame.correct}/{agenticGuardrailsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {agenticGuardrailsGame.complete && (
+            <Button variant="outline" onClick={() => setAgenticGuardrailsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {AGENTIC_GUARDRAILS_ROUNDS.map((round) => {
+            const selected = agenticGuardrailsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAgenticGuardrailsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good agentic guardrail assurance choice."
+                          : "Review the agent guardrail gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
