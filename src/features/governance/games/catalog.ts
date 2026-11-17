@@ -439,4 +439,12 @@ export const GOVERNANCE_GAMES = [
       "Practice time-boxed overrides with expiry, exception trend review, exception ownership and review, and assessing the impact of outputs produced while an override was active.",
     anchor: "guardrail-exception-assurance",
   },
+  {
+    id: "data-rights-licensing-assurance",
+    title: "Training data rights & licensing assurance",
+    category: "Data rights & licensing",
+    description:
+      "Practice confirming lawful basis for training data, checking licence terms against actual use, honouring opt-outs and withdrawals, and reviewing scraped corpora before use.",
+    anchor: "data-rights-licensing-assurance",
+  },
 ] as const;
