@@ -1703,6 +1703,30 @@ export function calculate(
           : "Readiness is trending well — keep the register current, route legal and changelog notices to an owner, and re-test the fallback as dependencies grow.",
     };
   }
+  if (id === "regulator-inquiry") {
+    const evidenceindex = v["evidenceindex"] ?? 0,
+      responder = v["responder"] ?? 0,
+      timelines = v["timelines"] ?? 0,
+      verification = v["verification"] ?? 0,
+      score = Math.round(evidenceindex * 0.3 + responder * 0.25 + timelines * 0.25 + verification * 0.2),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI regulator inquiry readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Evidence index maps systems to obligations (30%)", evidenceindex + "%"],
+        ["Named responder & legal review path (25%)", responder + "%"],
+        ["Statutory & contractual timelines tracked (25%)", timelines + "%"],
+        ["Answers verified against evidence before submission (20%)", verification + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: build an evidence index that maps each AI system to the obligations it answers, name a responder with a legal review path, track statutory and contractual timelines, and verify answers against evidence before submitting."
+          : "Readiness is trending well — refresh the index as systems change, rehearse a live inquiry end to end, and keep the legal review path from becoming a bottleneck.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

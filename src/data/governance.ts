@@ -3730,6 +3730,49 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "regulator-inquiry",
+    name: "AI regulator inquiry readiness",
+    desc: "Estimate readiness for answering a regulator, auditor or customer questionnaire about an AI system: an evidence index that maps each AI system to the obligations it answers, a named responder with a legal review path, statutory and contractual response timelines tracked, and answers verified against evidence before they are submitted.",
+    inputs: [
+      {
+        k: "evidenceindex",
+        label: "Evidence index maps systems to obligations",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 30,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "responder",
+        label: "Named responder & legal review path",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "timelines",
+        label: "Statutory & contractual timelines tracked",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "verification",
+        label: "Answers verified against evidence before submission",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
