@@ -4517,6 +4517,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "complaint-feedback",
+    name: "AI complaint & feedback loop readiness",
+    desc: "Estimate readiness for turning complaints and feedback about AI into fixes: intake that is findable and usable by the people affected, triage that separates one-off errors from systemic patterns, a stated response time actually met, root cause traced to the model, data, prompt or process rather than closing at the ticket, and fixes fed back into the system with the complainant told the outcome.",
+    inputs: [
+      {
+        k: "intake",
+        label: "Complaint intake findable & usable by affected people",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "triage",
+        label: "Triage separates one-off errors from systemic patterns",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "response",
+        label: "Stated response time met & measured",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "rootcause",
+        label: "Root cause traced to model, data, prompt or process",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "closedloop",
+        label: "Fix fed back into the system & outcome shared",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [

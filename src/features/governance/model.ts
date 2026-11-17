@@ -2131,6 +2131,34 @@ export function calculate(
           : "Readiness is trending well — re-check derived artifacts after each pipeline change, test that a withdrawal reaches processors, and confirm a revoked record cannot re-enter a future dataset.",
     };
   }
+  if (id === "complaint-feedback") {
+    const intake = v["intake"] ?? 0,
+      triage = v["triage"] ?? 0,
+      response = v["response"] ?? 0,
+      rootcause = v["rootcause"] ?? 0,
+      closedloop = v["closedloop"] ?? 0,
+      score = Math.round(
+        intake * 0.25 + triage * 0.25 + response * 0.2 + rootcause * 0.2 + closedloop * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI complaint & feedback loop readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Complaint intake findable & usable by affected people (25%)", intake + "%"],
+        ["Triage separates one-off errors from systemic patterns (25%)", triage + "%"],
+        ["Stated response time met & measured (20%)", response + "%"],
+        ["Root cause traced to model, data, prompt or process (20%)", rootcause + "%"],
+        ["Fix fed back into the system & outcome shared (10%)", closedloop + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: make complaint intake findable and usable by the people affected, triage to separate one-off errors from systemic patterns, meet and measure a stated response time, trace root cause to the model, data, prompt or process rather than closing at the ticket, and feed fixes back into the system while telling the complainant the outcome."
+          : "Readiness is trending well — cluster complaints by theme rather than volume, check that fixes survive the next model or prompt change, and confirm complainants are told what changed.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
