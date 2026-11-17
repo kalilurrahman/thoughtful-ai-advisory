@@ -671,4 +671,12 @@ export const GOVERNANCE_GAMES = [
       "Practice capturing prompts, retrieved context, model versions and outputs at the time, applying a hold before rotation, keeping chain of custody, and demonstrating root cause with a replayable trail.",
     anchor: "incident-evidence-assurance",
   },
+  {
+    id: "data-subject-request-assurance",
+    title: "AI data subject request assurance",
+    category: "Data & privacy assurance",
+    description:
+      "Practice verifying identity and tracking deadlines, searching prompts, logs, agent memory and derived summaries, redacting third-party data before disclosure, propagating corrections, and recording how each request was handled.",
+    anchor: "data-subject-request-assurance",
+  },
 ] as const;
