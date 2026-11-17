@@ -479,4 +479,12 @@ export const GOVERNANCE_GAMES = [
       "Practice holdout integrity and contamination checks, complete and honest reporting, evaluation relevance as products change, and sign-off on eval set versions and thresholds.",
     anchor: "eval-integrity-assurance",
   },
+  {
+    id: "intake-onboarding-assurance",
+    title: "AI intake & onboarding assurance",
+    category: "Intake & onboarding",
+    description:
+      "Practice bringing shadow AI into intake, proportionate review for pilots with real users, verified onboarding evidence, and recorded handover of ongoing obligations.",
+    anchor: "intake-onboarding-assurance",
+  },
 ] as const;

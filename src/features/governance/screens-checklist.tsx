@@ -224,6 +224,10 @@ import {
   riskAppetiteAssuranceScore,
 } from "./risk-appetite-assurance-game";
 import { EVAL_INTEGRITY_ROUNDS, evalIntegrityScore } from "./eval-integrity-game";
+import {
+  INTAKE_ONBOARDING_ROUNDS,
+  intakeOnboardingScore,
+} from "./intake-onboarding-game";
 
 const statusText = {
   complete: "Complete",
@@ -293,6 +297,7 @@ export function ChecklistScreen() {
   const [cadenceAnswers, setCadenceAnswers] = useState<Record<string, number>>({});
   const [appetiteAnswers, setAppetiteAnswers] = useState<Record<string, number>>({});
   const [evalIntegrityAnswers, setEvalIntegrityAnswers] = useState<Record<string, number>>({});
+  const [intakeAnswers, setIntakeAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -357,6 +362,7 @@ export function ChecklistScreen() {
   const cadenceGame = assuranceCadenceScore(cadenceAnswers);
   const appetiteGame = riskAppetiteAssuranceScore(appetiteAnswers);
   const evalIntegrityGame = evalIntegrityScore(evalIntegrityAnswers);
+  const intakeGame = intakeOnboardingScore(intakeAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -3632,6 +3638,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good evaluation integrity choice."
                           : "Review the evaluation integrity gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="intake-onboarding-assurance"
+        className="checklist-phase"
+        aria-label="AI intake and onboarding assurance game"
+      >
+        <h2>AI intake &amp; onboarding assurance</h2>
+        <p>
+          Practice bringing shadow AI into intake, proportionate review for pilots with real users,
+          verified onboarding evidence, and recorded handover of ongoing obligations. Scenarios are
+          learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {intakeGame.correct}/{intakeGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {intakeGame.complete && (
+            <Button variant="outline" onClick={() => setIntakeAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {INTAKE_ONBOARDING_ROUNDS.map((round) => {
+            const selected = intakeAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setIntakeAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good intake & onboarding assurance choice."
+                          : "Review the intake and onboarding gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
