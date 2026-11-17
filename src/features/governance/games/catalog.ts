@@ -615,4 +615,12 @@ export const GOVERNANCE_GAMES = [
       "Practice setting the quality bar before choosing, evaluating candidates on your own data, recording cost and risk trade-offs, and keeping a credible switch path before lock-in.",
     anchor: "model-selection-assurance",
   },
+  {
+    id: "env-impact-assurance",
+    title: "AI compute & environmental impact assurance",
+    category: "Responsible AI",
+    description:
+      "Practice measuring energy and compute per workload, right-sizing and scheduling for efficiency, reporting AI impact with assumptions, and owning reduction targets with a review cadence.",
+    anchor: "env-impact-assurance",
+  },
 ] as const;

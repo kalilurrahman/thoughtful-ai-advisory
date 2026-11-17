@@ -256,6 +256,7 @@ import { EVIDENCE_PACK_ROUNDS, evidencePackScore } from "./evidence-pack-game";
 import { PROMPT_INJECTION_ROUNDS, promptInjectionScore } from "./prompt-injection-game";
 import { SYNTHETIC_DATA_ROUNDS, syntheticDataScore } from "./synthetic-data-game";
 import { MODEL_SELECTION_ROUNDS, modelSelectionScore } from "./model-selection-game";
+import { ENV_IMPACT_ROUNDS, envImpactScore } from "./env-impact-game";
 
 const statusText = {
   complete: "Complete",
@@ -342,6 +343,7 @@ export function ChecklistScreen() {
   const [promptInjectionAnswers, setPromptInjectionAnswers] = useState<Record<string, number>>({});
   const [syntheticDataAnswers, setSyntheticDataAnswers] = useState<Record<string, number>>({});
   const [modelSelectionAnswers, setModelSelectionAnswers] = useState<Record<string, number>>({});
+  const [envImpactAnswers, setEnvImpactAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -423,6 +425,7 @@ export function ChecklistScreen() {
   const promptInjectionGame = promptInjectionScore(promptInjectionAnswers);
   const syntheticDataGame = syntheticDataScore(syntheticDataAnswers);
   const modelSelectionGame = modelSelectionScore(modelSelectionAnswers);
+  const envImpactGame = envImpactScore(envImpactAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -4753,6 +4756,68 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good model selection choice."
                           : "Review the model selection gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="env-impact-assurance"
+        className="checklist-phase"
+        aria-label="AI compute and environmental impact assurance game"
+      >
+        <h2>AI compute &amp; environmental impact assurance</h2>
+        <p>
+          Practice measuring energy and compute per workload, right-sizing and scheduling for
+          efficiency, reporting AI impact with assumptions, and owning reduction targets with a
+          review cadence. Scenarios are learning prompts, not compliance determinations.
+        </p>
+        <p>
+          <strong>
+            {envImpactGame.correct}/{envImpactGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {envImpactGame.complete && (
+            <Button variant="outline" onClick={() => setEnvImpactAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {ENV_IMPACT_ROUNDS.map((round) => {
+            const selected = envImpactAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setEnvImpactAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good environmental impact choice."
+                          : "Review the environmental impact gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
