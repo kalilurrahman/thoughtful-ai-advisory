@@ -967,4 +967,12 @@ export const GOVERNANCE_GAMES = [
       "Practice protecting people in vulnerable circumstances from automated harm: pausing adverse action on hardship signals for human review, adapting the interaction when someone discloses bereavement or illness, limiting vulnerability data to what was disclosed or needed, giving trained staff real override authority, and recording support and outcomes for vulnerable groups.",
     anchor: "vulnerable-customers-assurance",
   },
+  {
+    id: "education-integrity-assurance",
+    title: "AI in education & assessment game",
+    category: "Education & research",
+    description:
+      "Practice handling AI in education fairly: setting permitted use per assessment before work starts, treating detector output as evidence rather than a verdict, redesigning assessment that a model can complete, giving students a disclosure step, and training markers so decisions are consistent, recorded and appealable.",
+    anchor: "education-integrity-assurance",
+  },
 ] as const;
