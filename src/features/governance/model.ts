@@ -2901,6 +2901,41 @@ export function calculate(
           : "Readiness is trending well — test whether the model can reach a decline without a person seeing it, compare outcomes for similar risks across groups, and check that a customer who challenges a decision can get a specific reason rather than a restatement of the policy.",
     };
   }
+  if (id === "incident-notification-individuals") {
+    const criteria = v["criteria"] ?? 0,
+      identification = v["identification"] ?? 0,
+      clarity = v["clarity"] ?? 0,
+      remedy = v["remedy"] ?? 0,
+      consistency = v["consistency"] ?? 0,
+      learning = v["learning"] ?? 0,
+      score = Math.round(
+        criteria * 0.2 +
+          identification * 0.2 +
+          clarity * 0.2 +
+          remedy * 0.2 +
+          consistency * 0.1 +
+          learning * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI incident notification to affected individuals",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Criteria & thresholds for notifying affected individuals defined (20%)", criteria + "%"],
+        ["Affected individuals can be identified and reached with records (20%)", identification + "%"],
+        ["Notifications timely, clear, explain impact & what to do (20%)", clarity + "%"],
+        ["Remedy, support & recourse route offered and staffed (20%)", remedy + "%"],
+        ["Required regulator/client/partner notices consistent (10%)", consistency + "%"],
+        ["Notifications & outcomes logged and fed back into fixes (10%)", learning + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define criteria and thresholds for when individuals must be notified, ensure affected people can be identified and reached with the needed records, send notifications that are timely and clear about the impact and what to do, offer a staffed remedy, support and recourse route, keep required notices to regulators, clients and partners consistent, and log notifications and outcomes so fixes follow."
+          : "Readiness is trending well — run a notification drill from detection to message, check that you can identify everyone affected rather than a sample, and confirm people can actually reach the remedy and support you promised.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
