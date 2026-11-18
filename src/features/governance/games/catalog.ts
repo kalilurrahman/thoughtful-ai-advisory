@@ -1031,4 +1031,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI in safety-critical operations under control: preserving operator authority over consequential actions, putting limits and interlocks between model output and physical systems, testing behaviour under degraded data and extreme weather, governing third-party access to operational telemetry, disclosing AI influence on service decisions, and rehearsing a manual fallback when the model is unavailable.",
     anchor: "critical-infrastructure-assurance",
   },
+  {
+    id: "tenant-screening-assurance",
+    title: "AI in tenant screening & housing access game",
+    category: "Fairness assurance",
+    description:
+      "Practice keeping AI-assisted rental screening fair: testing criteria for proxies such as source of income, telling applicants a model is used and what data drives it, requiring human review before rejection, giving specific reasons with a route to correct errors, verifying screening data sources, and retaining audit evidence for fair-housing scrutiny.",
+    anchor: "tenant-screening-assurance",
+  },
 ] as const;
