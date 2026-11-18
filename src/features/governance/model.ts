@@ -2936,6 +2936,41 @@ export function calculate(
           : "Readiness is trending well — run a notification drill from detection to message, check that you can identify everyone affected rather than a sample, and confirm people can actually reach the remedy and support you promised.",
     };
   }
+  if (id === "elections-political-ads-integrity") {
+    const labeling = v["labeling"] ?? 0,
+      targeting = v["targeting"] ?? 0,
+      review = v["review"] ?? 0,
+      accountability = v["accountability"] ?? 0,
+      response = v["response"] ?? 0,
+      records = v["records"] ?? 0,
+      score = Math.round(
+        labeling * 0.2 +
+          targeting * 0.2 +
+          review * 0.2 +
+          accountability * 0.15 +
+          response * 0.15 +
+          records * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in elections & political advertising integrity",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["AI-generated or altered political content labeled with provenance (20%)", labeling + "%"],
+        ["Audience targeting follows legal limits and avoids prohibited manipulation (20%)", targeting + "%"],
+        ["Claims and ads reviewed for accuracy and misleading content (20%)", review + "%"],
+        ["Sponsors, funding and accountable owners clear and recorded (15%)", accountability + "%"],
+        ["Rapid process to correct, pause or remove harmful or misleading AI content (15%)", response + "%"],
+        ["Records support compliance with election and advertising rules (10%)", records + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: clearly label AI-generated or materially altered political content with provenance where feasible, ensure targeting follows legal limits and avoids prohibited manipulation, review claims and ads for accuracy before publication, record sponsors, funding and accountable owners, establish a rapid process to correct, pause or remove harmful or misleading AI content, and keep records that support compliance with applicable election and advertising rules."
+          : "Readiness is trending well — test labels and provenance on realistic synthetic content, review targeting criteria for unlawful or manipulative segmentation, and run a rapid-response drill to confirm misleading AI content can be paused, corrected and documented quickly.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
