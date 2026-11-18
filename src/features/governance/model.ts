@@ -2796,6 +2796,41 @@ export function calculate(
           : "Readiness is trending well — test screening with a near-match name and a reseller in a higher-risk jurisdiction, check whether weights can leave through a partner or a download link, and confirm refusals are recorded well enough to show a regulator what was declined and why.",
     };
   }
+  if (id === "vulnerable-customer-ai") {
+    const signals = v["signals"] ?? 0,
+      adaptation = v["adaptation"] ?? 0,
+      adverseAction = v["adverse-action"] ?? 0,
+      override = v["override"] ?? 0,
+      referral = v["referral"] ?? 0,
+      outcomes = v["outcomes"] ?? 0,
+      score = Math.round(
+        signals * 0.2 +
+          adaptation * 0.2 +
+          adverseAction * 0.2 +
+          override * 0.15 +
+          referral * 0.1 +
+          outcomes * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI & vulnerable customer readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Vulnerability signals recognised without over-collecting data (20%)", signals + "%"],
+        ["Interaction adapts: extra time, plain language, easy human route (20%)", adaptation + "%"],
+        ["No automated adverse action on vulnerability without review (20%)", adverseAction + "%"],
+        ["Staff trained and empowered to override the automation (15%)", override + "%"],
+        ["Referral to specialist or third-sector support is built in (10%)", referral + "%"],
+        ["Outcomes for vulnerable groups recorded and monitored (15%)", outcomes + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: recognise vulnerability signals without collecting more data than needed, adapt the interaction with extra time, plain language and an easy route to a person, stop automated adverse action on vulnerability indicators without human review, train and empower staff to override the automation, build in referral to specialist or third-sector support, and record and monitor outcomes for vulnerable groups."
+          : "Readiness is trending well — test the journey as someone in distress would experience it, check that an override is honoured downstream as well as on screen, and compare outcomes for customers who disclosed a vulnerability with those who did not.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
