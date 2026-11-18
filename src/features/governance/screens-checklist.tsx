@@ -319,6 +319,10 @@ import {
   clinicalDocumentationScore,
 } from "./clinical-documentation-game";
 import { EDISCOVERY_ROUNDS, eDiscoveryScore } from "./ediscovery-game";
+import {
+  CRITICAL_INFRASTRUCTURE_ROUNDS,
+  criticalInfrastructureScore,
+} from "./critical-infrastructure-game";
 
 const statusText = {
   complete: "Complete",
@@ -502,6 +506,9 @@ export function ChecklistScreen() {
     Record<string, number>
   >({});
   const [ediscoveryAnswers, setEdiscoveryAnswers] = useState<Record<string, number>>({});
+  const [criticalInfrastructureAnswers, setCriticalInfrastructureAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -634,6 +641,7 @@ export function ChecklistScreen() {
   const journalismIntegrityGame = journalismIntegrityScore(journalismIntegrityAnswers);
   const clinicalDocumentationGame = clinicalDocumentationScore(clinicalDocumentationAnswers);
   const ediscoveryGame = eDiscoveryScore(ediscoveryAnswers);
+  const criticalInfrastructureGame = criticalInfrastructureScore(criticalInfrastructureAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8189,6 +8197,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good defensibility choice."
                           : "Review the defensibility gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="critical-infrastructure-assurance"
+        className="checklist-phase"
+        aria-label="AI in energy grid and critical infrastructure game"
+      >
+        <h2>AI in energy grid &amp; critical infrastructure</h2>
+        <p>
+          Practice keeping AI in safety-critical operations under control: preserving operator
+          authority over consequential actions, putting limits and interlocks between model output and
+          physical systems, testing behaviour under degraded data and extreme weather, governing
+          third-party access to operational telemetry, disclosing AI influence on service decisions,
+          and rehearsing a manual fallback when the model is unavailable. Scenarios are learning
+          prompts, not engineering, safety or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {criticalInfrastructureGame.correct}/{criticalInfrastructureGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {criticalInfrastructureGame.complete && (
+            <Button variant="outline" onClick={() => setCriticalInfrastructureAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CRITICAL_INFRASTRUCTURE_ROUNDS.map((round) => {
+            const selected = criticalInfrastructureAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCriticalInfrastructureAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good operational safeguard."
+                          : "Review the operational gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
