@@ -2761,6 +2761,41 @@ export function calculate(
           : "Readiness is trending well — test whether the model can react to a competitor signal without human sign-off, check that pricing changes are not announced in ways that coordinate the market, and confirm the audit trail explains a price after the model has moved on.",
     };
   }
+  if (id === "ai-export-controls") {
+    const classification = v["classification"] ?? 0,
+      screening = v["screening"] ?? 0,
+      enduse = v["enduse"] ?? 0,
+      access = v["access"] ?? 0,
+      awareness = v["awareness"] ?? 0,
+      escalation = v["escalation"] ?? 0,
+      score = Math.round(
+        classification * 0.2 +
+          screening * 0.2 +
+          enduse * 0.2 +
+          access * 0.15 +
+          awareness * 0.1 +
+          escalation * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI export control, sanctions & dual-use readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Models, weights & capabilities classified against export control lists (20%)", classification + "%"],
+        ["Customers & users screened against sanctions & denied-party lists (20%)", screening + "%"],
+        ["End-use & end-user restrictions written into terms and enforced (20%)", enduse + "%"],
+        ["Restricted weights & APIs access-controlled, not openly distributed (15%)", access + "%"],
+        ["Staff & partners recognise red flags such as screening avoidance (10%)", awareness + "%"],
+        ["Denied or suspicious requests escalated and recorded (15%)", escalation + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: classify models, weights and capabilities against export control and dual-use lists, screen customers and users against sanctions and denied-party lists before access, write end-use and end-user restrictions into terms and enforce them, control access to restricted weights and APIs rather than distributing them openly, help staff and partners recognise red flags such as requests to avoid screening, and escalate and record denied or suspicious requests."
+          : "Readiness is trending well — test screening with a near-match name and a reseller in a higher-risk jurisdiction, check whether weights can leave through a partner or a download link, and confirm refusals are recorded well enough to show a regulator what was declined and why.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
