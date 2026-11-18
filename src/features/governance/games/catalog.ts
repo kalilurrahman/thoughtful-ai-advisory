@@ -951,4 +951,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI pricing inside competition law: keeping competitor data out of price setting, requiring human approval for material price moves, assessing the signalling risk of public price statements, treating parallel market movement as a collusion indicator with a legal escalation route, and keeping an audit trail of decisions and model versions.",
     anchor: "algorithmic-pricing-assurance",
   },
+  {
+    id: "export-controls-assurance",
+    title: "AI export control & sanctions game",
+    category: "Legal & regulatory",
+    description:
+      "Practice keeping AI capability inside export control and sanctions rules: screening end users rather than delegating it to a reseller, classifying a fine-tune's capability before releasing weights, treating logging-removal and undisclosed end-use requests as red flags, testing screening for near-matches and ownership, and recording refusals with reasons and decision makers.",
+    anchor: "export-controls-assurance",
+  },
 ] as const;
