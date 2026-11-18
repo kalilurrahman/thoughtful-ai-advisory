@@ -959,4 +959,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI capability inside export control and sanctions rules: screening end users rather than delegating it to a reseller, classifying a fine-tune's capability before releasing weights, treating logging-removal and undisclosed end-use requests as red flags, testing screening for near-matches and ownership, and recording refusals with reasons and decision makers.",
     anchor: "export-controls-assurance",
   },
+  {
+    id: "vulnerable-customers-assurance",
+    title: "AI & vulnerable customers game",
+    category: "Customers & vulnerability",
+    description:
+      "Practice protecting people in vulnerable circumstances from automated harm: pausing adverse action on hardship signals for human review, adapting the interaction when someone discloses bereavement or illness, limiting vulnerability data to what was disclosed or needed, giving trained staff real override authority, and recording support and outcomes for vulnerable groups.",
+    anchor: "vulnerable-customers-assurance",
+  },
 ] as const;
