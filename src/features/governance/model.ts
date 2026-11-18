@@ -2656,6 +2656,41 @@ export function calculate(
           : "Readiness is trending well — sample summaries against the source for dropped caveats, check that a correction reaches every downstream copy, and confirm retention deletes the transcript as well as the summary.",
     };
   }
+  if (id === "regulated-advice-boundaries") {
+    const scope = v["scope"] ?? 0,
+      review = v["review"] ?? 0,
+      facts = v["facts"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      escalation = v["escalation"] ?? 0,
+      record = v["record"] ?? 0,
+      score = Math.round(
+        scope * 0.25 +
+          review * 0.25 +
+          facts * 0.2 +
+          disclosure * 0.15 +
+          escalation * 0.1 +
+          record * 0.05,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in regulated advice boundaries",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Permitted & prohibited advice defined against firm permissions (25%)", scope + "%"],
+        ["Qualified human reviews advice before it reaches the client (25%)", review + "%"],
+        ["Facts & suitability information the advice depends on are gathered (20%)", facts + "%"],
+        ["Limits & disclaimers match what the tool actually does (15%)", disclosure + "%"],
+        ["Out-of-scope questions routed to a qualified professional (10%)", escalation + "%"],
+        ["Record kept of what was advised, to whom & by whom (5%)", record + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define the advice the tool may and may not give against the permissions your firm holds, require a suitably qualified human to review advice before it reaches the client, gather the facts and suitability information the advice depends on, make limits and disclaimers match what the tool actually does, route out-of-scope questions to a qualified professional, and keep a record of what was advised and by whom."
+          : "Readiness is trending well — test the boundary with questions just inside and just outside scope, check that reviewers actually change advice rather than rubber-stamp it, and confirm the record captures the basis of the advice if a client later challenges it.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
