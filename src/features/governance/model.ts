@@ -2563,6 +2563,40 @@ export function calculate(
           : "Readiness is trending well — verify the inventory against a live walkthrough rather than the data room, test whether the vendor will actually honour change-of-control terms, and check that day-one operations do not depend on a contract that ends at completion.",
     };
   }
+  if (id === "children-age-assurance") {
+    const ageassurance = v["ageassurance"] ?? 0,
+      design = v["design"] ?? 0,
+      consent = v["consent"] ?? 0,
+      childrisk = v["childrisk"] ?? 0,
+      escalation = v["escalation"] ?? 0,
+      score = Math.round(
+        ageassurance * 0.25 + design * 0.25 + consent * 0.2 + childrisk * 0.2 + escalation * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI services for children & age assurance readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        [
+          "Age assurance proportionate; no unnecessary identity collection (25%)",
+          ageassurance + "%",
+        ],
+        ["Age-appropriate defaults, explanations & content limits (25%)", design + "%"],
+        ["Parental consent where required, recorded & revocable (20%)", consent + "%"],
+        ["Child-specific risks assessed & mitigated (20%)", childrisk + "%"],
+        [
+          "Child-safety escalation staffed & path to authorities clear (10%)",
+          escalation + "%",
+        ],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: use age assurance proportionate to the risk instead of collecting identity documents by default, set age-appropriate defaults with plain explanations and content limits, obtain and record parental consent where required and make it revocable, assess and mitigate child-specific risks such as manipulation, self-harm, stranger contact and commercial pressure, and staff a child-safety escalation route with trained responders and a clear path to the authorities."
+          : "Readiness is trending well — test the age check with a determined child rather than an adult tester, review whether defaults still hold for younger users after product changes, and confirm escalations reach a trained responder out of hours.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
