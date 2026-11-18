@@ -308,6 +308,7 @@ import { REGULATED_ADVICE_ROUNDS, regulatedAdviceScore } from "./regulated-advic
 import { PUBLIC_SECTOR_FAIRNESS_ROUNDS, publicSectorFairnessScore } from "./public-sector-fairness-game";
 import { ALGORITHMIC_PRICING_ROUNDS, algorithmicPricingScore } from "./algorithmic-pricing-game";
 import { EXPORT_CONTROLS_ROUNDS, exportControlsScore } from "./export-controls-game";
+import { VULNERABLE_CUSTOMER_ROUNDS, vulnerableCustomerScore } from "./vulnerable-customers-game";
 
 const statusText = {
   complete: "Complete",
@@ -471,6 +472,9 @@ export function ChecklistScreen() {
     Record<string, number>
   >({});
   const [exportControlsAnswers, setExportControlsAnswers] = useState<Record<string, number>>({});
+  const [vulnerableCustomerAnswers, setVulnerableCustomerAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -595,6 +599,7 @@ export function ChecklistScreen() {
   const publicSectorFairnessGame = publicSectorFairnessScore(publicSectorFairnessAnswers);
   const algorithmicPricingGame = algorithmicPricingScore(algorithmicPricingAnswers);
   const exportControlsGame = exportControlsScore(exportControlsAnswers);
+  const vulnerableCustomerGame = vulnerableCustomerScore(vulnerableCustomerAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7636,6 +7641,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good controls choice."
                           : "Review the controls gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="vulnerable-customers-assurance"
+        className="checklist-phase"
+        aria-label="AI and vulnerable customers game"
+      >
+        <h2>AI &amp; vulnerable customers</h2>
+        <p>
+          Practice protecting people in vulnerable circumstances from automated harm: pausing adverse
+          action on hardship signals for human review, adapting the interaction when someone discloses
+          bereavement or illness, limiting vulnerability data to what was disclosed or needed, giving
+          trained staff real override authority, and recording support and outcomes for vulnerable
+          groups. Scenarios are learning prompts, not legal advice on consumer duty or vulnerability
+          duties.
+        </p>
+        <p>
+          <strong>
+            {vulnerableCustomerGame.correct}/{vulnerableCustomerGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {vulnerableCustomerGame.complete && (
+            <Button variant="outline" onClick={() => setVulnerableCustomerAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {VULNERABLE_CUSTOMER_ROUNDS.map((round) => {
+            const selected = vulnerableCustomerAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setVulnerableCustomerAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good vulnerability choice."
+                          : "Review the vulnerability gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
