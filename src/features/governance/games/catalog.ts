@@ -1023,4 +1023,12 @@ export const GOVERNANCE_GAMES = [
       "Practice defensible AI-assisted litigation and investigation work: issuing and monitoring legal holds across messaging and devices, validating and sampling AI review rather than trusting it, explaining how documents were classified, keeping privilege calls with qualified lawyers and a log, and preserving enough to reconstruct a produced set and disclose defects.",
     anchor: "ediscovery-assurance",
   },
+  {
+    id: "critical-infrastructure-assurance",
+    title: "AI in energy grid & critical infrastructure game",
+    category: "Operational readiness",
+    description:
+      "Practice keeping AI in safety-critical operations under control: preserving operator authority over consequential actions, putting limits and interlocks between model output and physical systems, testing behaviour under degraded data and extreme weather, governing third-party access to operational telemetry, disclosing AI influence on service decisions, and rehearsing a manual fallback when the model is unavailable.",
+    anchor: "critical-infrastructure-assurance",
+  },
 ] as const;
