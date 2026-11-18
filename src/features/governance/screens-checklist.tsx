@@ -310,6 +310,7 @@ import { ALGORITHMIC_PRICING_ROUNDS, algorithmicPricingScore } from "./algorithm
 import { EXPORT_CONTROLS_ROUNDS, exportControlsScore } from "./export-controls-game";
 import { VULNERABLE_CUSTOMER_ROUNDS, vulnerableCustomerScore } from "./vulnerable-customers-game";
 import { EDUCATION_INTEGRITY_ROUNDS, educationIntegrityScore } from "./education-integrity-game";
+import { INSURANCE_AI_ROUNDS, insuranceAiScore } from "./insurance-ai-game";
 
 const statusText = {
   complete: "Complete",
@@ -479,6 +480,7 @@ export function ChecklistScreen() {
   const [educationIntegrityAnswers, setEducationIntegrityAnswers] = useState<
     Record<string, number>
   >({});
+  const [insuranceAiAnswers, setInsuranceAiAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -605,6 +607,7 @@ export function ChecklistScreen() {
   const exportControlsGame = exportControlsScore(exportControlsAnswers);
   const vulnerableCustomerGame = vulnerableCustomerScore(vulnerableCustomerAnswers);
   const educationIntegrityGame = educationIntegrityScore(educationIntegrityAnswers);
+  const insuranceAiGame = insuranceAiScore(insuranceAiAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7775,6 +7778,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good integrity choice."
                           : "Review the integrity gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="insurance-ai-assurance"
+        className="checklist-phase"
+        aria-label="AI in insurance underwriting and claims game"
+      >
+        <h2>AI in insurance underwriting &amp; claims</h2>
+        <p>
+          Practice keeping AI pricing and claims decisions fair: testing for proxies rather than
+          trusting factors that never name a protected characteristic, reviewing adverse automated
+          decisions before they reach the customer, giving specific reasons and a route to review,
+          justifying rating factors actuarially, and investigating complaint clusters instead of
+          explaining them away. Scenarios are learning prompts, not actuarial or legal advice.
+        </p>
+        <p>
+          <strong>
+            {insuranceAiGame.correct}/{insuranceAiGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {insuranceAiGame.complete && (
+            <Button variant="outline" onClick={() => setInsuranceAiAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {INSURANCE_AI_ROUNDS.map((round) => {
+            const selected = insuranceAiAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setInsuranceAiAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good underwriting choice."
+                          : "Review the underwriting gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
