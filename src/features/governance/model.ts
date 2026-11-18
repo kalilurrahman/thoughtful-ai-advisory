@@ -2726,6 +2726,41 @@ export function calculate(
           : "Readiness is trending well — test the appeal route as a member of the public would, compare outcomes across groups on the same facts, and confirm a decision can still be reconstructed after a model or rule change.",
     };
   }
+  if (id === "algorithmic-pricing-competition") {
+    const inputs = v["inputs"] ?? 0,
+      approval = v["approval"] ?? 0,
+      signalling = v["signalling"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      legal = v["legal"] ?? 0,
+      audit = v["audit"] ?? 0,
+      score = Math.round(
+        inputs * 0.2 +
+          approval * 0.2 +
+          signalling * 0.15 +
+          monitoring * 0.2 +
+          legal * 0.15 +
+          audit * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Algorithmic pricing & competition readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Pricing logic & inputs documented; no competitor data used (20%)", inputs + "%"],
+        ["Material pricing changes have human review & approval (20%)", approval + "%"],
+        ["Market signalling risk through public price moves assessed (15%)", signalling + "%"],
+        ["Monitored for parallel pricing & collusion indicators (20%)", monitoring + "%"],
+        ["Legal review & escalation route for suspicious patterns (15%)", legal + "%"],
+        ["Audit trail of pricing decisions & model versions kept (10%)", audit + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: document the pricing logic and inputs and keep competitor data out of price setting, require human review and approval for material pricing changes, assess market signalling risk through public price moves and announcements, monitor for parallel pricing and other collusion indicators, give legal a review and escalation route for suspicious patterns, and keep an audit trail of pricing decisions and model versions."
+          : "Readiness is trending well — test whether the model can react to a competitor signal without human sign-off, check that pricing changes are not announced in ways that coordinate the market, and confirm the audit trail explains a price after the model has moved on.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
