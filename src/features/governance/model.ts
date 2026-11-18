@@ -3006,6 +3006,41 @@ export function calculate(
           : "Readiness is trending well — test a realistic AI-assisted draft for fabricated quotes and confident wrong claims, check whether a labelled synthetic image can be traced to its source, and confirm a correction reaches every version of the story that was published.",
     };
   }
+  if (id === "clinical-documentation-integrity") {
+    const clinicianReview = v["clinician-review"] ?? 0,
+      consent = v["consent"] ?? 0,
+      dataProtection = v["data-protection"] ?? 0,
+      accuracy = v["accuracy"] ?? 0,
+      auditTrail = v["audit-trail"] ?? 0,
+      patientAccess = v["patient-access"] ?? 0,
+      score = Math.round(
+        clinicianReview * 0.2 +
+          consent * 0.15 +
+          dataProtection * 0.2 +
+          accuracy * 0.2 +
+          auditTrail * 0.15 +
+          patientAccess * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI clinical documentation & ambient scribing integrity",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["AI-generated notes reviewed and signed by the responsible clinician (20%)", clinicianReview + "%"],
+        ["Patients told when encounters are recorded; consent captured (15%)", consent + "%"],
+        ["Health data minimised; vendor terms cover permitted use and retention (20%)", dataProtection + "%"],
+        ["Drafts checked for omitted findings, invented content and billing drift (20%)", accuracy + "%"],
+        ["Audit trail shows what was AI-drafted, edited and signed and by whom (15%)", auditTrail + "%"],
+        ["Patients can see and correct what the AI-influenced record says (10%)", patientAccess + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: require the responsible clinician to review and sign every AI-generated note before it becomes the record, tell patients when encounters are recorded or transcribed and capture consent where needed, minimise health data and confirm vendor terms cover permitted use and retention, check drafts for omitted findings, invented content and billing drift rather than accepting fluency, keep an audit trail of what was drafted, edited and signed and by whom, and give patients a way to see and correct what was written about them."
+          : "Readiness is trending well — compare a sample of signed notes against the encounter recording for omissions and invented findings, check that a clinician can tell which sentences the model wrote, and confirm a patient request to correct the record actually reaches the note.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
