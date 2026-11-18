@@ -975,4 +975,12 @@ export const GOVERNANCE_GAMES = [
       "Practice handling AI in education fairly: setting permitted use per assessment before work starts, treating detector output as evidence rather than a verdict, redesigning assessment that a model can complete, giving students a disclosure step, and training markers so decisions are consistent, recorded and appealable.",
     anchor: "education-integrity-assurance",
   },
+  {
+    id: "insurance-ai-assurance",
+    title: "AI in insurance underwriting & claims game",
+    category: "Sector assurance",
+    description:
+      "Practice keeping AI pricing and claims decisions fair: testing for proxies rather than trusting factors that never name a protected characteristic, reviewing adverse automated decisions before they reach the customer, giving specific reasons and a route to review, justifying rating factors actuarially, and investigating complaint clusters instead of explaining them away.",
+    anchor: "insurance-ai-assurance",
+  },
 ] as const;
