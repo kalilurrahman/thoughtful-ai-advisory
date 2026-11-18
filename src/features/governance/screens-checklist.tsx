@@ -306,6 +306,7 @@ import { WORKER_CONSULTATION_ROUNDS, workerConsultationScore } from "./worker-co
 import { SUMMARISATION_RECORDS_ROUNDS, summarisationRecordsScore } from "./summarisation-records-game";
 import { REGULATED_ADVICE_ROUNDS, regulatedAdviceScore } from "./regulated-advice-game";
 import { PUBLIC_SECTOR_FAIRNESS_ROUNDS, publicSectorFairnessScore } from "./public-sector-fairness-game";
+import { ALGORITHMIC_PRICING_ROUNDS, algorithmicPricingScore } from "./algorithmic-pricing-game";
 
 const statusText = {
   complete: "Complete",
@@ -465,6 +466,9 @@ export function ChecklistScreen() {
   const [publicSectorFairnessAnswers, setPublicSectorFairnessAnswers] = useState<
     Record<string, number>
   >({});
+  const [algorithmicPricingAnswers, setAlgorithmicPricingAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -587,6 +591,7 @@ export function ChecklistScreen() {
   const summarisationRecordsGame = summarisationRecordsScore(summarisationRecordsAnswers);
   const regulatedAdviceGame = regulatedAdviceScore(regulatedAdviceAnswers);
   const publicSectorFairnessGame = publicSectorFairnessScore(publicSectorFairnessAnswers);
+  const algorithmicPricingGame = algorithmicPricingScore(algorithmicPricingAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7499,6 +7504,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good fairness choice."
                           : "Review the fairness gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="algorithmic-pricing-assurance"
+        className="checklist-phase"
+        aria-label="Algorithmic pricing and competition game"
+      >
+        <h2>Algorithmic pricing &amp; competition</h2>
+        <p>
+          Practice keeping AI pricing inside competition law: keeping competitor data out of price
+          setting, requiring human approval for material price moves, assessing the signalling risk of
+          public price statements, treating parallel market movement as a collusion indicator with a
+          legal escalation route, and keeping an audit trail of decisions and model versions. Scenarios
+          are learning prompts, not legal advice on competition law.
+        </p>
+        <p>
+          <strong>
+            {algorithmicPricingGame.correct}/{algorithmicPricingGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {algorithmicPricingGame.complete && (
+            <Button variant="outline" onClick={() => setAlgorithmicPricingAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {ALGORITHMIC_PRICING_ROUNDS.map((round) => {
+            const selected = algorithmicPricingAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAlgorithmicPricingAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good competition choice."
+                          : "Review the competition gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
