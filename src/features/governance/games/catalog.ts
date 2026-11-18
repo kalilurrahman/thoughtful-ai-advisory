@@ -991,4 +991,12 @@ export const GOVERNANCE_GAMES = [
       "Practice notifying people affected by AI incidents: defining when notification is required, identifying and reaching those affected, explaining impact and next steps clearly, offering a staffed remedy and recourse route, and keeping regulator, client and individual messages consistent while logging outcomes for follow-up.",
     anchor: "incident-notification-assurance",
   },
+  {
+    id: "elections-integrity-assurance",
+    title: "AI in elections & political advertising game",
+    category: "Civic integrity",
+    description:
+      "Practice responsible AI use in election-period communications and political advertising: labeling synthetic or altered content with provenance, constraining targeting to lawful and non-manipulative use, reviewing claims before publication, recording sponsors and accountable owners, and responding rapidly to correct or pause harmful or misleading AI content.",
+    anchor: "elections-integrity-assurance",
+  },
 ] as const;
