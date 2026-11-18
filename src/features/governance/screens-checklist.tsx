@@ -305,6 +305,7 @@ import { CHILDREN_AGE_ROUNDS, childrenAgeScore } from "./children-age-assurance-
 import { WORKER_CONSULTATION_ROUNDS, workerConsultationScore } from "./worker-consultation-game";
 import { SUMMARISATION_RECORDS_ROUNDS, summarisationRecordsScore } from "./summarisation-records-game";
 import { REGULATED_ADVICE_ROUNDS, regulatedAdviceScore } from "./regulated-advice-game";
+import { PUBLIC_SECTOR_FAIRNESS_ROUNDS, publicSectorFairnessScore } from "./public-sector-fairness-game";
 
 const statusText = {
   complete: "Complete",
@@ -461,6 +462,9 @@ export function ChecklistScreen() {
     Record<string, number>
   >({});
   const [regulatedAdviceAnswers, setRegulatedAdviceAnswers] = useState<Record<string, number>>({});
+  const [publicSectorFairnessAnswers, setPublicSectorFairnessAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -582,6 +586,7 @@ export function ChecklistScreen() {
   const workerConsultationGame = workerConsultationScore(workerConsultationAnswers);
   const summarisationRecordsGame = summarisationRecordsScore(summarisationRecordsAnswers);
   const regulatedAdviceGame = regulatedAdviceScore(regulatedAdviceAnswers);
+  const publicSectorFairnessGame = publicSectorFairnessScore(publicSectorFairnessAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7430,6 +7435,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good advice-boundary choice."
                           : "Review the advice-boundary gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="public-sector-fairness-assurance"
+        className="checklist-phase"
+        aria-label="Public-sector automated decision fairness game"
+      >
+        <h2>Public-sector automated decisions</h2>
+        <p>
+          Practice keeping automated public decisions fair and contestable: publishing the legal basis
+          and policy for the automated element, ensuring a human with authority reviews before the
+          decision takes effect, giving plain reasons, making the appeal route genuinely usable, and
+          investigating disparate impact rather than assuming an objective model. Scenarios are
+          learning prompts, not legal advice on public law or equality duties.
+        </p>
+        <p>
+          <strong>
+            {publicSectorFairnessGame.correct}/{publicSectorFairnessGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {publicSectorFairnessGame.complete && (
+            <Button variant="outline" onClick={() => setPublicSectorFairnessAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PUBLIC_SECTOR_FAIRNESS_ROUNDS.map((round) => {
+            const selected = publicSectorFairnessAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setPublicSectorFairnessAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good fairness choice."
+                          : "Review the fairness gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

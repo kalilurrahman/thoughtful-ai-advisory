@@ -935,4 +935,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI inside regulated advice boundaries: defining what advice the tool may give against the firm's permissions, requiring a suitably qualified reviewer who can change the advice, gathering the facts and suitability information the advice depends on, routing out-of-scope questions to a professional, and keeping a record of what was advised and by whom.",
     anchor: "regulated-advice-assurance",
   },
+  {
+    id: "public-sector-fairness-assurance",
+    title: "Public-sector automated decision fairness game",
+    category: "Fairness & impact",
+    description:
+      "Practice keeping automated public decisions fair and contestable: publishing the legal basis and policy, ensuring a human with authority reviews before the decision takes effect, giving plain reasons, making the appeal route genuinely usable, and investigating disparate impact rather than assuming an objective model.",
+    anchor: "public-sector-fairness-assurance",
+  },
 ] as const;
