@@ -304,6 +304,7 @@ import { MA_DILIGENCE_ROUNDS, maDiligenceScore } from "./ma-diligence-game";
 import { CHILDREN_AGE_ROUNDS, childrenAgeScore } from "./children-age-assurance-game";
 import { WORKER_CONSULTATION_ROUNDS, workerConsultationScore } from "./worker-consultation-game";
 import { SUMMARISATION_RECORDS_ROUNDS, summarisationRecordsScore } from "./summarisation-records-game";
+import { REGULATED_ADVICE_ROUNDS, regulatedAdviceScore } from "./regulated-advice-game";
 
 const statusText = {
   complete: "Complete",
@@ -459,6 +460,7 @@ export function ChecklistScreen() {
   const [summarisationRecordsAnswers, setSummarisationRecordsAnswers] = useState<
     Record<string, number>
   >({});
+  const [regulatedAdviceAnswers, setRegulatedAdviceAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -579,6 +581,7 @@ export function ChecklistScreen() {
   const childrenAgeGame = childrenAgeScore(childrenAgeAnswers);
   const workerConsultationGame = workerConsultationScore(workerConsultationAnswers);
   const summarisationRecordsGame = summarisationRecordsScore(summarisationRecordsAnswers);
+  const regulatedAdviceGame = regulatedAdviceScore(regulatedAdviceAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7363,6 +7366,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good record-accuracy choice."
                           : "Review the record-accuracy gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="regulated-advice-assurance"
+        className="checklist-phase"
+        aria-label="AI in regulated advice game"
+      >
+        <h2>AI in regulated advice</h2>
+        <p>
+          Practice keeping AI inside regulated advice boundaries: defining what advice the tool may
+          give against the firm's permissions, requiring a suitably qualified reviewer who can change
+          the advice, gathering the facts and suitability information the advice depends on, routing
+          out-of-scope questions to a professional, and keeping a record of what was advised and by
+          whom. Scenarios are learning prompts, not legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {regulatedAdviceGame.correct}/{regulatedAdviceGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {regulatedAdviceGame.complete && (
+            <Button variant="outline" onClick={() => setRegulatedAdviceAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {REGULATED_ADVICE_ROUNDS.map((round) => {
+            const selected = regulatedAdviceAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setRegulatedAdviceAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good advice-boundary choice."
+                          : "Review the advice-boundary gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

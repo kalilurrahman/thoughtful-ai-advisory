@@ -927,4 +927,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI summaries of meetings, calls and cases trustworthy: defining what may never be summarised, requiring a human to confirm a summary before it becomes the record, carrying corrections into every downstream copy, telling people their conversation is summarised and letting them object, and applying retention and access rules to transcripts as well as summaries.",
     anchor: "summarisation-records-assurance",
   },
+  {
+    id: "regulated-advice-assurance",
+    title: "AI in regulated advice game",
+    category: "Assurance & oversight",
+    description:
+      "Practice keeping AI inside regulated advice boundaries: defining what advice the tool may give against the firm's permissions, requiring a suitably qualified reviewer who can change the advice, gathering the facts and suitability information the advice depends on, routing out-of-scope questions to a professional, and keeping a record of what was advised and by whom.",
+    anchor: "regulated-advice-assurance",
+  },
 ] as const;
