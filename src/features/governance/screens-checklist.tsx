@@ -313,6 +313,7 @@ import { EDUCATION_INTEGRITY_ROUNDS, educationIntegrityScore } from "./education
 import { INSURANCE_AI_ROUNDS, insuranceAiScore } from "./insurance-ai-game";
 import { INCIDENT_NOTIFICATION_ROUNDS, incidentNotificationScore } from "./incident-notification-game";
 import { ELECTIONS_INTEGRITY_ROUNDS, electionsIntegrityScore } from "./elections-integrity-game";
+import { JOURNALISM_INTEGRITY_ROUNDS, journalismIntegrityScore } from "./journalism-integrity-game";
 
 const statusText = {
   complete: "Complete",
@@ -489,6 +490,9 @@ export function ChecklistScreen() {
   const [electionsIntegrityAnswers, setElectionsIntegrityAnswers] = useState<
     Record<string, number>
   >({});
+  const [journalismIntegrityAnswers, setJournalismIntegrityAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -618,6 +622,7 @@ export function ChecklistScreen() {
   const insuranceAiGame = insuranceAiScore(insuranceAiAnswers);
   const incidentNotificationGame = incidentNotificationScore(incidentNotificationAnswers);
   const electionsIntegrityGame = electionsIntegrityScore(electionsIntegrityAnswers);
+  const journalismIntegrityGame = journalismIntegrityScore(journalismIntegrityAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7980,6 +7985,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good integrity choice."
                           : "Review the integrity gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="journalism-integrity-assurance"
+        className="checklist-phase"
+        aria-label="AI in journalism and newsroom verification game"
+      >
+        <h2>AI in journalism &amp; newsroom verification</h2>
+        <p>
+          Practice responsible AI use in newsrooms: verifying AI-assisted drafts and quotes against
+          primary sources, requiring a named editor to sign off AI-influenced output, labelling
+          synthetic media and checking provenance, publishing corrections and retractions with a clear
+          trail, and telling audiences when AI played a material role. Scenarios are learning prompts,
+          not editorial or legal advice.
+        </p>
+        <p>
+          <strong>
+            {journalismIntegrityGame.correct}/{journalismIntegrityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {journalismIntegrityGame.complete && (
+            <Button variant="outline" onClick={() => setJournalismIntegrityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {JOURNALISM_INTEGRITY_ROUNDS.map((round) => {
+            const selected = journalismIntegrityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setJournalismIntegrityAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good editorial safeguard."
+                          : "Review the editorial gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
