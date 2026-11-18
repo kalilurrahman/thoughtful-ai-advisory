@@ -919,4 +919,12 @@ export const GOVERNANCE_GAMES = [
       "Practice consulting before the decision rather than announcing it, identifying the roles whose work actually changes, explaining purpose, data and monitoring in plain terms, answering concerns with changes or recorded reasons, and consulting again when the system or its use changes.",
     anchor: "worker-consultation-assurance",
   },
+  {
+    id: "summarisation-records-assurance",
+    title: "AI summarisation & record accuracy game",
+    category: "Data & documentation",
+    description:
+      "Practice keeping AI summaries of meetings, calls and cases trustworthy: defining what may never be summarised, requiring a human to confirm a summary before it becomes the record, carrying corrections into every downstream copy, telling people their conversation is summarised and letting them object, and applying retention and access rules to transcripts as well as summaries.",
+    anchor: "summarisation-records-assurance",
+  },
 ] as const;

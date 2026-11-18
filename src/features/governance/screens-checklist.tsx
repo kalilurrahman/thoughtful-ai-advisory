@@ -303,6 +303,7 @@ import { CODING_ASSISTANTS_ROUNDS, codingAssistantsScore } from "./coding-assist
 import { MA_DILIGENCE_ROUNDS, maDiligenceScore } from "./ma-diligence-game";
 import { CHILDREN_AGE_ROUNDS, childrenAgeScore } from "./children-age-assurance-game";
 import { WORKER_CONSULTATION_ROUNDS, workerConsultationScore } from "./worker-consultation-game";
+import { SUMMARISATION_RECORDS_ROUNDS, summarisationRecordsScore } from "./summarisation-records-game";
 
 const statusText = {
   complete: "Complete",
@@ -455,6 +456,9 @@ export function ChecklistScreen() {
   const [workerConsultationAnswers, setWorkerConsultationAnswers] = useState<
     Record<string, number>
   >({});
+  const [summarisationRecordsAnswers, setSummarisationRecordsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -574,6 +578,7 @@ export function ChecklistScreen() {
   const maDiligenceGame = maDiligenceScore(maDiligenceAnswers);
   const childrenAgeGame = childrenAgeScore(childrenAgeAnswers);
   const workerConsultationGame = workerConsultationScore(workerConsultationAnswers);
+  const summarisationRecordsGame = summarisationRecordsScore(summarisationRecordsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7293,6 +7298,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good consultation choice."
                           : "Review the consultation gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="summarisation-records-assurance"
+        className="checklist-phase"
+        aria-label="AI summarisation and record accuracy game"
+      >
+        <h2>AI summarisation &amp; record accuracy</h2>
+        <p>
+          Practice keeping AI summaries of meetings, calls and cases trustworthy: defining what may
+          never be summarised, requiring a human to confirm a summary before it becomes the record,
+          carrying corrections into every downstream copy, telling people their conversation is
+          summarised and letting them object, and applying retention and access rules to transcripts
+          as well as summaries. Scenarios are learning prompts, not legal advice on record-keeping
+          duties.
+        </p>
+        <p>
+          <strong>
+            {summarisationRecordsGame.correct}/{summarisationRecordsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {summarisationRecordsGame.complete && (
+            <Button variant="outline" onClick={() => setSummarisationRecordsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SUMMARISATION_RECORDS_ROUNDS.map((round) => {
+            const selected = summarisationRecordsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setSummarisationRecordsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good record-accuracy choice."
+                          : "Review the record-accuracy gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
