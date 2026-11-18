@@ -1007,4 +1007,12 @@ export const GOVERNANCE_GAMES = [
       "Practice responsible AI use in newsrooms and editorial work: verifying AI-assisted drafts and quotes against primary sources, requiring a named editor to sign off AI-influenced output, labelling synthetic media and checking provenance, publishing corrections and retractions with a clear trail, and telling audiences when AI played a material role.",
     anchor: "journalism-integrity-assurance",
   },
+  {
+    id: "clinical-documentation-assurance",
+    title: "AI clinical documentation & ambient scribing game",
+    category: "Sector assurance",
+    description:
+      "Practice keeping AI-drafted clinical records safe: requiring clinician review and sign-off before a note becomes the record, telling patients when encounters are recorded and capturing consent, checking drafts for omitted findings and invented content, monitoring documentation-driven billing drift, and keeping an audit trail of AI authorship together with a route for patients to see and correct the record.",
+    anchor: "clinical-documentation-assurance",
+  },
 ] as const;

@@ -314,6 +314,10 @@ import { INSURANCE_AI_ROUNDS, insuranceAiScore } from "./insurance-ai-game";
 import { INCIDENT_NOTIFICATION_ROUNDS, incidentNotificationScore } from "./incident-notification-game";
 import { ELECTIONS_INTEGRITY_ROUNDS, electionsIntegrityScore } from "./elections-integrity-game";
 import { JOURNALISM_INTEGRITY_ROUNDS, journalismIntegrityScore } from "./journalism-integrity-game";
+import {
+  CLINICAL_DOCUMENTATION_ROUNDS,
+  clinicalDocumentationScore,
+} from "./clinical-documentation-game";
 
 const statusText = {
   complete: "Complete",
@@ -493,6 +497,9 @@ export function ChecklistScreen() {
   const [journalismIntegrityAnswers, setJournalismIntegrityAnswers] = useState<
     Record<string, number>
   >({});
+  const [clinicalDocumentationAnswers, setClinicalDocumentationAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -623,6 +630,7 @@ export function ChecklistScreen() {
   const incidentNotificationGame = incidentNotificationScore(incidentNotificationAnswers);
   const electionsIntegrityGame = electionsIntegrityScore(electionsIntegrityAnswers);
   const journalismIntegrityGame = journalismIntegrityScore(journalismIntegrityAnswers);
+  const clinicalDocumentationGame = clinicalDocumentationScore(clinicalDocumentationAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8049,6 +8057,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good editorial safeguard."
                           : "Review the editorial gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="clinical-documentation-assurance"
+        className="checklist-phase"
+        aria-label="AI clinical documentation and ambient scribing game"
+      >
+        <h2>AI clinical documentation &amp; ambient scribing</h2>
+        <p>
+          Practice keeping AI-drafted clinical records safe: requiring clinician review and sign-off
+          before a note becomes the record, telling patients when encounters are recorded and capturing
+          consent, checking drafts for omitted findings and invented content, monitoring
+          documentation-driven billing drift, and keeping an audit trail of AI authorship with a route
+          for patients to see and correct the record. Scenarios are learning prompts, not clinical,
+          coding or legal advice.
+        </p>
+        <p>
+          <strong>
+            {clinicalDocumentationGame.correct}/{clinicalDocumentationGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {clinicalDocumentationGame.complete && (
+            <Button variant="outline" onClick={() => setClinicalDocumentationAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CLINICAL_DOCUMENTATION_ROUNDS.map((round) => {
+            const selected = clinicalDocumentationAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setClinicalDocumentationAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good documentation safeguard."
+                          : "Review the documentation gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
