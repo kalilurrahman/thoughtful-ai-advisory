@@ -3041,6 +3041,41 @@ export function calculate(
           : "Readiness is trending well — compare a sample of signed notes against the encounter recording for omissions and invented findings, check that a clinician can tell which sentences the model wrote, and confirm a patient request to correct the record actually reaches the note.",
     };
   }
+  if (id === "legal-ediscovery-evidence") {
+    const preservation = v["preservation"] ?? 0,
+      validation = v["validation"] ?? 0,
+      explainability = v["explainability"] ?? 0,
+      privilege = v["privilege"] ?? 0,
+      reproducibility = v["reproducibility"] ?? 0,
+      defensibility = v["defensibility"] ?? 0,
+      score = Math.round(
+        preservation * 0.2 +
+          validation * 0.2 +
+          explainability * 0.15 +
+          privilege * 0.2 +
+          reproducibility * 0.15 +
+          defensibility * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in legal e-discovery & evidence preservation",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Legal holds issued and monitored before relevant data is lost (20%)", preservation + "%"],
+        ["AI-assisted collection and review validated and sampled (20%)", validation + "%"],
+        ["Reviewers can explain and defend how the model classified documents (15%)", explainability + "%"],
+        ["Privilege and confidentiality calls made by qualified people with a log (20%)", privilege + "%"],
+        ["Produced sets and defects can be reconstructed and disclosed (15%)", reproducibility + "%"],
+        ["Process defensible to opposing parties, regulators and courts (10%)", defensibility + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: issue and monitor legal holds before potentially relevant data is lost, validate and sample AI-assisted collection and review rather than trusting the model, make sure reviewers can explain and defend how documents were classified, keep privilege and confidentiality decisions with qualified people and a clear log, preserve what is needed to reconstruct produced sets and disclose defects, and document the process so it holds up to opposing parties, regulators and courts."
+          : "Readiness is trending well — test whether a hold actually reaches messaging and personal devices, sample the review for documents the model missed, check that a privilege call can be traced to a named lawyer, and confirm you can reproduce a produced set if it is challenged.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
