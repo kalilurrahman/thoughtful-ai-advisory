@@ -911,4 +911,12 @@ export const GOVERNANCE_GAMES = [
       "Practice choosing age assurance proportionate to the risk, setting age-appropriate defaults, recording revocable parental consent, assessing child-specific harm such as stranger contact and self-harm, and routing disclosures to trained responders.",
     anchor: "children-age-assurance",
   },
+  {
+    id: "worker-consultation-assurance",
+    title: "Worker consultation on AI game",
+    category: "People & workforce",
+    description:
+      "Practice consulting before the decision rather than announcing it, identifying the roles whose work actually changes, explaining purpose, data and monitoring in plain terms, answering concerns with changes or recorded reasons, and consulting again when the system or its use changes.",
+    anchor: "worker-consultation-assurance",
+  },
 ] as const;
