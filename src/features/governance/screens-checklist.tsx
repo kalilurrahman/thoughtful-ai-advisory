@@ -301,6 +301,7 @@ import { AI_HANDOVER_ROUNDS, aiHandoverScore } from "./ai-handover-game";
 import { MULTILINGUAL_ROUNDS, multilingualScore } from "./multilingual-assurance-game";
 import { CODING_ASSISTANTS_ROUNDS, codingAssistantsScore } from "./coding-assistants-game";
 import { MA_DILIGENCE_ROUNDS, maDiligenceScore } from "./ma-diligence-game";
+import { CHILDREN_AGE_ROUNDS, childrenAgeScore } from "./children-age-assurance-game";
 
 const statusText = {
   complete: "Complete",
@@ -449,6 +450,7 @@ export function ChecklistScreen() {
     {},
   );
   const [maDiligenceAnswers, setMaDiligenceAnswers] = useState<Record<string, number>>({});
+  const [childrenAgeAnswers, setChildrenAgeAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -566,6 +568,7 @@ export function ChecklistScreen() {
   const multilingualGame = multilingualScore(multilingualAnswers);
   const codingAssistantsGame = codingAssistantsScore(codingAssistantsAnswers);
   const maDiligenceGame = maDiligenceScore(maDiligenceAnswers);
+  const childrenAgeGame = childrenAgeScore(childrenAgeAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7159,6 +7162,69 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good diligence choice."
                           : "Review the diligence gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="children-age-assurance"
+        className="checklist-phase"
+        aria-label="AI services for children and age assurance game"
+      >
+        <h2>AI services for children &amp; age assurance</h2>
+        <p>
+          Practice choosing age assurance proportionate to the risk, setting age-appropriate defaults,
+          recording revocable parental consent, assessing child-specific harm such as stranger contact
+          and self-harm, and routing disclosures to trained responders. Scenarios are learning prompts,
+          not legal advice or a substitute for a child-safety assessment.
+        </p>
+        <p>
+          <strong>
+            {childrenAgeGame.correct}/{childrenAgeGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {childrenAgeGame.complete && (
+            <Button variant="outline" onClick={() => setChildrenAgeAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CHILDREN_AGE_ROUNDS.map((round) => {
+            const selected = childrenAgeAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setChildrenAgeAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good child-safety choice."
+                          : "Review the child-safety gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

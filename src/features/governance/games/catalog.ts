@@ -903,4 +903,12 @@ export const GOVERNANCE_GAMES = [
       "Practice building the AI inventory from real operations, checking change-of-control and termination rights before signing, surfacing inherited incidents and regulator contact, confirming data rights transfer or costing a retrain, and planning what must keep running on day one.",
     anchor: "ma-diligence-assurance",
   },
+  {
+    id: "children-age-assurance",
+    title: "AI services for children & age assurance game",
+    category: "Safety & harm prevention",
+    description:
+      "Practice choosing age assurance proportionate to the risk, setting age-appropriate defaults, recording revocable parental consent, assessing child-specific harm such as stranger contact and self-harm, and routing disclosures to trained responders.",
+    anchor: "children-age-assurance",
+  },
 ] as const;
