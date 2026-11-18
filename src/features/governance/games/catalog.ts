@@ -943,4 +943,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping automated public decisions fair and contestable: publishing the legal basis and policy, ensuring a human with authority reviews before the decision takes effect, giving plain reasons, making the appeal route genuinely usable, and investigating disparate impact rather than assuming an objective model.",
     anchor: "public-sector-fairness-assurance",
   },
+  {
+    id: "algorithmic-pricing-assurance",
+    title: "Algorithmic pricing & competition game",
+    category: "Commercial & competition",
+    description:
+      "Practice keeping AI pricing inside competition law: keeping competitor data out of price setting, requiring human approval for material price moves, assessing the signalling risk of public price statements, treating parallel market movement as a collusion indicator with a legal escalation route, and keeping an audit trail of decisions and model versions.",
+    anchor: "algorithmic-pricing-assurance",
+  },
 ] as const;
