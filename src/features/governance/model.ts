@@ -2866,6 +2866,41 @@ export function calculate(
           : "Readiness is trending well — test an assessment brief against a capable model, check that a detection flag cannot become a penalty without a conversation, and confirm students know where the line is before they submit rather than after.",
     };
   }
+  if (id === "insurance-underwriting-claims") {
+    const actuarial = v["actuarial"] ?? 0,
+      proxies = v["proxies"] ?? 0,
+      claimsReview = v["claims-review"] ?? 0,
+      explanation = v["explanation"] ?? 0,
+      dataSources = v["data-sources"] ?? 0,
+      outcomes = v["outcomes"] ?? 0,
+      score = Math.round(
+        actuarial * 0.2 +
+          proxies * 0.2 +
+          claimsReview * 0.2 +
+          explanation * 0.15 +
+          dataSources * 0.15 +
+          outcomes * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in insurance underwriting & claims readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Risk factors actuarially justified & documented (20%)", actuarial + "%"],
+        ["Proxies for protected characteristics tested and removed (20%)", proxies + "%"],
+        ["Adverse automated claims decisions get human review (20%)", claimsReview + "%"],
+        ["Declines explained with a route to review (15%)", explanation + "%"],
+        ["External data sources verified and permitted for the purpose (15%)", dataSources + "%"],
+        ["Outcomes monitored by group; complaints analysed for patterns (10%)", outcomes + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: justify and document risk factors actuarially rather than relying on what predicts, test for and remove proxies for protected characteristics, require human review of adverse automated claims decisions, explain declines with a route to review, verify that external data sources are permitted for the purpose, and monitor outcomes by group while analysing complaints for patterns."
+          : "Readiness is trending well — test whether the model can reach a decline without a person seeing it, compare outcomes for similar risks across groups, and check that a customer who challenges a decision can get a specific reason rather than a restatement of the policy.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
