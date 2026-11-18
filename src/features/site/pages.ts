@@ -164,6 +164,7 @@ export const workspaceNav: NavSection = {
     { label: "Corrective actions", url: "/actions" },
     { label: "AI governance advisor", url: "/advisor" },
     { label: "Site assistant", url: "/assistant" },
+    { label: "Team discussions", url: "/discussions" },
     { label: "Lifecycle checklist", url: "/checklist" },
     { label: "AI Governance Playbook", url: "/playbook" },
     { label: "Templates", url: "/templates" },
@@ -256,6 +257,7 @@ export const headerNav: HeaderSection[] = [
       ]),
       workspaceGroup("Learn & collaborate", [
         "/advisor",
+        "/discussions",
         "/assistant",
         "/playbook",
         "/templates",

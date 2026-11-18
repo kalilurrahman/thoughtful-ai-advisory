@@ -535,6 +535,7 @@
 |---|---|---|
 | CAP-001 Home page | Live | UC01 |
 | CAP-086 Readable sitemap | Live | UC01 |
+| CAP-087 Team discussions | Live | — |
 | CAP-002 Website content pages | Live | UC01 |
 | CAP-003 Control library | Live | UC07 |
 | CAP-004 Control detail | Live | UC07 |

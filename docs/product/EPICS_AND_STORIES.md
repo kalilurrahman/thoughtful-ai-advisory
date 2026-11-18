@@ -2,7 +2,7 @@
 
 # VERITRAIL epics and user stories
 
-16 epics and 63 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
+16 epics and 64 user stories, each with Given/When/Then acceptance criteria, the routes and tests that cover it, and the gaps still open. Source: [`catalog.yaml`](catalog.yaml).
 
 | Epic | Title | Area | Status | Stories | Done | Partial | Planned |
 |---|---|---|---|---|---|---|---|
@@ -15,7 +15,7 @@
 | [E07](#e07--guardrails-design-in-the-workspace) | Guardrails design in the workspace | Workspace — assessment and release readiness | Live | 1 | 1 | 0 | 0 |
 | [E08](#e08--operational-governance-registers) | Operational governance registers | Workspace — operational governance | Live | 5 | 5 | 0 | 0 |
 | [E09](#e09--remediation-roadmap-and-lifecycle-checklist) | Remediation roadmap and lifecycle checklist | Workspace — assessment and release readiness | Live | 2 | 2 | 0 | 0 |
-| [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 7 | 7 | 0 | 0 |
+| [E10](#e10--guidance-knowledge-and-advisor) | Guidance, knowledge and advisor | Workspace — guidance and knowledge | Live | 8 | 8 | 0 | 0 |
 | [E11](#e11--reports-and-audit-evidence) | Reports and audit evidence | Workspace — reports and evidence | Preview | 1 | 1 | 0 | 0 |
 | [E12](#e12--accounts-workspaces-and-cloud-persistence) | Accounts, workspaces and Cloud persistence | Accounts and persistence | Live | 5 | 3 | 2 | 0 |
 | [E13](#e13--platform-console) | Platform console | Platform console | Demo | 7 | 7 | 0 | 0 |
@@ -29,7 +29,7 @@
 
 **Area:** Public website and content · **Status:** Live
 
-**Capabilities:** CAP-001 Home page, CAP-086 Readable sitemap, CAP-002 Website content pages, CAP-074 Reading aids, CAP-075 Section illustrations and share images
+**Capabilities:** CAP-001 Home page, CAP-086 Readable sitemap, CAP-087 Team discussions, CAP-002 Website content pages, CAP-074 Reading aids, CAP-075 Section illustrations and share images
 
 ### S01.1
 
@@ -617,6 +617,19 @@ Acceptance criteria:
 
 **Routes:** `/assistant` · **Capabilities:** CAP-078, CAP-079 · **Tests:** `assistant-model.test.ts`, `app-routing.test.tsx`
 
+### S10.8
+
+**As an AI governance lead**, I want to discuss governance topics live with colleagues in my organisation, so that decisions and questions are shared and the history is kept.
+
+*Status: Done*
+
+Acceptance criteria:
+
+- Given a workspace member, when they post a message, then other members see it live and it remains after reload.
+- Given a non-member, when they open the discussions of another organisation, then no messages are returned.
+
+**Routes:** `/discussions` · **Capabilities:** CAP-087 · **Tests:** `site-pages.test.ts`
+
 Known gaps:
 
 - Signed-out visitors see a sign-in prompt instead of the chat; live two-thread restoration awaits a signed-in requesting-user account.
@@ -1102,7 +1115,7 @@ Every gap recorded against a story, in one list for planning.
 | [S10.1](#s101) | E10 | UI rendering tests require a router test helper (stub-playbook-ui). |
 | [S10.2](#s102) | E10 | UI rendering tests require a clipboard mock helper (stub-templates-ui). |
 | [S10.6](#s106) | E10 | The Lovable AI gateway (LOVABLE_API_KEY) is called only when the server function's requireSupabaseAuth middleware passes; the sign-in gate is enforced server-side. |
-| [S10.7](#s107) | E10 | Signed-out visitors see a sign-in prompt instead of the chat; live two-thread restoration awaits a signed-in requesting-user account. |
+| [S10.8](#s108) | E10 | Signed-out visitors see a sign-in prompt instead of the chat; live two-thread restoration awaits a signed-in requesting-user account. |
 | [S11.1](#s111) | E11 | The three packs differ only in title and subject. |
 | [S12.1](#s121) | E12 | No SSO/SAML or MFA. |
 | [S12.2](#s122) | E12 | Save calls save_veritrail_workspace and falls back to save_aegis_workspace until migration 0009 is applied; conflict detection needs migration 0013. |

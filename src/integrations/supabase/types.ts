@@ -339,6 +339,44 @@ export type Database = {
           },
         ]
       }
+      org_messages: {
+        Row: {
+          author: string
+          body: string
+          created_at: string
+          id: string
+          organization_id: string
+          topic: string
+          user_id: string
+        }
+        Insert: {
+          author: string
+          body: string
+          created_at?: string
+          id?: string
+          organization_id: string
+          topic?: string
+          user_id: string
+        }
+        Update: {
+          author?: string
+          body?: string
+          created_at?: string
+          id?: string
+          organization_id?: string
+          topic?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "org_messages_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organization_invitations: {
         Row: {
           accepted_at: string | null

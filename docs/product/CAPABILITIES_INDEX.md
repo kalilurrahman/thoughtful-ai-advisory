@@ -19,7 +19,7 @@ Every app, tool and feature, then every website content page, the control librar
 | [Accounts and persistence](#accounts-and-persistence) | 7 | 7 | 0 | 0 | 0 |
 | [Platform console](#platform-console) | 7 | 3 | 4 | 0 | 0 |
 | [Administration and analytics](#administration-and-analytics) | 2 | 2 | 0 | 0 | 0 |
-| [Installable app](#installable-app) | 12 | 12 | 0 | 0 | 0 |
+| [Installable app](#installable-app) | 13 | 13 | 0 | 0 | 0 |
 
 ## Apps, tools and features
 
@@ -131,6 +131,7 @@ Every app, tool and feature, then every website content page, the control librar
 
 | ID | Capability | Route | Status | Data | For | Epic | What it does |
 |---|---|---|---|---|---|---|---|
+| CAP-087 | Team discussions | `/discussions` | Live | Cloud (RLS) | AI governance lead | [E01](EPICS_AND_STORIES.md#e01--public-website-and-governed-content) | Live, saved discussion threads by governance topic for members of an organisation workspace; members only. |
 | CAP-005 | Glossary | `/glossary` | Live | None | Prospective buyer | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | 38 governed definitions, filterable by text and topic, with related controls. |
 | CAP-070 | Installable app (PWA) | Site-wide | Live | This browser | Prospective buyer, AI governance lead | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | Manifest with maskable icons, shortcuts and screenshots; install card and per-browser instructions. |
 | CAP-071 | Offline reading | Site-wide | Live | This browser | Prospective buyer | [E15](EPICS_AND_STORIES.md#e15--installable-app-search-and-reading-experience) | Production-only, network-first service worker; offline page with saved pages. |
@@ -284,6 +285,7 @@ Every app, tool and feature, then every website content page, the control librar
 |---|---|---|---|---|
 | CAP-001 | Home page | [S01.1](EPICS_AND_STORIES.md#s011) | `src/features/site/home.tsx`, `src/features/site/service-pathways.tsx`, `src/features/site/pages.ts`, `platform/content/website_pages/index.md` | `site-pages.test.ts`, `site-reading.test.ts` |
 | CAP-086 | Readable sitemap | [S01.2](EPICS_AND_STORIES.md#s012) | `src/routes/sitemap.tsx` | `app-routing.test.tsx` |
+| CAP-087 | Team discussions | [S10.8](EPICS_AND_STORIES.md#s108) | `src/routes/discussions.tsx`, `src/features/governance/screens-discussions.tsx` | `site-pages.test.ts` |
 | CAP-002 | Website content pages | [S01.2](EPICS_AND_STORIES.md#s012), [S01.3](EPICS_AND_STORIES.md#s013), [S01.4](EPICS_AND_STORIES.md#s014) | `src/routes/$.tsx`, `src/features/site/views.tsx`, `src/features/site/markdown.tsx` | `site-pages.test.ts`, `site-reading.test.ts` |
 | CAP-003 | Control library | [S02.1](EPICS_AND_STORIES.md#s021) | `src/routes/framework.controls.index.tsx`, `platform/content/controls/controls.yaml` | `site-pages.test.ts` |
 | CAP-004 | Control detail | [S02.2](EPICS_AND_STORIES.md#s022) | `src/routes/framework.controls.$controlId.tsx` | `site-pages.test.ts`, `app-routing.test.tsx` |

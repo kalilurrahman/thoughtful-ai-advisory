@@ -514,6 +514,17 @@ epics:
           - Given a question, when it is sent to the model, then the caller is validated and common sensitive details in history are masked.
         routes: [/assistant]
         tests: [assistant-model.test.ts, app-routing.test.tsx]
+      - id: S10.8
+        persona: gov-lead
+        want: to discuss governance topics live with colleagues in my organisation
+        so_that: decisions and questions are shared and the history is kept
+        status: done
+        capabilities: [CAP-087]
+        acceptance:
+          - Given a workspace member, when they post a message, then other members see it live and it remains after reload.
+          - Given a non-member, when they open the discussions of another organisation, then no messages are returned.
+        routes: [/discussions]
+        tests: [site-pages.test.ts]
         gaps: [Signed-out visitors see a sign-in prompt instead of the chat; live two-thread restoration awaits a signed-in requesting-user account.]
 
   - id: E11
@@ -1140,6 +1151,7 @@ capabilities:
   # ---------------------------------------------------------------- website (React pages)
   - {id: CAP-001, name: Home page, area: site, route: /, status: live, data: none, epic: E01, personas: [visitor], source: [src/features/site/home.tsx, src/features/site/service-pathways.tsx, src/features/site/pages.ts, platform/content/website_pages/index.md], tests: [site-pages.test.ts, site-reading.test.ts], summary: "Service-led home page: governance advisory, risk controls and assurance pathways; grouped menus, framework, practitioner workspace and AI guidance."}
   - {id: CAP-086, name: Readable sitemap, area: site, route: /sitemap, status: live, data: none, epic: E01, personas: [visitor], source: [src/routes/sitemap.tsx], tests: [app-routing.test.tsx], summary: "Grouped public page directory with XML sitemap viewing and download."}
+  - {id: CAP-087, name: Team discussions, area: app, route: /discussions, status: live, data: cloud, epic: E01, personas: [gov-lead], source: [src/routes/discussions.tsx, src/features/governance/screens-discussions.tsx], tests: [site-pages.test.ts], summary: "Live, saved discussion threads by governance topic for members of an organisation workspace; members only."}
   - {id: CAP-002, name: Website content pages, area: site, route: /$, status: live, data: none, epic: E01, personas: [visitor, cro], source: [src/routes/$.tsx, src/features/site/views.tsx, src/features/site/markdown.tsx], tests: [site-pages.test.ts, site-reading.test.ts], summary: "Every Markdown page in platform/content/website_pages (listed below) rendered with reading aids."}
   - {id: CAP-003, name: Control library, area: site, route: /framework/controls, status: live, data: none, epic: E02, personas: [gov-lead, auditor], source: [src/routes/framework.controls.index.tsx, platform/content/controls/controls.yaml], tests: [site-pages.test.ts], summary: "All 64 controls by pillar with priority mosaic and pillar cards."}
   - {id: CAP-004, name: Control detail, area: site, route: /framework/controls/$controlId, status: live, data: none, epic: E02, personas: [auditor, gov-lead], source: [src/routes/framework.controls.$controlId.tsx], tests: [site-pages.test.ts, app-routing.test.tsx], summary: "One control's owner, evidence, mappings, related questions and flags."}
