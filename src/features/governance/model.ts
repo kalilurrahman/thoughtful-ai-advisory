@@ -3146,6 +3146,41 @@ export function calculate(
           : "Readiness is trending well — test whether source-of-income and disability-related records can influence the score, ask an applicant to obtain their own decision reason, and check that a corrected record actually updates the next application.",
     };
   }
+  if (id === "agri-food-system-ai") {
+    const localValidation = v["local-validation"] ?? 0,
+      dataOwnership = v["data-ownership"] ?? 0,
+      equity = v["equity"] ?? 0,
+      foodSafety = v["food-safety"] ?? 0,
+      tradeOffs = v["trade-offs"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      score = Math.round(
+        localValidation * 0.2 +
+          dataOwnership * 0.2 +
+          equity * 0.15 +
+          foodSafety * 0.2 +
+          tradeOffs * 0.15 +
+          fallback * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in agriculture & food-system decisions",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Recommendations validated for local conditions before driving action (20%)", localValidation + "%"],
+        ["Farmers own and can access the data their operation generates (20%)", dataOwnership + "%"],
+        ["Advice does not disadvantage smallholders or thin-data regions (15%)", equity + "%"],
+        ["Food safety and traceability keep human sign-off and audit trails (20%)", foodSafety + "%"],
+        ["Environmental and animal-welfare trade-offs explicit, not optimised away (15%)", tradeOffs + "%"],
+        ["Growers have a workable fallback when the model fails (10%)", fallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: validate recommendations for local soil, climate and practice before they drive action, make sure farmers own and can access the data their operation generates, check that advice does not systematically disadvantage smallholders or thin-data regions, keep human sign-off and audit trails on food safety and traceability decisions, make environmental and animal-welfare trade-offs explicit rather than optimised away, and give growers a workable fallback when the model fails."
+          : "Readiness is trending well — test the advice on a smallholder-scale operation in a thin-data region, trace one food safety decision back to a named sign-off, and confirm a grower can export their own data and keep farming if the model is switched off.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
