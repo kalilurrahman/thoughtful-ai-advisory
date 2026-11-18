@@ -309,6 +309,7 @@ import { PUBLIC_SECTOR_FAIRNESS_ROUNDS, publicSectorFairnessScore } from "./publ
 import { ALGORITHMIC_PRICING_ROUNDS, algorithmicPricingScore } from "./algorithmic-pricing-game";
 import { EXPORT_CONTROLS_ROUNDS, exportControlsScore } from "./export-controls-game";
 import { VULNERABLE_CUSTOMER_ROUNDS, vulnerableCustomerScore } from "./vulnerable-customers-game";
+import { EDUCATION_INTEGRITY_ROUNDS, educationIntegrityScore } from "./education-integrity-game";
 
 const statusText = {
   complete: "Complete",
@@ -475,6 +476,9 @@ export function ChecklistScreen() {
   const [vulnerableCustomerAnswers, setVulnerableCustomerAnswers] = useState<
     Record<string, number>
   >({});
+  const [educationIntegrityAnswers, setEducationIntegrityAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -600,6 +604,7 @@ export function ChecklistScreen() {
   const algorithmicPricingGame = algorithmicPricingScore(algorithmicPricingAnswers);
   const exportControlsGame = exportControlsScore(exportControlsAnswers);
   const vulnerableCustomerGame = vulnerableCustomerScore(vulnerableCustomerAnswers);
+  const educationIntegrityGame = educationIntegrityScore(educationIntegrityAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7706,6 +7711,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good vulnerability choice."
                           : "Review the vulnerability gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="education-integrity-assurance"
+        className="checklist-phase"
+        aria-label="AI in education and assessment game"
+      >
+        <h2>AI in education &amp; assessment</h2>
+        <p>
+          Practice handling AI in education fairly: setting permitted use per assessment before work
+          starts, treating detector output as evidence rather than a verdict, redesigning assessment
+          that a model can complete, giving students a disclosure step, and training markers so
+          decisions are consistent, recorded and appealable. Scenarios are learning prompts, not
+          academic policy or legal advice.
+        </p>
+        <p>
+          <strong>
+            {educationIntegrityGame.correct}/{educationIntegrityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {educationIntegrityGame.complete && (
+            <Button variant="outline" onClick={() => setEducationIntegrityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {EDUCATION_INTEGRITY_ROUNDS.map((round) => {
+            const selected = educationIntegrityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setEducationIntegrityAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good integrity choice."
+                          : "Review the integrity gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
