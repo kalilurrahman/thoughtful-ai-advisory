@@ -318,6 +318,7 @@ import {
   CLINICAL_DOCUMENTATION_ROUNDS,
   clinicalDocumentationScore,
 } from "./clinical-documentation-game";
+import { EDISCOVERY_ROUNDS, eDiscoveryScore } from "./ediscovery-game";
 
 const statusText = {
   complete: "Complete",
@@ -500,6 +501,7 @@ export function ChecklistScreen() {
   const [clinicalDocumentationAnswers, setClinicalDocumentationAnswers] = useState<
     Record<string, number>
   >({});
+  const [ediscoveryAnswers, setEdiscoveryAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -631,6 +633,7 @@ export function ChecklistScreen() {
   const electionsIntegrityGame = electionsIntegrityScore(electionsIntegrityAnswers);
   const journalismIntegrityGame = journalismIntegrityScore(journalismIntegrityAnswers);
   const clinicalDocumentationGame = clinicalDocumentationScore(clinicalDocumentationAnswers);
+  const ediscoveryGame = eDiscoveryScore(ediscoveryAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8122,6 +8125,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good documentation safeguard."
                           : "Review the documentation gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="ediscovery-assurance"
+        className="checklist-phase"
+        aria-label="AI in legal e-discovery and evidence preservation game"
+      >
+        <h2>AI in legal e-discovery &amp; evidence preservation</h2>
+        <p>
+          Practice defensible AI-assisted litigation and investigation work: issuing and monitoring
+          legal holds across messaging and devices, validating and sampling AI review rather than
+          trusting it, explaining how documents were classified, keeping privilege calls with qualified
+          lawyers and a log, and preserving enough to reconstruct a produced set and disclose defects.
+          Scenarios are learning prompts, not legal advice.
+        </p>
+        <p>
+          <strong>
+            {ediscoveryGame.correct}/{ediscoveryGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {ediscoveryGame.complete && (
+            <Button variant="outline" onClick={() => setEdiscoveryAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {EDISCOVERY_ROUNDS.map((round) => {
+            const selected = ediscoveryAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setEdiscoveryAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good defensibility choice."
+                          : "Review the defensibility gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

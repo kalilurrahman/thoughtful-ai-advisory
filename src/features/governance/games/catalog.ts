@@ -1015,4 +1015,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI-drafted clinical records safe: requiring clinician review and sign-off before a note becomes the record, telling patients when encounters are recorded and capturing consent, checking drafts for omitted findings and invented content, monitoring documentation-driven billing drift, and keeping an audit trail of AI authorship together with a route for patients to see and correct the record.",
     anchor: "clinical-documentation-assurance",
   },
+  {
+    id: "ediscovery-assurance",
+    title: "AI in legal e-discovery & evidence preservation game",
+    category: "Legal assurance",
+    description:
+      "Practice defensible AI-assisted litigation and investigation work: issuing and monitoring legal holds across messaging and devices, validating and sampling AI review rather than trusting it, explaining how documents were classified, keeping privilege calls with qualified lawyers and a log, and preserving enough to reconstruct a produced set and disclose defects.",
+    anchor: "ediscovery-assurance",
+  },
 ] as const;
