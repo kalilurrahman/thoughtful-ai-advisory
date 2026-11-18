@@ -3076,6 +3076,41 @@ export function calculate(
           : "Readiness is trending well — test whether a hold actually reaches messaging and personal devices, sample the review for documents the model missed, check that a privilege call can be traced to a named lawyer, and confirm you can reproduce a produced set if it is challenged.",
     };
   }
+  if (id === "critical-infrastructure-operations") {
+    const operatorAuthority = v["operator-authority"] ?? 0,
+      interlocks = v["interlocks"] ?? 0,
+      degradedConditions = v["degraded-conditions"] ?? 0,
+      operationalData = v["operational-data"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      score = Math.round(
+        operatorAuthority * 0.2 +
+          interlocks * 0.2 +
+          degradedConditions * 0.15 +
+          operationalData * 0.15 +
+          disclosure * 0.15 +
+          fallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in energy grid & critical infrastructure operations",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Operators keep authority over consequential actions with escalation (20%)", operatorAuthority + "%"],
+        ["Model outputs cannot actuate physical systems without limits and interlocks (20%)", interlocks + "%"],
+        ["Tested and monitored under degraded data, extreme weather and novel events (15%)", degradedConditions + "%"],
+        ["Third-party access to operational data governed and minimised (15%)", operationalData + "%"],
+        ["Regulators, customers and communities told when AI influences service decisions (15%)", disclosure + "%"],
+        ["Manual fallback and drills for AI-caused or AI-worsened incidents (15%)", fallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: keep operators in authority over consequential actions with documented escalation, make sure model outputs cannot actuate physical systems without limits and interlocks, test and monitor performance under degraded data, extreme weather and novel events, govern and minimise third-party access to operational data, tell regulators, customers and affected communities when AI influences service decisions, and build a manual fallback with drills for AI-caused or AI-worsened incidents."
+          : "Readiness is trending well — run a degraded-data and extreme-weather exercise against the live model, try to trace one automated action back to a named operator decision, and confirm you can restore service manually if the model is unavailable mid-event.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
