@@ -2625,6 +2625,37 @@ export function calculate(
           : "Readiness is trending well — check that representatives hear about changes before staff do, test whether the explanation matches what the system actually monitors, and confirm concerns raised late still reach the people who can act on them.",
     };
   }
+  if (id === "summarisation-records") {
+    const scope = v["scope"] ?? 0,
+      confirmation = v["confirmation"] ?? 0,
+      correction = v["correction"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      retention = v["retention"] ?? 0,
+      score = Math.round(
+        scope * 0.2 + confirmation * 0.25 + correction * 0.2 + transparency * 0.2 + retention * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI summarisation & record accuracy readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["What may & must never be summarised is defined (20%)", scope + "%"],
+        ["A human confirms the summary before it becomes the record (25%)", confirmation + "%"],
+        ["Errors corrected, with corrections reaching downstream records (20%)", correction + "%"],
+        ["People told AI summarises their conversation & can object (20%)", transparency + "%"],
+        [
+          "Summaries follow retention & access rules; raw material minimised (15%)",
+          retention + "%",
+        ],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define what may and must never be summarised, require a human to confirm a summary before it becomes the record of a decision or interaction, make corrections possible and carry them into downstream records, tell people when AI summarises their conversation or document and let them object, and apply the same retention and access rules to summaries while minimising raw transcripts."
+          : "Readiness is trending well — sample summaries against the source for dropped caveats, check that a correction reaches every downstream copy, and confirm retention deletes the transcript as well as the summary.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
