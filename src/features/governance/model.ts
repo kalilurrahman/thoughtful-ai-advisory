@@ -3181,6 +3181,41 @@ export function calculate(
           : "Readiness is trending well — test the advice on a smallholder-scale operation in a thin-data region, trace one food safety decision back to a named sign-off, and confirm a grower can export their own data and keep farming if the model is switched off.",
     };
   }
+  if (id === "construction-built-environment") {
+    const professionalCheck = v["professional-check"] ?? 0,
+      lifeSafety = v["life-safety"] ?? 0,
+      siteSafety = v["site-safety"] ?? 0,
+      records = v["records"] ?? 0,
+      supplyData = v["supply-data"] ?? 0,
+      postHandover = v["post-handover"] ?? 0,
+      score = Math.round(
+        professionalCheck * 0.2 +
+          lifeSafety * 0.2 +
+          siteSafety * 0.15 +
+          records * 0.15 +
+          supplyData * 0.15 +
+          postHandover * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in construction & the built environment",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Generated designs, calculations and estimates checked by a qualified professional (20%)", professionalCheck + "%"],
+        ["Model outputs never substitute for structural, fire or life-safety sign-off (20%)", lifeSafety + "%"],
+        ["Safety predictions and risk flags reach the people who can act on them (15%)", siteSafety + "%"],
+        ["Design and as-built records show which elements were AI-assisted (15%)", records + "%"],
+        ["Contractor and supplier estimating data accurate and permissioned (15%)", supplyData + "%"],
+        ["Errors found after handover have a clear route to correction and disclosure (15%)", postHandover + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: have a qualified professional check generated designs, calculations and cost estimates and carry the liability, never let model output substitute for structural, fire or life-safety sign-off, route safety predictions and risk flags to the people who can act on them, record which design and as-built elements were AI-assisted, verify and permission contractor and supplier data used for estimating, and define a clear route to correct and disclose errors found after handover."
+          : "Readiness is trending well — take one AI-generated design element through professional checking end to end, test whether a safety flag actually reaches a site supervisor, and confirm a post-handover defect can be traced back to the model that contributed to it.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
