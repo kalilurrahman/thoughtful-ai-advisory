@@ -2831,6 +2831,41 @@ export function calculate(
           : "Readiness is trending well — test the journey as someone in distress would experience it, check that an override is honoured downstream as well as on screen, and compare outcomes for customers who disclosed a vulnerability with those who did not.",
     };
   }
+  if (id === "education-ai-integrity") {
+    const permitted = v["permitted"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      design = v["design"] ?? 0,
+      dueProcess = v["due-process"] ?? 0,
+      training = v["training"] ?? 0,
+      appeal = v["appeal"] ?? 0,
+      score = Math.round(
+        permitted * 0.2 +
+          disclosure * 0.2 +
+          design * 0.2 +
+          dueProcess * 0.15 +
+          training * 0.15 +
+          appeal * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in education: integrity & assessment readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Permitted & prohibited AI use defined per assessment (20%)", permitted + "%"],
+        ["Students disclose AI contribution where it is allowed (20%)", disclosure + "%"],
+        ["Assessment design resists outsourcing rather than relying on detection (20%)", design + "%"],
+        ["Detection treated as evidence, with due process before a penalty (15%)", dueProcess + "%"],
+        ["Staff & students trained and supported to use AI well (15%)", training + "%"],
+        ["Decisions recorded with an appeal route (10%)", appeal + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: define permitted and prohibited AI use for each assessment and share it in advance, require students to disclose AI contribution where it is allowed, design assessment that resists outsourcing rather than relying on detection, treat detection results as evidence with due process before any penalty, train and support staff and students, and record decisions with an appeal route."
+          : "Readiness is trending well — test an assessment brief against a capable model, check that a detection flag cannot become a penalty without a conversation, and confirm students know where the line is before they submit rather than after.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
