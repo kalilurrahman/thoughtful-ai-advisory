@@ -999,4 +999,12 @@ export const GOVERNANCE_GAMES = [
       "Practice responsible AI use in election-period communications and political advertising: labeling synthetic or altered content with provenance, constraining targeting to lawful and non-manipulative use, reviewing claims before publication, recording sponsors and accountable owners, and responding rapidly to correct or pause harmful or misleading AI content.",
     anchor: "elections-integrity-assurance",
   },
+  {
+    id: "journalism-integrity-assurance",
+    title: "AI in journalism & newsroom verification game",
+    category: "Civic integrity",
+    description:
+      "Practice responsible AI use in newsrooms and editorial work: verifying AI-assisted drafts and quotes against primary sources, requiring a named editor to sign off AI-influenced output, labelling synthetic media and checking provenance, publishing corrections and retractions with a clear trail, and telling audiences when AI played a material role.",
+    anchor: "journalism-integrity-assurance",
+  },
 ] as const;
