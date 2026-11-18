@@ -5401,6 +5401,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "summarisation-records",
+    name: "AI summarisation & record accuracy readiness",
+    desc: "Estimate readiness for AI that summarises meetings, calls, cases or documents that become your record: what may be summarised and what must never be summarised is defined, a human confirms a summary before it becomes the record of a decision or interaction, errors can be corrected with the correction reaching downstream records, people are told when AI summarises their conversation or document and can object, and summaries follow the same retention and access rules as the underlying material without keeping raw transcripts longer than needed.",
+    inputs: [
+      {
+        k: "scope",
+        label: "What may & must never be summarised is defined",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "confirmation",
+        label: "A human confirms the summary before it becomes the record",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "correction",
+        label: "Errors corrected, with corrections reaching downstream records",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "transparency",
+        label: "People told AI summarises their conversation & can object",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "retention",
+        label: "Summaries follow retention & access rules; raw material minimised",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 15,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
