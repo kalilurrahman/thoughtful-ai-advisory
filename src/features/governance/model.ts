@@ -2971,6 +2971,41 @@ export function calculate(
           : "Readiness is trending well — test labels and provenance on realistic synthetic content, review targeting criteria for unlawful or manipulative segmentation, and run a rapid-response drill to confirm misleading AI content can be paused, corrected and documented quickly.",
     };
   }
+  if (id === "journalism-newsroom-integrity") {
+    const verification = v["verification"] ?? 0,
+      editorial = v["editorial"] ?? 0,
+      syntheticMedia = v["synthetic-media"] ?? 0,
+      corrections = v["corrections"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      safeguards = v["safeguards"] ?? 0,
+      score = Math.round(
+        verification * 0.2 +
+          editorial * 0.2 +
+          syntheticMedia * 0.2 +
+          corrections * 0.15 +
+          disclosure * 0.15 +
+          safeguards * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in journalism & newsroom verification",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["AI-assisted output verified against primary sources (20%)", verification + "%"],
+        ["Named editor reviews and signs off AI-influenced output (20%)", editorial + "%"],
+        ["Synthetic or AI-generated media labelled and provenance checked (20%)", syntheticMedia + "%"],
+        ["Corrections and retractions published with a clear trail (15%)", corrections + "%"],
+        ["Audiences told when AI played a material role (15%)", disclosure + "%"],
+        ["Safeguards prevent unverified claims, fabricated quotes or harmful synthetic media (10%)", safeguards + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: verify AI-assisted output against primary sources before publication, require a named editor to review and sign off AI-influenced output, label synthetic or AI-generated media and check provenance, publish corrections and retractions with a clear trail, tell audiences when AI played a material role, and add safeguards that prevent unverified claims, fabricated quotes and harmful synthetic media from being published."
+          : "Readiness is trending well — test a realistic AI-assisted draft for fabricated quotes and confident wrong claims, check whether a labelled synthetic image can be traced to its source, and confirm a correction reaches every version of the story that was published.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
