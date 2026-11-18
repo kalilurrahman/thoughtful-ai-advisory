@@ -323,6 +323,7 @@ import {
   CRITICAL_INFRASTRUCTURE_ROUNDS,
   criticalInfrastructureScore,
 } from "./critical-infrastructure-game";
+import { TENANT_SCREENING_ROUNDS, tenantScreeningScore } from "./tenant-screening-game";
 
 const statusText = {
   complete: "Complete",
@@ -509,6 +510,7 @@ export function ChecklistScreen() {
   const [criticalInfrastructureAnswers, setCriticalInfrastructureAnswers] = useState<
     Record<string, number>
   >({});
+  const [tenantScreeningAnswers, setTenantScreeningAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -642,6 +644,7 @@ export function ChecklistScreen() {
   const clinicalDocumentationGame = clinicalDocumentationScore(clinicalDocumentationAnswers);
   const ediscoveryGame = eDiscoveryScore(ediscoveryAnswers);
   const criticalInfrastructureGame = criticalInfrastructureScore(criticalInfrastructureAnswers);
+  const tenantScreeningGame = tenantScreeningScore(tenantScreeningAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8262,6 +8265,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good operational safeguard."
                           : "Review the operational gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="tenant-screening-assurance"
+        className="checklist-phase"
+        aria-label="AI in tenant screening and housing access game"
+      >
+        <h2>AI in tenant screening &amp; housing access</h2>
+        <p>
+          Practice keeping AI-assisted rental screening fair: testing criteria for proxies such as
+          source of income, telling applicants a model is used and what data drives it, requiring
+          human review before rejection, giving specific reasons with a route to correct errors,
+          verifying screening data sources, and retaining audit evidence for fair-housing scrutiny.
+          Scenarios are learning prompts, not fair-housing or legal advice.
+        </p>
+        <p>
+          <strong>
+            {tenantScreeningGame.correct}/{tenantScreeningGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {tenantScreeningGame.complete && (
+            <Button variant="outline" onClick={() => setTenantScreeningAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {TENANT_SCREENING_ROUNDS.map((round) => {
+            const selected = tenantScreeningAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setTenantScreeningAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good housing-access safeguard."
+                          : "Review the housing-access gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
