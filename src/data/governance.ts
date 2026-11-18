@@ -5297,6 +5297,58 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "children-age-assurance",
+    name: "AI services for children & age assurance readiness",
+    desc: "Estimate readiness for AI features that children can reach: age assurance proportionate to the risk rather than collecting identity documents by default, age-appropriate design with safe defaults, plain explanations and content limits, parental or guardian consent where required, recorded and revocable, child-specific risks such as manipulation, self-harm, contact by strangers and commercial pressure assessed and mitigated, and a child-safety escalation route staffed by trained responders with a clear path to the authorities.",
+    inputs: [
+      {
+        k: "ageassurance",
+        label: "Age assurance proportionate; no unnecessary identity collection",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "design",
+        label: "Age-appropriate defaults, explanations & content limits",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "consent",
+        label: "Parental consent where required, recorded & revocable",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "childrisk",
+        label: "Child-specific risks assessed & mitigated",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "escalation",
+        label: "Child-safety escalation staffed & path to authorities clear",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
