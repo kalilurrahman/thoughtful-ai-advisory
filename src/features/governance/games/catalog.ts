@@ -1047,4 +1047,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in farming and food supply: validating recommendations for local conditions, keeping farm data with the grower, checking advice does not disadvantage smallholders or thin-data regions, keeping human sign-off and audit trails on food safety and traceability, making environmental and animal-welfare trade-offs explicit, and leaving growers a workable fallback when a model fails.",
     anchor: "agri-food-assurance",
   },
+  {
+    id: "construction-assurance",
+    title: "AI in construction & the built environment game",
+    category: "Sector assurance",
+    description:
+      "Practice keeping AI in design and delivery safe: requiring qualified professional checking of generated designs and calculations, refusing to let model output replace structural or fire sign-off, routing site-safety flags to the crews who can act, recording AI-authored design elements, and correcting and disclosing defects after handover.",
+    anchor: "construction-assurance",
+  },
 ] as const;
