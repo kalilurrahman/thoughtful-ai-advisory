@@ -3111,6 +3111,41 @@ export function calculate(
           : "Readiness is trending well — run a degraded-data and extreme-weather exercise against the live model, try to trace one automated action back to a named operator decision, and confirm you can restore service manually if the model is unavailable mid-event.",
     };
   }
+  if (id === "tenant-screening-housing") {
+    const lawfulCriteria = v["lawful-criteria"] ?? 0,
+      disclosure = v["disclosure"] ?? 0,
+      humanReview = v["human-review"] ?? 0,
+      reasonAndChallenge = v["reason-and-challenge"] ?? 0,
+      dataAccuracy = v["data-accuracy"] ?? 0,
+      outcomeMonitoring = v["outcome-monitoring"] ?? 0,
+      score = Math.round(
+        lawfulCriteria * 0.2 +
+          disclosure * 0.15 +
+          humanReview * 0.2 +
+          reasonAndChallenge * 0.2 +
+          dataAccuracy * 0.15 +
+          outcomeMonitoring * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in tenant screening & housing access",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Criteria lawful and housing-related; proxies for protected traits excluded (20%)", lawfulCriteria + "%"],
+        ["Applicants told a scoring model is used and what data drives it (15%)", disclosure + "%"],
+        ["Adverse decisions reviewed by a person before rejection (20%)", humanReview + "%"],
+        ["Specific reason given with a route to challenge and correct errors (20%)", reasonAndChallenge + "%"],
+        ["Screening data accurate with sources verified and stale records fixed (15%)", dataAccuracy + "%"],
+        ["Outcomes monitored by group with audit evidence retained (10%)", outcomeMonitoring + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: tie criteria to lawful, housing-related factors and exclude proxies for race, disability, family status and source of income, tell applicants a scoring model is used and what data drives it, require a person to review adverse decisions before rejection, give a specific reason with a route to challenge and correct errors, verify screening data sources and fix stale records, and monitor outcomes by group while retaining audit evidence for fair-housing scrutiny."
+          : "Readiness is trending well — test whether source-of-income and disability-related records can influence the score, ask an applicant to obtain their own decision reason, and check that a corrected record actually updates the next application.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
