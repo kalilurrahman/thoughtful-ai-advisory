@@ -1039,4 +1039,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI-assisted rental screening fair: testing criteria for proxies such as source of income, telling applicants a model is used and what data drives it, requiring human review before rejection, giving specific reasons with a route to correct errors, verifying screening data sources, and retaining audit evidence for fair-housing scrutiny.",
     anchor: "tenant-screening-assurance",
   },
+  {
+    id: "agri-food-assurance",
+    title: "AI in agriculture & food-system decisions game",
+    category: "Sector assurance",
+    description:
+      "Practice governing AI in farming and food supply: validating recommendations for local conditions, keeping farm data with the grower, checking advice does not disadvantage smallholders or thin-data regions, keeping human sign-off and audit trails on food safety and traceability, making environmental and animal-welfare trade-offs explicit, and leaving growers a workable fallback when a model fails.",
+    anchor: "agri-food-assurance",
+  },
 ] as const;

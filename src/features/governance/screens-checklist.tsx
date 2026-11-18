@@ -324,6 +324,7 @@ import {
   criticalInfrastructureScore,
 } from "./critical-infrastructure-game";
 import { TENANT_SCREENING_ROUNDS, tenantScreeningScore } from "./tenant-screening-game";
+import { AGRI_FOOD_ROUNDS, agriFoodScore } from "./agri-food-game";
 
 const statusText = {
   complete: "Complete",
@@ -511,6 +512,7 @@ export function ChecklistScreen() {
     Record<string, number>
   >({});
   const [tenantScreeningAnswers, setTenantScreeningAnswers] = useState<Record<string, number>>({});
+  const [agriFoodAnswers, setAgriFoodAnswers] = useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -645,6 +647,7 @@ export function ChecklistScreen() {
   const ediscoveryGame = eDiscoveryScore(ediscoveryAnswers);
   const criticalInfrastructureGame = criticalInfrastructureScore(criticalInfrastructureAnswers);
   const tenantScreeningGame = tenantScreeningScore(tenantScreeningAnswers);
+  const agriFoodGame = agriFoodScore(agriFoodAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8329,6 +8332,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good housing-access safeguard."
                           : "Review the housing-access gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="agri-food-assurance"
+        className="checklist-phase"
+        aria-label="AI in agriculture and food-system decisions game"
+      >
+        <h2>AI in agriculture &amp; food-system decisions</h2>
+        <p>
+          Practice governing AI in farming and food supply: validating recommendations for local
+          conditions, keeping farm data with the grower, checking advice does not disadvantage
+          smallholders or thin-data regions, keeping human sign-off and audit trails on food safety and
+          traceability, making environmental and animal-welfare trade-offs explicit, and leaving
+          growers a workable fallback when a model fails. Scenarios are learning prompts, not
+          agronomic, veterinary or food-safety advice.
+        </p>
+        <p>
+          <strong>
+            {agriFoodGame.correct}/{agriFoodGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {agriFoodGame.complete && (
+            <Button variant="outline" onClick={() => setAgriFoodAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {AGRI_FOOD_ROUNDS.map((round) => {
+            const selected = agriFoodAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAgriFoodAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good food-system safeguard."
+                          : "Review the food-system gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
