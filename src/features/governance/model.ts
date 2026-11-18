@@ -2597,6 +2597,34 @@ export function calculate(
           : "Readiness is trending well — test the age check with a determined child rather than an adult tester, review whether defaults still hold for younger users after product changes, and confirm escalations reach a trained responder out of hours.",
     };
   }
+  if (id === "worker-consultation") {
+    const mapping = v["mapping"] ?? 0,
+      timing = v["timing"] ?? 0,
+      content = v["content"] ?? 0,
+      response = v["response"] ?? 0,
+      ongoing = v["ongoing"] ?? 0,
+      score = Math.round(
+        mapping * 0.25 + timing * 0.25 + content * 0.2 + response * 0.2 + ongoing * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Worker consultation on AI readiness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Affected roles & worker representatives identified early (25%)", mapping + "%"],
+        ["Consultation before the decision, with time to respond (25%)", timing + "%"],
+        ["Purpose, data, monitoring & job effects explained plainly (20%)", content + "%"],
+        ["Concerns answered; changes made or reasons recorded (20%)", response + "%"],
+        ["Consultation continues as the system & its use change (10%)", ongoing + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: identify affected roles and worker representatives before deployment, consult before the decision with enough information and time to respond, explain the purpose, data used, monitoring, performance measures and expected job changes plainly, answer concerns with changes made or reasons recorded, and keep consulting as the system or its use changes."
+          : "Readiness is trending well — check that representatives hear about changes before staff do, test whether the explanation matches what the system actually monitors, and confirm concerns raised late still reach the people who can act on them.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",

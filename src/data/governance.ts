@@ -5349,13 +5349,66 @@ export const CALCS = [
       },
     ],
   },
+  {
+    id: "worker-consultation",
+    name: "Worker consultation on AI readiness",
+    desc: "Estimate readiness for consulting the people whose work an AI system changes: affected roles and worker representatives identified before deployment, consultation happening before the decision with enough information and time to respond, purpose, data used, monitoring, performance measures and expected job changes explained plainly, concerns answered with changes made or reasons recorded, and consultation continuing after deployment as the system or its use changes.",
+    inputs: [
+      {
+        k: "mapping",
+        label: "Affected roles & worker representatives identified early",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "timing",
+        label: "Consultation before the decision, with time to respond",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 25,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "content",
+        label: "Purpose, data, monitoring & job effects explained plainly",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "response",
+        label: "Concerns answered; changes made or reasons recorded",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 20,
+        fmt: (n: number) => n + "%",
+      },
+      {
+        k: "ongoing",
+        label: "Consultation continues as the system & its use change",
+        min: 0,
+        max: 100,
+        step: 5,
+        v: 10,
+        fmt: (n: number) => n + "%",
+      },
+    ],
+  },
 ];
 
 export const PHASES = [
   {
     num: "01",
     name: "Stabilize",
-    window: "Days 1–30",    items: [
+    window: "Days 1–30",
+    items: [
       {
         title: "Assign AI system owner and approve use-case scope",
         owner: "CIO",
