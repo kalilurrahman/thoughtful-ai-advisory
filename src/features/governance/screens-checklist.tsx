@@ -311,6 +311,7 @@ import { EXPORT_CONTROLS_ROUNDS, exportControlsScore } from "./export-controls-g
 import { VULNERABLE_CUSTOMER_ROUNDS, vulnerableCustomerScore } from "./vulnerable-customers-game";
 import { EDUCATION_INTEGRITY_ROUNDS, educationIntegrityScore } from "./education-integrity-game";
 import { INSURANCE_AI_ROUNDS, insuranceAiScore } from "./insurance-ai-game";
+import { INCIDENT_NOTIFICATION_ROUNDS, incidentNotificationScore } from "./incident-notification-game";
 
 const statusText = {
   complete: "Complete",
@@ -481,6 +482,9 @@ export function ChecklistScreen() {
     Record<string, number>
   >({});
   const [insuranceAiAnswers, setInsuranceAiAnswers] = useState<Record<string, number>>({});
+  const [incidentNotificationAnswers, setIncidentNotificationAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -608,6 +612,7 @@ export function ChecklistScreen() {
   const vulnerableCustomerGame = vulnerableCustomerScore(vulnerableCustomerAnswers);
   const educationIntegrityGame = educationIntegrityScore(educationIntegrityAnswers);
   const insuranceAiGame = insuranceAiScore(insuranceAiAnswers);
+  const incidentNotificationGame = incidentNotificationScore(incidentNotificationAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -7842,6 +7847,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good underwriting choice."
                           : "Review the underwriting gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="incident-notification-assurance"
+        className="checklist-phase"
+        aria-label="AI incident notification to affected individuals game"
+      >
+        <h2>AI incident notification to affected individuals</h2>
+        <p>
+          Practice notifying people affected by AI incidents: defining when notification is required,
+          identifying and reaching those affected, explaining impact and next steps clearly, offering
+          a staffed remedy and recourse route, and keeping regulator, client and individual messages
+          consistent while logging outcomes for follow-up. Scenarios are learning prompts, not legal
+          advice on notification duties.
+        </p>
+        <p>
+          <strong>
+            {incidentNotificationGame.correct}/{incidentNotificationGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {incidentNotificationGame.complete && (
+            <Button variant="outline" onClick={() => setIncidentNotificationAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {INCIDENT_NOTIFICATION_ROUNDS.map((round) => {
+            const selected = incidentNotificationAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setIncidentNotificationAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good notification choice."
+                          : "Review the notification gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

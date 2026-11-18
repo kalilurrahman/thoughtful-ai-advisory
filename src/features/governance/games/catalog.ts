@@ -983,4 +983,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI pricing and claims decisions fair: testing for proxies rather than trusting factors that never name a protected characteristic, reviewing adverse automated decisions before they reach the customer, giving specific reasons and a route to review, justifying rating factors actuarially, and investigating complaint clusters instead of explaining them away.",
     anchor: "insurance-ai-assurance",
   },
+  {
+    id: "incident-notification-assurance",
+    title: "AI incident notification to affected individuals game",
+    category: "Operational readiness",
+    description:
+      "Practice notifying people affected by AI incidents: defining when notification is required, identifying and reaching those affected, explaining impact and next steps clearly, offering a staffed remedy and recourse route, and keeping regulator, client and individual messages consistent while logging outcomes for follow-up.",
+    anchor: "incident-notification-assurance",
+  },
 ] as const;
