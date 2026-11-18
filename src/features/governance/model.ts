@@ -2691,6 +2691,41 @@ export function calculate(
           : "Readiness is trending well — test the boundary with questions just inside and just outside scope, check that reviewers actually change advice rather than rubber-stamp it, and confirm the record captures the basis of the advice if a client later challenges it.",
     };
   }
+  if (id === "public-sector-fairness") {
+    const basis = v["basis"] ?? 0,
+      human = v["human"] ?? 0,
+      reasons = v["reasons"] ?? 0,
+      appeal = v["appeal"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      reconstruct = v["reconstruct"] ?? 0,
+      score = Math.round(
+        basis * 0.2 +
+          human * 0.2 +
+          reasons * 0.2 +
+          appeal * 0.2 +
+          monitoring * 0.1 +
+          reconstruct * 0.1,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "Public-sector automated decision fairness",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Legal basis & published policy for the automated element (20%)", basis + "%"],
+        ["Human with authority to change the outcome reviews before deciding (20%)", human + "%"],
+        ["Person told plainly what was decided & why (20%)", reasons + "%"],
+        ["Notice & an effective appeal or review route (20%)", appeal + "%"],
+        ["Outcomes monitored for disparate impact across groups (10%)", monitoring + "%"],
+        ["Rules, data & model version recorded for reconstruction (10%)", reconstruct + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: make the legal basis and published policy for the automated element clear, ensure a human with authority to change the outcome reviews before a decision is made, tell the person plainly what was decided and why, provide notice and an effective appeal or review route, monitor outcomes for disparate impact across groups, and record the rules, data and model version used so decisions can be reconstructed."
+          : "Readiness is trending well — test the appeal route as a member of the public would, compare outcomes across groups on the same facts, and confirm a decision can still be reconstructed after a model or rule change.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
