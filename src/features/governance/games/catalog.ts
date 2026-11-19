@@ -1087,4 +1087,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in aviation and air traffic operations: keeping human authority and quick override for safety-critical decisions, validating performance in edge and degraded conditions, logging decisions and model versions for traceability, controlling changes against certified or approved baselines, and rehearsing manual procedures and coordination when AI fails.",
     anchor: "aviation-air-traffic-assurance",
   },
+  {
+    id: "maritime-port-operations-assurance",
+    title: "AI in maritime & port operations game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in maritime and port operations: keeping human oversight and override for safety- and security-critical actions, validating performance in adverse and degraded conditions, logging recommendations and model versions for traceability, testing screening and scheduling for fairness, and rehearsing manual procedures, coordination and notification when AI fails.",
+    anchor: "maritime-port-operations-assurance",
+  },
 ] as const;

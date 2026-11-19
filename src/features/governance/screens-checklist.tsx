@@ -342,6 +342,10 @@ import {
   AVIATION_AIR_TRAFFIC_ROUNDS,
   aviationAirTrafficScore,
 } from "./aviation-air-traffic-game";
+import {
+  MARITIME_PORT_OPERATIONS_ROUNDS,
+  maritimePortOperationsScore,
+} from "./maritime-port-operations-game";
 
 const statusText = {
   complete: "Complete",
@@ -543,6 +547,9 @@ export function ChecklistScreen() {
   const [aviationAirTrafficAnswers, setAviationAirTrafficAnswers] = useState<
     Record<string, number>
   >({});
+  const [maritimePortOperationsAnswers, setMaritimePortOperationsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -683,6 +690,7 @@ export function ChecklistScreen() {
   const officialStatisticsGame = officialStatisticsScore(officialStatisticsAnswers);
   const telecomOperationsGame = telecomOperationsScore(telecomOperationsAnswers);
   const aviationAirTrafficGame = aviationAirTrafficScore(aviationAirTrafficAnswers);
+  const maritimePortOperationsGame = maritimePortOperationsScore(maritimePortOperationsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8740,6 +8748,71 @@ export function ChecklistScreen() {
                       disabled={selected !== undefined}
                       onClick={() =>
                         setAviationAirTrafficAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good operations safeguard."
+                          : "Review the operations gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="maritime-port-operations-assurance"
+        className="checklist-phase"
+        aria-label="AI in maritime and port operations game"
+      >
+        <h2>AI in maritime &amp; port operations</h2>
+        <p>
+          Practice governing AI in maritime and port operations: keeping human oversight and override
+          for safety- and security-critical actions, validating performance in adverse and degraded
+          conditions, logging recommendations and model versions for traceability, testing screening
+          and scheduling for fairness, and rehearsing manual procedures, coordination and incident
+          notification when AI fails. Scenarios are learning prompts, not operational, safety,
+          security or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {maritimePortOperationsGame.correct}/{maritimePortOperationsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {maritimePortOperationsGame.complete && (
+            <Button variant="outline" onClick={() => setMaritimePortOperationsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {MARITIME_PORT_OPERATIONS_ROUNDS.map((round) => {
+            const selected = maritimePortOperationsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setMaritimePortOperationsAnswers((answers) => ({
                           ...answers,
                           [round.id]: index,
                         }))
