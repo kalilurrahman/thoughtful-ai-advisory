@@ -3321,6 +3321,41 @@ export function calculate(
           : "Readiness is trending well — trace a recent automated network change from trigger to rollback, test traffic prioritisation for unintended discrimination under congestion, and confirm manual failover can sustain essential and emergency service during a model outage.",
     };
   }
+  if (id === "aviation-air-traffic-operations") {
+    const oversight = v["oversight"] ?? 0,
+      validation = v["validation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      changeControl = v["change-control"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      coordination = v["coordination"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          validation * 0.2 +
+          traceability * 0.15 +
+          changeControl * 0.15 +
+          fallback * 0.15 +
+          coordination * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in aviation & air traffic operations",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Human authority and override maintained for safety-critical decisions (20%)", oversight + "%"],
+        ["Performance validated for edge cases, degraded conditions and novel scenarios (20%)", validation + "%"],
+        ["Decisions, inputs and model versions logged for traceability and investigation (15%)", traceability + "%"],
+        ["Changes controlled and separated from certified or approved operational baselines (15%)", changeControl + "%"],
+        ["Degraded modes and manual procedures can sustain safe operations if AI fails (15%)", fallback + "%"],
+        ["Coordination and required notifications supported when AI affects operations (15%)", coordination + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain human authority and override for safety-critical decisions with clear advisory-versus-control boundaries, validate performance in edge cases, degraded conditions and novel scenarios, log decisions, inputs and model versions for traceability and investigation, control changes and separate them from certified or approved operational baselines, ensure degraded modes and manual procedures can sustain safe operations if AI fails, and support coordination and required notifications when AI affects operations."
+          : "Readiness is trending well — run a degraded-conditions scenario to confirm human override and manual procedures work under pressure, trace a recent AI-influenced recommendation from inputs to outcome, and verify changes remain separated from certified or approved operational baselines.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
