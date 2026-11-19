@@ -1071,4 +1071,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in official statistics and census production: documenting reproducible methods and quality checks, testing outputs for bias and small-area error before release, enforcing statistical confidentiality on derived tables, versioning revisions and model changes with an audit trail, and telling the public when AI materially influenced published figures.",
     anchor: "official-statistics-assurance",
   },
+  {
+    id: "telecom-operations-assurance",
+    title: "AI in telecommunications network operations game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in network operations and service continuity: keeping operator oversight, limits and rollback on automated changes, testing traffic management for fairness under congestion, logging changes for traceable incidents, notifying customers and regulators of material AI-influenced impacts, and rehearsing manual operations to sustain essential service if the model fails.",
+    anchor: "telecom-operations-assurance",
+  },
 ] as const;
