@@ -3251,6 +3251,41 @@ export function calculate(
           : "Readiness is trending well — run a distorted-audio and non-native-language call through triage, check that a caller can reach a person without fighting the system, and confirm the manual dispatch process was drilled in the last quarter.",
     };
   }
+  if (id === "official-statistics-census") {
+    const methods = v["methods"] ?? 0,
+      sourceData = v["source-data"] ?? 0,
+      representativeness = v["representativeness"] ?? 0,
+      confidentiality = v["confidentiality"] ?? 0,
+      versioning = v["versioning"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      score = Math.round(
+        methods * 0.2 +
+          sourceData * 0.2 +
+          representativeness * 0.2 +
+          confidentiality * 0.15 +
+          versioning * 0.1 +
+          transparency * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in official statistics & census data production",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Methods documented, reproducible and quality-checked before release (20%)", methods + "%"],
+        ["Source data governed for coverage, linkage and consent (20%)", sourceData + "%"],
+        ["Outputs tested for bias, representativeness and small-area error (20%)", representativeness + "%"],
+        ["Statistical confidentiality and disclosure control enforced (15%)", confidentiality + "%"],
+        ["Revisions and model changes versioned with an audit trail (10%)", versioning + "%"],
+        ["Public told when AI influenced published figures and limitations stated (15%)", transparency + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: document and quality-check methods before release, govern source data for coverage, linkage and consent, test outputs for bias, representativeness and small-area error before publication, enforce statistical confidentiality and disclosure control on model outputs, version revisions and model changes with an audit trail, and tell the public when AI materially influenced published figures with limitations stated plainly."
+          : "Readiness is trending well — compare AI-assisted estimates against known benchmarks for small areas and hard-to-count groups, check that a derived table cannot be reverse-engineered to individuals, and confirm a revision note clearly explains the model change that drove it.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
