@@ -334,6 +334,10 @@ import {
   OFFICIAL_STATISTICS_ROUNDS,
   officialStatisticsScore,
 } from "./official-statistics-game";
+import {
+  TELECOM_OPERATIONS_ROUNDS,
+  telecomOperationsScore,
+} from "./telecom-operations-game";
 
 const statusText = {
   complete: "Complete",
@@ -529,6 +533,9 @@ export function ChecklistScreen() {
   const [officialStatisticsAnswers, setOfficialStatisticsAnswers] = useState<
     Record<string, number>
   >({});
+  const [telecomOperationsAnswers, setTelecomOperationsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -667,6 +674,7 @@ export function ChecklistScreen() {
   const constructionGame = constructionScore(constructionAnswers);
   const emergencyResponseGame = emergencyResponseScore(emergencyResponseAnswers);
   const officialStatisticsGame = officialStatisticsScore(officialStatisticsAnswers);
+  const telecomOperationsGame = telecomOperationsScore(telecomOperationsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8608,6 +8616,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good statistics safeguard."
                           : "Review the statistics gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="telecom-operations-assurance"
+        className="checklist-phase"
+        aria-label="AI in telecommunications network operations game"
+      >
+        <h2>AI in telecommunications network operations &amp; service continuity</h2>
+        <p>
+          Practice governing AI in network operations and service continuity: keeping operator
+          oversight, limits and rollback on automated changes, testing traffic management for fairness
+          under congestion, logging changes for traceable incidents, notifying customers and regulators
+          of material AI-influenced impacts, and rehearsing manual operations to sustain essential
+          service if the model fails. Scenarios are learning prompts, not operational, regulatory or
+          legal advice.
+        </p>
+        <p>
+          <strong>
+            {telecomOperationsGame.correct}/{telecomOperationsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {telecomOperationsGame.complete && (
+            <Button variant="outline" onClick={() => setTelecomOperationsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {TELECOM_OPERATIONS_ROUNDS.map((round) => {
+            const selected = telecomOperationsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setTelecomOperationsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good operations safeguard."
+                          : "Review the operations gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
