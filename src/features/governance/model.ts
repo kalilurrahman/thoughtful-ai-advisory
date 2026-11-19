@@ -3356,6 +3356,41 @@ export function calculate(
           : "Readiness is trending well — run a degraded-conditions scenario to confirm human override and manual procedures work under pressure, trace a recent AI-influenced recommendation from inputs to outcome, and verify changes remain separated from certified or approved operational baselines.",
     };
   }
+  if (id === "maritime-port-operations") {
+    const oversight = v["oversight"] ?? 0,
+      validation = v["validation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      fairness = v["fairness"] ?? 0,
+      coordination = v["coordination"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          validation * 0.2 +
+          traceability * 0.15 +
+          fairness * 0.15 +
+          coordination * 0.15 +
+          fallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in maritime & port operations",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Human oversight and override maintained for safety- and security-critical actions (20%)", oversight + "%"],
+        ["Performance validated in adverse conditions, degraded inputs and novel scenarios (20%)", validation + "%"],
+        ["Recommendations, decisions and model versions logged for traceability and investigation (15%)", traceability + "%"],
+        ["Screening, prioritisation and scheduling tested for fairness and non-discrimination (15%)", fairness + "%"],
+        ["Coordination and incident notification supported when AI affects operations (15%)", coordination + "%"],
+        ["Manual procedures and degraded modes can sustain safe port and vessel operations if AI fails (15%)", fallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain human oversight and override for safety- and security-critical actions, validate performance in adverse conditions, degraded inputs and novel scenarios, log recommendations, decisions and model versions for traceability and investigation, test screening, prioritisation and scheduling for fairness and non-discrimination where they affect access or treatment, support coordination and incident notification when AI affects operations, and ensure manual procedures and degraded modes can sustain safe port and vessel operations if AI fails."
+          : "Readiness is trending well — run an adverse-conditions scenario to confirm human override and manual procedures hold, trace a recent AI-influenced screening or scheduling decision from inputs to outcome, and verify coordination and incident notification paths work across teams.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
