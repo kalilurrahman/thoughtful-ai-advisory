@@ -3216,6 +3216,41 @@ export function calculate(
           : "Readiness is trending well — take one AI-generated design element through professional checking end to end, test whether a safety flag actually reaches a site supervisor, and confirm a post-handover defect can be traced back to the model that contributed to it.",
     };
   }
+  if (id === "emergency-response-triage") {
+    const humanControl = v["human-control"] ?? 0,
+      validation = v["validation"] ?? 0,
+      biasTesting = v["bias-testing"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      failSafe = v["fail-safe"] ?? 0,
+      reviewManual = v["review-manual"] ?? 0,
+      score = Math.round(
+        humanControl * 0.2 +
+          validation * 0.2 +
+          biasTesting * 0.15 +
+          transparency * 0.15 +
+          failSafe * 0.15 +
+          reviewManual * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in emergency response & public-safety triage",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Trained human keeps final control over dispatch and prioritisation (20%)", humanControl + "%"],
+        ["Triage logic validated against outcomes rather than vendor claims (20%)", validation + "%"],
+        ["Checked for bias by location, language, disability and demographic group (15%)", biasTesting + "%"],
+        ["Callers and staff told when AI is involved and can reach a person (15%)", transparency + "%"],
+        ["Degraded or ambiguous inputs fail safe towards sending help (15%)", failSafe + "%"],
+        ["Decisions and overrides logged; rehearsed manual process when the model fails (15%)", reviewManual + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: keep a trained human in final control of dispatch and prioritisation, validate triage logic against real outcomes rather than vendor claims, test for bias by location, language, disability and demographic group, tell callers and frontline staff when AI is involved and give them a route to a person, make degraded or ambiguous inputs fail safe towards sending help, log decisions and overrides, and rehearse a manual process for model failure."
+          : "Readiness is trending well — run a distorted-audio and non-native-language call through triage, check that a caller can reach a person without fighting the system, and confirm the manual dispatch process was drilled in the last quarter.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
