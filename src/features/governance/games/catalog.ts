@@ -1055,4 +1055,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI in design and delivery safe: requiring qualified professional checking of generated designs and calculations, refusing to let model output replace structural or fire sign-off, routing site-safety flags to the crews who can act, recording AI-authored design elements, and correcting and disclosing defects after handover.",
     anchor: "construction-assurance",
   },
+  {
+    id: "emergency-response-assurance",
+    title: "AI in emergency response & public-safety triage game",
+    category: "Operational readiness",
+    description:
+      "Practice keeping AI-supported dispatch and triage safe: keeping a trained human in final control and failing safe on degraded calls, testing outcomes for bias by location, language and disability, telling callers and staff when AI is involved with a route to a person, validating triage against local outcomes with decision logs, and rehearsing a manual process for model failure.",
+    anchor: "emergency-response-assurance",
+  },
 ] as const;

@@ -326,6 +326,10 @@ import {
 import { TENANT_SCREENING_ROUNDS, tenantScreeningScore } from "./tenant-screening-game";
 import { AGRI_FOOD_ROUNDS, agriFoodScore } from "./agri-food-game";
 import { CONSTRUCTION_ROUNDS, constructionScore } from "./construction-game";
+import {
+  EMERGENCY_RESPONSE_ROUNDS,
+  emergencyResponseScore,
+} from "./emergency-response-game";
 
 const statusText = {
   complete: "Complete",
@@ -515,6 +519,9 @@ export function ChecklistScreen() {
   const [tenantScreeningAnswers, setTenantScreeningAnswers] = useState<Record<string, number>>({});
   const [agriFoodAnswers, setAgriFoodAnswers] = useState<Record<string, number>>({});
   const [constructionAnswers, setConstructionAnswers] = useState<Record<string, number>>({});
+  const [emergencyResponseAnswers, setEmergencyResponseAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -651,6 +658,7 @@ export function ChecklistScreen() {
   const tenantScreeningGame = tenantScreeningScore(tenantScreeningAnswers);
   const agriFoodGame = agriFoodScore(agriFoodAnswers);
   const constructionGame = constructionScore(constructionAnswers);
+  const emergencyResponseGame = emergencyResponseScore(emergencyResponseAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8464,6 +8472,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good built-environment safeguard."
                           : "Review the built-environment gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="emergency-response-assurance"
+        className="checklist-phase"
+        aria-label="AI in emergency response and public-safety triage game"
+      >
+        <h2>AI in emergency response &amp; public-safety triage</h2>
+        <p>
+          Practice keeping AI-supported dispatch and triage safe: keeping a trained human in final
+          control and failing safe on degraded calls, testing outcomes for bias by location, language
+          and disability, telling callers and staff when AI is involved with a route to a person,
+          validating triage against local outcomes with decision logs, and rehearsing a manual process
+          for model failure. Scenarios are learning prompts, not operational, clinical or legal advice.
+        </p>
+        <p>
+          <strong>
+            {emergencyResponseGame.correct}/{emergencyResponseGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {emergencyResponseGame.complete && (
+            <Button variant="outline" onClick={() => setEmergencyResponseAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {EMERGENCY_RESPONSE_ROUNDS.map((round) => {
+            const selected = emergencyResponseAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setEmergencyResponseAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good triage safeguard."
+                          : "Review the triage gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
