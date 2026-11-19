@@ -330,6 +330,10 @@ import {
   EMERGENCY_RESPONSE_ROUNDS,
   emergencyResponseScore,
 } from "./emergency-response-game";
+import {
+  OFFICIAL_STATISTICS_ROUNDS,
+  officialStatisticsScore,
+} from "./official-statistics-game";
 
 const statusText = {
   complete: "Complete",
@@ -522,6 +526,9 @@ export function ChecklistScreen() {
   const [emergencyResponseAnswers, setEmergencyResponseAnswers] = useState<
     Record<string, number>
   >({});
+  const [officialStatisticsAnswers, setOfficialStatisticsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -659,6 +666,7 @@ export function ChecklistScreen() {
   const agriFoodGame = agriFoodScore(agriFoodAnswers);
   const constructionGame = constructionScore(constructionAnswers);
   const emergencyResponseGame = emergencyResponseScore(emergencyResponseAnswers);
+  const officialStatisticsGame = officialStatisticsScore(officialStatisticsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8536,6 +8544,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good triage safeguard."
                           : "Review the triage gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="official-statistics-assurance"
+        className="checklist-phase"
+        aria-label="AI in official statistics and census data production game"
+      >
+        <h2>AI in official statistics &amp; census data production</h2>
+        <p>
+          Practice governing AI in official statistics and census production: documenting reproducible
+          methods and quality checks, testing outputs for bias and small-area error before release,
+          enforcing statistical confidentiality on derived tables, versioning revisions and model
+          changes with an audit trail, and telling the public when AI materially influenced published
+          figures. Scenarios are learning prompts, not statistical or legal advice.
+        </p>
+        <p>
+          <strong>
+            {officialStatisticsGame.correct}/{officialStatisticsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {officialStatisticsGame.complete && (
+            <Button variant="outline" onClick={() => setOfficialStatisticsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {OFFICIAL_STATISTICS_ROUNDS.map((round) => {
+            const selected = officialStatisticsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setOfficialStatisticsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good statistics safeguard."
+                          : "Review the statistics gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
