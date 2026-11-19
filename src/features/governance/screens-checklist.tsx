@@ -338,6 +338,10 @@ import {
   TELECOM_OPERATIONS_ROUNDS,
   telecomOperationsScore,
 } from "./telecom-operations-game";
+import {
+  AVIATION_AIR_TRAFFIC_ROUNDS,
+  aviationAirTrafficScore,
+} from "./aviation-air-traffic-game";
 
 const statusText = {
   complete: "Complete",
@@ -536,6 +540,9 @@ export function ChecklistScreen() {
   const [telecomOperationsAnswers, setTelecomOperationsAnswers] = useState<
     Record<string, number>
   >({});
+  const [aviationAirTrafficAnswers, setAviationAirTrafficAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -675,6 +682,7 @@ export function ChecklistScreen() {
   const emergencyResponseGame = emergencyResponseScore(emergencyResponseAnswers);
   const officialStatisticsGame = officialStatisticsScore(officialStatisticsAnswers);
   const telecomOperationsGame = telecomOperationsScore(telecomOperationsAnswers);
+  const aviationAirTrafficGame = aviationAirTrafficScore(aviationAirTrafficAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8667,6 +8675,71 @@ export function ChecklistScreen() {
                       disabled={selected !== undefined}
                       onClick={() =>
                         setTelecomOperationsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good operations safeguard."
+                          : "Review the operations gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="aviation-air-traffic-assurance"
+        className="checklist-phase"
+        aria-label="AI in aviation and air traffic operations game"
+      >
+        <h2>AI in aviation &amp; air traffic operations</h2>
+        <p>
+          Practice governing AI in aviation and air traffic operations: keeping human authority and
+          quick override for safety-critical decisions, validating performance in edge and degraded
+          conditions, logging decisions and model versions for traceability, controlling changes
+          against certified or approved operational baselines, and rehearsing manual procedures and
+          coordination when AI fails. Scenarios are learning prompts, not operational, safety or
+          regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {aviationAirTrafficGame.correct}/{aviationAirTrafficGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {aviationAirTrafficGame.complete && (
+            <Button variant="outline" onClick={() => setAviationAirTrafficAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {AVIATION_AIR_TRAFFIC_ROUNDS.map((round) => {
+            const selected = aviationAirTrafficAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAviationAirTrafficAnswers((answers) => ({
                           ...answers,
                           [round.id]: index,
                         }))

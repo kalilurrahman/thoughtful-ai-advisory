@@ -1079,4 +1079,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in network operations and service continuity: keeping operator oversight, limits and rollback on automated changes, testing traffic management for fairness under congestion, logging changes for traceable incidents, notifying customers and regulators of material AI-influenced impacts, and rehearsing manual operations to sustain essential service if the model fails.",
     anchor: "telecom-operations-assurance",
   },
+  {
+    id: "aviation-air-traffic-assurance",
+    title: "AI in aviation & air traffic operations game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in aviation and air traffic operations: keeping human authority and quick override for safety-critical decisions, validating performance in edge and degraded conditions, logging decisions and model versions for traceability, controlling changes against certified or approved baselines, and rehearsing manual procedures and coordination when AI fails.",
+    anchor: "aviation-air-traffic-assurance",
+  },
 ] as const;
