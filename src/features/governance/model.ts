@@ -3286,6 +3286,41 @@ export function calculate(
           : "Readiness is trending well — compare AI-assisted estimates against known benchmarks for small areas and hard-to-count groups, check that a derived table cannot be reverse-engineered to individuals, and confirm a revision note clearly explains the model change that drove it.",
     };
   }
+  if (id === "telecom-network-operations") {
+    const oversight = v["oversight"] ?? 0,
+      fairness = v["fairness"] ?? 0,
+      changeControl = v["change-control"] ?? 0,
+      notification = v["notification"] ?? 0,
+      resilience = v["resilience"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          fairness * 0.15 +
+          changeControl * 0.15 +
+          notification * 0.2 +
+          resilience * 0.15 +
+          fallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in telecommunications network operations & service continuity",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Automated actions affecting service have oversight, limits and rollback (20%)", oversight + "%"],
+        ["Traffic management and prioritisation tested for fairness and non-discrimination (15%)", fairness + "%"],
+        ["Automated changes controlled and logged so incidents can be traced (15%)", changeControl + "%"],
+        ["Customers and regulators notified of material AI-influenced outages or impacts (20%)", notification + "%"],
+        ["Performance monitored under congestion, failures and novel conditions (15%)", resilience + "%"],
+        ["Manual operations can sustain essential service if the model fails (15%)", fallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: keep operator oversight, limits and rollback on automated actions that affect service or emergency access, test traffic management and prioritisation for fairness and non-discrimination, control and log automated changes so incidents can be traced, notify customers and regulators of material AI-influenced outages or impacts as required, monitor performance under congestion, failures and novel conditions, and ensure manual operations can sustain essential service if the model fails."
+          : "Readiness is trending well — trace a recent automated network change from trigger to rollback, test traffic prioritisation for unintended discrimination under congestion, and confirm manual failover can sustain essential and emergency service during a model outage.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
