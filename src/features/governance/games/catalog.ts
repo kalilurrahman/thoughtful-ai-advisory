@@ -1063,4 +1063,12 @@ export const GOVERNANCE_GAMES = [
       "Practice keeping AI-supported dispatch and triage safe: keeping a trained human in final control and failing safe on degraded calls, testing outcomes for bias by location, language and disability, telling callers and staff when AI is involved with a route to a person, validating triage against local outcomes with decision logs, and rehearsing a manual process for model failure.",
     anchor: "emergency-response-assurance",
   },
+  {
+    id: "official-statistics-assurance",
+    title: "AI in official statistics & census data production game",
+    category: "Public assurance",
+    description:
+      "Practice governing AI in official statistics and census production: documenting reproducible methods and quality checks, testing outputs for bias and small-area error before release, enforcing statistical confidentiality on derived tables, versioning revisions and model changes with an audit trail, and telling the public when AI materially influenced published figures.",
+    anchor: "official-statistics-assurance",
+  },
 ] as const;
