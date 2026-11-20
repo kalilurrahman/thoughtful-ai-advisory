@@ -1095,4 +1095,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in maritime and port operations: keeping human oversight and override for safety- and security-critical actions, validating performance in adverse and degraded conditions, logging recommendations and model versions for traceability, testing screening and scheduling for fairness, and rehearsing manual procedures, coordination and notification when AI fails.",
     anchor: "maritime-port-operations-assurance",
   },
+  {
+    id: "pharma-clinical-trials-assurance",
+    title: "AI in pharmaceutical clinical trials game",
+    category: "Public assurance",
+    description:
+      "Practice governing AI in pharmaceutical clinical trials: keeping qualified human oversight over participant safety and protocol adherence, maintaining consent and transparency when AI is used, testing recruitment and stratification for bias and representativeness, preserving data integrity, provenance and protected access, and monitoring performance with clear escalation and the ability to pause or revert AI use.",
+    anchor: "pharma-clinical-trials-assurance",
+  },
 ] as const;
