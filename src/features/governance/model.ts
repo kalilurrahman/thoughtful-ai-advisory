@@ -3461,6 +3461,41 @@ export function calculate(
           : "Readiness is trending well — sample a recent allocation for fairness and traceability from criteria to outcome, confirm affected people or partners can understand and challenge high-impact decisions, and verify teams can switch to manual prioritisation safely when conditions change rapidly.",
     };
   }
+  if (id === "water-wastewater-operations") {
+    const oversight = v["oversight"] ?? 0,
+      validation = v["validation"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      changeFallback = v["change-fallback"] ?? 0,
+      notification = v["notification"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          validation * 0.15 +
+          monitoring * 0.2 +
+          traceability * 0.15 +
+          changeFallback * 0.15 +
+          notification * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in water & wastewater utility operations",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Operator oversight and authority maintained for safety- and quality-critical actions (20%)", oversight + "%"],
+        ["Performance validated under sensor faults, adverse conditions and novel events (15%)", validation + "%"],
+        ["Quality and safety thresholds monitored with alarms and timely escalation (20%)", monitoring + "%"],
+        ["Decisions, actions, inputs and model versions logged for traceability and investigation (15%)", traceability + "%"],
+        ["Changes controlled with tested fail-safe and manual fallback to maintain safe service (15%)", changeFallback + "%"],
+        ["Coordination and required notifications supported for incidents affecting public health or service (15%)", notification + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain operator oversight and authority for safety- and quality-critical actions, validate performance under sensor faults, adverse conditions and novel events, monitor quality and safety thresholds with alarms and timely escalation, log decisions, actions, inputs and model versions for traceability and investigation, control changes with tested fail-safe and manual fallback to maintain safe service if AI fails, and support coordination and required notifications for incidents affecting public health or service."
+          : "Readiness is trending well — run a sensor-fault or threshold-excursion scenario to confirm alarms, escalation and manual fallback work as intended, trace a recent AI-influenced action from inputs to outcome, and verify required notification and coordination paths are clear.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
