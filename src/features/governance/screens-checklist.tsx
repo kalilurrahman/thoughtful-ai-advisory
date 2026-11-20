@@ -346,6 +346,10 @@ import {
   MARITIME_PORT_OPERATIONS_ROUNDS,
   maritimePortOperationsScore,
 } from "./maritime-port-operations-game";
+import {
+  PHARMA_CLINICAL_TRIALS_ROUNDS,
+  pharmaClinicalTrialsScore,
+} from "./pharma-clinical-trials-game";
 
 const statusText = {
   complete: "Complete",
@@ -550,6 +554,9 @@ export function ChecklistScreen() {
   const [maritimePortOperationsAnswers, setMaritimePortOperationsAnswers] = useState<
     Record<string, number>
   >({});
+  const [pharmaClinicalTrialsAnswers, setPharmaClinicalTrialsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -691,6 +698,7 @@ export function ChecklistScreen() {
   const telecomOperationsGame = telecomOperationsScore(telecomOperationsAnswers);
   const aviationAirTrafficGame = aviationAirTrafficScore(aviationAirTrafficAnswers);
   const maritimePortOperationsGame = maritimePortOperationsScore(maritimePortOperationsAnswers);
+  const pharmaClinicalTrialsGame = pharmaClinicalTrialsScore(pharmaClinicalTrialsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8827,6 +8835,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good operations safeguard."
                           : "Review the operations gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="pharma-clinical-trials-assurance"
+        className="checklist-phase"
+        aria-label="AI in pharmaceutical clinical trials game"
+      >
+        <h2>AI in pharmaceutical clinical trials</h2>
+        <p>
+          Practice governing AI in pharmaceutical clinical trials: keeping qualified human oversight
+          over participant safety and protocol adherence, maintaining consent and transparency when AI
+          is used, testing recruitment and stratification for bias and representativeness, preserving
+          data integrity, provenance and protected access, and monitoring performance with clear
+          escalation and the ability to pause or revert AI use. Scenarios are learning prompts, not
+          clinical, research or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {pharmaClinicalTrialsGame.correct}/{pharmaClinicalTrialsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {pharmaClinicalTrialsGame.complete && (
+            <Button variant="outline" onClick={() => setPharmaClinicalTrialsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PHARMA_CLINICAL_TRIALS_ROUNDS.map((round) => {
+            const selected = pharmaClinicalTrialsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setPharmaClinicalTrialsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good trial safeguard."
+                          : "Review the trial gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
