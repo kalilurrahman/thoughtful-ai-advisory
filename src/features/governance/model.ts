@@ -3426,6 +3426,41 @@ export function calculate(
           : "Readiness is trending well — sample an AI-influenced eligibility or stratification decision for bias and traceability, confirm consent and disclosure materials reflect current AI use, and verify teams can pause or revert AI support quickly if safety or data-quality concerns arise.",
     };
   }
+  if (id === "humanitarian-aid-allocation") {
+    const fairness = v["fairness"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      contestability = v["contestability"] ?? 0,
+      dataProtection = v["data-protection"] ?? 0,
+      accountability = v["accountability"] ?? 0,
+      oversightFallback = v["oversight-fallback"] ?? 0,
+      score = Math.round(
+        fairness * 0.2 +
+          transparency * 0.15 +
+          contestability * 0.15 +
+          dataProtection * 0.15 +
+          accountability * 0.2 +
+          oversightFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in humanitarian & aid allocation",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Targeting and prioritisation tested for fairness and non-discrimination (20%)", fairness + "%"],
+        ["Allocation criteria and AI role explained clearly to affected people and partners where appropriate (15%)", transparency + "%"],
+        ["High-impact decisions have human review, contestability and recourse (15%)", contestability + "%"],
+        ["Sensitive crisis data handled with quality checks, minimisation and protection (15%)", dataProtection + "%"],
+        ["Decisions, criteria and outcomes logged with clear accountability and audit trails (20%)", accountability + "%"],
+        ["Human oversight and manual fallback available in rapidly changing conditions (15%)", oversightFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: test targeting and prioritisation for fairness and non-discrimination so vulnerable groups are not excluded, explain allocation criteria and the AI's role to affected people and partners where appropriate, ensure high-impact decisions have human review, contestability and recourse, handle sensitive crisis data with quality checks, minimisation and protection, log decisions, criteria and outcomes with clear accountability and audit trails, and keep human oversight and manual fallback available in rapidly changing conditions."
+          : "Readiness is trending well — sample a recent allocation for fairness and traceability from criteria to outcome, confirm affected people or partners can understand and challenge high-impact decisions, and verify teams can switch to manual prioritisation safely when conditions change rapidly.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
