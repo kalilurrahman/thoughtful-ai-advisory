@@ -1119,4 +1119,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in water and wastewater utility operations: keeping operator oversight and authority for safety- and quality-critical actions, validating performance under sensor faults and adverse conditions, monitoring thresholds with alarms and escalation, logging decisions and model versions for traceability, and maintaining controlled changes with fail-safe manual fallback and required incident notification.",
     anchor: "water-wastewater-operations-assurance",
   },
+  {
+    id: "border-immigration-screening-assurance",
+    title: "AI in border, immigration & mobility screening game",
+    category: "Public assurance",
+    description:
+      "Practice governing AI in border, immigration and mobility screening: requiring qualified human review for high-impact decisions, testing outcomes for fairness and disproportionate impact, validating accuracy and false matches, providing explanation, contestability and recourse where appropriate while protecting sensitive data, and maintaining audit trails with manual fallback.",
+    anchor: "border-immigration-screening-assurance",
+  },
 ] as const;
