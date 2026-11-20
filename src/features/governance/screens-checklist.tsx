@@ -358,6 +358,10 @@ import {
   WATER_WASTEWATER_OPERATIONS_ROUNDS,
   waterWastewaterOperationsScore,
 } from "./water-wastewater-operations-game";
+import {
+  BORDER_IMMIGRATION_SCREENING_ROUNDS,
+  borderImmigrationScreeningScore,
+} from "./border-immigration-screening-game";
 
 const statusText = {
   complete: "Complete",
@@ -571,6 +575,9 @@ export function ChecklistScreen() {
   const [waterWastewaterOperationsAnswers, setWaterWastewaterOperationsAnswers] = useState<
     Record<string, number>
   >({});
+  const [borderImmigrationScreeningAnswers, setBorderImmigrationScreeningAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -715,6 +722,7 @@ export function ChecklistScreen() {
   const pharmaClinicalTrialsGame = pharmaClinicalTrialsScore(pharmaClinicalTrialsAnswers);
   const humanitarianAidAllocationGame = humanitarianAidAllocationScore(humanitarianAidAllocationAnswers);
   const waterWastewaterOperationsGame = waterWastewaterOperationsScore(waterWastewaterOperationsAnswers);
+  const borderImmigrationScreeningGame = borderImmigrationScreeningScore(borderImmigrationScreeningAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -9046,6 +9054,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good operations safeguard."
                           : "Review the operations gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="border-immigration-screening-assurance"
+        className="checklist-phase"
+        aria-label="AI in border, immigration and mobility screening game"
+      >
+        <h2>AI in border, immigration &amp; mobility screening</h2>
+        <p>
+          Practice governing AI in border, immigration and mobility screening: requiring qualified
+          human review for high-impact decisions, testing outcomes for fairness and disproportionate
+          impact, validating accuracy and false matches, providing explanation, contestability and
+          recourse where appropriate while protecting sensitive data, and maintaining audit trails with
+          manual fallback. Scenarios are learning prompts, not legal, immigration or operational
+          advice.
+        </p>
+        <p>
+          <strong>
+            {borderImmigrationScreeningGame.correct}/{borderImmigrationScreeningGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {borderImmigrationScreeningGame.complete && (
+            <Button variant="outline" onClick={() => setBorderImmigrationScreeningAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {BORDER_IMMIGRATION_SCREENING_ROUNDS.map((round) => {
+            const selected = borderImmigrationScreeningAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setBorderImmigrationScreeningAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good screening safeguard."
+                          : "Review the screening gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
