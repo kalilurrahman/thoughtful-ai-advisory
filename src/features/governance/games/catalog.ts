@@ -1111,4 +1111,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in humanitarian response and aid allocation: testing targeting for fairness and non-discrimination, explaining allocation criteria and AI's role, providing human review and recourse for high-impact decisions, protecting sensitive crisis data with quality checks and minimisation, and maintaining accountable records with manual fallback in rapidly changing conditions.",
     anchor: "humanitarian-aid-allocation-assurance",
   },
+  {
+    id: "water-wastewater-operations-assurance",
+    title: "AI in water & wastewater utility operations game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in water and wastewater utility operations: keeping operator oversight and authority for safety- and quality-critical actions, validating performance under sensor faults and adverse conditions, monitoring thresholds with alarms and escalation, logging decisions and model versions for traceability, and maintaining controlled changes with fail-safe manual fallback and required incident notification.",
+    anchor: "water-wastewater-operations-assurance",
+  },
 ] as const;
