@@ -3496,6 +3496,41 @@ export function calculate(
           : "Readiness is trending well — run a sensor-fault or threshold-excursion scenario to confirm alarms, escalation and manual fallback work as intended, trace a recent AI-influenced action from inputs to outcome, and verify required notification and coordination paths are clear.",
     };
   }
+  if (id === "border-immigration-screening") {
+    const humanReview = v["human-review"] ?? 0,
+      fairness = v["fairness"] ?? 0,
+      qualityValidation = v["quality-validation"] ?? 0,
+      contestability = v["contestability"] ?? 0,
+      dataProtection = v["data-protection"] ?? 0,
+      traceabilityFallback = v["traceability-fallback"] ?? 0,
+      score = Math.round(
+        humanReview * 0.2 +
+          fairness * 0.2 +
+          qualityValidation * 0.15 +
+          contestability * 0.15 +
+          dataProtection * 0.15 +
+          traceabilityFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in border, immigration & mobility screening",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["High-impact screening decisions have qualified human review and override (20%)", humanReview + "%"],
+        ["Screening outcomes tested for fairness, bias and disproportionate impact (20%)", fairness + "%"],
+        ["Accuracy and error rates validated, including edge cases and false matches (15%)", qualityValidation + "%"],
+        ["Individuals have clear routes to explanation, contestability and recourse where appropriate (15%)", contestability + "%"],
+        ["Sensitive personal and biometric data handled with minimisation, protection and retention controls (15%)", dataProtection + "%"],
+        ["Decisions and model versions logged for auditability with manual fallback available (15%)", traceabilityFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure high-impact screening decisions have qualified human review and override, test outcomes for fairness, bias and disproportionate impact, validate accuracy and error rates including edge cases and false matches, provide clear routes to explanation, contestability and recourse where appropriate, handle sensitive personal and biometric data with minimisation, protection and retention controls, and log decisions and model versions for auditability with manual fallback available."
+          : "Readiness is trending well — sample recent screening outcomes for fairness and false-match rates, confirm affected individuals can access explanation and recourse where appropriate, and verify decisions and model versions are traceable with a workable manual fallback.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
