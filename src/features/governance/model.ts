@@ -3391,6 +3391,41 @@ export function calculate(
           : "Readiness is trending well — run an adverse-conditions scenario to confirm human override and manual procedures hold, trace a recent AI-influenced screening or scheduling decision from inputs to outcome, and verify coordination and incident notification paths work across teams.",
     };
   }
+  if (id === "pharma-clinical-trials") {
+    const oversightSafety = v["oversight-safety"] ?? 0,
+      consentTransparency = v["consent-transparency"] ?? 0,
+      biasRepresentativeness = v["bias-representativeness"] ?? 0,
+      dataIntegrity = v["data-integrity"] ?? 0,
+      privacy = v["privacy"] ?? 0,
+      monitoringEscalation = v["monitoring-escalation"] ?? 0,
+      score = Math.round(
+        oversightSafety * 0.2 +
+          consentTransparency * 0.15 +
+          biasRepresentativeness * 0.2 +
+          dataIntegrity * 0.15 +
+          privacy * 0.15 +
+          monitoringEscalation * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in pharmaceutical clinical trials",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Qualified human oversight protects participant safety and protocol adherence (20%)", oversightSafety + "%"],
+        ["Participants informed when AI is used and consent and transparency maintained (15%)", consentTransparency + "%"],
+        ["Recruitment, eligibility and stratification tested for bias and representativeness (20%)", biasRepresentativeness + "%"],
+        ["Data integrity, provenance and audit trails maintained for regulatory evidence (15%)", dataIntegrity + "%"],
+        ["Sensitive health data protected with privacy controls and least-privilege access (15%)", privacy + "%"],
+        ["Performance monitored with error escalation and ability to pause or revert AI use (15%)", monitoringEscalation + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: keep qualified human oversight over participant safety and protocol adherence, inform participants when AI is used and maintain consent and transparency, test recruitment, eligibility and stratification for bias and representativeness, maintain data integrity, provenance and audit trails for regulatory evidence, protect sensitive health data with privacy controls and least-privilege access, and monitor performance with error escalation and the ability to pause or revert AI use."
+          : "Readiness is trending well — sample an AI-influenced eligibility or stratification decision for bias and traceability, confirm consent and disclosure materials reflect current AI use, and verify teams can pause or revert AI support quickly if safety or data-quality concerns arise.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
