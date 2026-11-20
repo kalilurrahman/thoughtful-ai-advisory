@@ -350,6 +350,10 @@ import {
   PHARMA_CLINICAL_TRIALS_ROUNDS,
   pharmaClinicalTrialsScore,
 } from "./pharma-clinical-trials-game";
+import {
+  HUMANITARIAN_AID_ALLOCATION_ROUNDS,
+  humanitarianAidAllocationScore,
+} from "./humanitarian-aid-allocation-game";
 
 const statusText = {
   complete: "Complete",
@@ -557,6 +561,9 @@ export function ChecklistScreen() {
   const [pharmaClinicalTrialsAnswers, setPharmaClinicalTrialsAnswers] = useState<
     Record<string, number>
   >({});
+  const [humanitarianAidAllocationAnswers, setHumanitarianAidAllocationAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -699,6 +706,7 @@ export function ChecklistScreen() {
   const aviationAirTrafficGame = aviationAirTrafficScore(aviationAirTrafficAnswers);
   const maritimePortOperationsGame = maritimePortOperationsScore(maritimePortOperationsAnswers);
   const pharmaClinicalTrialsGame = pharmaClinicalTrialsScore(pharmaClinicalTrialsAnswers);
+  const humanitarianAidAllocationGame = humanitarianAidAllocationScore(humanitarianAidAllocationAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -8900,6 +8908,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good trial safeguard."
                           : "Review the trial gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="humanitarian-aid-allocation-assurance"
+        className="checklist-phase"
+        aria-label="AI in humanitarian and aid allocation game"
+      >
+        <h2>AI in humanitarian &amp; aid allocation</h2>
+        <p>
+          Practice governing AI in humanitarian response and aid allocation: testing targeting for
+          fairness and non-discrimination, explaining allocation criteria and the AI's role, providing
+          human review and recourse for high-impact decisions, protecting sensitive crisis data with
+          quality checks and minimisation, and maintaining accountable records with manual fallback in
+          rapidly changing conditions. Scenarios are learning prompts, not operational, legal or
+          humanitarian-programme advice.
+        </p>
+        <p>
+          <strong>
+            {humanitarianAidAllocationGame.correct}/{humanitarianAidAllocationGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {humanitarianAidAllocationGame.complete && (
+            <Button variant="outline" onClick={() => setHumanitarianAidAllocationAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {HUMANITARIAN_AID_ALLOCATION_ROUNDS.map((round) => {
+            const selected = humanitarianAidAllocationAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setHumanitarianAidAllocationAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good aid safeguard."
+                          : "Review the aid gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

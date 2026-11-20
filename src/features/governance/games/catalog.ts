@@ -1103,4 +1103,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in pharmaceutical clinical trials: keeping qualified human oversight over participant safety and protocol adherence, maintaining consent and transparency when AI is used, testing recruitment and stratification for bias and representativeness, preserving data integrity, provenance and protected access, and monitoring performance with clear escalation and the ability to pause or revert AI use.",
     anchor: "pharma-clinical-trials-assurance",
   },
+  {
+    id: "humanitarian-aid-allocation-assurance",
+    title: "AI in humanitarian & aid allocation game",
+    category: "Public assurance",
+    description:
+      "Practice governing AI in humanitarian response and aid allocation: testing targeting for fairness and non-discrimination, explaining allocation criteria and AI's role, providing human review and recourse for high-impact decisions, protecting sensitive crisis data with quality checks and minimisation, and maintaining accountable records with manual fallback in rapidly changing conditions.",
+    anchor: "humanitarian-aid-allocation-assurance",
+  },
 ] as const;
