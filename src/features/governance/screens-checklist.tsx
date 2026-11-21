@@ -386,6 +386,10 @@ import {
   ARCHIVES_HERITAGE_DIGITISATION_ROUNDS,
   archivesHeritageDigitisationScore,
 } from "./archives-heritage-digitisation-game";
+import {
+  PUBLIC_TRANSPORT_OPERATIONS_ROUNDS,
+  publicTransportOperationsScore,
+} from "./public-transport-operations-game";
 
 const statusText = {
   complete: "Complete",
@@ -620,6 +624,9 @@ export function ChecklistScreen() {
   const [archivesHeritageDigitisationAnswers, setArchivesHeritageDigitisationAnswers] = useState<
     Record<string, number>
   >({});
+  const [publicTransportOperationsAnswers, setPublicTransportOperationsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -778,6 +785,9 @@ export function ChecklistScreen() {
   );
   const archivesHeritageDigitisationGame = archivesHeritageDigitisationScore(
     archivesHeritageDigitisationAnswers,
+  );
+  const publicTransportOperationsGame = publicTransportOperationsScore(
+    publicTransportOperationsAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -9566,6 +9576,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good stewardship safeguard."
                           : "Review the stewardship gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="public-transport-operations-assurance"
+        className="checklist-phase"
+        aria-label="AI in public transport operations and passenger information game"
+      >
+        <h2>AI in public transport operations &amp; passenger information</h2>
+        <p>
+          Practice governing AI in public transport operations and passenger information:
+          maintaining human oversight for service changes and safety-relevant communications,
+          validating predictions across routes, times, demand and disruptions, providing accurate,
+          timely, accessible and equitable information, protecting personal and location data, and
+          keeping traceable outputs with manual fallback communications and operations support.
+          Scenarios are learning prompts, not operational, safety, accessibility or regulatory
+          advice.
+        </p>
+        <p>
+          <strong>
+            {publicTransportOperationsGame.correct}/{publicTransportOperationsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {publicTransportOperationsGame.complete && (
+            <Button variant="outline" onClick={() => setPublicTransportOperationsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PUBLIC_TRANSPORT_OPERATIONS_ROUNDS.map((round) => {
+            const selected = publicTransportOperationsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setPublicTransportOperationsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good service safeguard."
+                          : "Review the service gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

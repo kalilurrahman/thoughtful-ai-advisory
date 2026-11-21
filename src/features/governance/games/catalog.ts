@@ -1175,4 +1175,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in public archives and cultural heritage digitisation: preserving provenance and integrity, reviewing metadata and descriptions for quality and bias, handling rights and sensitive content appropriately, disclosing AI assistance and limitations, and maintaining curatorial authority with traceable outputs and changes.",
     anchor: "archives-heritage-digitisation-assurance",
   },
+  {
+    id: "public-transport-operations-assurance",
+    title: "AI in public transport operations & passenger information game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in public transport operations and passenger information: maintaining human oversight for service changes and safety-relevant communications, validating predictions across conditions, providing accurate, accessible and equitable information, protecting personal and location data, and keeping traceable outputs with manual fallback communications and support.",
+    anchor: "public-transport-operations-assurance",
+  },
 ] as const;
