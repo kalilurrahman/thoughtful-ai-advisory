@@ -418,6 +418,10 @@ import {
   CEMETERIES_FUNERARY_BEREAVEMENT_SERVICES_ROUNDS,
   cemeteriesFuneraryBereavementServicesScore,
 } from "./cemeteries-funerary-bereavement-services-game";
+import {
+  TICKETING_VENUE_ACCESS_ROUNDS,
+  ticketingVenueAccessScore,
+} from "./ticketing-venue-access-game";
 
 const statusText = {
   complete: "Complete",
@@ -676,6 +680,9 @@ export function ChecklistScreen() {
   const [cemeteriesFuneraryBereavementServicesAnswers, setCemeteriesFuneraryBereavementServicesAnswers] = useState<
     Record<string, number>
   >({});
+  const [ticketingVenueAccessAnswers, setTicketingVenueAccessAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -858,6 +865,9 @@ export function ChecklistScreen() {
   );
   const cemeteriesFuneraryBereavementServicesGame = cemeteriesFuneraryBereavementServicesScore(
     cemeteriesFuneraryBereavementServicesAnswers,
+  );
+  const ticketingVenueAccessGame = ticketingVenueAccessScore(
+    ticketingVenueAccessAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10176,6 +10186,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good bereavement-services safeguard."
                           : "Review the bereavement-services gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="ticketing-venue-access-assurance"
+        className="checklist-phase"
+        aria-label="AI in ticketing, box office and venue access control game"
+      >
+        <h2>AI in ticketing, box office &amp; venue access control</h2>
+        <p>
+          Practice governing AI in ticketing, box office and venue access control: keeping pricing
+          and anti-fraud decisions fair, supporting accessible and equitable access, handling
+          verification data with minimisation and safeguards, communicating decisions transparently
+          with human review and appeals, and maintaining traceable records with tested fallback for
+          entry or access failures. Scenarios are learning prompts, not legal, consumer, pricing or
+          regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {ticketingVenueAccessGame.correct}/{ticketingVenueAccessGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {ticketingVenueAccessGame.complete && (
+            <Button variant="outline" onClick={() => setTicketingVenueAccessAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {TICKETING_VENUE_ACCESS_ROUNDS.map((round) => {
+            const selected = ticketingVenueAccessAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setTicketingVenueAccessAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good ticketing-access safeguard."
+                          : "Review the ticketing-access gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
