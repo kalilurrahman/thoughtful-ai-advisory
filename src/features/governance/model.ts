@@ -3566,6 +3566,41 @@ export function calculate(
           : "Readiness is trending well — run a degraded-signal or sensor-fault scenario to confirm human override and manual procedures hold, trace a recent AI-influenced recommendation from inputs to outcome, and verify changes remain separated from approved or certified operational and signalling baselines.",
     };
   }
+  if (id === "mining-extractive-safety") {
+    const oversight = v["oversight"] ?? 0,
+      validation = v["validation"] ?? 0,
+      monitoring = v["monitoring"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      changeFallback = v["change-fallback"] ?? 0,
+      coordination = v["coordination"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          validation * 0.15 +
+          monitoring * 0.2 +
+          traceability * 0.15 +
+          changeFallback * 0.15 +
+          coordination * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in mining & extractive operations safety",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Human authority and override maintained for safety-critical alerts and actions (20%)", oversight + "%"],
+        ["Performance validated in harsh environments, edge conditions and sensor faults (15%)", validation + "%"],
+        ["Hazard thresholds monitored with timely alarms and escalation (20%)", monitoring + "%"],
+        ["Decisions, alerts, inputs and model versions logged for traceability and investigation (15%)", traceability + "%"],
+        ["Changes controlled with tested fail-safe and manual procedures to protect workers and operations (15%)", changeFallback + "%"],
+        ["Coordination and required incident notifications supported when AI affects safety or operations (15%)", coordination + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain human authority and override for safety-critical alerts and actions, validate performance in harsh environments, edge conditions and sensor faults, monitor hazard thresholds with timely alarms and escalation, log decisions, alerts, inputs and model versions for traceability and investigation, control changes with tested fail-safe and manual procedures to protect workers and operations, and support coordination and required incident notifications when AI affects safety or operations."
+          : "Readiness is trending well — run a sensor-fault or hazard-threshold scenario to confirm alarms, escalation and manual procedures work, trace a recent AI-influenced alert from inputs to outcome, and verify coordination and required incident notification paths are clear.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
