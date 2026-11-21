@@ -462,6 +462,10 @@ import {
   SELF_SERVICE_LAUNDROMAT_SMART_LOCKER_ROUNDS,
   selfServiceLaundromatSmartLockerScore,
 } from "./self-service-laundromat-smart-locker-game";
+import {
+  BICYCLE_MICROMOBILITY_RENTAL_SHARE_ROUNDS,
+  bicycleMicromobilityRentalShareScore,
+} from "./bicycle-micromobility-rental-share-game";
 
 const statusText = {
   complete: "Complete",
@@ -753,6 +757,9 @@ export function ChecklistScreen() {
   const [selfServiceLaundromatSmartLockerAnswers, setSelfServiceLaundromatSmartLockerAnswers] = useState<
     Record<string, number>
   >({});
+  const [bicycleMicromobilityRentalShareAnswers, setBicycleMicromobilityRentalShareAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -968,6 +975,9 @@ export function ChecklistScreen() {
   );
   const selfServiceLaundromatSmartLockerGame = selfServiceLaundromatSmartLockerScore(
     selfServiceLaundromatSmartLockerAnswers,
+  );
+  const bicycleMicromobilityRentalShareGame = bicycleMicromobilityRentalShareScore(
+    bicycleMicromobilityRentalShareAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11006,6 +11016,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good self-service safeguard."
                           : "Review the self-service gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="bicycle-micromobility-rental-share-assurance"
+        className="checklist-phase"
+        aria-label="AI in bicycle and micromobility rental/share services game"
+      >
+        <h2>AI in bicycle &amp; micromobility rental/share services</h2>
+        <p>
+          Practice governing AI in bicycle and micromobility rental/share services: capturing
+          accurate vehicle identification, availability and condition, supporting damage, theft or
+          incident detection, handling and accountability, communicating pricing, fees and usage
+          terms transparently, applying privacy and minimisation to location and usage data with
+          traceable trip, access and condition records, and providing human review and fallback for
+          disputes, safety exceptions or uncertain cases. Scenarios are learning prompts, not
+          consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {bicycleMicromobilityRentalShareGame.correct}/{bicycleMicromobilityRentalShareGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {bicycleMicromobilityRentalShareGame.complete && (
+            <Button variant="outline" onClick={() => setBicycleMicromobilityRentalShareAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {BICYCLE_MICROMOBILITY_RENTAL_SHARE_ROUNDS.map((round) => {
+            const selected = bicycleMicromobilityRentalShareAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setBicycleMicromobilityRentalShareAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good micromobility safeguard."
+                          : "Review the micromobility gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
