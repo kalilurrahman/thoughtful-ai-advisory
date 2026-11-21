@@ -4091,6 +4091,41 @@ export function calculate(
           : "Readiness is trending well — sample enforcement actions for accuracy, evidence and alignment with current signage/rules, review outcomes for fairness and accessible appeals, and confirm privacy safeguards, traceability and manual fallback when the system is uncertain or unavailable.",
     };
   }
+  if (id === "large-event-crowd-safety") {
+    const validationAlerts = v["validation-alerts"] ?? 0,
+      proportionalityFairness = v["proportionality-fairness"] ?? 0,
+      commandEscalation = v["command-escalation"] ?? 0,
+      privacyCommunications = v["privacy-communications"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      fallbackContinuity = v["fallback-continuity"] ?? 0,
+      score = Math.round(
+        validationAlerts * 0.2 +
+          proportionalityFairness * 0.2 +
+          commandEscalation * 0.15 +
+          privacyCommunications * 0.15 +
+          traceability * 0.15 +
+          fallbackContinuity * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in stadiums, festivals & large-event crowd safety",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Crowd-density, risk detection and alerts validated for venues and conditions (20%)", validationAlerts + "%"],
+        ["Use is proportional and non-discriminatory, avoiding unnecessary profiling or exclusion (20%)", proportionalityFairness + "%"],
+        ["Clear human command, escalation and intervention authority maintained (15%)", commandEscalation + "%"],
+        ["Privacy and communications safeguards protect attendees (15%)", privacyCommunications + "%"],
+        ["Decisions, alerts, inputs and model or system versions logged for traceability and review (15%)", traceability + "%"],
+        ["Tested fallback and continuity or support procedures when AI is uncertain or unavailable (15%)", fallbackContinuity + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: validate crowd-density, risk detection and alerts for venues and conditions, ensure use is proportional and non-discriminatory without unnecessary profiling or exclusion, maintain clear human command, escalation and intervention authority, protect attendees with privacy and communications safeguards, log decisions, alerts, inputs and model or system versions for traceability and review, and test fallback and continuity or support procedures when AI is uncertain or unavailable."
+          : "Readiness is trending well — run venue/condition checks on crowd-risk alerts, review proportionality and non-discrimination in use, confirm human command and escalation paths are clear, and test privacy safeguards, traceability and fallback/continuity procedures.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
