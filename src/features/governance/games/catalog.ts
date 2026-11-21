@@ -1407,4 +1407,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in marina, boat slip and dry-storage services: ensuring accurate slip/berth/storage identification, availability and vessel matching, communicating pricing, seasonal terms and usage rules transparently, handling safety, maintenance and incident situations with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for access failures, safety concerns or disputes.",
     anchor: "marina-boat-slip-dry-storage-assurance",
   },
+  {
+    id: "farmers-market-stall-vendor-booking-assurance",
+    title: "AI in farmers' market, stall & vendor booking game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in farmers' market, stall and vendor booking: ensuring accurate stall identification, availability and vendor matching, communicating pricing, stall rules and booking terms transparently, handling safety, inspection or incident situations with accountability, applying privacy safeguards with traceable records, and providing human review and fallback for booking failures, safety concerns or disputes.",
+    anchor: "farmers-market-stall-vendor-booking-assurance",
+  },
 ] as const;
