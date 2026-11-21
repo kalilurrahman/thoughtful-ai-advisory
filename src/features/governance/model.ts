@@ -4441,6 +4441,41 @@ export function calculate(
           : "Readiness is trending well — sample rentals for identification, availability and condition accuracy, confirm accountable incident handling and transparent pricing/usage terms, and test privacy safeguards, traceability and human review/fallback for disputes or safety exceptions.",
     };
   }
+  if (id === "coworking-flexible-workspace-access") {
+    const accessAuthorization = v["access-authorization"] ?? 0,
+      incidentAccountability = v["incident-accountability"] ?? 0,
+      transparencyTerms = v["transparency-terms"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        accessAuthorization * 0.2 +
+          incidentAccountability * 0.2 +
+          transparencyTerms * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in coworking & flexible workspace access",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Member or guest identification, access authorization and booking access accurate (20%)", accessAuthorization + "%"],
+        ["Incident, amenity or access issue detection, handling and accountability supported (20%)", incidentAccountability + "%"],
+        ["Pricing, plans and usage terms communicated transparently (15%)", transparencyTerms + "%"],
+        ["Privacy and minimisation applied to member, guest and access or usage data (15%)", privacyMinimisation + "%"],
+        ["Access, booking and incident records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human review and fallback available for access issues, disputes or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure member or guest identification, access authorization and booking access are accurate, support incident, amenity or access issue detection, handling and accountability, communicate pricing, plans and usage terms transparently, apply privacy and minimisation to member, guest and access or usage data, log access, booking and incident records for traceability and dispute review, and provide human review and fallback for access issues, disputes or uncertain cases."
+          : "Readiness is trending well — sample access and bookings for authorization and assignment accuracy, confirm accountable issue handling and transparent pricing/plans/terms, and test privacy safeguards, traceability and human review/fallback for access issues or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
