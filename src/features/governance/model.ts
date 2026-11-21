@@ -4266,6 +4266,41 @@ export function calculate(
           : "Readiness is trending well — sample moves for inventory and condition accuracy, confirm transparent quotes/terms and accountable damage or loss handling, and test chain-of-custody traceability, privacy safeguards and human review/fallback for disputes or exceptions.",
     };
   }
+  if (id === "pet-boarding-daycare-grooming") {
+    const identificationInstructions = v["identification-instructions"] ?? 0,
+      welfareIncidentHandling = v["welfare-incident-handling"] ?? 0,
+      consentCommunication = v["consent-communication"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        identificationInstructions * 0.2 +
+          welfareIncidentHandling * 0.2 +
+          consentCommunication * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in pet boarding, daycare & grooming services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Pet identification and owner-provided care instructions captured accurately (20%)", identificationInstructions + "%"],
+        ["Health and welfare observation, incident detection and handling supported (20%)", welfareIncidentHandling + "%"],
+        ["Owner consent, communication and service terms communicated transparently (15%)", consentCommunication + "%"],
+        ["Privacy and minimisation applied to owner and pet data or images (15%)", privacyMinimisation + "%"],
+        ["Care actions and records logged for traceability and review (15%)", traceability + "%"],
+        ["Human review, escalation and fallback available for incidents, welfare concerns or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: capture pet identification and owner-provided care instructions accurately, support health and welfare observation, incident detection and handling, communicate owner consent, updates and service terms transparently, apply privacy and minimisation to owner and pet data or images, log care actions and records for traceability and review, and provide human review, escalation and fallback for incidents, welfare concerns or uncertain cases."
+          : "Readiness is trending well — sample stays for identification and care-instruction accuracy, confirm welfare observation and incident handling, and test transparent owner communication, privacy safeguards, traceability and human review/escalation for incidents or uncertain cases.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
