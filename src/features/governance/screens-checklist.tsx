@@ -370,6 +370,10 @@ import {
   MINING_EXTRACTIVE_SAFETY_ROUNDS,
   miningExtractiveSafetyScore,
 } from "./mining-extractive-safety-game";
+import {
+  PHARMA_MANUFACTURING_QUALITY_ROUNDS,
+  pharmaManufacturingQualityScore,
+} from "./pharma-manufacturing-quality-game";
 
 const statusText = {
   complete: "Complete",
@@ -592,6 +596,9 @@ export function ChecklistScreen() {
   const [miningExtractiveSafetyAnswers, setMiningExtractiveSafetyAnswers] = useState<
     Record<string, number>
   >({});
+  const [pharmaManufacturingQualityAnswers, setPharmaManufacturingQualityAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -739,6 +746,9 @@ export function ChecklistScreen() {
   const borderImmigrationScreeningGame = borderImmigrationScreeningScore(borderImmigrationScreeningAnswers);
   const railwaySignallingOperationsGame = railwaySignallingOperationsScore(railwaySignallingOperationsAnswers);
   const miningExtractiveSafetyGame = miningExtractiveSafetyScore(miningExtractiveSafetyAnswers);
+  const pharmaManufacturingQualityGame = pharmaManufacturingQualityScore(
+    pharmaManufacturingQualityAnswers,
+  );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -9265,6 +9275,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good safety safeguard."
                           : "Review the safety gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="pharma-manufacturing-quality-assurance"
+        className="checklist-phase"
+        aria-label="AI in pharmaceutical manufacturing and quality game"
+      >
+        <h2>AI in pharmaceutical manufacturing &amp; quality</h2>
+        <p>
+          Practice governing AI in pharmaceutical manufacturing and quality control: maintaining
+          qualified human review and release authority, preserving data integrity and audit trails,
+          detecting and escalating deviations with timely investigation, validating performance
+          across products, lines and conditions, and controlling changes with safe manual fallback
+          to protect product quality and continuity. Scenarios are learning prompts, not
+          manufacturing, quality, safety or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {pharmaManufacturingQualityGame.correct}/{pharmaManufacturingQualityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {pharmaManufacturingQualityGame.complete && (
+            <Button variant="outline" onClick={() => setPharmaManufacturingQualityAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PHARMA_MANUFACTURING_QUALITY_ROUNDS.map((round) => {
+            const selected = pharmaManufacturingQualityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setPharmaManufacturingQualityAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good quality safeguard."
+                          : "Review the quality gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

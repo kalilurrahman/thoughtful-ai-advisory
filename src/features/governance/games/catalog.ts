@@ -1143,4 +1143,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in mining and extractive operations safety: keeping human authority over safety-critical alerts and actions, validating performance in harsh environments and sensor faults, monitoring hazard thresholds with timely alarms and escalation, logging decisions and model versions for traceability, and maintaining controlled changes with fail-safe manual procedures and incident coordination.",
     anchor: "mining-extractive-safety-assurance",
   },
+  {
+    id: "pharma-manufacturing-quality-assurance",
+    title: "AI in pharmaceutical manufacturing & quality game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in pharmaceutical manufacturing and quality control: maintaining qualified human review and release authority, preserving data integrity and audit trails, detecting and escalating deviations with timely investigation, validating performance across products, lines and conditions, and controlling changes with safe manual fallback to protect product quality and continuity.",
+    anchor: "pharma-manufacturing-quality-assurance",
+  },
 ] as const;
