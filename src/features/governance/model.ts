@@ -4126,6 +4126,41 @@ export function calculate(
           : "Readiness is trending well — run venue/condition checks on crowd-risk alerts, review proportionality and non-discrimination in use, confirm human command and escalation paths are clear, and test privacy safeguards, traceability and fallback/continuity procedures.",
     };
   }
+  if (id === "self-storage-property-access") {
+    const verificationSafeguards = v["verification-safeguards"] ?? 0,
+      fairTransparentDecisions = v["fair-transparent-decisions"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      humanReview = v["human-review"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      fallbackSupport = v["fallback-support"] ?? 0,
+      score = Math.round(
+        verificationSafeguards * 0.2 +
+          fairTransparentDecisions * 0.2 +
+          privacyMinimisation * 0.15 +
+          humanReview * 0.15 +
+          traceability * 0.15 +
+          fallbackSupport * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in self-storage & property access facilities",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Identity, verification and access-control accuracy and safeguards maintained (20%)", verificationSafeguards + "%"],
+        ["Access and denial decisions fair and transparent with reasons as appropriate (20%)", fairTransparentDecisions + "%"],
+        ["Privacy and minimisation applied to monitoring and customer data (15%)", privacyMinimisation + "%"],
+        ["Human review available for consequential actions such as lockouts, holds or account restrictions (15%)", humanReview + "%"],
+        ["Access events, decisions and model or system versions logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Tested fallback and support pathways when AI is uncertain or unavailable (15%)", fallbackSupport + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain identity, verification and access-control accuracy and safeguards, ensure access and denial decisions are fair and transparent with reasons as appropriate, apply privacy and minimisation to monitoring and customer data, provide human review for consequential actions such as lockouts, holds or account restrictions, log access events, decisions and model or system versions for traceability and dispute review, and test fallback and support pathways when AI is uncertain or unavailable."
+          : "Readiness is trending well — sample access decisions for accuracy, fairness and transparency, confirm privacy safeguards and human review for consequential actions, and test traceability and fallback/support pathways when the system is uncertain or unavailable.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
