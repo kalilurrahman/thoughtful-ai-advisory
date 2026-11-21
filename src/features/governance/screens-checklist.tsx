@@ -414,6 +414,10 @@ import {
   VETERINARY_ANIMAL_WELFARE_ROUNDS,
   veterinaryAnimalWelfareScore,
 } from "./veterinary-animal-welfare-game";
+import {
+  CEMETERIES_FUNERARY_BEREAVEMENT_SERVICES_ROUNDS,
+  cemeteriesFuneraryBereavementServicesScore,
+} from "./cemeteries-funerary-bereavement-services-game";
 
 const statusText = {
   complete: "Complete",
@@ -669,6 +673,9 @@ export function ChecklistScreen() {
   const [veterinaryAnimalWelfareAnswers, setVeterinaryAnimalWelfareAnswers] = useState<
     Record<string, number>
   >({});
+  const [cemeteriesFuneraryBereavementServicesAnswers, setCemeteriesFuneraryBereavementServicesAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -848,6 +855,9 @@ export function ChecklistScreen() {
   );
   const veterinaryAnimalWelfareGame = veterinaryAnimalWelfareScore(
     veterinaryAnimalWelfareAnswers,
+  );
+  const cemeteriesFuneraryBereavementServicesGame = cemeteriesFuneraryBereavementServicesScore(
+    cemeteriesFuneraryBereavementServicesAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10097,6 +10107,75 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good veterinary-welfare safeguard."
                           : "Review the veterinary-welfare gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="cemeteries-funerary-bereavement-services-assurance"
+        className="checklist-phase"
+        aria-label="AI in cemeteries, funerary and bereavement services game"
+      >
+        <h2>AI in cemeteries, funerary &amp; bereavement services</h2>
+        <p>
+          Practice governing AI in cemeteries, funerary and bereavement services: handling personal,
+          bereavement and memorial information sensitively and with consent, ensuring accuracy,
+          dignity and respectful presentation with human review for consequential outputs, protecting
+          access to sensitive locations and records, maintaining human oversight and transparency,
+          and providing traceable fallback and support pathways. Scenarios are learning prompts, not
+          legal, funerary, pastoral or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {cemeteriesFuneraryBereavementServicesGame.correct}/
+            {cemeteriesFuneraryBereavementServicesGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {cemeteriesFuneraryBereavementServicesGame.complete && (
+            <Button
+              variant="outline"
+              onClick={() => setCemeteriesFuneraryBereavementServicesAnswers({})}
+            >
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CEMETERIES_FUNERARY_BEREAVEMENT_SERVICES_ROUNDS.map((round) => {
+            const selected = cemeteriesFuneraryBereavementServicesAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCemeteriesFuneraryBereavementServicesAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good bereavement-services safeguard."
+                          : "Review the bereavement-services gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
