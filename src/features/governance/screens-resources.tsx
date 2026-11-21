@@ -48,26 +48,61 @@ import { generateEvidenceFile, type ExportFormat } from "./evidence-files";
 export function CalculatorsScreen() {
   const { scores, coverage, state } = useGovernance();
   const [selected, setSelected] = useState("cost");
+  const [query, setQuery] = useState("");
   const [values, setValues] = useState<Record<string, number>>(() =>
     Object.fromEntries(CALCS.flatMap((c) => c.inputs.map((i) => [c.id + "." + i.k, i.v]))),
   );
   const calc = CALCS.find((c) => c.id === selected) ?? at(CALCS, 0);
+  const needle = query.trim().toLowerCase();
+  const matches = needle
+    ? CALCS.filter(
+        (c) => c.name.toLowerCase().includes(needle) || c.desc.toLowerCase().includes(needle),
+      )
+    : CALCS;
+  const selectedVisible = matches.some((c) => c.id === calc.id);
   const v = Object.fromEntries(calc.inputs.map((i) => [i.k, values[calc.id + "." + i.k] ?? i.v]));
   const out = calculate(calc.id, v, scores, coverage.percent);
   return (
     <>
       <WorkspaceVisual section="calculators" />
-      <div className="filters calculator-tabs">
-        {CALCS.map((c) => (
+      <label className="inventory-search calculator-search">
+        <MagnifyingGlass />
+        <input
+          aria-label="Search calculators"
+          placeholder="Search calculators by name or topic…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </label>
+      <div className="resource-result-bar">
+        <p className="muted" aria-live="polite">
+          Showing <strong>{matches.length}</strong> of {CALCS.length} calculators
+          {needle && !selectedVisible ? " · the open calculator stays below" : ""}
+        </p>
+        {query ? (
+          <Button variant="outline" size="sm" onClick={() => setQuery("")}>
+            Clear search
+          </Button>
+        ) : null}
+      </div>
+      <div className="filters calculator-tabs" aria-label="Calculators">
+        {matches.map((c) => (
           <Button
             key={c.id}
             variant={selected === c.id ? "default" : "outline"}
+            aria-pressed={selected === c.id}
             onClick={() => setSelected(c.id)}
           >
             {c.name}
           </Button>
         ))}
       </div>
+      {matches.length === 0 ? (
+        <p className="muted calculator-empty" role="status">
+          No calculators match “{query.trim()}”. Try a shorter or different term — the calculator
+          you have open is still shown below.
+        </p>
+      ) : null}
       <section className="calculator-body">
         <h2>{calc.name}</h2>
         <p className="muted">{calc.desc}</p>

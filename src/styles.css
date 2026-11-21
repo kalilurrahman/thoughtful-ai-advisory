@@ -5051,3 +5051,25 @@ body, button, a, .kicker, .nist, .dateline, .client-name, .tab-link span { lette
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/* ---- Calculator navigation: search box + bounded, wrapping tab list (no horizontal scrollbar) */
+.calculator-search {
+  display: block;
+  max-width: 520px;
+  margin-bottom: 12px;
+}
+.calculator-tabs {
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 42vh;
+  align-content: flex-start;
+  padding-right: 4px;
+}
+.calculator-tabs button {
+  flex-shrink: 1;
+  max-width: 100%;
+}
+.calculator-empty {
+  margin: 4px 0 16px;
+}
