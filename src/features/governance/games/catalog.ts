@@ -1319,4 +1319,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in equipment and tool rental services: capturing accurate item identification, condition and availability, supporting damage/loss handling and accountability, communicating pricing and terms transparently, maintaining traceable records with privacy safeguards, and providing human review and fallback for exceptions or disputes.",
     anchor: "equipment-tool-rental-assurance",
   },
+  {
+    id: "self-service-laundromat-smart-locker-assurance",
+    title: "AI in self-service laundromat & smart locker laundry services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in self-service laundromat and smart locker laundry services: ensuring accurate access and order/user matching, supporting issue/malfunction handling and accountability, communicating payment and usage terms transparently, applying privacy safeguards with traceable records, and providing human support and fallback for access failures or disputes.",
+    anchor: "self-service-laundromat-smart-locker-assurance",
+  },
 ] as const;

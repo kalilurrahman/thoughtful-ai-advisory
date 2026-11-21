@@ -458,6 +458,10 @@ import {
   EQUIPMENT_TOOL_RENTAL_ROUNDS,
   equipmentToolRentalScore,
 } from "./equipment-tool-rental-game";
+import {
+  SELF_SERVICE_LAUNDROMAT_SMART_LOCKER_ROUNDS,
+  selfServiceLaundromatSmartLockerScore,
+} from "./self-service-laundromat-smart-locker-game";
 
 const statusText = {
   complete: "Complete",
@@ -746,6 +750,9 @@ export function ChecklistScreen() {
   const [equipmentToolRentalAnswers, setEquipmentToolRentalAnswers] = useState<
     Record<string, number>
   >({});
+  const [selfServiceLaundromatSmartLockerAnswers, setSelfServiceLaundromatSmartLockerAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -958,6 +965,9 @@ export function ChecklistScreen() {
   );
   const equipmentToolRentalGame = equipmentToolRentalScore(
     equipmentToolRentalAnswers,
+  );
+  const selfServiceLaundromatSmartLockerGame = selfServiceLaundromatSmartLockerScore(
+    selfServiceLaundromatSmartLockerAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10930,6 +10940,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good rental-service safeguard."
                           : "Review the rental-service gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="self-service-laundromat-smart-locker-assurance"
+        className="checklist-phase"
+        aria-label="AI in self-service laundromat and smart locker laundry services game"
+      >
+        <h2>AI in self-service laundromat &amp; smart locker laundry services</h2>
+        <p>
+          Practice governing AI in self-service laundromat and smart locker laundry services:
+          ensuring accurate machine or locker access and order or user matching, supporting issue,
+          damage or malfunction detection, reporting and accountability, communicating payment,
+          pricing and usage terms transparently, applying privacy and minimisation to customer and
+          usage data with traceable access, transaction and usage records, and providing human
+          support and fallback for access failures, disputes or uncertain cases. Scenarios are
+          learning prompts, not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {selfServiceLaundromatSmartLockerGame.correct}/{selfServiceLaundromatSmartLockerGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {selfServiceLaundromatSmartLockerGame.complete && (
+            <Button variant="outline" onClick={() => setSelfServiceLaundromatSmartLockerAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SELF_SERVICE_LAUNDROMAT_SMART_LOCKER_ROUNDS.map((round) => {
+            const selected = selfServiceLaundromatSmartLockerAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setSelfServiceLaundromatSmartLockerAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good self-service safeguard."
+                          : "Review the self-service gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
