@@ -4651,6 +4651,41 @@ export function calculate(
           : "Readiness is trending well — sample access and occupancy states for availability and matching accuracy, confirm transparent usage conditions/fees/terms and accountable safety, maintenance or cleanliness issue handling, and test privacy safeguards, traceability and human support/fallback for access failures or disputes.",
     };
   }
+  if (id === "camping-glamping-recreation-site-booking") {
+    const identificationAvailability = v["identification-availability"] ?? 0,
+      pricingRulesTerms = v["pricing-rules-terms"] ?? 0,
+      safetyIncidentHandling = v["safety-incident-handling"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      supportFallback = v["support-fallback"] ?? 0,
+      score = Math.round(
+        identificationAvailability * 0.2 +
+          pricingRulesTerms * 0.2 +
+          safetyIncidentHandling * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          supportFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in camping, glamping & outdoor recreation site booking",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Site or amenity identification, availability and reservation matching accurate (20%)", identificationAvailability + "%"],
+        ["Pricing, rules and reservation terms communicated transparently (20%)", pricingRulesTerms + "%"],
+        ["Safety, weather, maintenance or incident detection, reporting and handling and accountability supported (15%)", safetyIncidentHandling + "%"],
+        ["Privacy and minimisation applied to guest, booking and location data (15%)", privacyMinimisation + "%"],
+        ["Booking, check-in and incident records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human support and fallback available for booking failures, safety concerns, disputes or uncertain cases (15%)", supportFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure site or amenity identification, availability and reservation matching are accurate, communicate pricing, rules and reservation terms transparently, support safety, weather, maintenance or incident detection, reporting and handling and accountability, apply privacy and minimisation to guest, booking and location data, log booking, check-in and incident records for traceability and dispute review, and provide human support and fallback for booking failures, safety concerns, disputes or uncertain cases."
+          : "Readiness is trending well — sample sites and reservations for identification, availability and match accuracy, confirm transparent pricing/rules/terms and accountable safety, weather or incident handling, and test privacy safeguards, traceability and human support/fallback for booking failures or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
