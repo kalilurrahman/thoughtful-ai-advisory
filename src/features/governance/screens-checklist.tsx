@@ -454,6 +454,10 @@ import {
   VEHICLE_VALET_PARKING_ATTENDANT_ROUNDS,
   vehicleValetParkingAttendantScore,
 } from "./vehicle-valet-parking-attendant-game";
+import {
+  EQUIPMENT_TOOL_RENTAL_ROUNDS,
+  equipmentToolRentalScore,
+} from "./equipment-tool-rental-game";
 
 const statusText = {
   complete: "Complete",
@@ -739,6 +743,9 @@ export function ChecklistScreen() {
   const [vehicleValetParkingAttendantAnswers, setVehicleValetParkingAttendantAnswers] = useState<
     Record<string, number>
   >({});
+  const [equipmentToolRentalAnswers, setEquipmentToolRentalAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -948,6 +955,9 @@ export function ChecklistScreen() {
   );
   const vehicleValetParkingAttendantGame = vehicleValetParkingAttendantScore(
     vehicleValetParkingAttendantAnswers,
+  );
+  const equipmentToolRentalGame = equipmentToolRentalScore(
+    equipmentToolRentalAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10854,6 +10864,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good valet-service safeguard."
                           : "Review the valet-service gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="equipment-tool-rental-assurance"
+        className="checklist-phase"
+        aria-label="AI in equipment and tool rental services game"
+      >
+        <h2>AI in equipment &amp; tool rental services</h2>
+        <p>
+          Practice governing AI in equipment and tool rental services: capturing accurate equipment
+          or tool identification, condition and availability, supporting damage or loss detection,
+          handling and accountability, communicating pricing, deposits and service terms
+          transparently, maintaining traceable checkout, return and maintenance records with privacy
+          and minimisation safeguards for renter and usage data or images, and providing human
+          review and fallback for exceptions, disputes or uncertain cases. Scenarios are learning
+          prompts, not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {equipmentToolRentalGame.correct}/{equipmentToolRentalGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {equipmentToolRentalGame.complete && (
+            <Button variant="outline" onClick={() => setEquipmentToolRentalAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {EQUIPMENT_TOOL_RENTAL_ROUNDS.map((round) => {
+            const selected = equipmentToolRentalAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setEquipmentToolRentalAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good rental-service safeguard."
+                          : "Review the rental-service gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
