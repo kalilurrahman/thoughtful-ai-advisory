@@ -382,6 +382,10 @@ import {
   WASTE_RECYCLING_OPERATIONS_ROUNDS,
   wasteRecyclingOperationsScore,
 } from "./waste-recycling-operations-game";
+import {
+  ARCHIVES_HERITAGE_DIGITISATION_ROUNDS,
+  archivesHeritageDigitisationScore,
+} from "./archives-heritage-digitisation-game";
 
 const statusText = {
   complete: "Complete",
@@ -613,6 +617,9 @@ export function ChecklistScreen() {
   const [wasteRecyclingOperationsAnswers, setWasteRecyclingOperationsAnswers] = useState<
     Record<string, number>
   >({});
+  const [archivesHeritageDigitisationAnswers, setArchivesHeritageDigitisationAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -768,6 +775,9 @@ export function ChecklistScreen() {
   );
   const wasteRecyclingOperationsGame = wasteRecyclingOperationsScore(
     wasteRecyclingOperationsAnswers,
+  );
+  const archivesHeritageDigitisationGame = archivesHeritageDigitisationScore(
+    archivesHeritageDigitisationAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -9491,6 +9501,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good operations safeguard."
                           : "Review the operations gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="archives-heritage-digitisation-assurance"
+        className="checklist-phase"
+        aria-label="AI in public archives and cultural heritage digitisation game"
+      >
+        <h2>AI in public archives &amp; cultural heritage digitisation</h2>
+        <p>
+          Practice governing AI in public archives and cultural heritage digitisation: preserving
+          provenance and integrity, reviewing metadata and descriptions for quality and bias with
+          subject-matter expertise, handling rights and sensitive content appropriately, disclosing
+          AI assistance and limitations, and maintaining curatorial authority with traceable outputs
+          and changes. Scenarios are learning prompts, not archival, legal, rights or regulatory
+          advice.
+        </p>
+        <p>
+          <strong>
+            {archivesHeritageDigitisationGame.correct}/{archivesHeritageDigitisationGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {archivesHeritageDigitisationGame.complete && (
+            <Button variant="outline" onClick={() => setArchivesHeritageDigitisationAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {ARCHIVES_HERITAGE_DIGITISATION_ROUNDS.map((round) => {
+            const selected = archivesHeritageDigitisationAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setArchivesHeritageDigitisationAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good stewardship safeguard."
+                          : "Review the stewardship gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
