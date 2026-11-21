@@ -4161,6 +4161,41 @@ export function calculate(
           : "Readiness is trending well — sample access decisions for accuracy, fairness and transparency, confirm privacy safeguards and human review for consequential actions, and test traceability and fallback/support pathways when the system is uncertain or unavailable.",
     };
   }
+  if (id === "laundry-garment-care") {
+    const identificationInstructions = v["identification-instructions"] ?? 0,
+      damageAccountability = v["damage-accountability"] ?? 0,
+      transparencyTerms = v["transparency-terms"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        identificationInstructions * 0.2 +
+          damageAccountability * 0.2 +
+          transparencyTerms * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in laundry, dry-cleaning & garment care services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Item and order identification and special-care instructions captured accurately (20%)", identificationInstructions + "%"],
+        ["Damage or loss detection, handling and accountability supported (20%)", damageAccountability + "%"],
+        ["Pricing, turnaround and service terms communicated transparently (15%)", transparencyTerms + "%"],
+        ["Privacy and minimisation applied to customer and item data or images (15%)", privacyMinimisation + "%"],
+        ["Decisions, condition records and model or system versions logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human review and fallback available for exceptions, disputes or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: capture item and order identification and special-care instructions accurately, support damage or loss detection, handling and accountability, communicate pricing, turnaround and service terms transparently, apply privacy and minimisation to customer and item data or images, log decisions, condition records and model or system versions for traceability and dispute review, and provide human review and fallback for exceptions, disputes or uncertain cases."
+          : "Readiness is trending well — sample orders for identification and special-care accuracy, confirm damage/loss handling and transparent terms, and test privacy safeguards, traceability and human review/fallback for disputes or exceptions.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
