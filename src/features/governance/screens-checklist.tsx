@@ -494,6 +494,10 @@ import {
   CAMPING_GLAMPING_RECREATION_SITE_BOOKING_ROUNDS,
   campingGlampingRecreationSiteBookingScore,
 } from "./camping-glamping-recreation-site-booking-game";
+import {
+  CO_LIVING_DORMITORY_SHARED_LIVING_ACCESS_ROUNDS,
+  coLivingDormitorySharedLivingAccessScore,
+} from "./co-living-dormitory-shared-living-access-game";
 
 const statusText = {
   complete: "Complete",
@@ -807,6 +811,8 @@ export function ChecklistScreen() {
     useState<Record<string, number>>({});
   const [campingGlampingRecreationSiteBookingAnswers, setCampingGlampingRecreationSiteBookingAnswers] =
     useState<Record<string, number>>({});
+  const [coLivingDormitorySharedLivingAccessAnswers, setCoLivingDormitorySharedLivingAccessAnswers] =
+    useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -1046,6 +1052,9 @@ export function ChecklistScreen() {
   );
   const campingGlampingRecreationSiteBookingGame = campingGlampingRecreationSiteBookingScore(
     campingGlampingRecreationSiteBookingAnswers,
+  );
+  const coLivingDormitorySharedLivingAccessGame = coLivingDormitorySharedLivingAccessScore(
+    coLivingDormitorySharedLivingAccessAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11623,6 +11632,77 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good outdoor-booking safeguard."
                           : "Review the outdoor-booking gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="co-living-dormitory-shared-living-access-assurance"
+        className="checklist-phase"
+        aria-label="AI in co-living, dormitory and shared-living amenity access game"
+      >
+        <h2>AI in co-living, dormitory &amp; shared-living amenity access</h2>
+        <p>
+          Practice governing AI in co-living, dormitory and shared-living amenity access: ensuring
+          accurate resident or guest identification, room or amenity assignment and access
+          authorization, communicating house rules, fees and amenity terms transparently, supporting
+          incident, maintenance or noise issue detection, reporting and handling and
+          accountability, applying privacy and minimisation to resident, guest and access or
+          occupancy data with traceable access, amenity and incident records, and providing human
+          review and fallback for access issues, disputes or uncertain cases. Scenarios are
+          learning prompts, not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {coLivingDormitorySharedLivingAccessGame.correct}/
+            {coLivingDormitorySharedLivingAccessGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {coLivingDormitorySharedLivingAccessGame.complete && (
+            <Button
+              variant="outline"
+              onClick={() => setCoLivingDormitorySharedLivingAccessAnswers({})}
+            >
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CO_LIVING_DORMITORY_SHARED_LIVING_ACCESS_ROUNDS.map((round) => {
+            const selected = coLivingDormitorySharedLivingAccessAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCoLivingDormitorySharedLivingAccessAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good shared-living safeguard."
+                          : "Review the shared-living gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

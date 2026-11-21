@@ -1391,4 +1391,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in camping, glamping and outdoor recreation site booking: ensuring accurate site/amenity identification, availability and reservation matching, communicating pricing, rules and reservation terms transparently, handling safety, weather and incident situations with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for booking failures, safety concerns or disputes.",
     anchor: "camping-glamping-recreation-site-booking-assurance",
   },
+  {
+    id: "co-living-dormitory-shared-living-access-assurance",
+    title: "AI in co-living, dormitory & shared-living amenity access game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in co-living, dormitory and shared-living amenity access: ensuring accurate resident/guest identification, room or amenity assignment and access authorization, communicating house rules, fees and amenity terms transparently, handling incident, maintenance or noise issues with accountability, applying privacy safeguards with traceable records, and providing human review and fallback for access issues or disputes.",
+    anchor: "co-living-dormitory-shared-living-access-assurance",
+  },
 ] as const;
