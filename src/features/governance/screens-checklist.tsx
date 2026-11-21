@@ -430,6 +430,10 @@ import {
   LARGE_EVENT_CROWD_SAFETY_ROUNDS,
   largeEventCrowdSafetyScore,
 } from "./large-event-crowd-safety-game";
+import {
+  SELF_STORAGE_PROPERTY_ACCESS_ROUNDS,
+  selfStoragePropertyAccessScore,
+} from "./self-storage-property-access-game";
 
 const statusText = {
   complete: "Complete",
@@ -697,6 +701,9 @@ export function ChecklistScreen() {
   const [largeEventCrowdSafetyAnswers, setLargeEventCrowdSafetyAnswers] = useState<
     Record<string, number>
   >({});
+  const [selfStoragePropertyAccessAnswers, setSelfStoragePropertyAccessAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -888,6 +895,9 @@ export function ChecklistScreen() {
   );
   const largeEventCrowdSafetyGame = largeEventCrowdSafetyScore(
     largeEventCrowdSafetyAnswers,
+  );
+  const selfStoragePropertyAccessGame = selfStoragePropertyAccessScore(
+    selfStoragePropertyAccessAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10400,6 +10410,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good crowd-safety safeguard."
                           : "Review the crowd-safety gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="self-storage-property-access-assurance"
+        className="checklist-phase"
+        aria-label="AI in self-storage and property access facilities game"
+      >
+        <h2>AI in self-storage &amp; property access facilities</h2>
+        <p>
+          Practice governing AI in self-storage and property access facilities: maintaining
+          accurate verification and access safeguards, ensuring fair and transparent access
+          decisions, applying privacy and minimisation to monitoring and customer data, providing
+          human review for consequential actions such as lockouts, holds or account restrictions,
+          and keeping traceable records with tested fallback and support pathways. Scenarios are
+          learning prompts, not legal, security or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {selfStoragePropertyAccessGame.correct}/{selfStoragePropertyAccessGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {selfStoragePropertyAccessGame.complete && (
+            <Button variant="outline" onClick={() => setSelfStoragePropertyAccessAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SELF_STORAGE_PROPERTY_ACCESS_ROUNDS.map((round) => {
+            const selected = selfStoragePropertyAccessAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setSelfStoragePropertyAccessAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good access-facility safeguard."
+                          : "Review the access-facility gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
