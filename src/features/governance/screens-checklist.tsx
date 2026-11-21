@@ -398,6 +398,10 @@ import {
   FORESTRY_WILDFIRE_LAND_MANAGEMENT_ROUNDS,
   forestryWildfireLandManagementScore,
 } from "./forestry-wildfire-land-management-game";
+import {
+  AIRPORT_PORT_GROUND_OPERATIONS_ROUNDS,
+  airportPortGroundOperationsScore,
+} from "./airport-port-ground-operations-game";
 
 const statusText = {
   complete: "Complete",
@@ -641,6 +645,9 @@ export function ChecklistScreen() {
   const [forestryWildfireLandManagementAnswers, setForestryWildfireLandManagementAnswers] = useState<
     Record<string, number>
   >({});
+  const [airportPortGroundOperationsAnswers, setAirportPortGroundOperationsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -808,6 +815,9 @@ export function ChecklistScreen() {
   );
   const forestryWildfireLandManagementGame = forestryWildfireLandManagementScore(
     forestryWildfireLandManagementAnswers,
+  );
+  const airportPortGroundOperationsGame = airportPortGroundOperationsScore(
+    airportPortGroundOperationsAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -9792,6 +9802,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good response safeguard."
                           : "Review the response gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="airport-port-ground-operations-assurance"
+        className="checklist-phase"
+        aria-label="AI in airport and port ground operations safety game"
+      >
+        <h2>AI in airport &amp; port ground operations safety</h2>
+        <p>
+          Practice governing AI in airport and port ground operations safety: maintaining human
+          authority for safety-critical movements and clearances, validating performance in degraded
+          visibility and congestion, ensuring timely proximity and hazard alerts, logging movements
+          and model versions for traceability, and controlling changes with fail-safe manual
+          procedures and cross-team coordination. Scenarios are learning prompts, not operational,
+          safety or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {airportPortGroundOperationsGame.correct}/{airportPortGroundOperationsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {airportPortGroundOperationsGame.complete && (
+            <Button variant="outline" onClick={() => setAirportPortGroundOperationsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {AIRPORT_PORT_GROUND_OPERATIONS_ROUNDS.map((round) => {
+            const selected = airportPortGroundOperationsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setAirportPortGroundOperationsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good ground-operations safeguard."
+                          : "Review the ground-operations gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
