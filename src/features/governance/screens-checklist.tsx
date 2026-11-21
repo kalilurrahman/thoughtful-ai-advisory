@@ -490,6 +490,10 @@ import {
   PUBLIC_RESTROOM_SHOWER_AMENITY_ACCESS_ROUNDS,
   publicRestroomShowerAmenityAccessScore,
 } from "./public-restroom-shower-amenity-access-game";
+import {
+  CAMPING_GLAMPING_RECREATION_SITE_BOOKING_ROUNDS,
+  campingGlampingRecreationSiteBookingScore,
+} from "./camping-glamping-recreation-site-booking-game";
 
 const statusText = {
   complete: "Complete",
@@ -801,6 +805,8 @@ export function ChecklistScreen() {
   >({});
   const [publicRestroomShowerAmenityAccessAnswers, setPublicRestroomShowerAmenityAccessAnswers] =
     useState<Record<string, number>>({});
+  const [campingGlampingRecreationSiteBookingAnswers, setCampingGlampingRecreationSiteBookingAnswers] =
+    useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -1037,6 +1043,9 @@ export function ChecklistScreen() {
   );
   const publicRestroomShowerAmenityAccessGame = publicRestroomShowerAmenityAccessScore(
     publicRestroomShowerAmenityAccessAnswers,
+  );
+  const campingGlampingRecreationSiteBookingGame = campingGlampingRecreationSiteBookingScore(
+    campingGlampingRecreationSiteBookingAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11543,6 +11552,77 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good amenity-access safeguard."
                           : "Review the amenity-access gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="camping-glamping-recreation-site-booking-assurance"
+        className="checklist-phase"
+        aria-label="AI in camping, glamping and outdoor recreation site booking game"
+      >
+        <h2>AI in camping, glamping &amp; outdoor recreation site booking</h2>
+        <p>
+          Practice governing AI in camping, glamping and outdoor recreation site booking: ensuring
+          accurate site or amenity identification, availability and reservation matching,
+          communicating pricing, rules and reservation terms transparently before reservation,
+          supporting safety, weather, maintenance or incident detection, reporting and handling and
+          accountability with timely guest notification, applying privacy and minimisation to guest,
+          booking and location data with traceable booking, check-in and incident records, and
+          providing human support and fallback for booking failures, safety concerns, disputes or
+          uncertain cases. Scenarios are learning prompts, not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {campingGlampingRecreationSiteBookingGame.correct}/
+            {campingGlampingRecreationSiteBookingGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {campingGlampingRecreationSiteBookingGame.complete && (
+            <Button
+              variant="outline"
+              onClick={() => setCampingGlampingRecreationSiteBookingAnswers({})}
+            >
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CAMPING_GLAMPING_RECREATION_SITE_BOOKING_ROUNDS.map((round) => {
+            const selected = campingGlampingRecreationSiteBookingAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCampingGlampingRecreationSiteBookingAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good outdoor-booking safeguard."
+                          : "Review the outdoor-booking gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
