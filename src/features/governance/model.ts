@@ -3706,6 +3706,41 @@ export function calculate(
           : "Readiness is trending well — run a hazard or contamination scenario to confirm alarms, escalation and manual procedures work, trace a recent AI-influenced alert or sorting decision from inputs to outcome, and verify worker-safety coordination and required notification paths are clear.",
     };
   }
+  if (id === "archives-heritage-digitisation") {
+    const provenanceIntegrity = v["provenance-integrity"] ?? 0,
+      metadataQualityBias = v["metadata-quality-bias"] ?? 0,
+      rightsSensitiveContent = v["rights-sensitive-content"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      humanReview = v["human-review"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      score = Math.round(
+        provenanceIntegrity * 0.2 +
+          metadataQualityBias * 0.2 +
+          rightsSensitiveContent * 0.15 +
+          transparency * 0.15 +
+          humanReview * 0.15 +
+          traceability * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in public archives & cultural heritage digitisation",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Provenance and integrity of digitised records preserved with links to originals (20%)", provenanceIntegrity + "%"],
+        ["Metadata and descriptions reviewed for quality and bias with subject-matter expertise (20%)", metadataQualityBias + "%"],
+        ["Access, use rights and sensitive or restricted content handled appropriately (15%)", rightsSensitiveContent + "%"],
+        ["AI assistance and limitations disclosed transparently in outputs (15%)", transparency + "%"],
+        ["Human review and curatorial authority maintained for consequential descriptions and access decisions (15%)", humanReview + "%"],
+        ["AI-generated outputs, sources and changes logged for traceability and audit (15%)", traceability + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: preserve provenance and integrity of digitised records with links to originals, review metadata and descriptions for quality and bias with subject-matter expertise, handle access, use rights and sensitive or restricted content appropriately, disclose AI assistance and limitations transparently in outputs, maintain human review and curatorial authority for consequential descriptions and access decisions, and log AI-generated outputs, sources and changes for traceability and audit."
+          : "Readiness is trending well — sample AI-generated descriptions and transcriptions against originals for accuracy, bias and provenance, confirm sensitive or restricted materials have appropriate access controls and disclosures, and verify outputs and changes remain traceable to sources and review decisions.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
