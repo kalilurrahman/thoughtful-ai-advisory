@@ -3916,6 +3916,41 @@ export function calculate(
           : "Readiness is trending well — sample AI-assisted search and recommendations for quality, bias and accessibility across user groups, confirm rights/sensitive-content handling and disclosures are clear, and verify privacy protections and traceability of outputs and interactions are in place.",
     };
   }
+  if (id === "sports-officiating-competition-integrity") {
+    const humanAuthority = v["human-authority"] ?? 0,
+      validation = v["validation"] ?? 0,
+      fairnessBias = v["fairness-bias"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      changeFallback = v["change-fallback"] ?? 0,
+      score = Math.round(
+        humanAuthority * 0.2 +
+          validation * 0.2 +
+          fairnessBias * 0.15 +
+          transparency * 0.15 +
+          traceability * 0.15 +
+          changeFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in sports officiating & competition integrity",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Human authority, review and appeals maintained for officiating decisions (20%)", humanAuthority + "%"],
+        ["Performance validated across venues, conditions, equipment and sport-specific edge cases (20%)", validation + "%"],
+        ["Fairness and bias monitored so assistance does not systematically disadvantage participants (15%)", fairnessBias + "%"],
+        ["Transparency of AI assistance, limitations and decision rationale provided to officials and stakeholders as appropriate (15%)", transparency + "%"],
+        ["Decisions, evidence, inputs and model or system versions logged for traceability, review and integrity investigations (15%)", traceability + "%"],
+        ["Changes controlled with tested fallback and continuity procedures when AI assistance is unavailable or contested (15%)", changeFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain human authority, review and appeals for officiating decisions, validate performance across venues, conditions, equipment and sport-specific edge cases, monitor fairness and bias so assistance does not systematically disadvantage participants, provide transparency of AI assistance, limitations and decision rationale as appropriate, log decisions, evidence, inputs and model or system versions for traceability and integrity investigations, and control changes with tested fallback and continuity procedures when assistance is unavailable or contested."
+          : "Readiness is trending well — run venue/condition edge-case checks, sample decisions for fairness and explainability to officials, trace a recent AI-assisted call from evidence and inputs to outcome, and test fallback and continuity procedures for contested or unavailable assistance.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
