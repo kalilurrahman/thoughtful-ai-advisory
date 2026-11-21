@@ -3846,6 +3846,41 @@ export function calculate(
           : "Readiness is trending well — review recent alerts for false alarms and missed detections, confirm uncertainty and limitations are communicated clearly during active conditions, and verify coordination, notifications and manual fallback work when detections or systems are degraded.",
     };
   }
+  if (id === "airport-port-ground-operations") {
+    const oversight = v["oversight"] ?? 0,
+      validation = v["validation"] ?? 0,
+      hazardDetection = v["hazard-detection"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      changeFallback = v["change-fallback"] ?? 0,
+      coordination = v["coordination"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          validation * 0.2 +
+          hazardDetection * 0.15 +
+          traceability * 0.15 +
+          changeFallback * 0.15 +
+          coordination * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in airport & port ground operations safety",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Human authority and oversight maintained for safety-critical vehicle and equipment movements and clearances (20%)", oversight + "%"],
+        ["Performance validated in degraded visibility, congestion, sensor faults and edge conditions (20%)", validation + "%"],
+        ["Proximity and hazard detection provide timely alerts and escalation (15%)", hazardDetection + "%"],
+        ["Movements, actions, alerts, inputs and model versions logged for traceability and investigation (15%)", traceability + "%"],
+        ["Changes controlled with tested fail-safe and manual procedures (15%)", changeFallback + "%"],
+        ["Coordination and required notifications across teams supported when AI affects operations or incidents (15%)", coordination + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain human authority and oversight for safety-critical vehicle and equipment movements and clearances, validate performance in degraded visibility, congestion, sensor faults and edge conditions, ensure proximity and hazard detection provide timely alerts and escalation, log movements, actions, alerts, inputs and model versions for traceability and investigation, control changes with tested fail-safe and manual procedures, and support coordination and required notifications across teams when AI affects operations or incidents."
+          : "Readiness is trending well — run a degraded-visibility or congestion scenario to confirm alerts, human oversight and manual procedures hold, trace a recent AI-influenced movement or alert from inputs to outcome, and verify cross-team coordination and required notification paths are clear.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
