@@ -4196,6 +4196,41 @@ export function calculate(
           : "Readiness is trending well — sample orders for identification and special-care accuracy, confirm damage/loss handling and transparent terms, and test privacy safeguards, traceability and human review/fallback for disputes or exceptions.",
     };
   }
+  if (id === "car-wash-vehicle-detailing") {
+    const identificationCondition = v["identification-condition"] ?? 0,
+      damageAccountability = v["damage-accountability"] ?? 0,
+      transparencyTerms = v["transparency-terms"] ?? 0,
+      consentPrivacy = v["consent-privacy"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        identificationCondition * 0.2 +
+          damageAccountability * 0.2 +
+          transparencyTerms * 0.15 +
+          consentPrivacy * 0.15 +
+          traceability * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in car wash & vehicle detailing services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Vehicle identification, service selection and pre-existing condition capture accurate (20%)", identificationCondition + "%"],
+        ["Damage or incident detection, handling and accountability supported (20%)", damageAccountability + "%"],
+        ["Pricing, packages or upsells and service terms communicated transparently (15%)", transparencyTerms + "%"],
+        ["Consented capture and use of vehicle and customer data or images minimised and safeguarded (15%)", consentPrivacy + "%"],
+        ["Decisions, condition records and model or system versions logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human review and fallback available for exceptions, disputes or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: capture vehicle identification, service selection and pre-existing condition accurately, support damage or incident detection, handling and accountability, communicate pricing, packages or upsells and service terms transparently, minimise and safeguard consented capture and use of vehicle and customer data or images, log decisions, condition records and model or system versions for traceability and dispute review, and provide human review and fallback for exceptions, disputes or uncertain cases."
+          : "Readiness is trending well — sample services for identification and pre-existing condition accuracy, confirm damage/incident handling and transparent pricing/terms, and test consent/privacy safeguards, traceability and human review/fallback for disputes or exceptions.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
