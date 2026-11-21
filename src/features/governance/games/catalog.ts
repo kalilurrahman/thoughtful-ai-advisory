@@ -1311,4 +1311,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in vehicle valet and parking attendant services: capturing accurate vehicle identification and condition at handoff/retrieval, supporting custody/key handling and damage accountability, communicating pricing and terms with authorization checks, applying privacy safeguards with traceable records, and providing human review and fallback for exceptions or disputes.",
     anchor: "vehicle-valet-parking-attendant-assurance",
   },
+  {
+    id: "equipment-tool-rental-assurance",
+    title: "AI in equipment & tool rental services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in equipment and tool rental services: capturing accurate item identification, condition and availability, supporting damage/loss handling and accountability, communicating pricing and terms transparently, maintaining traceable records with privacy safeguards, and providing human review and fallback for exceptions or disputes.",
+    anchor: "equipment-tool-rental-assurance",
+  },
 ] as const;
