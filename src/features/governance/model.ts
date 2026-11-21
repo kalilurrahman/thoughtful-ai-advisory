@@ -4581,6 +4581,41 @@ export function calculate(
           : "Readiness is trending well — sample selections and transactions for identification, availability and pricing/terms accuracy, confirm accountable dispense/fulfillment issue handling, and test privacy safeguards, traceability and human support/fallback for failures or disputes.",
     };
   }
+  if (id === "ev-charging-station-network") {
+    const identificationAvailability = v["identification-availability"] ?? 0,
+      pricingTerms = v["pricing-terms"] ?? 0,
+      faultSafetyHandling = v["fault-safety-handling"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      supportFallback = v["support-fallback"] ?? 0,
+      score = Math.round(
+        identificationAvailability * 0.2 +
+          pricingTerms * 0.2 +
+          faultSafetyHandling * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          supportFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in EV charging station & charging network services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Charger or connector identification, availability and session matching accurate (20%)", identificationAvailability + "%"],
+        ["Pricing, session and usage terms communicated transparently (20%)", pricingTerms + "%"],
+        ["Charging fault, safety incident, billing error or outage detection, reporting and handling and accountability supported (15%)", faultSafetyHandling + "%"],
+        ["Privacy and minimisation applied to driver, vehicle and location or usage data (15%)", privacyMinimisation + "%"],
+        ["Session, billing and incident records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human support and fallback available for charging failures, disputes or uncertain cases (15%)", supportFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure charger or connector identification, availability and session matching are accurate, communicate pricing, session and usage terms transparently, support charging fault, safety incident, billing error or outage detection, reporting and handling and accountability, apply privacy and minimisation to driver, vehicle and location or usage data, log session, billing and incident records for traceability and dispute review, and provide human support and fallback for charging failures, disputes or uncertain cases."
+          : "Readiness is trending well — sample chargers and sessions for identification, availability and match accuracy, confirm transparent pricing/session/usage terms and accountable fault, safety or billing issue handling, and test privacy safeguards, traceability and human support/fallback for charging failures or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
