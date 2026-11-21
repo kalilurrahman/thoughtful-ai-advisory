@@ -366,6 +366,10 @@ import {
   RAILWAY_SIGNALLING_OPERATIONS_ROUNDS,
   railwaySignallingOperationsScore,
 } from "./railway-signalling-operations-game";
+import {
+  MINING_EXTRACTIVE_SAFETY_ROUNDS,
+  miningExtractiveSafetyScore,
+} from "./mining-extractive-safety-game";
 
 const statusText = {
   complete: "Complete",
@@ -585,6 +589,9 @@ export function ChecklistScreen() {
   const [railwaySignallingOperationsAnswers, setRailwaySignallingOperationsAnswers] = useState<
     Record<string, number>
   >({});
+  const [miningExtractiveSafetyAnswers, setMiningExtractiveSafetyAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -731,6 +738,7 @@ export function ChecklistScreen() {
   const waterWastewaterOperationsGame = waterWastewaterOperationsScore(waterWastewaterOperationsAnswers);
   const borderImmigrationScreeningGame = borderImmigrationScreeningScore(borderImmigrationScreeningAnswers);
   const railwaySignallingOperationsGame = railwaySignallingOperationsScore(railwaySignallingOperationsAnswers);
+  const miningExtractiveSafetyGame = miningExtractiveSafetyScore(miningExtractiveSafetyAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -9192,6 +9200,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good operations safeguard."
                           : "Review the operations gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="mining-extractive-safety-assurance"
+        className="checklist-phase"
+        aria-label="AI in mining and extractive operations safety game"
+      >
+        <h2>AI in mining &amp; extractive operations safety</h2>
+        <p>
+          Practice governing AI in mining and extractive operations safety: keeping human authority
+          over safety-critical alerts and actions, validating performance in harsh environments and
+          sensor faults, monitoring hazard thresholds with timely alarms and escalation, logging
+          decisions and model versions for traceability, and maintaining controlled changes with
+          fail-safe manual procedures and incident coordination. Scenarios are learning prompts, not
+          operational, safety or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {miningExtractiveSafetyGame.correct}/{miningExtractiveSafetyGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {miningExtractiveSafetyGame.complete && (
+            <Button variant="outline" onClick={() => setMiningExtractiveSafetyAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {MINING_EXTRACTIVE_SAFETY_ROUNDS.map((round) => {
+            const selected = miningExtractiveSafetyAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setMiningExtractiveSafetyAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good safety safeguard."
+                          : "Review the safety gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
