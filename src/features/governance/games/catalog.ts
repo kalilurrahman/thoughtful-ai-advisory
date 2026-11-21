@@ -1295,4 +1295,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in moving, relocation and household goods storage: capturing accurate inventory and condition records, supporting damage/loss handling and accountability, communicating quotes and terms transparently, maintaining traceable chain-of-custody with privacy safeguards, and providing human review and fallback for exceptions or disputes.",
     anchor: "moving-relocation-household-goods-assurance",
   },
+  {
+    id: "pet-boarding-daycare-grooming-assurance",
+    title: "AI in pet boarding, daycare & grooming services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in pet boarding, daycare and grooming services: capturing accurate pet identification and care instructions, supporting welfare observation and incident handling, communicating consent and terms transparently, applying privacy safeguards with traceable care records, and providing human review, escalation and fallback for incidents or welfare concerns.",
+    anchor: "pet-boarding-daycare-grooming-assurance",
+  },
 ] as const;
