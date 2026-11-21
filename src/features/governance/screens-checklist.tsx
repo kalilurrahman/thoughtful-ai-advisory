@@ -482,6 +482,10 @@ import {
   VENDING_AUTOMATED_RETAIL_SMART_KIOSK_ROUNDS,
   vendingAutomatedRetailSmartKioskScore,
 } from "./vending-automated-retail-smart-kiosk-game";
+import {
+  EV_CHARGING_STATION_NETWORK_ROUNDS,
+  evChargingStationNetworkScore,
+} from "./ev-charging-station-network-game";
 
 const statusText = {
   complete: "Complete",
@@ -788,6 +792,9 @@ export function ChecklistScreen() {
   const [vendingAutomatedRetailSmartKioskAnswers, setVendingAutomatedRetailSmartKioskAnswers] = useState<
     Record<string, number>
   >({});
+  const [evChargingStationNetworkAnswers, setEvChargingStationNetworkAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -1018,6 +1025,9 @@ export function ChecklistScreen() {
   );
   const vendingAutomatedRetailSmartKioskGame = vendingAutomatedRetailSmartKioskScore(
     vendingAutomatedRetailSmartKioskAnswers,
+  );
+  const evChargingStationNetworkGame = evChargingStationNetworkScore(
+    evChargingStationNetworkAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11386,6 +11396,73 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good unattended-retail safeguard."
                           : "Review the unattended-retail gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="ev-charging-station-network-assurance"
+        className="checklist-phase"
+        aria-label="AI in EV charging station and charging network services game"
+      >
+        <h2>AI in EV charging station &amp; charging network services</h2>
+        <p>
+          Practice governing AI in EV charging station and charging network services: ensuring
+          accurate charger or connector identification, availability and session matching,
+          communicating pricing, session and usage terms transparently before a session starts,
+          supporting charging fault, safety incident, billing error or outage detection, reporting
+          and handling and accountability, applying privacy and minimisation to driver, vehicle and
+          location or usage data with traceable session, billing and incident records, and
+          providing human support and fallback for charging failures, disputes or uncertain cases.
+          Scenarios are learning prompts, not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {evChargingStationNetworkGame.correct}/{evChargingStationNetworkGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {evChargingStationNetworkGame.complete && (
+            <Button variant="outline" onClick={() => setEvChargingStationNetworkAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {EV_CHARGING_STATION_NETWORK_ROUNDS.map((round) => {
+            const selected = evChargingStationNetworkAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setEvChargingStationNetworkAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good charging-network safeguard."
+                          : "Review the charging-network gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

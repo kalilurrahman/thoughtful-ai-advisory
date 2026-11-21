@@ -1367,4 +1367,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in vending, automated retail and smart kiosk services: ensuring accurate product/selection identification and availability, communicating payment, pricing and terms transparently, handling dispense or fulfillment issues with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for failures or disputes.",
     anchor: "vending-automated-retail-smart-kiosk-assurance",
   },
+  {
+    id: "ev-charging-station-network-assurance",
+    title: "AI in EV charging station & charging network services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in EV charging station and charging network services: ensuring accurate charger/connector identification, availability and session matching, communicating pricing, session and usage terms transparently, handling charging faults, safety incidents and billing errors with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for charging failures or disputes.",
+    anchor: "ev-charging-station-network-assurance",
+  },
 ] as const;
