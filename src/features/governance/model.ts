@@ -3776,6 +3776,41 @@ export function calculate(
           : "Readiness is trending well — test passenger information during a simulated disruption for accuracy, timeliness and accessibility across channels, sample outputs against actual service conditions, and verify fallback manual communications and traceability work when AI support is degraded.",
     };
   }
+  if (id === "laboratory-research-safety") {
+    const oversight = v["oversight"] ?? 0,
+      hazardDetection = v["hazard-detection"] ?? 0,
+      validation = v["validation"] ?? 0,
+      dataIntegrity = v["data-integrity"] ?? 0,
+      deviationInvestigation = v["deviation-investigation"] ?? 0,
+      changeFallback = v["change-fallback"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          hazardDetection * 0.2 +
+          validation * 0.15 +
+          dataIntegrity * 0.15 +
+          deviationInvestigation * 0.15 +
+          changeFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in laboratories & research safety/compliance",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Qualified human oversight and authority maintained for safety-critical and protocol decisions (20%)", oversight + "%"],
+        ["Hazards and unsafe conditions detected with timely alarms and escalation (20%)", hazardDetection + "%"],
+        ["Performance validated across experiments, materials, equipment and sensor or condition variability (15%)", validation + "%"],
+        ["Data integrity, provenance and audit trails preserved for experimental and safety records (15%)", dataIntegrity + "%"],
+        ["Deviations and protocol nonconformance detected and investigated (15%)", deviationInvestigation + "%"],
+        ["Changes controlled with safe fallback, manual procedures and required notifications to protect people and compliance (15%)", changeFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain qualified human oversight and authority for safety-critical and protocol decisions, detect hazards and unsafe conditions with timely alarms and escalation, validate performance across experiments, materials, equipment and sensor or condition variability, preserve data integrity, provenance and audit trails for experimental and safety records, detect and investigate deviations and protocol nonconformance, and control changes with safe fallback, manual procedures and required notifications to protect people and compliance."
+          : "Readiness is trending well — run a hazard or protocol-deviation scenario to confirm alarms, escalation and manual procedures work, trace a recent AI-influenced safety or experimental decision from inputs to outcome, and verify data integrity, change control and required notification paths are complete.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
