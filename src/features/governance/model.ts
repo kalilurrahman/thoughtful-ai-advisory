@@ -4301,6 +4301,41 @@ export function calculate(
           : "Readiness is trending well — sample stays for identification and care-instruction accuracy, confirm welfare observation and incident handling, and test transparent owner communication, privacy safeguards, traceability and human review/escalation for incidents or uncertain cases.",
     };
   }
+  if (id === "vehicle-valet-parking-attendant") {
+    const identificationCondition = v["identification-condition"] ?? 0,
+      custodyDamageAccountability = v["custody-damage-accountability"] ?? 0,
+      transparencyAuthorization = v["transparency-authorization"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        identificationCondition * 0.2 +
+          custodyDamageAccountability * 0.2 +
+          transparencyAuthorization * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in vehicle valet & parking attendant services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Vehicle identification and condition capture accurate at handoff and retrieval (20%)", identificationCondition + "%"],
+        ["Key/custody handling and damage or incident detection, handling and accountability supported (20%)", custodyDamageAccountability + "%"],
+        ["Pricing, fees and service terms communicated transparently with access and authorization checks (15%)", transparencyAuthorization + "%"],
+        ["Privacy and minimisation applied to vehicle, customer and location data or images (15%)", privacyMinimisation + "%"],
+        ["Handoff, custody and condition records and model or system versions logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human review and fallback available for exceptions, disputes or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: capture vehicle identification and condition accurately at handoff and retrieval, support key/custody handling and damage or incident detection, handling and accountability, communicate pricing, fees and service terms transparently with access and authorization checks, apply privacy and minimisation to vehicle, customer and location data or images, log handoff, custody and condition records and model or system versions for traceability and dispute review, and provide human review and fallback for exceptions, disputes or uncertain cases."
+          : "Readiness is trending well — sample handoffs for identification and condition accuracy, confirm custody/key handling and accountable damage or incident processes, and test transparent terms with authorization checks, privacy safeguards, traceability and human review/fallback for disputes or exceptions.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
