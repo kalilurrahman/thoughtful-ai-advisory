@@ -4756,6 +4756,41 @@ export function calculate(
           : "Readiness is trending well — sample slips, berths and storage for identification, availability and vessel-matching accuracy, confirm transparent pricing/seasonal terms/usage rules and accountable safety or incident handling, and test privacy safeguards, traceability and human support/fallback for access failures or disputes.",
     };
   }
+  if (id === "farmers-market-stall-vendor-booking") {
+    const identificationAvailability = v["identification-availability"] ?? 0,
+      pricingTerms = v["pricing-terms"] ?? 0,
+      safetyInspectionHandling = v["safety-inspection-handling"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        identificationAvailability * 0.2 +
+          pricingTerms * 0.2 +
+          safetyInspectionHandling * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in farmers' market, stall & vendor booking",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Stall identification, availability and vendor matching accurate (20%)", identificationAvailability + "%"],
+        ["Pricing, stall rules and booking terms communicated transparently (20%)", pricingTerms + "%"],
+        ["Safety, inspection or incident detection, reporting and handling and accountability supported (15%)", safetyInspectionHandling + "%"],
+        ["Privacy and minimisation applied to vendor, booth and transaction data (15%)", privacyMinimisation + "%"],
+        ["Booking, stall and incident records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human review and fallback available for booking failures, safety concerns, disputes or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure stall identification, availability and vendor matching are accurate, communicate pricing, stall rules and booking terms transparently, support safety, inspection or incident detection, reporting and handling and accountability, apply privacy and minimisation to vendor, booth and transaction data, log booking, stall and incident records for traceability and dispute review, and provide human review and fallback for booking failures, safety concerns, disputes or uncertain cases."
+          : "Readiness is trending well — sample stalls and vendor bookings for identification, availability and match accuracy, confirm transparent pricing/stall rules/booking terms and accountable safety or inspection handling, and test privacy safeguards, traceability and human review/fallback for booking failures or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
