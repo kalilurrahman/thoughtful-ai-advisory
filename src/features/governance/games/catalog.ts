@@ -1271,4 +1271,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in self-storage and property access facilities: maintaining accurate verification and access safeguards, ensuring fair and transparent access decisions, applying privacy and minimisation to monitoring data, providing human review for consequential actions, and keeping traceable records with tested fallback and support pathways.",
     anchor: "self-storage-property-access-assurance",
   },
+  {
+    id: "laundry-garment-care-assurance",
+    title: "AI in laundry, dry-cleaning & garment care services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in laundry, dry-cleaning and garment care services: capturing accurate item identification and special-care instructions, supporting damage/loss handling and accountability, communicating pricing and terms transparently, applying privacy and minimisation with traceable records, and providing human review and fallback for exceptions or disputes.",
+    anchor: "laundry-garment-care-assurance",
+  },
 ] as const;

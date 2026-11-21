@@ -434,6 +434,10 @@ import {
   SELF_STORAGE_PROPERTY_ACCESS_ROUNDS,
   selfStoragePropertyAccessScore,
 } from "./self-storage-property-access-game";
+import {
+  LAUNDRY_GARMENT_CARE_ROUNDS,
+  laundryGarmentCareScore,
+} from "./laundry-garment-care-game";
 
 const statusText = {
   complete: "Complete",
@@ -704,6 +708,9 @@ export function ChecklistScreen() {
   const [selfStoragePropertyAccessAnswers, setSelfStoragePropertyAccessAnswers] = useState<
     Record<string, number>
   >({});
+  const [laundryGarmentCareAnswers, setLaundryGarmentCareAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -898,6 +905,9 @@ export function ChecklistScreen() {
   );
   const selfStoragePropertyAccessGame = selfStoragePropertyAccessScore(
     selfStoragePropertyAccessAnswers,
+  );
+  const laundryGarmentCareGame = laundryGarmentCareScore(
+    laundryGarmentCareAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10475,6 +10485,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good access-facility safeguard."
                           : "Review the access-facility gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="laundry-garment-care-assurance"
+        className="checklist-phase"
+        aria-label="AI in laundry, dry-cleaning and garment care services game"
+      >
+        <h2>AI in laundry, dry-cleaning &amp; garment care services</h2>
+        <p>
+          Practice governing AI in laundry, dry-cleaning and garment care services: capturing
+          accurate item identification and special-care instructions, supporting damage/loss
+          handling and accountability, communicating pricing and service terms transparently,
+          applying privacy and minimisation with traceable records, and providing human review and
+          fallback for exceptions, disputes or uncertain cases. Scenarios are learning prompts, not
+          consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {laundryGarmentCareGame.correct}/{laundryGarmentCareGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {laundryGarmentCareGame.complete && (
+            <Button variant="outline" onClick={() => setLaundryGarmentCareAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {LAUNDRY_GARMENT_CARE_ROUNDS.map((round) => {
+            const selected = laundryGarmentCareAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setLaundryGarmentCareAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good garment-care safeguard."
+                          : "Review the garment-care gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
