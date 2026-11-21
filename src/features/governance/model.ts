@@ -3951,6 +3951,41 @@ export function calculate(
           : "Readiness is trending well — run venue/condition edge-case checks, sample decisions for fairness and explainability to officials, trace a recent AI-assisted call from evidence and inputs to outcome, and test fallback and continuity procedures for contested or unavailable assistance.",
     };
   }
+  if (id === "veterinary-animal-welfare") {
+    const validation = v["validation"] ?? 0,
+      oversight = v["oversight"] ?? 0,
+      welfareRisk = v["welfare-risk"] ?? 0,
+      dataQuality = v["data-quality"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      escalationFallback = v["escalation-fallback"] ?? 0,
+      score = Math.round(
+        validation * 0.2 +
+          oversight * 0.2 +
+          welfareRisk * 0.15 +
+          dataQuality * 0.15 +
+          traceability * 0.15 +
+          escalationFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in veterinary & animal welfare decisions",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Diagnostic and care-support recommendations validated for clinical context, species and breeds (20%)", validation + "%"],
+        ["Veterinary and professional oversight maintained for consequential clinical and welfare decisions (20%)", oversight + "%"],
+        ["Welfare impacts and risks assessed and monitored (15%)", welfareRisk + "%"],
+        ["Data quality, provenance and limitations of inputs understood and documented (15%)", dataQuality + "%"],
+        ["Decisions, outputs and model or system versions logged for traceability and review (15%)", traceability + "%"],
+        ["Escalation and safe fallback procedures when AI is uncertain, unavailable or contraindicated (15%)", escalationFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: validate diagnostic and care-support recommendations for clinical context, species and breeds, maintain veterinary and professional oversight for consequential clinical and welfare decisions, assess and monitor welfare impacts and risks, understand and document data quality, provenance and limitations of inputs, log decisions, outputs and model or system versions for traceability and review, and establish escalation and safe fallback procedures when AI is uncertain, unavailable or contraindicated."
+          : "Readiness is trending well — sample AI-supported recommendations for clinical validity across species/breeds, confirm professional oversight and welfare-risk checks on consequential decisions, and test traceability and escalation/fallback when the system is uncertain or unavailable.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
