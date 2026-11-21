@@ -4686,6 +4686,41 @@ export function calculate(
           : "Readiness is trending well — sample sites and reservations for identification, availability and match accuracy, confirm transparent pricing/rules/terms and accountable safety, weather or incident handling, and test privacy safeguards, traceability and human support/fallback for booking failures or disputes.",
     };
   }
+  if (id === "co-living-dormitory-shared-living-access") {
+    const identificationAuthorization = v["identification-authorization"] ?? 0,
+      rulesFeesTerms = v["rules-fees-terms"] ?? 0,
+      issueHandling = v["issue-handling"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        identificationAuthorization * 0.2 +
+          rulesFeesTerms * 0.2 +
+          issueHandling * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in co-living, dormitory & shared-living amenity access",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Resident or guest identification, room or amenity assignment and access authorization accurate (20%)", identificationAuthorization + "%"],
+        ["House rules, fees and amenity terms communicated transparently (20%)", rulesFeesTerms + "%"],
+        ["Incident, maintenance or noise issue detection, reporting and handling and accountability supported (15%)", issueHandling + "%"],
+        ["Privacy and minimisation applied to resident, guest and access or occupancy data (15%)", privacyMinimisation + "%"],
+        ["Access, amenity and incident records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human review and fallback available for access issues, disputes or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure resident or guest identification, room or amenity assignment and access authorization are accurate, communicate house rules, fees and amenity terms transparently, support incident, maintenance or noise issue detection, reporting and handling and accountability, apply privacy and minimisation to resident, guest and access or occupancy data, log access, amenity and incident records for traceability and dispute review, and provide human review and fallback for access issues, disputes or uncertain cases."
+          : "Readiness is trending well — sample residents, guests and amenity bookings for identification and assignment accuracy, confirm transparent house rules/fees/terms and accountable incident handling, and test privacy safeguards, traceability and human review/fallback for access issues or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
