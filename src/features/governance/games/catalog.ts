@@ -1215,4 +1215,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in public libraries and knowledge access: monitoring search and recommendation quality and bias with curatorial review, supporting access, equity and age-appropriate safeguards, respecting rights and sensitive content, disclosing AI assistance transparently, and maintaining human oversight with privacy and traceability.",
     anchor: "public-libraries-knowledge-access-assurance",
   },
+  {
+    id: "sports-officiating-competition-integrity-assurance",
+    title: "AI in sports officiating & competition integrity game",
+    category: "Governance & oversight",
+    description:
+      "Practice governing AI in sports officiating and competition integrity: maintaining human authority, review and appeals, validating performance across venues and conditions, monitoring fairness and bias, providing transparency with traceable evidence for review and integrity investigations, and controlling changes with fallback continuity when assistance is unavailable or contested.",
+    anchor: "sports-officiating-competition-integrity-assurance",
+  },
 ] as const;

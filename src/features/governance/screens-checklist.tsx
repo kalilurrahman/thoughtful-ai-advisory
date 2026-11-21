@@ -406,6 +406,10 @@ import {
   PUBLIC_LIBRARIES_KNOWLEDGE_ACCESS_ROUNDS,
   publicLibrariesKnowledgeAccessScore,
 } from "./public-libraries-knowledge-access-game";
+import {
+  SPORTS_OFFICIATING_COMPETITION_INTEGRITY_ROUNDS,
+  sportsOfficiatingCompetitionIntegrityScore,
+} from "./sports-officiating-competition-integrity-game";
 
 const statusText = {
   complete: "Complete",
@@ -655,6 +659,9 @@ export function ChecklistScreen() {
   const [publicLibrariesKnowledgeAccessAnswers, setPublicLibrariesKnowledgeAccessAnswers] = useState<
     Record<string, number>
   >({});
+  const [sportsOfficiatingCompetitionIntegrityAnswers, setSportsOfficiatingCompetitionIntegrityAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -828,6 +835,9 @@ export function ChecklistScreen() {
   );
   const publicLibrariesKnowledgeAccessGame = publicLibrariesKnowledgeAccessScore(
     publicLibrariesKnowledgeAccessAnswers,
+  );
+  const sportsOfficiatingCompetitionIntegrityGame = sportsOfficiatingCompetitionIntegrityScore(
+    sportsOfficiatingCompetitionIntegrityAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -9942,6 +9952,75 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good knowledge-access safeguard."
                           : "Review the knowledge-access gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="sports-officiating-competition-integrity-assurance"
+        className="checklist-phase"
+        aria-label="AI in sports officiating and competition integrity game"
+      >
+        <h2>AI in sports officiating &amp; competition integrity</h2>
+        <p>
+          Practice governing AI in sports officiating and competition integrity: maintaining human
+          authority, review and appeals, validating performance across venues and conditions,
+          monitoring fairness and bias, providing transparency with traceable evidence for review and
+          integrity investigations, and controlling changes with fallback continuity when assistance
+          is unavailable or contested. Scenarios are learning prompts, not officiating, integrity,
+          legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {sportsOfficiatingCompetitionIntegrityGame.correct}/
+            {sportsOfficiatingCompetitionIntegrityGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {sportsOfficiatingCompetitionIntegrityGame.complete && (
+            <Button
+              variant="outline"
+              onClick={() => setSportsOfficiatingCompetitionIntegrityAnswers({})}
+            >
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SPORTS_OFFICIATING_COMPETITION_INTEGRITY_ROUNDS.map((round) => {
+            const selected = sportsOfficiatingCompetitionIntegrityAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setSportsOfficiatingCompetitionIntegrityAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good officiating-integrity safeguard."
+                          : "Review the officiating-integrity gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
