@@ -1127,4 +1127,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in border, immigration and mobility screening: requiring qualified human review for high-impact decisions, testing outcomes for fairness and disproportionate impact, validating accuracy and false matches, providing explanation, contestability and recourse where appropriate while protecting sensitive data, and maintaining audit trails with manual fallback.",
     anchor: "border-immigration-screening-assurance",
   },
+  {
+    id: "railway-signalling-operations-assurance",
+    title: "AI in railway operations & signalling support game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in railway operations and signalling support: keeping human authority and clear advisory-versus-control boundaries, validating performance in degraded conditions and signal faults, logging recommendations and model versions for traceability, controlling changes against approved or certified baselines, and rehearsing manual procedures, coordination and notifications when AI fails.",
+    anchor: "railway-signalling-operations-assurance",
+  },
 ] as const;
