@@ -4371,6 +4371,41 @@ export function calculate(
           : "Readiness is trending well — sample rentals for identification, condition and availability accuracy, confirm damage/loss handling and transparent pricing/deposits/terms, and test traceability, privacy safeguards and human review/fallback for disputes or exceptions.",
     };
   }
+  if (id === "self-service-laundromat-smart-locker") {
+    const accessMatching = v["access-matching"] ?? 0,
+      issueAccountability = v["issue-accountability"] ?? 0,
+      transparencyTerms = v["transparency-terms"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      supportFallback = v["support-fallback"] ?? 0,
+      score = Math.round(
+        accessMatching * 0.2 +
+          issueAccountability * 0.2 +
+          transparencyTerms * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          supportFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in self-service laundromat & smart locker laundry services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Machine or locker access and order or user matching accurate (20%)", accessMatching + "%"],
+        ["Issue, damage or malfunction detection, reporting and accountability supported (20%)", issueAccountability + "%"],
+        ["Payment, pricing and usage terms communicated transparently (15%)", transparencyTerms + "%"],
+        ["Privacy and minimisation applied to customer and usage data (15%)", privacyMinimisation + "%"],
+        ["Access, transaction and usage records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human support and fallback available for access failures, disputes or uncertain cases (15%)", supportFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure machine or locker access and order or user matching are accurate, support issue, damage or malfunction detection, reporting and accountability, communicate payment, pricing and usage terms transparently, apply privacy and minimisation to customer and usage data, log access, transaction and usage records for traceability and dispute review, and provide human support and fallback for access failures, disputes or uncertain cases."
+          : "Readiness is trending well — sample sessions for access and matching accuracy, confirm transparent payment/pricing/terms and accountable issue or malfunction handling, and test privacy safeguards, traceability and human support/fallback for access failures or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
