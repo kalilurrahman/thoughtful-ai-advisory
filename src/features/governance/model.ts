@@ -4231,6 +4231,41 @@ export function calculate(
           : "Readiness is trending well — sample services for identification and pre-existing condition accuracy, confirm damage/incident handling and transparent pricing/terms, and test consent/privacy safeguards, traceability and human review/fallback for disputes or exceptions.",
     };
   }
+  if (id === "moving-relocation-household-goods") {
+    const inventoryCondition = v["inventory-condition"] ?? 0,
+      damageAccountability = v["damage-accountability"] ?? 0,
+      transparencyTerms = v["transparency-terms"] ?? 0,
+      custodyTraceability = v["custody-traceability"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        inventoryCondition * 0.2 +
+          damageAccountability * 0.2 +
+          transparencyTerms * 0.15 +
+          custodyTraceability * 0.15 +
+          privacyMinimisation * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in moving, relocation & household goods storage",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Inventory and condition capture accurate for items and belongings (20%)", inventoryCondition + "%"],
+        ["Handling, damage or loss detection and accountability supported (20%)", damageAccountability + "%"],
+        ["Quotes, pricing and service terms communicated transparently (15%)", transparencyTerms + "%"],
+        ["Scheduling and chain-of-custody records traceable across handling and storage (15%)", custodyTraceability + "%"],
+        ["Privacy and minimisation applied to customer and property data or images (15%)", privacyMinimisation + "%"],
+        ["Human review and fallback available for exceptions, disputes or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: capture inventory and condition accurately for items and belongings, support handling, damage or loss detection and accountability, communicate quotes, pricing and service terms transparently, maintain traceable scheduling and chain-of-custody records across handling and storage, apply privacy and minimisation to customer and property data or images, and provide human review and fallback for exceptions, disputes or uncertain cases."
+          : "Readiness is trending well — sample moves for inventory and condition accuracy, confirm transparent quotes/terms and accountable damage or loss handling, and test chain-of-custody traceability, privacy safeguards and human review/fallback for disputes or exceptions.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
