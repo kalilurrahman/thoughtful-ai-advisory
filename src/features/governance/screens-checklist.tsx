@@ -426,6 +426,10 @@ import {
   PARKING_CURB_MANAGEMENT_ROUNDS,
   parkingCurbManagementScore,
 } from "./parking-curb-management-game";
+import {
+  LARGE_EVENT_CROWD_SAFETY_ROUNDS,
+  largeEventCrowdSafetyScore,
+} from "./large-event-crowd-safety-game";
 
 const statusText = {
   complete: "Complete",
@@ -690,6 +694,9 @@ export function ChecklistScreen() {
   const [parkingCurbManagementAnswers, setParkingCurbManagementAnswers] = useState<
     Record<string, number>
   >({});
+  const [largeEventCrowdSafetyAnswers, setLargeEventCrowdSafetyAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -878,6 +885,9 @@ export function ChecklistScreen() {
   );
   const parkingCurbManagementGame = parkingCurbManagementScore(
     parkingCurbManagementAnswers,
+  );
+  const largeEventCrowdSafetyGame = largeEventCrowdSafetyScore(
+    largeEventCrowdSafetyAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10325,6 +10335,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good parking-management safeguard."
                           : "Review the parking-management gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="large-event-crowd-safety-assurance"
+        className="checklist-phase"
+        aria-label="AI in stadiums, festivals and large-event crowd safety game"
+      >
+        <h2>AI in stadiums, festivals &amp; large-event crowd safety</h2>
+        <p>
+          Practice governing AI in stadiums, festivals and large-event crowd safety: validating
+          crowd-density and risk alerts for venues and conditions, ensuring proportional and
+          non-discriminatory use, maintaining clear human command and escalation, protecting
+          attendees with privacy and communications safeguards, and keeping traceable records with
+          tested fallback and continuity procedures. Scenarios are learning prompts, not safety,
+          security, operational or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {largeEventCrowdSafetyGame.correct}/{largeEventCrowdSafetyGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {largeEventCrowdSafetyGame.complete && (
+            <Button variant="outline" onClick={() => setLargeEventCrowdSafetyAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {LARGE_EVENT_CROWD_SAFETY_ROUNDS.map((round) => {
+            const selected = largeEventCrowdSafetyAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setLargeEventCrowdSafetyAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good crowd-safety safeguard."
+                          : "Review the crowd-safety gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

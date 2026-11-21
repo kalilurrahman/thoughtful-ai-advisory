@@ -1255,4 +1255,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in parking and curb/kerb management: validating detection accuracy and evidence, ensuring actions reflect current signage and conditions, monitoring fairness and accessible appeals, applying privacy and minimisation, and maintaining traceability with manual fallback when AI is uncertain or unavailable.",
     anchor: "parking-curb-management-assurance",
   },
+  {
+    id: "large-event-crowd-safety-assurance",
+    title: "AI in stadiums, festivals & large-event crowd safety game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in stadiums, festivals and large-event crowd safety: validating crowd-risk alerts for venues and conditions, ensuring proportional and non-discriminatory use, maintaining clear human command and escalation, protecting attendees with privacy and communications safeguards, and keeping traceable records with tested fallback continuity.",
+    anchor: "large-event-crowd-safety-assurance",
+  },
 ] as const;
