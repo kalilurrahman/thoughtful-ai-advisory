@@ -1239,4 +1239,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in cemeteries, funerary and bereavement services: handling personal, bereavement and memorial information sensitively and with consent, ensuring accuracy and dignified presentation with human review, protecting access to sensitive locations and records, maintaining human oversight and transparency, and providing traceable fallback and support pathways.",
     anchor: "cemeteries-funerary-bereavement-services-assurance",
   },
+  {
+    id: "ticketing-venue-access-assurance",
+    title: "AI in ticketing, box office & venue access control game",
+    category: "Governance & oversight",
+    description:
+      "Practice governing AI in ticketing, box office and venue access control: keeping pricing and anti-fraud decisions fair, supporting accessible and equitable access, handling verification data with minimisation and safeguards, communicating decisions transparently with review and appeals, and maintaining traceable records with tested fallback for access failures.",
+    anchor: "ticketing-venue-access-assurance",
+  },
 ] as const;
