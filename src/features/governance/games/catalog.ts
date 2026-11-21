@@ -1327,4 +1327,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in self-service laundromat and smart locker laundry services: ensuring accurate access and order/user matching, supporting issue/malfunction handling and accountability, communicating payment and usage terms transparently, applying privacy safeguards with traceable records, and providing human support and fallback for access failures or disputes.",
     anchor: "self-service-laundromat-smart-locker-assurance",
   },
+  {
+    id: "bicycle-micromobility-rental-share-assurance",
+    title: "AI in bicycle & micromobility rental/share services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in bicycle and micromobility rental/share services: capturing accurate vehicle identification, availability and condition, supporting incident handling and accountability, communicating pricing and usage terms transparently, applying privacy safeguards with traceable trip records, and providing human review and fallback for disputes or safety exceptions.",
+    anchor: "bicycle-micromobility-rental-share-assurance",
+  },
 ] as const;
