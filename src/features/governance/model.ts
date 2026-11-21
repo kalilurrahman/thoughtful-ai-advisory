@@ -3531,6 +3531,41 @@ export function calculate(
           : "Readiness is trending well — sample recent screening outcomes for fairness and false-match rates, confirm affected individuals can access explanation and recourse where appropriate, and verify decisions and model versions are traceable with a workable manual fallback.",
     };
   }
+  if (id === "railway-signalling-operations") {
+    const oversight = v["oversight"] ?? 0,
+      validation = v["validation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      changeControl = v["change-control"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      coordination = v["coordination"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          validation * 0.2 +
+          traceability * 0.15 +
+          changeControl * 0.15 +
+          fallback * 0.15 +
+          coordination * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in railway operations & signalling support",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Human authority and override maintained for safety-critical decisions (20%)", oversight + "%"],
+        ["Performance validated in degraded conditions, edge cases and novel scenarios (20%)", validation + "%"],
+        ["Decisions, recommendations, inputs and model versions logged for traceability and investigation (15%)", traceability + "%"],
+        ["Changes controlled and separated from approved or certified operational and signalling baselines (15%)", changeControl + "%"],
+        ["Degraded modes and manual procedures can sustain safe operations if AI fails (15%)", fallback + "%"],
+        ["Coordination and required notifications supported when AI affects operations or incidents (15%)", coordination + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain human authority and override for safety-critical decisions with clear advisory-versus-control boundaries, validate performance in degraded conditions, edge cases and novel scenarios including sensor or signal faults, log decisions, recommendations, inputs and model versions for traceability and investigation, control changes and separate them from approved or certified operational and signalling baselines, ensure degraded modes and manual procedures can sustain safe operations if AI fails, and support coordination and required notifications when AI affects operations or incidents."
+          : "Readiness is trending well — run a degraded-signal or sensor-fault scenario to confirm human override and manual procedures hold, trace a recent AI-influenced recommendation from inputs to outcome, and verify changes remain separated from approved or certified operational and signalling baselines.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
