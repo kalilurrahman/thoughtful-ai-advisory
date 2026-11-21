@@ -1247,4 +1247,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in ticketing, box office and venue access control: keeping pricing and anti-fraud decisions fair, supporting accessible and equitable access, handling verification data with minimisation and safeguards, communicating decisions transparently with review and appeals, and maintaining traceable records with tested fallback for access failures.",
     anchor: "ticketing-venue-access-assurance",
   },
+  {
+    id: "parking-curb-management-assurance",
+    title: "AI in parking & curb/kerb management game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in parking and curb/kerb management: validating detection accuracy and evidence, ensuring actions reflect current signage and conditions, monitoring fairness and accessible appeals, applying privacy and minimisation, and maintaining traceability with manual fallback when AI is uncertain or unavailable.",
+    anchor: "parking-curb-management-assurance",
+  },
 ] as const;

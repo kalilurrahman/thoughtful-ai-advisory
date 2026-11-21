@@ -422,6 +422,10 @@ import {
   TICKETING_VENUE_ACCESS_ROUNDS,
   ticketingVenueAccessScore,
 } from "./ticketing-venue-access-game";
+import {
+  PARKING_CURB_MANAGEMENT_ROUNDS,
+  parkingCurbManagementScore,
+} from "./parking-curb-management-game";
 
 const statusText = {
   complete: "Complete",
@@ -683,6 +687,9 @@ export function ChecklistScreen() {
   const [ticketingVenueAccessAnswers, setTicketingVenueAccessAnswers] = useState<
     Record<string, number>
   >({});
+  const [parkingCurbManagementAnswers, setParkingCurbManagementAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -868,6 +875,9 @@ export function ChecklistScreen() {
   );
   const ticketingVenueAccessGame = ticketingVenueAccessScore(
     ticketingVenueAccessAnswers,
+  );
+  const parkingCurbManagementGame = parkingCurbManagementScore(
+    parkingCurbManagementAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10251,6 +10261,70 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good ticketing-access safeguard."
                           : "Review the ticketing-access gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="parking-curb-management-assurance"
+        className="checklist-phase"
+        aria-label="AI in parking and curb/kerb management game"
+      >
+        <h2>AI in parking &amp; curb/kerb management</h2>
+        <p>
+          Practice governing AI in parking and curb/kerb management: validating detection accuracy
+          and evidence, ensuring actions reflect current signage and conditions, monitoring fairness
+          and accessible appeals, applying privacy and minimisation, and maintaining traceability
+          with manual fallback when AI is uncertain or unavailable. Scenarios are learning prompts,
+          not legal, enforcement or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {parkingCurbManagementGame.correct}/{parkingCurbManagementGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {parkingCurbManagementGame.complete && (
+            <Button variant="outline" onClick={() => setParkingCurbManagementAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PARKING_CURB_MANAGEMENT_ROUNDS.map((round) => {
+            const selected = parkingCurbManagementAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setParkingCurbManagementAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good parking-management safeguard."
+                          : "Review the parking-management gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
