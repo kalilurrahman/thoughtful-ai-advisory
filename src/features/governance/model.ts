@@ -4721,6 +4721,41 @@ export function calculate(
           : "Readiness is trending well — sample residents, guests and amenity bookings for identification and assignment accuracy, confirm transparent house rules/fees/terms and accountable incident handling, and test privacy safeguards, traceability and human review/fallback for access issues or disputes.",
     };
   }
+  if (id === "marina-boat-slip-dry-storage") {
+    const identificationAvailability = v["identification-availability"] ?? 0,
+      pricingTerms = v["pricing-terms"] ?? 0,
+      safetyIncidentHandling = v["safety-incident-handling"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      supportFallback = v["support-fallback"] ?? 0,
+      score = Math.round(
+        identificationAvailability * 0.2 +
+          pricingTerms * 0.2 +
+          safetyIncidentHandling * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          supportFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in marina, boat slip & dry-storage services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Slip, berth or storage identification, availability and vessel matching accurate (20%)", identificationAvailability + "%"],
+        ["Pricing, seasonal terms and usage rules communicated transparently (20%)", pricingTerms + "%"],
+        ["Safety, maintenance or incident detection, reporting and handling and accountability supported (15%)", safetyIncidentHandling + "%"],
+        ["Privacy and minimisation applied to member, vessel and location or usage data (15%)", privacyMinimisation + "%"],
+        ["Access, booking and incident records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human support and fallback available for access failures, safety concerns, disputes or uncertain cases (15%)", supportFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure slip, berth or storage identification, availability and vessel matching are accurate, communicate pricing, seasonal terms and usage rules transparently, support safety, maintenance or incident detection, reporting and handling and accountability, apply privacy and minimisation to member, vessel and location or usage data, log access, booking and incident records for traceability and dispute review, and provide human support and fallback for access failures, safety concerns, disputes or uncertain cases."
+          : "Readiness is trending well — sample slips, berths and storage for identification, availability and vessel-matching accuracy, confirm transparent pricing/seasonal terms/usage rules and accountable safety or incident handling, and test privacy safeguards, traceability and human support/fallback for access failures or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
