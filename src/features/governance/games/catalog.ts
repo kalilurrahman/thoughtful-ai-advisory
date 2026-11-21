@@ -1191,4 +1191,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in laboratories and research safety/compliance: maintaining qualified oversight for safety-critical and protocol decisions, detecting hazards with timely alarms and escalation, validating performance across lab variability, preserving data integrity and investigating deviations, and controlling changes with safe manual fallback and required notifications.",
     anchor: "laboratory-research-safety-assurance",
   },
+  {
+    id: "forestry-wildfire-land-management-assurance",
+    title: "AI in forestry, wildfire & land-management game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in forestry, wildfire detection/prediction and land-management: validating performance across terrain, weather and sensor limits, keeping human authority for response actions, managing false alarms and missed detections, communicating uncertainty transparently, and maintaining traceability with coordination and manual fallback.",
+    anchor: "forestry-wildfire-land-management-assurance",
+  },
 ] as const;
