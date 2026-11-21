@@ -3741,6 +3741,41 @@ export function calculate(
           : "Readiness is trending well — sample AI-generated descriptions and transcriptions against originals for accuracy, bias and provenance, confirm sensitive or restricted materials have appropriate access controls and disclosures, and verify outputs and changes remain traceable to sources and review decisions.",
     };
   }
+  if (id === "public-transport-operations") {
+    const oversight = v["oversight"] ?? 0,
+      validation = v["validation"] ?? 0,
+      informationQuality = v["information-quality"] ?? 0,
+      dataProtection = v["data-protection"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          validation * 0.15 +
+          informationQuality * 0.2 +
+          dataProtection * 0.15 +
+          traceability * 0.15 +
+          fallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in public transport operations & passenger information",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Human oversight maintained for service changes and safety-relevant communications (20%)", oversight + "%"],
+        ["Predictions and performance validated across routes, times, demand and disruption conditions (15%)", validation + "%"],
+        ["Passenger information accurate, timely, accessible and equitable including for disruptions and diverse needs (20%)", informationQuality + "%"],
+        ["Personal and location data minimised and protected (15%)", dataProtection + "%"],
+        ["Outputs, decisions, inputs and model versions logged for traceability and review (15%)", traceability + "%"],
+        ["Fallback manual communications and operations support maintained when AI is degraded or unavailable (15%)", fallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain human oversight for service changes and safety-relevant communications, validate predictions and performance across routes, times, demand and disruption conditions, ensure passenger information is accurate, timely, accessible and equitable including for disruptions and diverse needs, minimise and protect personal and location data, log outputs, decisions, inputs and model versions for traceability and review, and maintain fallback manual communications and operations support when AI is degraded or unavailable."
+          : "Readiness is trending well — test passenger information during a simulated disruption for accuracy, timeliness and accessibility across channels, sample outputs against actual service conditions, and verify fallback manual communications and traceability work when AI support is degraded.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
