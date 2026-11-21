@@ -1183,4 +1183,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in public transport operations and passenger information: maintaining human oversight for service changes and safety-relevant communications, validating predictions across conditions, providing accurate, accessible and equitable information, protecting personal and location data, and keeping traceable outputs with manual fallback communications and support.",
     anchor: "public-transport-operations-assurance",
   },
+  {
+    id: "laboratory-research-safety-assurance",
+    title: "AI in laboratories & research safety/compliance game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in laboratories and research safety/compliance: maintaining qualified oversight for safety-critical and protocol decisions, detecting hazards with timely alarms and escalation, validating performance across lab variability, preserving data integrity and investigating deviations, and controlling changes with safe manual fallback and required notifications.",
+    anchor: "laboratory-research-safety-assurance",
+  },
 ] as const;

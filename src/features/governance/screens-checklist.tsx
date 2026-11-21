@@ -390,6 +390,10 @@ import {
   PUBLIC_TRANSPORT_OPERATIONS_ROUNDS,
   publicTransportOperationsScore,
 } from "./public-transport-operations-game";
+import {
+  LABORATORY_RESEARCH_SAFETY_ROUNDS,
+  laboratoryResearchSafetyScore,
+} from "./laboratory-research-safety-game";
 
 const statusText = {
   complete: "Complete",
@@ -627,6 +631,9 @@ export function ChecklistScreen() {
   const [publicTransportOperationsAnswers, setPublicTransportOperationsAnswers] = useState<
     Record<string, number>
   >({});
+  const [laboratoryResearchSafetyAnswers, setLaboratoryResearchSafetyAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -788,6 +795,9 @@ export function ChecklistScreen() {
   );
   const publicTransportOperationsGame = publicTransportOperationsScore(
     publicTransportOperationsAnswers,
+  );
+  const laboratoryResearchSafetyGame = laboratoryResearchSafetyScore(
+    laboratoryResearchSafetyAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -9642,6 +9652,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good service safeguard."
                           : "Review the service gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="laboratory-research-safety-assurance"
+        className="checklist-phase"
+        aria-label="AI in laboratories and research safety/compliance game"
+      >
+        <h2>AI in laboratories &amp; research safety/compliance</h2>
+        <p>
+          Practice governing AI in laboratories and research safety/compliance: maintaining
+          qualified oversight for safety-critical and protocol decisions, detecting hazards with
+          timely alarms and escalation, validating performance across lab variability, preserving
+          data integrity and investigating deviations, and controlling changes with safe manual
+          fallback and required notifications. Scenarios are learning prompts, not laboratory
+          safety, research, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {laboratoryResearchSafetyGame.correct}/{laboratoryResearchSafetyGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {laboratoryResearchSafetyGame.complete && (
+            <Button variant="outline" onClick={() => setLaboratoryResearchSafetyAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {LABORATORY_RESEARCH_SAFETY_ROUNDS.map((round) => {
+            const selected = laboratoryResearchSafetyAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setLaboratoryResearchSafetyAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good safety safeguard."
+                          : "Review the safety gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
