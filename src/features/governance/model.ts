@@ -4511,6 +4511,41 @@ export function calculate(
           : "Readiness is trending well — sample deliveries for identification and assignment accuracy, confirm authorized pickup and accountable handoff/custody, and test issue handling, privacy safeguards, traceability and human support/fallback for access failures or disputes.",
     };
   }
+  if (id === "self-service-storage-luggage-locker") {
+    const identificationAccess = v["identification-access"] ?? 0,
+      pricingTerms = v["pricing-terms"] ?? 0,
+      issueHandling = v["issue-handling"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      supportFallback = v["support-fallback"] ?? 0,
+      score = Math.round(
+        identificationAccess * 0.2 +
+          pricingTerms * 0.2 +
+          issueHandling * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          supportFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in self-service storage & luggage locker services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Locker assignment, access and user matching accurate (20%)", identificationAccess + "%"],
+        ["Pricing, time limits and usage terms communicated transparently (20%)", pricingTerms + "%"],
+        ["Damage, theft or issue detection, reporting and handling and accountability supported (15%)", issueHandling + "%"],
+        ["Privacy and minimisation applied to user and access or usage data (15%)", privacyMinimisation + "%"],
+        ["Access and transaction records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human support and fallback available for access failures, disputes or uncertain cases (15%)", supportFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure locker assignment, access and user matching are accurate, communicate pricing, time limits and usage terms transparently, support damage, theft or issue detection, reporting and handling and accountability, apply privacy and minimisation to user and access or usage data, log access and transaction records for traceability and dispute review, and provide human support and fallback for access failures, disputes or uncertain cases."
+          : "Readiness is trending well — sample locker assignments and access for matching accuracy, confirm transparent pricing/time limits/usage terms and accountable issue handling, and test privacy safeguards, traceability and human support/fallback for access failures or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
