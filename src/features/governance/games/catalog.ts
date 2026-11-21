@@ -1207,4 +1207,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in airport and port ground operations safety: maintaining human authority for safety-critical movements and clearances, validating performance in degraded visibility and congestion, ensuring timely proximity and hazard alerts, logging movements and model versions for traceability, and controlling changes with fail-safe manual procedures and cross-team coordination.",
     anchor: "airport-port-ground-operations-assurance",
   },
+  {
+    id: "public-libraries-knowledge-access-assurance",
+    title: "AI in public libraries & knowledge access game",
+    category: "Governance & oversight",
+    description:
+      "Practice governing AI in public libraries and knowledge access: monitoring search and recommendation quality and bias with curatorial review, supporting access, equity and age-appropriate safeguards, respecting rights and sensitive content, disclosing AI assistance transparently, and maintaining human oversight with privacy and traceability.",
+    anchor: "public-libraries-knowledge-access-assurance",
+  },
 ] as const;
