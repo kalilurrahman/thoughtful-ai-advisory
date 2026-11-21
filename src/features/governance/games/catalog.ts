@@ -1303,4 +1303,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in pet boarding, daycare and grooming services: capturing accurate pet identification and care instructions, supporting welfare observation and incident handling, communicating consent and terms transparently, applying privacy safeguards with traceable care records, and providing human review, escalation and fallback for incidents or welfare concerns.",
     anchor: "pet-boarding-daycare-grooming-assurance",
   },
+  {
+    id: "vehicle-valet-parking-attendant-assurance",
+    title: "AI in vehicle valet & parking attendant services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in vehicle valet and parking attendant services: capturing accurate vehicle identification and condition at handoff/retrieval, supporting custody/key handling and damage accountability, communicating pricing and terms with authorization checks, applying privacy safeguards with traceable records, and providing human review and fallback for exceptions or disputes.",
+    anchor: "vehicle-valet-parking-attendant-assurance",
+  },
 ] as const;

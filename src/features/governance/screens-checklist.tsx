@@ -450,6 +450,10 @@ import {
   PET_BOARDING_DAYCARE_GROOMING_ROUNDS,
   petBoardingDaycareGroomingScore,
 } from "./pet-boarding-daycare-grooming-game";
+import {
+  VEHICLE_VALET_PARKING_ATTENDANT_ROUNDS,
+  vehicleValetParkingAttendantScore,
+} from "./vehicle-valet-parking-attendant-game";
 
 const statusText = {
   complete: "Complete",
@@ -732,6 +736,9 @@ export function ChecklistScreen() {
   const [petBoardingDaycareGroomingAnswers, setPetBoardingDaycareGroomingAnswers] = useState<
     Record<string, number>
   >({});
+  const [vehicleValetParkingAttendantAnswers, setVehicleValetParkingAttendantAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -938,6 +945,9 @@ export function ChecklistScreen() {
   );
   const petBoardingDaycareGroomingGame = petBoardingDaycareGroomingScore(
     petBoardingDaycareGroomingAnswers,
+  );
+  const vehicleValetParkingAttendantGame = vehicleValetParkingAttendantScore(
+    vehicleValetParkingAttendantAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10778,6 +10788,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good pet-care safeguard."
                           : "Review the pet-care gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="vehicle-valet-parking-attendant-assurance"
+        className="checklist-phase"
+        aria-label="AI in vehicle valet and parking attendant services game"
+      >
+        <h2>AI in vehicle valet &amp; parking attendant services</h2>
+        <p>
+          Practice governing AI in vehicle valet and parking attendant services: capturing accurate
+          vehicle identification and condition at handoff and retrieval, supporting key/custody
+          handling and damage or incident accountability, communicating pricing, fees and service
+          terms transparently with access and authorization checks, applying privacy and
+          minimisation to vehicle, customer and location data or images with traceable records, and
+          providing human review and fallback for exceptions, disputes or uncertain cases. Scenarios
+          are learning prompts, not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {vehicleValetParkingAttendantGame.correct}/{vehicleValetParkingAttendantGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {vehicleValetParkingAttendantGame.complete && (
+            <Button variant="outline" onClick={() => setVehicleValetParkingAttendantAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {VEHICLE_VALET_PARKING_ATTENDANT_ROUNDS.map((round) => {
+            const selected = vehicleValetParkingAttendantAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setVehicleValetParkingAttendantAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good valet-service safeguard."
+                          : "Review the valet-service gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
