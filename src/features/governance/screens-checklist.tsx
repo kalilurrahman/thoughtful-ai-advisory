@@ -374,6 +374,10 @@ import {
   PHARMA_MANUFACTURING_QUALITY_ROUNDS,
   pharmaManufacturingQualityScore,
 } from "./pharma-manufacturing-quality-game";
+import {
+  CUSTOMS_CARGO_TRADE_SCREENING_ROUNDS,
+  customsCargoTradeScreeningScore,
+} from "./customs-cargo-trade-screening-game";
 
 const statusText = {
   complete: "Complete",
@@ -599,6 +603,9 @@ export function ChecklistScreen() {
   const [pharmaManufacturingQualityAnswers, setPharmaManufacturingQualityAnswers] = useState<
     Record<string, number>
   >({});
+  const [customsCargoTradeScreeningAnswers, setCustomsCargoTradeScreeningAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -748,6 +755,9 @@ export function ChecklistScreen() {
   const miningExtractiveSafetyGame = miningExtractiveSafetyScore(miningExtractiveSafetyAnswers);
   const pharmaManufacturingQualityGame = pharmaManufacturingQualityScore(
     pharmaManufacturingQualityAnswers,
+  );
+  const customsCargoTradeScreeningGame = customsCargoTradeScreeningScore(
+    customsCargoTradeScreeningAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -9340,6 +9350,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good quality safeguard."
                           : "Review the quality gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="customs-cargo-trade-screening-assurance"
+        className="checklist-phase"
+        aria-label="AI in customs cargo and trade screening game"
+      >
+        <h2>AI in customs cargo &amp; trade screening</h2>
+        <p>
+          Practice governing AI in customs cargo and trade screening: maintaining human authority
+          for holds, inspections and enforcement actions, validating risk targeting for fairness and
+          trade impacts, protecting trade and partner data, logging decisions and risk scores for
+          traceability and audit, and controlling changes with manual fallback and expedited review
+          to sustain legitimate facilitation. Scenarios are learning prompts, not customs, trade,
+          legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {customsCargoTradeScreeningGame.correct}/{customsCargoTradeScreeningGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {customsCargoTradeScreeningGame.complete && (
+            <Button variant="outline" onClick={() => setCustomsCargoTradeScreeningAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CUSTOMS_CARGO_TRADE_SCREENING_ROUNDS.map((round) => {
+            const selected = customsCargoTradeScreeningAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCustomsCargoTradeScreeningAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good screening safeguard."
+                          : "Review the screening gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
