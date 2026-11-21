@@ -3881,6 +3881,41 @@ export function calculate(
           : "Readiness is trending well — run a degraded-visibility or congestion scenario to confirm alerts, human oversight and manual procedures hold, trace a recent AI-influenced movement or alert from inputs to outcome, and verify cross-team coordination and required notification paths are clear.",
     };
   }
+  if (id === "public-libraries-knowledge-access") {
+    const qualityBias = v["quality-bias"] ?? 0,
+      accessEquity = v["access-equity"] ?? 0,
+      rightsSensitiveContent = v["rights-sensitive-content"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      oversight = v["oversight"] ?? 0,
+      privacyTraceability = v["privacy-traceability"] ?? 0,
+      score = Math.round(
+        qualityBias * 0.2 +
+          accessEquity * 0.2 +
+          rightsSensitiveContent * 0.15 +
+          transparency * 0.15 +
+          oversight * 0.15 +
+          privacyTraceability * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in public libraries & knowledge access",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Search, recommendation and knowledge-assistance quality and bias monitored with subject-matter and curatorial review (20%)", qualityBias + "%"],
+        ["Access, equity and age-appropriate safeguards support diverse users (20%)", accessEquity + "%"],
+        ["Rights, licensing and sensitive-content handling respected (15%)", rightsSensitiveContent + "%"],
+        ["AI assistance and limitations disclosed transparently (15%)", transparency + "%"],
+        ["Human and curatorial oversight maintained for consequential guidance and collections decisions (15%)", oversight + "%"],
+        ["Privacy, data protection and traceability of outputs and interactions maintained (15%)", privacyTraceability + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: monitor search, recommendation and knowledge-assistance quality and bias with subject-matter and curatorial review, support access, equity and age-appropriate safeguards for diverse users, respect rights, licensing and sensitive-content handling, disclose AI assistance and limitations transparently, maintain human and curatorial oversight for consequential guidance and collections decisions, and maintain privacy, data protection and traceability of outputs and interactions."
+          : "Readiness is trending well — sample AI-assisted search and recommendations for quality, bias and accessibility across user groups, confirm rights/sensitive-content handling and disclosures are clear, and verify privacy protections and traceability of outputs and interactions are in place.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
