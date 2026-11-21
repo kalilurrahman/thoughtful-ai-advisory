@@ -3671,6 +3671,41 @@ export function calculate(
           : "Readiness is trending well — sample recent screening outcomes for false positives and trade impacts across routes and commodities, trace a recent hold or release decision from inputs and risk score to outcome, and verify manual fallback and expedited review can sustain legitimate facilitation during an AI outage or uncertain result.",
     };
   }
+  if (id === "waste-recycling-operations") {
+    const oversight = v["oversight"] ?? 0,
+      validation = v["validation"] ?? 0,
+      hazardDetection = v["hazard-detection"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      changeFallback = v["change-fallback"] ?? 0,
+      coordination = v["coordination"] ?? 0,
+      score = Math.round(
+        oversight * 0.2 +
+          validation * 0.15 +
+          hazardDetection * 0.2 +
+          traceability * 0.15 +
+          changeFallback * 0.15 +
+          coordination * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in waste management & recycling operations",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Human authority and oversight maintained for safety-critical and compliance-relevant actions (20%)", oversight + "%"],
+        ["Performance validated across waste streams, materials and operating conditions including sensor faults (15%)", validation + "%"],
+        ["Hazards and contamination detected with timely alarms and escalation (20%)", hazardDetection + "%"],
+        ["Decisions, alerts, inputs and model versions logged for traceability, investigation and compliance evidence (15%)", traceability + "%"],
+        ["Changes controlled with tested fail-safe and manual procedures to protect workers and operations (15%)", changeFallback + "%"],
+        ["Coordination, worker-safety procedures and required notifications supported when AI affects operations or incidents (15%)", coordination + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain human authority and oversight for safety-critical and compliance-relevant actions, validate performance across waste streams, materials and operating conditions including sensor faults, detect hazards and contamination with timely alarms and escalation, log decisions, alerts, inputs and model versions for traceability, investigation and compliance evidence, control changes with tested fail-safe and manual procedures to protect workers and operations, and support coordination, worker-safety procedures and required notifications when AI affects operations or incidents."
+          : "Readiness is trending well — run a hazard or contamination scenario to confirm alarms, escalation and manual procedures work, trace a recent AI-influenced alert or sorting decision from inputs to outcome, and verify worker-safety coordination and required notification paths are clear.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
