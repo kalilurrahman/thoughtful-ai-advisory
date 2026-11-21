@@ -1343,4 +1343,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in coworking and flexible workspace access: ensuring accurate authorization and booking access, supporting incident and amenity issue handling, communicating pricing and usage terms transparently, applying privacy safeguards with traceable records, and providing human review and fallback for access issues or disputes.",
     anchor: "coworking-flexible-workspace-access-assurance",
   },
+  {
+    id: "package-receiving-mailroom-parcel-locker-assurance",
+    title: "AI in package receiving, mailroom & parcel locker services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in package receiving, mailroom and parcel locker services: ensuring accurate recipient/package identification and assignment, supporting authorized pickup and custody accountability, handling damage/loss/theft issues, applying privacy safeguards with traceable records, and providing human support and fallback for access failures or disputes.",
+    anchor: "package-receiving-mailroom-parcel-locker-assurance",
+  },
 ] as const;

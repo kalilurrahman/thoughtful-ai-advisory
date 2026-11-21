@@ -470,6 +470,10 @@ import {
   COWORKING_FLEXIBLE_WORKSPACE_ACCESS_ROUNDS,
   coworkingFlexibleWorkspaceAccessScore,
 } from "./coworking-flexible-workspace-access-game";
+import {
+  PACKAGE_RECEIVING_MAILROOM_PARCEL_LOCKER_ROUNDS,
+  packageReceivingMailroomParcelLockerScore,
+} from "./package-receiving-mailroom-parcel-locker-game";
 
 const statusText = {
   complete: "Complete",
@@ -767,6 +771,9 @@ export function ChecklistScreen() {
   const [coworkingFlexibleWorkspaceAccessAnswers, setCoworkingFlexibleWorkspaceAccessAnswers] = useState<
     Record<string, number>
   >({});
+  const [packageReceivingMailroomParcelLockerAnswers, setPackageReceivingMailroomParcelLockerAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -988,6 +995,9 @@ export function ChecklistScreen() {
   );
   const coworkingFlexibleWorkspaceAccessGame = coworkingFlexibleWorkspaceAccessScore(
     coworkingFlexibleWorkspaceAccessAnswers,
+  );
+  const packageReceivingMailroomParcelLockerGame = packageReceivingMailroomParcelLockerScore(
+    packageReceivingMailroomParcelLockerAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11158,6 +11168,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good workspace-access safeguard."
                           : "Review the workspace-access gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="package-receiving-mailroom-parcel-locker-assurance"
+        className="checklist-phase"
+        aria-label="AI in package receiving, mailroom and parcel locker services game"
+      >
+        <h2>AI in package receiving, mailroom &amp; parcel locker services</h2>
+        <p>
+          Practice governing AI in package receiving, mailroom and parcel locker services: ensuring
+          accurate recipient or package identification and locker or mailroom assignment, supporting
+          pickup authorization and handoff or custody accountability, handling damage, loss or theft
+          detection, reporting and resolution, applying privacy and minimisation to recipient and
+          package data with traceable custody, notification and access records, and providing human
+          support and fallback for access failures, disputes or uncertain cases. Scenarios are
+          learning prompts, not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {packageReceivingMailroomParcelLockerGame.correct}/{packageReceivingMailroomParcelLockerGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {packageReceivingMailroomParcelLockerGame.complete && (
+            <Button variant="outline" onClick={() => setPackageReceivingMailroomParcelLockerAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PACKAGE_RECEIVING_MAILROOM_PARCEL_LOCKER_ROUNDS.map((round) => {
+            const selected = packageReceivingMailroomParcelLockerAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setPackageReceivingMailroomParcelLockerAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good receiving-service safeguard."
+                          : "Review the receiving-service gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
