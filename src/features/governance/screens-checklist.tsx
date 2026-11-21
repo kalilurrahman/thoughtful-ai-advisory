@@ -478,6 +478,10 @@ import {
   SELF_SERVICE_STORAGE_LUGGAGE_LOCKER_ROUNDS,
   selfServiceStorageLuggageLockerScore,
 } from "./self-service-storage-luggage-locker-game";
+import {
+  VENDING_AUTOMATED_RETAIL_SMART_KIOSK_ROUNDS,
+  vendingAutomatedRetailSmartKioskScore,
+} from "./vending-automated-retail-smart-kiosk-game";
 
 const statusText = {
   complete: "Complete",
@@ -781,6 +785,9 @@ export function ChecklistScreen() {
   const [selfServiceStorageLuggageLockerAnswers, setSelfServiceStorageLuggageLockerAnswers] = useState<
     Record<string, number>
   >({});
+  const [vendingAutomatedRetailSmartKioskAnswers, setVendingAutomatedRetailSmartKioskAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -1008,6 +1015,9 @@ export function ChecklistScreen() {
   );
   const selfServiceStorageLuggageLockerGame = selfServiceStorageLuggageLockerScore(
     selfServiceStorageLuggageLockerAnswers,
+  );
+  const vendingAutomatedRetailSmartKioskGame = vendingAutomatedRetailSmartKioskScore(
+    vendingAutomatedRetailSmartKioskAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11310,6 +11320,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good locker-service safeguard."
                           : "Review the locker-service gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="vending-automated-retail-smart-kiosk-assurance"
+        className="checklist-phase"
+        aria-label="AI in vending, automated retail and smart kiosk services game"
+      >
+        <h2>AI in vending, automated retail &amp; smart kiosk services</h2>
+        <p>
+          Practice governing AI in vending, automated retail and smart kiosk services: ensuring
+          accurate product or selection identification and availability, communicating payment,
+          pricing and terms transparently before confirmation, supporting dispense or fulfillment
+          issue detection, reporting and handling and accountability, applying privacy and
+          minimisation to customer and transaction data with traceable records, and providing human
+          support and fallback for failures, disputes or uncertain cases. Scenarios are learning
+          prompts, not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {vendingAutomatedRetailSmartKioskGame.correct}/{vendingAutomatedRetailSmartKioskGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {vendingAutomatedRetailSmartKioskGame.complete && (
+            <Button variant="outline" onClick={() => setVendingAutomatedRetailSmartKioskAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {VENDING_AUTOMATED_RETAIL_SMART_KIOSK_ROUNDS.map((round) => {
+            const selected = vendingAutomatedRetailSmartKioskAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setVendingAutomatedRetailSmartKioskAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good unattended-retail safeguard."
+                          : "Review the unattended-retail gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

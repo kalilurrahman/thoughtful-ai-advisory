@@ -1359,4 +1359,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in self-service storage and luggage locker services: ensuring accurate locker assignment/access and user matching, communicating pricing, time limits and usage terms transparently, handling damage/theft or issues with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for access failures or disputes.",
     anchor: "self-service-storage-luggage-locker-assurance",
   },
+  {
+    id: "vending-automated-retail-smart-kiosk-assurance",
+    title: "AI in vending, automated retail & smart kiosk services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in vending, automated retail and smart kiosk services: ensuring accurate product/selection identification and availability, communicating payment, pricing and terms transparently, handling dispense or fulfillment issues with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for failures or disputes.",
+    anchor: "vending-automated-retail-smart-kiosk-assurance",
+  },
 ] as const;
