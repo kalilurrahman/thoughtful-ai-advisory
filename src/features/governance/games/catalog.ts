@@ -1383,4 +1383,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in public restroom, shower and amenity access services: ensuring accurate access, occupancy/availability and user matching, communicating usage conditions, fees and access terms transparently, handling safety, maintenance or cleanliness issues with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for access failures, safety concerns or disputes.",
     anchor: "public-restroom-shower-amenity-access-assurance",
   },
+  {
+    id: "camping-glamping-recreation-site-booking-assurance",
+    title: "AI in camping, glamping & outdoor recreation site booking game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in camping, glamping and outdoor recreation site booking: ensuring accurate site/amenity identification, availability and reservation matching, communicating pricing, rules and reservation terms transparently, handling safety, weather and incident situations with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for booking failures, safety concerns or disputes.",
+    anchor: "camping-glamping-recreation-site-booking-assurance",
+  },
 ] as const;
