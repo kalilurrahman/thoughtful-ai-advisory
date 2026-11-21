@@ -1399,4 +1399,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in co-living, dormitory and shared-living amenity access: ensuring accurate resident/guest identification, room or amenity assignment and access authorization, communicating house rules, fees and amenity terms transparently, handling incident, maintenance or noise issues with accountability, applying privacy safeguards with traceable records, and providing human review and fallback for access issues or disputes.",
     anchor: "co-living-dormitory-shared-living-access-assurance",
   },
+  {
+    id: "marina-boat-slip-dry-storage-assurance",
+    title: "AI in marina, boat slip & dry-storage services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in marina, boat slip and dry-storage services: ensuring accurate slip/berth/storage identification, availability and vessel matching, communicating pricing, seasonal terms and usage rules transparently, handling safety, maintenance and incident situations with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for access failures, safety concerns or disputes.",
+    anchor: "marina-boat-slip-dry-storage-assurance",
+  },
 ] as const;

@@ -498,6 +498,10 @@ import {
   CO_LIVING_DORMITORY_SHARED_LIVING_ACCESS_ROUNDS,
   coLivingDormitorySharedLivingAccessScore,
 } from "./co-living-dormitory-shared-living-access-game";
+import {
+  MARINA_BOAT_SLIP_DRY_STORAGE_ROUNDS,
+  marinaBoatSlipDryStorageScore,
+} from "./marina-boat-slip-dry-storage-game";
 
 const statusText = {
   complete: "Complete",
@@ -813,6 +817,9 @@ export function ChecklistScreen() {
     useState<Record<string, number>>({});
   const [coLivingDormitorySharedLivingAccessAnswers, setCoLivingDormitorySharedLivingAccessAnswers] =
     useState<Record<string, number>>({});
+  const [marinaBoatSlipDryStorageAnswers, setMarinaBoatSlipDryStorageAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -1055,6 +1062,9 @@ export function ChecklistScreen() {
   );
   const coLivingDormitorySharedLivingAccessGame = coLivingDormitorySharedLivingAccessScore(
     coLivingDormitorySharedLivingAccessAnswers,
+  );
+  const marinaBoatSlipDryStorageGame = marinaBoatSlipDryStorageScore(
+    marinaBoatSlipDryStorageAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11703,6 +11713,73 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good shared-living safeguard."
                           : "Review the shared-living gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="marina-boat-slip-dry-storage-assurance"
+        className="checklist-phase"
+        aria-label="AI in marina, boat slip and dry-storage services game"
+      >
+        <h2>AI in marina, boat slip &amp; dry-storage services</h2>
+        <p>
+          Practice governing AI in marina, boat slip and dry-storage services: ensuring accurate
+          slip, berth or storage identification, availability and vessel matching, communicating
+          pricing, seasonal terms and usage rules transparently before commitment, supporting
+          safety, maintenance or incident detection, reporting and handling and accountability with
+          timely notification, applying privacy and minimisation to member, vessel and location or
+          usage data with traceable access, booking and incident records, and providing human
+          support and fallback for access failures, safety concerns, disputes or uncertain cases.
+          Scenarios are learning prompts, not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {marinaBoatSlipDryStorageGame.correct}/{marinaBoatSlipDryStorageGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {marinaBoatSlipDryStorageGame.complete && (
+            <Button variant="outline" onClick={() => setMarinaBoatSlipDryStorageAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {MARINA_BOAT_SLIP_DRY_STORAGE_ROUNDS.map((round) => {
+            const selected = marinaBoatSlipDryStorageAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setMarinaBoatSlipDryStorageAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good marina-service safeguard."
+                          : "Review the marina-service gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
