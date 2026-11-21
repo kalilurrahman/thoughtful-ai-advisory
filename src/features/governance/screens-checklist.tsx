@@ -402,6 +402,10 @@ import {
   AIRPORT_PORT_GROUND_OPERATIONS_ROUNDS,
   airportPortGroundOperationsScore,
 } from "./airport-port-ground-operations-game";
+import {
+  PUBLIC_LIBRARIES_KNOWLEDGE_ACCESS_ROUNDS,
+  publicLibrariesKnowledgeAccessScore,
+} from "./public-libraries-knowledge-access-game";
 
 const statusText = {
   complete: "Complete",
@@ -648,6 +652,9 @@ export function ChecklistScreen() {
   const [airportPortGroundOperationsAnswers, setAirportPortGroundOperationsAnswers] = useState<
     Record<string, number>
   >({});
+  const [publicLibrariesKnowledgeAccessAnswers, setPublicLibrariesKnowledgeAccessAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -818,6 +825,9 @@ export function ChecklistScreen() {
   );
   const airportPortGroundOperationsGame = airportPortGroundOperationsScore(
     airportPortGroundOperationsAnswers,
+  );
+  const publicLibrariesKnowledgeAccessGame = publicLibrariesKnowledgeAccessScore(
+    publicLibrariesKnowledgeAccessAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -9867,6 +9877,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good ground-operations safeguard."
                           : "Review the ground-operations gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="public-libraries-knowledge-access-assurance"
+        className="checklist-phase"
+        aria-label="AI in public libraries and knowledge access game"
+      >
+        <h2>AI in public libraries &amp; knowledge access</h2>
+        <p>
+          Practice governing AI in public libraries and knowledge access: monitoring search and
+          recommendation quality and bias with curatorial review, supporting access, equity and
+          age-appropriate safeguards, respecting rights and sensitive content, disclosing AI
+          assistance and limitations transparently, and maintaining human/curatorial oversight with
+          privacy and traceability. Scenarios are learning prompts, not library, legal, rights or
+          regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {publicLibrariesKnowledgeAccessGame.correct}/{publicLibrariesKnowledgeAccessGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {publicLibrariesKnowledgeAccessGame.complete && (
+            <Button variant="outline" onClick={() => setPublicLibrariesKnowledgeAccessAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {PUBLIC_LIBRARIES_KNOWLEDGE_ACCESS_ROUNDS.map((round) => {
+            const selected = publicLibrariesKnowledgeAccessAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setPublicLibrariesKnowledgeAccessAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good knowledge-access safeguard."
+                          : "Review the knowledge-access gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
