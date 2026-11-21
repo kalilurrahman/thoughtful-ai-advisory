@@ -1287,4 +1287,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in car wash and vehicle detailing services: capturing accurate vehicle identification and pre-existing condition, supporting damage/incident handling and accountability, communicating pricing and terms transparently, minimising consented data/image capture with traceable records, and providing human review and fallback for exceptions or disputes.",
     anchor: "car-wash-vehicle-detailing-assurance",
   },
+  {
+    id: "moving-relocation-household-goods-assurance",
+    title: "AI in moving, relocation & household goods storage game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in moving, relocation and household goods storage: capturing accurate inventory and condition records, supporting damage/loss handling and accountability, communicating quotes and terms transparently, maintaining traceable chain-of-custody with privacy safeguards, and providing human review and fallback for exceptions or disputes.",
+    anchor: "moving-relocation-household-goods-assurance",
+  },
 ] as const;

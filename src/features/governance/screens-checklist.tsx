@@ -442,6 +442,10 @@ import {
   CAR_WASH_VEHICLE_DETAILING_ROUNDS,
   carWashVehicleDetailingScore,
 } from "./car-wash-vehicle-detailing-game";
+import {
+  MOVING_RELOCATION_HOUSEHOLD_GOODS_ROUNDS,
+  movingRelocationHouseholdGoodsScore,
+} from "./moving-relocation-household-goods-game";
 
 const statusText = {
   complete: "Complete",
@@ -718,6 +722,9 @@ export function ChecklistScreen() {
   const [carWashVehicleDetailingAnswers, setCarWashVehicleDetailingAnswers] = useState<
     Record<string, number>
   >({});
+  const [movingRelocationHouseholdGoodsAnswers, setMovingRelocationHouseholdGoodsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -918,6 +925,9 @@ export function ChecklistScreen() {
   );
   const carWashVehicleDetailingGame = carWashVehicleDetailingScore(
     carWashVehicleDetailingAnswers,
+  );
+  const movingRelocationHouseholdGoodsGame = movingRelocationHouseholdGoodsScore(
+    movingRelocationHouseholdGoodsAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10626,6 +10636,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good vehicle-detailing safeguard."
                           : "Review the vehicle-detailing gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="moving-relocation-household-goods-assurance"
+        className="checklist-phase"
+        aria-label="AI in moving, relocation and household goods storage game"
+      >
+        <h2>AI in moving, relocation &amp; household goods storage</h2>
+        <p>
+          Practice governing AI in moving, relocation and household goods storage: capturing accurate
+          inventory and condition records, supporting handling, damage or loss detection and
+          accountability, communicating quotes, pricing and service terms transparently, maintaining
+          traceable scheduling and chain-of-custody with privacy and minimisation safeguards for
+          customer and property data or images, and providing human review and fallback for
+          exceptions, disputes or uncertain cases. Scenarios are learning prompts, not consumer,
+          legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {movingRelocationHouseholdGoodsGame.correct}/{movingRelocationHouseholdGoodsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {movingRelocationHouseholdGoodsGame.complete && (
+            <Button variant="outline" onClick={() => setMovingRelocationHouseholdGoodsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {MOVING_RELOCATION_HOUSEHOLD_GOODS_ROUNDS.map((round) => {
+            const selected = movingRelocationHouseholdGoodsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setMovingRelocationHouseholdGoodsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good moving-assurance safeguard."
+                          : "Review the moving-assurance gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
