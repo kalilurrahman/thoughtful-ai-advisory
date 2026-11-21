@@ -1199,4 +1199,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in forestry, wildfire detection/prediction and land-management: validating performance across terrain, weather and sensor limits, keeping human authority for response actions, managing false alarms and missed detections, communicating uncertainty transparently, and maintaining traceability with coordination and manual fallback.",
     anchor: "forestry-wildfire-land-management-assurance",
   },
+  {
+    id: "airport-port-ground-operations-assurance",
+    title: "AI in airport & port ground operations safety game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in airport and port ground operations safety: maintaining human authority for safety-critical movements and clearances, validating performance in degraded visibility and congestion, ensuring timely proximity and hazard alerts, logging movements and model versions for traceability, and controlling changes with fail-safe manual procedures and cross-team coordination.",
+    anchor: "airport-port-ground-operations-assurance",
+  },
 ] as const;
