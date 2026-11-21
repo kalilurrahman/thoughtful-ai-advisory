@@ -4546,6 +4546,41 @@ export function calculate(
           : "Readiness is trending well — sample locker assignments and access for matching accuracy, confirm transparent pricing/time limits/usage terms and accountable issue handling, and test privacy safeguards, traceability and human support/fallback for access failures or disputes.",
     };
   }
+  if (id === "vending-automated-retail-smart-kiosk") {
+    const identificationAvailability = v["identification-availability"] ?? 0,
+      pricingTerms = v["pricing-terms"] ?? 0,
+      issueHandling = v["issue-handling"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      supportFallback = v["support-fallback"] ?? 0,
+      score = Math.round(
+        identificationAvailability * 0.2 +
+          pricingTerms * 0.2 +
+          issueHandling * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          supportFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in vending, automated retail & smart kiosk services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Product or selection identification and availability accurate (20%)", identificationAvailability + "%"],
+        ["Payment, pricing and terms communicated transparently (20%)", pricingTerms + "%"],
+        ["Dispense or fulfillment issue detection, reporting and handling and accountability supported (15%)", issueHandling + "%"],
+        ["Privacy and minimisation applied to customer and transaction data (15%)", privacyMinimisation + "%"],
+        ["Transaction and fulfillment records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human support and fallback available for failures, disputes or uncertain cases (15%)", supportFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure product or selection identification and availability are accurate, communicate payment, pricing and terms transparently, support dispense or fulfillment issue detection, reporting and handling and accountability, apply privacy and minimisation to customer and transaction data, log transaction and fulfillment records for traceability and dispute review, and provide human support and fallback for failures, disputes or uncertain cases."
+          : "Readiness is trending well — sample selections and transactions for identification, availability and pricing/terms accuracy, confirm accountable dispense/fulfillment issue handling, and test privacy safeguards, traceability and human support/fallback for failures or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
