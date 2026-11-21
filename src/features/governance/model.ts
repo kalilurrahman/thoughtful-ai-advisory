@@ -4336,6 +4336,41 @@ export function calculate(
           : "Readiness is trending well — sample handoffs for identification and condition accuracy, confirm custody/key handling and accountable damage or incident processes, and test transparent terms with authorization checks, privacy safeguards, traceability and human review/fallback for disputes or exceptions.",
     };
   }
+  if (id === "equipment-tool-rental") {
+    const identificationCondition = v["identification-condition"] ?? 0,
+      damageAccountability = v["damage-accountability"] ?? 0,
+      transparencyTerms = v["transparency-terms"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        identificationCondition * 0.2 +
+          damageAccountability * 0.2 +
+          transparencyTerms * 0.15 +
+          traceability * 0.15 +
+          privacyMinimisation * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in equipment & tool rental services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Equipment or tool identification, condition and availability capture accurate (20%)", identificationCondition + "%"],
+        ["Damage or loss detection, handling and accountability supported (20%)", damageAccountability + "%"],
+        ["Pricing, deposits and service terms communicated transparently (15%)", transparencyTerms + "%"],
+        ["Checkout, return and maintenance records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Privacy and minimisation applied to renter and usage data or images (15%)", privacyMinimisation + "%"],
+        ["Human review and fallback available for exceptions, disputes or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: capture equipment or tool identification, condition and availability accurately, support damage or loss detection, handling and accountability, communicate pricing, deposits and service terms transparently, log checkout, return and maintenance records for traceability and dispute review, apply privacy and minimisation to renter and usage data or images, and provide human review and fallback for exceptions, disputes or uncertain cases."
+          : "Readiness is trending well — sample rentals for identification, condition and availability accuracy, confirm damage/loss handling and transparent pricing/deposits/terms, and test traceability, privacy safeguards and human review/fallback for disputes or exceptions.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
