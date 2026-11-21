@@ -1151,4 +1151,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in pharmaceutical manufacturing and quality control: maintaining qualified human review and release authority, preserving data integrity and audit trails, detecting and escalating deviations with timely investigation, validating performance across products, lines and conditions, and controlling changes with safe manual fallback to protect product quality and continuity.",
     anchor: "pharma-manufacturing-quality-assurance",
   },
+  {
+    id: "customs-cargo-trade-screening-assurance",
+    title: "AI in customs cargo & trade screening game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in customs cargo and trade screening: maintaining human authority for holds, inspections and enforcement actions, validating risk targeting for fairness and trade impacts, protecting trade and partner data, logging decisions and risk scores for traceability and audit, and controlling changes with manual fallback and expedited review to sustain legitimate facilitation.",
+    anchor: "customs-cargo-trade-screening-assurance",
+  },
 ] as const;
