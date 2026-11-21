@@ -3986,6 +3986,41 @@ export function calculate(
           : "Readiness is trending well — sample AI-supported recommendations for clinical validity across species/breeds, confirm professional oversight and welfare-risk checks on consequential decisions, and test traceability and escalation/fallback when the system is uncertain or unavailable.",
     };
   }
+  if (id === "cemeteries-funerary-bereavement-services") {
+    const sensitiveConsent = v["sensitive-consent"] ?? 0,
+      accuracyDignity = v["accuracy-dignity"] ?? 0,
+      accessControls = v["access-controls"] ?? 0,
+      oversight = v["oversight"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      traceabilityFallback = v["traceability-fallback"] ?? 0,
+      score = Math.round(
+        sensitiveConsent * 0.2 +
+          accuracyDignity * 0.2 +
+          accessControls * 0.15 +
+          oversight * 0.15 +
+          transparency * 0.15 +
+          traceabilityFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in cemeteries, funerary & bereavement services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Sensitive and consentful handling of personal, bereavement and memorial information maintained (20%)", sensitiveConsent + "%"],
+        ["Accuracy, dignity and respectful presentation in records, communications and memorial content supported with human review for consequential outputs (20%)", accuracyDignity + "%"],
+        ["Access controls protect sensitive locations, records and information (15%)", accessControls + "%"],
+        ["Human oversight maintained for consequential actions and arrangements (15%)", oversight + "%"],
+        ["AI assistance and limitations disclosed transparently to families and service users as appropriate (15%)", transparency + "%"],
+        ["Traceability, audit trails and safe fallback or support pathways when AI is uncertain or unavailable (15%)", traceabilityFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain sensitive and consentful handling of personal, bereavement and memorial information, support accuracy, dignity and respectful presentation in records, communications and memorial content with human review for consequential outputs, protect sensitive locations, records and information with access controls, maintain human oversight for consequential actions and arrangements, disclose AI assistance and limitations transparently to families and service users as appropriate, and ensure traceability, audit trails and safe fallback or support pathways when AI is uncertain or unavailable."
+          : "Readiness is trending well — review AI-assisted records and communications for accuracy, dignity and respectful presentation with human sign-off on consequential outputs, confirm consent, access controls and transparency are clear to families and service users, and test traceability and fallback/support pathways when the system is uncertain or unavailable.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
