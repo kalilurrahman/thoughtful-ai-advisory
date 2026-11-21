@@ -4616,6 +4616,41 @@ export function calculate(
           : "Readiness is trending well — sample chargers and sessions for identification, availability and match accuracy, confirm transparent pricing/session/usage terms and accountable fault, safety or billing issue handling, and test privacy safeguards, traceability and human support/fallback for charging failures or disputes.",
     };
   }
+  if (id === "public-restroom-shower-amenity-access") {
+    const identificationAvailability = v["identification-availability"] ?? 0,
+      pricingTerms = v["pricing-terms"] ?? 0,
+      issueHandling = v["issue-handling"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      supportFallback = v["support-fallback"] ?? 0,
+      score = Math.round(
+        identificationAvailability * 0.2 +
+          pricingTerms * 0.2 +
+          issueHandling * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          supportFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in public restroom, shower & amenity access services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Access, occupancy or amenity-availability and user matching accurate (20%)", identificationAvailability + "%"],
+        ["Usage conditions, fees or access terms communicated transparently (20%)", pricingTerms + "%"],
+        ["Safety, maintenance or cleanliness issue detection, reporting and handling and accountability supported (15%)", issueHandling + "%"],
+        ["Privacy and minimisation applied to user, access and sensor or usage data (15%)", privacyMinimisation + "%"],
+        ["Access, occupancy and incident records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human support and fallback available for access failures, safety concerns, disputes or uncertain cases (15%)", supportFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure access, occupancy or amenity-availability and user matching are accurate, communicate usage conditions, fees or access terms transparently, support safety, maintenance or cleanliness issue detection, reporting and handling and accountability, apply privacy and minimisation to user, access and sensor or usage data, log access, occupancy and incident records for traceability and dispute review, and provide human support and fallback for access failures, safety concerns, disputes or uncertain cases."
+          : "Readiness is trending well — sample access and occupancy states for availability and matching accuracy, confirm transparent usage conditions/fees/terms and accountable safety, maintenance or cleanliness issue handling, and test privacy safeguards, traceability and human support/fallback for access failures or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
