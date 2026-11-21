@@ -362,6 +362,10 @@ import {
   BORDER_IMMIGRATION_SCREENING_ROUNDS,
   borderImmigrationScreeningScore,
 } from "./border-immigration-screening-game";
+import {
+  RAILWAY_SIGNALLING_OPERATIONS_ROUNDS,
+  railwaySignallingOperationsScore,
+} from "./railway-signalling-operations-game";
 
 const statusText = {
   complete: "Complete",
@@ -578,6 +582,9 @@ export function ChecklistScreen() {
   const [borderImmigrationScreeningAnswers, setBorderImmigrationScreeningAnswers] = useState<
     Record<string, number>
   >({});
+  const [railwaySignallingOperationsAnswers, setRailwaySignallingOperationsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -723,6 +730,7 @@ export function ChecklistScreen() {
   const humanitarianAidAllocationGame = humanitarianAidAllocationScore(humanitarianAidAllocationAnswers);
   const waterWastewaterOperationsGame = waterWastewaterOperationsScore(waterWastewaterOperationsAnswers);
   const borderImmigrationScreeningGame = borderImmigrationScreeningScore(borderImmigrationScreeningAnswers);
+  const railwaySignallingOperationsGame = railwaySignallingOperationsScore(railwaySignallingOperationsAnswers);
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
     const complete = fields.filter((value, fieldIndex) =>
@@ -9119,6 +9127,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good screening safeguard."
                           : "Review the screening gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="railway-signalling-operations-assurance"
+        className="checklist-phase"
+        aria-label="AI in railway operations and signalling support game"
+      >
+        <h2>AI in railway operations &amp; signalling support</h2>
+        <p>
+          Practice governing AI in railway operations and signalling support: keeping human authority
+          and clear advisory-versus-control boundaries, validating performance in degraded conditions
+          and signal faults, logging recommendations and model versions for traceability, controlling
+          changes against approved or certified baselines, and rehearsing manual procedures,
+          coordination and notifications when AI fails. Scenarios are learning prompts, not
+          operational, safety or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {railwaySignallingOperationsGame.correct}/{railwaySignallingOperationsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {railwaySignallingOperationsGame.complete && (
+            <Button variant="outline" onClick={() => setRailwaySignallingOperationsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {RAILWAY_SIGNALLING_OPERATIONS_ROUNDS.map((round) => {
+            const selected = railwaySignallingOperationsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setRailwaySignallingOperationsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good operations safeguard."
+                          : "Review the operations gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
