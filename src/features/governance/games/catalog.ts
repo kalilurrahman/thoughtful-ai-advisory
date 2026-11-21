@@ -1351,4 +1351,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in package receiving, mailroom and parcel locker services: ensuring accurate recipient/package identification and assignment, supporting authorized pickup and custody accountability, handling damage/loss/theft issues, applying privacy safeguards with traceable records, and providing human support and fallback for access failures or disputes.",
     anchor: "package-receiving-mailroom-parcel-locker-assurance",
   },
+  {
+    id: "self-service-storage-luggage-locker-assurance",
+    title: "AI in self-service storage & luggage locker services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in self-service storage and luggage locker services: ensuring accurate locker assignment/access and user matching, communicating pricing, time limits and usage terms transparently, handling damage/theft or issues with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for access failures or disputes.",
+    anchor: "self-service-storage-luggage-locker-assurance",
+  },
 ] as const;

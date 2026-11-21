@@ -474,6 +474,10 @@ import {
   PACKAGE_RECEIVING_MAILROOM_PARCEL_LOCKER_ROUNDS,
   packageReceivingMailroomParcelLockerScore,
 } from "./package-receiving-mailroom-parcel-locker-game";
+import {
+  SELF_SERVICE_STORAGE_LUGGAGE_LOCKER_ROUNDS,
+  selfServiceStorageLuggageLockerScore,
+} from "./self-service-storage-luggage-locker-game";
 
 const statusText = {
   complete: "Complete",
@@ -774,6 +778,9 @@ export function ChecklistScreen() {
   const [packageReceivingMailroomParcelLockerAnswers, setPackageReceivingMailroomParcelLockerAnswers] = useState<
     Record<string, number>
   >({});
+  const [selfServiceStorageLuggageLockerAnswers, setSelfServiceStorageLuggageLockerAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -998,6 +1005,9 @@ export function ChecklistScreen() {
   );
   const packageReceivingMailroomParcelLockerGame = packageReceivingMailroomParcelLockerScore(
     packageReceivingMailroomParcelLockerAnswers,
+  );
+  const selfServiceStorageLuggageLockerGame = selfServiceStorageLuggageLockerScore(
+    selfServiceStorageLuggageLockerAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11234,6 +11244,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good receiving-service safeguard."
                           : "Review the receiving-service gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="self-service-storage-luggage-locker-assurance"
+        className="checklist-phase"
+        aria-label="AI in self-service storage and luggage locker services game"
+      >
+        <h2>AI in self-service storage &amp; luggage locker services</h2>
+        <p>
+          Practice governing AI in self-service storage and luggage locker services: ensuring accurate
+          locker assignment, access and user matching, communicating pricing, time limits and usage
+          terms transparently, supporting damage, theft or issue detection, reporting and handling
+          and accountability, applying privacy and minimisation to user and access or usage data
+          with traceable access and transaction records, and providing human support and fallback
+          for access failures, disputes or uncertain cases. Scenarios are learning prompts, not
+          consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {selfServiceStorageLuggageLockerGame.correct}/{selfServiceStorageLuggageLockerGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {selfServiceStorageLuggageLockerGame.complete && (
+            <Button variant="outline" onClick={() => setSelfServiceStorageLuggageLockerAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {SELF_SERVICE_STORAGE_LUGGAGE_LOCKER_ROUNDS.map((round) => {
+            const selected = selfServiceStorageLuggageLockerAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setSelfServiceStorageLuggageLockerAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good locker-service safeguard."
+                          : "Review the locker-service gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
