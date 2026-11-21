@@ -1375,4 +1375,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in EV charging station and charging network services: ensuring accurate charger/connector identification, availability and session matching, communicating pricing, session and usage terms transparently, handling charging faults, safety incidents and billing errors with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for charging failures or disputes.",
     anchor: "ev-charging-station-network-assurance",
   },
+  {
+    id: "public-restroom-shower-amenity-access-assurance",
+    title: "AI in public restroom, shower & amenity access services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in public restroom, shower and amenity access services: ensuring accurate access, occupancy/availability and user matching, communicating usage conditions, fees and access terms transparently, handling safety, maintenance or cleanliness issues with accountability, applying privacy safeguards with traceable records, and providing human support and fallback for access failures, safety concerns or disputes.",
+    anchor: "public-restroom-shower-amenity-access-assurance",
+  },
 ] as const;
