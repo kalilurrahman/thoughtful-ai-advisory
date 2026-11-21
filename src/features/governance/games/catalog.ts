@@ -1135,4 +1135,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in railway operations and signalling support: keeping human authority and clear advisory-versus-control boundaries, validating performance in degraded conditions and signal faults, logging recommendations and model versions for traceability, controlling changes against approved or certified baselines, and rehearsing manual procedures, coordination and notifications when AI fails.",
     anchor: "railway-signalling-operations-assurance",
   },
+  {
+    id: "mining-extractive-safety-assurance",
+    title: "AI in mining & extractive operations safety game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in mining and extractive operations safety: keeping human authority over safety-critical alerts and actions, validating performance in harsh environments and sensor faults, monitoring hazard thresholds with timely alarms and escalation, logging decisions and model versions for traceability, and maintaining controlled changes with fail-safe manual procedures and incident coordination.",
+    anchor: "mining-extractive-safety-assurance",
+  },
 ] as const;
