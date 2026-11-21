@@ -1223,4 +1223,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in sports officiating and competition integrity: maintaining human authority, review and appeals, validating performance across venues and conditions, monitoring fairness and bias, providing transparency with traceable evidence for review and integrity investigations, and controlling changes with fallback continuity when assistance is unavailable or contested.",
     anchor: "sports-officiating-competition-integrity-assurance",
   },
+  {
+    id: "veterinary-animal-welfare-assurance",
+    title: "AI in veterinary & animal welfare decisions game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in veterinary and animal welfare decisions: validating diagnostic and care-support recommendations for clinical context, species and breeds, maintaining professional oversight for consequential decisions, assessing welfare impacts and risks, documenting data quality and provenance with traceable outputs, and using escalation and safe fallback when AI is uncertain or unavailable.",
+    anchor: "veterinary-animal-welfare-assurance",
+  },
 ] as const;
