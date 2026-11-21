@@ -1159,4 +1159,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in customs cargo and trade screening: maintaining human authority for holds, inspections and enforcement actions, validating risk targeting for fairness and trade impacts, protecting trade and partner data, logging decisions and risk scores for traceability and audit, and controlling changes with manual fallback and expedited review to sustain legitimate facilitation.",
     anchor: "customs-cargo-trade-screening-assurance",
   },
+  {
+    id: "waste-recycling-operations-assurance",
+    title: "AI in waste management & recycling operations game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in waste management and recycling operations: maintaining human authority over safety-critical actions, validating performance across waste streams and sensor faults, detecting hazards and contamination with timely alarms and escalation, logging decisions and model versions for traceability and compliance evidence, and controlling changes with fail-safe manual procedures and worker-safety coordination.",
+    anchor: "waste-recycling-operations-assurance",
+  },
 ] as const;

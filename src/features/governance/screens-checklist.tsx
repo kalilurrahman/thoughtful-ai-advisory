@@ -378,6 +378,10 @@ import {
   CUSTOMS_CARGO_TRADE_SCREENING_ROUNDS,
   customsCargoTradeScreeningScore,
 } from "./customs-cargo-trade-screening-game";
+import {
+  WASTE_RECYCLING_OPERATIONS_ROUNDS,
+  wasteRecyclingOperationsScore,
+} from "./waste-recycling-operations-game";
 
 const statusText = {
   complete: "Complete",
@@ -606,6 +610,9 @@ export function ChecklistScreen() {
   const [customsCargoTradeScreeningAnswers, setCustomsCargoTradeScreeningAnswers] = useState<
     Record<string, number>
   >({});
+  const [wasteRecyclingOperationsAnswers, setWasteRecyclingOperationsAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -758,6 +765,9 @@ export function ChecklistScreen() {
   );
   const customsCargoTradeScreeningGame = customsCargoTradeScreeningScore(
     customsCargoTradeScreeningAnswers,
+  );
+  const wasteRecyclingOperationsGame = wasteRecyclingOperationsScore(
+    wasteRecyclingOperationsAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -9415,6 +9425,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good screening safeguard."
                           : "Review the screening gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="waste-recycling-operations-assurance"
+        className="checklist-phase"
+        aria-label="AI in waste management and recycling operations game"
+      >
+        <h2>AI in waste management &amp; recycling operations</h2>
+        <p>
+          Practice governing AI in waste management and recycling operations: maintaining human
+          authority over safety-critical actions, validating performance across waste streams and
+          sensor faults, detecting hazards and contamination with timely alarms and escalation,
+          logging decisions and model versions for traceability and compliance evidence, and
+          controlling changes with fail-safe manual procedures and worker-safety coordination.
+          Scenarios are learning prompts, not operational, safety, environmental or regulatory
+          advice.
+        </p>
+        <p>
+          <strong>
+            {wasteRecyclingOperationsGame.correct}/{wasteRecyclingOperationsGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {wasteRecyclingOperationsGame.complete && (
+            <Button variant="outline" onClick={() => setWasteRecyclingOperationsAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {WASTE_RECYCLING_OPERATIONS_ROUNDS.map((round) => {
+            const selected = wasteRecyclingOperationsAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setWasteRecyclingOperationsAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good operations safeguard."
+                          : "Review the operations gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
