@@ -1263,4 +1263,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in stadiums, festivals and large-event crowd safety: validating crowd-risk alerts for venues and conditions, ensuring proportional and non-discriminatory use, maintaining clear human command and escalation, protecting attendees with privacy and communications safeguards, and keeping traceable records with tested fallback continuity.",
     anchor: "large-event-crowd-safety-assurance",
   },
+  {
+    id: "self-storage-property-access-assurance",
+    title: "AI in self-storage & property access facilities game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in self-storage and property access facilities: maintaining accurate verification and access safeguards, ensuring fair and transparent access decisions, applying privacy and minimisation to monitoring data, providing human review for consequential actions, and keeping traceable records with tested fallback and support pathways.",
+    anchor: "self-storage-property-access-assurance",
+  },
 ] as const;
