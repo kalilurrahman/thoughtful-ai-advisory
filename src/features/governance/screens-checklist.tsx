@@ -410,6 +410,10 @@ import {
   SPORTS_OFFICIATING_COMPETITION_INTEGRITY_ROUNDS,
   sportsOfficiatingCompetitionIntegrityScore,
 } from "./sports-officiating-competition-integrity-game";
+import {
+  VETERINARY_ANIMAL_WELFARE_ROUNDS,
+  veterinaryAnimalWelfareScore,
+} from "./veterinary-animal-welfare-game";
 
 const statusText = {
   complete: "Complete",
@@ -662,6 +666,9 @@ export function ChecklistScreen() {
   const [sportsOfficiatingCompetitionIntegrityAnswers, setSportsOfficiatingCompetitionIntegrityAnswers] = useState<
     Record<string, number>
   >({});
+  const [veterinaryAnimalWelfareAnswers, setVeterinaryAnimalWelfareAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -838,6 +845,9 @@ export function ChecklistScreen() {
   );
   const sportsOfficiatingCompetitionIntegrityGame = sportsOfficiatingCompetitionIntegrityScore(
     sportsOfficiatingCompetitionIntegrityAnswers,
+  );
+  const veterinaryAnimalWelfareGame = veterinaryAnimalWelfareScore(
+    veterinaryAnimalWelfareAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10021,6 +10031,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good officiating-integrity safeguard."
                           : "Review the officiating-integrity gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="veterinary-animal-welfare-assurance"
+        className="checklist-phase"
+        aria-label="AI in veterinary and animal welfare decisions game"
+      >
+        <h2>AI in veterinary &amp; animal welfare decisions</h2>
+        <p>
+          Practice governing AI in veterinary and animal welfare decisions: validating diagnostic and
+          care-support recommendations for clinical context, species and breeds, maintaining
+          veterinary and professional oversight for consequential decisions, assessing and monitoring
+          welfare impacts and risks, documenting data quality and provenance with traceable outputs,
+          and using escalation and safe fallback when AI is uncertain, unavailable or
+          contraindicated. Scenarios are learning prompts, not veterinary, clinical, welfare or
+          regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {veterinaryAnimalWelfareGame.correct}/{veterinaryAnimalWelfareGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {veterinaryAnimalWelfareGame.complete && (
+            <Button variant="outline" onClick={() => setVeterinaryAnimalWelfareAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {VETERINARY_ANIMAL_WELFARE_ROUNDS.map((round) => {
+            const selected = veterinaryAnimalWelfareAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setVeterinaryAnimalWelfareAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good veterinary-welfare safeguard."
+                          : "Review the veterinary-welfare gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
