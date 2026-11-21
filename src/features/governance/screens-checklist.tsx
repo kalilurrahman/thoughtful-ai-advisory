@@ -394,6 +394,10 @@ import {
   LABORATORY_RESEARCH_SAFETY_ROUNDS,
   laboratoryResearchSafetyScore,
 } from "./laboratory-research-safety-game";
+import {
+  FORESTRY_WILDFIRE_LAND_MANAGEMENT_ROUNDS,
+  forestryWildfireLandManagementScore,
+} from "./forestry-wildfire-land-management-game";
 
 const statusText = {
   complete: "Complete",
@@ -634,6 +638,9 @@ export function ChecklistScreen() {
   const [laboratoryResearchSafetyAnswers, setLaboratoryResearchSafetyAnswers] = useState<
     Record<string, number>
   >({});
+  const [forestryWildfireLandManagementAnswers, setForestryWildfireLandManagementAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -798,6 +805,9 @@ export function ChecklistScreen() {
   );
   const laboratoryResearchSafetyGame = laboratoryResearchSafetyScore(
     laboratoryResearchSafetyAnswers,
+  );
+  const forestryWildfireLandManagementGame = forestryWildfireLandManagementScore(
+    forestryWildfireLandManagementAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -9717,6 +9727,71 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good safety safeguard."
                           : "Review the safety gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="forestry-wildfire-land-management-assurance"
+        className="checklist-phase"
+        aria-label="AI in forestry, wildfire and land-management game"
+      >
+        <h2>AI in forestry, wildfire &amp; land-management</h2>
+        <p>
+          Practice governing AI in forestry, wildfire detection/prediction and land-management:
+          validating performance across terrain, weather, seasonality and sensor limits, keeping
+          human authority for response prioritization and safety-critical actions, managing false
+          alarms and missed detections, communicating uncertainty and limitations transparently, and
+          maintaining traceability with coordination, notifications and manual fallback. Scenarios
+          are learning prompts, not operational, emergency response, safety or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {forestryWildfireLandManagementGame.correct}/{forestryWildfireLandManagementGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {forestryWildfireLandManagementGame.complete && (
+            <Button variant="outline" onClick={() => setForestryWildfireLandManagementAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {FORESTRY_WILDFIRE_LAND_MANAGEMENT_ROUNDS.map((round) => {
+            const selected = forestryWildfireLandManagementAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setForestryWildfireLandManagementAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good response safeguard."
+                          : "Review the response gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
