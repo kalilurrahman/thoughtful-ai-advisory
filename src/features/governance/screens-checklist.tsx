@@ -502,6 +502,10 @@ import {
   MARINA_BOAT_SLIP_DRY_STORAGE_ROUNDS,
   marinaBoatSlipDryStorageScore,
 } from "./marina-boat-slip-dry-storage-game";
+import {
+  FARMERS_MARKET_STALL_VENDOR_BOOKING_ROUNDS,
+  farmersMarketStallVendorBookingScore,
+} from "./farmers-market-stall-vendor-booking-game";
 
 const statusText = {
   complete: "Complete",
@@ -820,6 +824,8 @@ export function ChecklistScreen() {
   const [marinaBoatSlipDryStorageAnswers, setMarinaBoatSlipDryStorageAnswers] = useState<
     Record<string, number>
   >({});
+  const [farmersMarketStallVendorBookingAnswers, setFarmersMarketStallVendorBookingAnswers] =
+    useState<Record<string, number>>({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -1065,6 +1071,9 @@ export function ChecklistScreen() {
   );
   const marinaBoatSlipDryStorageGame = marinaBoatSlipDryStorageScore(
     marinaBoatSlipDryStorageAnswers,
+  );
+  const farmersMarketStallVendorBookingGame = farmersMarketStallVendorBookingScore(
+    farmersMarketStallVendorBookingAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11780,6 +11789,77 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good marina-service safeguard."
                           : "Review the marina-service gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="farmers-market-stall-vendor-booking-assurance"
+        className="checklist-phase"
+        aria-label="AI in farmers' market, stall and vendor booking game"
+      >
+        <h2>AI in farmers&apos; market, stall &amp; vendor booking</h2>
+        <p>
+          Practice governing AI in farmers&apos; market, stall and vendor booking: ensuring accurate
+          stall identification, availability and vendor matching, communicating pricing, stall rules
+          and booking terms transparently before commitment, supporting safety, inspection or
+          incident detection, reporting and handling and accountability with timely notification,
+          applying privacy and minimisation to vendor, booth and transaction data with traceable
+          booking, stall and incident records, and providing human review and fallback for booking
+          failures, safety concerns, disputes or uncertain cases. Scenarios are learning prompts,
+          not consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {farmersMarketStallVendorBookingGame.correct}/
+            {farmersMarketStallVendorBookingGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {farmersMarketStallVendorBookingGame.complete && (
+            <Button
+              variant="outline"
+              onClick={() => setFarmersMarketStallVendorBookingAnswers({})}
+            >
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {FARMERS_MARKET_STALL_VENDOR_BOOKING_ROUNDS.map((round) => {
+            const selected = farmersMarketStallVendorBookingAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setFarmersMarketStallVendorBookingAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good market-service safeguard."
+                          : "Review the market-service gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
