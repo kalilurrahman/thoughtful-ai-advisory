@@ -1279,4 +1279,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in laundry, dry-cleaning and garment care services: capturing accurate item identification and special-care instructions, supporting damage/loss handling and accountability, communicating pricing and terms transparently, applying privacy and minimisation with traceable records, and providing human review and fallback for exceptions or disputes.",
     anchor: "laundry-garment-care-assurance",
   },
+  {
+    id: "car-wash-vehicle-detailing-assurance",
+    title: "AI in car wash & vehicle detailing services game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in car wash and vehicle detailing services: capturing accurate vehicle identification and pre-existing condition, supporting damage/incident handling and accountability, communicating pricing and terms transparently, minimising consented data/image capture with traceable records, and providing human review and fallback for exceptions or disputes.",
+    anchor: "car-wash-vehicle-detailing-assurance",
+  },
 ] as const;

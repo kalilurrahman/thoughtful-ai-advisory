@@ -438,6 +438,10 @@ import {
   LAUNDRY_GARMENT_CARE_ROUNDS,
   laundryGarmentCareScore,
 } from "./laundry-garment-care-game";
+import {
+  CAR_WASH_VEHICLE_DETAILING_ROUNDS,
+  carWashVehicleDetailingScore,
+} from "./car-wash-vehicle-detailing-game";
 
 const statusText = {
   complete: "Complete",
@@ -711,6 +715,9 @@ export function ChecklistScreen() {
   const [laundryGarmentCareAnswers, setLaundryGarmentCareAnswers] = useState<
     Record<string, number>
   >({});
+  const [carWashVehicleDetailingAnswers, setCarWashVehicleDetailingAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -908,6 +915,9 @@ export function ChecklistScreen() {
   );
   const laundryGarmentCareGame = laundryGarmentCareScore(
     laundryGarmentCareAnswers,
+  );
+  const carWashVehicleDetailingGame = carWashVehicleDetailingScore(
+    carWashVehicleDetailingAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -10550,6 +10560,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good garment-care safeguard."
                           : "Review the garment-care gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="car-wash-vehicle-detailing-assurance"
+        className="checklist-phase"
+        aria-label="AI in car wash and vehicle detailing services game"
+      >
+        <h2>AI in car wash &amp; vehicle detailing services</h2>
+        <p>
+          Practice governing AI in car wash and vehicle detailing services: capturing accurate
+          vehicle identification, service selection and pre-existing condition, supporting
+          damage/incident handling and accountability, communicating pricing, packages/upsells and
+          service terms transparently, minimising and safeguarding consented capture/use of vehicle
+          and customer data or images with traceable records, and providing human review and
+          fallback for exceptions, disputes or uncertain cases. Scenarios are learning prompts, not
+          consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {carWashVehicleDetailingGame.correct}/{carWashVehicleDetailingGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {carWashVehicleDetailingGame.complete && (
+            <Button variant="outline" onClick={() => setCarWashVehicleDetailingAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {CAR_WASH_VEHICLE_DETAILING_ROUNDS.map((round) => {
+            const selected = carWashVehicleDetailingAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCarWashVehicleDetailingAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good vehicle-detailing safeguard."
+                          : "Review the vehicle-detailing gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>
