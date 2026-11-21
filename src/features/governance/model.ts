@@ -4406,6 +4406,41 @@ export function calculate(
           : "Readiness is trending well — sample sessions for access and matching accuracy, confirm transparent payment/pricing/terms and accountable issue or malfunction handling, and test privacy safeguards, traceability and human support/fallback for access failures or disputes.",
     };
   }
+  if (id === "bicycle-micromobility-rental-share") {
+    const identificationCondition = v["identification-condition"] ?? 0,
+      incidentAccountability = v["incident-accountability"] ?? 0,
+      transparencyTerms = v["transparency-terms"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      reviewFallback = v["review-fallback"] ?? 0,
+      score = Math.round(
+        identificationCondition * 0.2 +
+          incidentAccountability * 0.2 +
+          transparencyTerms * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          reviewFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in bicycle & micromobility rental/share services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Vehicle identification, availability and condition capture accurate (20%)", identificationCondition + "%"],
+        ["Damage, theft or incident detection, handling and accountability supported (20%)", incidentAccountability + "%"],
+        ["Pricing, fees and usage terms communicated transparently (15%)", transparencyTerms + "%"],
+        ["Privacy and minimisation applied to location and usage data (15%)", privacyMinimisation + "%"],
+        ["Trip, access and condition records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human review and fallback available for disputes, safety exceptions or uncertain cases (15%)", reviewFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: capture vehicle identification, availability and condition accurately, support damage, theft or incident detection, handling and accountability, communicate pricing, fees and usage terms transparently, apply privacy and minimisation to location and usage data, log trip, access and condition records for traceability and dispute review, and provide human review and fallback for disputes, safety exceptions or uncertain cases."
+          : "Readiness is trending well — sample rentals for identification, availability and condition accuracy, confirm accountable incident handling and transparent pricing/usage terms, and test privacy safeguards, traceability and human review/fallback for disputes or safety exceptions.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
