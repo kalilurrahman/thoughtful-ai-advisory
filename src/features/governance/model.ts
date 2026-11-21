@@ -3811,6 +3811,41 @@ export function calculate(
           : "Readiness is trending well — run a hazard or protocol-deviation scenario to confirm alarms, escalation and manual procedures work, trace a recent AI-influenced safety or experimental decision from inputs to outcome, and verify data integrity, change control and required notification paths are complete.",
     };
   }
+  if (id === "forestry-wildfire-land-management") {
+    const validation = v["validation"] ?? 0,
+      humanAuthority = v["human-authority"] ?? 0,
+      alarmQuality = v["alarm-quality"] ?? 0,
+      uncertaintyTransparency = v["uncertainty-transparency"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      coordinationFallback = v["coordination-fallback"] ?? 0,
+      score = Math.round(
+        validation * 0.2 +
+          humanAuthority * 0.2 +
+          alarmQuality * 0.15 +
+          uncertaintyTransparency * 0.15 +
+          traceability * 0.15 +
+          coordinationFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in forestry, wildfire & land-management",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Detection and prediction performance validated across terrain, weather, seasonality and sensor or satellite limitations (20%)", validation + "%"],
+        ["Human authority maintained for response prioritization and safety-critical actions (20%)", humanAuthority + "%"],
+        ["False alarms and missed detections monitored with verification and escalation (15%)", alarmQuality + "%"],
+        ["Uncertainty and model limitations communicated transparently to responders and affected communities (15%)", uncertaintyTransparency + "%"],
+        ["Detections, inputs, model versions and decisions logged for traceability and review (15%)", traceability + "%"],
+        ["Coordination, notifications and manual fallback maintained when AI is degraded or unavailable (15%)", coordinationFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: validate detection and prediction performance across terrain, weather, seasonality and sensor or satellite limitations, maintain human authority for response prioritization and safety-critical actions, monitor false alarms and missed detections with verification and escalation, communicate uncertainty and model limitations transparently to responders and affected communities, log detections, inputs, model versions and decisions for traceability and review, and maintain coordination, notifications and manual fallback when AI is degraded or unavailable."
+          : "Readiness is trending well — review recent alerts for false alarms and missed detections, confirm uncertainty and limitations are communicated clearly during active conditions, and verify coordination, notifications and manual fallback work when detections or systems are degraded.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
