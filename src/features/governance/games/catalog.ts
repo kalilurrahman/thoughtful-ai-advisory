@@ -1167,4 +1167,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in waste management and recycling operations: maintaining human authority over safety-critical actions, validating performance across waste streams and sensor faults, detecting hazards and contamination with timely alarms and escalation, logging decisions and model versions for traceability and compliance evidence, and controlling changes with fail-safe manual procedures and worker-safety coordination.",
     anchor: "waste-recycling-operations-assurance",
   },
+  {
+    id: "archives-heritage-digitisation-assurance",
+    title: "AI in public archives & cultural heritage digitisation game",
+    category: "Governance & oversight",
+    description:
+      "Practice governing AI in public archives and cultural heritage digitisation: preserving provenance and integrity, reviewing metadata and descriptions for quality and bias, handling rights and sensitive content appropriately, disclosing AI assistance and limitations, and maintaining curatorial authority with traceable outputs and changes.",
+    anchor: "archives-heritage-digitisation-assurance",
+  },
 ] as const;
