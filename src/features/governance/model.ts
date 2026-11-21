@@ -3636,6 +3636,41 @@ export function calculate(
           : "Readiness is trending well — trace a recent AI-influenced quality or deviation decision from inputs to outcome, confirm change control and validation records are complete across lines and products, and verify manual fallback procedures can sustain quality decisions during an AI outage.",
     };
   }
+  if (id === "customs-cargo-trade-screening") {
+    const humanReview = v["human-review"] ?? 0,
+      targetingValidation = v["targeting-validation"] ?? 0,
+      dataProtection = v["data-protection"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      changeControl = v["change-control"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      score = Math.round(
+        humanReview * 0.2 +
+          targetingValidation * 0.2 +
+          dataProtection * 0.15 +
+          traceability * 0.15 +
+          changeControl * 0.15 +
+          fallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in customs cargo & trade screening",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Human authority and review maintained for holds, inspections and enforcement actions (20%)", humanReview + "%"],
+        ["Risk targeting and performance validated for fairness, false positives and trade impacts across routes and commodities (20%)", targetingValidation + "%"],
+        ["Data quality, provenance and protection maintained for trade and partner data (15%)", dataProtection + "%"],
+        ["Decisions, risk scores, inputs and model versions logged for traceability and audit (15%)", traceability + "%"],
+        ["Models and rules controlled and tested before affecting live screening (15%)", changeControl + "%"],
+        ["Manual fallback and expedited review maintain legitimate trade facilitation when AI is uncertain or unavailable (15%)", fallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain human authority and review for holds, inspections and enforcement actions, validate risk targeting and performance for fairness, false positives and trade impacts across routes and commodities, maintain data quality, provenance and protection for trade and partner data, log decisions, risk scores, inputs and model versions for traceability and audit, control and test models and rules before affecting live screening, and ensure manual fallback and expedited review can maintain legitimate trade facilitation when AI is uncertain or unavailable."
+          : "Readiness is trending well — sample recent screening outcomes for false positives and trade impacts across routes and commodities, trace a recent hold or release decision from inputs and risk score to outcome, and verify manual fallback and expedited review can sustain legitimate facilitation during an AI outage or uncertain result.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
