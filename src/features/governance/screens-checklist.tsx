@@ -466,6 +466,10 @@ import {
   BICYCLE_MICROMOBILITY_RENTAL_SHARE_ROUNDS,
   bicycleMicromobilityRentalShareScore,
 } from "./bicycle-micromobility-rental-share-game";
+import {
+  COWORKING_FLEXIBLE_WORKSPACE_ACCESS_ROUNDS,
+  coworkingFlexibleWorkspaceAccessScore,
+} from "./coworking-flexible-workspace-access-game";
 
 const statusText = {
   complete: "Complete",
@@ -760,6 +764,9 @@ export function ChecklistScreen() {
   const [bicycleMicromobilityRentalShareAnswers, setBicycleMicromobilityRentalShareAnswers] = useState<
     Record<string, number>
   >({});
+  const [coworkingFlexibleWorkspaceAccessAnswers, setCoworkingFlexibleWorkspaceAccessAnswers] = useState<
+    Record<string, number>
+  >({});
   const { state } = useGovernance();
   const phases = buildLifecycleChecklist(state);
   const progress = checklistProgress(phases);
@@ -978,6 +985,9 @@ export function ChecklistScreen() {
   );
   const bicycleMicromobilityRentalShareGame = bicycleMicromobilityRentalShareScore(
     bicycleMicromobilityRentalShareAnswers,
+  );
+  const coworkingFlexibleWorkspaceAccessGame = coworkingFlexibleWorkspaceAccessScore(
+    coworkingFlexibleWorkspaceAccessAnswers,
   );
   const profiles = state.systems.map((system, index) => {
     const fields = [system.kind, system.owner, system.vendor, system.data];
@@ -11082,6 +11092,72 @@ export function ChecklistScreen() {
                         {selected === round.best
                           ? "Good micromobility safeguard."
                           : "Review the micromobility gap."}
+                      </strong>{" "}
+                      {round.feedback} <em>Assurance focus: {round.assurance}.</em>
+                    </p>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="coworking-flexible-workspace-access-assurance"
+        className="checklist-phase"
+        aria-label="AI in coworking and flexible workspace access game"
+      >
+        <h2>AI in coworking &amp; flexible workspace access</h2>
+        <p>
+          Practice governing AI in coworking and flexible workspace access: ensuring accurate member
+          or guest identification, access authorization and booking access, supporting incident,
+          amenity or access issue detection, handling and accountability, communicating pricing,
+          plans and usage terms transparently, applying privacy and minimisation to member, guest
+          and access or usage data with traceable records, and providing human review and fallback
+          for access issues, disputes or uncertain cases. Scenarios are learning prompts, not
+          consumer, legal or regulatory advice.
+        </p>
+        <p>
+          <strong>
+            {coworkingFlexibleWorkspaceAccessGame.correct}/{coworkingFlexibleWorkspaceAccessGame.attempted}
+          </strong>{" "}
+          sound assurance decisions ·{" "}
+          {coworkingFlexibleWorkspaceAccessGame.complete && (
+            <Button variant="outline" onClick={() => setCoworkingFlexibleWorkspaceAccessAnswers({})}>
+              Replay
+            </Button>
+          )}
+        </p>
+        <div className="checklist-tasks">
+          {COWORKING_FLEXIBLE_WORKSPACE_ACCESS_ROUNDS.map((round) => {
+            const selected = coworkingFlexibleWorkspaceAccessAnswers[round.id];
+            return (
+              <article className="checklist-task" key={round.id}>
+                <div>
+                  <h3>{round.scenario}</h3>
+                  {round.choices.map((choice, index) => (
+                    <Button
+                      key={choice}
+                      size="sm"
+                      variant={selected === index ? "default" : "outline"}
+                      disabled={selected !== undefined}
+                      onClick={() =>
+                        setCoworkingFlexibleWorkspaceAccessAnswers((answers) => ({
+                          ...answers,
+                          [round.id]: index,
+                        }))
+                      }
+                    >
+                      {choice}
+                    </Button>
+                  ))}
+                  {selected !== undefined && (
+                    <p role="status">
+                      <strong>
+                        {selected === round.best
+                          ? "Good workspace-access safeguard."
+                          : "Review the workspace-access gap."}
                       </strong>{" "}
                       {round.feedback} <em>Assurance focus: {round.assurance}.</em>
                     </p>

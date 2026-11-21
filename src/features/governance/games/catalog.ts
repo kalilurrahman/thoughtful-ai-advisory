@@ -1335,4 +1335,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in bicycle and micromobility rental/share services: capturing accurate vehicle identification, availability and condition, supporting incident handling and accountability, communicating pricing and usage terms transparently, applying privacy safeguards with traceable trip records, and providing human review and fallback for disputes or safety exceptions.",
     anchor: "bicycle-micromobility-rental-share-assurance",
   },
+  {
+    id: "coworking-flexible-workspace-access-assurance",
+    title: "AI in coworking & flexible workspace access game",
+    category: "Operational readiness",
+    description:
+      "Practice governing AI in coworking and flexible workspace access: ensuring accurate authorization and booking access, supporting incident and amenity issue handling, communicating pricing and usage terms transparently, applying privacy safeguards with traceable records, and providing human review and fallback for access issues or disputes.",
+    anchor: "coworking-flexible-workspace-access-assurance",
+  },
 ] as const;
