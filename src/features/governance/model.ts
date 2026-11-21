@@ -4056,6 +4056,41 @@ export function calculate(
           : "Readiness is trending well — sample pricing and access decisions for fairness and accessibility, confirm verification data safeguards and transparent communications, and test traceability, review/appeals and fallback procedures for entry or access failures.",
     };
   }
+  if (id === "parking-curb-management") {
+    const accuracyEvidence = v["accuracy-evidence"] ?? 0,
+      rulesConditions = v["rules-conditions"] ?? 0,
+      fairnessEquity = v["fairness-equity"] ?? 0,
+      transparencyAppeals = v["transparency-appeals"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceabilityFallback = v["traceability-fallback"] ?? 0,
+      score = Math.round(
+        accuracyEvidence * 0.2 +
+          rulesConditions * 0.2 +
+          fairnessEquity * 0.15 +
+          transparencyAppeals * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceabilityFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in parking & curb/kerb management",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Detection and enforcement accuracy and evidence quality validated (20%)", accuracyEvidence + "%"],
+        ["Signage, restrictions and conditions checked so actions reflect current rules (20%)", rulesConditions + "%"],
+        ["Fairness and equity monitored so enforcement does not systematically disadvantage groups or areas (15%)", fairnessEquity + "%"],
+        ["Transparency and contest or appeals pathways provided for enforcement actions (15%)", transparencyAppeals + "%"],
+        ["Privacy and minimisation applied in monitoring and data use (15%)", privacyMinimisation + "%"],
+        ["Decisions, evidence and model or system versions logged for traceability with manual fallback when AI is uncertain or unavailable (15%)", traceabilityFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: validate detection and enforcement accuracy and evidence quality, check signage, restrictions and conditions so actions reflect current rules, monitor fairness and equity so enforcement does not systematically disadvantage groups or areas, provide transparency and contest or appeals pathways for enforcement actions, apply privacy and minimisation in monitoring and data use, and log decisions, evidence and model or system versions for traceability with manual fallback when AI is uncertain or unavailable."
+          : "Readiness is trending well — sample enforcement actions for accuracy, evidence and alignment with current signage/rules, review outcomes for fairness and accessible appeals, and confirm privacy safeguards, traceability and manual fallback when the system is uncertain or unavailable.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
