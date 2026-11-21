@@ -1231,4 +1231,12 @@ export const GOVERNANCE_GAMES = [
       "Practice governing AI in veterinary and animal welfare decisions: validating diagnostic and care-support recommendations for clinical context, species and breeds, maintaining professional oversight for consequential decisions, assessing welfare impacts and risks, documenting data quality and provenance with traceable outputs, and using escalation and safe fallback when AI is uncertain or unavailable.",
     anchor: "veterinary-animal-welfare-assurance",
   },
+  {
+    id: "cemeteries-funerary-bereavement-services-assurance",
+    title: "AI in cemeteries, funerary & bereavement services game",
+    category: "Governance & oversight",
+    description:
+      "Practice governing AI in cemeteries, funerary and bereavement services: handling personal, bereavement and memorial information sensitively and with consent, ensuring accuracy and dignified presentation with human review, protecting access to sensitive locations and records, maintaining human oversight and transparency, and providing traceable fallback and support pathways.",
+    anchor: "cemeteries-funerary-bereavement-services-assurance",
+  },
 ] as const;
