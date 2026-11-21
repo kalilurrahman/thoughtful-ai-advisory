@@ -3601,6 +3601,41 @@ export function calculate(
           : "Readiness is trending well — run a sensor-fault or hazard-threshold scenario to confirm alarms, escalation and manual procedures work, trace a recent AI-influenced alert from inputs to outcome, and verify coordination and required incident notification paths are clear.",
     };
   }
+  if (id === "pharma-manufacturing-quality") {
+    const humanReview = v["human-review"] ?? 0,
+      dataIntegrity = v["data-integrity"] ?? 0,
+      deviationEscalation = v["deviation-escalation"] ?? 0,
+      validation = v["validation"] ?? 0,
+      changeControl = v["change-control"] ?? 0,
+      fallback = v["fallback"] ?? 0,
+      score = Math.round(
+        humanReview * 0.2 +
+          dataIntegrity * 0.2 +
+          deviationEscalation * 0.15 +
+          validation * 0.15 +
+          changeControl * 0.15 +
+          fallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in pharmaceutical manufacturing & quality",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Qualified human review and authority maintained for quality-critical and release decisions (20%)", humanReview + "%"],
+        ["Data integrity, provenance and audit trails preserved for manufacturing and quality records (20%)", dataIntegrity + "%"],
+        ["Deviations and anomalies detected and escalated with timely investigation (15%)", deviationEscalation + "%"],
+        ["Performance validated across products, lines and operating conditions (15%)", validation + "%"],
+        ["Models, parameters and configuration changes controlled, validated and traceable (15%)", changeControl + "%"],
+        ["Safe fallback and manual procedures maintain product quality and continuity if AI fails (15%)", fallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: maintain qualified human review and authority for quality-critical and release decisions, preserve data integrity, provenance and audit trails for manufacturing and quality records, detect and escalate deviations and anomalies with timely investigation, validate performance across products, lines and operating conditions, control, validate and trace models, parameters and configuration changes, and ensure safe fallback and manual procedures can maintain product quality and continuity if AI fails."
+          : "Readiness is trending well — trace a recent AI-influenced quality or deviation decision from inputs to outcome, confirm change control and validation records are complete across lines and products, and verify manual fallback procedures can sustain quality decisions during an AI outage.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
