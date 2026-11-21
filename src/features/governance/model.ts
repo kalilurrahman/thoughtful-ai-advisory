@@ -4476,6 +4476,41 @@ export function calculate(
           : "Readiness is trending well — sample access and bookings for authorization and assignment accuracy, confirm accountable issue handling and transparent pricing/plans/terms, and test privacy safeguards, traceability and human review/fallback for access issues or disputes.",
     };
   }
+  if (id === "package-receiving-mailroom-parcel-locker") {
+    const identificationAssignment = v["identification-assignment"] ?? 0,
+      authorizationCustody = v["authorization-custody"] ?? 0,
+      issueHandling = v["issue-handling"] ?? 0,
+      privacyMinimisation = v["privacy-minimisation"] ?? 0,
+      traceability = v["traceability"] ?? 0,
+      supportFallback = v["support-fallback"] ?? 0,
+      score = Math.round(
+        identificationAssignment * 0.2 +
+          authorizationCustody * 0.2 +
+          issueHandling * 0.15 +
+          privacyMinimisation * 0.15 +
+          traceability * 0.15 +
+          supportFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in package receiving, mailroom & parcel locker services",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Recipient or package identification and locker or mailroom assignment accurate (20%)", identificationAssignment + "%"],
+        ["Pickup authorization and handoff or custody accountability supported (20%)", authorizationCustody + "%"],
+        ["Damage, loss or theft detection, reporting and handling supported (15%)", issueHandling + "%"],
+        ["Privacy and minimisation applied to recipient and package data (15%)", privacyMinimisation + "%"],
+        ["Custody, notification and access records logged for traceability and dispute review (15%)", traceability + "%"],
+        ["Human support and fallback available for access failures, disputes or uncertain cases (15%)", supportFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure recipient or package identification and locker or mailroom assignment are accurate, support pickup authorization and handoff or custody accountability, support damage, loss or theft detection, reporting and handling, apply privacy and minimisation to recipient and package data, log custody, notification and access records for traceability and dispute review, and provide human support and fallback for access failures, disputes or uncertain cases."
+          : "Readiness is trending well — sample deliveries for identification and assignment accuracy, confirm authorized pickup and accountable handoff/custody, and test issue handling, privacy safeguards, traceability and human support/fallback for access failures or disputes.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
