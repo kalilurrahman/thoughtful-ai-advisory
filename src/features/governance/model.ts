@@ -4021,6 +4021,41 @@ export function calculate(
           : "Readiness is trending well — review AI-assisted records and communications for accuracy, dignity and respectful presentation with human sign-off on consequential outputs, confirm consent, access controls and transparency are clear to families and service users, and test traceability and fallback/support pathways when the system is uncertain or unavailable.",
     };
   }
+  if (id === "ticketing-venue-access") {
+    const fairness = v["fairness"] ?? 0,
+      accessibilityEquity = v["accessibility-equity"] ?? 0,
+      verificationSafeguards = v["verification-safeguards"] ?? 0,
+      transparency = v["transparency"] ?? 0,
+      reviewAppeals = v["review-appeals"] ?? 0,
+      traceabilityFallback = v["traceability-fallback"] ?? 0,
+      score = Math.round(
+        fairness * 0.2 +
+          accessibilityEquity * 0.2 +
+          verificationSafeguards * 0.15 +
+          transparency * 0.15 +
+          reviewAppeals * 0.15 +
+          traceabilityFallback * 0.15,
+      ),
+      band =
+        score >= 80 ? "Strong" : score >= 60 ? "Managed" : score >= 40 ? "Developing" : "Early";
+    return {
+      headline: "AI in ticketing, box office & venue access control",
+      value: score + "% · " + band,
+      raw: score,
+      rows: [
+        ["Pricing, fraud and bot-detection decisions fair and do not create unjust barriers (20%)", fairness + "%"],
+        ["Accessibility and equitable access supported for diverse patrons (20%)", accessibilityEquity + "%"],
+        ["Identity, biometric or verification data handled with minimisation and safeguards where used (15%)", verificationSafeguards + "%"],
+        ["Decisions, denials, restrictions and terms communicated transparently as appropriate (15%)", transparency + "%"],
+        ["Human review and appeals available for consequential access or pricing decisions (15%)", reviewAppeals + "%"],
+        ["Decisions, checks and model or system versions logged for traceability with tested fallback for entry or access failures (15%)", traceabilityFallback + "%"],
+      ],
+      action:
+        score < 60
+          ? "Prioritize gaps: ensure pricing, fraud and bot-detection decisions are fair and do not create unjust barriers, support accessibility and equitable access for diverse patrons, handle identity, biometric or verification data with minimisation and safeguards where used, communicate decisions, denials, restrictions and terms transparently as appropriate, provide human review and appeals for consequential access or pricing decisions, and log decisions, checks and model or system versions for traceability with tested fallback for entry or access failures."
+          : "Readiness is trending well — sample pricing and access decisions for fairness and accessibility, confirm verification data safeguards and transparent communications, and test traceability, review/appeals and fallback procedures for entry or access failures.",
+    };
+  }
   return {
     headline: "Guardrail Coverage Index",
     value: coverage + "%",
